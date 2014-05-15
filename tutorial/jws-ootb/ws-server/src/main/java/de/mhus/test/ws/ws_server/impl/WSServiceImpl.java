@@ -1,4 +1,4 @@
-package de.hfo.test.ws.ws_server.impl;
+package de.mhus.test.ws.ws_server.impl;
 
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -12,12 +12,12 @@ import org.osgi.service.component.ComponentContext;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
-import de.hfo.test.ws.ws_model.WSEntity;
-import de.hfo.test.ws.ws_model.WSService;
+import de.mhus.test.ws.ws_model.WSEntity;
+import de.mhus.test.ws.ws_model.WSService;
 
 
 @SuppressWarnings("restriction")
-@WebService(endpointInterface = "de.hfo.test.ws.ws_model.WSService")
+@WebService(endpointInterface = "de.mhus.test.ws.ws_model.WSService")
 @Component(name="HohohoHeHe",immediate=true)
 public class WSServiceImpl implements WSService {
 

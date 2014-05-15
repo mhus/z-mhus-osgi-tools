@@ -1,4 +1,4 @@
-package de.hfo.test.ws.ws_model;
+package de.mhus.test.ws.ws_model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
