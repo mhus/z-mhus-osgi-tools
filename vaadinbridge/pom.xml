@@ -24,8 +24,8 @@
     <artifactId>vaadinbridge</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-  <name>mhu-lib</name>
-  <description>...</description>
+  <name>vaadinbridge</name>
+  <description>Provide in OSGi the servlet /VAADIN to map vaadin resources (like widgetsets and themes) out in the world. The bridge will watch bundles and automatically publish/destroy VAADIN resources.</description>
   <url>http://www.mhus.org</url>
 
   <licenses>
@@ -37,7 +37,7 @@
   </licenses>
   <scm>
     <url>https://mhu-lib.googlecode.com/svn/trunk/mhu-lib</url>
-    <connection>scm:svn:https://mhu-lib.googlecode.com/svn/trunk/mhu-lib</connection>
+    <connection>scm:git:https://github.com/mhus/mhus-osgi-tools/vaadinbridge</connection>
   </scm>
   <developers>
     <developer>
@@ -54,6 +54,12 @@
         <bndlib.version>1.50.0</bndlib.version>
         <felix.metatype.version>1.0.10</felix.metatype.version>
 		<compileSource>1.7</compileSource>
+		
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<vaadin.version>7.1.12</vaadin.version>
+		<gwt.version>2.3.0</gwt.version>
+		<gwt.plugin.version>2.2.0</gwt.plugin.version>
+		
       </properties>
 
    <build>

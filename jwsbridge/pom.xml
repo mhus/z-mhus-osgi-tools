@@ -22,10 +22,10 @@
 
     <groupId>de.mhus.osgi</groupId>
     <artifactId>jwsbridge</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-  <name>mhu-lib</name>
-  <description>...</description>
+  <name>jwsbridge</name>
+  <description>Provide an OSGi service handling jws services. Implement and install the JavaWebService interface and the web service will automatically become an entry point.</description>
   <url>http://www.mhus.org</url>
 
   <licenses>
@@ -37,7 +37,7 @@
   </licenses>
   <scm>
     <url>https://mhu-lib.googlecode.com/svn/trunk/mhu-lib</url>
-    <connection>scm:svn:https://mhu-lib.googlecode.com/svn/trunk/mhu-lib</connection>
+    <connection>scm:git:https://github.com/mhus/mhus-osgi-tools/jwsbridge</connection>
   </scm>
   <developers>
     <developer>
@@ -54,6 +54,8 @@
         <bndlib.version>1.50.0</bndlib.version>
         <felix.metatype.version>1.0.10</felix.metatype.version>
 		<compileSource>1.7</compileSource>
+        <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
+        <osgi.version>5.0.0</osgi.version>
       </properties>
 
    <build>
@@ -85,7 +87,6 @@
 
     <modules>
       <module>jwsosgibridge</module>
-      <module>jwskarafbridge</module>
    </modules>
 
 

@@ -22,44 +22,15 @@
 
     <groupId>de.mhus.osgi</groupId>
     <artifactId>vaadinosgibridge</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
+  <parent>
+	  	<groupId>de.mhus.osgi</groupId>
+        <artifactId>vaadinbridge</artifactId>
+        <version>1.0.1-SNAPSHOT</version>
+  </parent>
 
     <name>vaadinbridge</name>
     <description>OSGi vaadin bridge. Provides the default vaadin resources vie web in /VAADIN</description>
-  <url>http://www.mhus.org</url>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-  <scm>
-    <url>https://osgi-vaadin-bridge.googlecode.com/svn/trunk/vaadinbridge</url>
-    <connection>scm:svn:https://osgi-vaadin-bridge.googlecode.com/svn/trunk/vaadinbridge</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>mhu</id>
-      <name>Mike Hummel</name>
-      <email>mh@mikehummel.de</email>
-      <url>http://www.mhus.de</url>
-    </developer>
-  </developers>
-
-	<properties>
-		<scr.packages>*</scr.packages>
-		<felix.scr.version>1.6.0</felix.scr.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<vaadin.version>7.1.12</vaadin.version>
-		<gwt.version>2.3.0</gwt.version>
-		<gwt.plugin.version>2.2.0</gwt.plugin.version>
-	    <bndlib.version>1.50.0</bndlib.version>
-        <felix.metatype.version>1.0.10</felix.metatype.version>
-  	</properties>
-	
 	
     <build>
         <plugins>
@@ -141,54 +112,5 @@
         </dependency>
 
     </dependencies>
-    
-	<distributionManagement>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	  
-          <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Sonatype Nexus release repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-          </repository>
-          	  
-	</distributionManagement>
-
-        <profiles>
-          <profile>
-            <id>release-sign-artifacts</id>
-            <activation>
-              <property>
-                <name>performRelease</name>
-                <value>true</value>
-              </property>
-            </activation>
-            <build>
-              <plugins>
-                <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-gpg-plugin</artifactId>
-                  <version>1.4</version>
-                  <configuration>
-                    <passphrase>${gpg.passphrase}</passphrase>
-                  </configuration>
-                  <executions>
-                    <execution>
-                      <id>sign-artifacts</id>
-                      <phase>verify</phase>
-                      <goals>
-                        <goal>sign</goal>
-                      </goals>
-                    </execution>
-                  </executions>
-                </plugin>
-              </plugins>
-            </build>
-          </profile>
-
-        </profiles>
     
 </project>
