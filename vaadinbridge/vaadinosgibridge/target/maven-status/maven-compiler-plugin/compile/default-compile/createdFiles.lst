@@ -1,0 +1,9 @@
+de/mhus/osgi/vaadinbridge/VaadinResourceProvider.class
+de/mhus/osgi/vaadinbridge/impl/VaadinResourcesServlet$1.class
+de/mhus/osgi/vaadinbridge/Resource.class
+de/mhus/osgi/vaadinbridge/VaadinConfigurableResourceProviderFinder.class
+de/mhus/osgi/vaadinbridge/impl/VaadinResourcesServlet.class
+de/mhus/osgi/vaadinbridge/VaadinConfigurableResourceProviderAdmin.class
+de/mhus/osgi/vaadinbridge/VaadinConfigurableResourceProviderFinder$1.class
+de/mhus/osgi/vaadinbridge/impl/ConfigurableResourceProvider.class
+de/mhus/osgi/vaadinbridge/impl/ConfigurableResourceProvider$ResourceBundle.class

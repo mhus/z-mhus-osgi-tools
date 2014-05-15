@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1400160397794
+Build-Jdk: 1.7.0_51
+Built-By: mikehummel
+Bundle-Blueprint: OSGI-INF/blueprint/my-service.xml
+Bundle-Description: ws-server OSGi blueprint bundle project.
+Bundle-ManifestVersion: 2
+Bundle-Name: ws-server
+Bundle-SymbolicName: ws-server
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: de.hfo.test.ws.ws_server;version="0.0.1.SNAPSHOT",de.hfo
+ .test.ws.ws_server.impl;version="0.0.1.SNAPSHOT";uses:="de.hfo.test.ws.
+ ws_model,javax.jws,org.osgi.service.component"
+Import-Package: de.hfo.test.ws.ws_model;version="[0.0,1)",javax.jws,java
+ x.xml.ws,org.osgi.framework;version="[1.5,2)",org.osgi.service.blueprin
+ t;version="[1.0.0,2.0.0)",org.osgi.service.component;version="[1.1,2)"
+Service-Component: OSGI-INF/HohohoHeHe.xml
+Tool: Bnd-2.1.0.20130426-122213

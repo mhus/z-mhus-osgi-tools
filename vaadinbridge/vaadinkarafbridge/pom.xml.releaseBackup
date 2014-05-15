@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!--
+        Licensed to the Apache Software Foundation (ASF) under one or more
+        contributor license agreements.  See the NOTICE file distributed with
+        this work for additional information regarding copyright ownership.
+        The ASF licenses this file to You under the Apache License, Version 2.0
+        (the "License"); you may not use this file except in compliance with
+        the License.  You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+        Unless required by applicable law or agreed to in writing, software
+        distributed under the License is distributed on an "AS IS" BASIS,
+        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+        See the License for the specific language governing permissions and
+        limitations under the License.
+    -->
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.mhus.karaf</groupId>
+    <artifactId>vaadinkarafbridge</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <name>vaadinkarafbridge</name>
+    <description>vaadinkarafbridge OSGi blueprint bundle project.</description>
+  <url>http://www.mhus.org</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <url>https://osgi-vaadin-bridge.googlecode.com/svn/trunk/vaadinkarafbridge</url>
+    <connection>scm:svn:https://osgi-vaadin-bridge.googlecode.com/svn/trunk/vaadinkarafbridge</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>mhu</id>
+      <name>Mike Hummel</name>
+      <email>mh@mikehummel.de</email>
+      <url>http://www.mhus.de</url>
+    </developer>
+  </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>
+                            de.mhus.karaf.vaadinkarafbridge*;version=${project.version}
+                        </Export-Package>
+                        <Import-Package>
+                            *
+                        </Import-Package>
+                        <Service-Component>*</Service-Component>
+                        
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+    	<dependency>
+    		<groupId>de.mhus.osgi</groupId>
+    		<artifactId>vaadinbridge</artifactId>
+    		<version>1.0.0</version>
+    		<type>bundle</type>
+    	</dependency>
+        <dependency>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+    </dependencies>
+    
+	<distributionManagement>
+	  <snapshotRepository>
+	     <id>doexecute</id>
+	     <name>Internal Snapshot Releases</name>
+	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
+	  </snapshotRepository>
+	  
+          <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus release repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+          </repository>
+          	  
+	</distributionManagement>
+    
+        <profiles>
+          <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+              <property>
+                <name>performRelease</name>
+                <value>true</value>
+              </property>
+            </activation>
+            <build>
+              <plugins>
+                <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-gpg-plugin</artifactId>
+                  <version>1.4</version>
+                  <configuration>
+                    <passphrase>${gpg.passphrase}</passphrase>
+                  </configuration>
+                  <executions>
+                    <execution>
+                      <id>sign-artifacts</id>
+                      <phase>verify</phase>
+                      <goals>
+                        <goal>sign</goal>
+                      </goals>
+                    </execution>
+                  </executions>
+                </plugin>
+              </plugins>
+            </build>
+          </profile>
+
+        </profiles>
+    
+</project>
