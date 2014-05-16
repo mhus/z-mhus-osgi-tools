@@ -1,5 +1,28 @@
 Manifest-Version: 1.0
-Built-By: mikehummel
+Class-Path: config/ lib/de.mhus.test.ws.ws-model.jar lib/org.apache.cx
+ f.cxf-rt-frontend-jaxrs.jar lib/org.apache.cxf.cxf-api.jar lib/org.co
+ dehaus.woodstox.woodstox-core-asl.jar lib/org.codehaus.woodstox.stax2
+ -api.jar lib/org.apache.ws.xmlschema.xmlschema-core.jar lib/org.apach
+ e.geronimo.specs.geronimo-javamail_1.4_spec.jar lib/wsdl4j.wsdl4j.jar
+  lib/org.apache.cxf.cxf-rt-core.jar lib/com.sun.xml.bind.jaxb-impl.ja
+ r lib/javax.ws.rs.javax.ws.rs-api.jar lib/org.apache.cxf.cxf-rt-bindi
+ ngs-xml.jar lib/org.apache.cxf.cxf-rt-frontend-jaxws.jar lib/xml-reso
+ lver.xml-resolver.jar lib/asm.asm.jar lib/org.apache.cxf.cxf-rt-bindi
+ ngs-soap.jar lib/org.apache.cxf.cxf-rt-databinding-jaxb.jar lib/org.a
+ pache.cxf.cxf-rt-frontend-simple.jar lib/org.apache.cxf.cxf-rt-ws-add
+ r.jar lib/org.apache.cxf.cxf-rt-ws-policy.jar lib/org.apache.neethi.n
+ eethi.jar lib/org.apache.cxf.cxf-rt-transports-http.jar lib/org.apach
+ e.cxf.cxf-rt-transports-http-jetty.jar lib/org.eclipse.jetty.jetty-se
+ rver.jar lib/org.eclipse.jetty.jetty-continuation.jar lib/org.eclipse
+ .jetty.jetty-http.jar lib/org.eclipse.jetty.jetty-io.jar lib/org.ecli
+ pse.jetty.jetty-util.jar lib/org.eclipse.jetty.jetty-security.jar lib
+ /org.slf4j.slf4j-api.jar lib/org.apache.geronimo.specs.geronimo-servl
+ et_3.0_spec.jar lib/javax.jws.jsr181-api.jar lib/de.mhus.lib.mhu-lib-
+ core.jar lib/junit.junit.jar lib/log4j.log4j.jar lib/org.codehaus.jac
+ kson.jackson-mapper-lgpl.jar lib/org.codehaus.jackson.jackson-core-lg
+ pl.jar
 Build-Jdk: 1.7.0_51
+Built-By: mikehummel
 Created-By: Maven Integration for Eclipse
+Main-Class: de.mhus.test.ws.ws_client.WSClientMain
 

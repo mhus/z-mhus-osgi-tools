@@ -3,7 +3,49 @@
   <groupId>de.mhus.test.ws</groupId>
   <artifactId>ws-client</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
   
+  <build>
+	  <plugins>
+		<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-jar-plugin</artifactId>
+		    <version>2.4</version>
+		    <configuration>
+		        <archive>
+		            <addMavenDescriptor>false</addMavenDescriptor>
+		            <manifestEntries>
+		                <Class-Path>config/</Class-Path>
+		            </manifestEntries>
+		            <manifest>
+		                <mainClass>de.mhus.test.ws.ws_client.WSClientMain</mainClass>
+		                <addClasspath>true</addClasspath>
+		                <classpathPrefix>lib/</classpathPrefix>
+		                <classpathLayoutType>custom</classpathLayoutType>
+		                <customClasspathLayout>$${artifact.groupId}.$${artifact.artifactId}.$${artifact.extension}</customClasspathLayout>
+		            </manifest>
+		        </archive>
+		    </configuration>
+		</plugin>
+	    <plugin>
+	      <artifactId>maven-assembly-plugin</artifactId>
+		  <executions>
+	        <execution>
+	          <phase>package</phase>
+	          <goals>
+	            <goal>single</goal>
+	          </goals>
+			  <configuration>
+                <descriptors>
+                    <descriptor>assembly/assembly.xml</descriptor>
+                </descriptors>
+            </configuration>	          
+	        </execution>
+	      </executions>	      
+	    </plugin>
+	  </plugins>
+	</build>
+	
   <dependencies>
         <dependency>
         	<groupId>de.mhus.test.ws</groupId>
@@ -21,5 +63,21 @@
         	<artifactId>mhu-lib-core</artifactId>
         	<version>3.2.5-SNAPSHOT</version>
         </dependency>
+        		            
+        
   </dependencies>
+  
+	<distributionManagement>
+	  <repository>
+	     <id>doexecute</id>
+	     <name>Internal Releases</name>
+	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
+	  </repository>
+	  <snapshotRepository>
+	     <id>doexecute</id>
+	     <name>Internal Snapshot Releases</name>
+	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
+	  </snapshotRepository>
+	</distributionManagement>
+  
 </project>

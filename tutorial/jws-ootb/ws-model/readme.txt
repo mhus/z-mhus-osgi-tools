@@ -7,3 +7,7 @@ install -s mvn:de.mhus.test.ws/ws-server/0.0.1-SNAPSHOT
 
 bundle:watch ws-model
 bundle:watch ws-server
+
+
+mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get -DrepoUrl=http://nexus.doexecute.com/nexus/content/repositories/snapshots/ -Dartifact=de.mhus.test.ws:ws-client:0.0.1-SNAPSHOT
+
