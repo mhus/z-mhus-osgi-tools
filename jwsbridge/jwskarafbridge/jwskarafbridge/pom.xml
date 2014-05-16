@@ -21,16 +21,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.mhus.osgi</groupId>
-    <artifactId>vaadinkarafbridge</artifactId>
+    <artifactId>jwskarafbridge</artifactId>
     <packaging>bundle</packaging>
   <parent>
 	  	<groupId>de.mhus.osgi</groupId>
-        <artifactId>vaadinbridge</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <artifactId>jwsbridge</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
   </parent>
 
-    <name>vaadinkarafbridge</name>
-    <description>vaadinkarafbridge OSGi bundle.</description>
+    <name>jwskarafbridge</name>
+    <description>jwskarafbridge OSGi blueprint bundle project.</description>
 
     <build>
         <plugins>
@@ -44,13 +44,14 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.karaf.vaadinkarafbridge*;version=${project.version}
+                            de.mhus.osgi.jwskarafbridge*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
                         </Import-Package>
-                        <Service-Component>*</Service-Component>
-                        
+						<Private-Package>
+                            de.mhus.osgi.jwskarafbridge.impl
+                        </Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -60,7 +61,7 @@
     <dependencies>
     	<dependency>
     		<groupId>de.mhus.osgi</groupId>
-    		<artifactId>vaadinosgibridge</artifactId>
+    		<artifactId>jwsosgibridge</artifactId>
     		<version>${project.version}</version>
     		<type>bundle</type>
     	</dependency>
@@ -75,5 +76,5 @@
             <version>3.2.4</version>
         </dependency>
     </dependencies>
-    
+
 </project>

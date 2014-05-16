@@ -43,6 +43,16 @@
             <version>${osgi.version}</version>
             <scope>provided</scope>
         </dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		<dependency>
+            <groupId>biz.aQute</groupId>
+            <artifactId>bndlib</artifactId>
+            <version>${bndlib.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,13 +66,16 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.mhus.osgi.jwsbridge.Activator</Bundle-Activator>
                         <Export-Package>
                             de.mhus.osgi.jwsbridge*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
                         </Import-Package>
+						<Private-Package>
+                            de.mhus.osgi.jwsbridge.impl
+                        </Private-Package>
+                        <Service-Component>*</Service-Component>
                     </instructions>
                 </configuration>
             </plugin>

@@ -20,17 +20,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.osgi</groupId>
-    <artifactId>vaadinkarafbridge</artifactId>
+    <groupId>de.mhus.test.bridgews</groupId>
+    <artifactId>bridgews-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
-  <parent>
-	  	<groupId>de.mhus.osgi</groupId>
-        <artifactId>vaadinbridge</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
-  </parent>
 
-    <name>vaadinkarafbridge</name>
-    <description>vaadinkarafbridge OSGi bundle.</description>
+    <name>bridgews-server</name>
+    <description>bridgews-server OSGi blueprint bundle project.</description>
 
     <build>
         <plugins>
@@ -44,7 +40,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.karaf.vaadinkarafbridge*;version=${project.version}
+                            de.mhus.test.bridgews.bridgews_server*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -57,23 +53,18 @@
         </plugins>
     </build>
 
-    <dependencies>
-    	<dependency>
+	<dependencies>
+        <dependency>
+        	<groupId>de.mhus.test.ws</groupId>
+			<artifactId>ws-model</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+        </dependency>
+	    <dependency>
     		<groupId>de.mhus.osgi</groupId>
-    		<artifactId>vaadinosgibridge</artifactId>
-    		<version>${project.version}</version>
+    		<artifactId>jwsosgibridge</artifactId>
+    		<version>1.0.0-SNAPSHOT</version>
     		<type>bundle</type>
     	</dependency>
-        <dependency>
-            <groupId>org.apache.karaf.shell</groupId>
-            <artifactId>org.apache.karaf.shell.console</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.mhus.lib</groupId>
-            <artifactId>mhu-lib-core</artifactId>
-            <version>3.2.4</version>
-        </dependency>
-    </dependencies>
-    
+	
+	</dependencies>
 </project>

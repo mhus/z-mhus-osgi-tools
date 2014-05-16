@@ -1,4 +1,5 @@
 /Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/JavaWebService.java
-/Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/Activator.java
+/Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/impl/WebServiceInfoImpl.java
 /Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/impl/JavaWebServiceAdminImpl.java
+/Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/WebServiceInfo.java
 /Users/mikehummel/Documents/MHUs/workspaces/mhus-osgi-tools/mhus-osgi-tools/jwsbridge/jwsosgibridge/src/main/java/de/mhus/osgi/jwsbridge/JavaWebServiceAdmin.java

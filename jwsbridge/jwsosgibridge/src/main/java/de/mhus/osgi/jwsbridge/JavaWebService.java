@@ -2,6 +2,8 @@ package de.mhus.osgi.jwsbridge;
 
 public interface JavaWebService {
 
-	Object getWebService();
+	Object getServiceObject();
+
+	String getServiceName();
 	
 }
