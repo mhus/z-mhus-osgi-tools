@@ -56,6 +56,7 @@
 		<compileSource>1.7</compileSource>
         <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
         <osgi.version>5.0.0</osgi.version>
+        <cxf.version>2.7.5</cxf.version>
       </properties>
 
    <build>
@@ -87,6 +88,7 @@
 
     <modules>
       <module>jwsosgibridge</module>
+      <module>jwskarafbridge</module>
    </modules>
 
 

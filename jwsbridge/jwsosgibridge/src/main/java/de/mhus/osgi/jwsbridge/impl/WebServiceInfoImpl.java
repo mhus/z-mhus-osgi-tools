@@ -6,6 +6,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.osgi.jwsbridge.JavaWebService;
 import de.mhus.osgi.jwsbridge.WebServiceInfo;
+import org.apache.cxf.jaxws.EndpointImpl;
 
 public class WebServiceInfoImpl extends WebServiceInfo {
 
@@ -26,7 +27,11 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 
 	public void disconnect() {
 		if (!isConnected()) return;
-		handler.stop();handler = null;
+		handler.stop();
+		webService = null;
+		service.stopped(this);
+		handler = null;
+		
 	}
 
 	public JavaWebService getJavaWebService() {
@@ -47,6 +52,8 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 			webService = null;
 			handler = null;
 		}
+		if (handler != null)
+			service.published(this);
 	}
 	
 	public boolean isConnected() {
@@ -65,9 +72,12 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		
 	}
 	
-	public String getBinding() {
+	public String getBindingInfo() {
 		if (!isConnected()) return "";
-		return handler.getBinding().getBindingID();
+		if (handler instanceof EndpointImpl) {
+			return ((EndpointImpl)handler).getPublishedEndpointUrl();
+		}
+		return "";
 	}
 
 	public boolean is(JavaWebService service2) {
@@ -88,5 +98,8 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		return reference.getBundle().getSymbolicName();
 	}
 	
+	public Endpoint getEndpoint() {
+		return handler;
+	}
 
 }

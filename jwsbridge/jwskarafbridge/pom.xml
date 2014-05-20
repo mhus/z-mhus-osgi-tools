@@ -20,18 +20,16 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.test.ws</groupId>
-    <artifactId>ws-model</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>jwskarafbridge</artifactId>
     <packaging>bundle</packaging>
+  <parent>
+	  	<groupId>de.mhus.osgi</groupId>
+        <artifactId>jwsbridge</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+  </parent>
 
-    <name>ws-model</name>
-    <description>ws-model OSGi blueprint bundle project.</description>
-
-    <properties>
-            <cxf.version>2.7.5</cxf.version>
-        <bndlib.version>1.50.0</bndlib.version>
-    </properties>
+    <name>jwskarafbridge</name>
+    <description>jwskarafbridge OSGi blueprint bundle project.</description>
 
     <build>
         <plugins>
@@ -45,58 +43,37 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.test.ws.ws_model*;version=${project.version}
+                            de.mhus.osgi.jwskarafbridge*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
                         </Import-Package>
+						<Private-Package>
+                            de.mhus.osgi.jwskarafbridge.impl
+                        </Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
-    <!--
+    	<dependency>
+    		<groupId>de.mhus.osgi</groupId>
+    		<artifactId>jwsosgibridge</artifactId>
+    		<version>${project.version}</version>
+    		<type>bundle</type>
+    	</dependency>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>${cxf.version}</version>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        -->
-        <dependency>
-        	<groupId>javax.jws</groupId>
-        	<artifactId>jsr181-api</artifactId>
-        	<version>1.0-MR1</version>
+            <groupId>de.mhus.lib</groupId>
+            <artifactId>mhu-lib-core</artifactId>
+            <version>3.2.4</version>
         </dependency>
     </dependencies>
-
-	<distributionManagement>
-	  <repository>
-	     <id>doexecute</id>
-	     <name>Internal Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
-	  </repository>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	</distributionManagement>
 
 </project>

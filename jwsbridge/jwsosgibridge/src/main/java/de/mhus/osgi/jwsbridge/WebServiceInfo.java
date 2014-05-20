@@ -1,5 +1,7 @@
 package de.mhus.osgi.jwsbridge;
 
+import javax.xml.ws.Endpoint;
+
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.osgi.jwsbridge.impl.JavaWebServiceAdminImpl;
@@ -24,6 +26,8 @@ public abstract class WebServiceInfo {
 
 	public abstract String getBundleName();
 
-	public abstract String getBinding();
+	public abstract String getBindingInfo();
 
+	public abstract Endpoint getEndpoint();
+	
 }

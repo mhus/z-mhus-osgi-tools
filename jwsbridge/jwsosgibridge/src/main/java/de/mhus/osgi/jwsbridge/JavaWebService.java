@@ -6,4 +6,8 @@ public interface JavaWebService {
 
 	String getServiceName();
 	
+	void published(WebServiceInfo info);
+	
+	void stopped(WebServiceInfo info);
+	
 }

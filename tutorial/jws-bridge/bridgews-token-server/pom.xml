@@ -20,19 +20,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.test.ws</groupId>
-    <artifactId>ws-model</artifactId>
+    <groupId>de.mhus.test.bridgews</groupId>
+    <artifactId>bridgews-token-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>ws-model</name>
-    <description>ws-model OSGi blueprint bundle project.</description>
+    <name>bridgews-token-server</name>
+    <description>bridgews-server OSGi blueprint bundle project.</description>
 
-    <properties>
-            <cxf.version>2.7.5</cxf.version>
-        <bndlib.version>1.50.0</bndlib.version>
-    </properties>
-
+	<properties>
+	            <cxf.version>2.7.5</cxf.version>
+	</properties>
     <build>
         <plugins>
             <plugin>
@@ -45,58 +43,41 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.test.ws.ws_model*;version=${project.version}
+                            de.mhus.test.bridgews.bridgews_token_server*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
                         </Import-Package>
+                        <Service-Component>*</Service-Component>
+                        
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-    
-    <dependencies>
-    <!--
+
+	<dependencies>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>${cxf.version}</version>
+        	<groupId>de.mhus.test.ws</groupId>
+			<artifactId>ws-model</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
         </dependency>
+	    <dependency>
+    		<groupId>de.mhus.osgi</groupId>
+    		<artifactId>jwsosgibridge</artifactId>
+    		<version>1.0.0-SNAPSHOT</version>
+    		<type>bundle</type>
+    	</dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        -->
-        <dependency>
-        	<groupId>javax.jws</groupId>
-        	<artifactId>jsr181-api</artifactId>
-        	<version>1.0-MR1</version>
-        </dependency>
-    </dependencies>
 
-	<distributionManagement>
-	  <repository>
-	     <id>doexecute</id>
-	     <name>Internal Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
-	  </repository>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	</distributionManagement>
-
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+	</dependencies>
 </project>
