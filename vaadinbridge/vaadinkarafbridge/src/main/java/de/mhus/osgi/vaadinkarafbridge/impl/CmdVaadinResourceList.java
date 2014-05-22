@@ -1,4 +1,4 @@
-package de.mhus.karaf.vaadinkarafbridge.impl;
+package de.mhus.osgi.vaadinkarafbridge.impl;
 
 import java.io.PrintStream;
 
@@ -24,8 +24,8 @@ public class CmdVaadinResourceList implements Action {
 			StringBuffer res = new StringBuffer();
 			boolean first = true;
 			for (String p : provider.getResourcePathes(s)) {
-				if (!first) out.print(',');
-				out.print(p);
+				if (!first) res.append(',');
+				res.append(p);
 				first = false;
 			}
 			table.addRowValues(s,res.toString());

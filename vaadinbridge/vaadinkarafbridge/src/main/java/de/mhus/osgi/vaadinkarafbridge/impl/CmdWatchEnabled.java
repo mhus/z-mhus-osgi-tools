@@ -1,4 +1,4 @@
-package de.mhus.karaf.vaadinkarafbridge.impl;
+package de.mhus.osgi.vaadinkarafbridge.impl;
 
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;

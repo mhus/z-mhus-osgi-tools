@@ -37,7 +37,7 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 	
 	private static final Logger log = Logger.getLogger(BundleWatchImpl.class.getName());
 	private BundleContext context;
-	private boolean enabled = false;
+	private boolean enabled = true;
 	private ServiceRegistration<?> configUpdaterReg;
 	private static final String CONFIG_PID = "de.mhus.osgi.vaadinbridge";
 

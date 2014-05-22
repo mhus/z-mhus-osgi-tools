@@ -20,32 +20,32 @@
 	<reference id="watch" availability="mandatory" interface="de.mhus.osgi.vaadinbridge.BundleWatch" />
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.0.0">
         <command name="vaadin/resourceAdd">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdVaadinResourceAdd">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdVaadinResourceAdd">
 	            <property name="resourceProvider" ref="admin" />
             </action>
         </command>
         <command name="vaadin/resourceList">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdVaadinResourceList">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdVaadinResourceList">
 	            <property name="resourceProvider" ref="admin" />
             </action>
         </command>
         <command name="vaadin/resourceRemove">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdVaadinResourceRemove">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdVaadinResourceRemove">
 	            <property name="resourceProvider" ref="admin" />
             </action>
         </command>
         <command name="vaadin/debug">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdVaadinDebug">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdVaadinDebug">
 		        <property name="resourceProvider" ref="admin" />
             </action>
         </command>
         <command name="vaadin/watchrefresh">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdWatchRefresh">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdWatchRefresh">
 		        <property name="bundleWatch" ref="watch" />
             </action>
         </command>
         <command name="vaadin/watchenabled">
-            <action class="de.mhus.karaf.vaadinkarafbridge.impl.CmdWatchEnabled">
+            <action class="de.mhus.osgi.vaadinkarafbridge.impl.CmdWatchEnabled">
 		        <property name="bundleWatch" ref="watch" />
             </action>
         </command>

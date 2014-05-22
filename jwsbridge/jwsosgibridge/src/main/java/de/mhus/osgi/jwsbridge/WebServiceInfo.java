@@ -30,4 +30,5 @@ public abstract class WebServiceInfo {
 
 	public abstract Endpoint getEndpoint();
 	
+
 }

@@ -6,6 +6,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.osgi.jwsbridge.JavaWebService;
 import de.mhus.osgi.jwsbridge.WebServiceInfo;
+
 import org.apache.cxf.jaxws.EndpointImpl;
 
 public class WebServiceInfoImpl extends WebServiceInfo {
@@ -15,7 +16,7 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 	private JavaWebService service;
 	private Object webService;
 	private String error;
-	private Endpoint handler;
+	private Endpoint endpoint;
 	private static long nextId = 0;
 	private long id = ++nextId;
 
@@ -23,14 +24,16 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 			ServiceReference<JavaWebService> reference) {
 		this.admin = admin;
 		this.reference = reference;
+		service = admin.getContext().getService(reference);
+		if (service != null) setName(service.getServiceName());
 	}
 
 	public void disconnect() {
 		if (!isConnected()) return;
-		handler.stop();
+		endpoint.stop();
 		webService = null;
 		service.stopped(this);
-		handler = null;
+		endpoint = null;
 		
 	}
 
@@ -39,25 +42,23 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 	}
 
 	public void connect() {
-		if (isConnected()) return;
+		if (isConnected() || getName() == null || getName().length() == 0 || service == null) return;
 		error = null;
-		handler = null;
-		service = admin.getContext().getService(reference);
+		endpoint = null;
 		webService = service.getServiceObject();
-		setName(service.getServiceName());
 		try {
-			handler = Endpoint.publish("/" + getName(), webService);
+			endpoint = Endpoint.publish("/" + getName(), webService);
 		} catch (Throwable t) {
 			error = t.getMessage();
 			webService = null;
-			handler = null;
+			endpoint = null;
 		}
-		if (handler != null)
+		if (endpoint != null)
 			service.published(this);
 	}
 	
 	public boolean isConnected() {
-		return handler != null;
+		return endpoint != null;
 	}
 	
 	
@@ -68,16 +69,16 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		if (!isConnected())
 			return "not connected";
 		
-		return handler.isPublished() ? "published" : "not published";
+		return endpoint.isPublished() ? "published" : "not published";
 		
 	}
 	
 	public String getBindingInfo() {
 		if (!isConnected()) return "";
-		if (handler instanceof EndpointImpl) {
-			return ((EndpointImpl)handler).getPublishedEndpointUrl();
+		if (endpoint instanceof EndpointImpl) {
+			return ((EndpointImpl)endpoint).getAddress();
 		}
-		return "";
+		return "/" + getName();
 	}
 
 	public boolean is(JavaWebService service2) {
@@ -99,7 +100,15 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 	}
 	
 	public Endpoint getEndpoint() {
-		return handler;
+		return endpoint;
+	}
+	
+	public void setName(String name) {
+		if (name == null || name.length() == 0 || name.equals(getName())) return;
+		boolean connected = isConnected();
+		disconnect();
+		super.setName(name);
+		if (connected) connect();
 	}
 
 }

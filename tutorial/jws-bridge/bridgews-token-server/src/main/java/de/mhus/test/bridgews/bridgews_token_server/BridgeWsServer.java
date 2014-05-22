@@ -59,7 +59,7 @@ public class BridgeWsServer implements JavaWebService, WSService {
 //		Map<String,Object> outProps = new HashMap<String,Object>();
 //		WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(outProps);
 //		cxfEndpoint.getOutInterceptors().add(wssOut);
-	
+
 		Map<String,Object> inProps= new HashMap<String,Object>();
 		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
 		cxfEndpoint.getInInterceptors().add(wssIn);

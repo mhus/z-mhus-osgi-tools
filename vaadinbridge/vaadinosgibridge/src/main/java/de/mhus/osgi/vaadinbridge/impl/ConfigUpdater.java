@@ -20,7 +20,7 @@ public class ConfigUpdater implements ManagedService {
 		      return;
 	    }	
 		
-		watch.setEnabled("true".equals(String.valueOf(properties.get("enabled"))));
+		watch.setEnabled(!"false".equals(String.valueOf(properties.get("enabled"))));
 		
 	}
 
