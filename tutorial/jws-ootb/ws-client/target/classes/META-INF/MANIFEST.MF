@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Class-Path: config/ lib/de.mhus.test.ws.ws-model.jar lib/javax.jws.jsr
  181-api.jar lib/de.mhus.lib.mhu-lib-core.jar lib/junit.junit.jar lib/
- log4j.log4j.jar lib/org.codehaus.jackson.jackson-mapper-lgpl.jar lib/
- org.codehaus.jackson.jackson-core-lgpl.jar
+ org.codehaus.jackson.jackson-mapper-lgpl.jar lib/org.codehaus.jackson
+ .jackson-core-lgpl.jar lib/de.mhus.lib.mhu-lib-annotations.jar
 Build-Jdk: 1.7.0_51
 Built-By: mikehummel
 Created-By: Maven Integration for Eclipse

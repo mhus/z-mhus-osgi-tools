@@ -89,7 +89,8 @@
     <modules>
       <module>jwsosgibridge</module>
       <module>jwskarafbridge</module>
-   </modules>
+      <module>jwsclient</module>
+    </modules>
 
 
 	<distributionManagement>
