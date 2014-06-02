@@ -18,7 +18,7 @@ import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 
 @WebService(endpointInterface = "de.mhus.test.ws.ws_model.WSService")
-@Component(name="HohohoHeHeBridgeWithToken",immediate=true,provide=JavaWebService.class)
+@Component(name="securetoken",immediate=true,provide=JavaWebService.class)
 public class BridgeWsServer implements JavaWebService, WSService {
 
 	private Logger log = Logger.getLogger(BridgeWsServer.class.getName());
@@ -55,6 +55,7 @@ public class BridgeWsServer implements JavaWebService, WSService {
 	public void published(WebServiceInfo info) {
 		EndpointImpl jaxWsEndpoint = (EndpointImpl) info.getEndpoint();
 		Endpoint cxfEndpoint = jaxWsEndpoint.getServer().getEndpoint();
+		
 		
 //		Map<String,Object> outProps = new HashMap<String,Object>();
 //		WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(outProps);

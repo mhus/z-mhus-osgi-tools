@@ -59,7 +59,7 @@
 		<vaadin.version>7.1.12</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
-		
+		<osgi.version>5.0.0</osgi.version>		
       </properties>
 
    <build>

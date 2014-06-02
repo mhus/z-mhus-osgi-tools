@@ -33,6 +33,9 @@ public class JwsWebClient extends Client {
 	
 	public Connection getConnection(Object session, String target) throws Exception {
 		
+		if (session == null)
+			return getTarget(target).createConnection();
+		
 		synchronized (session) {
 			Connection con = (Connection) getSessionAttribute(session, SESSION_CONNECTION_ATTRIBUTE + target);
 			if (con == null) {

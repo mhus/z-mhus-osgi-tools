@@ -19,14 +19,18 @@ public class WSClientMain {
 	public static void main(String[] args) throws IOException {
 
 		MArgs a = new MArgs(args);
-		String defaultUrl = "jws||http://localhost:8181/cxf/hehe?wsdl|http://impl.ws_server.ws.test.mhus.de/|WSServiceImplService";
+		String[] defaultUrls = {
+				"jws|bridews-server|http://localhost:8181/cxf/itsabridge?wsdl|http://bridgews_server.bridgews.test.mhus.de/|BridgeWsServerService"
+				,
+				"jws|ws-server|http://localhost:8181/cxf/hehe?wsdl|http://impl.ws_server.ws.test.mhus.de/|WSServiceImplService"
+		};
 		
 		String[] urls = a.getValues("url");
 		if (urls == null || urls.length == 0)
-			urls = new String[] {defaultUrl};
+			urls = defaultUrls;
 		
-		String targetName = a.getValue("target", "", 0);
-		String serviceName = a.getValue("service", "WSServiceImplService", 0);
+		String targetName = a.getValue("target", "bridews-server", 0);
+		String serviceName = a.getValue("service", "BridgeWsServerService", 0);
 		
 		boolean remove = MCast.toboolean(a.getValue("remove", 0), false);
 		boolean add    = MCast.toboolean(a.getValue("add", 0), false);
@@ -48,6 +52,8 @@ public class WSClientMain {
 		Connection connection = target.createConnection();
 		
 		WSService ws = connection.getService(serviceName, WSService.class);
+		
+		System.out.println("Connected to: " + target.getUrl() + " Service: " + serviceName);
 		
 		// The same code as in ws-client ...
 		

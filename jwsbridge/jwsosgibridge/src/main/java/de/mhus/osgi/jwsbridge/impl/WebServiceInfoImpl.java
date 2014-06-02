@@ -75,10 +75,22 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 	
 	public String getBindingInfo() {
 		if (!isConnected()) return "";
-		if (endpoint instanceof EndpointImpl) {
-			return ((EndpointImpl)endpoint).getAddress();
-		}
+		
+		try {
+			return "jws|" + getName() + "|http://localhost:8080/cxf/" + getName() + "?wsdl|http://" + turnArround(webService.getClass().getPackage().getName()) + "/|" + webService.getClass().getSimpleName() + "Service";
+		} catch (Throwable t) {}
 		return "/" + getName();
+	}
+
+	private String turnArround(String name) {
+		String[] parts = name.split("\\.");
+		StringBuffer out = new StringBuffer();
+		for (String part : parts) {
+			if (out.length() != 0)
+				out.insert(0, ".");
+			out.insert(0, part);
+		}
+		return out.toString();
 	}
 
 	public boolean is(JavaWebService service2) {
