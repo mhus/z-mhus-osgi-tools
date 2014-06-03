@@ -24,7 +24,7 @@
     <packaging>bundle</packaging>
   <parent>
     <groupId>de.mhus.osgi.tutorial</groupId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <artifactId>tutorials</artifactId>
   </parent>
 
