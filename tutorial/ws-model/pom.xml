@@ -20,18 +20,16 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.test.ws</groupId>
     <artifactId>ws-model</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
+  <parent>
+    <groupId>de.mhus.osgi.tutorial</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>tutorials</artifactId>
+  </parent>
 
     <name>ws-model</name>
     <description>ws-model OSGi blueprint bundle project.</description>
-
-    <properties>
-            <cxf.version>2.7.5</cxf.version>
-        <bndlib.version>1.50.0</bndlib.version>
-    </properties>
 
     <build>
         <plugins>
@@ -57,46 +55,12 @@
     </build>
     
     <dependencies>
-    <!--
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-http-jetty</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        -->
         <dependency>
         	<groupId>javax.jws</groupId>
         	<artifactId>jsr181-api</artifactId>
-        	<version>1.0-MR1</version>
+        	<version>${jaxws.version}</version>
         </dependency>
     </dependencies>
 
-	<distributionManagement>
-	  <repository>
-	     <id>doexecute</id>
-	     <name>Internal Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
-	  </repository>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	</distributionManagement>
 
 </project>

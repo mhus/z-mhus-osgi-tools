@@ -20,17 +20,17 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.test.bridgews</groupId>
-    <artifactId>bridgews-token-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>bridgews-server</artifactId>
     <packaging>bundle</packaging>
+	  <parent>
+	    <groupId>de.mhus.osgi.tutorial</groupId>
+	    <version>1.0.1-SNAPSHOT</version>
+	    <artifactId>tutorials</artifactId>
+	  </parent>
 
-    <name>bridgews-token-server</name>
+    <name>bridgews-server</name>
     <description>bridgews-server OSGi blueprint bundle project.</description>
 
-	<properties>
-	            <cxf.version>2.7.5</cxf.version>
-	</properties>
     <build>
         <plugins>
             <plugin>
@@ -43,7 +43,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.test.bridgews.bridgews_token_server*;version=${project.version}
+                            de.mhus.test.bridgews.bridgews_server*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -58,26 +58,16 @@
 
 	<dependencies>
         <dependency>
-        	<groupId>de.mhus.test.ws</groupId>
+        	<groupId>${project.groupId}</groupId>
 			<artifactId>ws-model</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
+  			<version>${project.version}</version>
         </dependency>
 	    <dependency>
     		<groupId>de.mhus.osgi</groupId>
     		<artifactId>jwsosgibridge</artifactId>
-    		<version>1.0.0-SNAPSHOT</version>
+    		<version>${project.version}</version>
     		<type>bundle</type>
     	</dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-ws-security</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
+	
 	</dependencies>
 </project>

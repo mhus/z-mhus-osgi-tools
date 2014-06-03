@@ -20,22 +20,16 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.mhus.test.ws</groupId>
     <artifactId>ws-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
+  <parent>
+    <groupId>de.mhus.osgi.tutorial</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>tutorials</artifactId>
+  </parent>
 
     <name>ws-server</name>
     <description>ws-server OSGi blueprint bundle project.</description>
-	
-    <properties>
-        <scr.packages>*</scr.packages>
-        <felix.scr.version>1.6.0</felix.scr.version>
-        <felix.metatype.version>1.0.10</felix.metatype.version>
-            <cxf.version>2.7.5</cxf.version>
-        <bndlib.version>1.50.0</bndlib.version>
-    </properties>
-
 	
     <build>
         <plugins>
@@ -68,9 +62,9 @@
 
 	<dependencies>
         <dependency>
-        	<groupId>de.mhus.test.ws</groupId>
+        	<groupId>${project.groupId}</groupId>
 			<artifactId>ws-model</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
+  			<version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -112,19 +106,6 @@
         </dependency>
         
 	</dependencies>
-	
-	<distributionManagement>
-	  <repository>
-	     <id>doexecute</id>
-	     <name>Internal Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
-	  </repository>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	</distributionManagement>
 	
 	
 </project>

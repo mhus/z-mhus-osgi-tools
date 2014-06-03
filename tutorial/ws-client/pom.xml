@@ -1,9 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.mhus.test.ws</groupId>
   <artifactId>ws-client</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
+  <parent>
+    <groupId>de.mhus.osgi.tutorial</groupId>
+    <version>1.0.1-SNAPSHOT</version>
+    <artifactId>tutorials</artifactId>
+  </parent>
   
   <build>
 	  <plugins>
@@ -29,6 +32,7 @@
 		</plugin>
 	    <plugin>
 	      <artifactId>maven-assembly-plugin</artifactId>
+		    <version>2.4</version>
 		  <executions>
 	        <execution>
 	          <phase>package</phase>
@@ -48,9 +52,9 @@
 	
   <dependencies>
         <dependency>
-        	<groupId>de.mhus.test.ws</groupId>
+        	<groupId>${project.groupId}</groupId>
 			<artifactId>ws-model</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
+  			<version>${project.version}</version>
         </dependency>
         <dependency>
         	<groupId>javax.jws</groupId>
@@ -61,23 +65,10 @@
         <dependency>
         	<groupId>de.mhus.lib</groupId>
         	<artifactId>mhu-lib-core</artifactId>
-        	<version>3.2.5-SNAPSHOT</version>
+        	<version>${mhulib.version}</version>
         </dependency>
         		            
         
   </dependencies>
-  
-	<distributionManagement>
-	  <repository>
-	     <id>doexecute</id>
-	     <name>Internal Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/releases/</url>
-	  </repository>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
-	</distributionManagement>
   
 </project>
