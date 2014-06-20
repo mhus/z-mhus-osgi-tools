@@ -1,7 +1,6 @@
 package de.mhus.test.bridgews.bridgews_token_server;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.jws.WebService;
@@ -14,8 +13,6 @@ import de.mhus.test.ws.ws_model.WSService;
 
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.jaxws.EndpointImpl;
-import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
-import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
 
 @WebService(endpointInterface = "de.mhus.test.ws.ws_model.WSService")
 @Component(name="securetoken",immediate=true,provide=JavaWebService.class)
@@ -43,6 +40,7 @@ public class BridgeWsServer implements JavaWebService, WSService {
 	}
 
 	public WSEntity[] getAll() {
+		System.out.println("getAll Token: " + TokenInInterceptor.currentToken.get());
 		return map.values().toArray(new WSEntity[0]);
 	}
 
@@ -61,8 +59,7 @@ public class BridgeWsServer implements JavaWebService, WSService {
 //		WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(outProps);
 //		cxfEndpoint.getOutInterceptors().add(wssOut);
 
-		Map<String,Object> inProps= new HashMap<String,Object>();
-		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
+		TokenInInterceptor wssIn = new TokenInInterceptor();
 		cxfEndpoint.getInInterceptors().add(wssIn);
 		
 	}

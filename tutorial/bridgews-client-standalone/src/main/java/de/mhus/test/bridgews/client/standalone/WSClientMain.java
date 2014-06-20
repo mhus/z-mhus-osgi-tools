@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.UUID;
 
+import org.apache.cxf.frontend.ClientProxy;
+
 import de.mhus.lib.core.MArgs;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MStopWatch;
@@ -36,6 +38,7 @@ public class WSClientMain {
 		boolean add    = MCast.toboolean(a.getValue("add", 0), false);
 		boolean read   = MCast.toboolean(a.getValue("read", 0), true);
 		int rounds = MCast.toint(a.getValue("rounds", 0), 10000);
+		String token = a.getValue("token", 0);
 		
 		// load a client and configure it
 		JwsStandaloneClient client = JwsStandaloneClient.instance();
@@ -51,7 +54,13 @@ public class WSClientMain {
 		Target target = client.getTarget(targetName);
 		Connection connection = target.createConnection();
 		
+
 		WSService ws = connection.getService(serviceName, WSService.class);
+		
+		if (token != null) {
+			org.apache.cxf.endpoint.Client cxfClient = ClientProxy.getClient(ws);
+			cxfClient.getOutInterceptors().add(new TokenOutInterceptor(token));
+		}
 		
 		System.out.println("Connected to: " + target.getUrl() + " Service: " + serviceName);
 		

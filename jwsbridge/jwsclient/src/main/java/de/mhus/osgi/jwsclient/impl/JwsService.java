@@ -18,7 +18,7 @@ public class JwsService {
 				
 		qname = new QName(((JwsTarget)connection.getTarget()).getNameSpace(), name);
 		service = Service.create(connection.getUrl(), qname);
-
+		
 	}
 	
 	protected <T> T createService(Class<? extends T> ifc) {
