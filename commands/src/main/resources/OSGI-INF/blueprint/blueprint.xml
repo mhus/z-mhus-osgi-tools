@@ -49,18 +49,7 @@
             <action class="de.mhus.osgi.commands.impl.CmdMem">
             </action>
         </command>
-        
-        <command name="adb/list">
-            <action class="de.mhus.osgi.commands.adb.CmdList">
-		        <property name="context" ref="blueprintBundleContext" />
-            </action>
-        </command>
-        <command name="adb/update">
-            <action class="de.mhus.osgi.commands.adb.CmdUpdate">
-		        <property name="context" ref="blueprintBundleContext" />
-            </action>
-        </command>
-        
+                
         <command name="bundle/reinstall">
             <action class="de.mhus.osgi.commands.impl.CmdBundleReinstall">
 		        <property name="context" ref="blueprintBundleContext" />

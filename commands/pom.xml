@@ -29,7 +29,7 @@
     <artifactId>commands</artifactId>
     <packaging>bundle</packaging>
 
-    <name>commands Blueprint Bundle</name>
+    <name>commands</name>
     <description>commands OSGi blueprint bundle project.</description>
 
     <build>

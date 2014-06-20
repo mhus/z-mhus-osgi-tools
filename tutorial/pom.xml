@@ -37,6 +37,7 @@
       <module>bridgews-server</module>
       <module>bridgews-token-server</module>
       <module>bridgews-client-standalone</module>
+      <module>vaadin-sample</module>
     </modules>
 
 </project>

@@ -16,6 +16,9 @@ public interface WSService {
 	WSEntity[] getAll();
 	
 	@WebMethod
-	void remvoeEntity(WSEntity entity);
+	void removeEntity(WSEntity entity);
+	
+	@WebMethod
+	WSEntity get(String name);
 	
 }

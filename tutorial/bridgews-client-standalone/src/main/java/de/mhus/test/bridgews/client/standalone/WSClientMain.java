@@ -69,7 +69,7 @@ public class WSClientMain {
 					System.out.print(".");
 					if (cnt % 100 == 0)
 						System.out.println(" " + cnt + " " + watch.getCurrentSeconds() );
-					if (remove) ws.remvoeEntity(entry);
+					if (remove) ws.removeEntity(entry);
 				}
 			}
 			if (add) {

@@ -46,7 +46,7 @@ public class BridgeWsServer implements JavaWebService, WSService {
 		return map.values().toArray(new WSEntity[0]);
 	}
 
-	public void remvoeEntity(WSEntity entity) {
+	public void removeEntity(WSEntity entity) {
 		if (entity == null) return;
 		log.info("remove " + entity.getName());
 		map.remove(entity.getName());
@@ -69,6 +69,11 @@ public class BridgeWsServer implements JavaWebService, WSService {
 
 	public void stopped(WebServiceInfo info) {
 		
+	}
+
+	@Override
+	public WSEntity get(String name) {
+		return map.get(name);
 	}
 
 }

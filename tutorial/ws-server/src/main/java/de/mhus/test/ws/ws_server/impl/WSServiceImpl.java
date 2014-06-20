@@ -56,10 +56,15 @@ public class WSServiceImpl implements WSService {
 		return map.values().toArray(new WSEntity[0]);
 	}
 
-	public void remvoeEntity(WSEntity entity) {
+	public void removeEntity(WSEntity entity) {
 		if (entity == null) return;
 		log.info("remove " + entity.getName());
 		map.remove(entity.getName());
+	}
+
+	@Override
+	public WSEntity get(String name) {
+		return map.get(name);
 	}
 
 }

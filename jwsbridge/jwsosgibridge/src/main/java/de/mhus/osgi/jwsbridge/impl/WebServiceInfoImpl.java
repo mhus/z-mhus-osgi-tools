@@ -52,6 +52,8 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 			error = t.getMessage();
 			webService = null;
 			endpoint = null;
+			System.out.println("ERROR: " + getName() + " " + webService);
+			t.printStackTrace(); //TODO use logger
 		}
 		if (endpoint != null)
 			service.published(this);
@@ -77,7 +79,8 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		if (!isConnected()) return "";
 		
 		try {
-			return "jws|" + getName() + "|http://localhost:8080/cxf/" + getName() + "?wsdl|http://" + turnArround(webService.getClass().getPackage().getName()) + "/|" + webService.getClass().getSimpleName() + "Service";
+			//TODO This could be more generic
+			return "jws|" + getName() + "|http://localhost:8181/cxf/" + getName() + "?wsdl|http://" + turnArround(webService.getClass().getPackage().getName()) + "/|" + webService.getClass().getSimpleName() + "Service";
 		} catch (Throwable t) {}
 		return "/" + getName();
 	}
