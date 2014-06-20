@@ -12,3 +12,25 @@ jwsbridge
 -------------
 
 Provide an OSGi service handling jws services. Implement and install the JavaWebService interface and the web service will automatically become an entry point.
+
+Build from source
+-------------
+
+	git clone https://github.com/mhus/mhus-osgi-tools.git mhus-osgi-tools
+	cd mhus-osgi-tools
+	mvn install
+
+Use with maven
+-------------
+
+**Maybe change version**
+
+Append a version property
+
+	<properties>
+		<mhus-osgi-tools.version>1.0.2</mhus-osgi-tools.version>
+	</properties>
+
+Follow the instructions in the sections jwsbridge and vaadinbridge.
+
+

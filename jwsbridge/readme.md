@@ -16,6 +16,28 @@ It's going to define the class also as web service implementation. Have a look i
 	
 	[implement interface]
 	
+Define the Web-Service in the interface:
+
+	@WebService
+	@SOAPBinding(style = Style.RPC)
+	public interface WSService {
+	
+		@WebMethod
+		void addEntity(WSEntity entity);
+
+	[...]
+
+
+Karaf Support
+-------------
+
+To allow command support the bundle jwskarafbridge will append the needed commands to the gogo shell.
+The command space is 'jws' and will provide the following commands
+
+	list: list all known jws services
+	stop: stop a service
+	publish: pubish a service (if stopped)
+	remove: remove the service from list
 
 Installation
 -------------
@@ -24,5 +46,4 @@ Installation
 
 	install -s mvn:de.mhus.osgi/jwsosgibridge/1.0.2
 	install -s mvn:de.mhus.osgi/jwskarafbridge/1.0.2
-	
-	
+
