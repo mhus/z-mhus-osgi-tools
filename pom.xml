@@ -96,7 +96,8 @@
       <module>vaadinbridge</module>
       <module>tutorial</module>
     <module>commands</module>
-  </modules>
+    <module>groovy-console</module>
+    </modules>
 
 
 	<distributionManagement>

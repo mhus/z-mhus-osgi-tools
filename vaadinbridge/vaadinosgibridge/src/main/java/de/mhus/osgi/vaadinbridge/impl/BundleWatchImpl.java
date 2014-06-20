@@ -17,12 +17,11 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.component.ComponentContext;
 
-import de.mhus.osgi.vaadinbridge.BundleWatch;
-import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderAdmin;
-import de.mhus.osgi.vaadinbridge.VaadinResourceProvider;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
+import de.mhus.osgi.vaadinbridge.BundleWatch;
+import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderAdmin;
 
 /*
 vaadinBootstrap.js

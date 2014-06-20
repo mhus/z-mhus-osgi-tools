@@ -1,7 +1,5 @@
 package de.mhus.osgi.commands.impl;
 
-import java.io.PrintStream;
-
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;

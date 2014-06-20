@@ -1,11 +1,8 @@
 package de.mhus.osgi.commands.impl;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
@@ -15,7 +12,6 @@ import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;

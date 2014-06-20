@@ -1,15 +1,11 @@
 package de.mhus.osgi.jwskarafbridge.impl;
 
-import java.io.PrintStream;
-
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 
-import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.jwsbridge.JavaWebServiceAdmin;
-import de.mhus.osgi.jwsbridge.WebServiceInfo;
 
 @Command(scope = "jws", name = "stop", description = "Stops A Web Services")
 public class CmdStop implements Action {

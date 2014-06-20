@@ -12,7 +12,7 @@ To provide the VAADIN servlet the vaadinbridge supports such a servlet. It autom
 folder VAADIN and provide the content via the servlet. This will also include the basic VAADIN resources from vaadin-server, vaadin-client ...
 
 To use the bridge you don't need to append dependencies to the bridge. The bridge will automatically recognize of the VAADIN folder. Develop
-you application as vaadin maven application as described in the vaadin documentation. For details have a look in the vaadin-sample.
+you application as vaadin maven application as described in the vaadin documentation. For details have a look into the vaadin-sample.
 
 Karaf support
 -------------
@@ -29,6 +29,24 @@ If you install also the karafbridge, it will provide commands to control the osg
 
 Instalation
 -------------
+
+**Maybe change version strings**
+
+Installation of Vaadin
+
+	feature:install http
+	install -s mvn:org.apache.commons/commons-jexl/2.1.1
+	install -s 'wrap:mvn:org.w3c.css/sac/1.3/$Bundle-SymbolicName=sac&Bundle-Version=1.3&Export-Package=org.w3c.css.sac;version="1.3",\!*'
+	install -s mvn:org.jsoup/jsoup/1.7.3
+	install -s mvn:com.vaadin/vaadin-shared-deps/1.0.2
+	install -s mvn:com.vaadin/vaadin-shared/7.1.12
+	install -s mvn:com.vaadin/vaadin-themes/7.1.12
+	install -s mvn:com.vaadin/vaadin-theme-compiler/7.1.12
+	install -s mvn:com.vaadin/vaadin-server/7.1.12
+	install -s mvn:com.vaadin/vaadin-client-compiled/7.1.12
+
+
+Installation of the vaadin bridge
 
 	install -s mvn:de.mhus.osgi/vaadinosgibridge/1.0.2
 	install -s mvn:de.mhus.osgi/vaadinkarafbridge/1.0.2

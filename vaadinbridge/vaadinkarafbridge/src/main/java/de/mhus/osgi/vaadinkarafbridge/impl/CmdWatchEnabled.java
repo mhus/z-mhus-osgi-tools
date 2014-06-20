@@ -6,7 +6,6 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 
 import de.mhus.osgi.vaadinbridge.BundleWatch;
-import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderAdmin;
 
 @Command(scope = "vaadin", name = "watchenabled", description = "Enable / Disable bundle watch")
 public class CmdWatchEnabled implements Action {

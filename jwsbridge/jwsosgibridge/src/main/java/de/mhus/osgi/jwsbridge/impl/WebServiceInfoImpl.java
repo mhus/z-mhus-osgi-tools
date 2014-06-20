@@ -7,8 +7,6 @@ import org.osgi.framework.ServiceReference;
 import de.mhus.osgi.jwsbridge.JavaWebService;
 import de.mhus.osgi.jwsbridge.WebServiceInfo;
 
-import org.apache.cxf.jaxws.EndpointImpl;
-
 public class WebServiceInfoImpl extends WebServiceInfo {
 
 	private JavaWebServiceAdminImpl admin;

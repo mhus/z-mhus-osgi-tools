@@ -2,17 +2,8 @@ package de.mhus.osgi.commands.impl;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.HashMap;
 
-import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.dbcp.DataSourceConnectionFactory;
-import org.apache.commons.dbcp.PoolableConnectionFactory;
-import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.pool.ObjectPool;
-import org.apache.commons.pool.impl.GenericObjectPool;
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;

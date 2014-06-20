@@ -28,7 +28,7 @@ be recognized as a fail over yet.
 Cascading Sample
 -------------
 
-My application bundle expects the data source 'targetdb' to work proper. I wan't to use a pool and have deploved a database cluster. 
+My application bundle expects the data source 'targetdb' to work proper. I want to use a pool and have deploved a database cluster. 
 This will cause the following dependecies:
 
 	Database 1: jdbc/db1

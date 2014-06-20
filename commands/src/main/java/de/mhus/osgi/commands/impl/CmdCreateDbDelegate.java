@@ -2,10 +2,7 @@ package de.mhus.osgi.commands.impl;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.HashMap;
-
-import javax.sql.DataSource;
 
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
