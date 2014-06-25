@@ -15,7 +15,7 @@ import de.mhus.osgi.jwsbridge.JavaWebService;
 import de.mhus.osgi.jwsbridge.JavaWebServiceAdmin;
 import de.mhus.osgi.jwsbridge.WebServiceInfo;
 
-@Component(name=JavaWebServiceAdmin.NAME,servicefactory=true)
+@Component(name=JavaWebServiceAdmin.NAME,immediate=true)
 public class JavaWebServiceAdminImpl implements JavaWebServiceAdmin {
 
 	private LinkedList<WebServiceInfoImpl> list = new LinkedList<>();
@@ -67,10 +67,21 @@ public class JavaWebServiceAdminImpl implements JavaWebServiceAdmin {
 
 			synchronized(list) {
 				WebServiceInfoImpl info = new WebServiceInfoImpl(JavaWebServiceAdminImpl.this, reference);
+				if (contains(info)) {
+					System.out.println("WebService already registered " + info);
+					return null;
+				}
 				list.add(info);
 				info.connect();
 				return info.getJavaWebService();
 			}
+		}
+
+		private boolean contains(WebServiceInfoImpl info) {
+			for (WebServiceInfoImpl item : list) {
+				if (item.getName().equals(info.getName())) return true;
+			}
+			return false;
 		}
 
 		@Override

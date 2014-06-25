@@ -45,7 +45,8 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		endpoint = null;
 		webService = service.getServiceObject();
 		try {
-			endpoint = Endpoint.publish("/" + getName(), webService);
+			System.out.println("+++ JWS Register: " + getName());
+			endpoint = Endpoint.publish("/cxf/" + getName(), webService);
 		} catch (Throwable t) {
 			error = t.getMessage();
 			webService = null;
