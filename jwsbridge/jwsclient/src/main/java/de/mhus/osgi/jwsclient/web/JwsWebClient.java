@@ -47,7 +47,12 @@ public class JwsWebClient extends Client {
 		}
 		
 	}
-	
+
+	public void closeConnection(Object session, String target) throws Exception {
+		if (session == null) return;
+		setSessionAttribute(session, SESSION_CONNECTION_ATTRIBUTE + target, null);
+	}
+
 	public static Object getSessionAttribute(Object session, String name) throws Exception {
 		Method method = session.getClass().getMethod("getAttribute", String.class);
 		Object result = method.invoke(session, name);

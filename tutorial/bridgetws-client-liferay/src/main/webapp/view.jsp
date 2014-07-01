@@ -45,22 +45,18 @@
 </div>
 
 <script type="text/javascript">
-var viewModel = {
+  var viewModel<portlet:namespace/> = {
 		f_entries : ko.observableArray(),
 		f_name: ko.observable(),
 		
 		loadEntryList: function() {
 	        var url = '<%=ajaxServiceURL%>&action=list';
-	        showSpinner(true);
-	        $.getJSON(url, function (data2) {
-	    		showAjaxResult(data2);
-	    		if (data2.success == 1){
-	    			viewModel.f_entries.removeAll();
-					for (var nr in data2.result) {
-						var row = data2.result[nr];
-						viewModel.f_entries.push(row);
-					}
-	    		}
+	        ajaxRequest(url, function (results) {
+    			viewModel<portlet:namespace/>.f_entries.removeAll();
+				for (var nr in results) {
+					var row = results[nr];
+					viewModel<portlet:namespace/>.f_entries.push(row);
+				}
 			});
 		},
 		
@@ -68,30 +64,21 @@ var viewModel = {
 			//if (!confirm("Really remove " + data['name'])) return;
 			
 	        var url = '<%=ajaxServiceURL%>&action=remove&name=' + data['name'];
-	        showSpinner(true);
-	        $.getJSON(url, function (data2) {
-	    		showAjaxResult(data2);
-	    		if (data2.success == 1) {
-	    			viewModel.loadEntryList();
-	    		}
+	        ajaxRequest(url, function (results) {
+	    		viewModel<portlet:namespace/>.loadEntryList();
 	    	});
 		},
 		
 		doAdd: function() {
-	        var url = '<%=ajaxServiceURL%>&action=add&name=' + viewModel.f_name();
-	        showSpinner(true);
-	        $.getJSON(url, function (data2) {
-	    		showAjaxResult(data2);
-	    		if (data2.success == 1) {
-	    			//alert("Added!");
-	    			viewModel.loadEntryList();
-	    			viewModel.f_name("");
-	    		}
+	        var url = '<%=ajaxServiceURL%>&action=add&name=' + viewModel<portlet:namespace/>.f_name();
+	        ajaxRequest(url, function (results) {
+    			viewModel<portlet:namespace/>.loadEntryList();
+    			viewModel<portlet:namespace/>.f_name("");
 	    	});
-			
 		}
-};
-ko.applyBindings(viewModel);
-viewModel.loadEntryList();
+  };
+  // bind only to the portlet namespace
+  namespace = "portlet<portlet:namespace/>";
+  ko.applyBindings(viewModel<portlet:namespace/>, document.getElementById(namespace.substring(0, namespace.length-1)));
+  viewModel<portlet:namespace/>.loadEntryList();
 </script>
-

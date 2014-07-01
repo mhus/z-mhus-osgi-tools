@@ -26,8 +26,6 @@
 <%@page import="java.util.Map" %>
 
 <%@page import="de.mhus.test.ws.ws_model.WSEntity"%>
-<%@page import="de.mhus.test.ws.ws_client.web.Singleton"%>
-<%@page import="de.mhus.test.ws.ws_client.web.Connection"%>
 <%@page import="de.mhus.test.ws.ws_model.WSService"%>
 
 

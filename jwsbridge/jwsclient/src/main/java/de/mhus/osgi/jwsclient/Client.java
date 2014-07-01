@@ -29,14 +29,24 @@ public class Client {
 		if (factory == null)
 			throw new FactoryNotFoundException(parts[0], url);
 		
-		Target target = factory.createTarget(this, parts);
-		synchronized (target) {
+		synchronized (targets) {
+			Target target = targets.get(parts[1]);
+			if (target != null) return target;
+			
+			target = factory.createTarget(this, parts);
 			targets.put(parts[1], target);
+			return target;
 		}
-		return target;
 		
 	}
 
+	public void closeTarget(String targetName) {
+		synchronized (targets) {
+			targets.remove(targetName);
+		}
+	}
+	
+	
 	/**
 	 * Return the named factory or null if not exists.
 	 * 

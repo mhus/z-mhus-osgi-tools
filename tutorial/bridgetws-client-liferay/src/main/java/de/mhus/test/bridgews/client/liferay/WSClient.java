@@ -9,6 +9,6 @@ public class WSClient extends LiferayMVCPortlet {
 	@Override
 	protected void doInit() throws PortletException {
 		resourcesHandler.register("service", new AjaxService());
+		actionsHandler.register("setJwsUrl", new SetJwsUrlAction());
 	}
-
 }
