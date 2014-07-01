@@ -5,7 +5,10 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.ResourceBundle" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Collections" %>
@@ -21,6 +24,8 @@
 <%@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %>
 <%@ page import="com.liferay.portal.service.permission.PortletPermissionUtil" %>
 <%@ page import="javax.portlet.PortletURL" %>
+
+<%@ page isELIgnored="false" %>
 
 <%@page import="java.util.LinkedList" %>
 <%@page import="java.util.Map" %>

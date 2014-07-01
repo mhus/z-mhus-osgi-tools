@@ -18,22 +18,20 @@
 <portlet:resourceURL var="ajaxServiceURL" id="service" />
 
 <div class="panel panel-info">
-	<div class="panel-heading">Add Entry</div>
+	<div class="panel-heading"><liferay-ui:message key="addentry.topic"/></div>
 	<div class="panel-body">
 		<table class="info">
 			<tr>
-				<td>Name:</td>
+				<td><liferay-ui:message key="addentry.name"/>&nbsp;</td>
 				<td><input data-bind="value: f_name"/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><button class="btn btn-success btn-mini" data-bind="click:doAdd"><span class="glyphicon glyphicon-plus"/></button></button></td>
+				<td>&nbsp;<button class="btn btn-success btn-mini" data-bind="click:doAdd"><span class="glyphicon glyphicon-plus"/></button></button></td>
 		</table>
 	</div>
 </div>
 
 <div class="panel panel-info">
-	<div class="panel-heading"><button class="btn btn-warning btn-mini"><span class="glyphicon glyphicon-refresh" data-bind="click:loadEntryList"/></button>&nbsp;&nbsp;&nbsp;List Of Entries</div>
+	<div class="panel-heading"><button class="btn btn-warning btn-mini"><span class="glyphicon glyphicon-refresh" data-bind="click:loadEntryList"/>
+	</button>&nbsp;&nbsp;&nbsp;<liferay-ui:message key="list.topic"/></div>
 	<div class="panel-body">
 		<table class="info">
 			<tbody data-bind="foreach: f_entries">

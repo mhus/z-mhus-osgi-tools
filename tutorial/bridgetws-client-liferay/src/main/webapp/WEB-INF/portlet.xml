@@ -19,6 +19,7 @@
             <portlet-mode>view</portlet-mode>
             <portlet-mode>edit</portlet-mode>
 		</supports>
+        <resource-bundle>de.mhus.test.bridgews.client.Resource</resource-bundle>
 		<portlet-info>
 			<title>WSClient</title>
 			<short-title>WSClient</short-title>
