@@ -20,3 +20,11 @@ Open the Website with the mhu-liferay-theme and the browser javascript console. 
 	setAjaxDebug(true);
 
 to enable debugging of the ajax requests. The debug information will be send to the console.
+
+Used Technologies
+---------
+- Use of JSTL Tag Lib
+- Access Control
+- i18n Liferay and Callback
+- Ajax Callback Framework
+- JWS Client

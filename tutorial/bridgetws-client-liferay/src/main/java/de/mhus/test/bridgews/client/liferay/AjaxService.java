@@ -36,21 +36,27 @@ public class AjaxService extends AbstractAjaxCallback {
 		if (action.equals("remove")) {
 			String name = properties.getString("name", null);
 			if (name == null) throw new NullPointerException("name is not set");
+			name = name.trim();
+			if (name.length() == 0) throw new NullPointerException("name is empty");
 
 			// OK this is a trick, but it works for this demo !
 			WSEntity entry = new WSEntity();
 			entry.setName(name);
 			service.removeEntity(entry);
+			response.addSuccess("removed=Item Removed");
 			response.setSuccess(true);
 		} else
 		if (action.equals("add")) {
 			
 			String name = properties.getString("name", null);
 			if (name == null) throw new NullPointerException("name is not set");
+			name = name.trim();
+			if (name.length() == 0) throw new NullPointerException("name is empty");
 
 			WSEntity entry = new WSEntity();
 			entry.setName(name);
 			service.addEntity(entry);
+			response.addSuccess("created=Item Created");
 			response.setSuccess(true);
 			
 		}
