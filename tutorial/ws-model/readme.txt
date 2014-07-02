@@ -2,6 +2,11 @@ feature:repo-add cxf 2.7.9
 feature:install cxf
 feature:install scr
 
+install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.5
+install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.5
+install -s mvn:de.mhus.lib/mhu-lib-annotations/3.2.6-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-core/3.2.6-SNAPSHOT
+
 install -s mvn:de.mhus.osgi/jwsosgibridge/1.0.2-SNAPSHOT
 install -s mvn:de.mhus.osgi/jwskarafbridge/1.0.2-SNAPSHOT
 
