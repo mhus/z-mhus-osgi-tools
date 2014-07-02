@@ -13,6 +13,10 @@
 			<name>edit-jsp</name>
 			<value>/edit.jsp</value>
 		</init-param>
+		<init-param>
+			<name>public-view-jsp</name>
+			<value>/public.jsp</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

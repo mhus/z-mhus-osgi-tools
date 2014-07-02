@@ -1,9 +1,7 @@
 <%@page import="de.mhus.test.bridgews.client.liferay.SetJwsUrlAction"%>
 <%@include file="init.jsp" %>
 
-<portlet:renderURL var="cancelURL">
-	<portlet:param name="jspPage" value="view.jsp"/>
-</portlet:renderURL>
+<portlet:renderURL portletMode="view" var="cancelURL" />
 <portlet:actionURL name="setJwsUrl" var="setJwsUrl"/>
 
 <aui:form name="setJwsAction" action="<%=setJwsUrl.toString() %>" method="post">
