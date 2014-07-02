@@ -1,7 +1,7 @@
 <%@include file="init.jsp" %>
 
 <c:if test="${requestScope.reason == 'noaccess'}">
-No Access !
+Access denied
 </c:if>
 <c:if test="${requestScope.reason == 'login'}">
 Please login
