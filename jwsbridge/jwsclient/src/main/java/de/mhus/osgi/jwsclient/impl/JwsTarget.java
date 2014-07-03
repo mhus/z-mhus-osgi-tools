@@ -15,9 +15,36 @@ public class JwsTarget extends Target {
 		client = jwsClient;
 		factory = jwsFactory;
 		url = parts[2];
-		nameSpace = parts[3];
 		
-		services = parts[4].split(",");
+		if (parts.length > 3)
+			nameSpace = parts[3];
+		else {
+			String wrongNs = url;
+			int pos1 = url.lastIndexOf('/');
+			int pos2 = url.lastIndexOf('?');
+			wrongNs = url.substring(pos1+1,pos2);
+			String[] wrongParts = wrongNs.split("\\.");
+			String lastPart = wrongParts[wrongParts.length-1];
+			StringBuffer correctNs = null;
+			for (String p : wrongParts) {
+				if (!p.equals(lastPart)) {
+					if (correctNs == null)
+						correctNs = new StringBuffer();
+					else
+						correctNs.insert(0, '.');
+					correctNs.insert(0, p);
+				}
+			}			
+			nameSpace = "http://" + correctNs.toString() + "/";
+		}
+		
+		if (parts.length > 4)
+			services = parts[4].split(",");
+		else {
+			int pos1 = url.lastIndexOf('.');
+			int pos2 = url.lastIndexOf('?');
+			services = new String[] { url.substring(pos1+1,pos2) + "Service" };
+		}
 	}
 
 	@Override

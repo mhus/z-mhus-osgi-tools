@@ -39,5 +39,10 @@ public class JwsConnection extends Connection {
 	public JwsService getService(String name) {
 		return services.get(name);
 	}
+
+	@Override
+	public String[] getServiceNames() {
+		return services.keySet().toArray(new String[1]);
+	}
 	
 }
