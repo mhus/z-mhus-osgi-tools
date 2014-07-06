@@ -31,7 +31,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 
 import de.mhus.lib.core.logging.Log;
-import de.mhus.lib.core.logging.MLogger;
 
 public class ConsoleView extends VerticalLayout implements View {
 
@@ -41,7 +40,7 @@ public class ConsoleView extends VerticalLayout implements View {
 	private CheckBox cbCleanOutput;
 	private CheckBox cbBindingsUpdate;
 	private StringBuffer text;
-	private Log log = MLogger.getLog(GroovyConsoleUI.class);
+	private Log log = Log.getLog(GroovyConsoleUI.class);
 	private Binding binding;
 	private GroovyShell shell;
 	private Table bindings;

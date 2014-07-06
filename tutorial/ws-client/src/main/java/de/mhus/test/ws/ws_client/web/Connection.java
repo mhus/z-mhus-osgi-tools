@@ -7,12 +7,11 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
 import de.mhus.lib.core.logging.Log;
-import de.mhus.lib.core.logging.MLogger;
 import de.mhus.test.ws.ws_model.WSService;
 
 public class Connection {
 
-	private static final Log log = MLogger.getLog(Connection.class);
+	private static final Log log = Log.getLog(Connection.class);
 	
 	private WSService ws;
 	private long updated;
