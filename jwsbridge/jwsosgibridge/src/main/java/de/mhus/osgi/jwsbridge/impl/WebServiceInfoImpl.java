@@ -1,5 +1,8 @@
 package de.mhus.osgi.jwsbridge.impl;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.xml.ws.Endpoint;
 
 import org.osgi.framework.ServiceReference;
@@ -9,6 +12,8 @@ import de.mhus.osgi.jwsbridge.WebServiceInfo;
 
 public class WebServiceInfoImpl extends WebServiceInfo {
 
+	private static Logger log = Logger.getLogger(WebServiceInfoImpl.class.getSimpleName());
+	@SuppressWarnings("unused")
 	private JavaWebServiceAdminImpl admin;
 	private ServiceReference<JavaWebService> reference;
 	private JavaWebService service;
@@ -28,6 +33,7 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 
 	public void disconnect() {
 		if (!isConnected()) return;
+		log.fine("JWS Disconnect: " + getName());
 		endpoint.stop();
 		webService = null;
 		service.stopped(this);
@@ -45,14 +51,13 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		endpoint = null;
 		webService = service.getServiceObject();
 		try {
-			System.out.println("+++ JWS Register: " + getName());
+			log.fine("JWS Connect: " + getName());
 			endpoint = Endpoint.publish("/" + getName(), webService);
 		} catch (Throwable t) {
 			error = t.getMessage();
 			webService = null;
 			endpoint = null;
-			System.out.println("ERROR: " + getName() + " " + webService);
-			t.printStackTrace(); //TODO use logger
+			log.log(Level.WARNING, "ERROR: " + getName() + " " + webService, t);
 		}
 		if (endpoint != null)
 			service.published(this);
