@@ -84,7 +84,9 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		
 		try {
 			//TODO This could be more generic
-			return "jws|" + getName() + "|http://localhost:8181/cxf/" + getName() + "?wsdl|http://" + turnArround(webService.getClass().getPackage().getName()) + "/|" + webService.getClass().getSimpleName() + "Service";
+			String myName = webService.getClass().getSimpleName();
+			if (myName.endsWith("Impl")) myName = myName.substring(0, myName.length()-4);
+			return "jws|" + myName + "|http://localhost:8181/cxf/" + getName() + "?wsdl";
 		} catch (Throwable t) {}
 		return "/" + getName();
 	}
