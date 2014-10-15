@@ -135,8 +135,12 @@ public class CmdBundleReinstall implements Action {
 		
 		if (!notUpdate) {
 			String loc = bundle.getLocation();
-			session.execute("bundle:uninstall " + bundle.getSymbolicName());
-			session.execute("bundle:install -s " + loc);
+			// session.execute("bundle:uninstall " + bundle.getSymbolicName());
+			bundle.uninstall();
+			
+			//session.execute("bundle:install -s " + loc);
+			Bundle newBundle = context.installBundle(loc, null);
+			newBundle.start();
 		}
 		if (setWatch)
 			session.execute("bundle:watch " + bundle.getSymbolicName());
