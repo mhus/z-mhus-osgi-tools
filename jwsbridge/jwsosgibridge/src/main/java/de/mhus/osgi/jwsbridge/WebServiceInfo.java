@@ -4,7 +4,7 @@ import javax.xml.ws.Endpoint;
 
 public abstract class WebServiceInfo {
 
-	private String name;
+	private String name = "?";
 
 	public String getName() {
 		return name;
