@@ -61,7 +61,7 @@
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
 		<osgi.version>5.0.0</osgi.version>	
 		<jaxws.version>1.0-MR1</jaxws.version>
-		<mhulib.version>3.2.6-SNAPSHOT</mhulib.version>
+		<mhulib.version>3.2.6</mhulib.version>
       </properties>
 
    <build>
