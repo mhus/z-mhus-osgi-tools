@@ -26,7 +26,7 @@
   <description>Provide in OSGi the servlet /VAADIN to map vaadin resources (like widgetsets and themes) out in the world. The bridge will watch bundles and automatically publish/destroy VAADIN resources.</description>
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
 

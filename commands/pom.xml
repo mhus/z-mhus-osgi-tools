@@ -23,7 +23,7 @@
     <parent>
         <artifactId>mhus-osgi-tools</artifactId>
         <groupId>de.mhus.osgi</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>commands</artifactId>

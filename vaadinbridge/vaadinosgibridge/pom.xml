@@ -26,7 +26,7 @@
   <parent>
 	  	<groupId>de.mhus.osgi</groupId>
         <artifactId>vaadinbridge</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
   </parent>
 
     <name>vaadinbridge</name>
