@@ -62,6 +62,7 @@
 		<osgi.version>5.0.0</osgi.version>	
 		<jaxws.version>1.0-MR1</jaxws.version>
 		<mhulib.version>3.2.6</mhulib.version>
+		<javax.mail.version>1.4.1</javax.mail.version>
       </properties>
 
    <build>
@@ -95,8 +96,9 @@
       <module>jwsbridge</module>
       <module>vaadinbridge</module>
       <module>tutorial</module>
-    <module>commands</module>
-    <module>groovy-console</module>
+      <module>commands</module>
+      <module>groovy-console</module>
+      <module>osgimail</module>
     </modules>
 
 
