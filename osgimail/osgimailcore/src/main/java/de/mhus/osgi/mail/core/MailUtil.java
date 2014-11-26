@@ -14,18 +14,20 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 public class MailUtil {
 
-	public static SendQueueManager getSendQueueManager(BundleContext context) {
+	public static SendQueueManager getSendQueueManager() {
+		BundleContext context = FrameworkUtil.getBundle(MailUtil.class).getBundleContext();
 		ServiceReference<SendQueueManager> ref = context.getServiceReference(SendQueueManager.class);
 		if (ref == null) return null;
 		return context.getService(ref);
 	}
 	
-	public static void addSmtpIfNotExists(BundleContext context, String queueName, Properties properties) {
-		SendQueueManager manager = getSendQueueManager(context);
+	public static void addSmtpIfNotExists(String queueName, Properties properties) {
+		SendQueueManager manager = getSendQueueManager();
 		if (manager.getQueue(queueName) != null) return;
 		manager.registerQueue(new SmtpSendQueue(queueName, properties));
 	}
