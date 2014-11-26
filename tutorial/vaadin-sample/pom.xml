@@ -78,8 +78,8 @@
         </dependency>
         <dependency>
         	<groupId>de.mhus.osgi</groupId>
-        	<artifactId>vaadinbridge</artifactId>
-        	<version>1.0.0</version>
+        	<artifactId>vaadinosgibridge</artifactId>
+        	<version>${project.version}</version>
         	<type>bundle</type>
         </dependency>
     </dependencies>

@@ -52,6 +52,11 @@
 			<artifactId>mail</artifactId>
 			<version>${javax.mail.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>${javax.activation.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
@@ -76,7 +81,7 @@
                             de.mhus.osgi.mail.core.impl
                         </Private-Package>
                         <Service-Component>*</Service-Component>
-						<Embed-Dependency>mail</Embed-Dependency>
+						<Embed-Dependency>mail,activation</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
