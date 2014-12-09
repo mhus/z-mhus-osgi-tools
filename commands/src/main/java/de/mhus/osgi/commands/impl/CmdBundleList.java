@@ -9,6 +9,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 
@@ -38,9 +39,9 @@ public class CmdBundleList implements Action  {
 			if (filter == null || MString.compareRegexPattern(b.getSymbolicName(), filter)) {
 			
 				if (pLocation)
-					table.addRowValues(""+b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MCast.toIsoDateTime(b.getLastModified()), b.getLocation() );
+					table.addRowValues(""+b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()), b.getLocation() );
 				else
-					table.addRowValues(""+b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MCast.toIsoDateTime(b.getLastModified()) );
+					table.addRowValues(""+b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()) );
 			}		
 		}
 		table.print(System.out);
