@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.mhus.osgi</groupId>
     <artifactId>jwsbridge</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4-SNAPSHOT</version>
   </parent>
   <artifactId>jwsclient</artifactId>
   
