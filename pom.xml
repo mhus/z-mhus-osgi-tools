@@ -55,7 +55,7 @@
 		<compileSource>1.7</compileSource>
         <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
         <osgi.version>5.0.0</osgi.version>
-        <cxf.version>2.7.5</cxf.version>
+        <cxf.version>2.7.9</cxf.version>
 		<vaadin.version>7.1.12</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>

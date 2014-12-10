@@ -85,7 +85,6 @@
                             org.terracotta.toolkit*;resolution:=optional,
                             javax.servlet*;resolution:=optional,
                             javax.transaction*;resolution:=optional,
-                            org.osgi.service.component
                             *
                         </Import-Package>
 						<Private-Package>
