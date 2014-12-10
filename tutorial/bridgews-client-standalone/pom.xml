@@ -4,7 +4,7 @@
   
   <parent>
     <groupId>de.mhus.osgi.tutorial</groupId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <artifactId>tutorials</artifactId>
   </parent>
   
