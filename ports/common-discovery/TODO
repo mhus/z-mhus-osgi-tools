@@ -1,0 +1,7 @@
+2. Review/rewrite javadoc
+
+3. Review/rework best-practices.html
+
+4. NLS enable
+
+5. Create a finer granularity of exceptions.. we only have one for all situations.

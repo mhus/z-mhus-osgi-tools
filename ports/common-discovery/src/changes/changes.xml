@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Licensed to the Apache Software Foundation (ASF) under one or more
+     contributor license agreements.  See the NOTICE file distributed with
+     this work for additional information regarding copyright ownership.
+     The ASF licenses this file to You under the Apache License, Version 2.0
+     (the "License"); you may not use this file except in compliance with
+     the License.  You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+  -->
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+  <properties>
+    <title>Commons Discovery Changes</title>
+  </properties>
+  <body>
+  <release version="0.5" date="TBD" description="Maintainance release.">
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-3">
+      Enumeration in Service class is broken.
+    </action>
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-6">
+      [discovery] Doesn't work with ClassLoaders that do not support getResource()
+    </action>
+    <action dev="simonetripodi" type="update" issue="DISCOVERY-7">
+      Discovery failed to load an inner class.
+    </action>
+    <action dev="simonetripodi" type="update" issue="DISCOVERY-9">
+      Documentation of other use cases.
+    </action>
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-11">
+      Service.providers Enumeration does not catch and discard
+      UnsatisfiedLinkErrors and ExceptionInInitializerErrors.
+    </action>
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-12">
+      SPI implementation class searching logic has some issues: it discards all errors;
+      it only considers first className in supplied classNames array.
+    </action>
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-13">
+      Problem with Oracle JVM classLoader.
+    </action>
+    <action dev="simonetripodi" type="update" issue="DISCOVERY-14">
+      Moved to Java5 APIs, used Generics.
+    </action>
+    <action dev="simonetripodi" type="update" issue="DISCOVERY-15">
+      Custom org.apache.commons.discovery.log.Log implementation replaced by
+      default commons-logging behavior.
+    </action>
+    <action dev="simonetripodi" type="update" issue="DISCOVERY-16">
+      The setLog() methods are not thread-safe and should be deprecated.
+    </action>
+    <action dev="simonetripodi" type="fix" issue="DISCOVERY-17">
+      Enumeration returned by Service.providers has a broken behavior.
+    </action>
+  </release>
+  </body>
+</document>

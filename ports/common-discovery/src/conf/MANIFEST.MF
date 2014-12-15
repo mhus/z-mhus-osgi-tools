@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Package: @package@
+Extension-Name: @name@
+Specification-Title: @title@
+Specification-Vendor: The Apache Software Foundation
+Implementation-Title: @package@
+Implementation-Vendor: The Apache Software Foundation
+Implementation-Version: @version@
+
