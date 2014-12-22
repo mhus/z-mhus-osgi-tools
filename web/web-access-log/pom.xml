@@ -40,7 +40,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.osgi.web*;version=${project.version}
+                            de.mhus.osgi.web.accesslog*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

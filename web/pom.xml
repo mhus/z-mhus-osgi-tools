@@ -32,6 +32,7 @@
   </parent>
     <modules>
     <module>web-access-log</module>
+    <module>web-virtualization-api</module>
     </modules>
 
 </project>

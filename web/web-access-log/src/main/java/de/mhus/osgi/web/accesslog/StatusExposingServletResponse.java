@@ -1,4 +1,4 @@
-package de.mhus.osgi.web;
+package de.mhus.osgi.web.accesslog;
 
 import java.io.IOException;
 
