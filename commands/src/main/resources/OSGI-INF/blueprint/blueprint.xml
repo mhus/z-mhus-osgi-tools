@@ -56,6 +56,19 @@
             </action>
         </command>
         
+        <command name="http/centrallist">
+            <action class="de.mhus.osgi.commands.http.CmdCentralHandlerList">
+            </action>
+        </command>
+        <command name="http/centralupdate">
+            <action class="de.mhus.osgi.commands.http.CmdCentralHandlerUpdate">
+            </action>
+        </command>
+        <command name="http/centralenable">
+            <action class="de.mhus.osgi.commands.http.CmdCentralHandlerEnable">
+            </action>
+        </command>
+        
     </command-bundle>
 
 </blueprint>

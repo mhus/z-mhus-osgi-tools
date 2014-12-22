@@ -19,11 +19,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>tutorials</artifactId>
+    <artifactId>web</artifactId>
     <packaging>pom</packaging>
-    <groupId>de.mhus.osgi.tutorial</groupId>
-  <name>tutorials</name>
-  <description>Tutorials</description>
+  <name>web</name>
+  <description>Provide OSGi services for patched (mhus) pax web service</description>
+    <groupId>de.mhus.osgi.web</groupId>
 
   <parent>
     <groupId>de.mhus.osgi</groupId>
@@ -31,15 +31,7 @@
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
     <modules>
-      <module>ws-model</module>
-      <module>ws-client</module>
-      <module>ws-server</module>
-      <module>bridgews-server</module>
-      <module>bridgews-token-server</module>
-      <module>bridgews-client-standalone</module>
-      <module>vaadin-sample</module>
-      <module>quartz-job</module>
-      <module>web-master-filter</module>
+    <module>web-access-log</module>
     </modules>
 
 </project>

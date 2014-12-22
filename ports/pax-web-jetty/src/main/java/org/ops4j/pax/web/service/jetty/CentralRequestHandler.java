@@ -8,7 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface CentralRequestHandler {
 
-	boolean doHandle(final String target, final HttpServletRequest baseRequest,
-			final HttpServletRequest request, final HttpServletResponse response)
+	boolean doHandleBefore(CentralCallContext context)
 			throws IOException, ServletException;
+	
+	boolean doHandleAfter(CentralCallContext context)
+			throws IOException, ServletException;
+
+	boolean isEnabled();
+
+	double getSortHint();
+	
 }

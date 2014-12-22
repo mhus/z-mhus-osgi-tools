@@ -134,14 +134,17 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 
 		if (!enabled) return;
 
-		if (event.getType() != ServiceEvent.REGISTERED) return;
-		Object service = context.getService(event.getServiceReference());
-		if (service == null) return;
-		if (!(service instanceof VaadinConfigurableResourceProviderAdmin)) return;
-
-		log.info("Admin-Service registered");
-		refreshAll();
-		
+		try {
+			if (event.getType() != ServiceEvent.REGISTERED) return;
+			Object service = context.getService(event.getServiceReference());
+			if (service == null) return;
+			if (!(service instanceof VaadinConfigurableResourceProviderAdmin)) return;
+	
+			log.info("Admin-Service registered");
+			refreshAll();
+		} catch (Throwable t) {
+			t.printStackTrace(); //TODO log
+		}
 	}
 
 	@Override

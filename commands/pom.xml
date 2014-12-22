@@ -46,6 +46,7 @@
                         <Export-Package>de.mhus.osgi.commands*;version=${project.version}</Export-Package>
                         <Import-Package>
 	                        !org.osgi.service.component*,
+	                        org.ops4j.pax.web.service.jetty.*;resolution:=optional,
 	                        *
                         </Import-Package>
                         <Service-Component>*</Service-Component>
@@ -111,6 +112,13 @@
         	<groupId>de.mhus.lib</groupId>
         	<artifactId>mhu-lib-persistence</artifactId>
         	<version>${mhulib.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>de.mhus.osgi.ports</groupId>
+        	<artifactId>mhus-pax-web-jetty</artifactId>
+        	<version>${project.version}</version>
+        	<type>bundle</type>
+        	<scope>provided</scope>
         </dependency>
         	
 	</dependencies>

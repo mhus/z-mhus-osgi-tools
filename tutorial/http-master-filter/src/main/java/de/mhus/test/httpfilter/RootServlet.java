@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import aQute.bnd.annotation.component.Component;
 
@@ -27,6 +28,9 @@ public class RootServlet implements Servlet {
 			throws ServletException, IOException {
 		System.out.println("S: " + ((HttpServletRequest)req).getRequestURI() );
 		
+		if (((HttpServletRequest)req).getRequestURI() != null && ((HttpServletRequest)req).getRequestURI().endsWith(".txt")) {
+			((HttpServletResponse)res).sendError(404);
+		}
 	}
 
 	public String getServletInfo() {

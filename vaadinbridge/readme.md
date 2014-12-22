@@ -51,3 +51,7 @@ Installation of the vaadin bridge
 	install -s mvn:de.mhus.osgi/vaadinosgibridge/1.0.2
 	install -s mvn:de.mhus.osgi/vaadinkarafbridge/1.0.2
 	
+bundle:watch vaadinosgibridge
+bundle:watch vaadinkarafbridge
+
+

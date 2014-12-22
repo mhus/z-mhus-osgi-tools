@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.ops4j.lang.NullArgumentException;
+import org.ops4j.pax.web.service.jetty.CentralCallContext;
 import org.osgi.service.http.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,8 @@ class HttpServiceServletHandler extends ServletHandler {
 			final HttpServletRequest request, final HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleCentral(target, baseRequest,request,response))
+		CentralCallContext context = new CentralCallContext(target, baseRequest,request,response);
+		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleBeforeRequest(context))
 			return;
 		
 		if (request.getMethod().equals(METHOD_TRACE)) {
@@ -63,14 +65,14 @@ class HttpServiceServletHandler extends ServletHandler {
 		if (baseRequest
 				.getAttribute(HttpServiceRequestWrapper.JETTY_REQUEST_ATTR_NAME) == null) {
 			baseRequest.setAttribute(
-					HttpServiceRequestWrapper.JETTY_REQUEST_ATTR_NAME, request);
+					HttpServiceRequestWrapper.JETTY_REQUEST_ATTR_NAME, context.getRequest());
 		}
 		final HttpServiceRequestWrapper requestWrapper = new HttpServiceRequestWrapper(
-				request);
+				context.getRequest() );
 		final HttpServiceResponseWrapper responseWrapper = new HttpServiceResponseWrapper(
-				response);
+				context.getResponse());
 		if (httpContext.handleSecurity(requestWrapper, responseWrapper)) {
-			super.doHandle(target, baseRequest, request, response);
+			super.doHandle(context.getTarget(), (Request)context.getBaseRequest(), context.getRequest(), context.getResponse());
 		} else {
 			// on case of security constraints not fullfiled, handleSecurity is
 			// supposed to set the right
@@ -87,6 +89,10 @@ class HttpServiceServletHandler extends ServletHandler {
 				}
 			}
 		}
+		
+		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleAfterRequest(context))
+			return;
+		
 	}
 
 }

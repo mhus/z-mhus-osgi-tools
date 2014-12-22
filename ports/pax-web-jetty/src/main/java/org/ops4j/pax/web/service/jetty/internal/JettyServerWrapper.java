@@ -19,11 +19,15 @@ package org.ops4j.pax.web.service.jetty.internal;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -57,7 +61,10 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.security.Constraint;
 import org.ops4j.pax.swissbox.core.BundleUtils;
 import org.ops4j.pax.web.service.WebContainerConstants;
+import org.ops4j.pax.web.service.jetty.CentralCallContext;
+import org.ops4j.pax.web.service.jetty.CentralRequestHandlerAdmin;
 import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
+import org.ops4j.pax.web.service.jetty.ConfigurableHandler;
 import org.ops4j.pax.web.service.spi.model.ContextModel;
 import org.ops4j.pax.web.service.spi.model.Model;
 import org.ops4j.pax.web.service.spi.model.ServerModel;
@@ -71,14 +78,20 @@ import org.osgi.service.http.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import aQute.bnd.annotation.component.Component;
+
 /**
  * Jetty server with a handler collection specific to Pax Web.
  */
-class JettyServerWrapper extends Server {
+class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(JettyServerWrapper.class);
 
+	private LinkedList<CentralRequestHandler> centralHandlers = null;
+	private Properties centralHandlerRules = null;
+	static JettyServerWrapper instance = null;
+	
 	private static final class ServletContextInfo {
 
 		private final HttpServiceContext handler;
@@ -124,10 +137,13 @@ class JettyServerWrapper extends Server {
 	private final Lock readLock = rwLock.readLock();
 	private final Lock writeLock = rwLock.writeLock();
 
+	private long lastCentralHandlerUpdate;
+
 	JettyServerWrapper(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		setHandler(new JettyServerHandlerCollection(serverModel));
 		// setHandler( new HandlerCollection(true) );
+		instance = this;
 	}
 
 	public void configureContext(final Map<String, Object> attributes,
@@ -145,18 +161,100 @@ class JettyServerWrapper extends Server {
 		this.storeDirectory = storeDirectory;
 	}
 
-	public boolean doHandleCentral(final String target, final Request baseRequest,
-			final HttpServletRequest request, final HttpServletResponse response)
+	public boolean doHandleBeforeRequest(CentralCallContext context)
 			throws IOException, ServletException {
-		//TODO optimize for performance
-		BundleContext ctx = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		try {
-			for ( ServiceReference<CentralRequestHandler> ref : ctx.getServiceReferences(CentralRequestHandler.class, null)) {
-				CentralRequestHandler service = ctx.getService(ref);
-				if (service != null && service.doHandle(target, baseRequest, request, response)) return true;
+		
+		synchronized (this) {
+	
+			checkCentralHandlers();
+			
+			for (CentralRequestHandler service : centralHandlers) {
+				try {
+					if (service.isEnabled() && service.doHandleBefore(context)) return true;
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (InvalidSyntaxException e) {
-			e.printStackTrace();
+		}
+		return false;
+	}
+
+	private void checkCentralHandlers() {
+		// TODO handle by service tracker
+		if (centralHandlers == null || System.currentTimeMillis() - lastCentralHandlerUpdate > 1000 * 60 * 1 ) // every 1 Minute
+			updateCentralHandlers(null);
+	}
+
+	public void updateCentralHandlers(Properties rules) {
+
+		lastCentralHandlerUpdate = System.currentTimeMillis();
+		
+		if (rules != null)
+			centralHandlerRules = rules;
+		else
+			rules = centralHandlerRules;
+		
+		synchronized (this) {
+	
+			BundleContext ctx = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			LinkedList<CentralRequestHandler> newList = new LinkedList<CentralRequestHandler>();
+			try {
+				for ( ServiceReference<CentralRequestHandler> ref : ctx.getServiceReferences(CentralRequestHandler.class, null)) {
+					CentralRequestHandler service = ctx.getService(ref);
+					if (service != null) {// TODO rules ignore property
+						if (service instanceof ConfigurableHandler)
+							((ConfigurableHandler)service).configure(rules);
+						newList.add(service);
+					}
+				}
+				
+				if (rules != null) {
+					String[] loadClasses = rules.getProperty("load","").split(",");
+					for (String loadClass : loadClasses) {
+						try {
+							CentralRequestHandler inst = (CentralRequestHandler)Class.forName(loadClass).newInstance();
+							if (inst instanceof ConfigurableHandler)
+								((ConfigurableHandler)inst).configure(rules);
+							newList.add(inst);
+						} catch (InstantiationException | IllegalAccessException
+								| ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				
+				Collections.sort(newList, new Comparator<CentralRequestHandler>() {
+	
+					@Override
+					public int compare(CentralRequestHandler o1,
+							CentralRequestHandler o2) {
+						return Double.compare(o1.getSortHint(), o2.getSortHint());
+					}
+					
+				});
+				
+				centralHandlers = newList;
+				
+			} catch (InvalidSyntaxException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public boolean doHandleAfterRequest(CentralCallContext context)
+			throws IOException, ServletException {
+		
+		synchronized (this) {
+	
+			checkCentralHandlers();
+				for (int i = centralHandlers.size()-1; i >= 0; i--) {
+					CentralRequestHandler service = centralHandlers.get(i);
+					try {
+						if (service.isEnabled() && service.doHandleAfter(context)) return true;
+					} catch (Throwable e) {
+						e.printStackTrace();
+					}
+				}
 		}
 		return false;
 	}
@@ -560,5 +658,18 @@ class JettyServerWrapper extends Server {
 
 	public void setServerConfigURL(URL serverConfigURL) {
 		this.serverConfigURL = serverConfigURL;
+	}
+
+	@Override
+	public CentralRequestHandler[] getCentralHandlers() {
+		synchronized (this) {
+			checkCentralHandlers();
+			return centralHandlers.toArray(new CentralRequestHandler[centralHandlers.size()]);
+		}
+	}
+
+	@Override
+	public Properties getCentralHandlerProperties() {
+		return centralHandlerRules; //TODO return a copy
 	}
 }

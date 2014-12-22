@@ -107,6 +107,7 @@
 							Embed-Dependency,
 							Embed-Transitive
 						</_removeheaders>
+                        <Service-Component>*</Service-Component>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -189,6 +190,11 @@
 			<scope>provided</scope>
 			<version>${pax.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>biz.aQute</groupId>
+            <artifactId>bndlib</artifactId>
+            <version>${bndlib.version}</version>
+        </dependency>
 
 		<!-- Test dependencies (not transitive) -->
 		<dependency>
