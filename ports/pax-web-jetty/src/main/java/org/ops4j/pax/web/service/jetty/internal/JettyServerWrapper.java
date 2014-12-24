@@ -73,10 +73,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
-import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualization.api.central.ConfigurableHandler;
 
 /**
  * Jetty server with a handler collection specific to Pax Web.

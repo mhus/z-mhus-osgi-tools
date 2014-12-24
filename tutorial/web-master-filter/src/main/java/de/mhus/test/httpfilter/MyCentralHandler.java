@@ -7,9 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.ConfigurableHandler;
 import aQute.bnd.annotation.component.Component;
 
 @Component(immediate=true)

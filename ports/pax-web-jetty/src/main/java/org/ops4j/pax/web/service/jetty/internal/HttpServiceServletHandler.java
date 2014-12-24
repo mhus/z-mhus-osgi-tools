@@ -30,7 +30,7 @@ import org.osgi.service.http.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 
 class HttpServiceServletHandler extends ServletHandler {
 

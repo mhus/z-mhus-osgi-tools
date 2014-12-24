@@ -13,9 +13,9 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
-import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualization.api.central.ConfigurableHandler;
 
 @Command(scope = "http", name = "centralenable", description = "Update central handlers list with properties")
 public class CmdCentralHandlerEnable implements Action {

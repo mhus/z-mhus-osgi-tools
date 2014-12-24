@@ -1,4 +1,4 @@
-package de.mhus.osgi.web.virtualisation.service;
+package de.mhus.osgi.web.virtualization.service;
 
 import java.io.IOException;
 

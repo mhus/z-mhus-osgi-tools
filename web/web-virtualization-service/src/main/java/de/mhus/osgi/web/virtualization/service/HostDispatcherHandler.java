@@ -1,4 +1,4 @@
-package de.mhus.osgi.web.virtualisation.service;
+package de.mhus.osgi.web.virtualization.service;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,13 +18,14 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
-import de.mhus.osgi.web.virtualisation.api.VirtualHost;
-import de.mhus.osgi.web.virtualisation.api.VirtualHostProvider;
-import de.mhus.osgi.web.virtualisation.api.central.AbstractCentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
-import de.mhus.osgi.web.virtualisation.api.util.ExtendedServletResponse;
+import de.mhus.osgi.web.virtualization.api.VirtualHost;
+import de.mhus.osgi.web.virtualization.api.VirtualHostProvider;
+import de.mhus.osgi.web.virtualization.api.central.AbstractCentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 
-@Component(immediate=true)
+@Component(immediate=true,provide=CentralRequestHandler.class,name="HostDispatcherHandler")
 public class HostDispatcherHandler extends AbstractCentralRequestHandler {
 
 	private HashMap<String, VirtualHostProvider> hostProviders = new HashMap<>();

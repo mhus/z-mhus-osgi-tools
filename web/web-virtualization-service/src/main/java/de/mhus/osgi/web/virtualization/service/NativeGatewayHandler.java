@@ -1,4 +1,4 @@
-package de.mhus.osgi.web.virtualisation.service;
+package de.mhus.osgi.web.virtualization.service;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,13 +7,16 @@ import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
-import de.mhus.osgi.web.virtualisation.api.VirtualApplication;
-import de.mhus.osgi.web.virtualisation.api.VirtualHost;
-import de.mhus.osgi.web.virtualisation.api.VirtualHostProvider;
-import de.mhus.osgi.web.virtualisation.api.central.AbstractCentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
-import de.mhus.osgi.web.virtualisation.api.util.ExtendedServletResponse;
+import aQute.bnd.annotation.component.Component;
+import de.mhus.osgi.web.virtualization.api.VirtualApplication;
+import de.mhus.osgi.web.virtualization.api.VirtualHost;
+import de.mhus.osgi.web.virtualization.api.VirtualHostProvider;
+import de.mhus.osgi.web.virtualization.api.central.AbstractCentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 
+@Component(immediate=true,provide=CentralRequestHandler.class,name="NativeGatewayHandler")
 public class NativeGatewayHandler extends AbstractCentralRequestHandler {
 	
 	@Override

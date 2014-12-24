@@ -1,11 +1,11 @@
-package de.mhus.osgi.web.virtualisation.api.util;
+package de.mhus.osgi.web.virtualization.api.util;
 
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 
 public class ExtendedServletResponse extends HttpServletResponseWrapper {
 

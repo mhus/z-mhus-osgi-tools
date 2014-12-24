@@ -91,7 +91,9 @@
 							com.sun.el.parser; version="[2.1.0,3.0.0)";resolution:=optional,
 							com.sun.el.util; version="[2.1.0,3.0.0)";resolution:=optional,
 							!javax.microedition.io,
-							!javax.security.auth.x500
+							!javax.security.auth.x500,
+							org.osgi.util.tracker,
+							de.mhus.osgi.web.virtualization.api.*
 						</Import-Package>
 						<Export-Package>
                             ${bundle.namespace}.*;version=${project.version}
@@ -194,11 +196,13 @@
             <groupId>biz.aQute</groupId>
             <artifactId>bndlib</artifactId>
             <version>${bndlib.version}</version>
+			<scope>provided</scope>
         </dependency>
 		<dependency>
             <groupId>de.mhus.osgi.web</groupId>
             <artifactId>web-virtualization-api</artifactId>
             <version>${project.version}</version>
+			<scope>provided</scope>
         </dependency>
 
 		<!-- Test dependencies (not transitive) -->

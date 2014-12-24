@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 
 import de.mhus.lib.core.MCast;
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
-import de.mhus.osgi.web.virtualisation.api.util.ExtendedServletResponse;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.ConfigurableHandler;
+import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 import aQute.bnd.annotation.component.Component;
 
 @Component(immediate=true)

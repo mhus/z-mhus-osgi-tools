@@ -72,7 +72,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.osgi.web.virtualisation.service*;version=${project.version}
+                            de.mhus.osgi.web.virtualization.service*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

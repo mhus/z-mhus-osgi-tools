@@ -9,8 +9,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandlerAdmin;
 
 @Command(scope = "http", name = "centrallist", description = "Return the list of central handlers")
 public class CmdCentralHandlerList implements Action {

@@ -13,8 +13,8 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandlerAdmin;
 
 @Command(scope = "http", name = "centralupdate", description = "Update central handlers list with properties")
 public class CmdCentralHandlerUpdate implements Action {

@@ -6,6 +6,7 @@
     <version>1.0.4-SNAPSHOT</version>
   </parent>
   <artifactId>web-virtualization-api</artifactId>
+    <packaging>bundle</packaging>
   
   <dependencies>
   	<dependency>
@@ -22,4 +23,28 @@
 		</dependency>
   </dependencies>
   
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>
+                            de.mhus.osgi.web.virtualization.api*;version=${project.version}
+                        </Export-Package>
+                        <Import-Package>
+                            *
+                        </Import-Package>
+                        <Service-Component>*</Service-Component>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+   
 </project>

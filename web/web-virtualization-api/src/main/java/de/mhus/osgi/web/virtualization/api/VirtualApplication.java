@@ -1,6 +1,6 @@
-package de.mhus.osgi.web.virtualisation.api;
+package de.mhus.osgi.web.virtualization.api;
 
-import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 
 public interface VirtualApplication {
 

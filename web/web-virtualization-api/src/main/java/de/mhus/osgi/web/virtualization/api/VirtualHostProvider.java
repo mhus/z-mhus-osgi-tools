@@ -1,4 +1,4 @@
-package de.mhus.osgi.web.virtualisation.api;
+package de.mhus.osgi.web.virtualization.api;
 
 public interface VirtualHostProvider {
 

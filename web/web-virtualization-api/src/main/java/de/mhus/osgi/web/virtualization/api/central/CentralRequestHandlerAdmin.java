@@ -1,4 +1,4 @@
-package de.mhus.osgi.web.virtualisation.api.central;
+package de.mhus.osgi.web.virtualization.api.central;
 
 import java.util.Properties;
 

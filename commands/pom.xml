@@ -29,7 +29,7 @@
     <artifactId>commands</artifactId>
     <packaging>bundle</packaging>
 
-    <name>commands</name>
+    <name>mhus-osgi-commands</name>
     <description>commands OSGi blueprint bundle project.</description>
 
     <build>

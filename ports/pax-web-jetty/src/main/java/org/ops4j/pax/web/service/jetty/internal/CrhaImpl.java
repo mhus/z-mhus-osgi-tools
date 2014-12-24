@@ -3,8 +3,8 @@ package org.ops4j.pax.web.service.jetty.internal;
 import java.util.Properties;
 
 import aQute.bnd.annotation.component.Component;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
-import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandlerAdmin;
 
 /**
  * Central Request Handler Admin Impl
@@ -12,7 +12,7 @@ import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
  * @author mikehummel
  *
  */
-@Component(provide=CentralRequestHandlerAdmin.class)
+@Component(provide=CentralRequestHandlerAdmin.class,immediate=true)
 public class CrhaImpl implements CentralRequestHandlerAdmin {
 
 	@Override
