@@ -7,6 +7,8 @@ import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
 
 public interface VirtualHost {
 
+	String CENTRAL_CONTEXT_KEY = "VirtualHost";
+
 	Logger getLog();
 	
 	void setAttribute(String key, Object value);
@@ -17,7 +19,7 @@ public interface VirtualHost {
 	
 	ResourceNode getResource(String target);
 	
-	Application getApplication();
+	VirtualApplication getApplication();
 	
 	void processError(CentralCallContext context);
 	

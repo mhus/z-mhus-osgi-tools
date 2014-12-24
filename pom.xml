@@ -96,10 +96,12 @@
     <modules>
       <module>jwsbridge</module>
       <module>vaadinbridge</module>
-      <module>commands</module>
       <module>groovy-console</module>
       <module>osgimail</module>
       <module>quartz</module>
+      <module>web</module>
+      <module>ports</module>
+      <module>commands</module>
       <module>tutorial</module>
     </modules>
 

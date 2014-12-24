@@ -46,7 +46,7 @@
                         <Export-Package>de.mhus.osgi.commands*;version=${project.version}</Export-Package>
                         <Import-Package>
 	                        !org.osgi.service.component*,
-	                        org.ops4j.pax.web.service.jetty.*;resolution:=optional,
+	                        de.mhus.osgi.web.*;resolution:=optional,
 	                        *
                         </Import-Package>
                         <Service-Component>*</Service-Component>
@@ -114,8 +114,8 @@
         	<version>${mhulib.version}</version>
         </dependency>
         <dependency>
-        	<groupId>de.mhus.osgi.ports</groupId>
-        	<artifactId>mhus-pax-web-jetty</artifactId>
+        	<groupId>de.mhus.osgi.web</groupId>
+        	<artifactId>web-virtualization-api</artifactId>
         	<version>${project.version}</version>
         	<type>bundle</type>
         	<scope>provided</scope>

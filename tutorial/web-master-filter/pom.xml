@@ -39,13 +39,12 @@
         	<type>bundle</type>
         </dependency>
 
-        <dependency>
-        	<groupId>de.mhus.osgi.ports</groupId>
-        	<artifactId>mhus-pax-web-jetty</artifactId>
-        	<version>${project.version}</version>
-        	<type>bundle</type>
-        	<scope>provided</scope>
-        </dependency>
+  	<dependency>
+  		<groupId>de.mhus.osgi.web</groupId>
+  		<artifactId>web-virtualization-api</artifactId>
+  		<version>${project.version}</version>
+  		<scope>provided</scope>
+  	</dependency>
       </dependencies>
  
     <build>

@@ -2,9 +2,9 @@ package org.ops4j.pax.web.service.jetty.internal;
 
 import java.util.Properties;
 
+import aQute.bnd.annotation.component.Component;
 import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
 import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
-import aQute.bnd.annotation.component.Component;
 
 /**
  * Central Request Handler Admin Impl

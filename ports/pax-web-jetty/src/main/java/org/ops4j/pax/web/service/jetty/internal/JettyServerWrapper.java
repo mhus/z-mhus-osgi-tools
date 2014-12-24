@@ -34,8 +34,6 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.security.Authenticator;
 import org.eclipse.jetty.security.SecurityHandler;
@@ -46,7 +44,6 @@ import org.eclipse.jetty.security.authentication.FormAuthenticator;
 import org.eclipse.jetty.security.authentication.SpnegoAuthenticator;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.HandlerContainer;
-import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.SessionIdManager;
 import org.eclipse.jetty.server.SessionManager;
@@ -71,6 +68,8 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.HttpContext;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +77,6 @@ import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
 import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
 import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
-import aQute.bnd.annotation.component.Component;
 
 /**
  * Jetty server with a handler collection specific to Pax Web.
@@ -91,6 +89,7 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 	private LinkedList<CentralRequestHandler> centralHandlers = null;
 	private Properties centralHandlerRules = null;
 	static JettyServerWrapper instance = null;
+	private ServiceTracker<CentralRequestHandler, CentralRequestHandler> tracker;
 	
 	private static final class ServletContextInfo {
 
@@ -137,13 +136,17 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 	private final Lock readLock = rwLock.readLock();
 	private final Lock writeLock = rwLock.writeLock();
 
-	private long lastCentralHandlerUpdate;
+	private BundleContext bc;
 
 	JettyServerWrapper(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		setHandler(new JettyServerHandlerCollection(serverModel));
 		// setHandler( new HandlerCollection(true) );
 		instance = this;
+		
+		bc = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		tracker = new ServiceTracker<>(bc, CentralRequestHandler.class, new WSCustomizer());
+		tracker.open();
 	}
 
 	public void configureContext(final Map<String, Object> attributes,
@@ -201,14 +204,13 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 	}
 
 	private void checkCentralHandlers() {
-		// TODO handle by service tracker
-		if (centralHandlers == null || System.currentTimeMillis() - lastCentralHandlerUpdate > 1000 * 60 * 1 ) // every 1 Minute
+		if (centralHandlers == null)
 			updateCentralHandlers(null);
 	}
 
 	public void updateCentralHandlers(Properties rules) {
-
-		lastCentralHandlerUpdate = System.currentTimeMillis();
+		
+		LOG.info("update");
 		
 		if (rules != null)
 			centralHandlerRules = rules;
@@ -676,4 +678,39 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 	public Properties getCentralHandlerProperties() {
 		return centralHandlerRules; //TODO return a copy
 	}
+
+	@Override
+	protected void doStop() throws Exception {
+		tracker.close();
+		super.doStop();
+	}
+
+	
+	private class WSCustomizer implements ServiceTrackerCustomizer<CentralRequestHandler, CentralRequestHandler> {
+
+		@Override
+		public CentralRequestHandler addingService(
+				ServiceReference<CentralRequestHandler> reference) {
+
+			CentralRequestHandler service = bc.getService(reference);
+			updateCentralHandlers(null);
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+				ServiceReference<CentralRequestHandler> reference,
+				CentralRequestHandler service) {
+			updateCentralHandlers(null);
+		}
+
+		@Override
+		public void removedService(
+				ServiceReference<CentralRequestHandler> reference,
+				CentralRequestHandler service) {
+			updateCentralHandlers(null);
+		}
+		
+	}
+	
 }

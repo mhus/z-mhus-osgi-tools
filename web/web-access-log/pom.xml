@@ -18,19 +18,17 @@
             <artifactId>bndlib</artifactId>
             <version>${bndlib.version}</version>
         </dependency>
-
-        <dependency>
-        	<groupId>de.mhus.osgi.ports</groupId>
-        	<artifactId>mhus-pax-web-jetty</artifactId>
-        	<version>${project.version}</version>
-        	<type>bundle</type>
-        	<scope>provided</scope>
-        </dependency>
         
   	<dependency>
   		<groupId>de.mhus.lib</groupId>
   		<artifactId>mhu-lib-core</artifactId>
   		<version>${mhulib.version}</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.mhus.osgi.web</groupId>
+  		<artifactId>web-virtualization-api</artifactId>
+  		<version>${project.version}</version>
   		<scope>provided</scope>
   	</dependency>
         
