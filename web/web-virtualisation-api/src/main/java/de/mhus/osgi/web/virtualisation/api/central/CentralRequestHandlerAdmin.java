@@ -1,4 +1,4 @@
-package org.ops4j.pax.web.service.jetty;
+package de.mhus.osgi.web.virtualisation.api.central;
 
 import java.util.Properties;
 

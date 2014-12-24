@@ -1,4 +1,4 @@
-package org.ops4j.pax.web.service.jetty;
+package de.mhus.osgi.web.virtualisation.api.central;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ public interface CentralRequestHandler {
 	boolean doHandleBefore(CentralCallContext context)
 			throws IOException, ServletException;
 	
-	boolean doHandleAfter(CentralCallContext context)
+	void doHandleAfter(CentralCallContext context)
 			throws IOException, ServletException;
 
 	boolean isEnabled();

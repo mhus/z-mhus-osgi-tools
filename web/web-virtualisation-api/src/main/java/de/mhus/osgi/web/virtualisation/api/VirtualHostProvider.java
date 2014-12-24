@@ -2,8 +2,10 @@ package de.mhus.osgi.web.virtualisation.api;
 
 public interface VirtualHostProvider {
 
-	boolean existsVirtualHost(String host);
+	String[] getProvidedHosts();
 	
-	VirtualHost getVirtualHost(String host);
+	boolean existsHost(String host);
+	
+	VirtualHost getHost(String host);
 	
 }

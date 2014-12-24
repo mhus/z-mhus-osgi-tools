@@ -26,6 +26,14 @@
         	<type>bundle</type>
         	<scope>provided</scope>
         </dependency>
+        
+  	<dependency>
+  		<groupId>de.mhus.lib</groupId>
+  		<artifactId>mhu-lib-core</artifactId>
+  		<version>${mhulib.version}</version>
+  		<scope>provided</scope>
+  	</dependency>
+        
       </dependencies>
  
     <build>

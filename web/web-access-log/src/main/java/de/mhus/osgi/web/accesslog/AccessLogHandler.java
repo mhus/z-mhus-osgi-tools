@@ -6,10 +6,11 @@ import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 
-import org.ops4j.pax.web.service.jetty.CentralCallContext;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
-import org.ops4j.pax.web.service.jetty.ConfigurableHandler;
-
+import de.mhus.lib.core.MCast;
+import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
+import de.mhus.osgi.web.virtualisation.api.util.ExtendedServletResponse;
 import aQute.bnd.annotation.component.Component;
 
 @Component(immediate=true)
@@ -19,17 +20,18 @@ public class AccessLogHandler implements CentralRequestHandler, ConfigurableHand
 	private static Logger log = Logger.getLogger("web-access-log");
 	
 	private boolean enabled = true;
+	private long maxTime = 1000;
 	
 	@Override
 	public boolean doHandleBefore(CentralCallContext context) throws IOException, ServletException {
 		log.info("Request," + context.getHost() + "," + context.getTarget());
 		context.setAttribute(TIME_KEY, System.currentTimeMillis());
-		context.setResponse(new StatusExposingServletResponse(context.getResponse()));
+		ExtendedServletResponse.inject(context);
 		return false;
 	}
 
 	@Override
-	public boolean doHandleAfter(CentralCallContext context)
+	public void doHandleAfter(CentralCallContext context)
 			throws IOException, ServletException {
 		
 		long cur = System.currentTimeMillis();
@@ -39,12 +41,11 @@ public class AccessLogHandler implements CentralRequestHandler, ConfigurableHand
 			time = cur - start;
 		}
 		int rc = 0;
-		if (context.getResponse() instanceof StatusExposingServletResponse) {
-			rc = ((StatusExposingServletResponse)context.getResponse()).getStatus();
-		}
-		if (rc != 0 && rc != 200 || time > 1000)
+		if (ExtendedServletResponse.isExtended(context))
+			rc = ExtendedServletResponse.getExtendedResponse(context).getStatus();
+
+		if (rc != 0 && rc != 200 || time > maxTime )
 			log.info("Warn," + context.getBaseRequest().getHeader("host") + "," + context.getTarget() + "," + time + "," + rc);
-		return false;
 	}
 
 	@Override
@@ -59,7 +60,9 @@ public class AccessLogHandler implements CentralRequestHandler, ConfigurableHand
 
 	@Override
 	public void configure(Properties rules) {
-		
+		if (rules != null) {
+			maxTime = MCast.tolong(rules.getProperty(getClass().getSimpleName() + ".alertTime"),maxTime);
+		}
 	}
 
 	@Override

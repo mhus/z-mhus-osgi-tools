@@ -33,6 +33,7 @@
     <modules>
     <module>web-access-log</module>
     <module>web-virtualization-api</module>
+    <module>web-virtualization-service</module>
     </modules>
 
 </project>

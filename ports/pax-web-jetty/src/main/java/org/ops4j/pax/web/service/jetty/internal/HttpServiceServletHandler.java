@@ -26,10 +26,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.servlet.ServletHandler;
 import org.ops4j.lang.NullArgumentException;
-import org.ops4j.pax.web.service.jetty.CentralCallContext;
 import org.osgi.service.http.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
 
 class HttpServiceServletHandler extends ServletHandler {
 

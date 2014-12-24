@@ -7,10 +7,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ops4j.pax.web.service.jetty.CentralCallContext;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
-import org.ops4j.pax.web.service.jetty.ConfigurableHandler;
-
+import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
 import aQute.bnd.annotation.component.Component;
 
 @Component(immediate=true)
@@ -28,7 +27,7 @@ public class MyCentralHandler implements CentralRequestHandler,ConfigurableHandl
 	}
 
 	@Override
-	public boolean doHandleAfter(CentralCallContext context)
+	public void doHandleAfter(CentralCallContext context)
 			throws IOException, ServletException {
 		
 		long cur = System.currentTimeMillis();
@@ -40,9 +39,10 @@ public class MyCentralHandler implements CentralRequestHandler,ConfigurableHandl
 		int rc = 0;
 		if (context.getResponse() instanceof StatusExposingServletResponse) {
 			rc = ((StatusExposingServletResponse)context.getResponse()).getStatus();
+			context.setResponse((HttpServletResponse) ((StatusExposingServletResponse)context.getResponse()).getResponse() );
 		}
 		System.out.println("CA," + context.getBaseRequest().getHeader("host") + "," + context.getTarget() + "," + time + "," + rc);
-		return false;
+		
 	}
 
 	@Override

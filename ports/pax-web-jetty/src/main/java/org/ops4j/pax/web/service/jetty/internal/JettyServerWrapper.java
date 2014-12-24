@@ -61,10 +61,6 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.security.Constraint;
 import org.ops4j.pax.swissbox.core.BundleUtils;
 import org.ops4j.pax.web.service.WebContainerConstants;
-import org.ops4j.pax.web.service.jetty.CentralCallContext;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandlerAdmin;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
-import org.ops4j.pax.web.service.jetty.ConfigurableHandler;
 import org.ops4j.pax.web.service.spi.model.ContextModel;
 import org.ops4j.pax.web.service.spi.model.Model;
 import org.ops4j.pax.web.service.spi.model.ServerModel;
@@ -78,6 +74,10 @@ import org.osgi.service.http.HttpContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.mhus.osgi.web.virtualisation.api.central.CentralCallContext;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
+import de.mhus.osgi.web.virtualisation.api.central.ConfigurableHandler;
 import aQute.bnd.annotation.component.Component;
 
 /**
@@ -167,10 +167,31 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 		synchronized (this) {
 	
 			checkCentralHandlers();
-			
-			for (CentralRequestHandler service : centralHandlers) {
+			for (int i = 0; i < centralHandlers.size(); i++) {
+				CentralRequestHandler service = centralHandlers.get(i);
 				try {
+					context.setLastHandler(i);
 					if (service.isEnabled() && service.doHandleBefore(context)) return true;
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
+	
+	public boolean doHandleAfterRequest(CentralCallContext context)
+			throws IOException, ServletException {
+		
+		synchronized (this) {
+			
+			checkCentralHandlers();
+			int start = Math.min(context.getLastHandler(), centralHandlers.size()-1);
+			for (int i = start; i >= 0; i--) {
+				CentralRequestHandler service = centralHandlers.get(i);
+				try {
+					if (service.isEnabled())
+						service.doHandleAfter(context);
 				} catch (Throwable e) {
 					e.printStackTrace();
 				}
@@ -241,23 +262,6 @@ class JettyServerWrapper extends Server implements CentralRequestHandlerAdmin {
 		}
 	}
 	
-	public boolean doHandleAfterRequest(CentralCallContext context)
-			throws IOException, ServletException {
-		
-		synchronized (this) {
-	
-			checkCentralHandlers();
-				for (int i = centralHandlers.size()-1; i >= 0; i--) {
-					CentralRequestHandler service = centralHandlers.get(i);
-					try {
-						if (service.isEnabled() && service.doHandleAfter(context)) return true;
-					} catch (Throwable e) {
-						e.printStackTrace();
-					}
-				}
-		}
-		return false;
-	}
 	
 	HttpServiceContext getContext(final HttpContext httpContext) {
 		readLock.lock();

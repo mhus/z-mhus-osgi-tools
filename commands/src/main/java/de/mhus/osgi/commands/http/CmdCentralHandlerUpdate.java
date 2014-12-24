@@ -6,8 +6,6 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandlerAdmin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -15,6 +13,8 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
 
 @Command(scope = "http", name = "centralupdate", description = "Update central handlers list with properties")
 public class CmdCentralHandlerUpdate implements Action {

@@ -2,11 +2,16 @@ package org.ops4j.pax.web.service.jetty.internal;
 
 import java.util.Properties;
 
-import org.ops4j.pax.web.service.jetty.CentralRequestHandler;
-import org.ops4j.pax.web.service.jetty.CentralRequestHandlerAdmin;
-
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandler;
+import de.mhus.osgi.web.virtualisation.api.central.CentralRequestHandlerAdmin;
 import aQute.bnd.annotation.component.Component;
 
+/**
+ * Central Request Handler Admin Impl
+ * 
+ * @author mikehummel
+ *
+ */
 @Component(provide=CentralRequestHandlerAdmin.class)
 public class CrhaImpl implements CentralRequestHandlerAdmin {
 

@@ -1,4 +1,4 @@
-package org.ops4j.pax.web.service.jetty;
+package de.mhus.osgi.web.virtualisation.api.central;
 
 import java.util.HashMap;
 
@@ -13,6 +13,7 @@ public class CentralCallContext {
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private HashMap<String, Object> attributes = new HashMap<>();
+	private int lastHandler = -1;
 	
 	public CentralCallContext(String target, HttpServletRequest baseRequest,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -60,6 +61,14 @@ public class CentralCallContext {
 	
 	public Object getAttribute(String key) {
 		return attributes.get(key);
+	}
+
+	public int getLastHandler() {
+		return lastHandler;
+	}
+
+	public void setLastHandler(int lastHandler) {
+		this.lastHandler = lastHandler;
 	}
 
 }

@@ -195,6 +195,11 @@
             <artifactId>bndlib</artifactId>
             <version>${bndlib.version}</version>
         </dependency>
+		<dependency>
+            <groupId>de.mhus.osgi.web</groupId>
+            <artifactId>web-virtualization-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
 		<!-- Test dependencies (not transitive) -->
 		<dependency>
