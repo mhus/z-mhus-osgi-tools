@@ -12,7 +12,11 @@ import de.mhus.lib.errors.MException;
 
 public class FileResource extends ResourceNode {
 
-	public enum KEYS {NAME};
+	public enum KEYS {NAME, LENGTH, MODIFIED, TYPE, HIDDEN};
+	public enum TYPE {FILE,DIRCTORY,UNKNOWN}
+	
+	public static final long UNKNOWN_LENGTH = -1;
+	
 	private FileRootResource root;
 	private File file;
 	private FileResource parent;
@@ -109,8 +113,24 @@ public class FileResource extends ResourceNode {
 		switch (key) {
 		case NAME:
 			return file.getName();
-		
+		case LENGTH:
+			return file.length();
+		case MODIFIED:
+			if (file.isFile())
+				return file.lastModified();
+			else
+				return UNKNOWN_LENGTH;
+		case TYPE:
+			if (file.isFile())
+				return TYPE.FILE;
+			if (file.isDirectory())
+				return TYPE.DIRCTORY;
+			return TYPE.UNKNOWN;
+		case HIDDEN:
+			return file.isHidden();
 		}
+		if (name.equals("file"))
+			return file;
 		return null;
 	}
 

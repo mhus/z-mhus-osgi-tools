@@ -29,9 +29,9 @@ public class FileRootResource extends FileResource {
 			next = target;
 			target = "";
 		}
-		if (next.length() == 0) return getResource(this,target);
+		if (next.length() == 0) return getResource(parent,target);
 		
-		ResourceNode n = getNode(next);
+		ResourceNode n = parent.getNode(next);
 		if (n == null) return null;
 		
 		return getResource((FileResource) n, target);

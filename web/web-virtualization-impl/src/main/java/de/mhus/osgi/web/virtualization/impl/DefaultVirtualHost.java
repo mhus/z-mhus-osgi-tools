@@ -27,6 +27,10 @@ import de.mhus.osgi.web.virtualization.api.util.AbstractVirtualHost;
 public class DefaultVirtualHost extends AbstractVirtualHost {
 
 	private LinkedList<String> names = new LinkedList<>();
+	private LinkedList<String> indexes = new LinkedList<>();
+	{
+		indexes.add("index.html");
+	}
 	private String applicationId;
 	private ResourceNode applicationConfig;
 	private File documentRoot;
@@ -36,6 +40,8 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	private ConsoleFactory logFactory;
 	private String name;
 	private FileRootResource documentRootRes;
+	private MimeTypeFinder mimeFinder;
+	private File configRoot;
 	
 	public DefaultVirtualHost(IConfig config) throws InstantiationException, MException, FileNotFoundException {
 		
@@ -57,9 +63,11 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		
 		documentRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/html"));
 		logRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/log"));
+		configRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/conf"));
 		
 		documentRoot.mkdirs();
 		logRoot.mkdirs();
+		configRoot.mkdirs();
 
 		documentRootRes = new FileRootResource(documentRoot);
 		
@@ -72,6 +80,17 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 				errorPages.put(page.getInt("code", -1), page.getExtracted("name"));
 			}
 		}
+		
+		mimeFinder = new MimeTypeFinder(this);
+		
+		ResourceNode index = config.getNode("indexes");
+		if (index != null) {
+			indexes.clear();
+			for (ResourceNode i : index.getNodes("index")) {
+				indexes.add(i.getExtracted("name"));
+			}
+		}
+		
 	}
 
 	public static String getTagValue(Element root, String path, String def) {
@@ -109,17 +128,39 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		
 		InputStream is = res.getInputStream();
 		if (is == null) {
-			// TODO find index.html or print directory
-			return false;
+			for (String in : indexes) {
+				ResourceNode inn = res.getNode(in);
+				if (inn != null) {
+					is = inn.getInputStream();
+					if (is != null) {
+						res = inn;
+						break;
+					}
+				}
+				if (is != null) break;
+			}
+			if (is == null)
+				return false;
 		}
 		
-		context.getResponse().setContentType("text/html"); //TODO find mime
-		context.getResponse().setStatus(200);
+		long len = res.getLong(FileResource.KEYS.LENGTH.name(), -1);
+		if (len >= 0 && len < Integer.MAX_VALUE)
+			context.getResponse().setContentLength((int)len);
+		context.getResponse().setContentType( mimeFinder.getMimeType( res ) ); //TODO find mime
+		context.getResponse().setStatus(HttpServletResponse.SC_OK);
 		ServletOutputStream os = context.getResponse().getOutputStream();
 		MFile.copyFile(is, os);
 		os.flush();
 		
 		return true; // consumed
+	}
+
+	public File getServerRoot() {
+		return serverRoot;
+	}
+
+	public File getConfigRoot() {
+		return configRoot;
 	}
 
 }
