@@ -9,9 +9,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.ldap.ExtendedRequest;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.w3c.dom.Element;
 
 import de.mhus.lib.core.MFile;
@@ -21,8 +26,10 @@ import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.directory.ResourceNode;
 import de.mhus.lib.core.logging.ConsoleFactory;
 import de.mhus.lib.errors.MException;
+import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualization.api.util.AbstractVirtualHost;
+import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 
 public class DefaultVirtualHost extends AbstractVirtualHost {
 
@@ -33,6 +40,7 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	}
 	private String applicationId;
 	private ResourceNode applicationConfig;
+	private VirtualApplication application;
 	private File documentRoot;
 	private File serverRoot;
 	private File logRoot;
@@ -91,6 +99,8 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 			}
 		}
 		
+		doUpdateApplication();
+		
 	}
 
 	public static String getTagValue(Element root, String path, String def) {
@@ -111,6 +121,24 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	@Override
 	public void processError(CentralCallContext context) {
 		
+		if (ExtendedServletResponse.isExtended(context)) {
+			ExtendedServletResponse resp = ExtendedServletResponse.getExtendedResponse(context);
+			int cs = resp.getStatus();
+			if (cs != 0 && cs != 200) {
+				String errorPagePath = errorPages.get(cs);
+				if (errorPagePath == null) 
+					errorPagePath = errorPages.get(0);
+				if (errorPagePath != null) {
+					ResourceNode res = getResource(errorPagePath);
+					try {
+						deliverStaticContent(context, res, false);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
 	}
 
 	public List<String> getHostNames() {
@@ -120,7 +148,16 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	@Override
 	public boolean processRequest(CentralCallContext context) throws Exception {
 		
+		if (application != null)
+			if (application.processRequest(this, context)) return true;
+		
 		ResourceNode res = getResource(context.getTarget());
+		return deliverStaticContent(context, res, true);
+		
+	}
+
+	public boolean deliverStaticContent(CentralCallContext context, ResourceNode res, boolean setResponseOk) throws Exception {
+		
 		if (res == null) {
 //			context.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND);
 			return false;
@@ -147,14 +184,14 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		if (len >= 0 && len < Integer.MAX_VALUE)
 			context.getResponse().setContentLength((int)len);
 		context.getResponse().setContentType( mimeFinder.getMimeType( res ) ); //TODO find mime
-		context.getResponse().setStatus(HttpServletResponse.SC_OK);
+		if (setResponseOk) context.getResponse().setStatus(HttpServletResponse.SC_OK);
 		ServletOutputStream os = context.getResponse().getOutputStream();
 		MFile.copyFile(is, os);
 		os.flush();
 		
 		return true; // consumed
 	}
-
+	
 	public File getServerRoot() {
 		return serverRoot;
 	}
@@ -163,4 +200,31 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		return configRoot;
 	}
 
+	public void doUpdateApplication() {
+		if (applicationId == null) return;
+		
+		BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		try {
+			for (ServiceReference<VirtualApplication> ref : context.getServiceReferences(VirtualApplication.class, "(name="+applicationId+")") ) {
+				VirtualApplication service = context.getService(ref);
+				doUpdateApplication(context, ref, service);
+				return;
+			}
+		} catch (InvalidSyntaxException e) {
+			e.printStackTrace();
+		}
+		application = null;
+	}
+
+	public void doUpdateApplication(BundleContext cb,
+			ServiceReference<VirtualApplication> reference,
+			VirtualApplication service) {
+		if (reference.getProperty("name").equals(applicationId)) {
+			application = service;
+			if (application != null)
+				application.configureHost(this,applicationConfig);
+		}
+		
+	}
+	
 }

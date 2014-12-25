@@ -3,8 +3,13 @@ package de.mhus.osgi.web.virtualization.impl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -13,6 +18,7 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.config.XmlConfig;
+import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.VirtualHost;
 import de.mhus.osgi.web.virtualization.api.VirtualHostProvider;
 
@@ -21,16 +27,22 @@ public class DefaultHostProvider implements VirtualHostProvider {
 
 	private File configDir = new File("etc/vhosts");
 	private HashMap<String,VirtualHost> hostMapping = new HashMap<>();
-
+	ServiceTracker<VirtualApplication, VirtualApplication> applicationTracker;
+	private BundleContext cb;
+	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
 		updateConfiguration();
+		cb = ctx.getBundleContext();
+		applicationTracker = new ServiceTracker<>(cb, VirtualApplication.class, new MyCustomizer());
+		applicationTracker.open();
 	}
 	
 
 	@Deactivate
 	public void doDeactivate(ComponentContext ctx) {
 		hostMapping.clear();
+		applicationTracker.close();
 	}
 	
 	private void updateConfiguration() {
@@ -98,4 +110,50 @@ public class DefaultHostProvider implements VirtualHostProvider {
 		}
 	}
 
+	private class MyCustomizer implements ServiceTrackerCustomizer<VirtualApplication, VirtualApplication> {
+
+		@Override
+		public VirtualApplication addingService(
+				ServiceReference<VirtualApplication> reference) {
+			
+			VirtualApplication service = cb.getService(reference);
+			
+			synchronized (hostMapping) {
+				HashSet<VirtualHost> vh = new HashSet<>();
+				vh.addAll(hostMapping.values());
+				for (VirtualHost host : vh)
+					((DefaultVirtualHost)host).doUpdateApplication(cb,reference,service);
+			}
+
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+				ServiceReference<VirtualApplication> reference,
+				VirtualApplication service) {
+			synchronized (hostMapping) {
+				HashSet<VirtualHost> vh = new HashSet<>();
+				vh.addAll(hostMapping.values());
+				for (VirtualHost host : vh)
+					((DefaultVirtualHost)host).doUpdateApplication(cb,reference,service);
+			}
+			
+		}
+
+		@Override
+		public void removedService(
+				ServiceReference<VirtualApplication> reference,
+				VirtualApplication service) {
+			
+			synchronized (hostMapping) {
+				HashSet<VirtualHost> vh = new HashSet<>();
+				vh.addAll(hostMapping.values());
+				for (VirtualHost host : vh)
+					((DefaultVirtualHost)host).doUpdateApplication(cb,reference,null);
+			}
+			
+		}
+		
+	}
 }

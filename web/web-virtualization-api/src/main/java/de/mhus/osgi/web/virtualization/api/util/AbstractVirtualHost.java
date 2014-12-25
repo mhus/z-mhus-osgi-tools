@@ -12,6 +12,7 @@ public abstract class AbstractVirtualHost implements VirtualHost {
 	protected HashMap<String, Object> attr = new HashMap<>();
 	protected LinkedList<String> nativePathes = new LinkedList<>();
 	protected Log log;
+	protected ClassLoader classLoader = getClass().getClassLoader();
 	
 	@Override
 	public Log getLog() {
@@ -33,6 +34,10 @@ public abstract class AbstractVirtualHost implements VirtualHost {
 		for (String line : nativePathes)
 			if (target.matches(line)) return true;
 		return false;
+	}
+
+	public ClassLoader getHostClassLoader() {
+		return classLoader;
 	}
 
 }

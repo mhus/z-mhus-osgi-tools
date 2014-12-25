@@ -24,4 +24,6 @@ public interface VirtualHost {
 	
 	void processError(CentralCallContext context);
 	
+	ClassLoader getHostClassLoader();
+	
 }
