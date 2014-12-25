@@ -16,20 +16,22 @@ import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualization.api.central.CentralRequestHandler;
 import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 
-@Component(immediate=true,provide=CentralRequestHandler.class,name="ApplicationHandler")
-public class ApplicationHandler extends AbstractCentralRequestHandler {
+@Component(immediate=true,provide=CentralRequestHandler.class,name="HostRequestHandler")
+public class HostRequestHandler extends AbstractCentralRequestHandler {
 	
 	@Override
 	public boolean doHandleBefore(CentralCallContext context)
 			throws IOException, ServletException {
-				
-		VirtualHost vh = (VirtualHost) context.getAttribute(VirtualHost.CENTRAL_CONTEXT_KEY);
-		if (vh != null) {
-			VirtualApplication app = vh.getApplication();
-			context.setAttribute(VirtualApplication.CENTRAL_CONTEXT_KEY, app);
-			if (app != null) {
-				return app.process(vh, context);
+
+		try {
+			VirtualHost vh = (VirtualHost) context.getAttribute(VirtualHost.CENTRAL_CONTEXT_KEY);
+			if (vh != null) {
+				return vh.processRequest(context);
 			}
+		} catch (Throwable t) {
+			t.printStackTrace();
+			context.getResponse().sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return true;
 		}
 		return false;
 	}

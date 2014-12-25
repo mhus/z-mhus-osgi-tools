@@ -50,8 +50,10 @@ class HttpServiceServletHandler extends ServletHandler {
 			throws IOException, ServletException {
 		
 		CentralCallContext context = new CentralCallContext(target, baseRequest,request,response);
-		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleBeforeRequest(context))
+		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleBeforeRequest(context)) {
+			((JettyServerWrapper)getServer()).doHandleAfterRequest(context);
 			return;
+		}
 		
 		if (request.getMethod().equals(METHOD_TRACE)) {
 			throw new ServletException("HTTP TRACE method is disabled");
