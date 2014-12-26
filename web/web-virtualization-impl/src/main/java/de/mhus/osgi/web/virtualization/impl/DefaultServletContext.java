@@ -62,7 +62,10 @@ public class DefaultServletContext extends AbstractServletContext {
 
 	@Override
 	public String getRealPath(String path) {
-		return null;
+		ResourceNode res = host.getResource(path);
+		if (res == null) return null;
+		String file = (String) res.getProperty("filepath");
+		return file;
 	}
 
 }

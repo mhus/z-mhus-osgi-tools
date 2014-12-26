@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import de.mhus.lib.core.directory.ResourceNode;
@@ -21,6 +22,7 @@ public class FileResource extends ResourceNode {
 	private FileRootResource root;
 	private File file;
 	private FileResource parent;
+	private HashMap<String,FileResource> cache = new HashMap<>();
 
 	public FileResource(FileRootResource root, FileResource parent, File file) {
 		if (root == null) root = (FileRootResource) this;
@@ -46,10 +48,18 @@ public class FileResource extends ResourceNode {
 		if (key.equals("..") || key.equals(".")) return null;
 		if (key.indexOf('/') > -1 || key.indexOf('\\') > -1) return null; // only direct children
 		// TODO special chars ?!!
-		// TODO cache !!!
+		
+		FileResource cached = cache.get(key);
+		if (cached != null) {
+			if (cached.isValide()) return cached;
+			cache.remove(key);
+		}
 		File f = new File(file, key);
 		if (!f.exists()) return null;
-		return new FileResource(root, this, f);
+		cached = new FileResource(root, this, f);
+		cache.put(key,cached);
+
+		return cached;
 	}
 
 	@Override
@@ -166,6 +176,10 @@ public class FileResource extends ResourceNode {
 	@Override
 	public boolean isEditable() {
 		return false;
+	}
+
+	public boolean isValide() {
+		return file != null && file.exists();
 	}
 
 }

@@ -5,7 +5,7 @@
     <artifactId>web</artifactId>
     <version>1.0.4-SNAPSHOT</version>
   </parent>
-  <artifactId>web-application-jsp</artifactId>
+  <artifactId>web-application-php</artifactId>
   <packaging>bundle</packaging>
   
       <dependencies>
@@ -20,26 +20,22 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
-  		<scope>provided</scope>
 		</dependency>
 
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.metatype</artifactId>
             <version>${felix.metatype.version}</version>
-  		<scope>provided</scope>
         </dependency>
 		<dependency>
             <groupId>biz.aQute</groupId>
             <artifactId>bndlib</artifactId>
             <version>${bndlib.version}</version>
-  		<scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.karaf.shell</groupId>
             <artifactId>org.apache.karaf.shell.console</artifactId>
             <version>3.0.0</version>
-  		<scope>provided</scope>
         </dependency>
         <dependency>
         	<groupId>org.apache.felix</groupId>
@@ -47,7 +43,7 @@
         		org.apache.felix.servicediagnostics.plugin
         	</artifactId>
         	<version>0.1.3</version>
-  		<scope>provided</scope>
+        	<type>bundle</type>
         </dependency>
   	<dependency>
   		<groupId>de.mhus.lib</groupId>
@@ -67,27 +63,7 @@
   		<version>${project.version}</version>
   		<scope>provided</scope>
   	</dependency>
-  	
-		<dependency>
-			<groupId>org.eclipse.jetty.aggregate</groupId>
-			<artifactId>jetty-all-server</artifactId>
-			<scope>provided</scope>
-				<version>${dependency.jetty.version}</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.ops4j.pax.web</groupId>
-			<artifactId>pax-web-jsp</artifactId>
-			<version>3.1.0</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.org.apache</groupId>
-			<artifactId>jaxp-ri</artifactId>
-			<version>1.4</version>
-			<type>jar</type>
-		</dependency>
-		
       </dependencies>
  
     <build>
@@ -102,25 +78,16 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.osgi.web.application.jsp*;version=${project.version}
+                            de.mhus.osgi.web.application.php*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
-							com.sun.java_cup.internal*;resolution:=optional,                        
-							sun.misc*;resolution:=optional,
                             *
-                        </Import-Package> 
+                        </Import-Package>
                         <Service-Component>*</Service-Component>
-                        <Embed-Dependency>pax-web-jsp,jaxp-ri</Embed-Dependency>
-						<Embed-Transitive>true</Embed-Transitive>
-						<_removeheaders>
-							Include-Resource,
-							Private-Package,
-							Embed-Dependency,
-							Embed-Transitive
-						</_removeheaders>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+        
 </project>

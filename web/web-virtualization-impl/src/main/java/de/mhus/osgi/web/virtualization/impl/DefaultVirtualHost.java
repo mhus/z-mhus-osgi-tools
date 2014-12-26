@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import javax.naming.ldap.ExtendedRequest;
 import javax.servlet.ServletContext;
@@ -51,6 +52,9 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	private FileRootResource documentRootRes;
 	private MimeTypeFinder mimeFinder;
 	private File configRoot;
+	private File binRoot;
+	private WeakHashMap<String, ResourceNode> resourceCache = new WeakHashMap<>();
+	private File tmpRoot;
 	
 	public DefaultVirtualHost(IConfig config) throws InstantiationException, MException, FileNotFoundException {
 		
@@ -72,11 +76,15 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		
 		documentRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/html"));
 		logRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/log"));
-		configRoot = new File(dir.getExtracted("docuemntRoot", serverRootStr + "/conf"));
+		configRoot = new File(dir.getExtracted("documentRoot", serverRootStr + "/conf"));
+		binRoot = new File(dir.getExtracted("bin", serverRootStr + "/bin"));
+		tmpRoot = new File(dir.getExtracted("tmp", serverRootStr + "/tmp"));
 		
 		documentRoot.mkdirs();
 		logRoot.mkdirs();
 		configRoot.mkdirs();
+		binRoot.mkdirs();
+		tmpRoot.mkdirs();
 
 		documentRootRes = new FileRootResource(documentRoot);
 		
@@ -116,7 +124,12 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	
 	@Override
 	public ResourceNode getResource(String target) {
-		return documentRootRes.getResource(target);
+		ResourceNode res = resourceCache.get(target);
+		if (res != null && ((FileResource)res).isValide())
+			return res;
+		res = documentRootRes.getResource(target);
+		resourceCache.put(target, res);
+		return res;
 	}
 
 	@Override
@@ -235,6 +248,10 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	
 	public MimeTypeFinder getMimeTypeFinder() {
 		return mimeFinder;
+	}
+
+	public File getTmpRoot() {
+		return tmpRoot;
 	}
 	
 }

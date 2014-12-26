@@ -2,15 +2,19 @@ package de.mhus.osgi.web.application.jsp;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.jasper.EmbeddedServletOptions;
-import org.apache.jasper.compiler.JspRuntimeContext;
-import org.apache.jasper.servlet.JspServletWrapper;
+import org.apache.jasper.Constants;
+import org.apache.jasper.servlet.JspServlet;
+import org.ops4j.pax.web.jsp.JspServletWrapper;
+import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.directory.ResourceNode;
 import de.mhus.osgi.web.virtualization.api.VirtualHost;
@@ -23,50 +27,34 @@ public class JspContext {
 	private DefaultVirtualHost host;
 	private ServletContext servletContext;
 	private DefaultServletConfig config;
-	private EmbeddedServletOptions options;
-	private JspRuntimeContext rctxt;
-
-	public JspContext(VirtualHost host) {
+	private HashMap<String, JspServletWrapper> wrappers = new HashMap<>();
+	private URLClassLoader cl;
+	private JspServletWrapper servlet;
+	
+	public JspContext(VirtualHost host) throws ServletException {
 		this.host = (DefaultVirtualHost) host;
-		servletContext = this.host.createServletContext();
+		servletContext = new JspDefaultServletContext(this.host);
 		config = new DefaultServletConfig(servletContext);
-		options = new EmbeddedServletOptions(config, servletContext);
-		rctxt = new JspRuntimeContext(servletContext, options);
-
+		cl = new URLClassLoader(new URL[0], host.getHostClassLoader());
+			
+		servlet = new JspServletWrapper(null,cl);
+		servlet.init(config);
 	}
 
 	public boolean processRequest(CentralCallContext context, ResourceNode res) {
+
+		JspRequestWrapper req = new JspRequestWrapper(context, res, host, config);
+		
 		try {
-			serviceJspFile(context.getRequest(), context.getResponse(), (String)res.getProperty("filepath"), false);
+			
+			req.setAttribute(Constants.JSP_FILE, context.getTarget());
+			servlet.service(req, context.getResponse());
+			
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
+		
 		return true;
 	}
-
-	private void serviceJspFile(HttpServletRequest request,
-			HttpServletResponse response, String jspUri, boolean precompile)
-			throws ServletException, IOException {
-
-		JspServletWrapper wrapper = rctxt.getWrapper(jspUri);
-		if (wrapper == null) {
-			synchronized (this) {
-				wrapper = rctxt.getWrapper(jspUri);
-				if (wrapper == null) {
-					// Check if the requested JSP page exists, to avoid
-					// creating unnecessary directories and files.
-					wrapper = new JspServletWrapper(config, options, jspUri, false, rctxt);
-					rctxt.addWrapper(jspUri, wrapper);
-				}
-			}
-		}
-
-		try {
-			wrapper.service(request, response, precompile);
-		} catch (FileNotFoundException fnfe) {
-//			handleMissingResource(request, response, jspUri);
-		}
-
-	}
-
+	
 }

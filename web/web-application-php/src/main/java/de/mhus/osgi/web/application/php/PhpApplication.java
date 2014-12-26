@@ -1,8 +1,9 @@
-package de.mhus.osgi.web.application.jsp;
+package de.mhus.osgi.web.application.php;
 
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import aQute.bnd.annotation.component.Component;
@@ -15,7 +16,7 @@ import de.mhus.osgi.web.virtualization.impl.DefaultVirtualHost;
 import de.mhus.osgi.web.virtualization.impl.FileResource;
 
 @Component(name="JspApplication",immediate=true,properties="name=jsp")
-public class JspApplication implements VirtualApplication {
+public class PhpApplication implements VirtualApplication {
 
 	private DefaultVirtualHost host;
 	private ServletContext servletContext;
@@ -36,7 +37,7 @@ public class JspApplication implements VirtualApplication {
 	
 		if ( res.getProperty(FileResource.KEYS.TYPE.name()) != FileResource.TYPE.FILE) return false;
 		
-		JspContext ctx = (JspContext) host.getAttribute(CENTRAL_CONTEXT_KEY);
+		PhpContext ctx = (PhpContext) host.getAttribute(CENTRAL_CONTEXT_KEY);
 		if (ctx == null) {
 			context.getResponse().sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return true;
@@ -47,13 +48,8 @@ public class JspApplication implements VirtualApplication {
 
 	@Override
 	public void configureHost(VirtualHost host, ResourceNode applicationConfig) {
-		try {
-			JspContext ctx = new JspContext(host);
-			host.setAttribute(CENTRAL_CONTEXT_KEY, ctx);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		PhpContext ctx = new PhpContext(host);
+		host.setAttribute(CENTRAL_CONTEXT_KEY, ctx);
 	}
 
 }
