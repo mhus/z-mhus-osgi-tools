@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletContext;
+
 import de.mhus.lib.core.logging.Log;
 import de.mhus.osgi.web.virtualization.api.VirtualHost;
 

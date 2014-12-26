@@ -43,4 +43,11 @@ public class MimeTypeFinder {
 		return type;
 	}
 
+	public String getMimeType(String res) {
+		String ext = "";
+		ext = MString.afterLastIndex(res, '.');
+		String type = types.getProperty(ext, defaultMime);
+		return type;
+	}
+	
 }

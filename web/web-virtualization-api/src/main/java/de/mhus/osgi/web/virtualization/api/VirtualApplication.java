@@ -7,7 +7,7 @@ public interface VirtualApplication {
 
 	String CENTRAL_CONTEXT_KEY = "VirtualApplication";
 
-	boolean processRequest(VirtualHost host, CentralCallContext context);
+	boolean processRequest(VirtualHost host, CentralCallContext context) throws Exception;
 
 	void configureHost(VirtualHost host, ResourceNode applicationConfig);
 

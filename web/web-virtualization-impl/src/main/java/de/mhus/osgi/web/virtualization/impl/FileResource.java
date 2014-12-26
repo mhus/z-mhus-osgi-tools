@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -104,11 +105,23 @@ public class FileResource extends ResourceNode {
 
 	@Override
 	public URL getUrl() {
+		try {
+			return file.toURL();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
 	public Object getProperty(String name) {
+		
+		if (name.equals("file"))
+			return file;
+		if (name.equals("filepath"))
+			return file.getAbsolutePath();
+		
 		KEYS key = KEYS.valueOf(name.toUpperCase());
 		switch (key) {
 		case NAME:
@@ -129,8 +142,6 @@ public class FileResource extends ResourceNode {
 		case HIDDEN:
 			return file.isHidden();
 		}
-		if (name.equals("file"))
-			return file;
 		return null;
 	}
 

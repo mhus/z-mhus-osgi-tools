@@ -35,6 +35,7 @@
     <module>web-virtualization-api</module>
     <module>web-virtualization-service</module>
     <module>web-virtualization-impl</module>
+    <module>web-application-jsp</module>
     </modules>
 
 </project>

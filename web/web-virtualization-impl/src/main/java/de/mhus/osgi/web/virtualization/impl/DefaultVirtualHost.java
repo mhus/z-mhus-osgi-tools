@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.naming.ldap.ExtendedRequest;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -219,12 +220,21 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	public void doUpdateApplication(BundleContext cb,
 			ServiceReference<VirtualApplication> reference,
 			VirtualApplication service) {
-		if (reference.getProperty("name").equals(applicationId)) {
+		if (reference.getProperty("name") != null && reference.getProperty("name").equals(applicationId)) {
 			application = service;
 			if (application != null)
 				application.configureHost(this,applicationConfig);
 		}
 		
+	}
+
+	@Override
+	public ServletContext createServletContext() {
+		return new DefaultServletContext(this);
+	}
+	
+	public MimeTypeFinder getMimeTypeFinder() {
+		return mimeFinder;
 	}
 	
 }
