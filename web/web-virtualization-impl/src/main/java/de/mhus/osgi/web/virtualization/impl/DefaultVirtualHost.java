@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -108,8 +111,35 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 			}
 		}
 		
-		doUpdateApplication();
+		URL[] urls = scanBinaries();
+		classLoader = new URLClassLoader(urls,classLoader);
 		
+		doUpdateApplication();
+
+	}
+
+	private URL[] scanBinaries() {
+		LinkedList<URL> list = new LinkedList<>();
+		scanBinaries(list,binRoot);
+		return list.toArray(new URL[list.size()]);
+	}
+
+	private void scanBinaries(LinkedList<URL> list, File dir) {
+		for (File file : dir.listFiles()) {
+			if (file.isHidden() || file.getName().startsWith(".")) {
+				
+			} else
+			if (file.isDirectory()) {
+				scanBinaries(list, file);
+			} else
+			if (file.isFile() && file.getName().endsWith(".jar")) {
+				try {
+					list.add(file.toURL());
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public static String getTagValue(Element root, String path, String def) {

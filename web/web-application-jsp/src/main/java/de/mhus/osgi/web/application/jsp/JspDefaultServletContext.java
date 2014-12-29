@@ -16,12 +16,14 @@ import de.mhus.osgi.web.virtualization.impl.DefaultServletContext;
 import de.mhus.osgi.web.virtualization.impl.DefaultVirtualHost;
 
 public class JspDefaultServletContext extends DefaultServletContext {
-
+	
+	// http://www.e-pde.gr/docs/jasper-howto.html
 	public JspDefaultServletContext(DefaultVirtualHost host) {
 		super(host);
 		File tmp = new File( host.getTmpRoot(), "jsp");
 		tmp.mkdirs();
 		param.put("scratchdir", tmp.getAbsolutePath() );
+		param.put("keepgenerated", "true");
 	}
 	
 	

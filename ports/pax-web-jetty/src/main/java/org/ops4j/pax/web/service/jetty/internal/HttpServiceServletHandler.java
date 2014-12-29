@@ -51,7 +51,11 @@ class HttpServiceServletHandler extends ServletHandler {
 		
 		CentralCallContext context = new CentralCallContext(target, baseRequest,request,response);
 		if (getServer() instanceof JettyServerWrapper && ((JettyServerWrapper)getServer()).doHandleBeforeRequest(context)) {
-			((JettyServerWrapper)getServer()).doHandleAfterRequest(context);
+			try {
+				((JettyServerWrapper)getServer()).doHandleAfterRequest(context);
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
 			return;
 		}
 		
