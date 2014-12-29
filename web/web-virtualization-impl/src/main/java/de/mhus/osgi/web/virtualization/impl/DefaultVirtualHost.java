@@ -270,11 +270,6 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		}
 		
 	}
-
-	@Override
-	public ServletContext createServletContext() {
-		return new DefaultServletContext(this);
-	}
 	
 	public MimeTypeFinder getMimeTypeFinder() {
 		return mimeFinder;

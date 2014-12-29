@@ -63,11 +63,46 @@
   		<version>${project.version}</version>
   		<scope>provided</scope>
   	</dependency>
+	<dependency>
+	    <groupId>com.caucho.quercus</groupId>
+        <artifactId>quercus</artifactId>
+        <version>4.0.39</version>
+        <type>jar</type>
+		<scope>system</scope>
+    	<systemPath>${basedir}/lib/quercus-4.0.39.jar</systemPath>
+  	</dependency>
 
+	<dependency>
+		<groupId>com.caucho</groupId>
+		<artifactId>hessian</artifactId>
+		<version>4.0.38</version>
+	</dependency>
       </dependencies>
  
     <build>
         <plugins>
+
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-install-plugin</artifactId>
+			    <version>2.4</version>
+			    <executions>
+			        <execution>
+			            <phase>initialize</phase>
+			            <goals>
+			                <goal>install-file</goal>
+			            </goals>
+			            <configuration>
+			                <groupId>com.caucho.quercus</groupId>
+			                <artifactId>quercus</artifactId>
+			                <version>4.0.39</version>
+			                <packaging>jar</packaging>
+			                <file>${basedir}/lib/quercus-4.0.39.jar</file>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+        
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -81,13 +116,59 @@
                             de.mhus.osgi.web.application.php*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
+                            javax.mail;resolution:=optional,
+                            com.google.appengine.*;resolution:=optional,
+                            javax.cache*;resolution:=optional,
+                            javax.decorator*;resolution:=optional,
+                            javax.ejb*;resolution:=optional,
+                            javax.enterprise.*;resolution:=optional,
+                            javax.inject*;resolution:=optional,
+                            javax.interceptor*;resolution:=optional,
+                            javax.resource*;resolution:=optional,
+                            sun.misc*;resolution:=optional,
                             *
                         </Import-Package>
                         <Service-Component>*</Service-Component>
+                		<Embed-Dependency>quercus,hessian</Embed-Dependency>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+        	<plugins>
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>
+        									org.apache.maven.plugins
+        								</groupId>
+        								<artifactId>
+        									maven-install-plugin
+        								</artifactId>
+        								<versionRange>
+        									[2.4,)
+        								</versionRange>
+        								<goals>
+        									<goal>install-file</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+        	</plugins>
+        </pluginManagement>
     </build>
-        
+    
 </project>
