@@ -28,4 +28,10 @@ public interface VirtualHost {
 	
 	ClassLoader getHostClassLoader();
 		
+	void setProcessorContext(ProcessorContext context);
+	
+	ProcessorContext getProcessorContext(String name);
+
+	MimeTypeFinder getMimeTypeFinder();
+
 }

@@ -31,6 +31,7 @@ import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.directory.ResourceNode;
 import de.mhus.lib.core.logging.ConsoleFactory;
 import de.mhus.lib.errors.MException;
+import de.mhus.osgi.web.virtualization.api.MimeTypeFinder;
 import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualization.api.util.AbstractVirtualHost;
@@ -38,22 +39,19 @@ import de.mhus.osgi.web.virtualization.api.util.ExtendedServletResponse;
 
 public class DefaultVirtualHost extends AbstractVirtualHost {
 
+	public static final String DEFAULT_APPLICATION_ID = "default";
+	
 	private LinkedList<String> names = new LinkedList<>();
-	private LinkedList<String> indexes = new LinkedList<>();
-	{
-		indexes.add("index.html");
-	}
 	private String applicationId;
 	private ResourceNode applicationConfig;
 	private VirtualApplication application;
 	private File documentRoot;
 	private File serverRoot;
 	private File logRoot;
-	private HashMap<Integer, String> errorPages = new HashMap<>();
 	private ConsoleFactory logFactory;
 	private String name;
 	private FileRootResource documentRootRes;
-	private MimeTypeFinder mimeFinder;
+	private DefaultMimeTypeFinder mimeFinder;
 	private File configRoot;
 	private File binRoot;
 	private WeakHashMap<String, ResourceNode> resourceCache = new WeakHashMap<>();
@@ -71,7 +69,8 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 			applicationId = app.getExtracted("id");
 			applicationConfig = app.getNode("configuration");
 		}
-
+		if (applicationId == null) applicationId = DEFAULT_APPLICATION_ID;
+		
 		ResourceNode dir = config.getNode("directories");
 		String serverRootStr = dir.getExtracted("serverRoot");
 		if (serverRootStr == null) throw new InstantiationException("host root not found");
@@ -93,24 +92,9 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		
 		logFactory = new ConsoleFactory(new PrintStream(new File(logRoot,"virtual.log")));
 		log = logFactory.createInstance(name);
-		
-		ResourceNode error = config.getNode("errors");
-		if (error != null) {
-			for (ResourceNode page : error.getNodes("page")) {
-				errorPages.put(page.getInt("code", -1), page.getExtracted("name"));
-			}
-		}
-		
-		mimeFinder = new MimeTypeFinder(this);
-		
-		ResourceNode index = config.getNode("indexes");
-		if (index != null) {
-			indexes.clear();
-			for (ResourceNode i : index.getNodes("index")) {
-				indexes.add(i.getExtracted("name"));
-			}
-		}
-		
+				
+		mimeFinder = new DefaultMimeTypeFinder(this);
+				
 		URL[] urls = scanBinaries();
 		classLoader = new URLClassLoader(urls,classLoader);
 		
@@ -169,17 +153,8 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 			ExtendedServletResponse resp = ExtendedServletResponse.getExtendedResponse(context);
 			int cs = resp.getStatus();
 			if (cs != 0 && cs != 200) {
-				String errorPagePath = errorPages.get(cs);
-				if (errorPagePath == null) 
-					errorPagePath = errorPages.get(0);
-				if (errorPagePath != null) {
-					ResourceNode res = getResource(errorPagePath);
-					try {
-						deliverStaticContent(context, res, false);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+				if (application != null)
+					application.processError(this, context, cs);
 			}
 		}
 		
@@ -195,47 +170,12 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		if (application != null)
 			if (application.processRequest(this, context)) return true;
 		
-		ResourceNode res = getResource(context.getTarget());
-		return deliverStaticContent(context, res, true);
-		
+//		ResourceNode res = getResource(context.getTarget());
+//		return deliverStaticContent(context, res, true);
+		return false;
 	}
 
-	public boolean deliverStaticContent(CentralCallContext context, ResourceNode res, boolean setResponseOk) throws Exception {
-		
-		if (res == null) {
-//			context.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND);
-			return false;
-		}
-		
-		InputStream is = res.getInputStream();
-		if (is == null) {
-			for (String in : indexes) {
-				ResourceNode inn = res.getNode(in);
-				if (inn != null) {
-					is = inn.getInputStream();
-					if (is != null) {
-						res = inn;
-						break;
-					}
-				}
-				if (is != null) break;
-			}
-			if (is == null)
-				return false;
-		}
-		
-		long len = res.getLong(FileResource.KEYS.LENGTH.name(), -1);
-		if (len >= 0 && len < Integer.MAX_VALUE)
-			context.getResponse().setContentLength((int)len);
-		context.getResponse().setContentType( mimeFinder.getMimeType( res ) ); //TODO find mime
-		if (setResponseOk) context.getResponse().setStatus(HttpServletResponse.SC_OK);
-		ServletOutputStream os = context.getResponse().getOutputStream();
-		MFile.copyFile(is, os);
-		os.flush();
-		
-		return true; // consumed
-	}
-	
+
 	public File getServerRoot() {
 		return serverRoot;
 	}
@@ -266,7 +206,11 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		if (reference.getProperty("name") != null && reference.getProperty("name").equals(applicationId)) {
 			application = service;
 			if (application != null)
-				application.configureHost(this,applicationConfig);
+				try {
+					application.configureHost(this,applicationConfig);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 		}
 		
 	}

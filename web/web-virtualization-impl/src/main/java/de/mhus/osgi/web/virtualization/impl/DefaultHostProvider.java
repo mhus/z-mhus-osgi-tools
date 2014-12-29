@@ -27,7 +27,7 @@ public class DefaultHostProvider implements VirtualHostProvider {
 
 	private File configDir = new File("etc/vhosts");
 	private HashMap<String,VirtualHost> hostMapping = new HashMap<>();
-	ServiceTracker<VirtualApplication, VirtualApplication> applicationTracker;
+	private ServiceTracker<VirtualApplication, VirtualApplication> applicationTracker;
 	private BundleContext cb;
 	
 	@Activate

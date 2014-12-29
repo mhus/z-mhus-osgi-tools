@@ -9,6 +9,8 @@ public interface VirtualApplication {
 
 	boolean processRequest(VirtualHost host, CentralCallContext context) throws Exception;
 
-	void configureHost(VirtualHost host, ResourceNode applicationConfig);
+	void configureHost(VirtualHost host, ResourceNode applicationConfig) throws Exception;
+
+	void processError(VirtualHost host, CentralCallContext context, int cs);
 
 }

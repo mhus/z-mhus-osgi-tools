@@ -20,8 +20,8 @@ install -s mvn:de.mhus.osgi.ports/mhus-pax-web-jetty/1.0.4-SNAPSHOT
 install -s mvn:de.mhus.osgi.web/web-virtualization-api/1.0.4-SNAPSHOT
 install -s mvn:de.mhus.osgi.web/web-virtualization-service/1.0.4-SNAPSHOT
 install -s mvn:de.mhus.osgi.web/web-virtualization-impl/1.0.4-SNAPSHOT
-install -s mvn:de.mhus.osgi.web/web-application-jsp/1.0.4-SNAPSHOT
-install -s mvn:de.mhus.osgi.web/web-application-php/1.0.4-SNAPSHOT
+install -s mvn:de.mhus.osgi.web/web-processor-jsp/1.0.4-SNAPSHOT
+install -s mvn:de.mhus.osgi.web/web-processor-php/1.0.4-SNAPSHOT
 
 
 
@@ -29,8 +29,8 @@ bundle:watch mhus-pax-web-jetty
 bundle:watch web-virtualization-api
 bundle:watch web-virtualization-service
 bundle:watch web-virtualization-impl
-bundle:watch web-application-jsp
-bundle:watch web-application-php
+bundle:watch web-processor-jsp
+bundle:watch web-processor-php
 
 feature:repo-add cxf 2.7.9
 feature:install cxf

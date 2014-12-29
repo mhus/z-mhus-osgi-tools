@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 
 import de.mhus.lib.core.logging.Log;
+import de.mhus.osgi.web.virtualization.api.ProcessorContext;
 import de.mhus.osgi.web.virtualization.api.VirtualHost;
 
 public abstract class AbstractVirtualHost implements VirtualHost {
@@ -15,6 +16,7 @@ public abstract class AbstractVirtualHost implements VirtualHost {
 	protected LinkedList<String> nativePathes = new LinkedList<>();
 	protected Log log;
 	protected ClassLoader classLoader = getClass().getClassLoader();
+	protected HashMap<String, ProcessorContext> processorContexts = new HashMap<>();
 	
 	@Override
 	public Log getLog() {
@@ -40,6 +42,16 @@ public abstract class AbstractVirtualHost implements VirtualHost {
 
 	public ClassLoader getHostClassLoader() {
 		return classLoader;
+	}
+
+	@Override
+	public void setProcessorContext(ProcessorContext context) {
+		processorContexts.put(context.getName(), context);
+	}
+	
+	@Override
+	public ProcessorContext getProcessorContext(String name) {
+		return processorContexts.get(name);
 	}
 
 }
