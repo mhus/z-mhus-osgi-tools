@@ -22,6 +22,7 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.directory.ResourceNode;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.portlet.resource.Resource;
+import de.mhus.osgi.web.virtualization.api.ApplicationContext;
 import de.mhus.osgi.web.virtualization.api.ProcessorMatcher;
 import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.VirtualFileProcessor;
@@ -58,7 +59,7 @@ public class DefaultApplication implements VirtualApplication {
 	public boolean processRequest(VirtualHost host, CentralCallContext context)
 			throws Exception {
 
-		DefaultApplicationContext app = (DefaultApplicationContext)host.getAttribute(CENTRAL_CONTEXT_KEY);
+		ApplicationContext app = (ApplicationContext)host.getAttribute(CENTRAL_CONTEXT_KEY);
 		if (app == null) {
 			context.getResponse().sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return true;
@@ -108,14 +109,31 @@ public class DefaultApplication implements VirtualApplication {
 	@Override
 	public void configureHost(VirtualHost host, ResourceNode config) throws Exception {
 
-		DefaultApplicationContext context = createApplicationContext(host, config);
+		ApplicationContext context = createApplicationContext(host, config);
 		host.setAttribute(CENTRAL_CONTEXT_KEY, context);
 		
 	}
 
-	protected DefaultApplicationContext createApplicationContext(
+	protected ApplicationContext createApplicationContext(
 			VirtualHost host, ResourceNode config) throws Exception {
-		return new DefaultApplicationContext(this, host, config);
+		
+		if (config != null) {
+			try {
+				String className = config.getExtracted("class");
+				if (className != null) {
+					Class<?> clazz = host.getHostClassLoader().loadClass(className);
+					ApplicationContext app = (ApplicationContext)clazz.newInstance();
+					app.doActivate(this, host, config);
+					return app;
+				}
+			} catch (Throwable t) {
+				t.printStackTrace();
+			}
+		}
+		
+		DefaultApplicationContext app = new DefaultApplicationContext();
+		app.doActivate(this, host, config);
+		return app;
 	}
 
 	@Override

@@ -11,11 +11,13 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.directory.ResourceNode;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.portlet.resource.Resource;
+import de.mhus.osgi.web.virtualization.api.ApplicationContext;
 import de.mhus.osgi.web.virtualization.api.ProcessorMatcher;
+import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.VirtualHost;
 import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 
-public class DefaultApplicationContext {
+public class DefaultApplicationContext implements ApplicationContext {
 
 	protected LinkedList<String> indexes = new LinkedList<>();
 	{
@@ -28,8 +30,8 @@ public class DefaultApplicationContext {
 	protected HashMap<String, ProcessorMatcher> processorMapping = null;
 	private VirtualHost host;
 
-	public DefaultApplicationContext(DefaultApplication defaultApplication,
-			VirtualHost host, ResourceNode config) throws MException {
+	public void doActivate(VirtualApplication defaultApplication,
+			VirtualHost host, ResourceNode config) throws Exception {
 
 		this.host = host;
 		
