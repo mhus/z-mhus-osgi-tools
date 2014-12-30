@@ -50,7 +50,7 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	private File logRoot;
 	private ConsoleFactory logFactory;
 	private String name;
-	private FileRootResource documentRootRes;
+	private FileResourceRoot documentRootRes;
 	private DefaultMimeTypeFinder mimeFinder;
 	private File configRoot;
 	private File binRoot;
@@ -88,35 +88,36 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 		binRoot.mkdirs();
 		tmpRoot.mkdirs();
 
-		documentRootRes = new FileRootResource(documentRoot);
+		documentRootRes = new FileResourceRoot(documentRoot);
 		
 		logFactory = new ConsoleFactory(new PrintStream(new File(logRoot,"virtual.log")));
 		log = logFactory.createInstance(name);
 				
 		mimeFinder = new DefaultMimeTypeFinder(this);
 				
-		URL[] urls = scanBinaries();
+		URL[] urls = findBinaries("jar");
 		classLoader = new URLClassLoader(urls,classLoader);
 		
 		doUpdateApplication();
 
 	}
 
-	private URL[] scanBinaries() {
+	@Override
+	public URL[] findBinaries(String ext) {
 		LinkedList<URL> list = new LinkedList<>();
-		scanBinaries(list,binRoot);
+		scanBinaries(list,binRoot, ext);
 		return list.toArray(new URL[list.size()]);
 	}
 
-	private void scanBinaries(LinkedList<URL> list, File dir) {
+	private void scanBinaries(LinkedList<URL> list, File dir, String ext) {
 		for (File file : dir.listFiles()) {
 			if (file.isHidden() || file.getName().startsWith(".")) {
 				
 			} else
 			if (file.isDirectory()) {
-				scanBinaries(list, file);
+				scanBinaries(list, file, ext);
 			} else
-			if (file.isFile() && file.getName().endsWith(".jar")) {
+			if (file.isFile() && file.getName().endsWith("." + ext)) {
 				try {
 					list.add(file.toURL());
 				} catch (MalformedURLException e) {
@@ -138,12 +139,24 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	
 	@Override
 	public ResourceNode getResource(String target) {
+		// need to ask application for resources. The application can redirect the resources to another source.
+		// or use the getFileResource to load from document root
+		if (application != null)
+			return application.getResource(this, target);
+		return null;
+	}
+	
+	public ResourceNode getDocumentRootResource(String target) {
 		ResourceNode res = resourceCache.get(target);
 		if (res != null && ((FileResource)res).isValide())
 			return res;
 		res = documentRootRes.getResource(target);
 		resourceCache.put(target, res);
 		return res;
+	}
+
+	public File getDocumentRoot() {
+		return documentRoot;
 	}
 
 	@Override

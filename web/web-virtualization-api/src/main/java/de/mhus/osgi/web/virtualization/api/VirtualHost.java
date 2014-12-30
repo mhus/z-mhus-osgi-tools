@@ -1,5 +1,6 @@
 package de.mhus.osgi.web.virtualization.api;
 
+import java.net.URL;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
@@ -33,5 +34,7 @@ public interface VirtualHost {
 	ProcessorContext getProcessorContext(String name);
 
 	MimeTypeFinder getMimeTypeFinder();
+
+	URL[] findBinaries(String ext);
 
 }

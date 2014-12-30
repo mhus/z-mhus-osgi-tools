@@ -1,14 +1,23 @@
-package de.mhus.osgi.web.virtualization.impl;
+package de.mhus.osgi.web.virtualization.impl.osgi;
 
-import java.io.File;
+import org.osgi.framework.Bundle;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.osgi.web.virtualization.impl.FileResource;
 
-public class FileRootResource extends FileResource {
+public class BundleResourceRoot extends BundleResource {
 
-	public FileRootResource(File documentRoot) {
-		super(null, null, documentRoot);
+	protected Bundle bundle;
+
+	public BundleResourceRoot(Bundle bundle, String path) {
+		super(null, path, null);
+		this.bundle = bundle;
+		this.root = this;
+	}
+	
+	public Bundle getBundle() {
+		return bundle;
 	}
 
 	public ResourceNode getResource(String target) {
@@ -16,7 +25,7 @@ public class FileRootResource extends FileResource {
 		return getResource(this,target);
 	}
 
-	private ResourceNode getResource(FileResource parent,
+	private ResourceNode getResource(BundleResource parent,
 			String target) {
 		if (parent == null || target == null) return null;
 		if (target.length() == 0) return parent;
@@ -31,10 +40,10 @@ public class FileRootResource extends FileResource {
 		}
 		if (next.length() == 0) return getResource(parent,target);
 		
-		ResourceNode n = parent.getNode(next);
+		ResourceNode n = parent.getNode(next + ( target.length() == 0 ? "" : "/") );
 		if (n == null) return null;
 		
-		return getResource((FileResource) n, target);
+		return getResource((BundleResource) n, target);
 	}
 
 }

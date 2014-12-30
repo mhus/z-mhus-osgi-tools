@@ -13,4 +13,6 @@ public interface VirtualApplication {
 
 	void processError(VirtualHost host, CentralCallContext context, int cs);
 
+	ResourceNode getResource(VirtualHost host, String target);
+
 }

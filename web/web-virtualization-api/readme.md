@@ -6,11 +6,14 @@ feature:install openjpa
 
 install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.5
 install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.5
-install -s mvn:de.mhus.lib/mhu-lib-annotations/3.2.7
-install -s mvn:de.mhus.lib/mhu-lib-core/3.2.7
-install -s mvn:de.mhus.lib/mhu-lib-persistence/3.2.7
-install -s mvn:de.mhus.lib/mhu-lib-logging/3.2.7
-install -s mvn:de.mhus.lib/mhu-lib-karaf/3.2.7
+install -s mvn:javax.portlet/portlet-api/2.0
+ 
+install -s mvn:de.mhus.lib/mhu-lib-annotations/3.2.8-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-core/3.2.8-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-persistence/3.2.8-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-logging/3.2.8-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-karaf/3.2.8-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-j2ee/3.2.8-SNAPSHOT
 
 install -s mvn:de.mhus.osgi/commands/1.0.4-SNAPSHOT
 
@@ -34,3 +37,16 @@ bundle:watch web-processor-php
 
 feature:repo-add cxf 2.7.9
 feature:install cxf
+
+
+vhosts/default.xml:
+
+<hosts>
+  <virtualhost>
+    <host name="localhost:8181" />
+    <application id="default" />
+
+    <directories serverRoot="/tmp/localhost" />
+
+  </virtualhost>
+</hosts>

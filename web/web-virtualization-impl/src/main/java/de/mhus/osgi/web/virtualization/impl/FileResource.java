@@ -19,13 +19,13 @@ public class FileResource extends ResourceNode {
 	
 	public static final long UNKNOWN_LENGTH = -1;
 	
-	private FileRootResource root;
+	private FileResourceRoot root;
 	private File file;
 	private FileResource parent;
 	private HashMap<String,FileResource> cache = new HashMap<>();
 
-	public FileResource(FileRootResource root, FileResource parent, File file) {
-		if (root == null) root = (FileRootResource) this;
+	public FileResource(FileResourceRoot root, FileResource parent, File file) {
+		if (root == null) root = (FileResourceRoot) this;
 		this.root = root;
 		this.file = file;
 		this.parent = parent;
@@ -132,26 +132,28 @@ public class FileResource extends ResourceNode {
 		if (name.equals("filepath"))
 			return file.getAbsolutePath();
 		
-		KEYS key = KEYS.valueOf(name.toUpperCase());
-		switch (key) {
-		case NAME:
-			return file.getName();
-		case LENGTH:
-			return file.length();
-		case MODIFIED:
-			if (file.isFile())
-				return file.lastModified();
-			else
-				return UNKNOWN_LENGTH;
-		case TYPE:
-			if (file.isFile())
-				return TYPE.FILE;
-			if (file.isDirectory())
-				return TYPE.DIRCTORY;
-			return TYPE.UNKNOWN;
-		case HIDDEN:
-			return file.isHidden();
-		}
+		try {
+			KEYS key = KEYS.valueOf(name.toUpperCase());
+			switch (key) {
+			case NAME:
+				return file.getName();
+			case LENGTH:
+				return file.length();
+			case MODIFIED:
+				if (file.isFile())
+					return file.lastModified();
+				else
+					return UNKNOWN_LENGTH;
+			case TYPE:
+				if (file.isFile())
+					return TYPE.FILE;
+				if (file.isDirectory())
+					return TYPE.DIRCTORY;
+				return TYPE.UNKNOWN;
+			case HIDDEN:
+				return file.isHidden();
+			}
+		} catch (IllegalArgumentException e) {}
 		return null;
 	}
 
