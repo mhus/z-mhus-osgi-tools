@@ -1,6 +1,9 @@
 package de.mhus.osgi.tutorial.websampleapp;
 
+import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.osgi.web.virtualization.api.ApplicationContext;
 import de.mhus.osgi.web.virtualization.api.VirtualApplication;
+import de.mhus.osgi.web.virtualization.api.VirtualHost;
 import de.mhus.osgi.web.virtualization.impl.osgi.AbstractOsgiBundleApplication;
 
 import org.osgi.service.component.ComponentContext;
@@ -22,4 +25,8 @@ public class SampleApp extends AbstractOsgiBundleApplication {
 		super.doDeactivate(ctx);
 	}
 
+	protected ApplicationContext createApplicationContext(
+			VirtualHost host, ResourceNode config) throws Exception {
+		return new SampleContext(this, host, config);
+	}
 }
