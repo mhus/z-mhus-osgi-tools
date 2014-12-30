@@ -14,7 +14,6 @@ import de.mhus.osgi.web.virtualization.api.VirtualHost;
 import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualization.impl.DefaultServletConfig;
 import de.mhus.osgi.web.virtualization.impl.DefaultVirtualHost;
-import de.mhus.osgi.web.virtualization.impl.FileResource;
 
 @Component(name="JspProcessor",immediate=true,properties="name=" + JspApplication.NAME)
 public class JspApplication implements VirtualFileProcessor {

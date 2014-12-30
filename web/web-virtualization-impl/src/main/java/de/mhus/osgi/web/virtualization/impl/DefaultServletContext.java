@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.lib.core.directory.fs.FileResource;
 import de.mhus.osgi.web.virtualization.api.util.AbstractServletContext;
 
 public class DefaultServletContext extends AbstractServletContext {

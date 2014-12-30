@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.lib.core.directory.fs.FileResource;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.portlet.resource.Resource;
 import de.mhus.osgi.web.virtualization.api.ApplicationContext;

@@ -29,6 +29,8 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.lib.core.directory.fs.FileResource;
+import de.mhus.lib.core.directory.fs.FileResourceRoot;
 import de.mhus.lib.core.logging.ConsoleFactory;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.web.virtualization.api.MimeTypeFinder;

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.directory.ResourceNode;
+import de.mhus.lib.core.directory.fs.FileResource;
 import de.mhus.osgi.web.virtualization.api.ProcessorMatcher;
 import de.mhus.osgi.web.virtualization.api.VirtualApplication;
 import de.mhus.osgi.web.virtualization.api.VirtualFileProcessor;
@@ -16,7 +17,6 @@ import de.mhus.osgi.web.virtualization.api.VirtualHost;
 import de.mhus.osgi.web.virtualization.api.central.CentralCallContext;
 import de.mhus.osgi.web.virtualization.impl.DefaultServletConfig;
 import de.mhus.osgi.web.virtualization.impl.DefaultVirtualHost;
-import de.mhus.osgi.web.virtualization.impl.FileResource;
 
 @Component(name="PhpProcessor",immediate=true,properties="name=" + PhpApplication.NAME)
 public class PhpApplication implements VirtualFileProcessor {

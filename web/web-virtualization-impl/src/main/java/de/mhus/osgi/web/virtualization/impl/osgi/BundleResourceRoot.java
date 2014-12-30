@@ -4,7 +4,6 @@ import org.osgi.framework.Bundle;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.directory.ResourceNode;
-import de.mhus.osgi.web.virtualization.impl.FileResource;
 
 public class BundleResourceRoot extends BundleResource {
 
