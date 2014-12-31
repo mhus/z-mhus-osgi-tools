@@ -87,22 +87,7 @@ public class DefaultApplicationContext implements ApplicationContext {
 		
 		InputStream is = res.getInputStream();
 		if (is == null) {
-			String target = context.getTarget();
-			if (!target.endsWith("/")) target = target + "/";
-			for (String in : indexes) {
-				// do not use res.getNode(in), another resource could be mounted - TODO need to use a cascaded resource
-				ResourceNode inn = host.getResource(target + in);
-				if (inn != null) {
-					is = inn.getInputStream();
-					if (is != null) {
-						res = inn;
-						break;
-					}
-				}
-				if (is != null) break;
-			}
-			if (is == null)
-				return false;
+			return false;
 		}
 		
 		long len = res.getLong(FileResource.KEYS.LENGTH.name(), -1);
@@ -139,4 +124,23 @@ public class DefaultApplicationContext implements ApplicationContext {
 		return processorMapping;
 	}
 
+
+	@Override
+	public ResourceNode findIndex(CentralCallContext context, ResourceNode res) {
+		String target = context.getTarget();
+		if (!target.endsWith("/")) target = target + "/";
+		for (String in : indexes) {
+			// do not use res.getNode(in), another resource could be mounted - TODO need to use a cascaded resource
+			ResourceNode inn = host.getResource(target + in);
+			if (inn != null && inn.hasContent()) {
+				return inn;
+			}
+		}
+		return null;
+	}
+
+	public VirtualHost getHost() {
+		return host;
+	}
+	
 }

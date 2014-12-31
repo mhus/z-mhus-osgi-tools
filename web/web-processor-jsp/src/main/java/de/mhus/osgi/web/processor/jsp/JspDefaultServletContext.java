@@ -24,6 +24,7 @@ public class JspDefaultServletContext extends DefaultServletContext {
 		tmp.mkdirs();
 		param.put("scratchdir", tmp.getAbsolutePath() );
 		param.put("keepgenerated", "true");
+		param.put("enablePooling", "false");
 	}
 	
 	

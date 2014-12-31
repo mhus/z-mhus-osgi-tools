@@ -188,4 +188,9 @@ public class BundleResource extends ResourceNode {
 		return false;
 	}
 
+	@Override
+	public boolean hasContent() {
+		return !dir;
+	}
+
 }

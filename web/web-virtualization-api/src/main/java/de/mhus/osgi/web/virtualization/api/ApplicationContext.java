@@ -18,5 +18,7 @@ public interface ApplicationContext {
 	public Resource getResourceHandler(CentralCallContext context);
 	
 	public HashMap<String, ProcessorMatcher> getProcessorMapping();
+
+	public ResourceNode findIndex(CentralCallContext context, ResourceNode res);
 	
 }

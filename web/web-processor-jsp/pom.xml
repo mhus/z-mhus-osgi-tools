@@ -111,6 +111,7 @@
                         </Import-Package> 
                         <Service-Component>*</Service-Component>
                         <Embed-Dependency>pax-web-jsp,jaxp-ri</Embed-Dependency>
+                        <!-- 
 						<Embed-Transitive>true</Embed-Transitive>
 						<_removeheaders>
 							Include-Resource,
@@ -118,6 +119,7 @@
 							Embed-Dependency,
 							Embed-Transitive
 						</_removeheaders>
+                         -->
                     </instructions>
                 </configuration>
             </plugin>

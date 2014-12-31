@@ -15,4 +15,6 @@ public interface VirtualApplication {
 
 	ResourceNode getResource(VirtualHost host, String target);
 
+	ClassLoader getApplicationClassLoader();
+
 }

@@ -218,14 +218,23 @@ public class DefaultVirtualHost extends AbstractVirtualHost {
 	public void doUpdateApplication(BundleContext cb,
 			ServiceReference<VirtualApplication> reference,
 			VirtualApplication service) {
+		
 		if (reference.getProperty("name") != null && reference.getProperty("name").equals(applicationId)) {
 			application = service;
-			if (application != null)
+			if (application != null) {
 				try {
 					application.configureHost(this,applicationConfig);
+					
+					URL[] urls = findBinaries("jar");
+					classLoader = new URLClassLoader(urls, application.getApplicationClassLoader() );
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			} else {
+				URL[] urls = findBinaries("jar");
+				classLoader = new URLClassLoader(urls, getClass().getClassLoader() );
+			}
 		}
 		
 	}

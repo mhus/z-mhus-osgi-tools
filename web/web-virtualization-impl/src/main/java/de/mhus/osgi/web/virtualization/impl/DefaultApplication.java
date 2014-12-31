@@ -10,6 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -74,6 +75,14 @@ public class DefaultApplication implements VirtualApplication {
 		}
 		
 		ResourceNode res = host.getResource(context.getTarget());
+		
+		if (res != null && !res.hasContent()) {
+			// find index
+			res = app.findIndex(context, res);
+			if (res != null)
+				context.setTarget( context.getTarget() + "/" + res.getName());
+		}
+		
 		if (res != null) {
 			
 			// lookup for processor
@@ -184,6 +193,11 @@ public class DefaultApplication implements VirtualApplication {
 	@Override
 	public ResourceNode getResource(VirtualHost host, String target) {
 		return ((DefaultVirtualHost)host).getDocumentRootResource(target);
+	}
+
+	@Override
+	public ClassLoader getApplicationClassLoader() {
+		return getClass().getClassLoader();
 	}
 	
 	

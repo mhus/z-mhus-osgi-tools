@@ -1,3 +1,4 @@
+<%@taglib prefix="test" uri="/WEB-INF/I18N.tld"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,11 +23,11 @@
 	<h1>Sample Application</h1>
 	
 <div class="panel panel-info">
-	<div class="panel-heading">addentry.topic</div>
+	<div class="panel-heading"><test:i18n key="addentry.topic"/></div>
 	<div class="panel-body">
 		<table class="info">
 			<tr>
-				<td>addentry.name&nbsp;</td>
+				<td><test:i18n key="addentry.name"/>&nbsp;</td>
 				<td><input data-bind="value: f_name"/></td>
 				<td>&nbsp;<button class="btn btn-success btn-mini" data-bind="click:doAdd"><span class="glyphicon glyphicon-plus"/></button></button></td>
 		</table>
@@ -35,7 +36,7 @@
 
 <div class="panel panel-info">
 	<div class="panel-heading"><button class="btn btn-warning btn-mini"><span class="glyphicon glyphicon-refresh" data-bind="click:loadEntryList"/>
-	</button>&nbsp;&nbsp;&nbsp;list.topic</div>
+	</button>&nbsp;&nbsp;&nbsp;<test:i18n key="list.topic"/></div>
 	<div class="panel-body">
 		<table class="info">
 			<tbody data-bind="foreach: f_entries">

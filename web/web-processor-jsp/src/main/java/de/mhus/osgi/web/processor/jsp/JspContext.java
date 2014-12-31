@@ -32,18 +32,31 @@ public class JspContext implements ProcessorContext {
 	private DefaultServletConfig config;
 	private HashMap<String, JspServletWrapper> wrappers = new HashMap<>();
 	private JspServletWrapper servlet;
+	private ClassLoader hostClassLoader;
 	
 	public JspContext(VirtualHost host) throws ServletException {
 		this.host = (DefaultVirtualHost) host;
+		init();
+	}
+
+	private void init() throws ServletException {
 		servletContext = new JspDefaultServletContext(this.host);
 		config = new DefaultServletConfig(servletContext);
-		servlet = new JspServletWrapper(null,new JasperClassLoader( FrameworkUtil.getBundle(getClass()), host.getHostClassLoader()));
+		hostClassLoader = host.getHostClassLoader();
+		servlet = new JspServletWrapper(null,new MyJasperClassLoader( FrameworkUtil.getBundle(getClass()), hostClassLoader));
 		servlet.init(config);
 	}
 
 	public boolean processRequest(CentralCallContext context, ResourceNode res) {
 
 		//JspRequestWrapper req = new JspRequestWrapper(context, res, host, config);
+		
+		if ( host.getHostClassLoader() != hostClassLoader)
+			try {
+				init();
+			} catch (ServletException e1) {
+				e1.printStackTrace();
+			}
 		
 		HttpServletRequest req = context.getRequest();
 		ExtendedServletResponse.inject(context);
