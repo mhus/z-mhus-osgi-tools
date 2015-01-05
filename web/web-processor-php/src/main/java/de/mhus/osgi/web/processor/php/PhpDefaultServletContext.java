@@ -24,6 +24,9 @@ public class PhpDefaultServletContext extends DefaultServletContext {
 		tmp.mkdirs();
 //		param.put("scratchdir", tmp.getAbsolutePath() );
 //		param.put("keepgenerated", "true");
+		param.put("ini-file","WEB-INF/php.ini");
+		param.put("license-directory","WEB-INF/licenses");
+		param.put("compile", "true");
 	}
 	
 	
