@@ -39,8 +39,6 @@
       <module>bridgews-client-standalone</module>
       <module>vaadin-sample</module>
       <module>quartz-job</module>
-      <module>web-master-filter</module>
-      <module>web-sample-application</module>
     </modules>
 
 </project>
