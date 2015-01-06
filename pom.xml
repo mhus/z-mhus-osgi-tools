@@ -64,6 +64,7 @@
 		<mhulib.version>3.2.8-SNAPSHOT</mhulib.version>
 		<javax.mail.version>1.4.1</javax.mail.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
+        <felix.version>4.2.4</felix.version>
 		
 		<dependency.jetty.version>8.1.14.v20131031</dependency.jetty.version>
 		 <pax.version>3.1.0</pax.version>
@@ -104,8 +105,9 @@
       <module>osgimail</module>
       <module>quartz</module>
       <module>ports</module>
-      <module>commands</module>
+      <module>mhus-commands</module>
       <module>tutorial</module>
+      <module>mhus-web-console</module>
     </modules>
 
 
