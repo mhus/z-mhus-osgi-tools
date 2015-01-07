@@ -2,45 +2,50 @@ package de.mhus.osgi.webconsole;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URL;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.felix.webconsole.AbstractWebConsolePlugin;
-import org.apache.felix.webconsole.WebConsoleConstants;
-import org.apache.felix.webconsole.WebConsoleUtil;
+import org.apache.felix.webconsole.SimpleWebConsolePlugin;
+import org.osgi.service.component.ComponentContext;
 
 import de.mhus.lib.core.MXml;
+import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Deactivate;
 
-@Component(immediate=true,provide=Servlet.class,name="SystemInfo",properties={
-	"alias=/system/console/" + SystemInfos.PLUGIN})
-public class SystemInfos extends AbstractWebConsolePlugin {
+@Component(immediate=true,provide=DummyService.class,name="SystemEnvironment")
+public class SystemEnvironment extends SimpleWebConsolePlugin implements DummyService {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	final static String PLUGIN = "mhusys";
-	final static String TITLE = "";
+	final static String PLUGIN = "mhusysenv";
+	final static String TITLE = "System Environment";
+	
+	public SystemEnvironment() {
+		super(PLUGIN,TITLE,"Main",new String[0]);
+	}
 
-	@Override
-    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
-    IOException
-    {
-		RequestWrapper req = new RequestWrapper(request);
-		WebConsoleUtil.getVariableResolver(req);
-		super.doGet(req, response);
-    }
-    
+	@Activate
+	public void doActivate(ComponentContext ctx) {
+		register(ctx.getBundleContext());
+	}
+	@Deactivate
+	public void doDeactivate(ComponentContext ctx) {
+		unregister();
+	}
+
+	
 	@Override
 	protected void renderContent(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		
 		PrintWriter w = res.getWriter();
+		w.println("<br>");
+		
 		w.println("<table class='nicetable ui-widget'>");
 		w.println("<tr><td colspan='2' class='ui-widget-header'>System Parameters</td></tr>");
 		
@@ -50,7 +55,8 @@ public class SystemInfos extends AbstractWebConsolePlugin {
 		
 		w.println("</table>");
 
-		
+		w.println("<br>");
+
 		w.println("<table class='nicetable ui-widget'>");
 		w.println("<tr><td colspan='2' class='ui-widget-header'>Environment</td></tr>");
 		
@@ -62,22 +68,5 @@ public class SystemInfos extends AbstractWebConsolePlugin {
 		
 	}
 
-	@Override
-	public String getLabel() {
-		return PLUGIN;
-	}
-
-	@Override
-	public String getTitle() {
-		return TITLE;
-	}
-
-	public URL getResource(String resource) {
-		if (resource.equals("/"+PLUGIN))
-			return null;
- 
-		resource = resource.replaceAll("/"+PLUGIN+"/", "");
-		return getClass().getResource(resource);
-	}
 
 }
