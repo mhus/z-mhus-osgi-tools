@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.felix.webconsole.AbstractWebConsolePlugin;
 import org.apache.felix.webconsole.WebConsoleConstants;
+import org.apache.felix.webconsole.WebConsoleUtil;
 
 import de.mhus.lib.core.MXml;
 import aQute.bnd.annotation.component.Component;
@@ -26,6 +27,15 @@ public class SystemInfos extends AbstractWebConsolePlugin {
 	final static String PLUGIN = "mhusys";
 	final static String TITLE = "";
 
+	@Override
+    protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException,
+    IOException
+    {
+		RequestWrapper req = new RequestWrapper(request);
+		WebConsoleUtil.getVariableResolver(req);
+		super.doGet(req, response);
+    }
+    
 	@Override
 	protected void renderContent(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
