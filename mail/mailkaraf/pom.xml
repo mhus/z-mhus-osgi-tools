@@ -18,12 +18,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <artifactId>osgimail</artifactId>
+    <artifactId>mail</artifactId>
     <version>1.0.4-SNAPSHOT</version>
   </parent>
-  <artifactId>karafmailcore</artifactId>
-  <name>karafmailcore</name>
-  <description>jwskarafbridge OSGi blueprint bundle project.</description>
+  <artifactId>mailkaraf</artifactId>
+  <name>mailkaraf</name>
+  <description>Mail OSGi karaf commands</description>
       <packaging>bundle</packaging>
   
     <build>
@@ -55,7 +55,7 @@
     <dependencies>
     	<dependency>
     		<groupId>de.mhus.osgi</groupId>
-    		<artifactId>osgimailcore</artifactId>
+    		<artifactId>mailosgi</artifactId>
     		<version>${project.version}</version>
     		<type>bundle</type>
     	</dependency>

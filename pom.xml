@@ -102,7 +102,7 @@
       <module>jwsbridge</module>
       <module>vaadinbridge</module>
       <module>groovy-console</module>
-      <module>osgimail</module>
+      <module>mail</module>
       <module>quartz</module>
       <module>ports</module>
       <module>mhus-commands</module>

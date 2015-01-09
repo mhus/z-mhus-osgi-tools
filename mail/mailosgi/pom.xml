@@ -20,14 +20,12 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <artifactId>osgimail</artifactId>
+    <artifactId>mail</artifactId>
     <version>1.0.4-SNAPSHOT</version>
   </parent>
-  <artifactId>osgimailcore</artifactId>
-  <name>osgimailcore</name>
-  <description>
-         osgi mail core OSGi bundle project.
-  </description>
+  <artifactId>mailosgi</artifactId>
+  <name>mailosgi</name>
+  <description>osgi mail core OSGi bundle project.</description>
     <packaging>bundle</packaging>
   
     <dependencies>

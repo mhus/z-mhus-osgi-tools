@@ -19,9 +19,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>osgimail</artifactId>
+    <artifactId>mail</artifactId>
     <packaging>pom</packaging>
-  <name>osgimail</name>
+  <name>mail</name>
   <description>Provide OSGi services and interfaces to handle mails.</description>
 
   <parent>
@@ -30,8 +30,8 @@
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
     <modules>
-    <module>osgimailcore</module>
-    <module>karafmailcore</module>
+    <module>mailosgi</module>
+    <module>mailkaraf</module>
     </modules>
 
 </project>
