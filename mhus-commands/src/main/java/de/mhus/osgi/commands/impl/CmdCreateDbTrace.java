@@ -12,9 +12,10 @@ import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.BundleContext;
 
 import de.mhus.osgi.commands.db.DelegateDataSource;
+import de.mhus.osgi.commands.db.TraceDataSource;
 
-@Command(scope = "jdbc", name = "createdbdelegate", description = "Create DB Delegate")
-public class CmdCreateDbDelegate implements Action {
+@Command(scope = "jdbc", name = "createdbtrace", description = "Create DB Trace")
+public class CmdCreateDbTrace implements Action {
 
     @Option(name = "-o", aliases = { "--online" }, description = "Create the datasource online and not a blueprint", required = false, multiValued = false)
     boolean online;
@@ -33,7 +34,7 @@ public class CmdCreateDbDelegate implements Action {
 
 		if (online) {
 	        
-	        DelegateDataSource dataSource = new DelegateDataSource();
+	        TraceDataSource dataSource = new TraceDataSource();
 	        dataSource.setSource(source);
 	        dataSource.setContext(context);
 	        
@@ -43,12 +44,12 @@ public class CmdCreateDbDelegate implements Action {
 			
 	        File karafBase = new File(System.getProperty("karaf.base"));
 	        File deployFolder = new File(karafBase, "deploy");
-	        File outFile = new File(deployFolder, "datasource-delegate_" + target + ".xml");
+	        File outFile = new File(deployFolder, "datasource-trace_" + target + ".xml");
 
 	        HashMap<String, String> properties = new HashMap<String, String>();
 	        properties.put("name", target);
 	        properties.put("source", source);
-	        String templateFile = "datasource-delegate.xml";
+	        String templateFile = "datasource-trace.xml";
             InputStream is = this.getClass().getResourceAsStream(templateFile);
             if (is == null) {
                 throw new IllegalArgumentException("Template resource " + templateFile + " doesn't exist");

@@ -71,7 +71,7 @@
         <dependency>
             <groupId>de.mhus.lib</groupId>
             <artifactId>mhu-lib-core</artifactId>
-            <version>3.2.4</version>
+            <version>${mhulib.version}</version>
         </dependency>
     </dependencies>
     

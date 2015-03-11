@@ -105,9 +105,10 @@
       <module>mail</module>
       <module>quartz</module>
       <module>ports</module>
+      <module>mhus-bundle-watch</module>
       <module>mhus-commands</module>
-      <module>tutorial</module>
       <module>mhus-web-console</module>
+      <module>tutorial</module>
     </modules>
 
 

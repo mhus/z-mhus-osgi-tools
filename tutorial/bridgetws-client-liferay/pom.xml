@@ -11,7 +11,8 @@
 		<liferay.maven.plugin.version>6.2.1</liferay.maven.plugin.version>
 		<compileSource>1.7</compileSource>
 		<liferay.app.server.portal.dir>/Users/mikehummel/dev/liferay/portal-6.2-ga2/liferay-portal-6.2-ce-ga2/tomcat-7.0.42</liferay.app.server.portal.dir>
-		<mhulib.version>3.2.6-SNAPSHOT</mhulib.version>
+		<mhulib.version>3.2.8-SNAPSHOT</mhulib.version>
+		<mhus.tools.version>1.0.4-SNAPSHOT</mhus.tools.version>
 	</properties>
 
 	<build>
@@ -153,7 +154,7 @@
 			<groupId>de.mhus.osgi</groupId>
 			<artifactId>jwsclient</artifactId>
 			<type>jar</type>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>${mhus.tools.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -165,7 +166,7 @@
 		<dependency>
 			<groupId>de.mhus.osgi.tutorial</groupId>
 			<artifactId>ws-model</artifactId>
-			<version>1.0.2-SNAPSHOT</version>
+			<version>${mhus.tools.version}</version>
 			<type>jar</type>
 			<exclusions>
 				<exclusion>
@@ -185,6 +186,6 @@
 	<parent>
 		<groupId>de.mhus.osgi.tutorial</groupId>
 		<artifactId>tutorials</artifactId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.4-SNAPSHOT</version>
 	</parent>
 </project>

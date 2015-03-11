@@ -23,8 +23,8 @@ import de.mhus.osgi.commands.db.DelegatedDataSource;
 
 public class DelegateConnection implements Connection {
 	
-	private Connection instance;
-	private DelegatedDataSource dataSource;
+	protected Connection instance;
+	protected DelegatedDataSource dataSource;
 
 	public DelegateConnection(Connection connection,
 			DelegatedDataSource dataSource) {
@@ -267,6 +267,10 @@ public class DelegateConnection implements Connection {
 
 	public int getNetworkTimeout() throws SQLException {
 		return instance.getNetworkTimeout();
+	}
+
+	public DelegatedDataSource getDataSource() {
+		return dataSource;
 	}
 
 }
