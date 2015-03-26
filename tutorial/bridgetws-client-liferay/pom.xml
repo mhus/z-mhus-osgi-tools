@@ -11,7 +11,7 @@
 		<liferay.maven.plugin.version>6.2.1</liferay.maven.plugin.version>
 		<compileSource>1.7</compileSource>
 		<liferay.app.server.portal.dir>/Users/mikehummel/dev/liferay/portal-6.2-ga2/liferay-portal-6.2-ce-ga2/tomcat-7.0.42</liferay.app.server.portal.dir>
-		<mhulib.version>3.2.8-SNAPSHOT</mhulib.version>
+		<mhulib.version>3.2.8</mhulib.version>
 		<mhus.tools.version>1.0.4-SNAPSHOT</mhus.tools.version>
 	</properties>
 

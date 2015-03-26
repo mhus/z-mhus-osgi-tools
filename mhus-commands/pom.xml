@@ -46,7 +46,6 @@
                         <Export-Package>de.mhus.osgi.commands*;version=${project.version}</Export-Package>
                         <Import-Package>
 	                        !org.osgi.service.component*,
-	                        de.mhus.osgi.bundlewatch*;resolution:=optional,
 	                        *
                         </Import-Package>
                         <Service-Component>de.mhus.osgi.commands.impl*</Service-Component>
@@ -112,11 +111,6 @@
         	<groupId>de.mhus.lib</groupId>
         	<artifactId>mhu-lib-persistence</artifactId>
         	<version>${mhulib.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.osgi</groupId>
-        	<artifactId>mhus-bundle-watch</artifactId>
-        	<version>${project.version}</version>
         </dependency>
         	
 	</dependencies>
