@@ -105,7 +105,7 @@
       <module>mail</module>
       <module>quartz</module>
       <module>ports</module>
-      <module>mhus-bundle-watch</module>
+      <module>jms-commands</module>
       <module>mhus-commands</module>
       <module>mhus-web-console</module>
       <module>tutorial</module>

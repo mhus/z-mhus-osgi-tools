@@ -1,4 +1,4 @@
-package de.mhus.osgi.bundlewatch;
+package de.mhus.osgi.commands.bundle;
 
 import java.io.IOException;
 import java.util.List;
