@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.mhus.osgi.tutorial</groupId>
     <artifactId>tutorials</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
   </parent>
   <artifactId>vaadin-sample</artifactId>
   
