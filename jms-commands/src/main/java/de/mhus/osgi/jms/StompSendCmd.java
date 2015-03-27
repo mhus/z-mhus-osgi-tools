@@ -15,7 +15,7 @@ import org.apache.karaf.shell.commands.Option;
  http://activemq.apache.org/stomp.html
  
  */
-@Command(scope = "jms", name = "stomp-send", description = "send")
+@Command(scope = "jms", name = "direct-stomp-send", description = "send")
 public class StompSendCmd implements Action {
 
 	@Argument(index=0, name="url", required=true, description="...", multiValued=false)

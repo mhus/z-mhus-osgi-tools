@@ -6,7 +6,7 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
-@Command(scope = "jms", name = "list", description = "listen")
+@Command(scope = "jms", name = "direct-list", description = "listen")
 public class ReceiverListCmd implements Action {
 
 	public Object execute(CommandSession s) throws Exception {

@@ -24,7 +24,7 @@ import org.apache.karaf.shell.commands.Option;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MStopWatch;
 
-@Command(scope = "jms", name = "file", description = "send")
+@Command(scope = "jms", name = "direct-sendfile", description = "send file")
 public class SendFileCmd implements Action {
 
     private static final Boolean NON_TRANSACTED = false;

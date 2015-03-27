@@ -32,7 +32,7 @@ hello queue a^@
 
  */
 
-@Command(scope = "jms", name = "send", description = "send")
+@Command(scope = "jms", name = "direct-send", description = "send")
 public class SendCmd implements Action {
 
     private static final Boolean NON_TRANSACTED = false;

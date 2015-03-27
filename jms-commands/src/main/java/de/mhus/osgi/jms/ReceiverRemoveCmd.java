@@ -6,7 +6,7 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
-@Command(scope = "jms", name = "remove", description = "listen")
+@Command(scope = "jms", name = "direct-remove", description = "listen")
 public class ReceiverRemoveCmd implements Action {
 
 	@Argument(index=0, name="name", required=true, description="...", multiValued=false)

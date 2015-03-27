@@ -6,7 +6,7 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
-@Command(scope = "jms", name = "stomp-add", description = "listen")
+@Command(scope = "jms", name = "direct-stomp-add", description = "listen")
 public class ReceiverStompAddCmd implements Action {
 
 	@Argument(index=0, name="url", required=true, description="...", multiValued=false)

@@ -18,33 +18,33 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" default-activation="lazy">
 
     <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.0.0">
-        <command name="jms/stomp-send">
+        <command name="jms/direct-stomp-send">
             <action class="de.mhus.osgi.jms.StompSendCmd">
             </action>
         </command>
-        <command name="jms/stomp-add">
+        <command name="jms/direct-stomp-add">
             <action class="de.mhus.osgi.jms.ReceiverStompAddCmd">
             </action>
         </command>
         
-        <command name="jms/send">
+        <command name="jms/direct-send">
             <action class="de.mhus.osgi.jms.SendCmd">
             </action>
         </command>
-        <command name="jms/sendfile">
+        <command name="jms/direct-sendfile">
             <action class="de.mhus.osgi.jms.SendFileCmd">
             </action>
         </command>
         
-        <command name="jms/add">
+        <command name="jms/direct-listen">
             <action class="de.mhus.osgi.jms.ReceiverAddCmd">
             </action>
         </command>
-        <command name="jms/list">
+        <command name="jms/direct-list">
             <action class="de.mhus.osgi.jms.ReceiverListCmd">
             </action>
         </command>
-        <command name="jms/remove">
+        <command name="jms/direct-remove">
             <action class="de.mhus.osgi.jms.ReceiverRemoveCmd">
             </action>
         </command>

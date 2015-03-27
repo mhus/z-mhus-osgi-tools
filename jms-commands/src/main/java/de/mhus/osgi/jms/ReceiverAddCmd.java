@@ -6,10 +6,13 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
-@Command(scope = "jms", name = "add", description = "listen")
+import de.mhus.lib.jms.JmsConnection;
+import de.mhus.lib.karaf.jms.JmsUtil;
+
+@Command(scope = "jms", name = "direct-listen", description = "listen")
 public class ReceiverAddCmd implements Action {
 
-	@Argument(index=0, name="url", required=true, description="...", multiValued=false)
+	@Argument(index=0, name="url", required=true, description="url or connection name", multiValued=false)
     String url;
 	
 	@Argument(index=1, name="queue", required=true, description="...", multiValued=false)
@@ -29,11 +32,24 @@ public class ReceiverAddCmd implements Action {
 
 	public Object execute(CommandSession s) throws Exception {
 		
-		JmsReceiver receiver = new JmsReceiverOpenWire(user, password, url, topic, queue);
+		if (url.indexOf(':') > 0) {
 		
-		JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
-		admin.add(receiver);
-		
+			JmsReceiver receiver = new JmsReceiverOpenWire(user, password, url, topic, queue);
+			
+			JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
+			admin.add(receiver);
+			
+		} else {
+			
+			JmsConnection con = JmsUtil.getConnection(url);
+			if (con == null) {
+				System.out.println("Connection not found");
+				return null;
+			}
+			
+			
+			
+		}
 		return null;
 		
 	}
