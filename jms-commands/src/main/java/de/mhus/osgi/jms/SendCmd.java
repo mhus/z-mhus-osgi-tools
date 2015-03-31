@@ -83,8 +83,7 @@ public class SendCmd implements Action {
             	responseConsumer = session.createConsumer(answerQueue);
             }
             
-            MStopWatch watch = new MStopWatch();
-            watch.start();
+            MStopWatch watch = new MStopWatch().start();
             for (int i = 0; i < count; i++) {
                 TextMessage message = session.createTextMessage(msg);
                 String id = UUID.randomUUID().toString();
