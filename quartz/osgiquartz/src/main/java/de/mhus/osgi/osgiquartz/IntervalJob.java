@@ -4,15 +4,23 @@ import org.quartz.SimpleScheduleBuilder;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 
-public abstract class IntervalJob extends AbstractQuargiJob {
+public class IntervalJob extends AbstractQuargiJob {
 
-	protected Trigger createTrigger() {
+	private int intervalInSeconds;
+
+	protected Trigger createTrigger() throws ClassNotFoundException {
 		return TriggerBuilder.newTrigger()
 	    .withIdentity(getJobName(), getJobGroup())
 	    .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(getIntervalInSeconds()).repeatForever())
 	    .build();
 	}
 
-	protected abstract int getIntervalInSeconds();
-	
+	protected int getIntervalInSeconds() {
+		return intervalInSeconds;
+	}
+
+	public void setIntervalInSeconds(int intervalInSeconds) {
+		this.intervalInSeconds = intervalInSeconds;
+	}
+
 }

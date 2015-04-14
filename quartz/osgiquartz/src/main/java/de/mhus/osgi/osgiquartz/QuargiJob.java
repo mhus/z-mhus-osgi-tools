@@ -6,9 +6,9 @@ import org.quartz.Trigger;
 
 public interface QuargiJob {
 
-	JobDetail getJob();
+	JobDetail getJob() throws ClassNotFoundException;
 
-	Trigger getTrigger();
+	Trigger getTrigger() throws ClassNotFoundException;
 
 	void errorEvent(Exception e);
 

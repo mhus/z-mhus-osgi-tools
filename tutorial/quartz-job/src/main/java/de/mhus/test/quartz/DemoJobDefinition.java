@@ -15,7 +15,7 @@ public class DemoJobDefinition extends IntervalJob {
 	}
 
 	@Override
-	protected Class<? extends Job> getJobClass() {
+	protected Class<? extends Job> findJobClass() {
 		return PrintTimeJob.class;
 	}
 

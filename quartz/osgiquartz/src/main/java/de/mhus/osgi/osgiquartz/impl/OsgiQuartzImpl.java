@@ -67,14 +67,15 @@ public class OsgiQuartzImpl implements Quargi {
 		public QuargiJob addingService(ServiceReference<QuargiJob> reference) {
 			
 			QuargiJob job = context.getService(reference);
-			JobDetail j = job.getJob();
-			Trigger t = job.getTrigger();
-			
 			try {
+				JobDetail j = job.getJob();
+				Trigger t = job.getTrigger();
+				
 				scheduler.scheduleJob(j, t);
-			} catch (SchedulerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				job.errorEvent(e);
+				return null;
 			}
 			return job;
 		}
@@ -82,18 +83,20 @@ public class OsgiQuartzImpl implements Quargi {
 		@Override
 		public void modifiedService(ServiceReference<QuargiJob> reference,
 				QuargiJob service) {
-			QuargiJob job = context.getService(reference);
-			JobDetail j = job.getJob();
-			Trigger t = job.getTrigger();
+			
+			QuargiJob job = null;
 			try {
-				scheduler.deleteJob(j.getKey());
-			} catch (SchedulerException e) {
-				e.printStackTrace();
-				job.errorEvent(e);
-			}
-			try {
+				job = context.getService(reference);
+				JobDetail j = job.getJob();
+				Trigger t = job.getTrigger();
+				try {
+					scheduler.deleteJob(j.getKey());
+				} catch (SchedulerException e) {
+					e.printStackTrace();
+					job.errorEvent(e);
+				}
 				scheduler.scheduleJob(j, t);
-			} catch (SchedulerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				job.errorEvent(e);
 			}
@@ -104,10 +107,10 @@ public class OsgiQuartzImpl implements Quargi {
 		public void removedService(ServiceReference<QuargiJob> reference,
 				QuargiJob service) {
 			QuargiJob job = context.getService(reference);
-			JobDetail j = job.getJob();
 			try {
+				JobDetail j = job.getJob();
 				scheduler.deleteJob(j.getKey());
-			} catch (SchedulerException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				job.errorEvent(e);
 			}

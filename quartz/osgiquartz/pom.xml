@@ -47,6 +47,7 @@
             <artifactId>bndlib</artifactId>
             <version>${bndlib.version}</version>
         </dependency>
+<!-- 
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
@@ -58,6 +59,26 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+ -->       
+		<dependency>
+			<groupId>c3p0</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.1.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.6.6</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.transaction</artifactId>
+			<version>3.2-b06</version>
+			<scope>provided</scope>
+		</dependency>
+		
     </dependencies>
 
     <build>
@@ -77,13 +98,6 @@
                         </Export-Package>
                         <Import-Package>
                             com.mchange.v2*;resolution:=optional,
-                            commonj.work*;resolution:=optional,
-                            oracle.sql*;resolution:=optional,
-                            org.jboss.*;resolution:=optional,
-                            org.quartz.jobs*;resolution:=optional,
-                            weblogic.jdbc*;resolution:=optional,
-                            org.terracotta.toolkit*;resolution:=optional,
-                            javax.servlet*;resolution:=optional,
                             javax.transaction*;resolution:=optional,
                             *
                         </Import-Package>
@@ -92,7 +106,10 @@
                         </Private-Package>
                         
                         <Service-Component>*</Service-Component>
+						<!-- 
 						<Embed-Dependency>quartz</Embed-Dependency>
+						 -->
+						<DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>
