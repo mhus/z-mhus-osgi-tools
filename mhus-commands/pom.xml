@@ -29,7 +29,7 @@
     <artifactId>mhus-commands</artifactId>
     <packaging>bundle</packaging>
 
-    <name>mhus-osgi-commands</name>
+    <name>mhus-commands</name>
     <description>commands OSGi blueprint bundle project.</description>
 
     <build>
@@ -45,13 +45,12 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>de.mhus.osgi.commands*;version=${project.version}</Export-Package>
                         <Import-Package>
-	                        !org.osgi.service.component*,
 	                        *
                         </Import-Package>
-                        <Service-Component>de.mhus.osgi.commands.impl*</Service-Component>
                         <Private-Package>
                         	de.mhus.osgi.commands.impl*
                         </Private-Package>
+                        <Service-Component>*</Service-Component>
                     </instructions>
                 </configuration>
             </plugin>
@@ -110,6 +109,11 @@
         <dependency>
         	<groupId>de.mhus.lib</groupId>
         	<artifactId>mhu-lib-persistence</artifactId>
+        	<version>${mhulib.version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>de.mhus.lib</groupId>
+        	<artifactId>mhu-lib-karaf</artifactId>
         	<version>${mhulib.version}</version>
         </dependency>
         	
