@@ -11,6 +11,7 @@ import java.util.TimerTask;
 
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.CommandSession;
+import org.apache.karaf.bundle.core.BundleWatcher;
 import org.osgi.service.component.ComponentContext;
 
 import aQute.bnd.annotation.component.Activate;
@@ -23,10 +24,7 @@ import de.mhus.lib.karaf.MOsgi;
 @Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistenceWatch",provide=PersistenceWatch.class)
 public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 
-	private Timer timer;
-
-	private HashSet<String> done = new HashSet<>();
-	
+	private Timer timer;	
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
@@ -48,10 +46,17 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 
 	protected void doTask() {
 		try {
-			synchronized (done) {
+			synchronized (this) {
+				BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
+				List<String> watched = bundleWatcher.getWatchURLs();
 				for (String line : readFile()) {
 					try {
-						if (!done.contains(line)) {
+						if (!watched.contains(line)) {
+							
+							log().i("add",line);
+							bundleWatcher.add(line);
+							
+							/*
 							  CommandProcessor commandProcessor=MOsgi.getService(CommandProcessor.class);
 							  CommandSession commandSession=commandProcessor.createSession(System.in,System.out,System.err);						
 							  
@@ -59,7 +64,7 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 							  commandSession.put("USER","karaf");
 							  
 							  commandSession.execute("bundle:watch " + line);
-							done.add(line);
+							  */
 						}
 					} catch (Throwable t) {
 						log().d(t);
@@ -90,8 +95,7 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 
 	@Override
 	public void add(String line) throws IOException {
-		synchronized (done) {
-			done.remove(line);
+		synchronized (this) {
 			List<String> content = readFile();
 			if (content.contains(line))
 				content.remove(line);
@@ -103,8 +107,7 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 
 	@Override
 	public void remove(String line) throws IOException {
-		synchronized (done) {
-			done.remove(line);
+		synchronized (this) {
 			List<String> content = readFile();
 			content.remove(line);
 			writeFile(content);
@@ -114,7 +117,7 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 
 	@Override
 	public String[] list() throws IOException {
-		synchronized (done) {
+		synchronized (this) {
 			return readFile().toArray(new String[0]);
 		}
 	}
@@ -131,12 +134,5 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 		writeFile(new LinkedList<String>());
 	}
 
-
-	@Override
-	public void clearDone() {
-		synchronized (done) {
-			done.clear();
-		}
-	}
 
 }

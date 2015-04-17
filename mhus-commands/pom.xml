@@ -45,6 +45,7 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>de.mhus.osgi.commands*;version=${project.version}</Export-Package>
                         <Import-Package>
+                        	org.apache.karaf.bundle.core;resolution:=optional,
 	                        *
                         </Import-Package>
                         <Private-Package>
@@ -76,6 +77,11 @@
         <dependency>
             <groupId>org.apache.karaf.shell</groupId>
             <artifactId>org.apache.karaf.shell.console</artifactId>
+            <version>${karaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.karaf.bundle</groupId>
+            <artifactId>org.apache.karaf.bundle.core</artifactId>
             <version>${karaf.version}</version>
         </dependency>
         <dependency>

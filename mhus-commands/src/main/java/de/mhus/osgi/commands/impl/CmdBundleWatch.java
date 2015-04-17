@@ -54,7 +54,6 @@ public class CmdBundleWatch implements Action  {
 			service.clear();
 		} else
 		if (cmd.equals("rewatch")) {
-			service.clearDone();
 			service.watch();
 		}
 		return null;
