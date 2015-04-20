@@ -13,12 +13,12 @@ import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.karaf.MOsgi;
-import de.mhus.osgi.commands.watch.PersistenceWatch;
+import de.mhus.osgi.commands.watch.PersistentWatch;
 
 @Command(scope = "bundle", name = "persistentwatch", description = "Work with persistence watch list")
 public class CmdBundleWatch implements Action  {
 
-	@Argument(index=0, name="cmd", required=true, description="Command add, remove,list, clear, watch, rewatch", multiValued=false)
+	@Argument(index=0, name="cmd", required=false, description="Command add, remove,list, clear, watch, rewatch", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="lines", required=false, description="lines to add or remove", multiValued=true)
@@ -26,7 +26,7 @@ public class CmdBundleWatch implements Action  {
 	
 	public Object execute(CommandSession session) throws Exception {
 		
-		PersistenceWatch service = MOsgi.getService(PersistenceWatch.class);
+		PersistentWatch service = MOsgi.getService(PersistentWatch.class);
 
 		if (cmd == null || cmd.equals("list")) {
 			
@@ -53,8 +53,8 @@ public class CmdBundleWatch implements Action  {
 		if (cmd.equals("clear")) {
 			service.clear();
 		} else
-		if (cmd.equals("rewatch")) {
-			service.watch();
+		if (cmd.equals("remember")) {
+			service.remember();
 		}
 		return null;
 	}

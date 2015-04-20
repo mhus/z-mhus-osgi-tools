@@ -21,8 +21,8 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.karaf.MOsgi;
 
-@Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistenceWatch",provide=PersistenceWatch.class)
-public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
+@Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",provide=PersistentWatch.class)
+public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
 	private Timer timer;	
 	
@@ -89,7 +89,7 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 	}
 	
 	private File getFile() {
-		return new File("etc/" + PersistenceWatch.class.getCanonicalName() + ".txt");
+		return new File("etc/" + PersistentWatch.class.getCanonicalName() + ".txt");
 	}
 
 
@@ -132,6 +132,14 @@ public class PersistenceWatchImpl extends MLog implements PersistenceWatch {
 	@Override
 	public void clear() throws IOException {
 		writeFile(new LinkedList<String>());
+	}
+
+
+	@Override
+	public void remember() {
+		synchronized (this) {
+			
+		}
 	}
 
 

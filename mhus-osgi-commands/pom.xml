@@ -26,10 +26,10 @@
         <version>1.0.5-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mhus-commands</artifactId>
+    <artifactId>mhus-osgi-commands</artifactId>
     <packaging>bundle</packaging>
 
-    <name>mhus-commands</name>
+    <name>mhus-osgi-commands</name>
     <description>commands OSGi blueprint bundle project.</description>
 
     <build>
