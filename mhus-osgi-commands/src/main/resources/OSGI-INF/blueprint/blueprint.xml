@@ -70,6 +70,15 @@
 		        <property name="context" ref="blueprintBundleContext" />
             </action>
         </command>
+
+        <command name="java/threads">
+            <action class="de.mhus.osgi.commands.shell.CmdThreads">
+            </action>
+        </command>
+        <command name="java/kill">
+            <action class="de.mhus.osgi.commands.shell.CmdThreadKill">
+            </action>
+        </command>
         	        
     </command-bundle>
 
