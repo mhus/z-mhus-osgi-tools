@@ -24,24 +24,26 @@ import de.mhus.lib.karaf.MOsgi;
 @Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",provide=PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
-	private Timer timer;	
+	private Timer timer;
+	private TimerTask timerTask;	
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
-		timer = new Timer(true);
-		timer.schedule(new TimerTask() {
+		timer = MOsgi.getTimer();
+		timerTask = new TimerTask() {
 			
 			@Override
 			public void run() {
 				doTask();
 			}
-		}, 10000, 60000);
+		};
+		timer.schedule(timerTask, 10000, 60000);
 	}
 	
 
 	@Deactivate
 	public void doDeactivate(ComponentContext ctx) {
-		timer.cancel();
+		timerTask.cancel();
 	}
 
 	protected void doTask() {
@@ -136,9 +138,11 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
 
 	@Override
-	public void remember() {
+	public void remember() throws IOException {
 		synchronized (this) {
-			
+			BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
+			List<String> watched = bundleWatcher.getWatchURLs();
+			writeFile(watched);
 		}
 	}
 

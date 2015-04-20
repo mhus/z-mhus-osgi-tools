@@ -9,6 +9,6 @@ public interface PersistentWatch {
 	String[] list() throws IOException;
 	void watch();
 	void clear() throws IOException;
-	void remember();
+	void remember() throws IOException;
 	
 }
