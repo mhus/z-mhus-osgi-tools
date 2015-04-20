@@ -4,7 +4,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
@@ -15,7 +14,6 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.logging.FileLogger;
 import de.mhus.osgi.commands.impl.AbstractDataSource;
 import de.mhus.osgi.commands.impl.DataSourceUtil;
-import de.mhus.osgi.commands.impl.DelegateConnection;
 import de.mhus.osgi.commands.impl.TracedConnection;
 
 

@@ -11,7 +11,7 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.BundleContext;
 
-import de.mhus.osgi.commands.db.DelegateDataSource;
+import de.mhus.lib.karaf.TemplateUtils;
 import de.mhus.osgi.commands.db.TraceDataSource;
 
 @Command(scope = "jdbc", name = "createdbtrace", description = "Create DB Trace")

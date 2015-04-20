@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;

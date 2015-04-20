@@ -1,9 +1,6 @@
 package de.mhus.osgi.commands.impl;
 
-import java.io.File;
-import java.io.InputStream;
 import java.sql.Connection;
-import java.util.HashMap;
 
 import javax.sql.DataSource;
 
@@ -11,10 +8,8 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.BundleContext;
 
-import de.mhus.osgi.commands.db.DelegateDataSource;
 import de.mhus.osgi.commands.db.TraceDataSource;
 
 @Command(scope = "jdbc", name = "dbtrace", description = "Modify DB Trace")
@@ -26,6 +21,7 @@ public class CmdDbTrace implements Action {
 	@Argument(index=1, name="option", required=true, description="enable / disable", multiValued=false)
     String option;
 
+	@SuppressWarnings("unused")
 	private BundleContext context;
 
 	private DataSourceUtil util;

@@ -6,13 +6,7 @@ import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 
-import de.mhus.lib.core.MCast;
-import de.mhus.lib.core.MDate;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.osgi.commands.watch.PersistentWatch;

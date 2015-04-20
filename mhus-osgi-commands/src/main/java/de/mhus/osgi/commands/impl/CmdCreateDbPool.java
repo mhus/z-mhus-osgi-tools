@@ -11,6 +11,7 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.BundleContext;
 
+import de.mhus.lib.karaf.TemplateUtils;
 import de.mhus.osgi.commands.db.PoolDataSource;
 
 @Command(scope = "jdbc", name = "createdbpool", description = "Create DB Pool")
@@ -29,7 +30,6 @@ public class CmdCreateDbPool implements Action {
 
 	private DataSourceUtil util;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	public Object execute(CommandSession session) throws Exception {
 		
 		if (online) {

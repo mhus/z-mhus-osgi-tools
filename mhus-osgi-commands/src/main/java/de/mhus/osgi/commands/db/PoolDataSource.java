@@ -29,9 +29,11 @@ public class PoolDataSource extends AbstractDataSource {
 			if (dataSource == null) {
 				DataSource ds = new DataSourceUtil(context).getDataSource(source);
 				
+				@SuppressWarnings({ "rawtypes", "unchecked" })
 				ObjectPool connectionPool = new GenericObjectPool(null);
 				ConnectionFactory connectionFactory = new DataSourceConnectionFactory(ds);
-		        PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory,connectionPool,null,null,false,true);
+		        @SuppressWarnings("unused")
+				PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory,connectionPool,null,null,false,true);
 		        dataSource = new PoolingDataSource(connectionPool);
 
 				// dbcp2

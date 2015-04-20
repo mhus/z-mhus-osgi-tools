@@ -11,6 +11,7 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.BundleContext;
 
+import de.mhus.lib.karaf.TemplateUtils;
 import de.mhus.osgi.commands.db.FailoverDataSource;
 
 @Command(scope = "jdbc", name = "createdbfailover", description = "Create DB Failover DataSource")

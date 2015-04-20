@@ -204,6 +204,7 @@ public class TracedPreparedStatement implements PreparedStatement {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setUnicodeStream(int parameterIndex, InputStream x, int length)
 			throws SQLException {
 		instance.setUnicodeStream(parameterIndex, x, length);

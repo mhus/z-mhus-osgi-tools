@@ -3,14 +3,10 @@ package de.mhus.osgi.commands.watch;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.felix.service.command.CommandProcessor;
-import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.bundle.core.BundleWatcher;
 import org.osgi.service.component.ComponentContext;
 
@@ -19,12 +15,13 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.util.TimerIfc;
 import de.mhus.lib.karaf.MOsgi;
 
 @Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",provide=PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
-	private Timer timer;
+	private TimerIfc timer;
 	private TimerTask timerTask;	
 	
 	@Activate

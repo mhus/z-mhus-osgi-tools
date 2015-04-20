@@ -11,11 +11,9 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.w3c.dom.Document;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.MXml;
 
 @Command(scope = "bundle", name = "reinstall", description = "Remove from local repository and reinstall bundles from the remote repository")
 public class CmdBundleReinstall implements Action {
@@ -92,7 +90,7 @@ public class CmdBundleReinstall implements Action {
 				return;
 			}
 			
-			Document pom = MXml.loadXml(pomUrl.openStream());
+//			Document pom = MXml.loadXml(pomUrl.openStream());
 	//		System.out.println(MXml.dump(pom.getDocumentElement()));
 			
 			groupId = groupPath.substring("/META-INF/maven".length(), groupPath.length()-1);
