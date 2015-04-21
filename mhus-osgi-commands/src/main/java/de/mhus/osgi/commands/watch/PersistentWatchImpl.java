@@ -1,5 +1,7 @@
 package de.mhus.osgi.commands.watch;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.osgi.service.component.ComponentContext;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.util.TimerIfc;
 import de.mhus.lib.karaf.MOsgi;
@@ -20,13 +23,13 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
 	private TimerIfc timer;
 	private TimerTask timerTask;
-	private PersistentWatchConfig pwc;
+//	private PersistentWatchConfig pwc;
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
 		
-	    pwc = new PersistentWatchConfig();
-	    pwc.register(ctx.getBundleContext());
+//	    pwc = new PersistentWatchConfig();
+//	    pwc.register(ctx.getBundleContext());
 		
 		timer = MOsgi.getTimer();
 		timerTask = new TimerTask() {
@@ -43,7 +46,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 	@Deactivate
 	public void doDeactivate(ComponentContext ctx) {
 		timerTask.cancel();
-		pwc.unregister();
+//		pwc.unregister();
 	}
 
 	protected void doTask() {
@@ -79,22 +82,22 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 	}
 
 	private List<String> readFile() throws IOException {
-//		try {
-//			return MFile.readLines(getFile(),true);
-//		} catch (FileNotFoundException e) {
-//			return new LinkedList<>();
-//		}
-		return pwc.readFile();
+		try {
+			return MFile.readLines(getFile(),true);
+		} catch (FileNotFoundException e) {
+			return new LinkedList<>();
+		}
+//		return pwc.readFile();
 	}
 	
 	private void writeFile(List<String> content) throws IOException {
-//		MFile.writeLines(getFile(), content, false);
-		pwc.writeFile(content);
+		MFile.writeLines(getFile(), content, false);
+//		pwc.writeFile(content);
 	}
 	
-//	private File getFile() {
-//		return new File("etc/" + PersistentWatch.class.getCanonicalName() + ".txt");
-//	}
+	private File getFile() {
+		return new File("etc/" + PersistentWatch.class.getCanonicalName() + ".cfg");
+	}
 
 
 	@Override
