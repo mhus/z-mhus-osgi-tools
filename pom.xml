@@ -106,7 +106,7 @@
       <module>quartz</module>
       <module>ports</module>
       <module>jms-commands</module>
-      <module>mhus-commands</module>
+      <module>mhus-osgi-commands</module>
       <module>mhus-web-console</module>
       <module>tutorial</module>
     </modules>
