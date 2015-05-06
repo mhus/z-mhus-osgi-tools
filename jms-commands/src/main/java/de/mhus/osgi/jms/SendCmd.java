@@ -20,6 +20,10 @@ import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
 import de.mhus.lib.core.MStopWatch;
+import de.mhus.lib.core.MString;
+import de.mhus.lib.jms.JmsConnection;
+import de.mhus.lib.jms.JmsDestination;
+import de.mhus.lib.karaf.jms.JmsUtil;
 
 /*
 MESSAGE
@@ -38,7 +42,7 @@ public class SendCmd implements Action {
     private static final Boolean NON_TRANSACTED = false;
     private static final long DELAY = 100;
     
-	@Argument(index=0, name="url", required=true, description="...", multiValued=false)
+	@Argument(index=0, name="url", required=true, description="url tcp:// or name of the connection", multiValued=false)
     String url;
 	
 	@Argument(index=1, name="queue", required=true, description="...", multiValued=false)
@@ -47,7 +51,7 @@ public class SendCmd implements Action {
 	@Argument(index=2, name="msg", required=true, description="...", multiValued=false)
     String msg;
 
-	@Argument(index=3, name="count", required=false, description="...", multiValued=false)
+	@Option(name="-c", aliases="--count", required=false, description="...", multiValued=false)
     int count = 1;
 	
 	@Option(name="-t", aliases="--topic", description="Use a topic instead of a queue",required=false)
@@ -62,36 +66,55 @@ public class SendCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 	
+	@Option(name="-h", aliases="--header", description="Header key=value",required=false,multiValued=true)
+	String[] header;
+	
+	boolean ownConnection = false;
+	
 	public Object execute(CommandSession s) throws Exception {
 
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
-        Connection connection = null;
+        JmsConnection connection = null;
         
         try {
 
-            connection = connectionFactory.createConnection();
-            connection.start();
-
-            Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = topic ? session.createTopic(queue) : session.createQueue(queue);
-            MessageProducer producer = session.createProducer(destination);
+        	if (url.indexOf(':') > 0 ) {
+        		ownConnection = true;
+	            connection = new JmsConnection(url, user, password);
+        	} else {
+        		JmsUtil.getConnection(url);
+        	}
+        	
+        	JmsDestination destination = topic ? connection.createTopic(queue) : connection.createQueue(queue);
+        	destination.open();
+        	
+            MessageProducer producer = connection.getSession().createProducer(destination.getDestination());
 
             TemporaryQueue answerQueue = null;
             MessageConsumer responseConsumer = null;
             if (sync) {
-            	answerQueue = session.createTemporaryQueue();
-            	responseConsumer = session.createConsumer(answerQueue);
+            	answerQueue = connection.getSession().createTemporaryQueue();
+            	responseConsumer = connection.getSession().createConsumer(answerQueue);
             }
             
             MStopWatch watch = new MStopWatch().start();
             for (int i = 0; i < count; i++) {
-                TextMessage message = session.createTextMessage(msg);
+                TextMessage message = connection.getSession().createTextMessage(msg);
                 String id = UUID.randomUUID().toString();
                 message.setJMSMessageID(id);
                 if (answerQueue != null) {
                 	message.setJMSReplyTo(answerQueue);
                 	message.setJMSCorrelationID(id);
                 }
+                
+                if (header != null) {
+                	for (String h : header) {
+                		String name = MString.beforeIndex(h, '=');
+                		String value = MString.afterIndex(h, '=');
+                		if (MString.isSet(name))
+                			message.setStringProperty( name, value);
+                	}
+                }
+                
                 System.out.println("Sending message #" + i);
                 producer.send(message);
                 if (answerQueue != null) {
@@ -114,17 +137,17 @@ public class SendCmd implements Action {
 //            producer.send(session.createTextMessage("END"));
 
             producer.close();
-            session.close();
+            connection.getSession().close();
 
         } catch (Exception e) {
             System.out.println("Caught exception!");
             e.printStackTrace();
         }
         finally {
-            if (connection != null) {
+            if (connection != null && ownConnection) {
                 try {
                     connection.close();
-                } catch (JMSException e) {
+                } catch (Exception e) {
                     System.out.println("Could not close an open connection...");
                     e.printStackTrace();
                 }
