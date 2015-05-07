@@ -1,13 +1,19 @@
 package de.mhus.osgi.jms;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.Serializable;
 import java.util.UUID;
 
+import javax.jms.BytesMessage;
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.jms.TemporaryQueue;
 import javax.jms.TextMessage;
@@ -19,8 +25,10 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MStopWatch;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.jms.ClientJms;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.JmsDestination;
 import de.mhus.lib.karaf.jms.JmsUtil;
@@ -48,7 +56,7 @@ public class SendCmd implements Action {
 	@Argument(index=1, name="queue", required=true, description="...", multiValued=false)
     String queue;
 
-	@Argument(index=2, name="msg", required=true, description="...", multiValued=false)
+	@Argument(index=2, name="msg", required=false, description="...", multiValued=false)
     String msg;
 
 	@Option(name="-c", aliases="--count", required=false, description="...", multiValued=false)
@@ -69,6 +77,15 @@ public class SendCmd implements Action {
 	@Option(name="-h", aliases="--header", description="Header key=value",required=false,multiValued=true)
 	String[] header;
 	
+	@Option(name="-m", aliases="--map", description="Map value key=value (Map Message)",required=false,multiValued=true)
+	String[] map;
+	
+	@Option(name="-f", aliases="--file", description="File (Bytes Message)",required=false)
+	String file;
+	
+	@Option(name="-o", aliases="--object", description="File (Object Message)",required=false)
+	String object;
+	
 	boolean ownConnection = false;
 	
 	public Object execute(CommandSession s) throws Exception {
@@ -81,30 +98,41 @@ public class SendCmd implements Action {
         		ownConnection = true;
 	            connection = new JmsConnection(url, user, password);
         	} else {
-        		JmsUtil.getConnection(url);
+        		connection = JmsUtil.getConnection(url);
         	}
         	
         	JmsDestination destination = topic ? connection.createTopic(queue) : connection.createQueue(queue);
         	destination.open();
         	
-            MessageProducer producer = connection.getSession().createProducer(destination.getDestination());
-
-            TemporaryQueue answerQueue = null;
-            MessageConsumer responseConsumer = null;
-            if (sync) {
-            	answerQueue = connection.getSession().createTemporaryQueue();
-            	responseConsumer = connection.getSession().createConsumer(answerQueue);
-            }
-            
+        	ClientJms client = new ClientJms(destination);
+            client.setTimeout(30 * 1000);
             MStopWatch watch = new MStopWatch().start();
             for (int i = 0; i < count; i++) {
-                TextMessage message = connection.getSession().createTextMessage(msg);
+            	Message message = null;
+            	
+            	if (map != null) {
+            		MapMessage mm = connection.getSession().createMapMessage();
+                	for (String h : map) {
+                		String name = MString.beforeIndex(h, '=');
+                		String value = MString.afterIndex(h, '=');
+                		if (MString.isSet(name))
+                			mm.setString( name, value);
+                	}
+            		message = mm;
+            	} else
+            	if (file != null) {
+            		BytesMessage mm = connection.getSession().createBytesMessage();
+            		File f = new File(file);
+                    byte[] b = MFile.readBinaryFile(f);
+                    mm.writeBytes(b);
+            	} else
+            	if (object != null) {
+            		Object o = s.get(object);
+            		message = connection.getSession().createObjectMessage((Serializable) o);
+            	} else
+            		message = connection.getSession().createTextMessage(msg);
+            	
                 String id = UUID.randomUUID().toString();
-                message.setJMSMessageID(id);
-                if (answerQueue != null) {
-                	message.setJMSReplyTo(answerQueue);
-                	message.setJMSCorrelationID(id);
-                }
                 
                 if (header != null) {
                 	for (String h : header) {
@@ -115,29 +143,23 @@ public class SendCmd implements Action {
                 	}
                 }
                 
-                System.out.println("Sending message #" + i);
-                producer.send(message);
-                if (answerQueue != null) {
-                	Message answer = responseConsumer.receive(1000 * 30); // wait 30 seconds
-                	if (answer == null) {
-                		System.out.println("*** Answer not received");
-                	} else {
-                		String answerTxt = null;
-                		if (answer instanceof TextMessage)
-                			answerTxt = ((TextMessage)answer).getText();
-                		else
-                			answerTxt = answer.toString();
-                		System.out.println("--- Answer: " + watch.getCurrentTimeAsString(true) + " " + answerTxt);
+                System.out.println("Sending message #" + i + " " + message);
+
+                if (sync) {
+                	Message res = client.sendJms(message);
+                	if (res != null) {
+                		if (res instanceof MapMessage)
+                			((MapMessage)res).getMapNames(); // touch the map message
                 	}
-                }
+            		System.out.println("--- Answer: " + watch.getCurrentTimeAsString(true) + " " + res);
+                } else
+                	client.sendJmsOneWay(message);
+
             }
             watch.stop();
             System.out.println(watch.getCurrentTimeAsString(true));
             // tell the subscribers we're done
 //            producer.send(session.createTextMessage("END"));
-
-            producer.close();
-            connection.getSession().close();
 
         } catch (Exception e) {
             System.out.println("Caught exception!");
