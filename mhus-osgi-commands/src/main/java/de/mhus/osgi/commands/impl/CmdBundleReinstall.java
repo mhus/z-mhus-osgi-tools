@@ -35,6 +35,9 @@ public class CmdBundleReinstall implements Action {
     @Option(name = "-w", aliases = { "--watch" }, description = "Set bundle:watch option", required = false, multiValued = false)
     boolean setWatch;
     
+    @Option(name = "-c", aliases = { "--clean" }, description = "Clean Local Maven Repository", required = false, multiValued = false)
+    boolean cleanLocalRepo;
+    
 	@Override
 	public Object execute(CommandSession session) throws Exception {
 		
@@ -128,7 +131,8 @@ public class CmdBundleReinstall implements Action {
 		if (!file.exists()) {
 			System.out.println("Local repository directory not found: " + bn);
 		} else {
-			MFile.deleteDir(file);
+			if (cleanLocalRepo)
+				MFile.deleteDir(file);
 		}
 		
 		if (!notUpdate) {

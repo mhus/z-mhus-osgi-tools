@@ -1,5 +1,7 @@
 package de.mhus.osgi.commands.impl;
 
+import java.lang.reflect.Field;
+
 import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.commands.Action;
 import org.apache.karaf.shell.commands.Argument;
@@ -32,15 +34,22 @@ public class CmdBundleList implements Action  {
 		table.getHeader().add("Modified");
 		if (pLocation)
 			table.getHeader().add("Location");
+		table.getHeader().add("Valid");
 
 		for (Bundle b : context.getBundles()) {
 			
-			if (filter == null || MString.compareRegexPattern(b.getSymbolicName(), filter)) {
+			String valid = "valid";
+			try {
+				b.getBundleContext().getBundle();
+			} catch (Throwable e) {
+				valid = e.getMessage();
+			}
 			
+			if (filter == null || MString.compareRegexPattern(b.getSymbolicName(), filter)) {
 				if (pLocation)
-					table.addRowValues(b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()), b.getLocation() );
+					table.addRowValues(b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()), b.getLocation(), valid );
 				else
-					table.addRowValues(b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()) );
+					table.addRowValues(b.getBundleId(),b.getSymbolicName(),b.getVersion().toString(), toState(b.getState()), MDate.toIsoDateTime(b.getLastModified()), valid );
 			}		
 		}
 		table.print(System.out);
