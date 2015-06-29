@@ -21,9 +21,6 @@ public class ReceiverAddCmd implements Action {
 	@Option(name="-t", aliases="--topic", description="Use a topic instead of a queue",required=false)
 	boolean topic = false;
 	
-	@Option(name="-s", aliases="--synchronized", description="Create a temporary answer queue and wait for the answer",required=false)
-	boolean sync = false;
-	
 	@Option(name="-u", aliases="--user", description="User",required=false)
 	String user = "admin";
 	
@@ -47,7 +44,10 @@ public class ReceiverAddCmd implements Action {
 				return null;
 			}
 			
+			JmsReceiver receiver = new JmsReceiverOpenWire(con, topic, queue);
 			
+			JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
+			admin.add(receiver);
 			
 		}
 		return null;

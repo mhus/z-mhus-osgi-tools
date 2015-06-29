@@ -256,7 +256,7 @@ public class ConsoleView extends VerticalLayout implements View {
 			bindingInfo.setValue(out.toString());
 		} catch (Throwable t) {
 			bindingInfo.setValue(t.toString());
-			log.error("",t);
+			log.e("",t);
 		}
 	}
 
@@ -284,7 +284,7 @@ public class ConsoleView extends VerticalLayout implements View {
 			bindingInfo.setValue("");
 		} catch (Throwable t) {
 			bindingInfo.setValue(t.toString());
-			log.error("",t);
+			log.e("",t);
 		}
 	}
 	
@@ -300,7 +300,7 @@ public class ConsoleView extends VerticalLayout implements View {
 			text.append( "< " + ret + "\n" );
 			if (ret != null) getUI().showNotification(ret.toString());
 		} catch (Throwable e) {
-			log.error("",e);
+			log.e("",e);
 			getUI().showNotification(e.toString(),Notification.TYPE_ERROR_MESSAGE );
 			text.append(e.toString() + "\n");
 		}

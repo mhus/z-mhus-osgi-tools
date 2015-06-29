@@ -28,6 +28,7 @@ import org.apache.karaf.shell.commands.Option;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MStopWatch;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.jms.ClientJms;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.JmsDestination;
@@ -49,6 +50,7 @@ public class SendCmd implements Action {
 
     private static final Boolean NON_TRANSACTED = false;
     private static final long DELAY = 100;
+    private static Log log = Log.getLog(SendCmd.class);
     
 	@Argument(index=0, name="url", required=true, description="url tcp:// or name of the connection", multiValued=false)
     String url;
@@ -132,7 +134,7 @@ public class SendCmd implements Action {
             	} else
             		message = connection.getSession().createTextMessage(msg);
             	
-                String id = UUID.randomUUID().toString();
+                //String id = UUID.randomUUID().toString();
                 
                 if (header != null) {
                 	for (String h : header) {
@@ -143,7 +145,7 @@ public class SendCmd implements Action {
                 	}
                 }
                 
-                System.out.println("Sending message #" + i + " " + message);
+                log.i("Sending message #" + i, message);
 
                 if (sync) {
                 	Message res = client.sendJms(message);
@@ -151,27 +153,25 @@ public class SendCmd implements Action {
                 		if (res instanceof MapMessage)
                 			((MapMessage)res).getMapNames(); // touch the map message
                 	}
-            		System.out.println("--- Answer: " + watch.getCurrentTimeAsString(true) + " " + res);
+            		log.i("Answer", watch.getCurrentTimeAsString(true), res);
                 } else
                 	client.sendJmsOneWay(message);
 
             }
             watch.stop();
-            System.out.println(watch.getCurrentTimeAsString(true));
+            log.i(watch.getCurrentTimeAsString(true));
             // tell the subscribers we're done
 //            producer.send(session.createTextMessage("END"));
 
         } catch (Exception e) {
-            System.out.println("Caught exception!");
-            e.printStackTrace();
+            log.e("Caught exception!", e);
         }
         finally {
             if (connection != null && ownConnection) {
                 try {
                     connection.close();
                 } catch (Exception e) {
-                    System.out.println("Could not close an open connection...");
-                    e.printStackTrace();
+                    log.e("Could not close an open connection...",e);
                 }
             }
         }	  
