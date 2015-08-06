@@ -22,9 +22,11 @@ public class Resource {
 	}
 
 	public String getMimeType(ServletContext context) throws ServletException, IOException {
+		String path = getPath();
+		if (path == null) return "text/plain";
 		String mime = context == null ? null : context.getMimeType(getPath());
 		if (mime == null) {
-			String path = getPath().toLowerCase();
+			path = path.toLowerCase();
 			if (path.endsWith(".css")) {
 				return "text/css";
 			} else
