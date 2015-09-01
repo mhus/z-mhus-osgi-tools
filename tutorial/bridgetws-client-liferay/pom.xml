@@ -20,7 +20,7 @@
 			<plugin>
 				<groupId>com.liferay.maven.plugins</groupId>
 				<artifactId>liferay-maven-plugin</artifactId>
-				<version>${liferay.maven.plugin.version}</version>
+                <version>${bundle.plugin.version}</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>

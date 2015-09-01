@@ -53,7 +53,7 @@
         <bndlib.version>1.50.0</bndlib.version>
         <felix.metatype.version>1.0.10</felix.metatype.version>
 		<compileSource>1.7</compileSource>
-        <maven-bundle-plugin.version>2.4.0</maven-bundle-plugin.version>
+        <bundle.plugin.version>2.5.3</bundle.plugin.version>
         <osgi.version>5.0.0</osgi.version>
         <cxf.version>2.7.9</cxf.version>
 		<vaadin.version>7.1.12</vaadin.version>
