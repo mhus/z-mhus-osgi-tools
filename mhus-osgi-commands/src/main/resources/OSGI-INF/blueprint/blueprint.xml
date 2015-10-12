@@ -60,6 +60,10 @@
             <action class="de.mhus.osgi.commands.impl.CmdGC">
             </action>
         </command>
+        <command name="java/finalization">
+            <action class="de.mhus.osgi.commands.impl.CmdFinalization">
+            </action>
+        </command>
         <command name="java/mem">
             <action class="de.mhus.osgi.commands.impl.CmdMem">
             </action>
