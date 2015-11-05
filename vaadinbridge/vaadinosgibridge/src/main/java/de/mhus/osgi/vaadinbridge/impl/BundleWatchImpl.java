@@ -94,7 +94,11 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 //			log.info(bundle.getSymbolicName() + ": " + path );
 			path = path.substring("VAADIN".length());			
 			
-			if (bundle.getSymbolicName().equals("com.vaadin.server") && path.equals("/vaadinBootstrap.js")) {
+			if (path != null && 
+				bundle.getSymbolicName() != null &&
+				bundle.getSymbolicName().equals("com.vaadin.server") && 
+				path.equals("/vaadinBootstrap.js"))
+			{
 				resources.add(path);
 			} else {
 				Enumeration<String> list2 = bundle.getEntryPaths("/VAADIN" + path);
@@ -116,7 +120,11 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 			if (current != null) {
 				admin.removeResource(bundle.getSymbolicName());
 			}
-			admin.addResource(bundle.getSymbolicName(), resources.toArray(new String[resources.size()]));
+			try {
+				admin.addResource(bundle.getSymbolicName() == null ? ""+bundle.getBundleId() : bundle.getSymbolicName(), resources.toArray(new String[resources.size()]));
+			} catch (Throwable t) {
+				log.warning("can't add resources of bundle " + bundle + " " + t);
+			}
 		}
 	}
 
@@ -124,7 +132,11 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 	public void refreshAll() {
 		for (Bundle bundle : context.getBundles()) {
 			if (bundle.getState() == Bundle.ACTIVE) {
-				doBundle(bundle);
+				try {
+					doBundle(bundle);
+				} catch (Throwable t) {
+					log.warning("can't refresh bundle " + bundle + " " + t);
+				}
 			}
 		}
 	}

@@ -35,6 +35,7 @@
   </properties>
     <modules>
     <module>common-discovery</module>
+    <module>vaadin-shared-deps</module>
     </modules>
 
 </project>

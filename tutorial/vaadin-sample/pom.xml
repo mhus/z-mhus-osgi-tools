@@ -5,7 +5,9 @@
     <artifactId>tutorials</artifactId>
     <version>1.0.5-SNAPSHOT</version>
   </parent>
+  <name>vaadin-sample</name>
   <artifactId>vaadin-sample</artifactId>
+  <packaging>bundle</packaging>
   
     <build>
         <plugins>
@@ -25,9 +27,6 @@
                         <Import-Package>
                             *
                         </Import-Package>
-                        <Private-Package>
-                        	de.mhus.osgi.vaadin_sample.impl*
-                        </Private-Package>
                         <Service-Component>*</Service-Component>
                     </instructions>
                 </configuration>

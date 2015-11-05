@@ -82,7 +82,8 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 	 * @param pathes
 	 */
 	public void addResource(String bundle, String... pathes) {
-		if (bundle == null || pathes == null) throw new NullPointerException();
+		if (bundle == null || pathes == null)
+			throw new NullPointerException();
 		for (String p : pathes) if (p == null) throw new NullPointerException();
 		synchronized (list) {
 			for (ResourceBundle r : list) {
