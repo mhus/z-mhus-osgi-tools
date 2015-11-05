@@ -2,6 +2,7 @@ package de.mhus.osgi.vaadinbridge;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 
 import javax.servlet.ServletContext;
@@ -49,6 +50,7 @@ public class Resource {
 	}
 
 	public String getPath() {
+		if (url == null) return null;
 		return url.getPath();
 	}
 	
@@ -60,11 +62,19 @@ public class Resource {
 		return url.openStream();
 	}
 
-	public void writeToStream(ServletOutputStream outputStream) throws IOException {
+	public void writeToStream(OutputStream outputStream) throws IOException {
 		
 		InputStream stream = openStream();
 		IOUtils.copy(stream, outputStream);
 		
+	}
+
+	public Bundle getBundle() {
+		return bundle;
+	}
+
+	public URL getUrl() {
+		return url;
 	}
 	
 }

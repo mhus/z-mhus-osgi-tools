@@ -100,6 +100,9 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 				path.equals("/vaadinBootstrap.js"))
 			{
 				resources.add(path);
+			} else
+			if (path != null && ( path.indexOf("gwt-unitCache") > -1 || path.indexOf("WEB-INF") > -1 ) ) {
+				// ignore
 			} else {
 				Enumeration<String> list2 = bundle.getEntryPaths("/VAADIN" + path);
 				if (list2 != null) {

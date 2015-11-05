@@ -1,6 +1,8 @@
 package de.mhus.osgi.vaadinbridge.impl;
 
+import java.io.File;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -15,6 +17,7 @@ import de.mhus.osgi.vaadinbridge.VaadinResourceProvider;
 @Component(name=ConfigurableResourceProvider.NAME,servicefactory=true)
 public class ConfigurableResourceProvider implements VaadinResourceProvider, VaadinConfigurableResourceProviderAdmin {
 
+	public static Logger logger = Logger.getLogger("ConfigurableResourceProvider");
 	public static final String NAME = "configurableVaadinResourceProvider";
 	private static LinkedList<ResourceBundle> list = new LinkedList<ResourceBundle>();
 	private BundleContext context;
@@ -97,6 +100,9 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 			r.pathes = pathes;
 			list.add(r);
 		}
+		
+		cleanupCache();
+		
 	}
 
 	public void removeResource(String bundle) {
@@ -162,4 +168,13 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 		this.debug = debug;
 	}
 	
+	public void cleanupCache() {
+		logger.info("cleanup cache");
+        synchronized (VaadinResourcesServlet.SCSS_MUTEX) {
+        	for (File f : new File("vaadincache").listFiles()) {
+        		if (f.isFile() && !f.getName().startsWith(".")) f.delete();
+        	};
+        }
+	}
+
 }

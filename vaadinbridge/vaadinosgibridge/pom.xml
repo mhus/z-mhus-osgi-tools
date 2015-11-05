@@ -62,7 +62,7 @@
 						<Private-Package>
                             de.mhus.osgi.vaadinbridge.impl
                         </Private-Package>
-                        
+                        <Embed-Dependency>vaadin-sass-compiler</Embed-Dependency>
                         <Service-Component>*</Service-Component>
                     </instructions>
                 </configuration>
@@ -92,6 +92,12 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
 			<version>${vaadin.version}</version>
+		</dependency>
+		 
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-sass-compiler</artifactId>
+			<version>0.9.12</version>
 		</dependency>
 		 
 		<dependency>

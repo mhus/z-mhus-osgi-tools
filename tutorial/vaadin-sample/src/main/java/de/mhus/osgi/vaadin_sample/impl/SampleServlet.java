@@ -15,7 +15,7 @@ import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderFinder;
 
 
 @Component(provide = Servlet.class, properties = { "alias=/vaadinsample" }, name="VaadinSample",servicefactory=true)
-@VaadinServletConfiguration(ui=SampleUI.class, productionMode=false)
+@VaadinServletConfiguration(ui=SampleUI.class, productionMode=true)
 public class SampleServlet extends VaadinServlet {
 
 	private static final long serialVersionUID = 1L;

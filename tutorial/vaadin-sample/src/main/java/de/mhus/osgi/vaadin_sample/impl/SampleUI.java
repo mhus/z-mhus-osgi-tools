@@ -7,6 +7,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -16,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 @Theme("vaadinsample")
+@Widgetset("de.mhus.test.vaadin.VaadinExampleApplication.MyAppWidgetset")
 public class SampleUI extends UI {
 
 	private static final long serialVersionUID = 1L;
