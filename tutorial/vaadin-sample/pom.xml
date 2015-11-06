@@ -52,11 +52,7 @@
                         <goals>
                             <goal>update-theme</goal>
                             <goal>update-widgetset</goal>
-                            <goal>compile-theme</goal>
                             <goal>compile</goal>
-                         <!-- disabled by default to use on-the-fly theme 
-                                compilation -->
-                            <!-- <goal>compile-theme</goal> -->
                         </goals>
                     </execution>
                 </executions>
@@ -105,7 +101,6 @@
                                         <artifactId>vaadin-maven-plugin</artifactId>
                                         <versionRange>[7.1.11,)</versionRange>
                                         <goals>
-                                            <goal>compile-theme</goal>
                                             <goal>update-theme</goal>
                                             <goal>resources</goal>
                                             <goal>update-widgetset</goal>

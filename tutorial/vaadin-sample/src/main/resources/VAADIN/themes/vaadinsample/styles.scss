@@ -1,4 +1,4 @@
-/*
+
 @import "vaadinsample.scss";
 @import "addons.scss";
 
@@ -12,10 +12,11 @@ $v-layout-margin: $v-layout-margin-top $v-layout-margin-right $v-layout-margin-b
   @include addons;
   @include vaadinsample;
 }
-*/
 
+/*
 @import "../reindeer/legacy-styles.css";
 
 .v-app {
     background: grey;
 }
+*/
