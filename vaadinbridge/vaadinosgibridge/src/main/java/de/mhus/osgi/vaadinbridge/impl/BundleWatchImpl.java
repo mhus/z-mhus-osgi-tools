@@ -101,16 +101,20 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 			{
 				resources.add(path);
 			} else
-			if (path != null && ( path.indexOf("gwt-unitCache") > -1 || path.indexOf("WEB-INF") > -1 ) ) {
+			if (path != null && path.indexOf("gwt-unitCache") > -1) {
 				// ignore
 			} else {
 				Enumeration<String> list2 = bundle.getEntryPaths("/VAADIN" + path);
 				if (list2 != null) {
 					while (list2.hasMoreElements()) {
 						String path2 = list2.nextElement();
-						path2 = path2.substring("VAADIN".length());
-						if (path2.endsWith("/")) path2 = path2.substring(0, path2.length()-1);
-						resources.add(path2);
+						if ( path2.indexOf("WEB-INF") > -1 ) {
+							// ignore
+						} else {
+							path2 = path2.substring("VAADIN".length());
+							if (path2.endsWith("/")) path2 = path2.substring(0, path2.length()-1);
+							resources.add(path2);
+						}
 					}
 				}
 			}

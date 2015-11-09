@@ -135,7 +135,7 @@ public class VaadinResourcesServlet extends HttpServlet {
 				VaadinResourceProvider service = (VaadinResourceProvider)serviceObj;
 //				if (service.canHandle(newName)) {
 					Resource res = service.getResource(newName);
-					if (res != null) {
+					if (res != null && res.getUrl() != null) {
 						return handleScss(res,name, newName);
 					}
 //				}
