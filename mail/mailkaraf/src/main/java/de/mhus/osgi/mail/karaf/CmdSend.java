@@ -47,7 +47,7 @@ public class CmdSend implements Action {
 		for (int i = 0; i < attachFiles.length; i++)
 			attachFiles[i] = new File(attachments[i]);
 		
-		MailUtil.sendEmailWithAttachments(q, from, address, subject, message, attachFiles);
+		MailUtil.sendEmailWithAttachments(name, from, address, subject, message, attachFiles);
 		
 		System.out.println("OK");
 		

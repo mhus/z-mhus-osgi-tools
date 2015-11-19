@@ -32,10 +32,11 @@ public class MailUtil {
 		manager.registerQueue(new SmtpSendQueue(queueName, properties));
 	}
 	
-	public static void sendEmailWithAttachments(SendQueue queue, String from, String toAddress,
+	public static void sendEmailWithAttachments(String queueName, String from, String toAddress,
             String subject, String message, File ... attachFiles)
             throws Exception {
 
+		SendQueue queue = getSendQueueManager().getQueue(queueName);
         // creates a new e-mail message
         Message msg = new MimeMessage(queue.getSession());
  
@@ -78,10 +79,11 @@ public class MailUtil {
         queue.sendMessage(msg, new Address[] { new InternetAddress(toAddress) } );
 	}
 	
-	public static void sendEmailWithAttachments(SendQueue queue, String from, String[] toAddress,
+	public static void sendEmailWithAttachments(String queueName, String from, String[] toAddress,
             String subject, String message, File ... attachFiles)
             throws Exception {
 
+		SendQueue queue = getSendQueueManager().getQueue(queueName);
         // creates a new e-mail message
         Message msg = new MimeMessage(queue.getSession());
  
