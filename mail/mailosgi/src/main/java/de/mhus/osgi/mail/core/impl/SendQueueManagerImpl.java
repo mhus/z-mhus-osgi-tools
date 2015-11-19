@@ -23,7 +23,7 @@ public class SendQueueManagerImpl implements SendQueueManager {
 	
 	@Override
 	public void sendMail(Message message, Address[] addresses) throws Exception {
-		sendMail("default", message, addresses);
+		sendMail(QUEUE_DEFAULT, message, addresses);
 	}
 	
 	@Override
@@ -87,7 +87,7 @@ public class SendQueueManagerImpl implements SendQueueManager {
 	@Override
 	public void sendMail(Message message, Address addresse)
 			throws Exception {
-		sendMail("default", message, new Address[] {addresse});
+		sendMail(QUEUE_DEFAULT, message, new Address[] {addresse});
 	}
 	
 	@Override

@@ -5,6 +5,8 @@ import javax.mail.Message;
 
 public interface SendQueueManager {
 
+	public static String QUEUE_DEFAULT = "default";
+	
 	/**
 	 * Send a mail.
 	 * 
