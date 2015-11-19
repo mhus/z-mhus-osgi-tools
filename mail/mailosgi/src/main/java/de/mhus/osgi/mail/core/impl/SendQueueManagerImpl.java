@@ -1,6 +1,10 @@
 package de.mhus.osgi.mail.core.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
+import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Address;
 import javax.mail.Message;
@@ -9,10 +13,12 @@ import aQute.bnd.annotation.component.Component;
 import de.mhus.osgi.mail.core.QueueNotFoundException;
 import de.mhus.osgi.mail.core.SendQueueManager;
 import de.mhus.osgi.mail.core.SendQueue;
+import de.mhus.osgi.mail.core.SmtpSendQueue;
 
 @Component(name="DefaultSendQueueManager",immediate=true)
 public class SendQueueManagerImpl implements SendQueueManager {
 
+	private static Logger log = Logger.getLogger(SendQueueManagerImpl.class.getCanonicalName());
 	private HashMap<String, SendQueue> queues = new HashMap<>();
 	
 	@Override
@@ -25,8 +31,31 @@ public class SendQueueManagerImpl implements SendQueueManager {
 	@Override
 	public SendQueue getQueue(String name) {
 		synchronized (queues) {
-			return queues.get(name);
+			SendQueue ret = queues.get(name);
+			if (ret == null) {
+				ret = loadQueue(name);
+			}
+			return ret;
 		}
+	}
+
+	private SendQueue loadQueue(String name) {
+		Properties p = new Properties();
+		File file = new File("etc/smtp-" + name + ".properties");
+		if (!file.exists()) {
+			log.warning("SMTP Config Not Found: " + file.getAbsolutePath());
+			return null;
+		}
+		try {
+			FileInputStream is = new FileInputStream(file);
+			p.load(is);
+			is.close();
+		} catch (Throwable t) {
+			log.fine(t.toString());
+		}
+		registerQueue(new SmtpSendQueue(name, p));
+		
+		return queues.get(name);
 	}
 
 	@Override
