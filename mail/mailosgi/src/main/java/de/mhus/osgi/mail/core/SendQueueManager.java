@@ -53,5 +53,9 @@ public interface SendQueueManager {
 	 * @return
 	 */
 	String[] getQueueNames();
+
+	void sendMail(Message message, Address[] addresses) throws Exception;
+
+	void sendMail(Message message, Address addresse) throws Exception;
 	
 }

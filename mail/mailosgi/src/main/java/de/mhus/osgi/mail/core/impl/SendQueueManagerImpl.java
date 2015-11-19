@@ -22,6 +22,11 @@ public class SendQueueManagerImpl implements SendQueueManager {
 	private HashMap<String, SendQueue> queues = new HashMap<>();
 	
 	@Override
+	public void sendMail(Message message, Address[] addresses) throws Exception {
+		sendMail("default", message, addresses);
+	}
+	
+	@Override
 	public void sendMail(String queue, Message message, Address[] addresses) throws Exception {
 		SendQueue q = getQueue(queue);
 		if (q == null) throw new QueueNotFoundException(queue);
@@ -79,6 +84,12 @@ public class SendQueueManagerImpl implements SendQueueManager {
 		}
 	}
 
+	@Override
+	public void sendMail(Message message, Address addresse)
+			throws Exception {
+		sendMail("default", message, new Address[] {addresse});
+	}
+	
 	@Override
 	public void sendMail(String queue, Message message, Address addresse)
 			throws Exception {
