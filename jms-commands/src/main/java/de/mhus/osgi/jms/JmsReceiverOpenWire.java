@@ -1,5 +1,10 @@
 package de.mhus.osgi.jms;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.jms.BytesMessage;
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
@@ -72,6 +77,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 				public void receivedOneWay(Message msg) throws JMSException {
 					if (msg instanceof MapMessage) ((MapMessage)msg).getMapNames();
 					log().i("Received One Way", msg);
+					doProcess(msg);
 				}
 				
 				@Override
@@ -79,6 +85,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 					if (msg instanceof MapMessage) ((MapMessage)msg).getMapNames();
 					// System.out.println("--- " + getName() + " Received: " + msg);
 					log().i("Received", msg);
+					doProcess(msg);
 					TextMessage ret = con.getSession().createTextMessage("ok");
 					return ret;
 				}
@@ -92,6 +99,34 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
         }
 		
 		
+	}
+
+	protected void doProcess(Message msg) {
+		try {
+			if (msg instanceof BytesMessage && msg.getStringProperty("filename") != null) {
+				String filename = msg.getStringProperty("filename");
+				filename = filename.replace("..", "_");
+				filename = filename.replace("~", "_");
+				while (filename.startsWith("/")) filename = filename.substring(1);
+				File file = new File("jms/" + queue + "/" + filename );
+				file.getParentFile().mkdirs();
+				FileOutputStream os = new FileOutputStream(file);
+				byte[] buffer = new byte[1024];
+				while (true) {
+					int size = ((BytesMessage)msg).readBytes(buffer);
+					if (size < 0) break;
+					if (size == 0)
+						Thread.sleep(100);
+					else {
+						os.write(buffer, 0, size);
+					}
+						
+				}
+				os.close();
+			}
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
 	}
 
 	public void close() {
