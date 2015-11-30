@@ -81,16 +81,7 @@
         	<artifactId>org.apache.felix.webconsole</artifactId>
         	<version>${felix.version}</version>
         	<type>bundle</type>
-        </dependency>
-        
-        
-<dependency>
-				<groupId>org.ops4j.pax.web</groupId>
-				<artifactId>pax-web-jetty</artifactId>
-				<version>3.1.4</version>
-				<type>bundle</type>
-			</dependency>        
-        
+        </dependency>        
         
 	</dependencies>
 </project>
