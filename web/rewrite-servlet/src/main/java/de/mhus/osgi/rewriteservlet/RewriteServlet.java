@@ -72,7 +72,7 @@ public class RewriteServlet extends HttpServlet {
 		
 		String servlet = props.getProperty(config + ".servlet" );
 		
-		System.out.println(servlet + " " + path);
+		log.fine(servlet + " " + path);
 
 		if (servlet == null) {
 			res.sendError(404);
