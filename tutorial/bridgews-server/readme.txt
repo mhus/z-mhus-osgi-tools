@@ -1,4 +1,4 @@
 
-install -s mvn:de.mhus.test.bridgews/bridgews-server/0.0.1-SNAPSHOT
+install -s mvn:de.mhus.osgi.tutorial/bridgews-server/1.0.5-SNAPSHOT
 
 bundle:watch bridgews-server

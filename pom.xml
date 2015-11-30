@@ -102,12 +102,11 @@
     <modules>
       <module>jwsbridge</module>
       <module>vaadinbridge</module>
-      <module>groovy-console</module>
       <module>mail</module>
       <module>ports</module>
       <module>jms-commands</module>
       <module>mhus-osgi-commands</module>
-      <module>mhus-web-console</module>
+      <module>web</module>
       <module>tutorial</module>
     </modules>
 
