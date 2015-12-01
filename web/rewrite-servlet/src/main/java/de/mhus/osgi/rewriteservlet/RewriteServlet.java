@@ -72,7 +72,7 @@ public class RewriteServlet extends HttpServlet {
 		
 		String servlet = props.getProperty(config + ".servlet" );
 		
-		log.fine(servlet + " " + path);
+		log.fine("delegate: " + servlet + " " + path);
 
 		if (servlet == null) {
 			res.sendError(404);
@@ -83,18 +83,21 @@ public class RewriteServlet extends HttpServlet {
 			BundleContext bc = FrameworkUtil.getBundle(RewriteServlet.class).getBundleContext();
 			for (ServiceReference<Servlet> ref : bc.getServiceReferences(Servlet.class,null)) {
 				Object alias = ref.getProperty("alias");
-				if (alias != null && String.valueOf(alias).startsWith("/" + servlet)) {
+				if (alias != null && String.valueOf(alias).equals(servlet) || ref.getBundle().getSymbolicName().equals(servlet) ) {
 					Servlet inst = bc.getService(ref);
 					
 					DispatchedHttpServletResponse newResponse = new DispatchedHttpServletResponse(res);
 					inst.service(new DispatchedHttpServletRequest(path, req),newResponse);
 				    String content = newResponse.getContent();
+				    
+					log.fine("executed: " + servlet + " " + path + " " + ref.getBundle().getSymbolicName() + " " + (content == null ? "null" : content.length()) + " " + newResponse.getContentType() );
+
 				    if (content == null) {
 				    	return;
 				    }
 				    
 				    for (int cnt = 0; props.getProperty(config + cnt + ".rule") != null; cnt++ ) {
-				    	if (path.matches( props.getProperty(config + cnt + ".path") ) )
+				    	if (path.matches( props.getProperty(config + cnt + ".path", ".*") ) && newResponse.getContentType().matches( props.getProperty(config + cnt + ".contentType", ".*") ) )
 				    		content = content.replaceAll( props.getProperty(config + cnt + ".rule"), props.getProperty(config + cnt + ".replace") );
 				    }
 				    
