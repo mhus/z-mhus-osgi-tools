@@ -164,6 +164,9 @@ public class CmdRun extends MLog implements Action {
 						loops.removeFirst();
 					}
 				} else
+				if (line.equals("exit")) {
+					return;
+				} else
 				if (line.startsWith("label ")) {
 				} else {
 					session.execute(line);

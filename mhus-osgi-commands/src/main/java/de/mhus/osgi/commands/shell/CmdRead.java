@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Scanner;
@@ -79,8 +80,13 @@ public class CmdRead implements Action {
 				
 			}
 		} else {
-			File f = new File(fileName);
-			FileInputStream is = new FileInputStream(f);
+			InputStream is = null;
+			if (fileName.equals("*")) {
+				is = System.in;
+			} else {
+				File f = new File(fileName);
+				is = new FileInputStream(f);
+			}
 			ByteArrayOutputStream ba = new ByteArrayOutputStream();
 			MFile.copyFile(is, ba);
 			is.close();
