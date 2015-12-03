@@ -66,9 +66,10 @@ public class CmdRun extends MLog implements Action {
 			
 			for (int i = 0; i < lines.size(); i++) {
 				String line = lines.get(i).trim();
-				if (line.startsWith("label:")) {
-					lines.set(i, "#" + line);
-					labels.put(line.substring(7), i);
+				if (line.startsWith("label ")) {
+					String label = line.substring(6).trim();
+					if (label.endsWith(":")) label = label.substring(0, label.length()-1).trim();
+					labels.put(label, i);
 				}
 			}
 			
@@ -77,6 +78,16 @@ public class CmdRun extends MLog implements Action {
 		public void execute(CommandSession session) throws Exception {
 			pos = 0;
 			while(true) {
+				// check stdin
+				while ( System.in.available() > 0 ) {
+					int b = System.in.read();
+					if (b < 0) {
+						break;
+					}
+					System.out.print((char)b);
+				}
+				
+				
 				if (pos >= lines.size()) return;
 				String line = lines.get(pos).trim();
 				if (debug) System.out.println("--- " + pos + " " + line);
@@ -113,8 +124,17 @@ public class CmdRun extends MLog implements Action {
 						if (!findEndIf(session)) return;
 					}
 				} else
+				if (line.startsWith("while ")) {
+					Loop loop = new WhileLoop(session,line.substring(6), pos);
+					if (loop.hasNext()) {
+						loops.add(0, loop);
+						loop.next();
+					} else {
+						if (!findDone()) return;
+					}
+				} else
 				if (line.startsWith("for ")) {
-					Loop loop = new Loop(session,line.substring(4), pos);
+					Loop loop = new ForLoop(session,line.substring(4), pos);
 					if (loop.hasNext()) {
 						loops.add(0, loop);
 						loop.next();
@@ -143,6 +163,8 @@ public class CmdRun extends MLog implements Action {
 					} else {
 						loops.removeFirst();
 					}
+				} else
+				if (line.startsWith("label ")) {
 				} else {
 					session.execute(line);
 				}
@@ -196,6 +218,8 @@ public class CmdRun extends MLog implements Action {
 				
 				if (line.startsWith("for ")) ifCnt++;
 				else
+				if (line.startsWith("while ")) ifCnt++;
+				else
 				if (line.equals("done")) ifCnt--;
 				
 				if (ifCnt < 0) return true;
@@ -203,37 +227,74 @@ public class CmdRun extends MLog implements Action {
 			
 		}
 	
-		private boolean isTrue(Object result) {
-	        if (result == null) {
-	            return false;
-	        }
-	        if (result instanceof String && ((String) result).equals("")) {
-	            return false;
-	        }
-	        if (result instanceof Number) {
-	            return ((Number) result).doubleValue() != 0.0d;
-	        }
-	        if (result instanceof Boolean) {
-	            return (Boolean) result;
-	        }
-	        return true;
-	    }	
 	}
 	
-	public class Loop {
-
-		private String condition;
-		private String varName;
-		private Iterator iterator;
-		private CommandSession session;
-		private int startPos;
-
+	private boolean isTrue(Object result) {
+		if (result == null) {
+			return false;
+		}
+		if (result instanceof String && ((String) result).equals("")) {
+			return false;
+		}
+		if (result instanceof Number) {
+			return ((Number) result).doubleValue() != 0.0d;
+		}
+		if (result instanceof Boolean) {
+			return (Boolean) result;
+		}
+		return true;
+	}	
+	
+	public abstract class Loop {
+		
+		protected int startPos;
+		protected CommandSession session;
+		protected String condition;
+		
 		public Loop(CommandSession session, String condition, int pos) throws Exception {
 			this.session = session;
+			this.condition = condition.trim();
 			this.startPos = pos;
-			condition = condition.trim();
+		}
+		public int getStartPos() {
+			return startPos;
+		}
+
+		public abstract void next();
+		public abstract boolean hasNext() throws Exception;
+
+	}
+	
+	public class WhileLoop extends Loop {
+		public WhileLoop(CommandSession session, String condition, int pos) throws Exception {
+			super(session, condition, pos);
+		}
+
+		@Override
+		public void next() {
+		}
+
+		@Override
+		public boolean hasNext() throws Exception {
+			Object res = session.execute( "%(" + condition + ")" );
+			return isTrue(res);
+		}		
+	}
+	public class ForLoop extends Loop {
+
+		private String varName;
+		private Iterator<?> iterator;
+
+		public ForLoop(CommandSession session, String condition, int pos) throws Exception {
+			super(session, condition, pos);
 			varName = MString.beforeIndex(condition, ' ');
 			condition = MString.afterIndex(condition, ' ');
+			
+			int p = condition.indexOf("in ");
+			if (p > -1 ) {
+				//TODO read options like delimiter
+				condition = condition.substring(p+3).trim();
+			}
 			this.condition = condition;
 			Object res = session.execute(condition);
 			if (res == null) {
