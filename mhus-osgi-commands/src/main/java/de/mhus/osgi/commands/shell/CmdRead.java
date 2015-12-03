@@ -59,6 +59,9 @@ public class CmdRead implements Action {
 							System.out.print(' ');
 							System.out.print('\b');
 							System.out.flush();
+						} else {
+							System.out.print('\7');
+							System.out.flush();
 						}
 					} else {
 						sb.append((char)c);
