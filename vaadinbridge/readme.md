@@ -39,17 +39,17 @@ Installation of Vaadin
 	install -s 'wrap:mvn:org.w3c.css/sac/1.3/$Bundle-SymbolicName=sac&Bundle-Version=1.3&Export-Package=org.w3c.css.sac;version="1.3",\!*'
 	install -s mvn:org.jsoup/jsoup/1.7.3
 	install -s mvn:com.vaadin/vaadin-shared-deps/1.0.2
-	install -s mvn:com.vaadin/vaadin-shared/7.1.12
-	install -s mvn:com.vaadin/vaadin-themes/7.1.12
-	install -s mvn:com.vaadin/vaadin-theme-compiler/7.1.12
-	install -s mvn:com.vaadin/vaadin-server/7.1.12
-	install -s mvn:com.vaadin/vaadin-client-compiled/7.1.12
+	install -s mvn:com.vaadin/vaadin-shared/7.5.8
+	install -s mvn:com.vaadin/vaadin-themes/7.5.8
+	install -s mvn:com.vaadin/vaadin-theme-compiler/7.5.8
+	install -s mvn:com.vaadin/vaadin-server/7.5.8
+	install -s mvn:com.vaadin/vaadin-client-compiled/7.5.8
 
 
 Installation of the vaadin bridge
 
-	install -s mvn:de.mhus.osgi/vaadinosgibridge/1.0.2
-	install -s mvn:de.mhus.osgi/vaadinkarafbridge/1.0.2
+	install -s mvn:de.mhus.osgi/vaadinosgibridge/1.3.0
+	install -s mvn:de.mhus.osgi/vaadinkarafbridge/1.3.0
 	
 bundle:watch vaadinosgibridge
 bundle:watch vaadinkarafbridge

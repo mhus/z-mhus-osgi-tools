@@ -44,6 +44,6 @@ Installation
 
 **Maybe update version**
 
-	install -s mvn:de.mhus.osgi/jwsosgibridge/1.0.5-SNAPSHOT
-	install -s mvn:de.mhus.osgi/jwskarafbridge/1.0.5-SNAPSHOT
+	install -s mvn:de.mhus.osgi/jwsosgibridge/1.3.0-SNAPSHOT
+	install -s mvn:de.mhus.osgi/jwskarafbridge/1.3.0-SNAPSHOT
 
