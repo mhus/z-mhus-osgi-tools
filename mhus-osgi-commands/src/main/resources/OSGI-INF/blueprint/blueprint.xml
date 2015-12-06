@@ -83,6 +83,26 @@
             <action class="de.mhus.osgi.commands.shell.CmdThreadKill">
             </action>
         </command>
+        <command name="shell/write">
+            <action class="de.mhus.osgi.commands.shell.CmdWrite">
+            </action>
+        </command>
+        <command name="shell/bash">
+            <action class="de.mhus.osgi.commands.shell.CmdBash">
+            </action>
+        </command>
+        <command name="shell/run">
+            <action class="de.mhus.osgi.commands.shell.CmdRun">
+            </action>
+        </command>
+        <command name="shell/read">
+            <action class="de.mhus.osgi.commands.shell.CmdRead">
+            </action>
+        </command>
+        <command name="shell/cut">
+            <action class="de.mhus.osgi.commands.shell.CmdCut">
+            </action>
+        </command>
         	        
     </command-bundle>
 
