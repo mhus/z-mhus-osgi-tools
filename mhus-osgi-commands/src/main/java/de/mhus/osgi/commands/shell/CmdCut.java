@@ -58,7 +58,7 @@ public class CmdCut implements Action {
 
 	private void processPos(String line) {
 		boolean first = true;
-		for (String p : fields.split(",")) {
+		for (String p : positions.split(",")) {
 			
 			int start = 0;
 			int stop = line.length()-1;
