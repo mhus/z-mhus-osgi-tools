@@ -99,6 +99,10 @@
             <action class="de.mhus.osgi.commands.shell.CmdRead">
             </action>
         </command>
+        <command name="shell/cut">
+            <action class="de.mhus.osgi.commands.shell.CmdCut">
+            </action>
+        </command>
         	        
     </command-bundle>
 
