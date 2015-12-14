@@ -1,6 +1,7 @@
 package org.apache.commons.discovery.defaults;
 
 import de.mhus.lib.core.lang.MObject;
+import de.mhus.lib.core.MSingleton;
 
 public class Defaults extends MObject {
 
@@ -16,7 +17,7 @@ public class Defaults extends MObject {
 
 		try {
 			Class<?> ifc = Class.forName(name);
-			Object obj = base(ifc);
+			Object obj = MSingleton.baseLookup(this, ifc);
 			if (obj != null) return obj.getClass();
 		} catch (Throwable e) {
 		}
