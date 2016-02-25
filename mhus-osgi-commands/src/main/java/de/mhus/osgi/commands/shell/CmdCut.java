@@ -51,10 +51,10 @@ public class CmdCut implements Action {
 	    	else
 	    	if (MString.isSet(positions))
 	    		processPos(line);
-	    	else
-    		if (n)
-	    		out.append(line).append("\n");
-	    		
+	    	else {
+	    		out.append(line);
+	    		if (n) out.append("\n");
+	    	}
 	    }
 		return out.toString();
 	}
