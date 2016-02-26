@@ -5,6 +5,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import javax.sql.DataSource;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.osgi.commands.impl.AbstractDataSource;
 import de.mhus.osgi.commands.impl.DataSourceUtil;
@@ -20,9 +21,14 @@ public class DelegateDataSource extends AbstractDataSource {
 	public DataSource getDataSource() throws SQLFeatureNotSupportedException {
 		
 		synchronized (this) {
+			
+			if (context == null)
+				context = FrameworkUtil.getBundle(DataSource.class).getBundleContext();
+			
 			if (dataSource == null) {
 				dataSource = new DataSourceUtil(context).getDataSource(source);
 			}
+			
 		}
 		
 		return dataSource;

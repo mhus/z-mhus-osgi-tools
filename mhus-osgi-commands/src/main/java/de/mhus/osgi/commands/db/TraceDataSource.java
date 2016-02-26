@@ -8,6 +8,7 @@ import java.sql.SQLFeatureNotSupportedException;
 import javax.sql.DataSource;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.logging.Log;
@@ -31,6 +32,10 @@ public class TraceDataSource extends AbstractDataSource {
 		
 		synchronized (this) {
 			if (dataSource == null) {
+				
+				if (context == null)
+					context = FrameworkUtil.getBundle(DataSource.class).getBundleContext();
+
 				dataSource = new DataSourceUtil(context).getDataSource(source);
 			}
 		}
