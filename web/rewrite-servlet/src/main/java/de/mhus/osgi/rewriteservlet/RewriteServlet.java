@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -103,6 +104,15 @@ public class RewriteServlet extends HttpServlet {
 				    
 				    res.getWriter().write(content);
 					
+				    if (props.getProperty(config + ".debug","").equals("true")) {
+				    	log.info("Request: " + req.getMethod() + " " + path);
+				    	for (Enumeration<String> en = req.getHeaderNames(); en.hasMoreElements();) {
+				    		String name = en.nextElement();
+				    		log.info("> " + name + "=" + req.getHeader(name));
+				    	}
+				    	log.info("Result: " + content);
+				    }
+				    
 					return;
 				}
 			}
