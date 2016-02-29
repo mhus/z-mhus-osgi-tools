@@ -88,7 +88,8 @@ public class RewriteServlet extends HttpServlet {
 					Servlet inst = bc.getService(ref);
 					
 					DispatchedHttpServletResponse newResponse = new DispatchedHttpServletResponse(res);
-					inst.service(new DispatchedHttpServletRequest(path, req),newResponse);
+					DispatchedHttpServletRequest newRequest = new DispatchedHttpServletRequest(path, req);
+					inst.service(newRequest,newResponse);
 				    String content = newResponse.getContent();
 				    
 					log.fine("executed: " + servlet + " " + path + " " + ref.getBundle().getSymbolicName() + " " + (content == null ? "null" : content.length()) + " " + newResponse.getContentType() );
@@ -108,9 +109,11 @@ public class RewriteServlet extends HttpServlet {
 				    	log.info("Request: " + req.getMethod() + " " + path);
 				    	for (Enumeration<String> en = req.getHeaderNames(); en.hasMoreElements();) {
 				    		String name = en.nextElement();
-				    		log.info("> " + name + "=" + req.getHeader(name));
+				    		log.info("Header: " + name + "=" + req.getHeader(name));
 				    	}
-				    	log.info("Result: " + content);
+				    	if (newRequest.getInputBytes() != null)
+				    		log.info("In: " + new String(newRequest.getInputBytes()));
+				    	log.info("Out: " + content);
 				    }
 				    
 					return;

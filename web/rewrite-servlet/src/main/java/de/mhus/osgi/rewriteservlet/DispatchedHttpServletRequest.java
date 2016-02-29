@@ -1,6 +1,8 @@
 package de.mhus.osgi.rewriteservlet;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
@@ -19,6 +21,7 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 
 	private String path;
 	private HttpServletRequest instance;
+	private byte[] inputBytes;
 
 	public Object getAttribute(String name) {
 		return instance.getAttribute(name);
@@ -66,7 +69,16 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 	}
 
 	public ServletInputStream getInputStream() throws IOException {
-		return instance.getInputStream();
+		ByteArrayOutputStream bs = new ByteArrayOutputStream();
+		ServletInputStream is = instance.getInputStream();
+		while(true) {
+			int b = is.read();
+			if (b < 0) break;
+			bs.write(b);
+		}
+		inputBytes = bs.toByteArray();
+		
+		return new MyServletInputStream();
 	}
 
 	public String getParameter(String name) {
@@ -243,5 +255,21 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 		this.path = path;
 		this.instance = req;
 	}
+	
+	public byte[] getInputBytes() {
+		return inputBytes;
+	}
 
+	private class MyServletInputStream extends ServletInputStream {
+
+		private int cnt = 0;
+
+		@Override
+		public int read() throws IOException {
+			if (inputBytes == null || cnt >= inputBytes.length) return -1;
+			cnt++;
+			return inputBytes[cnt-1];
+		}
+		
+	}
 }
