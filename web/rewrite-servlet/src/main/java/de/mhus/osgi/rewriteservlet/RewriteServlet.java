@@ -106,6 +106,7 @@ public class RewriteServlet extends HttpServlet {
 				    res.getWriter().write(content);
 					
 				    if (props.getProperty(config + ".debug","").equals("true")) {
+				    	log.info("===================");
 				    	log.info("Request: " + req.getMethod() + " " + path);
 				    	for (Enumeration<String> en = req.getHeaderNames(); en.hasMoreElements();) {
 				    		String name = en.nextElement();
@@ -114,6 +115,7 @@ public class RewriteServlet extends HttpServlet {
 				    	if (newRequest.getInputBytes() != null)
 				    		log.info("In: " + new String(newRequest.getInputBytes()));
 				    	log.info("Out: " + content);
+				    	log.info("===================");
 				    }
 				    
 					return;
