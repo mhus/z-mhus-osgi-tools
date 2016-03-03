@@ -219,12 +219,13 @@ class FilteredEntryMultimap<K, V> extends AbstractMultimap<K, V> implements Filt
       return new Maps.KeySet<K, Collection<V>>(this) {
         @Override
         public boolean removeAll(Collection<?> c) {
-          return removeIf(Maps.<K>keyPredicateOnEntries(in(c)));
+//            return removeIf(Maps.<K>keyPredicateOnEntries(in(c)));
+            return removeIf((java.util.function.Predicate<? super K>) Maps.<K>keyPredicateOnEntries(in(c)));
         }
 
         @Override
         public boolean retainAll(Collection<?> c) {
-          return removeIf(Maps.<K>keyPredicateOnEntries(not(in(c))));
+          return removeIf((java.util.function.Predicate<? super K>) Maps.<K>keyPredicateOnEntries(not(in(c))));
         }
 
         @Override
@@ -266,12 +267,12 @@ class FilteredEntryMultimap<K, V> extends AbstractMultimap<K, V> implements Filt
 
         @Override
         public boolean removeAll(Collection<?> c) {
-          return removeIf(in(c));
+          return removeIf((java.util.function.Predicate<? super java.util.Map.Entry<K, Collection<V>>>) in(c));
         }
 
         @Override
         public boolean retainAll(Collection<?> c) {
-          return removeIf(not(in(c)));
+          return removeIf((java.util.function.Predicate<? super java.util.Map.Entry<K, Collection<V>>>) not(in(c)));
         }
         
         @Override
@@ -310,12 +311,12 @@ class FilteredEntryMultimap<K, V> extends AbstractMultimap<K, V> implements Filt
 
         @Override
         public boolean removeAll(Collection<?> c) {
-          return removeIf(Maps.<Collection<V>>valuePredicateOnEntries(in(c)));
+          return removeIf((java.util.function.Predicate<? super Collection<V>>) Maps.<Collection<V>>valuePredicateOnEntries(in(c)));
         }
 
         @Override
         public boolean retainAll(Collection<?> c) {
-          return removeIf(Maps.<Collection<V>>valuePredicateOnEntries(not(in(c))));
+          return removeIf((java.util.function.Predicate<? super Collection<V>>) Maps.<Collection<V>>valuePredicateOnEntries(not(in(c))));
         }
       };
     }

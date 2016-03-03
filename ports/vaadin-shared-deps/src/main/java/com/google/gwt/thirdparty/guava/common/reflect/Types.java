@@ -29,6 +29,8 @@ import com.google.gwt.thirdparty.guava.common.collect.ImmutableList;
 import com.google.gwt.thirdparty.guava.common.collect.Iterables;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.GenericDeclaration;
@@ -356,6 +358,28 @@ final class Types {
       }
       return false;
     }
+
+	@Override
+	public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+		// TODO Auto-generated method stub
+		return genericDeclaration.getAnnotation(annotationClass);
+	}
+
+	@Override
+	public Annotation[] getAnnotations() {
+		return genericDeclaration.getAnnotations();
+	}
+
+	@Override
+	public Annotation[] getDeclaredAnnotations() {
+		return genericDeclaration.getDeclaredAnnotations();
+	}
+
+	@Override
+	public AnnotatedType[] getAnnotatedBounds() {
+	    return bounds.toArray(new AnnotatedType[bounds.size()]);
+	}
+
   }
 
   static final class WildcardTypeImpl implements WildcardType, Serializable {

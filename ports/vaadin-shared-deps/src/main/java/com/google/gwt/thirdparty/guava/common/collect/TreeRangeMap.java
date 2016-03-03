@@ -511,7 +511,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
           
           @Override
           public boolean retainAll(Collection<?> c) {
-            return removeIf(compose(not(in(c)), Maps.<Range<K>>keyFunction()));
+            return removeIf((java.util.function.Predicate<? super Range<K>>) compose(not(in(c)), Maps.<Range<K>>keyFunction()));
           }
         };
       }
@@ -555,7 +555,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
           
           @Override
           public boolean retainAll(Collection<?> c) {
-            return removeIf(not(in(c)));
+            return removeIf((java.util.function.Predicate<? super java.util.Map.Entry<Range<K>, V>>) not(in(c)));
           }
           
           @Override
@@ -575,12 +575,12 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
         return new Maps.Values<Range<K>, V>(this) {          
           @Override
           public boolean removeAll(Collection<?> c) {
-            return removeIf(compose(in(c), Maps.<V>valueFunction()));            
+            return removeIf((java.util.function.Predicate<? super V>) compose(in(c), Maps.<V>valueFunction()));            
           }
           
           @Override
           public boolean retainAll(Collection<?> c) {
-            return removeIf(compose(not(in(c)), Maps.<V>valueFunction()));
+            return removeIf((java.util.function.Predicate<? super V>) compose(not(in(c)), Maps.<V>valueFunction()));
           }
         };
       }
