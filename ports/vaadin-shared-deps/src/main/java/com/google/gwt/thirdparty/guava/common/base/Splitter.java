@@ -387,7 +387,7 @@ public final class Splitter {
 
     return new Iterable<String>() {
       @Override public Iterator<String> iterator() {
-        return spliterator(sequence);
+        return Splitter.this.spliterator(sequence);
       }
       @Override public String toString() {
         return Joiner.on(", ")

@@ -29,6 +29,8 @@ public class CmdCut implements Action {
     String join = "";
     @Option(name = "-t", aliases = { "--trim" }, description = "Trim every single part", required = false, multiValued = false)
     boolean trim = false;
+    @Option(name = "-n", description = "Add new line at the end", required = false, multiValued = false)
+    boolean n = false;
     
 	private StringBuilder out;
 
@@ -49,9 +51,10 @@ public class CmdCut implements Action {
 	    	else
 	    	if (MString.isSet(positions))
 	    		processPos(line);
-	    	else
-	    		out.append(line).append("\n");
-	    		
+	    	else {
+	    		out.append(line);
+	    		if (n) out.append("\n");
+	    	}
 	    }
 		return out.toString();
 	}
@@ -96,7 +99,7 @@ public class CmdCut implements Action {
 			out.append( x );
 			
 		}
-		if (!first) out.append("\n");
+		if (n && !first) out.append("\n");
 	}
 
 	private void processDelim(String line) {
@@ -139,7 +142,7 @@ public class CmdCut implements Action {
 			}	
 			
 		}
-		if (!first) out.append("\n");
+		if (n && !first) out.append("\n");
 
 	}
 

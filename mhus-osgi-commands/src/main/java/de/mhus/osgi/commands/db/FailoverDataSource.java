@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import javax.sql.DataSource;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.osgi.commands.impl.AbstractDataSource;
 import de.mhus.osgi.commands.impl.DataSourceUtil;
@@ -30,6 +31,10 @@ public class FailoverDataSource extends AbstractDataSource {
 				list = new LinkedList<DataSource>();
 				realList = "";
 				for (String name : source.split(",")) {
+					
+					if (context == null)
+						context = FrameworkUtil.getBundle(DataSource.class).getBundleContext();
+
 					DataSource dataSource = new DataSourceUtil(context).getDataSource(name);
 					if (dataSource != null) {
 						list.add(dataSource);

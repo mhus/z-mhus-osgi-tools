@@ -11,6 +11,7 @@ import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.ObjectPool;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.osgi.commands.impl.AbstractDataSource;
 import de.mhus.osgi.commands.impl.DataSourceUtil;
@@ -27,6 +28,10 @@ public class PoolDataSource extends AbstractDataSource {
 		
 		synchronized (this) {
 			if (dataSource == null) {
+				
+				if (context == null)
+					context = FrameworkUtil.getBundle(DataSource.class).getBundleContext();
+
 				DataSource ds = new DataSourceUtil(context).getDataSource(source);
 				
 				@SuppressWarnings({ "rawtypes", "unchecked" })

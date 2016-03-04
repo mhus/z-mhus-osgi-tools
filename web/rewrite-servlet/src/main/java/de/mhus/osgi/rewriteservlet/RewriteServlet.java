@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -87,7 +88,8 @@ public class RewriteServlet extends HttpServlet {
 					Servlet inst = bc.getService(ref);
 					
 					DispatchedHttpServletResponse newResponse = new DispatchedHttpServletResponse(res);
-					inst.service(new DispatchedHttpServletRequest(path, req),newResponse);
+					DispatchedHttpServletRequest newRequest = new DispatchedHttpServletRequest(path, req);
+					inst.service(newRequest,newResponse);
 				    String content = newResponse.getContent();
 				    
 					log.fine("executed: " + servlet + " " + path + " " + ref.getBundle().getSymbolicName() + " " + (content == null ? "null" : content.length()) + " " + newResponse.getContentType() );
@@ -103,6 +105,19 @@ public class RewriteServlet extends HttpServlet {
 				    
 				    res.getWriter().write(content);
 					
+				    if (props.getProperty(config + ".debug","").equals("true")) {
+				    	log.info("===================");
+				    	log.info("Request: " + req.getMethod() + " " + path);
+				    	for (Enumeration<String> en = req.getHeaderNames(); en.hasMoreElements();) {
+				    		String name = en.nextElement();
+				    		log.info("Header: " + name + "=" + req.getHeader(name));
+				    	}
+				    	if (newRequest.getInputBytes() != null)
+				    		log.info("In: " + new String(newRequest.getInputBytes()));
+				    	log.info("Out: " + content);
+				    	log.info("===================");
+				    }
+				    
 					return;
 				}
 			}

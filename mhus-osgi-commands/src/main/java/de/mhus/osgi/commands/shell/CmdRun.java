@@ -14,6 +14,7 @@ import org.apache.karaf.shell.commands.Argument;
 import org.apache.karaf.shell.commands.Command;
 import org.apache.karaf.shell.commands.Option;
 
+import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
@@ -31,6 +32,9 @@ public class CmdRun extends MLog implements Action {
     @Option(name = "-c", aliases = { "--command" }, description = "direct command input", required = false, multiValued = false)
     boolean command;
 
+    @Option(name = "-g", aliases = { "--goto" }, description = "First goto jump to start", required = false, multiValued = false)
+    String go;
+    
     @Option(name = "-s", aliases = { "--sensitive" }, description = "do not separate commands by semikolon", required = false, multiValued = false)
     boolean sensitive;
     
@@ -87,11 +91,16 @@ public class CmdRun extends MLog implements Action {
 					System.out.print((char)b);
 				}
 				
-				
-				if (pos >= lines.size()) return;
-				String line = lines.get(pos).trim();
-				if (debug) System.out.println("--- " + pos + " " + line);
-				pos++;
+				String line = null;
+				if (go != null) { // insert special goto command
+					line = "goto " + go;
+					go = null;
+				} else {
+					if (pos >= lines.size()) return;
+					line = lines.get(pos).trim();
+					if (debug) System.out.println("--- " + pos + " " + line);
+					pos++;
+				}
 				
 				if (line.startsWith("#") || line.length() == 0) {
 					if (line.equals("#--")) {
@@ -111,6 +120,11 @@ public class CmdRun extends MLog implements Action {
 				if (line.startsWith("goto ")) {
 					String label = line.substring(5).trim();
 					Integer newPos = labels.get(label);
+					if (newPos == null) {
+						int p = MCast.toint(label, -1);
+						if (p >= 0)
+							newPos = p;
+					}
 					if (newPos == null) {
 						System.err.println("Label not found: " + label + " at " + (pos-1));
 						return;
