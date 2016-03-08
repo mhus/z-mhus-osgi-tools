@@ -4,15 +4,18 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
 import de.mhus.osgi.commands.db.TraceDataSource;
 
 @Command(scope = "jdbc", name = "dbtrace", description = "Modify DB Trace")
+@Service
 public class CmdDbTrace implements Action {
 
 	@Argument(index=0, name="source", required=true, description="Source Datasource", multiValued=false)
@@ -21,12 +24,12 @@ public class CmdDbTrace implements Action {
 	@Argument(index=1, name="option", required=true, description="enable / disable", multiValued=false)
     String option;
 
-	@SuppressWarnings("unused")
+    @Reference
 	private BundleContext context;
 
 	private DataSourceUtil util;
 
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		DataSource ds = util.getDataSource(source);
 		Connection con = ds.getConnection();

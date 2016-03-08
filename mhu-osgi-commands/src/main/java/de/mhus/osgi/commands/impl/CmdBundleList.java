@@ -1,15 +1,15 @@
 package de.mhus.osgi.commands.impl;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
@@ -18,6 +18,7 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "bundle", name = "rawlist", description = "Return the raw list of bundle names")
+@Service
 public class CmdBundleList implements Action  {
 
     @Option(name = "-l", aliases = { "--location" }, description = "Print location", required = false, multiValued = false)
@@ -32,9 +33,11 @@ public class CmdBundleList implements Action  {
     @Option(name = "-s", aliases = { "--symbolic" }, description = "Order by symbolic name", required = false, multiValued = false)
     boolean orderSymbolic;
     
+    @Reference
 	private BundleContext context;
 
-	public Object execute(CommandSession session) throws Exception {
+	@Override
+	public Object execute() throws Exception {
 		ConsoleTable table = new ConsoleTable();
 		table.getHeader().add("id");
 		table.getHeader().add("Bundle");

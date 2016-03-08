@@ -2,16 +2,18 @@ package de.mhus.osgi.commands.impl;
 
 import java.io.IOException;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.osgi.commands.watch.PersistentWatch;
 
 @Command(scope = "bundle", name = "persistentwatch", description = "Work with persistence watch list")
+@Service
 public class CmdBundleWatch implements Action  {
 
 	@Argument(index=0, name="cmd", required=false, description="Command add, remove,list, clear, watch, rewatch", multiValued=false)
@@ -20,7 +22,7 @@ public class CmdBundleWatch implements Action  {
 	@Argument(index=1, name="lines", required=false, description="lines to add or remove", multiValued=true)
     String[] lines;
 	
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		
 		PersistentWatch service = MOsgi.getService(PersistentWatch.class);
 

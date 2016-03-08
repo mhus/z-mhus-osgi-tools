@@ -2,12 +2,14 @@ package de.mhus.osgi.commands.shell;
 
 import java.util.Map;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Command(scope = "java", name = "kill", description = "Kill a thread with an exception")
+@Service
 public class CmdThreadKill implements Action {
 
 	@Argument(index=0, name="thread", required=true, description="Thread Id", multiValued=false)
@@ -21,7 +23,7 @@ public class CmdThreadKill implements Action {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
 		for (Thread thread : traces.keySet()) {

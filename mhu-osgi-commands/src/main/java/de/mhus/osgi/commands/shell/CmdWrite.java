@@ -10,16 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "shell", name = "write", description = "Write to file")
+@Service
 public class CmdWrite implements Action {
 
 	@Argument(index=0, name="fileName", required=false, description="FileName or * for std return", multiValued=false)
@@ -29,7 +30,7 @@ public class CmdWrite implements Action {
     boolean append;
     
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		if (fileName.equals("*")) {
 			ByteArrayOutputStream ba = new ByteArrayOutputStream();

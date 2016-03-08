@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MFile;
@@ -21,6 +23,7 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.util.ArrayIterator;
 
 @Command(scope = "shell", name = "run", description = "Run Gogo Script")
+@Service
 public class CmdRun extends MLog implements Action {
 
 	@Argument(index = 0, name = "command", description = "File or command", required = true, multiValued = false)
@@ -41,8 +44,11 @@ public class CmdRun extends MLog implements Action {
     @Option(name = "-s", aliases = { "--sensitive" }, description = "do not separate commands by semikolon", required = false, multiValued = false)
     boolean sensitive;
     
+    @Reference
+    private Session session;
+
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		List<String> lines = null;
 		if (command) {
@@ -82,7 +88,7 @@ public class CmdRun extends MLog implements Action {
 			
 		}
 		
-		public void execute(CommandSession session) throws Exception {
+		public void execute(Session session) throws Exception {
 			pos = 0;
 			while(true) {
 				// check stdin
@@ -195,7 +201,7 @@ public class CmdRun extends MLog implements Action {
 			}
 		}
 
-		private boolean findEndIf(CommandSession session) throws Exception {
+		private boolean findEndIf(Session session) throws Exception {
 			int l = pos-1;
 			int ifCnt = 0;
 			while (true) {
@@ -270,10 +276,10 @@ public class CmdRun extends MLog implements Action {
 	public abstract class Loop {
 		
 		protected int startPos;
-		protected CommandSession session;
+		protected Session session;
 		protected String condition;
 		
-		public Loop(CommandSession session, String condition, int pos) throws Exception {
+		public Loop(Session session, String condition, int pos) throws Exception {
 			this.session = session;
 			this.condition = condition.trim();
 			this.startPos = pos;
@@ -288,7 +294,7 @@ public class CmdRun extends MLog implements Action {
 	}
 	
 	public class WhileLoop extends Loop {
-		public WhileLoop(CommandSession session, String condition, int pos) throws Exception {
+		public WhileLoop(Session session, String condition, int pos) throws Exception {
 			super(session, condition, pos);
 		}
 
@@ -307,7 +313,7 @@ public class CmdRun extends MLog implements Action {
 		private String varName;
 		private Iterator<?> iterator;
 
-		public ForLoop(CommandSession session, String condition, int pos) throws Exception {
+		public ForLoop(Session session, String condition, int pos) throws Exception {
 			super(session, condition, pos);
 			varName = MString.beforeIndex(condition, ' ');
 			condition = MString.afterIndex(condition, ' ');

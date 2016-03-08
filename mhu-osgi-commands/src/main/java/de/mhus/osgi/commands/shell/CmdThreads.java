@@ -6,15 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "java", name = "thread", description = "Print thread information")
+@Service
 public class CmdThreads implements Action {
 
 	@Argument(index=0, name="thread", required=false, description="Thread Id", multiValued=false)
@@ -33,7 +34,7 @@ public class CmdThreads implements Action {
     boolean orderGroup;
     
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
 		

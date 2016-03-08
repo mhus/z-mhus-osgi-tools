@@ -1,14 +1,17 @@
 package de.mhus.osgi.commands.impl;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Command(scope = "java", name = "gc", description = "Trigger the Garbage Collector of the JVM")
+@Service
 public class CmdGC implements Action {
 
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		System.gc();
 		return null;
 	}

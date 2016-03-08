@@ -4,20 +4,24 @@ import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;
 
 @Command(scope = "bundle", name = "reinstall", description = "Remove from local repository and reinstall bundles from the remote repository")
+@Service
 public class CmdBundleReinstall implements Action {
 
+    @Reference
 	private BundleContext context;
 
 	@Argument(index=0, name="bundle", required=true, description="(Raw) Name of the bundle to redeploy, use placeholder asterisk", multiValued=true)
@@ -38,15 +42,18 @@ public class CmdBundleReinstall implements Action {
     @Option(name = "-c", aliases = { "--clean" }, description = "Clean Local Maven Repository", required = false, multiValued = false)
     boolean cleanLocalRepo;
     
+    @Reference
+    private Session session;
+
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		
 
 		for (Bundle b : context.getBundles())
 			for (String bn : bundleName) {
 				if (MString.compareFsLikePattern(b.getSymbolicName(),bn) || String.valueOf(b.getBundleId()).equals(bn)) {
 					try {
-						doIt(session, b);
+						doIt(b);
 					} catch (Throwable t) {
 						System.out.println("ERROR: Bundle: " + bn + " " + t.toString());
 						if (printVerbose)
@@ -59,7 +66,7 @@ public class CmdBundleReinstall implements Action {
 		return null;
 	}
 	
-	public void doIt(CommandSession session, Bundle bundle) throws Exception {
+	public void doIt(Bundle bundle) throws Exception {
 		
 		String bn = bundle.getSymbolicName();
 		

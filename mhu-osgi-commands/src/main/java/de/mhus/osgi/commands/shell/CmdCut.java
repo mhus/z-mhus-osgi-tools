@@ -4,15 +4,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 
 @Command(scope = "shell", name = "cut", description = "Cut out selected parts of a line")
+@Service
 public class CmdCut implements Action {
 
     @Option(name = "-d", aliases = { "--delimiter" }, description = "Seperate parts by this regex", required = false, multiValued = false)
@@ -37,7 +39,7 @@ public class CmdCut implements Action {
 	private StringBuilder out;
 
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		out = new StringBuilder();
 		InputStreamReader isr = new InputStreamReader(System.in, Charset.forName("UTF-8"));

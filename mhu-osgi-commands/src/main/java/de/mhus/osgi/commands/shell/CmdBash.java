@@ -3,22 +3,24 @@ package de.mhus.osgi.commands.shell;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 
 @Command(scope = "shell", name = "bash", description = "Execute bash line")
+@Service
 public class CmdBash extends MLog implements Action {
 
 	@Argument(index = 0, name = "command", description = "Execution bash command with arguments", required = true, multiValued = true)
     private List<String> bashArgs;
 
 	@Override
-	public Object execute(CommandSession arg0) throws Exception {
+	public Object execute() throws Exception {
 
 		LinkedList<String> args = new LinkedList<>();
 		args.add("bash");
