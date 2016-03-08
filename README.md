@@ -62,14 +62,14 @@ install -s mvn:de.mhus.lib/mhu-lib-logging/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-persistence/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-karaf/3.3.0-SNAPSHOT
 
-install -s mvn:de.mhus.osgi/jms-commands/1.3.0-SNAPSHOT
-install -s mvn:de.mhus.osgi/mhus-osgi-commands/1.3.0-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-jms/1.3.0-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-commands/1.3.0-SNAPSHOT
 
 install -s mvn:org.apache.httpcomponents/httpcore-osgi/4.2.1
 install -s mvn:org.apache.httpcomponents/httpclient-osgi/4.2.1
 
-install -s mvn:de.mhus.osgi/mailosgi/1.3.0-SNAPSHOT
-install -s mvn:de.mhus.osgi/mailkaraf/1.3.0-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-mailosgi/1.3.0-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-mailkaraf/1.3.0-SNAPSHOT
 
 ---
 
@@ -81,13 +81,12 @@ bundle:persistentwatch add mhu-lib-jms
 bundle:persistentwatch add mhu-lib-vaadin
 bundle:persistentwatch add mhu-lib-forms
 bundle:persistentwatch add mhu-lib-core
-bundle:persistentwatch add jms-commands
-bundle:persistentwatch add mailosgi
-bundle:persistentwatch add mailkaraf
-bundle:persistentwatch add osgiquartz
-bundle:persistentwatch add karafquartz
-bundle:persistentwatch add mhus-osgi-commands
+bundle:persistentwatch add mhu-osgi-jms
+bundle:persistentwatch add mhu-osgi-mailosgi
+bundle:persistentwatch add mhu-osgi-mailkaraf
+bundle:persistentwatch add mhu-osgi-commands
 
+bundle:list|grep mhu-osgi|cut -d '\|' -f 4|run -c "for i in read *;bundle:persistentwatch add \$i\ ;done"
 
 
 
