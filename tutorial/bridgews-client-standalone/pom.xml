@@ -59,7 +59,7 @@
         </dependency>
         <dependency>
         	<groupId>de.mhus.osgi</groupId>
-        	<artifactId>jwsclient</artifactId>
+        	<artifactId>mhu-osgi-jwsclient</artifactId>
         	<version>${project.version}</version>
         </dependency>
         <dependency>
