@@ -29,6 +29,9 @@ public class CmdRun extends MLog implements Action {
     @Option(name = "-d", aliases = { "--debug" }, description = "Print debug information", required = false, multiValued = false)
     boolean debug;
 
+    @Option(name = "-i", aliases = { "--notinteruptable" }, description = "Not interuptable by pressing Ctrl+C, this will allow the script to process binary stdin", required = false, multiValued = false)
+    boolean notInteruptable;
+
     @Option(name = "-c", aliases = { "--command" }, description = "direct command input", required = false, multiValued = false)
     boolean command;
 
@@ -83,12 +86,14 @@ public class CmdRun extends MLog implements Action {
 			pos = 0;
 			while(true) {
 				// check stdin
-				while ( System.in.available() > 0 ) {
-					int b = System.in.read();
-					if (b < 0) {
-						break;
+				if (!notInteruptable) {
+					while ( System.in.available() > 0 ) {
+						int b = System.in.read();
+						if (b < 0) {
+							break;
+						}
+						System.out.print((char)b);
 					}
-					System.out.print((char)b);
 				}
 				
 				String line = null;
@@ -326,7 +331,11 @@ public class CmdRun extends MLog implements Action {
 			if (res instanceof Set) {
 				iterator = ((Set)res).iterator();
 			} else {
-				iterator = new ArrayIterator<String>( MString.split(String.valueOf(res), "\n") );
+				String[] array = MString.split(String.valueOf(res), "\n");
+				int stop = array.length;
+				if (array.length > 0 && MString.isEmpty(array[stop-1])) stop--;
+				iterator = new ArrayIterator<String>( array, 0, stop );
+				
 			}
 		}
 

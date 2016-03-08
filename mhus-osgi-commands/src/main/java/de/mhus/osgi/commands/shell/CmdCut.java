@@ -29,8 +29,10 @@ public class CmdCut implements Action {
     String join = "";
     @Option(name = "-t", aliases = { "--trim" }, description = "Trim every single part", required = false, multiValued = false)
     boolean trim = false;
-    @Option(name = "-n", description = "Add new line at the end", required = false, multiValued = false)
+    @Option(name = "-n", description = "Add not new line at the end", required = false, multiValued = false)
     boolean n = false;
+    @Option(name = "-x", description = "Do not ignore empty lines", required = false, multiValued = false)
+    boolean empty = false;
     
 	private StringBuilder out;
 
@@ -42,7 +44,8 @@ public class CmdCut implements Action {
 	    BufferedReader br = new BufferedReader(isr);
 	    String line = null;
 	    while ((line = br.readLine()) != null) {
-
+	    	out.setLength(0);
+	    	
 	    	if (MString.isSet(regex) && MString.isSet(replace))
 	    		line = line.replaceAll(regex, replace);
 	    	
@@ -53,10 +56,14 @@ public class CmdCut implements Action {
 	    		processPos(line);
 	    	else {
 	    		out.append(line);
-	    		if (n) out.append("\n");
+	    		if (!n) out.append("\n");
 	    	}
+	    	
+	    	if (empty || out.length() > 0)
+	    		System.out.print(out);
 	    }
-		return out.toString();
+//		return out.toString();
+	    return null;
 	}
 
 	private void processPos(String line) {
@@ -99,7 +106,7 @@ public class CmdCut implements Action {
 			out.append( x );
 			
 		}
-		if (n && !first) out.append("\n");
+		if (!n && !first) out.append("\n");
 	}
 
 	private void processDelim(String line) {
@@ -142,7 +149,7 @@ public class CmdCut implements Action {
 			}	
 			
 		}
-		if (n && !first) out.append("\n");
+		if (!n && !first) out.append("\n");
 
 	}
 
