@@ -30,7 +30,8 @@ public class TokenOutInterceptor extends AbstractSoapInterceptor {
 	@Override
 	public void handleMessage(SoapMessage message) throws Fault {
 		
-		message.setContextualProperty(TOKEN, token);
+		//XXX not working any more .... maybe sample is not working now
+		// message.setContextualProperty(TOKEN, token);
 		
 	}
 
