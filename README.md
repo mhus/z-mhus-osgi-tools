@@ -86,7 +86,7 @@ bundle:persistentwatch add mhu-osgi-mailosgi
 bundle:persistentwatch add mhu-osgi-mailkaraf
 bundle:persistentwatch add mhu-osgi-commands
 
-bundle:list|grep mhu-osgi|cut -d '\|' -f 4|run -c "for i in read *;bundle:persistentwatch add \$i\ ;done"
+bundle:list|grep --color never mhu-osgi|cut -d '\|' -f 4|run -c "for i in read *;bundle:persistentwatch add \$i\ ;done"
 
 
 
