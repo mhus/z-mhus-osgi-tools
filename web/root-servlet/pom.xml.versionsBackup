@@ -3,13 +3,13 @@
   <parent>
     <groupId>de.mhus.osgi</groupId>
     <artifactId>web</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
   </parent>
-  <artifactId>mhus-web-console</artifactId>
+  <artifactId>root-servlet</artifactId>
     <packaging>bundle</packaging>
 
-    <name>mhus-osgi-commands</name>
-    <description>commands OSGi blueprint bundle project.</description>
+    <name>root-servlet</name>
+    <description>Root servlet to delegate requests</description>
 
     <build>
         <plugins>
@@ -22,7 +22,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Export-Package>de.mhus.osgi.webconsole*;version=${project.version}</Export-Package>
+                        <Export-Package>de.mhus.osgi.rootservlet*;version=${project.version}</Export-Package>
                         <Import-Package>*</Import-Package>
                         <Service-Component>*</Service-Component>
                     </instructions>
@@ -69,21 +69,6 @@
         	<groupId>commons-pool</groupId>
         	<artifactId>commons-pool</artifactId>
         	<version>1.6</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-core</artifactId>
-        	<version>${mhulib.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-logging</artifactId>
-        	<version>${mhulib.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-persistence</artifactId>
-        	<version>${mhulib.version}</version>
         </dependency>
 
         <dependency>

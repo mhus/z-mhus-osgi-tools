@@ -20,15 +20,15 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bridgews-token-server</artifactId>
+    <artifactId>bridgews-server</artifactId>
     <packaging>bundle</packaging>
-  <parent>
-    <groupId>de.mhus.osgi.tutorial</groupId>
-    <version>1.0.5-SNAPSHOT</version>
-    <artifactId>tutorials</artifactId>
-  </parent>
+	  <parent>
+	    <groupId>de.mhus.osgi.tutorial</groupId>
+	    <version>1.0.6-SNAPSHOT</version>
+	    <artifactId>tutorials</artifactId>
+	  </parent>
 
-    <name>bridgews-token-server</name>
+    <name>bridgews-server</name>
     <description>bridgews-server OSGi blueprint bundle project.</description>
 
     <build>
@@ -43,7 +43,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.test.bridgews.bridgews_token_server*;version=${project.version}
+                            de.mhus.test.bridgews.bridgews_server*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -68,16 +68,6 @@
     		<version>${project.version}</version>
     		<type>bundle</type>
     	</dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-ws-security</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
+	
 	</dependencies>
 </project>

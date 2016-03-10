@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <!--
         Licensed to the Apache Software Foundation (ASF) under one or more
         contributor license agreements.  See the NOTICE file distributed with
@@ -17,20 +15,17 @@
         See the License for the specific language governing permissions and
         limitations under the License.
     -->
-
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>bridgews-token-server</artifactId>
-    <packaging>bundle</packaging>
+  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>de.mhus.osgi.tutorial</groupId>
-    <version>1.0.5-SNAPSHOT</version>
-    <artifactId>tutorials</artifactId>
+    <groupId>de.mhus.osgi</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.0.6-SNAPSHOT</version>
   </parent>
-
-    <name>bridgews-token-server</name>
-    <description>bridgews-server OSGi blueprint bundle project.</description>
-
+  <artifactId>mailkaraf</artifactId>
+  <name>mailkaraf</name>
+  <description>Mail OSGi karaf commands</description>
+      <packaging>bundle</packaging>
+  
     <build>
         <plugins>
             <plugin>
@@ -43,41 +38,37 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.mhus.test.bridgews.bridgews_token_server*;version=${project.version}
+                            de.mhus.osgi.mail.karaf*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
                         </Import-Package>
-                        <Service-Component>*</Service-Component>
-                        
+						<Private-Package>
+                            de.mhus.osgi.mail.karaf.impl
+                        </Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-	<dependencies>
-        <dependency>
-        	<groupId>${project.groupId}</groupId>
-			<artifactId>ws-model</artifactId>
-  			<version>${project.version}</version>
-        </dependency>
-	    <dependency>
+    <dependencies>
+    	<dependency>
     		<groupId>de.mhus.osgi</groupId>
-    		<artifactId>jwsosgibridge</artifactId>
+    		<artifactId>mailosgi</artifactId>
     		<version>${project.version}</version>
     		<type>bundle</type>
     	</dependency>
         <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
+            <groupId>org.apache.karaf.shell</groupId>
+            <artifactId>org.apache.karaf.shell.console</artifactId>
+            <version>${karaf.version}</version>
         </dependency>
-
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-ws-security</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>de.mhus.lib</groupId>
+            <artifactId>mhu-lib-core</artifactId>
+            <version>${mhulib.version}</version>
+        </dependency>
+    </dependencies>
+  
 </project>

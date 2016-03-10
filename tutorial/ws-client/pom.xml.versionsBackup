@@ -1,13 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>bridgews-client-standalone</artifactId>
-  
+  <artifactId>ws-client</artifactId>
+  <packaging>jar</packaging>
   <parent>
     <groupId>de.mhus.osgi.tutorial</groupId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
     <artifactId>tutorials</artifactId>
   </parent>
-  
   
   <build>
 	  <plugins>
@@ -22,7 +21,7 @@
 		                <Class-Path>config/</Class-Path>
 		            </manifestEntries>
 		            <manifest>
-		                <mainClass>de.mhus.test.bridgews.client.standalone.WSClientMain</mainClass>
+		                <mainClass>de.mhus.test.ws.ws_client.WSClientMain</mainClass>
 		                <addClasspath>true</addClasspath>
 		                <classpathPrefix>lib/</classpathPrefix>
 		                <classpathLayoutType>custom</classpathLayoutType>
@@ -50,7 +49,7 @@
 	    </plugin>
 	  </plugins>
 	</build>
-	  
+	
   <dependencies>
         <dependency>
         	<groupId>${project.groupId}</groupId>
@@ -58,20 +57,18 @@
   			<version>${project.version}</version>
         </dependency>
         <dependency>
-        	<groupId>de.mhus.osgi</groupId>
-        	<artifactId>jwsclient</artifactId>
-        	<version>${project.version}</version>
+        	<groupId>javax.jws</groupId>
+        	<artifactId>jsr181-api</artifactId>
+        	<version>1.0-MR1</version>
         </dependency>
+
         <dependency>
         	<groupId>de.mhus.lib</groupId>
         	<artifactId>mhu-lib-core</artifactId>
         	<version>${mhulib.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
+        		            
+        
   </dependencies>
-    
+  
 </project>

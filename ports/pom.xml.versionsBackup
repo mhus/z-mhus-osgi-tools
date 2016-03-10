@@ -19,22 +19,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>web</artifactId>
+    <artifactId>ports</artifactId>
     <packaging>pom</packaging>
-  <name>web</name>
-  <description>Web tools</description>
+  <name>ports</name>
+  <groupId>de.mhus.osgi.ports</groupId>
+  <description>Provide OSGi services and interfaces to use quartz (cronjob like service).</description>
+
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
-
+  <properties>
+  	<quartz.version>2.2.1</quartz.version>
+  </properties>
     <modules>
-      <module>mhus-web-console</module>
-      <module>groovy-console</module>
-      <module>root-servlet</module>
-      <module>rewrite-servlet</module>
-   </modules>
+    <module>common-discovery</module>
+    <module>vaadin-shared-deps</module>
+    </modules>
 
 </project>

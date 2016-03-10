@@ -3,13 +3,13 @@
   <parent>
     <groupId>de.mhus.osgi</groupId>
     <artifactId>web</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
   </parent>
-  <artifactId>mhus-web-console</artifactId>
+  <artifactId>rewrite-servlet</artifactId>
     <packaging>bundle</packaging>
 
-    <name>mhus-osgi-commands</name>
-    <description>commands OSGi blueprint bundle project.</description>
+    <name>rewrite-servlet</name>
+    <description>Rewrite content servlet</description>
 
     <build>
         <plugins>
@@ -22,7 +22,7 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Export-Package>de.mhus.osgi.webconsole*;version=${project.version}</Export-Package>
+                        <Export-Package>de.mhus.osgi.rewriteservlet*;version=${project.version}</Export-Package>
                         <Import-Package>*</Import-Package>
                         <Service-Component>*</Service-Component>
                     </instructions>
@@ -52,6 +52,11 @@
             <artifactId>org.apache.karaf.shell.console</artifactId>
             <version>${karaf.version}</version>
         </dependency>
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>servlet-api</artifactId>
+	<version>2.4</version>
+</dependency>
         <dependency>
         	<groupId>org.apache.felix</groupId>
         	<artifactId>
@@ -70,27 +75,13 @@
         	<artifactId>commons-pool</artifactId>
         	<version>1.6</version>
         </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-core</artifactId>
-        	<version>${mhulib.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-logging</artifactId>
-        	<version>${mhulib.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>de.mhus.lib</groupId>
-        	<artifactId>mhu-lib-persistence</artifactId>
-        	<version>${mhulib.version}</version>
-        </dependency>
 
         <dependency>
         	<groupId>org.apache.felix</groupId>
         	<artifactId>org.apache.felix.webconsole</artifactId>
         	<version>${felix.version}</version>
         	<type>bundle</type>
-        </dependency>
+        </dependency>        
+        
 	</dependencies>
 </project>

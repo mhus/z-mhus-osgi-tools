@@ -19,22 +19,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>web</artifactId>
+    <artifactId>jwsbridge</artifactId>
     <packaging>pom</packaging>
-  <name>web</name>
-  <description>Web tools</description>
+  <name>jwsbridge</name>
+  <description>Provide an OSGi service handling jws services. Implement and install the JavaWebService interface and the web service will automatically become an entry point.</description>
+
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.6-SNAPSHOT</version>
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
-
     <modules>
-      <module>mhus-web-console</module>
-      <module>groovy-console</module>
-      <module>root-servlet</module>
-      <module>rewrite-servlet</module>
-   </modules>
+      <module>jwsosgibridge</module>
+      <module>jwskarafbridge</module>
+      <module>jwsclient</module>
+    </modules>
 
 </project>
