@@ -4,7 +4,7 @@
     <packaging>bundle</packaging>
   <parent>
     <groupId>de.mhus.osgi.ports</groupId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.0.5</version>
     <artifactId>ports</artifactId>
   </parent>
 
