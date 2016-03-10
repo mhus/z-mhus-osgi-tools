@@ -13,6 +13,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
 import de.mhus.osgi.commands.db.TraceDataSource;
+import de.mhus.lib.karaf.DataSourceUtil;
 
 @Command(scope = "jdbc", name = "dbtrace", description = "Modify DB Trace")
 @Service

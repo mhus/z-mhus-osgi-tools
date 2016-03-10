@@ -14,6 +14,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.karaf.DataSourceUtil;
 
 @Command(scope = "jdbc", name = "datasources", description = "Show old datasources services")
 @Service
