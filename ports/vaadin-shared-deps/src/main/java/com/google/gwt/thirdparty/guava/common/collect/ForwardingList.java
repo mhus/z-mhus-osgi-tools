@@ -26,7 +26,7 @@ import java.util.ListIterator;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A list which forwards all its method calls to another list. Subclasses should
  * override one or more methods to modify the behavior of the backing list as
  * desired per the <a
@@ -56,7 +56,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     implements List<E> {
   // TODO(user): identify places where thread safety is actually lost
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingList() {}
 
   @Override protected abstract List<E> delegate();
@@ -119,7 +119,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return delegate().hashCode();
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #add(Object)}, in terms of
    * {@link #add(int, Object)}. If you override {@link #add(int, Object)}, you
    * may wish to override {@link #add(Object)} to forward to this
@@ -132,7 +132,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return true;
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #addAll(int, Collection)}, in
    * terms of the {@code add} method of {@link #listIterator(int)}. If you
    * override {@link #listIterator(int)}, you may wish to override {@link
@@ -145,7 +145,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.addAllImpl(this, index, elements);
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #indexOf}, in terms of {@link
    * #listIterator()}. If you override {@link #listIterator()}, you may wish to
    * override {@link #indexOf} to forward to this implementation.
@@ -156,7 +156,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.indexOfImpl(this, element);
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #lastIndexOf}, in terms of
    * {@link #listIterator(int)}. If you override {@link #listIterator(int)}, you
    * may wish to override {@link #lastIndexOf} to forward to this
@@ -168,7 +168,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.lastIndexOfImpl(this, element);
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #iterator}, in terms of
    * {@link #listIterator()}. If you override {@link #listIterator()}, you may
    * wish to override {@link #iterator} to forward to this implementation.
@@ -179,7 +179,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return listIterator();
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #listIterator()}, in terms of
    * {@link #listIterator(int)}. If you override {@link #listIterator(int)}, you
    * may wish to override {@link #listIterator()} to forward to this
@@ -191,7 +191,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return listIterator(0);
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #listIterator(int)}, in terms
    * of {@link #size}, {@link #get(int)}, {@link #set(int, Object)}, {@link
    * #add(int, Object)}, and {@link #remove(int)}. If you override any of these
@@ -204,7 +204,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.listIteratorImpl(this, start);
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #subList(int, int)}. If you
    * override any other methods, you may wish to override {@link #subList(int,
    * int)} to forward to this implementation.
@@ -215,7 +215,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.subListImpl(this, fromIndex, toIndex);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #equals(Object)} in terms of {@link #size}
    * and {@link #iterator}. If you override either of those methods, you may
    * wish to override {@link #equals(Object)} to forward to this implementation.
@@ -226,7 +226,7 @@ public abstract class ForwardingList<E> extends ForwardingCollection<E>
     return Lists.equalsImpl(this, object);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #hashCode} in terms of {@link #iterator}.
    * If you override {@link #iterator}, you may wish to override {@link
    * #hashCode} to forward to this implementation.

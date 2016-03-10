@@ -16,7 +16,7 @@ package org.w3c.flute.parser.selectors;
 import org.w3c.css.sac.AttributeCondition;
 import org.w3c.css.sac.Condition;
 
-/**
+/* 
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
@@ -24,21 +24,21 @@ public class IdConditionImpl implements AttributeCondition {
 
     String value;
     
-    /**
+    /* 
      * Creates a new AttributeConditionImpl
      */
     public IdConditionImpl(String value) {
 	this.value     = value;
     }
     
-    /**
+    /* 
      * An integer indicating the type of <code>Condition</code>.
      */    
     public short getConditionType() {
 	return Condition.SAC_ID_CONDITION;
     }
 
-    /**
+    /* 
      * Returns the
      * <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
      * URI</a> of this attribute condition.
@@ -52,7 +52,7 @@ public class IdConditionImpl implements AttributeCondition {
 	return null;
     }
 
-    /**
+    /* 
      * Returns the
      * <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a>
      * of the
@@ -70,7 +70,7 @@ public class IdConditionImpl implements AttributeCondition {
 	return null;
     }
 
-    /**
+    /* 
      * Returns <code>true</code> if the attribute must have an explicit value
      * in the original document, <code>false</code> otherwise.
      */
@@ -78,7 +78,7 @@ public class IdConditionImpl implements AttributeCondition {
 	return false;
     }
 
-    /**
+    /* 
      * Returns the value of the attribute.
      * If this attribute is a class or a pseudo class attribute, you'll get
      * the class name (or psedo class name) without the '.' or ':'.

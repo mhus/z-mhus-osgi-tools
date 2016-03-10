@@ -26,7 +26,7 @@ import java.nio.ByteBuffer;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * {@link HashFunction} implementation of SipHash-c-d.
  *
  * @author Kurt Alfred Kluever
@@ -43,7 +43,7 @@ final class SipHashFunction extends AbstractStreamingHashFunction implements Ser
   private final long k0;
   private final long k1;
 
-  /**
+  /* 
    * @param c the number of compression rounds (must be positive)
    * @param d the number of finalization rounds (must be positive)
    * @param k0 the first half of the key

@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.base.Predicate;
 import java.util.Map.Entry;
 import java.util.Set;
 
-/**
+/* 
  * Implementation of {@link Multimaps#filterEntries(SetMultimap, Predicate)}.
  * 
  * @author Louis Wasserman

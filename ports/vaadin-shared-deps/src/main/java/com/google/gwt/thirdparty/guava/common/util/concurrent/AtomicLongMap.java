@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
+/* 
  * A map containing {@code long} values that can be atomically updated. While writes to a
  * traditional {@code Map} rely on {@code put(K, V)}, the typical mechanism for writing to this map
  * is {@code addAndGet(K, long)}, which adds a {@code long} to the value currently associated with
@@ -58,14 +58,14 @@ public final class AtomicLongMap<K> {
     this.map = checkNotNull(map);
   }
 
-  /**
+  /* 
    * Creates an {@code AtomicLongMap}.
    */
   public static <K> AtomicLongMap<K> create() {
     return new AtomicLongMap<K>(new ConcurrentHashMap<K, AtomicLong>());
   }
 
-  /**
+  /* 
    * Creates an {@code AtomicLongMap} with the same mappings as the specified {@code Map}.
    */
   public static <K> AtomicLongMap<K> create(Map<? extends K, ? extends Long> m) {
@@ -74,7 +74,7 @@ public final class AtomicLongMap<K> {
     return result;
   }
 
-  /**
+  /* 
    * Returns the value associated with {@code key}, or zero if there is no value associated with
    * {@code key}.
    */
@@ -83,21 +83,21 @@ public final class AtomicLongMap<K> {
     return atomic == null ? 0L : atomic.get();
   }
 
-  /**
+  /* 
    * Increments by one the value currently associated with {@code key}, and returns the new value.
    */
   public long incrementAndGet(K key) {
     return addAndGet(key, 1);
   }
 
-  /**
+  /* 
    * Decrements by one the value currently associated with {@code key}, and returns the new value.
    */
   public long decrementAndGet(K key) {
     return addAndGet(key, -1);
   }
 
-  /**
+  /* 
    * Adds {@code delta} to the value currently associated with {@code key}, and returns the new
    * value.
    */
@@ -132,21 +132,21 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Increments by one the value currently associated with {@code key}, and returns the old value.
    */
   public long getAndIncrement(K key) {
     return getAndAdd(key, 1);
   }
 
-  /**
+  /* 
    * Decrements by one the value currently associated with {@code key}, and returns the old value.
    */
   public long getAndDecrement(K key) {
     return getAndAdd(key, -1);
   }
 
-  /**
+  /* 
    * Adds {@code delta} to the value currently associated with {@code key}, and returns the old
    * value.
    */
@@ -181,7 +181,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Associates {@code newValue} with {@code key} in this map, and returns the value previously
    * associated with {@code key}, or zero if there was no such value.
    */
@@ -215,7 +215,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Copies all of the mappings from the specified map to this map. The effect of this call is
    * equivalent to that of calling {@code put(k, v)} on this map once for each mapping from key
    * {@code k} to value {@code v} in the specified map. The behavior of this operation is undefined
@@ -227,7 +227,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Removes and returns the value associated with {@code key}. If {@code key} is not
    * in the map, this method has no effect and returns zero.
    */
@@ -248,7 +248,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Removes all mappings from this map whose values are zero.
    *
    * <p>This method is not atomic: the map may be visible in intermediate states, where some
@@ -263,7 +263,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * Returns the sum of all values in this map.
    *
    * <p>This method is not atomic: the sum may or may not include other concurrent operations.
@@ -278,7 +278,7 @@ public final class AtomicLongMap<K> {
 
   private transient Map<K, Long> asMap;
 
-  /**
+  /* 
    * Returns a live, read-only view of the map backing this {@code AtomicLongMap}.
    */
   public Map<K, Long> asMap() {
@@ -296,14 +296,14 @@ public final class AtomicLongMap<K> {
         }));
   }
 
-  /**
+  /* 
    * Returns true if this map contains a mapping for the specified key.
    */
   public boolean containsKey(Object key) {
     return map.containsKey(key);
   }
 
-  /**
+  /* 
    * Returns the number of key-value mappings in this map. If the map contains more than
    * {@code Integer.MAX_VALUE} elements, returns {@code Integer.MAX_VALUE}.
    */
@@ -311,14 +311,14 @@ public final class AtomicLongMap<K> {
     return map.size();
   }
 
-  /**
+  /* 
    * Returns {@code true} if this map contains no key-value mappings.
    */
   public boolean isEmpty() {
     return map.isEmpty();
   }
 
-  /**
+  /* 
    * Removes all of the mappings from this map. The map will be empty after this call returns.
    *
    * <p>This method is not atomic: the map may not be empty after returning if there were concurrent
@@ -356,7 +356,7 @@ public final class AtomicLongMap<K> {
    *   absent.
    */
 
-  /**
+  /* 
    * If {@code key} is not already associated with a value or if {@code key} is associated with
    * zero, associate it with {@code newValue}. Returns the previous value associated with
    * {@code key}, or zero if there was no mapping for {@code key}.
@@ -386,7 +386,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * If {@code (key, expectedOldValue)} is currently in the map, this method replaces
    * {@code expectedOldValue} with {@code newValue} and returns true; otherwise, this method
    * returns false.
@@ -403,7 +403,7 @@ public final class AtomicLongMap<K> {
     }
   }
 
-  /**
+  /* 
    * If {@code (key, value)} is currently in the map, this method removes it and returns
    * true; otherwise, this method returns false.
    */

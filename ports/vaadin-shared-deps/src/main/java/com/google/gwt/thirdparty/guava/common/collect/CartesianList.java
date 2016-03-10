@@ -25,7 +25,7 @@ import java.util.ListIterator;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Implementation of {@link Lists#cartesianProduct(List)}.
  * 
  * @author Louis Wasserman

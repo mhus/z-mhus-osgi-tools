@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableSet;
 
-/**
+/* 
  * A sorted multiset which forwards all its method calls to another sorted multiset. Subclasses
  * should override one or more methods to modify the behavior of the backing multiset as desired
  * per the <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -43,7 +43,7 @@ import java.util.NavigableSet;
 @GwtCompatible(emulated = true)
 public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     implements SortedMultiset<E> {
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingSortedMultiset() {}
 
   @Override
@@ -54,7 +54,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return (NavigableSet<E>) super.elementSet();
   }
 
-  /**
+  /* 
    * A sensible implementation of {@link SortedMultiset#elementSet} in terms of the following
    * methods: {@link SortedMultiset#clear}, {@link SortedMultiset#comparator}, {@link
    * SortedMultiset#contains}, {@link SortedMultiset#containsAll}, {@link SortedMultiset#count},
@@ -66,7 +66,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
    * implementation or a subclass thereof.
    */
   protected class StandardElementSet extends SortedMultisets.NavigableElementSet<E> {
-    /** Constructor for use by subclasses. */
+    /*  Constructor for use by subclasses. */
     public StandardElementSet() {
       super(ForwardingSortedMultiset.this);
     }
@@ -82,7 +82,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().descendingMultiset();
   }
 
-  /**
+  /* 
    * A skeleton implementation of a descending multiset view. Normally,
    * {@link #descendingMultiset()} will not reflect any changes you make to the behavior of methods
    * such as {@link #add(Object)} or {@link #pollFirstEntry}. This skeleton implementation
@@ -94,7 +94,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
    */
   protected abstract class StandardDescendingMultiset
       extends DescendingMultiset<E> {
-    /** Constructor for use by subclasses. */
+    /*  Constructor for use by subclasses. */
     public StandardDescendingMultiset() {}
 
     @Override
@@ -108,7 +108,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().firstEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #firstEntry()} in terms of {@code entrySet().iterator()}.
    *
    * If you override {@link #entrySet()}, you may wish to override {@link #firstEntry()} to forward
@@ -128,7 +128,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().lastEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #lastEntry()} in terms of {@code
    * descendingMultiset().entrySet().iterator()}.
    *
@@ -151,7 +151,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().pollFirstEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #pollFirstEntry()} in terms of {@code entrySet().iterator()}.
    *
    * If you override {@link #entrySet()}, you may wish to override {@link #pollFirstEntry()} to
@@ -173,7 +173,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().pollLastEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #pollLastEntry()} in terms of {@code
    * descendingMultiset().entrySet().iterator()}.
    *
@@ -204,7 +204,7 @@ public abstract class ForwardingSortedMultiset<E> extends ForwardingMultiset<E>
     return delegate().subMultiset(lowerBound, lowerBoundType, upperBound, upperBoundType);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #subMultiset(Object, BoundType, Object, BoundType)} in terms
    * of {@link #headMultiset(Object, BoundType) headMultiset} and
    * {@link #tailMultiset(Object, BoundType) tailMultiset}.

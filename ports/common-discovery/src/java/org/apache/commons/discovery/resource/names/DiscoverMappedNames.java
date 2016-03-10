@@ -24,7 +24,7 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Recover resource name from Managed Properties,
  * using OLD property names.
  * 
@@ -38,7 +38,7 @@ public class DiscoverMappedNames extends ResourceNameDiscoverImpl implements Res
 
     private static Log log = LogFactory.getLog(DiscoverMappedNames.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -49,18 +49,18 @@ public class DiscoverMappedNames extends ResourceNameDiscoverImpl implements Res
         log = _log;
     }
 
-    /**
+    /* 
      * The String name ==> String[] newNames mapping
      */
     private final Map<String, String[]> mapping = new Hashtable<String, String[]>();
 
-    /**
+    /* 
      * Construct a new resource discoverer
      */
     public DiscoverMappedNames() {
     }
 
-    /**
+    /* 
      * Maps a name to another name.
      *
      * @param fromName The name has to be mapped
@@ -70,7 +70,7 @@ public class DiscoverMappedNames extends ResourceNameDiscoverImpl implements Res
         map(fromName, new String[]{ toName });
     }
 
-    /**
+    /* 
      * Maps a name to multiple names.
      *
      * @param fromName The name has to be mapped
@@ -80,7 +80,7 @@ public class DiscoverMappedNames extends ResourceNameDiscoverImpl implements Res
         mapping.put(fromName, toNames);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

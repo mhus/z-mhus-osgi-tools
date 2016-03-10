@@ -18,7 +18,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.io.Serializable;
 
-/**
+/* 
  * An object which can send data from an object of type {@code T} into a {@code PrimitiveSink}.
  * Implementations for common types can be found in {@link Funnels}.
  *
@@ -33,7 +33,7 @@ import java.io.Serializable;
 @Beta
 public interface Funnel<T> extends Serializable {
 
-  /**
+  /* 
    * Sends a stream of data from the {@code from} object into the sink {@code into}. There
    * is no requirement that this data be complete enough to fully reconstitute the object
    * later.

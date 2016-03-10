@@ -48,7 +48,7 @@ import java.util.Queue;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * This class contains static utility methods that operate on or return objects
  * of type {@link Iterator}. Except as noted, each method has a corresponding
  * {@link Iterable}-based method in the {@link Iterables} class.
@@ -97,7 +97,7 @@ public final class Iterators {
         }
       };
 
-  /**
+  /* 
    * Returns the empty iterator.
    *
    * <p>The {@link Iterable} equivalent of this method is {@link
@@ -107,7 +107,7 @@ public final class Iterators {
     return emptyListIterator();
   }
 
-  /**
+  /* 
    * Returns the empty iterator.
    *
    * <p>The {@link Iterable} equivalent of this method is {@link
@@ -134,7 +134,7 @@ public final class Iterators {
         }
       };
 
-  /**
+  /* 
    * Returns the empty {@code Iterator} that throws
    * {@link IllegalStateException} instead of
    * {@link UnsupportedOperationException} on a call to
@@ -146,7 +146,7 @@ public final class Iterators {
     return (Iterator<T>) EMPTY_MODIFIABLE_ITERATOR;
   }
 
-  /** Returns an unmodifiable view of {@code iterator}. */
+  /*  Returns an unmodifiable view of {@code iterator}. */
   public static <T> UnmodifiableIterator<T> unmodifiableIterator(
       final Iterator<T> iterator) {
     checkNotNull(iterator);
@@ -165,7 +165,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Simply returns its argument.
    *
    * @deprecated no need to use this
@@ -176,7 +176,7 @@ public final class Iterators {
     return checkNotNull(iterator);
   }
 
-  /**
+  /* 
    * Returns the number of elements remaining in {@code iterator}. The iterator
    * will be left exhausted: its {@code hasNext()} method will return
    * {@code false}.
@@ -190,14 +190,14 @@ public final class Iterators {
     return count;
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code iterator} contains {@code element}.
    */
   public static boolean contains(Iterator<?> iterator, @Nullable Object element) {
     return any(iterator, equalTo(element));
   }
 
-  /**
+  /* 
    * Traverses an iterator and removes every element that belongs to the
    * provided collection. The iterator will be left exhausted: its
    * {@code hasNext()} method will return {@code false}.
@@ -211,7 +211,7 @@ public final class Iterators {
     return removeIf(removeFrom, in(elementsToRemove));
   }
 
-  /**
+  /* 
    * Removes every element that satisfies the provided predicate from the
    * iterator. The iterator will be left exhausted: its {@code hasNext()}
    * method will return {@code false}.
@@ -235,7 +235,7 @@ public final class Iterators {
     return modified;
   }
 
-  /**
+  /* 
    * Traverses an iterator and removes every element that does not belong to the
    * provided collection. The iterator will be left exhausted: its
    * {@code hasNext()} method will return {@code false}.
@@ -249,7 +249,7 @@ public final class Iterators {
     return removeIf(removeFrom, not(in(elementsToRetain)));
   }
 
-  /**
+  /* 
    * Determines whether two iterators contain equal elements in the same order.
    * More specifically, this method returns {@code true} if {@code iterator1}
    * and {@code iterator2} contain the same number of elements and every element
@@ -274,7 +274,7 @@ public final class Iterators {
     return !iterator2.hasNext();
   }
 
-  /**
+  /* 
    * Returns a string representation of {@code iterator}, with the format
    * {@code [e1, e2, ..., en]}. The iterator will be left exhausted: its
    * {@code hasNext()} method will return {@code false}.
@@ -286,7 +286,7 @@ public final class Iterators {
         .toString();
   }
 
-  /**
+  /* 
    * Returns the single element contained in {@code iterator}.
    *
    * @throws NoSuchElementException if the iterator is empty
@@ -312,7 +312,7 @@ public final class Iterators {
     throw new IllegalArgumentException(sb.toString());
   }
 
-  /**
+  /* 
    * Returns the single element contained in {@code iterator}, or {@code
    * defaultValue} if the iterator is empty.
    *
@@ -324,7 +324,7 @@ public final class Iterators {
     return iterator.hasNext() ? getOnlyElement(iterator) : defaultValue;
   }
 
-  /**
+  /* 
    * Copies an iterator's elements into an array. The iterator will be left
    * exhausted: its {@code hasNext()} method will return {@code false}.
    *
@@ -340,7 +340,7 @@ public final class Iterators {
     return Iterables.toArray(list, type);
   }
 
-  /**
+  /* 
    * Adds all elements in {@code iterator} to {@code collection}. The iterator
    * will be left exhausted: its {@code hasNext()} method will return
    * {@code false}.
@@ -359,7 +359,7 @@ public final class Iterators {
     return wasModified;
   }
 
-  /**
+  /* 
    * Returns the number of elements in the specified iterator that equal the
    * specified object. The iterator will be left exhausted: its
    * {@code hasNext()} method will return {@code false}.
@@ -370,7 +370,7 @@ public final class Iterators {
     return size(filter(iterator, equalTo(element)));
   }
 
-  /**
+  /* 
    * Returns an iterator that cycles indefinitely over the elements of {@code
    * iterable}.
    *
@@ -414,7 +414,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Returns an iterator that cycles indefinitely over the provided elements.
    *
    * <p>The returned iterator supports {@code remove()}. After {@code remove()}
@@ -431,7 +431,7 @@ public final class Iterators {
     return cycle(Lists.newArrayList(elements));
   }
 
-  /**
+  /* 
    * Combines two iterators into a single iterator. The returned iterator
    * iterates across the elements in {@code a}, followed by the elements in
    * {@code b}. The source iterators are not polled until necessary.
@@ -449,7 +449,7 @@ public final class Iterators {
     return concat(ImmutableList.of(a, b).iterator());
   }
 
-  /**
+  /* 
    * Combines three iterators into a single iterator. The returned iterator
    * iterates across the elements in {@code a}, followed by the elements in
    * {@code b}, followed by the elements in {@code c}. The source iterators
@@ -468,7 +468,7 @@ public final class Iterators {
     return concat(ImmutableList.of(a, b, c).iterator());
   }
 
-  /**
+  /* 
    * Combines four iterators into a single iterator. The returned iterator
    * iterates across the elements in {@code a}, followed by the elements in
    * {@code b}, followed by the elements in {@code c}, followed by the elements
@@ -488,7 +488,7 @@ public final class Iterators {
     return concat(ImmutableList.of(a, b, c, d).iterator());
   }
 
-  /**
+  /* 
    * Combines multiple iterators into a single iterator. The returned iterator
    * iterates across the elements of each iterator in {@code inputs}. The input
    * iterators are not polled until necessary.
@@ -507,7 +507,7 @@ public final class Iterators {
     return concat(ImmutableList.copyOf(inputs).iterator());
   }
 
-  /**
+  /* 
    * Combines multiple iterators into a single iterator. The returned iterator
    * iterates across the elements of each iterator in {@code inputs}. The input
    * iterators are not polled until necessary.
@@ -561,7 +561,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Divides an iterator into unmodifiable sublists of the given size (the final
    * list may be smaller). For example, partitioning an iterator containing
    * {@code [a, b, c, d, e]} with a partition size of 3 yields {@code
@@ -581,7 +581,7 @@ public final class Iterators {
     return partitionImpl(iterator, size, false);
   }
 
-  /**
+  /* 
    * Divides an iterator into unmodifiable sublists of the given size, padding
    * the final iterator with null values if necessary. For example, partitioning
    * an iterator containing {@code [a, b, c, d, e]} with a partition size of 3
@@ -633,7 +633,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Returns the elements of {@code unfiltered} that satisfy a predicate.
    */
   public static <T> UnmodifiableIterator<T> filter(
@@ -653,7 +653,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Returns all instances of class {@code type} in {@code unfiltered}. The
    * returned iterator has elements whose class is {@code type} or a subclass of
    * {@code type}.
@@ -670,7 +670,7 @@ public final class Iterators {
     return (UnmodifiableIterator<T>) filter(unfiltered, instanceOf(type));
   }
 
-  /**
+  /* 
    * Returns {@code true} if one or more elements returned by {@code iterator}
    * satisfy the given predicate.
    */
@@ -679,7 +679,7 @@ public final class Iterators {
     return indexOf(iterator, predicate) != -1;
   }
 
-  /**
+  /* 
    * Returns {@code true} if every element returned by {@code iterator}
    * satisfies the given predicate. If {@code iterator} is empty, {@code true}
    * is returned.
@@ -696,7 +696,7 @@ public final class Iterators {
     return true;
   }
 
-  /**
+  /* 
    * Returns the first element in {@code iterator} that satisfies the given
    * predicate; use this method only when such an element is known to exist. If
    * no such element is found, the iterator will be left exhausted: its {@code
@@ -712,7 +712,7 @@ public final class Iterators {
     return filter(iterator, predicate).next();
   }
 
-  /**
+  /* 
    * Returns the first element in {@code iterator} that satisfies the given
    * predicate. If no such element is found, {@code defaultValue} will be
    * returned from this method and the iterator will be left exhausted: its
@@ -728,7 +728,7 @@ public final class Iterators {
     return getNext(filter(iterator, predicate), defaultValue);
   }
 
-  /**
+  /* 
    * Returns an {@link Optional} containing the first element in {@code
    * iterator} that satisfies the given predicate, if such an element exists. If
    * no such element is found, an empty {@link Optional} will be returned from
@@ -749,7 +749,7 @@ public final class Iterators {
         : Optional.<T>absent();
   }
 
-  /**
+  /* 
    * Returns the index in {@code iterator} of the first element that satisfies
    * the provided {@code predicate}, or {@code -1} if the Iterator has no such
    * elements.
@@ -777,7 +777,7 @@ public final class Iterators {
     return -1;
   }
 
-  /**
+  /* 
    * Returns an iterator that applies {@code function} to each element of {@code
    * fromIterator}.
    *
@@ -796,7 +796,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Advances {@code iterator} {@code position + 1} times, returning the
    * element at the {@code position}th position.
    *
@@ -824,7 +824,7 @@ public final class Iterators {
     }
   }
 
-  /**
+  /* 
    * Advances {@code iterator} {@code position + 1} times, returning the
    * element at the {@code position}th position or {@code defaultValue}
    * otherwise.
@@ -846,7 +846,7 @@ public final class Iterators {
     return getNext(iterator, defaultValue);
   }
 
-  /**
+  /* 
    * Returns the next element in {@code iterator} or {@code defaultValue} if
    * the iterator is empty.  The {@link Iterables} analog to this method is
    * {@link Iterables#getFirst}.
@@ -860,7 +860,7 @@ public final class Iterators {
     return iterator.hasNext() ? iterator.next() : defaultValue;
   }
 
-  /**
+  /* 
    * Advances {@code iterator} to the end, returning the last element.
    *
    * @return the last element of {@code iterator}
@@ -875,7 +875,7 @@ public final class Iterators {
     }
   }
 
-  /**
+  /* 
    * Advances {@code iterator} to the end, returning the last element or
    * {@code defaultValue} if the iterator is empty.
    *
@@ -888,7 +888,7 @@ public final class Iterators {
     return iterator.hasNext() ? getLast(iterator) : defaultValue;
   }
 
-  /**
+  /* 
    * Calls {@code next()} on {@code iterator}, either {@code numberToAdvance} times
    * or until {@code hasNext()} returns {@code false}, whichever comes first.
    *
@@ -906,7 +906,7 @@ public final class Iterators {
     return i;
   }
 
-  /**
+  /* 
    * Creates an iterator returning the first {@code limitSize} elements of the
    * given iterator. If the original iterator does not contain that many
    * elements, the returned iterator will have the same behavior as the original
@@ -946,7 +946,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Returns a view of the supplied {@code iterator} that removes each element
    * from the supplied {@code iterator} as it is returned.
    *
@@ -976,7 +976,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Deletes and returns the next value from the iterator, or returns
    * {@code defaultValue} if there is no such value.
    */
@@ -993,7 +993,7 @@ public final class Iterators {
 
   // Methods only in Iterators, not in Iterables
 
-  /**
+  /* 
    * Clears the iterator using its remove method.
    */
   static void clear(Iterator<?> iterator) {
@@ -1004,7 +1004,7 @@ public final class Iterators {
     }
   }
 
-  /**
+  /* 
    * Returns an iterator containing the elements of {@code array} in order. The
    * returned iterator is a view of the array; subsequent changes to the array
    * will be reflected in the iterator.
@@ -1021,7 +1021,7 @@ public final class Iterators {
     return forArray(array, 0, array.length, 0);
   }
 
-  /**
+  /* 
    * Returns a list iterator containing the elements in the specified range of
    * {@code array} in order, starting at the specified index.
    *
@@ -1052,7 +1052,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Returns an iterator containing only {@code value}.
    *
    * <p>The {@link Iterable} equivalent of this method is {@link
@@ -1077,7 +1077,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Adapts an {@code Enumeration} to the {@code Iterator} interface.
    *
    * <p>This method has no equivalent in {@link Iterables} because viewing an
@@ -1100,7 +1100,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Adapts an {@code Iterator} to the {@code Enumeration} interface.
    *
    * <p>The {@code Iterable} equivalent of this method is either {@link
@@ -1121,7 +1121,7 @@ public final class Iterators {
     };
   }
 
-  /**
+  /* 
    * Implementation of PeekingIterator that avoids peeking unless necessary.
    */
   private static class PeekingImpl<E> implements PeekingIterator<E> {
@@ -1166,7 +1166,7 @@ public final class Iterators {
     }
   }
 
-  /**
+  /* 
    * Returns a {@code PeekingIterator} backed by the given iterator.
    *
    * <p>Calls to the {@code peek} method with no intervening calls to {@code
@@ -1216,7 +1216,7 @@ public final class Iterators {
     return new PeekingImpl<T>(iterator);
   }
 
-  /**
+  /* 
    * Simply returns its argument.
    *
    * @deprecated no need to use this
@@ -1227,7 +1227,7 @@ public final class Iterators {
     return checkNotNull(iterator);
   }
 
-  /**
+  /* 
    * Returns an iterator over the merged contents of all given
    * {@code iterators}, traversing every element of the input iterators.
    * Equivalent entries will not be de-duplicated.
@@ -1250,7 +1250,7 @@ public final class Iterators {
     return new MergingIterator<T>(iterators, comparator);
   }
 
-  /**
+  /* 
    * An iterator that performs a lazy N-way merge, calculating the next value
    * each time the iterator is polled. This amortizes the sorting cost over the
    * iteration and requires less memory than sorting all elements at once.
@@ -1299,7 +1299,7 @@ public final class Iterators {
     }
   }
 
-  /**
+  /* 
    * Used to avoid http://bugs.sun.com/view_bug.do?bug_id=6558557
    */
   static <T> ListIterator<T> cast(Iterator<T> iterator) {

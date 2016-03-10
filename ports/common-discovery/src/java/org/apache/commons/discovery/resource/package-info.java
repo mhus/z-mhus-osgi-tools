@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Resources discovery catalog.
  */
 package org.apache.commons.discovery.resource;

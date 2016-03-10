@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
 
-/**
+/* 
  * Static utility methods pertaining to {@code boolean} primitives, that are not
  * already found in either {@link Boolean} or {@link Arrays}.
  *
@@ -48,7 +48,7 @@ import java.util.RandomAccess;
 public final class Booleans {
   private Booleans() {}
 
-  /**
+  /* 
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Boolean) value).hashCode()}.
    *
@@ -59,7 +59,7 @@ public final class Booleans {
     return value ? 1231 : 1237;
   }
 
-  /**
+  /* 
    * Compares the two specified {@code boolean} values in the standard way
    * ({@code false} is considered less than {@code true}). The sign of the
    * value returned is the same as that of {@code ((Boolean) a).compareTo(b)}.
@@ -73,7 +73,7 @@ public final class Booleans {
     return (a == b) ? 0 : (a ? 1 : -1);
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -96,7 +96,7 @@ public final class Booleans {
     return false;
   }
 
-  /**
+  /* 
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -124,7 +124,7 @@ public final class Booleans {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -154,7 +154,7 @@ public final class Booleans {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -192,7 +192,7 @@ public final class Booleans {
     return result;
   }
 
-  /**
+  /* 
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -224,7 +224,7 @@ public final class Booleans {
     return copy;
   }
 
-  /**
+  /* 
    * Returns a string containing the supplied {@code boolean} values separated
    * by {@code separator}. For example, {@code join("-", false, true, false)}
    * returns the string {@code "false-true-false"}.
@@ -248,7 +248,7 @@ public final class Booleans {
     return builder.toString();
   }
 
-  /**
+  /* 
    * Returns a comparator that compares two {@code boolean} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(boolean, boolean)}), the first pair of values that follow any
@@ -284,7 +284,7 @@ public final class Booleans {
     }
   }
 
-  /**
+  /* 
    * Copies a collection of {@code Boolean} instances into a new array of
    * primitive {@code boolean} values.
    *
@@ -316,7 +316,7 @@ public final class Booleans {
     return array;
   }
 
-  /**
+  /* 
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

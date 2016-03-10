@@ -24,7 +24,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Basic implementation of the {@link SetMultimap} interface. It's a wrapper
  * around {@link AbstractMapBasedMultimap} that converts the returned collections into
  * {@code Sets}. The {@link #createCollection} method must return a {@code Set}.
@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
 @GwtCompatible
 abstract class AbstractSetMultimap<K, V>
     extends AbstractMapBasedMultimap<K, V> implements SetMultimap<K, V> {
-  /**
+  /* 
    * Creates a new multimap that uses the provided map.
    *
    * @param map place to store the mapping from each key to its corresponding
@@ -52,7 +52,7 @@ abstract class AbstractSetMultimap<K, V>
 
   // Following Javadoc copied from SetMultimap.
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -63,7 +63,7 @@ abstract class AbstractSetMultimap<K, V>
     return (Set<V>) super.get(key);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -74,7 +74,7 @@ abstract class AbstractSetMultimap<K, V>
     return (Set<Map.Entry<K, V>>) super.entries();
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -85,7 +85,7 @@ abstract class AbstractSetMultimap<K, V>
     return (Set<V>) super.removeAll(key);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -99,7 +99,7 @@ abstract class AbstractSetMultimap<K, V>
     return (Set<V>) super.replaceValues(key, values);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Though the method signature doesn't say so explicitly, the returned map
@@ -109,7 +109,7 @@ abstract class AbstractSetMultimap<K, V>
     return super.asMap();
   }
 
-  /**
+  /* 
    * Stores a key-value pair in the multimap.
    *
    * @param key key to store in the multimap
@@ -121,7 +121,7 @@ abstract class AbstractSetMultimap<K, V>
     return super.put(key, value);
   }
 
-  /**
+  /* 
    * Compares the specified object to this multimap for equality.
    *
    * <p>Two {@code SetMultimap} instances are equal if, for each key, they

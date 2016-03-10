@@ -26,7 +26,7 @@ import com.google.gwt.thirdparty.guava.common.util.concurrent.UncheckedExecution
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
-/**
+/* 
  * A semi-persistent mapping from keys to values. Values are automatically loaded by the cache,
  * and are stored in the cache until either evicted or manually invalidated.
  *
@@ -48,7 +48,7 @@ import java.util.concurrent.ExecutionException;
 @GwtCompatible
 public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
 
-  /**
+  /* 
    * Returns the value associated with {@code key} in this cache, first loading that value if
    * necessary. No observable state associated with this cache is modified until loading completes.
    *
@@ -75,7 +75,7 @@ public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
    */
   V get(K key) throws ExecutionException;
 
-  /**
+  /* 
    * Returns the value associated with {@code key} in this cache, first loading that value if
    * necessary. No observable state associated with this cache is modified until loading
    * completes. Unlike {@link #get}, this method does not throw a checked exception, and thus should
@@ -101,7 +101,7 @@ public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
    */
   V getUnchecked(K key);
 
-  /**
+  /* 
    * Returns a map of the values associated with {@code keys}, creating or retrieving those values
    * if necessary. The returned map contains entries that were already cached, combined with newly
    * loaded entries; it will never contain null keys or values.
@@ -127,7 +127,7 @@ public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
    */
   ImmutableMap<K, V> getAll(Iterable<? extends K> keys) throws ExecutionException;
 
-  /**
+  /* 
    * Discouraged. Provided to satisfy the {@code Function} interface; use {@link #get} or
    * {@link #getUnchecked} instead.
    *
@@ -138,7 +138,7 @@ public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
   @Override
   V apply(K key);
 
-  /**
+  /* 
    * Loads a new value for key {@code key}, possibly asynchronously. While the new value is loading
    * the previous value (if any) will continue to be returned by {@code get(key)} unless it is
    * evicted. If the new value is loaded successfully it will replace the previous value in the
@@ -158,7 +158,7 @@ public interface LoadingCache<K, V> extends Cache<K, V>, Function<K, V> {
    */
   void refresh(K key);
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p><b>Note that although the view <i>is</i> modifiable, no method on the returned map will ever

@@ -39,7 +39,7 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Iterator;
 
-/**
+/* 
  * A class for arithmetic on doubles that is not covered by {@link java.lang.Math}.
  *
  * @author Louis Wasserman
@@ -109,7 +109,7 @@ public final class DoubleMath {
     }
   }
 
-  /**
+  /* 
    * Returns the {@code int} value that is equal to {@code x} rounded with the specified rounding
    * mode, if possible.
    *
@@ -132,7 +132,7 @@ public final class DoubleMath {
   private static final double MIN_INT_AS_DOUBLE = -0x1p31;
   private static final double MAX_INT_AS_DOUBLE = 0x1p31 - 1.0;
 
-  /**
+  /* 
    * Returns the {@code long} value that is equal to {@code x} rounded with the specified rounding
    * mode, if possible.
    *
@@ -159,7 +159,7 @@ public final class DoubleMath {
    */
   private static final double MAX_LONG_AS_DOUBLE_PLUS_ONE = 0x1p63;
 
-  /**
+  /* 
    * Returns the {@code BigInteger} value that is equal to {@code x} rounded with the specified
    * rounding mode, if possible.
    *
@@ -181,7 +181,7 @@ public final class DoubleMath {
     return (x < 0) ? result.negate() : result;
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code x} is exactly equal to {@code 2^k} for some finite integer
    * {@code k}.
    */
@@ -189,7 +189,7 @@ public final class DoubleMath {
     return x > 0.0 && isFinite(x) && LongMath.isPowerOfTwo(getSignificand(x));
   }
 
-  /**
+  /* 
    * Returns the base 2 logarithm of a double value.
    *
    * <p>Special cases:
@@ -210,7 +210,7 @@ public final class DoubleMath {
 
   private static final double LN_2 = log(2);
 
-  /**
+  /* 
    * Returns the base 2 logarithm of a double value, rounded with the specified rounding mode to an
    * {@code int}.
    *
@@ -259,7 +259,7 @@ public final class DoubleMath {
     return increment ? exponent + 1 : exponent;
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code x} represents a mathematical integer.
    *
    * <p>This is equivalent to, but not necessarily implemented as, the expression {@code
@@ -271,7 +271,7 @@ public final class DoubleMath {
             SIGNIFICAND_BITS - Long.numberOfTrailingZeros(getSignificand(x)) <= getExponent(x));
   }
 
-  /**
+  /* 
    * Returns {@code n!}, that is, the product of the first {@code n} positive
    * integers, {@code 1} if {@code n == 0}, or e n!}, or
    * {@link Double#POSITIVE_INFINITY} if {@code n! > Double.MAX_VALUE}.
@@ -312,7 +312,7 @@ public final class DoubleMath {
       0x1.8ce85fadb707ep829,
       0x1.95d5f3d928edep945};
 
-  /**
+  /* 
    * Returns {@code true} if {@code a} and {@code b} are within {@code tolerance} of each other.
    *
    * <p>Technically speaking, this is equivalent to
@@ -346,7 +346,7 @@ public final class DoubleMath {
           || (Double.isNaN(a) && Double.isNaN(b));
   }
 
-  /**
+  /* 
    * Compares {@code a} and {@code b} "fuzzily," with a tolerance for nearly-equal values.
    *
    * <p>This method is equivalent to
@@ -390,7 +390,7 @@ public final class DoubleMath {
     }
   }
 
-  /**
+  /* 
    * Returns the arithmetic mean of the values. There must be at least one value, and they must all
    * be finite.
    */
@@ -402,7 +402,7 @@ public final class DoubleMath {
     return accumulator.mean();
   }
 
-  /**
+  /* 
    * Returns the arithmetic mean of the values. There must be at least one value. The values will
    * be converted to doubles, which does not cause any loss of precision for ints.
    */
@@ -414,7 +414,7 @@ public final class DoubleMath {
     return accumulator.mean();
   }
 
-  /**
+  /* 
    * Returns the arithmetic mean of the values. There must be at least one value. The values will
    * be converted to doubles, which causes loss of precision for longs of magnitude over 2^53
    * (slightly over 9e15).
@@ -427,7 +427,7 @@ public final class DoubleMath {
     return accumulator.mean();
   }
 
-  /**
+  /* 
    * Returns the arithmetic mean of the values. There must be at least one value, and they must all
    * be finite. The values will be converted to doubles, which may cause loss of precision for some
    * numeric types.
@@ -440,7 +440,7 @@ public final class DoubleMath {
     return accumulator.mean();
   }
 
-  /**
+  /* 
    * Returns the arithmetic mean of the values. There must be at least one value, and they must all
    * be finite. The values will be converted to doubles, which may cause loss of precision for some
    * numeric types.

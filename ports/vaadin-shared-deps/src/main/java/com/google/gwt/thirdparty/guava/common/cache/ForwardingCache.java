@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A cache which forwards all its method calls to another cache. Subclasses should override one or
  * more methods to modify the behavior of the backing cache as desired per the
  * <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -39,13 +39,13 @@ import javax.annotation.Nullable;
 @Beta
 public abstract class ForwardingCache<K, V> extends ForwardingObject implements Cache<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingCache() {}
 
   @Override
   protected abstract Cache<K, V> delegate();
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -54,7 +54,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     return delegate().getIfPresent(key);
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -62,7 +62,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     return delegate().get(key, valueLoader);
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -70,7 +70,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     return delegate().getAllPresent(keys);
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -78,7 +78,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     delegate().put(key, value);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @Override
@@ -91,7 +91,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     delegate().invalidate(key);
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -124,7 +124,7 @@ public abstract class ForwardingCache<K, V> extends ForwardingObject implements 
     delegate().cleanUp();
   }
 
-  /**
+  /* 
    * A simplified version of {@link ForwardingCache} where subclasses can pass in an already
    * constructed {@link Cache} as the delegete.
    *

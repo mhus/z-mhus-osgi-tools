@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Equivalence applied on functional result.
  *
  * @author Bob Lee

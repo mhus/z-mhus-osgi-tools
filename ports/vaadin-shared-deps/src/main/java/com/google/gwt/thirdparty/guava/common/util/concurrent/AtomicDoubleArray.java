@@ -18,7 +18,7 @@ import static java.lang.Double.longBitsToDouble;
 
 import java.util.concurrent.atomic.AtomicLongArray;
 
-/**
+/* 
  * A {@code double} array in which elements may be updated atomically.
  * See the {@link java.util.concurrent.atomic} package specification
  * for description of the properties of atomic variables.
@@ -40,7 +40,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
   // Java 2nd Edition Item 76: Write readObject methods defensively.
   private transient AtomicLongArray longs;
 
-  /**
+  /* 
    * Creates a new {@code AtomicDoubleArray} of the given length,
    * with all elements initially zero.
    *
@@ -50,7 +50,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     this.longs = new AtomicLongArray(length);
   }
 
-  /**
+  /* 
    * Creates a new {@code AtomicDoubleArray} with the same length
    * as, and all elements copied from, the given array.
    *
@@ -66,7 +66,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     this.longs = new AtomicLongArray(longArray);
   }
 
-  /**
+  /* 
    * Returns the length of the array.
    *
    * @return the length of the array
@@ -75,7 +75,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     return longs.length();
   }
 
-  /**
+  /* 
    * Gets the current value at position {@code i}.
    *
    * @param i the index
@@ -85,7 +85,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     return longBitsToDouble(longs.get(i));
   }
 
-  /**
+  /* 
    * Sets the element at position {@code i} to the given value.
    *
    * @param i the index
@@ -96,7 +96,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     longs.set(i, next);
   }
 
-  /**
+  /* 
    * Eventually sets the element at position {@code i} to the given value.
    *
    * @param i the index
@@ -109,7 +109,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     // longs.lazySet(i, next);
   }
 
-  /**
+  /* 
    * Atomically sets the element at position {@code i} to the given value
    * and returns the old value.
    *
@@ -122,7 +122,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     return longBitsToDouble(longs.getAndSet(i, next));
   }
 
-  /**
+  /* 
    * Atomically sets the element at position {@code i} to the given
    * updated value
    * if the current value is <a href="#bitEquals">bitwise equal</a>
@@ -140,7 +140,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
                                doubleToRawLongBits(update));
   }
 
-  /**
+  /* 
    * Atomically sets the element at position {@code i} to the given
    * updated value
    * if the current value is <a href="#bitEquals">bitwise equal</a>
@@ -163,7 +163,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
                                    doubleToRawLongBits(update));
   }
 
-  /**
+  /* 
    * Atomically adds the given value to the element at index {@code i}.
    *
    * @param i the index
@@ -182,7 +182,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     }
   }
 
-  /**
+  /* 
    * Atomically adds the given value to the element at index {@code i}.
    *
    * @param i the index
@@ -201,7 +201,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     }
   }
 
-  /**
+  /* 
    * Returns the String representation of the current values of array.
    * @return the String representation of the current values of array
    */
@@ -223,7 +223,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     }
   }
 
-  /**
+  /* 
    * Saves the state to a stream (that is, serializes it).
    *
    * @serialData The length of the array is emitted (int), followed by all
@@ -243,7 +243,7 @@ public class AtomicDoubleArray implements java.io.Serializable {
     }
   }
 
-  /**
+  /* 
    * Reconstitutes the instance from a stream (that is, deserializes it).
    */
   private void readObject(java.io.ObjectInputStream s)

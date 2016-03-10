@@ -10,7 +10,7 @@ package org.w3c.flute.parser;
 
 import org.w3c.css.sac.LexicalUnit;
 
-/**
+/* 
  * @version $Revision: 1.3 $
  * @author  Philippe Le Hegaret
  */

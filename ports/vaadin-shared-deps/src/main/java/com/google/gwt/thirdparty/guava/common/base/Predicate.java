@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Determines a true or false value for a given input.
  *
  * <p>The {@link Predicates} class provides common predicates and related utilities.
@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public interface Predicate<T> {
-  /**
+  /* 
    * Returns the result of applying this predicate to {@code input}. This method is <i>generally
    * expected</i>, but not absolutely required, to have the following properties:
    *
@@ -50,7 +50,7 @@ public interface Predicate<T> {
    */
   boolean apply(@Nullable T input);
 
-  /**
+  /* 
    * Indicates whether another object is equal to this predicate.
    *
    * <p>Most implementations will have no reason to override the behavior of {@link Object#equals}.

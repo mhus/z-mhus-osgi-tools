@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Bimap with no mappings.
  *
  * @author Jared Levy

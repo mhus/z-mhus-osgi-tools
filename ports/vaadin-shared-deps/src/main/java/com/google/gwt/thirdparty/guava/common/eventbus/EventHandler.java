@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Wraps a single-argument 'handler' method on a specific object.
  *
  * <p>This class only verifies the suitability of the method and event type if
@@ -39,12 +39,12 @@ import javax.annotation.Nullable;
  */
 class EventHandler {
 
-  /** Object sporting the handler method. */
+  /*  Object sporting the handler method. */
   private final Object target;
-  /** Handler method. */
+  /*  Handler method. */
   private final Method method;
 
-  /**
+  /* 
    * Creates a new EventHandler to wrap {@code method} on @{code target}.
    *
    * @param target  object to which the method applies.
@@ -60,7 +60,7 @@ class EventHandler {
     method.setAccessible(true);
   }
 
-  /**
+  /* 
    * Invokes the wrapped handler method to handle {@code event}.
    *
    * @param event  event to handle

@@ -16,7 +16,7 @@
  */
 package org.apache.commons.discovery;
 
-/**
+/* 
  * Iterate over resource names.
  * The semantics are somewhat unusual, for better or worse.
  * hasNext is presumed to be destructive to the current state,
@@ -28,14 +28,14 @@ package org.apache.commons.discovery;
  */
 public interface ResourceNameIterator {
 
-    /**
+    /* 
      * Returns true if the iteration has more elements.
      *
      * @return true if the iterator has more elements, false otherwise
      */
     boolean hasNext();
 
-    /**
+    /* 
      * nextResourceName() returns the name of the next resource,
      * and MUST be non-destructive.  Repeated calls
      *

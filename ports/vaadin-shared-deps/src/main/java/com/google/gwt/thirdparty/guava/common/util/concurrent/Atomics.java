@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to classes in the
  * {@code java.util.concurrent.atomic} package.
  *
@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 public final class Atomics {
   private Atomics() {}
 
-  /**
+  /* 
    * Creates an {@code AtomicReference} instance with no initial value.
    *
    * @return a new {@code AtomicReference} with no initial value
@@ -40,7 +40,7 @@ public final class Atomics {
     return new AtomicReference<V>();
   }
 
-  /**
+  /* 
    * Creates an {@code AtomicReference} instance with the given initial value.
    *
    * @param initialValue the initial value
@@ -50,7 +50,7 @@ public final class Atomics {
     return new AtomicReference<V>(initialValue);
   }
 
-  /**
+  /* 
    * Creates an {@code AtomicReferenceArray} instance of given length.
    *
    * @param length the length of the array
@@ -60,7 +60,7 @@ public final class Atomics {
     return new AtomicReferenceArray<E>(length);
   }
 
-  /**
+  /* 
    * Creates an {@code AtomicReferenceArray} instance with the same length as,
    * and all elements copied from, the given array.
    *

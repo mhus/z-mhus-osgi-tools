@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.streamhtmlparser;
 
 import com.google.gwt.thirdparty.streamhtmlparser.impl.JavascriptParserImpl;
 
-/**
+/* 
  * A factory class to obtain instances of an <code>JavascriptParser</code>.
  * Currently each instance is a new object given these are fairly
  * light-weight.

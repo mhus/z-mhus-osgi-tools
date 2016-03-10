@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-/**
+/* 
  * Produces proxies that impose a time limit on method
  * calls to the proxied object.  For example, to return the value of
  * {@code target.someMethod()}, but substitute {@code DEFAULT_VALUE} if this
@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
 @Beta
 public interface TimeLimiter {
 
-  /**
+  /* 
    * Returns an instance of {@code interfaceType} that delegates all method
    * calls to the {@code target} object, enforcing the specified time limit on
    * each call.  This time-limited delegation is also performed for calls to
@@ -78,7 +78,7 @@ public interface TimeLimiter {
   <T> T newProxy(T target, Class<T> interfaceType,
       long timeoutDuration, TimeUnit timeoutUnit);
 
-  /**
+  /* 
    * Invokes a specified Callable, timing out after the specified time limit.
    * If the target method call finished before the limit is reached, the return
    * value or exception is propagated to the caller exactly as-is.  If, on the

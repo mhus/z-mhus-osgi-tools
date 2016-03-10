@@ -81,7 +81,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
-/**
+/* 
  * The concurrent hash map implementation built by {@link CacheBuilder}.
  *
  * <p>This implementation is heavily derived from revision 1.96 of <a
@@ -122,20 +122,20 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   // Constants
 
-  /**
+  /* 
    * The maximum capacity, used if a higher value is implicitly specified by either of the
    * constructors with arguments. MUST be a power of two <= 1<<30 to ensure that entries are
    * indexable using ints.
    */
   static final int MAXIMUM_CAPACITY = 1 << 30;
 
-  /** The maximum number of segments to allow; used to bound constructor arguments. */
+  /*  The maximum number of segments to allow; used to bound constructor arguments. */
   static final int MAX_SEGMENTS = 1 << 16; // slightly conservative
 
-  /** Number of (unsynchronized) retries in the containsValue method. */
+  /*  Number of (unsynchronized) retries in the containsValue method. */
   static final int CONTAINS_VALUE_RETRIES = 3;
 
-  /**
+  /* 
    * Number of cache access operations that can be buffered per segment before the cache's recency
    * ordering information is updated. This is used to avoid lock contention by recording a memento
    * of reads and delaying a lock acquisition until the threshold is crossed or a mutation occurs.
@@ -144,7 +144,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
    */
   static final int DRAIN_THRESHOLD = 0x3F;
 
-  /**
+  /* 
    * Maximum number of entries to be drained in a single cleanup run. This applies independently to
    * the cleanup queue and both reference queues.
    */
@@ -157,80 +157,80 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   static final ListeningExecutorService sameThreadExecutor = MoreExecutors.sameThreadExecutor();
 
-  /**
+  /* 
    * Mask value for indexing into segments. The upper bits of a key's hash code are used to choose
    * the segment.
    */
   final int segmentMask;
 
-  /**
+  /* 
    * Shift value for indexing within segments. Helps prevent entries that end up in the same segment
    * from also ending up in the same bucket.
    */
   final int segmentShift;
 
-  /** The segments, each of which is a specialized hash table. */
+  /*  The segments, each of which is a specialized hash table. */
   final Segment<K, V>[] segments;
 
-  /** The concurrency level. */
+  /*  The concurrency level. */
   final int concurrencyLevel;
 
-  /** Strategy for comparing keys. */
+  /*  Strategy for comparing keys. */
   final Equivalence<Object> keyEquivalence;
 
-  /** Strategy for comparing values. */
+  /*  Strategy for comparing values. */
   final Equivalence<Object> valueEquivalence;
 
-  /** Strategy for referencing keys. */
+  /*  Strategy for referencing keys. */
   final Strength keyStrength;
 
-  /** Strategy for referencing values. */
+  /*  Strategy for referencing values. */
   final Strength valueStrength;
 
-  /** The maximum weight of this map. UNSET_INT if there is no maximum. */
+  /*  The maximum weight of this map. UNSET_INT if there is no maximum. */
   final long maxWeight;
 
-  /** Weigher to weigh cache entries. */
+  /*  Weigher to weigh cache entries. */
   final Weigher<K, V> weigher;
 
-  /** How long after the last access to an entry the map will retain that entry. */
+  /*  How long after the last access to an entry the map will retain that entry. */
   final long expireAfterAccessNanos;
 
-  /** How long after the last write to an entry the map will retain that entry. */
+  /*  How long after the last write to an entry the map will retain that entry. */
   final long expireAfterWriteNanos;
 
-  /** How long after the last write an entry becomes a candidate for refresh. */
+  /*  How long after the last write an entry becomes a candidate for refresh. */
   final long refreshNanos;
 
-  /** Entries waiting to be consumed by the removal listener. */
+  /*  Entries waiting to be consumed by the removal listener. */
   // TODO(fry): define a new type which creates event objects and automates the clear logic
   final Queue<RemovalNotification<K, V>> removalNotificationQueue;
 
-  /**
+  /* 
    * A listener that is invoked when an entry is removed due to expiration or garbage collection of
    * soft/weak entries.
    */
   final RemovalListener<K, V> removalListener;
 
-  /** Measures time in a testable way. */
+  /*  Measures time in a testable way. */
   final Ticker ticker;
 
-  /** Factory used to create new entries. */
+  /*  Factory used to create new entries. */
   final EntryFactory entryFactory;
 
-  /**
+  /* 
    * Accumulates global cache statistics. Note that there are also per-segments stats counters
    * which must be aggregated to obtain a global stats view.
    */
   final StatsCounter globalStatsCounter;
 
-  /**
+  /* 
    * The default cache loader to use on loading operations.
    */
   @Nullable
   final CacheLoader<? super K, V> defaultLoader;
 
-  /**
+  /* 
    * Creates a new, empty map with the specified strategy, initial capacity and concurrency level.
    */
   LocalCache(
@@ -423,13 +423,13 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     };
 
-    /**
+    /* 
      * Creates a reference for the given value according to this value strength.
      */
     abstract <K, V> ValueReference<K, V> referenceValue(
         Segment<K, V> segment, ReferenceEntry<K, V> entry, V value, int weight);
 
-    /**
+    /* 
      * Returns the default equivalence strategy used to compare and hash keys or values referenced
      * at this strength. This strategy will be used unless the user explicitly specifies an
      * alternate strategy.
@@ -437,7 +437,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     abstract Equivalence<Object> defaultEquivalence();
   }
 
-  /**
+  /* 
    * Creates new entries.
    */
   enum EntryFactory {
@@ -549,14 +549,14 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     };
 
-    /**
+    /* 
      * Masks used to compute indices in the following table.
      */
     static final int ACCESS_MASK = 1;
     static final int WRITE_MASK = 2;
     static final int WEAK_MASK = 4;
 
-    /**
+    /* 
      * Look-up table for factories.
      */
     static final EntryFactory[] factories = {
@@ -572,7 +572,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return factories[flags];
     }
 
-    /**
+    /* 
      * Creates a new entry.
      *
      * @param segment to create the entry for
@@ -583,7 +583,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     abstract <K, V> ReferenceEntry<K, V> newEntry(
         Segment<K, V> segment, K key, int hash, @Nullable ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Copies an entry, assigning it a new {@code next} entry.
      *
      * @param original the entry to copy
@@ -620,17 +620,17 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * A reference to a value.
    */
   interface ValueReference<K, V> {
-    /**
+    /* 
      * Returns the value. Does not block or throw exceptions.
      */
     @Nullable
     V get();
 
-    /**
+    /* 
      * Waits for a value that may still be loading. Unlike get(), this method can block (in the
      * case of FutureValueReference).
      *
@@ -639,19 +639,19 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
      */
     V waitForValue() throws ExecutionException;
 
-    /**
+    /* 
      * Returns the weight of this entry. This is assumed to be static between calls to setValue.
      */
     int getWeight();
 
-    /**
+    /* 
      * Returns the entry associated with this value reference, or {@code null} if this value
      * reference is independent of any entry.
      */
     @Nullable
     ReferenceEntry<K, V> getEntry();
 
-    /**
+    /* 
      * Creates a copy of this reference for the given entry.
      *
      * <p>{@code value} may be null only for a loading reference.
@@ -659,20 +659,20 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     ValueReference<K, V> copyFor(
         ReferenceQueue<V> queue, @Nullable V value, ReferenceEntry<K, V> entry);
 
-    /**
+    /* 
      * Notifify pending loads that a new value was set. This is only relevant to loading
      * value references.
      */
     void notifyNewValue(@Nullable V newValue);
 
-    /**
+    /* 
      * Returns true if a new value is currently loading, regardless of whether or not there is an
      * existing value. It is assumed that the return value of this method is constant for any given
      * ValueReference instance.
      */
     boolean isLoading();
 
-    /**
+    /* 
      * Returns true if this reference contains an active value, meaning one that is still considered
      * present in the cache. Active values consist of live values, which are returned by cache
      * lookups, and dead values, which have been evicted but awaiting removal. Non-active values
@@ -682,7 +682,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     boolean isActive();
   }
 
-  /**
+  /* 
    * Placeholder. Indicates that the value hasn't been set yet.
    */
   static final ValueReference<Object, Object> UNSET = new ValueReference<Object, Object>() {
@@ -726,7 +726,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     public void notifyNewValue(Object newValue) {}
   };
 
-  /**
+  /* 
    * Singleton placeholder that indicates a value is being loaded.
    */
   @SuppressWarnings("unchecked") // impl never uses a parameter or returns any non-null value
@@ -734,7 +734,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return (ValueReference<K, V>) UNSET;
   }
 
-  /**
+  /* 
    * An entry in a reference map.
    *
    * Entries in the map can be in the following states:
@@ -749,28 +749,28 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
    * - Unset: marked as unset, awaiting cleanup or reuse
    */
   interface ReferenceEntry<K, V> {
-    /**
+    /* 
      * Returns the value reference from this entry.
      */
     ValueReference<K, V> getValueReference();
 
-    /**
+    /* 
      * Sets the value reference for this entry.
      */
     void setValueReference(ValueReference<K, V> valueReference);
 
-    /**
+    /* 
      * Returns the next entry in the chain.
      */
     @Nullable
     ReferenceEntry<K, V> getNext();
 
-    /**
+    /* 
      * Returns the entry's hash.
      */
     int getHash();
 
-    /**
+    /* 
      * Returns the key for this entry.
      */
     @Nullable
@@ -782,32 +782,32 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
      * the head of the list.
      */
 
-    /**
+    /* 
      * Returns the time that this entry was last accessed, in ns.
      */
     long getAccessTime();
 
-    /**
+    /* 
      * Sets the entry access time in ns.
      */
     void setAccessTime(long time);
 
-    /**
+    /* 
      * Returns the next entry in the access queue.
      */
     ReferenceEntry<K, V> getNextInAccessQueue();
 
-    /**
+    /* 
      * Sets the next entry in the access queue.
      */
     void setNextInAccessQueue(ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Returns the previous entry in the access queue.
      */
     ReferenceEntry<K, V> getPreviousInAccessQueue();
 
-    /**
+    /* 
      * Sets the previous entry in the access queue.
      */
     void setPreviousInAccessQueue(ReferenceEntry<K, V> previous);
@@ -818,32 +818,32 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
      * entries are expired from the head of the list.
      */
 
-    /**
+    /* 
      * Returns the time that this entry was last written, in ns.
      */
     long getWriteTime();
 
-    /**
+    /* 
      * Sets the entry write time in ns.
      */
     void setWriteTime(long time);
 
-    /**
+    /* 
      * Returns the next entry in the write queue.
      */
     ReferenceEntry<K, V> getNextInWriteQueue();
 
-    /**
+    /* 
      * Sets the next entry in the write queue.
      */
     void setNextInWriteQueue(ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Returns the previous entry in the write queue.
      */
     ReferenceEntry<K, V> getPreviousInWriteQueue();
 
-    /**
+    /* 
      * Sets the previous entry in the write queue.
      */
     void setPreviousInWriteQueue(ReferenceEntry<K, V> previous);
@@ -1043,7 +1043,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   };
 
-  /**
+  /* 
    * Queue that discards all elements.
    */
   @SuppressWarnings("unchecked") // impl never uses a parameter or returns any non-null value
@@ -1059,7 +1059,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
    * respective superclasses.
    */
 
-  /**
+  /* 
    * Used for strongly-referenced keys.
    */
   static class StrongEntry<K, V> extends AbstractReferenceEntry<K, V> {
@@ -1281,7 +1281,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * Used for weakly-referenced keys.
    */
   static class WeakEntry<K, V> extends WeakReference<K> implements ReferenceEntry<K, V> {
@@ -1573,7 +1573,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * References a weak value.
    */
   static class WeakValueReference<K, V>
@@ -1620,7 +1620,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * References a soft value.
    */
   static class SoftValueReference<K, V>
@@ -1667,7 +1667,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * References a strong value.
    */
   static class StrongValueReference<K, V> implements ValueReference<K, V> {
@@ -1717,7 +1717,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     public void notifyNewValue(V newValue) {}
   }
 
-  /**
+  /* 
    * References a weak value.
    */
   static final class WeightedWeakValueReference<K, V> extends WeakValueReference<K, V> {
@@ -1741,7 +1741,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * References a soft value.
    */
   static final class WeightedSoftValueReference<K, V> extends SoftValueReference<K, V> {
@@ -1765,7 +1765,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   }
 
-  /**
+  /* 
    * References a strong value.
    */
   static final class WeightedStrongValueReference<K, V> extends StrongValueReference<K, V> {
@@ -1782,7 +1782,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * Applies a supplemental hash function to a given hash code, which defends against poor quality
    * hash functions. This is critical when the concurrent hash map uses power-of-two length hash
    * tables, that otherwise encounter collisions for hash codes that do not differ in lower or
@@ -1802,7 +1802,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return h ^ (h >>> 16);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#newEntry} directly.
    */
   @GuardedBy("Segment.this")
@@ -1811,7 +1811,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return segmentFor(hash).newEntry(key, hash, next);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#copyEntry} directly.
    */
   @GuardedBy("Segment.this")
@@ -1821,7 +1821,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return segmentFor(hash).copyEntry(original, newNext);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#setValue} instead.
    */
   @GuardedBy("Segment.this")
@@ -1847,7 +1847,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     segmentFor(hash).reclaimKey(entry, hash);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#getLiveValue}
    * instead.
    */
@@ -1856,7 +1856,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return segmentFor(entry.getHash()).getLiveValue(entry, now) != null;
   }
 
-  /**
+  /* 
    * Returns the segment that should be used for a key with the given hash.
    *
    * @param hash the hash code for the key
@@ -1872,7 +1872,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return new Segment<K, V>(this, initialCapacity, maxSegmentWeight, statsCounter);
   }
 
-  /**
+  /* 
    * Gets the value from an entry. Returns null if the entry is invalid, partially-collected,
    * loading, or expired. Unlike {@link Segment#getLiveValue} this method does not attempt to
    * cleanup stale entries. As such it should only be called outside of a segment context, such as
@@ -1896,7 +1896,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   // expiration
 
-  /**
+  /* 
    * Returns true if the entry has expired.
    */
   boolean isExpired(ReferenceEntry<K, V> entry, long now) {
@@ -1940,7 +1940,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     nulled.setPreviousInWriteQueue(nullEntry);
   }
 
-  /**
+  /* 
    * Notifies listeners that an entry has been automatically removed due to expiration, eviction,
    * or eligibility for garbage collection. This should be called every time expireEntries or
    * evictEntry is called (once the lock is released).
@@ -1963,7 +1963,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   // Inner Classes
 
-  /**
+  /* 
    * Segments are specialized versions of hash tables. This subclass inherits from ReentrantLock
    * opportunistically, just to simplify some locking and avoid separate construction.
    */
@@ -2005,18 +2005,18 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
     final LocalCache<K, V> map;
 
-    /**
+    /* 
      * The number of live elements in this segment's region.
      */
     volatile int count;
 
-    /**
+    /* 
      * The weight of the live elements in this segment's region.
      */
     @GuardedBy("Segment.this")
     int totalWeight;
 
-    /**
+    /* 
      * Number of updates that alter the size of the table. This is used during bulk-read methods to
      * make sure they see a consistent snapshot: If modCounts change during a traversal of segments
      * loading size or checking containsValue, then we might have an inconsistent view of state
@@ -2024,62 +2024,62 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
      */
     int modCount;
 
-    /**
+    /* 
      * The table is expanded when its size exceeds this threshold. (The value of this field is
      * always {@code (int) (capacity * 0.75)}.)
      */
     int threshold;
 
-    /**
+    /* 
      * The per-segment table.
      */
     volatile AtomicReferenceArray<ReferenceEntry<K, V>> table;
 
-    /**
+    /* 
      * The maximum weight of this segment. UNSET_INT if there is no maximum.
      */
     final long maxSegmentWeight;
 
-    /**
+    /* 
      * The key reference queue contains entries whose keys have been garbage collected, and which
      * need to be cleaned up internally.
      */
     final ReferenceQueue<K> keyReferenceQueue;
 
-    /**
+    /* 
      * The value reference queue contains value references whose values have been garbage collected,
      * and which need to be cleaned up internally.
      */
     final ReferenceQueue<V> valueReferenceQueue;
 
-    /**
+    /* 
      * The recency queue is used to record which entries were accessed for updating the access
      * list's ordering. It is drained as a batch operation when either the DRAIN_THRESHOLD is
      * crossed or a write occurs on the segment.
      */
     final Queue<ReferenceEntry<K, V>> recencyQueue;
 
-    /**
+    /* 
      * A counter of the number of reads since the last write, used to drain queues on a small
      * fraction of read operations.
      */
     final AtomicInteger readCount = new AtomicInteger();
 
-    /**
+    /* 
      * A queue of elements currently in the map, ordered by write time. Elements are added to the
      * tail of the queue on write.
      */
     @GuardedBy("Segment.this")
     final Queue<ReferenceEntry<K, V>> writeQueue;
 
-    /**
+    /* 
      * A queue of elements currently in the map, ordered by access time. Elements are added to the
      * tail of the queue on access (note that writes count as accesses).
      */
     @GuardedBy("Segment.this")
     final Queue<ReferenceEntry<K, V>> accessQueue;
 
-    /** Accumulates cache statistics. */
+    /*  Accumulates cache statistics. */
     final StatsCounter statsCounter;
 
     Segment(LocalCache<K, V> map, int initialCapacity, long maxSegmentWeight,
@@ -2126,7 +2126,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return map.entryFactory.newEntry(this, checkNotNull(key), hash, next);
     }
 
-    /**
+    /* 
      * Copies {@code original} into a new entry chained to {@code newNext}. Returns the new entry,
      * or {@code null} if {@code original} was already garbage collected.
      */
@@ -2149,7 +2149,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return newEntry;
     }
 
-    /**
+    /* 
      * Sets a new value of an entry. Adds newly created entries at the end of the access queue.
      */
     @GuardedBy("Segment.this")
@@ -2334,7 +2334,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return loadingFuture;
     }
 
-    /**
+    /* 
      * Waits uninterruptibly for {@code newValue} to be loaded, and then records loading stats.
      */
     V getAndRecordStats(K key, int hash, LoadingValueReference<K, V> loadingValueReference,
@@ -2368,7 +2368,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return oldValue;
     }
 
-    /**
+    /* 
      * Refreshes the value associated with {@code key}, unless another thread is already doing so.
      * Returns the newly refreshed value associated with {@code key} if it was refreshed inline, or
      * {@code null} if another thread is performing the refresh or if an error occurs during
@@ -2393,7 +2393,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return null;
     }
 
-    /**
+    /* 
      * Returns a newly inserted {@code LoadingValueReference}, or null if the live value reference
      * is already loading.
      */
@@ -2449,7 +2449,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
     // reference queues, for garbage collection cleanup
 
-    /**
+    /* 
      * Cleanup collected entries when the lock is available.
      */
     void tryDrainReferenceQueues() {
@@ -2462,7 +2462,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Drain the key and value reference queues, cleaning up internal entries containing garbage
      * collected keys or values.
      */
@@ -2504,7 +2504,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Clears all entries from the key and value reference queues.
      */
     void clearReferenceQueues() {
@@ -2526,7 +2526,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
     // recency queue, shared by expiration and eviction
 
-    /**
+    /* 
      * Records the relative order in which this read was performed by adding {@code entry} to the
      * recency queue. At write-time, or when the queue is full past the threshold, the queue will
      * be drained and the entries therein processed.
@@ -2540,7 +2540,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       recencyQueue.add(entry);
     }
 
-    /**
+    /* 
      * Updates the eviction metadata that {@code entry} was just read. This currently amounts to
      * adding {@code entry} to relevant eviction lists.
      *
@@ -2555,7 +2555,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       accessQueue.add(entry);
     }
 
-    /**
+    /* 
      * Updates eviction metadata that {@code entry} was just written. This currently amounts to
      * adding {@code entry} to relevant eviction lists.
      */
@@ -2575,7 +2575,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       writeQueue.add(entry);
     }
 
-    /**
+    /* 
      * Drains the recency queue, updating eviction metadata that the entries therein were read in
      * the specified relative order. This currently amounts to adding them to relevant eviction
      * lists (accounting for the fact that they could have been removed from the map since being
@@ -2597,7 +2597,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
     // expiration
 
-    /**
+    /* 
      * Cleanup expired entries when the lock is available.
      */
     void tryExpireEntries(long now) {
@@ -2649,7 +2649,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Performs eviction if the segment is full. This should only be called prior to adding a new
      * entry and increasing {@code count}.
      */
@@ -2679,7 +2679,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       throw new AssertionError();
     }
 
-    /**
+    /* 
      * Returns first entry of bin for given hash.
      */
     ReferenceEntry<K, V> getFirst(int hash) {
@@ -2723,7 +2723,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return e;
     }
 
-    /**
+    /* 
      * Gets the value from an entry. Returns null if the entry is invalid, partially-collected,
      * loading, or expired.
      */
@@ -2785,7 +2785,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * This method is a convenience for testing. Code should call {@link
      * LocalCache#containsValue} directly.
      */
@@ -2887,7 +2887,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Expands the table if possible.
      */
     @GuardedBy("Segment.this")
@@ -3281,7 +3281,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       accessQueue.remove(entry);
     }
 
-    /**
+    /* 
      * Removes an entry whose key has been garbage collected.
      */
     boolean reclaimKey(ReferenceEntry<K, V> entry, int hash) {
@@ -3311,7 +3311,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Removes an entry whose value has been garbage collected.
      */
     boolean reclaimValue(K key, int hash, ValueReference<K, V> valueReference) {
@@ -3403,7 +3403,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return false;
     }
 
-    /**
+    /* 
      * Performs routine cleanup following a read. Normally cleanup happens during writes. If cleanup
      * is not observed after a sufficient number of reads, try cleaning up from the read thread.
      */
@@ -3413,7 +3413,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Performs routine cleanup prior to executing a write. This should be called every time a
      * write thread acquires the segment lock, immediately after acquiring the lock.
      *
@@ -3424,7 +3424,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       runLockedCleanup(now);
     }
 
-    /**
+    /* 
      * Performs routine cleanup following a write.
      */
     void postWriteCleanup() {
@@ -3575,7 +3575,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   // Queues
 
-  /**
+  /* 
    * A custom queue for managing eviction order. Note that this is tightly integrated with {@code
    * ReferenceEntry}, upon which it relies to perform its linking.
    *
@@ -3712,7 +3712,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * A custom queue for managing access order. Note that this is tightly integrated with
    * {@code ReferenceEntry}, upon which it reliese to perform its linking.
    *
@@ -4003,7 +4003,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * Returns the result of calling {@link CacheLoader#loadAll}, or null if {@code loader} doesn't
    * implement {@code loadAll}.
    */
@@ -4067,7 +4067,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     return result;
   }
 
-  /**
+  /* 
    * Returns the internal entry for the specified key. The entry may be loading, expired, or
    * partially collected.
    */
@@ -4282,7 +4282,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       }
     }
 
-    /**
+    /* 
      * Finds the next entry in the current chain. Returns true if an entry was found.
      */
     boolean nextInChain() {
@@ -4296,7 +4296,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return false;
     }
 
-    /**
+    /* 
      * Finds the next entry in the current table. Returns true if an entry was found.
      */
     boolean nextInTable() {
@@ -4310,7 +4310,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       return false;
     }
 
-    /**
+    /* 
      * Advances to the given entry. Returns true if the entry was valid, false if it should be
      * skipped.
      */
@@ -4369,7 +4369,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * Custom Entry class used by EntryIterator.next(), that relays setValue changes to the
    * underlying map.
    */
@@ -4413,7 +4413,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
       throw new UnsupportedOperationException();
     }
 
-    /**
+    /* 
      * Returns a string representation of the form <code>{key}={value}</code>.
      */
     @Override public String toString() {
@@ -4530,7 +4530,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
 
   // Serialization Support
 
-  /**
+  /* 
    * Serializes the configuration of a LocalCache, reconsitituting it as a Cache using
    * CacheBuilder upon deserialization. An instance of this class is fit for use by the writeReplace
    * of LocalManualCache.
@@ -4642,7 +4642,7 @@ class LocalCache<K, V> extends AbstractMap<K, V> implements ConcurrentMap<K, V> 
     }
   }
 
-  /**
+  /* 
    * Serializes the configuration of a LocalCache, reconsitituting it as an LoadingCache using
    * CacheBuilder upon deserialization. An instance of this class is fit for use by the writeReplace
    * of LocalLoadingCache.

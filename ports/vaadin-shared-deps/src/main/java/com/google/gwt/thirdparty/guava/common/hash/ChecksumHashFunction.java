@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.base.Supplier;
 import java.io.Serializable;
 import java.util.zip.Checksum;
 
-/**
+/* 
  * {@link HashFunction} adapter for {@link Checksum} instances.
  *
  * @author Colin Decker
@@ -55,7 +55,7 @@ final class ChecksumHashFunction extends AbstractStreamingHashFunction implement
     return toString;
   }
 
-  /**
+  /* 
    * Hasher that updates a checksum.
    */
   private final class ChecksumHasher extends AbstractByteHasher {

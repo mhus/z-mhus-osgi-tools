@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.primitives.Ints;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static methods for implementing hash-based collections.
  *
  * @author Kevin Bourrillion

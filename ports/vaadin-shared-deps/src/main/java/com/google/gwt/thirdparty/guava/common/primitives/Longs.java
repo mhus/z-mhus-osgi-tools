@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
 
-/**
+/* 
  * Static utility methods pertaining to {@code long} primitives, that are not
  * already found in either {@link Long} or {@link Arrays}.
  *
@@ -48,20 +48,20 @@ import java.util.RandomAccess;
 public final class Longs {
   private Longs() {}
 
-  /**
+  /* 
    * The number of bytes required to represent a primitive {@code long}
    * value.
    */
   public static final int BYTES = Long.SIZE / Byte.SIZE;
 
-  /**
+  /* 
    * The largest power of two that can be represented as a {@code long}.
    *
    * @since 10.0
    */
   public static final long MAX_POWER_OF_TWO = 1L << (Long.SIZE - 2);
 
-  /**
+  /* 
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Long) value).hashCode()}.
    *
@@ -77,7 +77,7 @@ public final class Longs {
     return (int) (value ^ (value >>> 32));
   }
 
-  /**
+  /* 
    * Compares the two specified {@code long} values. The sign of the value
    * returned is the same as that of {@code ((Long) a).compareTo(b)}.
    *
@@ -90,7 +90,7 @@ public final class Longs {
     return (a < b) ? -1 : ((a > b) ? 1 : 0);
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -108,7 +108,7 @@ public final class Longs {
     return false;
   }
 
-  /**
+  /* 
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -132,7 +132,7 @@ public final class Longs {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -162,7 +162,7 @@ public final class Longs {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -186,7 +186,7 @@ public final class Longs {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code long} values
@@ -205,7 +205,7 @@ public final class Longs {
     return min;
   }
 
-  /**
+  /* 
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code long} values
@@ -268,7 +268,7 @@ public final class Longs {
         | (b8 & 0xFFL);
   }
 
-  /**
+  /* 
    * Parses the specified string as a signed decimal long value. The ASCII
    * character {@code '-'} (<code>'&#92;u002D'</code>) is recognized as the
    * minus sign.
@@ -322,7 +322,7 @@ public final class Longs {
     }
   }
 
-  /**
+  /* 
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -354,7 +354,7 @@ public final class Longs {
     return copy;
   }
 
-  /**
+  /* 
    * Returns a string containing the supplied {@code long} values separated
    * by {@code separator}. For example, {@code join("-", 1L, 2L, 3L)} returns
    * the string {@code "1-2-3"}.
@@ -378,7 +378,7 @@ public final class Longs {
     return builder.toString();
   }
 
-  /**
+  /* 
    * Returns a comparator that compares two {@code long} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(long, long)}), the first pair of values that follow any
@@ -414,7 +414,7 @@ public final class Longs {
     }
   }
 
-  /**
+  /* 
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code long} value in the manner of {@link Number#longValue}.
    *
@@ -444,7 +444,7 @@ public final class Longs {
     return array;
   }
 
-  /**
+  /* 
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

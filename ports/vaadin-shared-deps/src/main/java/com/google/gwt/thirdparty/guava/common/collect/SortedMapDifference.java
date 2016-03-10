@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.SortedMap;
 
-/**
+/* 
  * An object representing the differences between two sorted maps.
  *
  * @author Louis Wasserman

@@ -25,7 +25,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/** An ordering for a pre-existing comparator. */
+/*  An ordering for a pre-existing comparator. */
 @GwtCompatible(serializable = true)
 final class ComparatorOrdering<T> extends Ordering<T> implements Serializable {
   final Comparator<T> comparator;

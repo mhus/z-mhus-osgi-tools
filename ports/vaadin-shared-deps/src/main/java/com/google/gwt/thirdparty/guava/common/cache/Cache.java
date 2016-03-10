@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A semi-persistent mapping from keys to values. Cache entries are manually added using
  * {@link #get(Object, Callable)} or {@link #put(Object, Object)}, and are stored in the cache until
  * either evicted or manually invalidated.
@@ -49,7 +49,7 @@ import javax.annotation.Nullable;
 @GwtCompatible
 public interface Cache<K, V> {
 
-  /**
+  /* 
    * Returns the value associated with {@code key} in this cache, or {@code null} if there is no
    * cached value for {@code key}.
    *
@@ -58,7 +58,7 @@ public interface Cache<K, V> {
   @Nullable
   V getIfPresent(Object key);
 
-  /**
+  /* 
    * Returns the value associated with {@code key} in this cache, obtaining that value from
    * {@code valueLoader} if necessary. No observable state associated with this cache is modified
    * until loading completes. This method provides a simple substitute for the conventional
@@ -76,7 +76,7 @@ public interface Cache<K, V> {
    */
   V get(K key, Callable<? extends V> valueLoader) throws ExecutionException;
 
-  /**
+  /* 
    * Returns a map of the values associated with {@code keys} in this cache. The returned map will
    * only contain entries which are already present in the cache.
    *
@@ -84,7 +84,7 @@ public interface Cache<K, V> {
    */
   ImmutableMap<K, V> getAllPresent(Iterable<?> keys);
 
-  /**
+  /* 
    * Associates {@code value} with {@code key} in this cache. If the cache previously contained a
    * value associated with {@code key}, the old value is replaced by {@code value}.
    *
@@ -95,7 +95,7 @@ public interface Cache<K, V> {
    */
   void put(K key, V value);
 
-  /**
+  /* 
    * Copies all of the mappings from the specified map to the cache. The effect of this call is
    * equivalent to that of calling {@code put(k, v)} on this map once for each mapping from key
    * {@code k} to value {@code v} in the specified map. The behavior of this operation is undefined
@@ -105,41 +105,41 @@ public interface Cache<K, V> {
    */
   void putAll(Map<? extends K,? extends V> m);
 
-  /**
+  /* 
    * Discards any cached value for key {@code key}.
    */
   void invalidate(Object key);
 
-  /**
+  /* 
    * Discards any cached values for keys {@code keys}.
    *
    * @since 11.0
    */
   void invalidateAll(Iterable<?> keys);
 
-  /**
+  /* 
    * Discards all entries in the cache.
    */
   void invalidateAll();
 
-  /**
+  /* 
    * Returns the approximate number of entries in this cache.
    */
   long size();
 
-  /**
+  /* 
    * Returns a current snapshot of this cache's cumulative statistics. All stats are initialized
    * to zero, and are monotonically increasing over the lifetime of the cache.
    */
   CacheStats stats();
 
-  /**
+  /* 
    * Returns a view of the entries stored in this cache as a thread-safe map. Modifications made to
    * the map directly affect the cache.
    */
   ConcurrentMap<K, V> asMap();
 
-  /**
+  /* 
    * Performs any pending maintenance operations needed by the cache. Exactly which activities are
    * performed -- if any -- is implementation-dependent.
    */

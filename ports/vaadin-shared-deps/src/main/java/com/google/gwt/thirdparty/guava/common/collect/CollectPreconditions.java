@@ -20,7 +20,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkSta
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * Precondition checks useful in collection implementations.
  */
 @GwtCompatible
@@ -41,7 +41,7 @@ final class CollectPreconditions {
     return value;
   }
 
-  /**
+  /* 
    * Precondition tester for {@code Iterator.remove()} that throws an exception with a consistent
    * error message.
    */

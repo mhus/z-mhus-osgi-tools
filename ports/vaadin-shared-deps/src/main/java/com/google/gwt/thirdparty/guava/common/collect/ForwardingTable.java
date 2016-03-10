@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-/**
+/* 
  * A table which forwards all its method calls to another table. Subclasses
  * should override one or more methods to modify the behavior of the backing
  * map as desired per the <a
@@ -34,7 +34,7 @@ import java.util.Set;
 @GwtCompatible
 public abstract class ForwardingTable<R, C, V> extends ForwardingObject
     implements Table<R, C, V> {
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingTable() {}
 
   @Override protected abstract Table<R, C, V> delegate();

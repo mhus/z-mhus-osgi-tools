@@ -20,7 +20,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 
 import java.nio.charset.Charset;
 
-/**
+/* 
  * An abstract composition of multiple hash functions. {@linkplain #newHasher()} delegates to the
  * {@code Hasher} objects of the delegate hash functions, and in the end, they are used by
  * {@linkplain #makeHash(Hasher[])} that constructs the final {@code HashCode}.
@@ -37,7 +37,7 @@ abstract class AbstractCompositeHashFunction extends AbstractStreamingHashFuncti
     this.functions = functions;
   }
 
-  /**
+  /* 
    * Constructs a {@code HashCode} from the {@code Hasher} objects of the functions. Each of them
    * has consumed the entire input and they are ready to output a {@code HashCode}. The order of
    * the hashers are the same order as the functions given to the constructor.
@@ -122,7 +122,7 @@ abstract class AbstractCompositeHashFunction extends AbstractStreamingHashFuncti
         return this;
       }
 
-      /**
+      /* 
        * @deprecated Use {@link Hasher#putUnencodedChars} instead.
        */
       @Deprecated

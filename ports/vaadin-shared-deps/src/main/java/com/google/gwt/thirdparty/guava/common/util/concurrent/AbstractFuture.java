@@ -27,7 +27,7 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An abstract implementation of the {@link ListenableFuture} interface. This
  * class is preferable to {@link java.util.concurrent.FutureTask} for two
  * reasons: It implements {@code ListenableFuture}, and it does not implement
@@ -64,13 +64,13 @@ import javax.annotation.Nullable;
  */
 public abstract class AbstractFuture<V> implements ListenableFuture<V> {
 
-  /** Synchronization control for AbstractFutures. */
+  /*  Synchronization control for AbstractFutures. */
   private final Sync<V> sync = new Sync<V>();
 
   // The execution list to hold our executors.
   private final ExecutionList executionList = new ExecutionList();
 
-  /**
+  /* 
    * Constructor for use by subclasses.
    */
   protected AbstractFuture() {}
@@ -79,7 +79,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
    * Improve the documentation of when InterruptedException is thrown. Our
    * behavior matches the JDK's, but the JDK's documentation is misleading.
    */
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>The default {@link AbstractFuture} implementation throws {@code
@@ -100,7 +100,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
    * Improve the documentation of when InterruptedException is thrown. Our
    * behavior matches the JDK's, but the JDK's documentation is misleading.
    */
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>The default {@link AbstractFuture} implementation throws {@code
@@ -138,7 +138,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
     return true;
   }
 
-  /**
+  /* 
    * Subclasses can override this method to implement interruption of the
    * future's computation. The method is invoked automatically by a successful
    * call to {@link #cancel(boolean) cancel(true)}.
@@ -150,7 +150,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
   protected void interruptTask() {
   }
 
-  /**
+  /* 
    * Returns true if this future was cancelled with {@code
    * mayInterruptIfRunning} set to {@code true}.
    *
@@ -160,7 +160,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
     return sync.wasInterrupted();
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * @since 10.0
@@ -170,7 +170,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
     executionList.add(listener, exec);
   }
 
-  /**
+  /* 
    * Subclasses should invoke this method to set the result of the computation
    * to {@code value}.  This will set the state of the future to
    * {@link AbstractFuture.Sync#COMPLETED} and invoke the listeners if the
@@ -187,7 +187,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
     return result;
   }
 
-  /**
+  /* 
    * Subclasses should invoke this method to set the result of the computation
    * to an error, {@code throwable}.  This will set the state of the future to
    * {@link AbstractFuture.Sync#COMPLETED} and invoke the listeners if the
@@ -204,7 +204,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
     return result;
   }
 
-  /**
+  /* 
    * <p>Following the contract of {@link AbstractQueuedSynchronizer} we create a
    * private subclass to hold the synchronizer.  This synchronizer is used to
    * implement the blocking and waiting calls as well as to handle state changes
@@ -256,7 +256,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
       return true;
     }
 
-    /**
+    /* 
      * Blocks until the task is complete or the timeout expires.  Throws a
      * {@link TimeoutException} if the timer expires, otherwise behaves like
      * {@link #get()}.
@@ -272,7 +272,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
       return getValue();
     }
 
-    /**
+    /* 
      * Blocks until {@link #complete(Object, Throwable, int)} has been
      * successfully called.  Throws a {@link CancellationException} if the task
      * was cancelled, or a {@link ExecutionException} if the task completed with
@@ -286,7 +286,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
       return getValue();
     }
 
-    /**
+    /* 
      * Implementation of the actual value retrieval.  Will return the value
      * on success, an exception on failure, a cancellation on cancellation, or
      * an illegal state if the synchronizer is in an invalid state.
@@ -312,7 +312,7 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
       }
     }
 
-    /**
+    /* 
      * Checks if the state is {@link #COMPLETED}, {@link #CANCELLED}, or {@link
      * INTERRUPTED}.
      */
@@ -320,42 +320,42 @@ public abstract class AbstractFuture<V> implements ListenableFuture<V> {
       return (getState() & (COMPLETED | CANCELLED | INTERRUPTED)) != 0;
     }
 
-    /**
+    /* 
      * Checks if the state is {@link #CANCELLED} or {@link #INTERRUPTED}.
      */
     boolean isCancelled() {
       return (getState() & (CANCELLED | INTERRUPTED)) != 0;
     }
 
-    /**
+    /* 
      * Checks if the state is {@link #INTERRUPTED}.
      */
     boolean wasInterrupted() {
       return getState() == INTERRUPTED;
     }
 
-    /**
+    /* 
      * Transition to the COMPLETED state and set the value.
      */
     boolean set(@Nullable V v) {
       return complete(v, null, COMPLETED);
     }
 
-    /**
+    /* 
      * Transition to the COMPLETED state and set the exception.
      */
     boolean setException(Throwable t) {
       return complete(null, t, COMPLETED);
     }
 
-    /**
+    /* 
      * Transition to the CANCELLED or INTERRUPTED state.
      */
     boolean cancel(boolean interrupt) {
       return complete(null, null, interrupt ? INTERRUPTED : CANCELLED);
     }
 
-    /**
+    /* 
      * Implementation of completing a task.  Either {@code v} or {@code t} will
      * be set but not both.  The {@code finalState} is the state to change to
      * from {@link #RUNNING}.  If the state is not in the RUNNING state we

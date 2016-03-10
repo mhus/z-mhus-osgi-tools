@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A collection that maps keys to values, similar to {@link Map}, but in which
  * each key may be associated with <i>multiple</i> values. You can visualize the
  * contents of a multimap either as a map from keys to <i>nonempty</i>
@@ -144,13 +144,13 @@ import javax.annotation.Nullable;
 public interface Multimap<K, V> {
   // Query Operations
 
-  /** Returns the number of key-value pairs in the multimap. */
+  /*  Returns the number of key-value pairs in the multimap. */
   int size();
 
-  /** Returns {@code true} if the multimap contains no key-value pairs. */
+  /*  Returns {@code true} if the multimap contains no key-value pairs. */
   boolean isEmpty();
 
-  /**
+  /* 
    * Returns {@code true} if the multimap contains any values for the specified
    * key.
    *
@@ -158,7 +158,7 @@ public interface Multimap<K, V> {
    */
   boolean containsKey(@Nullable Object key);
 
-  /**
+  /* 
    * Returns {@code true} if the multimap contains the specified value for any
    * key.
    *
@@ -166,7 +166,7 @@ public interface Multimap<K, V> {
    */
   boolean containsValue(@Nullable Object value);
 
-  /**
+  /* 
    * Returns {@code true} if the multimap contains the specified key-value pair.
    *
    * @param key key to search for in multimap
@@ -176,7 +176,7 @@ public interface Multimap<K, V> {
 
   // Modification Operations
 
-  /**
+  /* 
    * Stores a key-value pair in the multimap.
    *
    * <p>Some multimap implementations allow duplicate key-value pairs, in which
@@ -192,7 +192,7 @@ public interface Multimap<K, V> {
    */
   boolean put(@Nullable K key, @Nullable V value);
 
-  /**
+  /* 
    * Removes a single key-value pair from the multimap.
    *
    * @param key key of entry to remove from the multimap
@@ -203,7 +203,7 @@ public interface Multimap<K, V> {
 
   // Bulk Operations
 
-  /**
+  /* 
    * Stores key-value pairs in this multimap with one key and multiple values.
    * 
    * 
@@ -215,7 +215,7 @@ public interface Multimap<K, V> {
    */
   boolean putAll(@Nullable K key, Iterable<? extends V> values);
 
-  /**
+  /* 
    * Copies all of another multimap's key-value pairs into this multimap. The
    * order in which the mappings are added is determined by
    * {@code multimap.entries()}.
@@ -225,7 +225,7 @@ public interface Multimap<K, V> {
    */
   boolean putAll(Multimap<? extends K, ? extends V> multimap);
 
-  /**
+  /* 
    * Stores a collection of values with the same key, replacing any existing
    * values for that key.
    * 
@@ -241,7 +241,7 @@ public interface Multimap<K, V> {
    */
   Collection<V> replaceValues(@Nullable K key, Iterable<? extends V> values);
 
-  /**
+  /* 
    * Removes all values associated with a given key.
    * 
    * <p>Once this method returns, {@code key} will not be mapped to any values,
@@ -256,14 +256,14 @@ public interface Multimap<K, V> {
    */
   Collection<V> removeAll(@Nullable Object key);
 
-  /**
+  /* 
    * Removes all key-value pairs from the multimap.
    */
   void clear();
 
   // Views
 
-  /**
+  /* 
    * Returns a collection view containing the values associated with {@code key}
    * in this multimap, if any. Note that even when ({@code containsKey(key)} is
    * false, {@code get(key)} still returns an empty collection, not {@code
@@ -278,7 +278,7 @@ public interface Multimap<K, V> {
    */
   Collection<V> get(@Nullable K key);
 
-  /**
+  /* 
    * Returns the set of all keys, each appearing once in the returned set.
    * Changes to the returned set will update the underlying multimap, and vice
    * versa.
@@ -290,7 +290,7 @@ public interface Multimap<K, V> {
    */
   Set<K> keySet();
 
-  /**
+  /* 
    * Returns a collection, which may contain duplicates, of all keys. The number
    * of times of key appears in the returned multiset equals the number of
    * mappings the key has in the multimap. Changes to the returned multiset will
@@ -302,7 +302,7 @@ public interface Multimap<K, V> {
    */
   Multiset<K> keys();
 
-  /**
+  /* 
    * Returns a collection of all values in the multimap. Changes to the returned
    * collection will update the underlying multimap, and vice versa.
    *
@@ -311,7 +311,7 @@ public interface Multimap<K, V> {
    */
   Collection<V> values();
 
-  /**
+  /* 
    * Returns a collection of all key-value pairs. Changes to the returned
    * collection will update the underlying multimap, and vice versa. The entries
    * collection does not support the {@code add} or {@code addAll} operations.
@@ -320,7 +320,7 @@ public interface Multimap<K, V> {
    */
   Collection<Map.Entry<K, V>> entries();
 
-  /**
+  /* 
    * Returns a map view that associates each key with the corresponding values
    * in the multimap. Changes to the returned map, such as element removal, will
    * update the underlying multimap. The map does not support {@code setValue()}
@@ -337,7 +337,7 @@ public interface Multimap<K, V> {
 
   // Comparison and hashing
 
-  /**
+  /* 
    * Compares the specified object with this multimap for equality. Two
    * multimaps are equal when their map views, as returned by {@link #asMap},
    * are also equal.
@@ -356,7 +356,7 @@ public interface Multimap<K, V> {
   @Override
   boolean equals(@Nullable Object obj);
 
-  /**
+  /* 
    * Returns the hash code for this multimap.
    *
    * <p>The hash code of a multimap is defined as the hash code of the map view,

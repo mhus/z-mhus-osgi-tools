@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-/**
+/* 
  * A queue which forwards all its method calls to another queue. Subclasses
  * should override one or more methods to modify the behavior of the backing
  * queue as desired per the <a
@@ -45,7 +45,7 @@ import java.util.Queue;
 public abstract class ForwardingQueue<E> extends ForwardingCollection<E>
     implements Queue<E> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingQueue() {}
 
   @Override protected abstract Queue<E> delegate();
@@ -75,7 +75,7 @@ public abstract class ForwardingQueue<E> extends ForwardingCollection<E>
     return delegate().element();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #offer} in terms of {@link #add}. If you
    * override {@link #add}, you may wish to override {@link #offer} to forward
    * to this implementation.
@@ -90,7 +90,7 @@ public abstract class ForwardingQueue<E> extends ForwardingCollection<E>
     }
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #peek} in terms of {@link #element}. If you
    * override {@link #element}, you may wish to override {@link #peek} to
    * forward to this implementation.
@@ -105,7 +105,7 @@ public abstract class ForwardingQueue<E> extends ForwardingCollection<E>
     }
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #poll} in terms of {@link #remove}. If you
    * override {@link #remove}, you may wish to override {@link #poll} to forward
    * to this implementation.

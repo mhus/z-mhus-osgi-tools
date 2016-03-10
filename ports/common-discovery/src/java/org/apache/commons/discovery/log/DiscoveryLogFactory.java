@@ -25,7 +25,7 @@ import org.apache.commons.discovery.tools.ClassUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * <p>Simple implementation of Log that sends all enabled log messages,
  * for all defined loggers, to System.err.
  * </p>
@@ -51,19 +51,19 @@ public class DiscoveryLogFactory {
 
     private static final Class<?>[] setLogParamClasses = new Class<?>[] { Log.class };
 
-    /**
+    /* 
      * Above fields must be initialied before this one..
      */
     private static Log log = DiscoveryLogFactory._newLog(DiscoveryLogFactory.class);
 
-    /**
+    /* 
      * Creates a new {@code Log} instance for the input class.
      *
      * @param clazz The class the log has to be created for
      * @return The input class logger
      */
     public static Log newLog(Class<?> clazz) {
-        /**
+        /* 
          * Required to implement 'public static void setLog(Log)'
          */
         try {
@@ -92,7 +92,7 @@ public class DiscoveryLogFactory {
         return _newLog(clazz);
     }
 
-    /**
+    /* 
      * This method MUST not invoke any logging..
      *
      * @param clazz The class the log has to be created for
@@ -106,7 +106,7 @@ public class DiscoveryLogFactory {
                : logFactory.getInstance(clazz.getName());
     }
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -115,7 +115,7 @@ public class DiscoveryLogFactory {
         log = _log;
     }
 
-    /**
+    /* 
      * Set logFactory, works ONLY on first call.
      *
      * @param factory The log factory

@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Implementation of {@link ImmutableMap} with exactly one entry.
  *
  * @author Jesse Wilson

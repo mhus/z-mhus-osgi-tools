@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/**
+/* 
  * Static utility methods pertaining to {@code int} primitives that interpret values as
  * <i>unsigned</i> (that is, any negative value {@code x} is treated as the positive value
  * {@code 2^32 + x}). The methods for which signedness is not an issue are in {@link Ints}, as well
@@ -55,7 +55,7 @@ public final class UnsignedInts {
     return value ^ Integer.MIN_VALUE;
   }
 
-  /**
+  /* 
    * Compares the two specified {@code int} values, treating them as unsigned values between
    * {@code 0} and {@code 2^32 - 1} inclusive.
    *
@@ -68,14 +68,14 @@ public final class UnsignedInts {
     return Ints.compare(flip(a), flip(b));
   }
 
-  /**
+  /* 
    * Returns the value of the given {@code int} as a {@code long}, when treated as unsigned.
    */
   public static long toLong(int value) {
     return value & INT_MASK;
   }
 
-  /**
+  /* 
    * Returns the least value present in {@code array}, treating values as unsigned.
    *
    * @param array a <i>nonempty</i> array of unsigned {@code int} values
@@ -95,7 +95,7 @@ public final class UnsignedInts {
     return flip(min);
   }
 
-  /**
+  /* 
    * Returns the greatest value present in {@code array}, treating values as unsigned.
    *
    * @param array a <i>nonempty</i> array of unsigned {@code int} values
@@ -115,7 +115,7 @@ public final class UnsignedInts {
     return flip(max);
   }
 
-  /**
+  /* 
    * Returns a string containing the supplied unsigned {@code int} values separated by
    * {@code separator}. For example, {@code join("-", 1, 2, 3)} returns the string {@code "1-2-3"}.
    *
@@ -138,7 +138,7 @@ public final class UnsignedInts {
     return builder.toString();
   }
 
-  /**
+  /* 
    * Returns a comparator that compares two arrays of unsigned {@code int} values lexicographically.
    * That is, it compares, using {@link #compare(int, int)}), the first pair of values that follow
    * any common prefix, or when one array is a prefix of the other, treats the shorter array as the
@@ -169,7 +169,7 @@ public final class UnsignedInts {
     }
   }
 
-  /**
+  /* 
    * Returns dividend / divisor, where the dividend and divisor are treated as unsigned 32-bit
    * quantities.
    *
@@ -181,7 +181,7 @@ public final class UnsignedInts {
     return (int) (toLong(dividend) / toLong(divisor));
   }
 
-  /**
+  /* 
    * Returns dividend % divisor, where the dividend and divisor are treated as unsigned 32-bit
    * quantities.
    *
@@ -193,7 +193,7 @@ public final class UnsignedInts {
     return (int) (toLong(dividend) % toLong(divisor));
   }
 
-  /**
+  /* 
    * Returns the unsigned {@code int} value represented by the given string.
    *
    * Accepts a decimal, hexadecimal, or octal number given by specifying the following prefix:
@@ -221,7 +221,7 @@ public final class UnsignedInts {
     }
   }
 
-  /**
+  /* 
    * Returns the unsigned {@code int} value represented by the given decimal string.
    *
    * @throws NumberFormatException if the string does not contain a valid unsigned {@code int} value
@@ -232,7 +232,7 @@ public final class UnsignedInts {
     return parseUnsignedInt(s, 10);
   }
 
-  /**
+  /* 
    * Returns the unsigned {@code int} value represented by a string with the given radix.
    *
    * @param string the string containing the unsigned integer representation to be parsed.
@@ -253,14 +253,14 @@ public final class UnsignedInts {
     return (int) result;
   }
 
-  /**
+  /* 
    * Returns a string representation of x, where x is treated as unsigned.
    */
   public static String toString(int x) {
     return toString(x, 10);
   }
 
-  /**
+  /* 
    * Returns a string representation of {@code x} for the given radix, where {@code x} is treated
    * as unsigned.
    *

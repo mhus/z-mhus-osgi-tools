@@ -20,7 +20,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * Utility class for converting between various ASCII case formats.
  *
  * @author Mike Bostock
@@ -28,7 +28,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
  */
 @GwtCompatible
 public enum CaseFormat {
-  /**
+  /* 
    * Hyphenated variable naming convention, e.g., "lower-hyphen".
    */
   LOWER_HYPHEN(CharMatcher.is('-'), "-") {
@@ -46,7 +46,7 @@ public enum CaseFormat {
     }
   },
 
-  /**
+  /* 
    * C++ variable naming convention, e.g., "lower_underscore".
    */
   LOWER_UNDERSCORE(CharMatcher.is('_'), "_") {
@@ -64,7 +64,7 @@ public enum CaseFormat {
     }
   },
 
-  /**
+  /* 
    * Java variable naming convention, e.g., "lowerCamel".
    */
   LOWER_CAMEL(CharMatcher.inRange('A', 'Z'), "") {
@@ -73,7 +73,7 @@ public enum CaseFormat {
     }
   },
 
-  /**
+  /* 
    * Java and C++ class naming convention, e.g., "UpperCamel".
    */
   UPPER_CAMEL(CharMatcher.inRange('A', 'Z'), "") {
@@ -82,7 +82,7 @@ public enum CaseFormat {
     }
   },
 
-  /**
+  /* 
    * Java and C++ constant naming convention, e.g., "UPPER_UNDERSCORE".
    */
   UPPER_UNDERSCORE(CharMatcher.is('_'), "_") {
@@ -108,7 +108,7 @@ public enum CaseFormat {
     this.wordSeparator = wordSeparator;
   }
 
-  /**
+  /* 
    * Converts the specified {@code String str} from this format to the specified {@code format}. A
    * "best effort" approach is taken; if {@code str} does not conform to the assumed format, then
    * the behavior of this method is undefined but we make a reasonable effort at converting anyway.
@@ -119,7 +119,7 @@ public enum CaseFormat {
     return (format == this) ? str : convert(format, str);
   }
 
-  /**
+  /* 
    * Enum values can override for performance reasons.
    */
   String convert(CaseFormat format, String s) {

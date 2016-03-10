@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to object arrays.
  *
  * @author Kevin Bourrillion
@@ -38,7 +38,7 @@ public final class ObjectArrays {
 
   private ObjectArrays() {}
 
-  /**
+  /* 
    * Returns a new array of the given length with the specified component type.
    *
    * @param type the component type
@@ -50,7 +50,7 @@ public final class ObjectArrays {
     return (T[]) Array.newInstance(type, length);
   }
 
-  /**
+  /* 
    * Returns a new array of the given length with the same type as a reference
    * array.
    *
@@ -61,7 +61,7 @@ public final class ObjectArrays {
     return Platform.newArray(reference, length);
   }
 
-  /**
+  /* 
    * Returns a new array that contains the concatenated contents of two arrays.
    *
    * @param first the first array of elements to concatenate
@@ -76,7 +76,7 @@ public final class ObjectArrays {
     return result;
   }
 
-  /**
+  /* 
    * Returns a new array that prepends {@code element} to {@code array}.
    *
    * @param element the element to prepend to the front of {@code array}
@@ -92,7 +92,7 @@ public final class ObjectArrays {
     return result;
   }
 
-  /**
+  /* 
    * Returns a new array that appends {@code element} to {@code array}.
    *
    * @param array the array of elements to prepend
@@ -107,7 +107,7 @@ public final class ObjectArrays {
     return result;
   }
 
-  /** GWT safe version of Arrays.copyOf. */
+  /*  GWT safe version of Arrays.copyOf. */
   static <T> T[] arraysCopyOf(T[] original, int newLength) {
     T[] copy = newArray(original, newLength);
     System.arraycopy(
@@ -115,7 +115,7 @@ public final class ObjectArrays {
     return copy;
   }
 
-  /**
+  /* 
    * Returns an array containing all of the elements in the specified
    * collection; the runtime type of the returned array is that of the specified
    * array. If the collection fits in the specified array, it is returned
@@ -151,7 +151,7 @@ public final class ObjectArrays {
     return array;
   }
   
-  /**
+  /* 
    * Implementation of {@link Collection#toArray(Object[])} for collections backed by an object
    * array. the runtime type of the returned array is that of the specified array. If the collection
    * fits in the specified array, it is returned therein. Otherwise, a new array is allocated with
@@ -173,7 +173,7 @@ public final class ObjectArrays {
     return dst;
   }
 
-  /**
+  /* 
    * Returns an array containing all of the elements in the specified
    * collection. This method returns the elements in the order they are returned
    * by the collection's iterator. The returned array is "safe" in that no
@@ -191,7 +191,7 @@ public final class ObjectArrays {
     return fillArray(c, new Object[c.size()]);
   }
 
-  /**
+  /* 
    * Returns a copy of the specified subrange of the specified array that is literally an Object[],
    * and not e.g. a {@code String[]}.
    */
@@ -213,7 +213,7 @@ public final class ObjectArrays {
     return array;
   }
 
-  /**
+  /* 
    * Swaps {@code array[i]} with {@code array[j]}.
    */
   static void swap(Object[] array, int i, int j) {

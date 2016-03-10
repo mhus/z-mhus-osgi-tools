@@ -29,7 +29,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable collection. Does not permit null elements.
  *
  * <p>In addition to the {@link Collection} methods, this class has an {@link
@@ -49,7 +49,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
 
   ImmutableCollection() {}
 
-  /**
+  /* 
    * Returns an unmodifiable iterator across the elements in this collection.
    */
   @Override
@@ -84,7 +84,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     return object != null && super.contains(object);
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -96,7 +96,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -108,7 +108,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -120,7 +120,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -132,7 +132,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -144,7 +144,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -162,7 +162,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
    */
   private transient ImmutableList<E> asList;
 
-  /**
+  /* 
    * Returns a list view of the collection.
    *
    * @since 2.0
@@ -183,7 +183,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     }
   }
 
-  /**
+  /* 
    * Returns {@code true} if this immutable collection's implementation contains references to
    * user-created objects that aren't accessible via this collection's methods. This is generally
    * used to determine whether {@code copyOf} implementations should make an explicit copy to avoid
@@ -191,7 +191,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
    */
   abstract boolean isPartialView();
   
-  /**
+  /* 
    * Copies the contents of this immutable collection into the specified array at the specified
    * offset.  Returns {@code offset + size()}.
    */
@@ -207,7 +207,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     return new ImmutableList.SerializedForm(toArray());
   }
 
-  /**
+  /* 
    * Abstract base class for builders of {@link ImmutableCollection} types.
    *
    * @since 10.0
@@ -234,7 +234,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
     Builder() {
     }
 
-    /**
+    /* 
      * Adds {@code element} to the {@code ImmutableCollection} being built.
      *
      * <p>Note that each builder class covariantly returns its own type from
@@ -246,7 +246,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
      */
     public abstract Builder<E> add(E element);
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableCollection}
      * being built.
      *
@@ -265,7 +265,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableCollection}
      * being built.
      *
@@ -284,7 +284,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableCollection}
      * being built.
      *
@@ -303,7 +303,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Returns a newly-created {@code ImmutableCollection} of the appropriate
      * type, containing the elements provided to this builder.
      *
@@ -323,7 +323,7 @@ public abstract class ImmutableCollection<E> extends AbstractCollection<E>
       this.size = 0;
     }
     
-    /**
+    /* 
      * Expand the absolute capacity of the builder so it can accept at least
      * the specified number of elements without being resized.
      */

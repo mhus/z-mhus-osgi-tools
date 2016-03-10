@@ -26,7 +26,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Basic implementation of the {@link SortedSetMultimap} interface. It's a
  * wrapper around {@link AbstractMapBasedMultimap} that converts the returned
  * collections into sorted sets. The {@link #createCollection} method
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 @GwtCompatible
 abstract class AbstractSortedSetMultimap<K, V>
     extends AbstractSetMultimap<K, V> implements SortedSetMultimap<K, V> {
-  /**
+  /* 
    * Creates a new multimap that uses the provided map.
    *
    * @param map place to store the mapping from each key to its corresponding
@@ -62,7 +62,7 @@ abstract class AbstractSortedSetMultimap<K, V>
 
   // Following Javadoc copied from Multimap and SortedSetMultimap.
 
-  /**
+  /* 
    * Returns a collection view of all values associated with a key. If no
    * mappings in the multimap have the provided key, an empty collection is
    * returned.
@@ -78,7 +78,7 @@ abstract class AbstractSortedSetMultimap<K, V>
     return (SortedSet<V>) super.get(key);
   }
 
-  /**
+  /* 
    * Removes all values associated with a given key. The returned collection is
    * immutable.
    *
@@ -90,7 +90,7 @@ abstract class AbstractSortedSetMultimap<K, V>
     return (SortedSet<V>) super.removeAll(key);
   }
 
-  /**
+  /* 
    * Stores a collection of values with the same key, replacing any existing
    * values for that key. The returned collection is immutable.
    *
@@ -105,7 +105,7 @@ abstract class AbstractSortedSetMultimap<K, V>
     return (SortedSet<V>) super.replaceValues(key, values);
   }
 
-  /**
+  /* 
    * Returns a map view that associates each key with the corresponding values
    * in the multimap. Changes to the returned map, such as element removal, will
    * update the underlying multimap. The map does not support {@code setValue}
@@ -123,7 +123,7 @@ abstract class AbstractSortedSetMultimap<K, V>
     return super.asMap();
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * Consequently, the values do not follow their natural ordering or the

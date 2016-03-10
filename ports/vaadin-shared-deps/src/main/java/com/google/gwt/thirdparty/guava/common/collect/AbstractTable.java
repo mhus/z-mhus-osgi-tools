@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Skeletal, implementation-agnostic implementation of the {@link Table} interface.
  * 
  * @author Louis Wasserman
@@ -207,7 +207,7 @@ abstract class AbstractTable<R, C, V> implements Table<R, C, V> {
     return cellSet().hashCode();
   }
 
-  /**
+  /* 
    * Returns the string representation {@code rowMap().toString()}.
    */
   @Override public String toString() {

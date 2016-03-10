@@ -51,7 +51,7 @@ import javax.annotation.concurrent.Immutable;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-/**
+/* 
  * A manager for monitoring and controlling a set of {@link Service services}. This class provides
  * methods for {@linkplain #startAsync() starting}, {@linkplain #stopAsync() stopping} and
  * {@linkplain #servicesByState inspecting} a collection of {@linkplain Service services}.
@@ -75,7 +75,7 @@ import javax.inject.Singleton;
 public final class ServiceManager {
   private static final Logger logger = Logger.getLogger(ServiceManager.class.getName());
   
-  /**
+  /* 
    * A listener for the aggregate state changes of the services that are under management. Users
    * that need to listen to more fine-grained events (such as when each particular
    * {@link Service service} starts, or terminates), should attach {@link Service.Listener service
@@ -86,7 +86,7 @@ public final class ServiceManager {
    */
   @Beta  // Should come out of Beta when ServiceManager does
   public abstract static class Listener {
-    /** 
+    /*  
      * Called when the service initially becomes healthy.
      * 
      * <p>This will be called at most once after all the services have entered the 
@@ -96,13 +96,13 @@ public final class ServiceManager {
      */
     public void healthy() {}
     
-    /** 
+    /*  
      * Called when the all of the component services have reached a terminal state, either 
      * {@linkplain State#TERMINATED terminated} or {@linkplain State#FAILED failed}.
      */
     public void stopped() {}
     
-    /** 
+    /*  
      * Called when a component service has {@linkplain State#FAILED failed}.
      * 
      * @param service The service that failed.
@@ -110,7 +110,7 @@ public final class ServiceManager {
     public void failure(Service service) {}
   }
   
-  /**
+  /* 
    * An encapsulation of all of the state that is accessed by the {@linkplain ServiceListener 
    * service listeners}.  This is extracted into its own object so that {@link ServiceListener} 
    * could be made {@code static} and its instances can be safely constructed and added in the 
@@ -120,7 +120,7 @@ public final class ServiceManager {
   private final ServiceManagerState state;
   private final ImmutableMap<Service, ServiceListener> services;
   
-  /**
+  /* 
    * Constructs a new instance for managing the given services.
    * 
    * @param services The services to manage
@@ -152,7 +152,7 @@ public final class ServiceManager {
     this.services = builder.build();
   }
   
-  /**
+  /* 
    * Constructs a new instance for managing the given services. This constructor is provided so that
    * dependency injection frameworks can inject instances of {@link ServiceManager}.
    * 
@@ -164,7 +164,7 @@ public final class ServiceManager {
     this((Iterable<Service>) services);
   }
   
-  /**
+  /* 
    * Registers a {@link Listener} to be {@linkplain Executor#execute executed} on the given 
    * executor. The listener will not have previous state changes replayed, so it is 
    * suggested that listeners are added before any of the managed services are 
@@ -188,7 +188,7 @@ public final class ServiceManager {
     state.addListener(listener, executor);
   }
 
-  /**
+  /* 
    * Registers a {@link Listener} to be run when this {@link ServiceManager} changes state. The 
    * listener will not have previous state changes replayed, so it is suggested that listeners are 
    * added before any of the managed services are {@linkplain Service#start started}.
@@ -204,7 +204,7 @@ public final class ServiceManager {
     state.addListener(listener, MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Initiates service {@linkplain Service#start startup} on all the services being managed.  It is
    * only valid to call this method if all of the services are {@linkplain State#NEW new}.
    * 
@@ -233,7 +233,7 @@ public final class ServiceManager {
     return this;
   }
   
-  /**
+  /* 
    * Waits for the {@link ServiceManager} to become {@linkplain #isHealthy() healthy}.  The manager
    * will become healthy after all the component services have reached the {@linkplain State#RUNNING
    * running} state.  
@@ -246,7 +246,7 @@ public final class ServiceManager {
     checkState(isHealthy(), "Expected to be healthy after starting");
   }
   
-  /**
+  /* 
    * Waits for the {@link ServiceManager} to become {@linkplain #isHealthy() healthy} for no more 
    * than the given time.  The manager will become healthy after all the component services have 
    * reached the {@linkplain State#RUNNING running} state. 
@@ -270,7 +270,7 @@ public final class ServiceManager {
     checkState(isHealthy(), "Expected to be healthy after starting");
   }
 
-  /**
+  /* 
    * Initiates service {@linkplain Service#stop shutdown} if necessary on all the services being 
    * managed. 
    *    
@@ -283,7 +283,7 @@ public final class ServiceManager {
     return this;
   }
  
-  /**
+  /* 
    * Waits for the all the services to reach a terminal state. After this method returns all
    * services will either be {@link Service.State#TERMINATED terminated} or 
    * {@link Service.State#FAILED failed}
@@ -292,7 +292,7 @@ public final class ServiceManager {
     state.awaitStopped();
   }
   
-  /**
+  /* 
    * Waits for the all the services to reach a terminal state for no more than the given time. After
    * this method returns all services will either be {@link Service.State#TERMINATED terminated} or 
    * {@link Service.State#FAILED failed}
@@ -307,7 +307,7 @@ public final class ServiceManager {
     }
   }
   
-  /**
+  /* 
    * Returns true if all services are currently in the {@linkplain State#RUNNING running} state.  
    * 
    * <p>Users who want more detailed information should use the {@link #servicesByState} method to 
@@ -322,7 +322,7 @@ public final class ServiceManager {
     return true;
   }
   
-  /**
+  /* 
    * Provides a snapshot of the current state of all the services under management.
    * 
    * <p>N.B. This snapshot it not guaranteed to be consistent, i.e. the set of states returned may
@@ -338,7 +338,7 @@ public final class ServiceManager {
     return builder.build();
   }
   
-  /**
+  /* 
    * Returns the service load times. This value will only return startup times for services that
    * have finished starting.
    *
@@ -373,20 +373,20 @@ public final class ServiceManager {
         .toString();
   }
   
-  /**
+  /* 
    * An encapsulation of all the mutable state of the {@link ServiceManager} that needs to be 
    * accessed by instances of {@link ServiceListener}.
    */
   private static final class ServiceManagerState {
     final Monitor monitor = new Monitor();
     final int numberOfServices;
-    /** The number of services that have not finished starting up. */
+    /*  The number of services that have not finished starting up. */
     @GuardedBy("monitor")
     int unstartedServices;
-    /** The number of services that have not reached a terminal state. */
+    /*  The number of services that have not reached a terminal state. */
     @GuardedBy("monitor")
     int unstoppedServices;
-    /** 
+    /*  
      * Controls how long to wait for all the service manager to either become healthy or reach a 
      * state where it is guaranteed that it can never become healthy.
      */
@@ -396,7 +396,7 @@ public final class ServiceManager {
         return unstartedServices == 0 | unstoppedServices != numberOfServices;
       }
     };
-    /**
+    /* 
      * Controls how long to wait for all services to reach a terminal state.
      */
     final Monitor.Guard stoppedGuard = new Monitor.Guard(monitor) {
@@ -404,10 +404,10 @@ public final class ServiceManager {
         return unstoppedServices == 0;
       }
     };
-    /** The listeners to notify during a state transition. */
+    /*  The listeners to notify during a state transition. */
     @GuardedBy("monitor")
     final List<ListenerExecutorPair> listeners = Lists.newArrayList();
-    /**
+    /* 
      * The queue of listeners that are waiting to be executed.
      *
      * <p>Enqueue operations should be protected by {@link #monitor} while dequeue operations are
@@ -464,7 +464,7 @@ public final class ServiceManager {
       return false;
     }
     
-    /**
+    /* 
      * This should be called when a service finishes starting up.
      * 
      * @param currentlyHealthy whether or not the service that finished starting was healthy at the 
@@ -494,7 +494,7 @@ public final class ServiceManager {
       }
     }
     
-    /**
+    /* 
      * This should be called when a service is {@linkplain State#TERMINATED terminated}.
      */
     @GuardedBy("monitor")
@@ -502,7 +502,7 @@ public final class ServiceManager {
       serviceStopped(service);
     }
     
-    /**
+    /* 
      * This should be called when a service is {@linkplain State#FAILED failed}.
      */
     @GuardedBy("monitor")
@@ -517,7 +517,7 @@ public final class ServiceManager {
       serviceStopped(service);
     }
     
-    /**
+    /* 
      * Should be called whenever a service reaches a terminal state (
      * {@linkplain State#TERMINATED terminated} or 
      * {@linkplain State#FAILED failed}).
@@ -543,7 +543,7 @@ public final class ServiceManager {
       }
     }
 
-    /** Attempts to execute all the listeners in {@link #queuedListeners}. */
+    /*  Attempts to execute all the listeners in {@link #queuedListeners}. */
     private void executeListeners() {
       checkState(!monitor.isOccupiedByCurrentThread(), 
           "It is incorrect to execute listeners with the monitor held.");
@@ -551,7 +551,7 @@ public final class ServiceManager {
     }
   }
 
-  /**
+  /* 
    * A {@link Service} that wraps another service and times how long it takes for it to start and 
    * also calls the {@link ServiceManagerState#serviceFinishedStarting}, 
    * {@link ServiceManagerState#serviceTerminated} and {@link ServiceManagerState#serviceFailed}
@@ -563,7 +563,7 @@ public final class ServiceManager {
     final Service service;
     final ServiceManagerState state;
     
-    /**
+    /* 
      * @param service the service that 
      */
     ServiceListener(Service service, ServiceManagerState state) {
@@ -634,7 +634,7 @@ public final class ServiceManager {
       }
     }
     
-    /** 
+    /*  
      * Stop the stopwatch, log the startup time and decrement the startup latch
      *  
      * @param currentlyHealthy whether or not the service that finished starting is currently 
@@ -657,7 +657,7 @@ public final class ServiceManager {
       service.startAsync();
     }
   
-    /** Start the timer if it hasn't been started. */
+    /*  Start the timer if it hasn't been started. */
     void startTimer() {
       synchronized (watch) {
         if (!watch.isRunning()) { // only start the watch once.
@@ -669,7 +669,7 @@ public final class ServiceManager {
       }
     }
     
-    /** Returns the amount of time it took for the service to finish starting in milliseconds. */
+    /*  Returns the amount of time it took for the service to finish starting in milliseconds. */
     long startupTimeMillis() {
       synchronized (watch) {
         return watch.elapsed(MILLISECONDS);
@@ -677,7 +677,7 @@ public final class ServiceManager {
     }
   }
   
-  /** Simple value object binding a listener to its executor. */
+  /*  Simple value object binding a listener to its executor. */
   @Immutable private static final class ListenerExecutorPair {
     final Listener listener;
     final Executor executor;
@@ -688,7 +688,7 @@ public final class ServiceManager {
     }
   }
   
-  /**
+  /* 
    * A {@link Service} instance that does nothing.  This is only useful as a placeholder to
    * ensure that the {@link ServiceManager} functions properly even when it is managing no services.
    * 
@@ -701,6 +701,6 @@ public final class ServiceManager {
     @Override protected void doStop() { notifyStopped(); }
   }
   
-  /** This is never thrown but only used for logging. */
+  /*  This is never thrown but only used for logging. */
   private static final class EmptyServiceManagerWarning extends Throwable {}
 }

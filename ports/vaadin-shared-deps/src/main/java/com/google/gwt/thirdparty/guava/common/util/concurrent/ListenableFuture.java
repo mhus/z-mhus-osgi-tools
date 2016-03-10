@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RejectedExecutionException;
 
-/**
+/* 
  * A {@link Future} that accepts completion listeners.  Each listener has an
  * associated executor, and it is invoked using this executor once the future's
  * computation is {@linkplain Future#isDone() complete}.  If the computation has
@@ -71,7 +71,7 @@ import java.util.concurrent.RejectedExecutionException;
  * @since 1.0
  */
 public interface ListenableFuture<V> extends Future<V> {
-  /**
+  /* 
    * Registers a listener to be {@linkplain Executor#execute(Runnable) run} on
    * the given executor.  The listener will run when the {@code Future}'s
    * computation is {@linkplain Future#isDone() complete} or, if the computation

@@ -24,7 +24,7 @@ import org.apache.commons.discovery.DiscoveryException;
 import org.apache.commons.discovery.jdk.JDKHooks;
 import org.apache.commons.discovery.resource.ClassLoaders;
 
-/**
+/* 
  * <p>Discover singleton service providers.
  * This 
  * </p>
@@ -198,14 +198,14 @@ import org.apache.commons.discovery.resource.ClassLoaders;
  */
 public class DiscoverSingleton {
 
-    /********************** (RELATIVELY) SIMPLE FINDERS **********************
+    /* ******************** (RELATIVELY) SIMPLE FINDERS **********************
      *
      * These finders are suitable for direct use in components looking for a
      * service.  If you are not sure which finder(s) to use, you can narrow
      * your search to one of these.
      */
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T>  Service Provider Interface type.
@@ -225,7 +225,7 @@ public class DiscoverSingleton {
                     (DefaultClassHolder<T>) null);
     }
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T> Service Provider Interface type
@@ -250,7 +250,7 @@ public class DiscoverSingleton {
                     (DefaultClassHolder<T>) null);
     }
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T> Service Provider Interface type
@@ -273,7 +273,7 @@ public class DiscoverSingleton {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T> Service Provider Interface type
@@ -302,7 +302,7 @@ public class DiscoverSingleton {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T> Service Provider Interface type
@@ -331,10 +331,10 @@ public class DiscoverSingleton {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /*************** FINDERS FOR USE IN FACTORY/HELPER METHODS ***************
+    /* ************* FINDERS FOR USE IN FACTORY/HELPER METHODS ***************
      */
 
-    /**
+    /* 
      * Find implementation of SPI.
      *
      * @param <T> Service Provider Interface type
@@ -382,9 +382,9 @@ public class DiscoverSingleton {
         return obj;
     }
 
-    /********************** CACHE-MANAGEMENT SUPPORT **********************/
+    /* ******************** CACHE-MANAGEMENT SUPPORT **********************/
 
-    /**
+    /* 
      * Release all internal references to previously created service
      * instances associated with the current thread context class loader.
      * The <code>release()</code> method is called for service instances that
@@ -399,7 +399,7 @@ public class DiscoverSingleton {
         EnvironmentCache.release();
     }
 
-    /**
+    /* 
      * Release any internal references to a previously created service
      * instance associated with the current thread context class loader.
      * If the SPI instance implements <code>Service</code>, then call
@@ -415,7 +415,7 @@ public class DiscoverSingleton {
         }
     }
 
-    /************************* SPI CACHE SUPPORT *************************
+    /* *********************** SPI CACHE SUPPORT *************************
      *
      * Cache services by a 'key' unique to the requesting class/environment:
      *
@@ -442,12 +442,12 @@ public class DiscoverSingleton {
      *         Value : SPI Instance/Implementation (<code>Object</code>.
      */
 
-    /**
+    /* 
      * Implements first two levels of the cache (loader & groupContext).
      * Allows null keys, important as default groupContext is null.
      */
 
-    /**
+    /* 
      * Get service keyed by spi & classLoader.
      *
      * @param classLoader The class loader as key to retrieve the related cache
@@ -464,7 +464,7 @@ public class DiscoverSingleton {
         return null;
     }
 
-    /**
+    /* 
      * Put service keyed by spi & classLoader.
      *
      * @param classLoader The {@link EnvironmentCache} key

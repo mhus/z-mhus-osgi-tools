@@ -8,12 +8,12 @@
  */
 package org.w3c.flute.parser;
 
-/**
+/* 
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
 public class JumpException extends RuntimeException {
-    /**
+    /* 
      * Creates a new JumpException
      */
     public JumpException() {

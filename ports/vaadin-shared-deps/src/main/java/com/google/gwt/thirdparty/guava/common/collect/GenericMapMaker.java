@@ -28,7 +28,7 @@ import com.google.gwt.thirdparty.guava.common.collect.MapMaker.RemovalNotificati
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
-/**
+/* 
  * A class exactly like {@link MapMaker}, except restricted in the types of maps it can build.
  * For the most part, you should probably just ignore the existence of this class.
  *
@@ -63,40 +63,40 @@ public abstract class GenericMapMaker<K0, V0> {
   // No subclasses but our own
   GenericMapMaker() {}
 
-  /**
+  /* 
    * See {@link MapMaker#keyEquivalence}.
    */
   @GwtIncompatible("To be supported")
   abstract GenericMapMaker<K0, V0> keyEquivalence(Equivalence<Object> equivalence);
 
-  /**
+  /* 
    * See {@link MapMaker#initialCapacity}.
    */
   public abstract GenericMapMaker<K0, V0> initialCapacity(int initialCapacity);
 
-  /**
+  /* 
    * See {@link MapMaker#maximumSize}.
    */
   abstract GenericMapMaker<K0, V0> maximumSize(int maximumSize);
 
-  /**
+  /* 
    * See {@link MapMaker#concurrencyLevel}.
    */
   public abstract GenericMapMaker<K0, V0> concurrencyLevel(int concurrencyLevel);
 
-  /**
+  /* 
    * See {@link MapMaker#weakKeys}.
    */
   @GwtIncompatible("java.lang.ref.WeakReference")
   public abstract GenericMapMaker<K0, V0> weakKeys();
 
-  /**
+  /* 
    * See {@link MapMaker#weakValues}.
    */
   @GwtIncompatible("java.lang.ref.WeakReference")
   public abstract GenericMapMaker<K0, V0> weakValues();
 
-  /**
+  /* 
    * See {@link MapMaker#softValues}.
    *
    * @deprecated Caching functionality in {@code MapMaker} has been moved to {@link
@@ -109,12 +109,12 @@ public abstract class GenericMapMaker<K0, V0> {
   @GwtIncompatible("java.lang.ref.SoftReference")
   public abstract GenericMapMaker<K0, V0> softValues();
 
-  /**
+  /* 
    * See {@link MapMaker#expireAfterWrite}.
    */
   abstract GenericMapMaker<K0, V0> expireAfterWrite(long duration, TimeUnit unit);
 
-  /**
+  /* 
    * See {@link MapMaker#expireAfterAccess}.
    */
   @GwtIncompatible("To be supported")
@@ -131,18 +131,18 @@ public abstract class GenericMapMaker<K0, V0> {
     return (RemovalListener<K, V>) Objects.firstNonNull(removalListener, NullListener.INSTANCE);
   }
 
-  /**
+  /* 
    * See {@link MapMaker#makeMap}.
    */
   public abstract <K extends K0, V extends V0> ConcurrentMap<K, V> makeMap();
 
-  /**
+  /* 
    * See {@link MapMaker#makeCustomMap}.
    */
   @GwtIncompatible("MapMakerInternalMap")
   abstract <K, V> MapMakerInternalMap<K, V> makeCustomMap();
 
-  /**
+  /* 
    * See {@link MapMaker#makeComputingMap}.
    */
   @Deprecated

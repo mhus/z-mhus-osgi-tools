@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Iterator;
 
-/**
+/* 
  * An iterator that transforms a backing iterator; for internal use. This avoids
  * the object overhead of constructing a {@link Function} for internal methods.
  *

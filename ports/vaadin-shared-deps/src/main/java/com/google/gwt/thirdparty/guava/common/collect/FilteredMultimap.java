@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.base.Predicate;
 
 import java.util.Map.Entry;
 
-/**
+/* 
  * An interface for all filtered multimap types.
  * 
  * @author Louis Wasserman

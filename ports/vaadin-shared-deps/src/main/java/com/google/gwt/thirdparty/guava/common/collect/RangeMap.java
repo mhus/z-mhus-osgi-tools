@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A mapping from disjoint nonempty ranges to non-null values. Queries look up the value
  * associated with the range (if any) that contains a specified key.
  *
@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
  */
 @Beta
 public interface RangeMap<K extends Comparable, V> {
-  /**
+  /* 
    * Returns the value associated with the specified key, or {@code null} if there is no
    * such value.
    *
@@ -44,21 +44,21 @@ public interface RangeMap<K extends Comparable, V> {
   @Nullable
   V get(K key);
 
-  /**
+  /* 
    * Returns the range containing this key and its associated value, if such a range is present
    * in the range map, or {@code null} otherwise.
    */
   @Nullable
   Map.Entry<Range<K>, V> getEntry(K key);
 
-  /**
+  /* 
    * Returns the minimal range {@linkplain Range#encloses(Range) enclosing} the ranges
    * in this {@code RangeMap}.
    *
    */
   Range<K> span();
 
-  /**
+  /* 
    * Maps a range to a specified value (optional operation).
    *
    * <p>Specifically, after a call to {@code put(range, value)}, if
@@ -69,17 +69,17 @@ public interface RangeMap<K extends Comparable, V> {
    */
   void put(Range<K> range, V value);
 
-  /**
+  /* 
    * Puts all the associations from {@code rangeMap} into this range map (optional operation).
    */
   void putAll(RangeMap<K, V> rangeMap);
 
-  /**
+  /* 
    * Removes all associations from this range map (optional operation).
    */
   void clear();
 
-  /**
+  /* 
    * Removes all associations from this range map in the specified range (optional operation).
    *
    * <p>If {@code !range.contains(k)}, {@link #get(Comparable) get(k)} will return the same result
@@ -88,7 +88,7 @@ public interface RangeMap<K extends Comparable, V> {
    */
   void remove(Range<K> range);
 
-  /**
+  /* 
    * Returns a view of this range map as an unmodifiable {@code Map<Range<K>, V>}.
    * Modifications to this range map are guaranteed to read through to the returned {@code Map}.
    *
@@ -96,7 +96,7 @@ public interface RangeMap<K extends Comparable, V> {
    */
   Map<Range<K>, V> asMapOfRanges();
   
-  /**
+  /* 
    * Returns a view of the part of this range map that intersects with {@code range}.
    * 
    * <p>For example, if {@code rangeMap} had the entries 
@@ -112,20 +112,20 @@ public interface RangeMap<K extends Comparable, V> {
    */
   RangeMap<K, V> subRangeMap(Range<K> range);
 
-  /**
+  /* 
    * Returns {@code true} if {@code obj} is another {@code RangeMap} that has an equivalent
    * {@link #asMapOfRanges()}.
    */
   @Override
   boolean equals(@Nullable Object o);
 
-  /**
+  /* 
    * Returns {@code asMapOfRanges().hashCode()}.
    */
   @Override
   int hashCode();
 
-  /**
+  /* 
    * Returns a readable string representation of this range map.
    */
   @Override

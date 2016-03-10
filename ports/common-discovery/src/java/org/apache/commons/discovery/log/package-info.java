@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Apache Commons-Logging wrapper.
  */
 package org.apache.commons.discovery.log;

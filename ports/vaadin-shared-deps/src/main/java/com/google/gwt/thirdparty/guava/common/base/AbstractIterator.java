@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
+/* 
  * Note this class is a copy of
  * {@link com.google.gwt.thirdparty.guava.common.collect.AbstractIterator} (for dependency reasons).
  */

@@ -26,14 +26,14 @@ import org.apache.commons.discovery.defaults.Defaults;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Various utilities to interact with {@code Class} types.
  */
 public class ClassUtils {
 
     private static Log log = LogFactory.getLog(ClassUtils.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -44,7 +44,7 @@ public class ClassUtils {
         log = _log;
     }
 
-    /**
+    /* 
      * Get package name.
      * Not all class loaders 'keep' package information,
      * in which case Class.getPackage() returns null.
@@ -66,7 +66,7 @@ public class ClassUtils {
         return packageName;
     }
 
-    /**
+    /* 
      * Looks for {@code public static returnType methodName(paramTypes)}.
      *
      * @param clazz The class where looking for the method
@@ -121,7 +121,7 @@ public class ClassUtils {
         return method;
     }
 
-    /**
+    /* 
      * Creates a new instance of the input class using the following policy:
      *
      * <ul>
@@ -158,7 +158,7 @@ public class ClassUtils {
         return constructor.newInstance(params);
     }
 
-    /**
+    /* 
      * Throws exception if {@code impl} does not
      * implement or extend the SPI.
      *

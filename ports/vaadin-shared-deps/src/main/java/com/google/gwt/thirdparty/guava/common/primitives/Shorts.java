@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
 
-/**
+/* 
  * Static utility methods pertaining to {@code short} primitives, that are not
  * already found in either {@link Short} or {@link Arrays}.
  *
@@ -48,20 +48,20 @@ import java.util.RandomAccess;
 public final class Shorts {
   private Shorts() {}
 
-  /**
+  /* 
    * The number of bytes required to represent a primitive {@code short}
    * value.
    */
   public static final int BYTES = Short.SIZE / Byte.SIZE;
 
-  /**
+  /* 
    * The largest power of two that can be represented as a {@code short}.
    *
    * @since 10.0
    */
   public static final short MAX_POWER_OF_TWO = 1 << (Short.SIZE - 2);
 
-  /**
+  /* 
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Short) value).hashCode()}.
    *
@@ -72,7 +72,7 @@ public final class Shorts {
     return value;
   }
 
-  /**
+  /* 
    * Returns the {@code short} value that is equal to {@code value}, if
    * possible.
    *
@@ -87,7 +87,7 @@ public final class Shorts {
     return result;
   }
 
-  /**
+  /* 
    * Returns the {@code short} nearest in value to {@code value}.
    *
    * @param value any {@code long} value
@@ -105,7 +105,7 @@ public final class Shorts {
     return (short) value;
   }
 
-  /**
+  /* 
    * Compares the two specified {@code short} values. The sign of the value
    * returned is the same as that of {@code ((Short) a).compareTo(b)}.
    *
@@ -118,7 +118,7 @@ public final class Shorts {
     return a - b; // safe due to restricted range
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -136,7 +136,7 @@ public final class Shorts {
     return false;
   }
 
-  /**
+  /* 
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -160,7 +160,7 @@ public final class Shorts {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -190,7 +190,7 @@ public final class Shorts {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -214,7 +214,7 @@ public final class Shorts {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code short} values
@@ -233,7 +233,7 @@ public final class Shorts {
     return min;
   }
 
-  /**
+  /* 
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code short} values
@@ -285,7 +285,7 @@ public final class Shorts {
     return (short) ((b1 << 8) | (b2 & 0xFF));
   }
 
-  /**
+  /* 
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -317,7 +317,7 @@ public final class Shorts {
     return copy;
   }
 
-  /**
+  /* 
    * Returns a string containing the supplied {@code short} values separated
    * by {@code separator}. For example, {@code join("-", (short) 1, (short) 2,
    * (short) 3)} returns the string {@code "1-2-3"}.
@@ -341,7 +341,7 @@ public final class Shorts {
     return builder.toString();
   }
 
-  /**
+  /* 
    * Returns a comparator that compares two {@code short} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(short, short)}), the first pair of values that follow any
@@ -377,7 +377,7 @@ public final class Shorts {
     }
   }
 
-  /**
+  /* 
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code short} value in the manner of {@link Number#shortValue}.
    *
@@ -407,7 +407,7 @@ public final class Shorts {
     return array;
   }
 
-  /**
+  /* 
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

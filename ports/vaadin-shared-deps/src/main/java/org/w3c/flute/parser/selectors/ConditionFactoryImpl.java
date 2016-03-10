@@ -23,13 +23,13 @@ import org.w3c.css.sac.PositionalCondition;
 import org.w3c.css.sac.NegativeCondition;
 import org.w3c.css.sac.ConditionFactory;
 
-/**
+/* 
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
 public class ConditionFactoryImpl implements ConditionFactory {
 
-    /**
+    /* 
      * Creates an and condition
      *
      * @param first the first condition
@@ -43,7 +43,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	return new AndConditionImpl(first, second);
     }
 
-    /**
+    /* 
      * Creates an or condition
      *
      * @param first the first condition
@@ -57,7 +57,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /**
+    /* 
      * Creates a negative condition
      *
      * @param condition the condition
@@ -70,7 +70,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
     }
 
 
-    /**
+    /* 
      * Creates a positional condition
      *
      * @param position the position of the node in the list.
@@ -89,7 +89,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /**
+    /* 
      * creates an attribute condition
      *
      * @param localName the localName of the attribute
@@ -112,7 +112,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	}
     }
 
-    /**
+    /* 
      * Creates an id condition
      *
      * @param value the value of the id.
@@ -124,7 +124,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	return new IdConditionImpl(value);
     }
 
-    /**
+    /* 
      * Creates a lang condition
      *
      * @return A lang condition
@@ -135,7 +135,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	return new LangConditionImpl(lang);
     }
 
-    /**
+    /* 
      * Creates a "one of" attribute condition
      *
      * @param localName the localName of the attribute
@@ -158,7 +158,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	}
     }
 
-    /**
+    /* 
      * Creates a "begin hyphen" attribute condition
      *
      * @param localName the localName of the attribute
@@ -181,7 +181,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	}
     }
 
-    /**
+    /* 
      * Creates a class condition
      *
      * @param namespaceURI the namespace URI of the attribute
@@ -195,7 +195,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	return new ClassConditionImpl(value);
     }
 
-    /**
+    /* 
      * Creates a pseudo class condition
      *
      * @param namespaceURI the namespace URI of the attribute
@@ -209,7 +209,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	return new PseudoClassConditionImpl(value);
     }
 
-    /**
+    /* 
      * Creates a "only one" child condition
      *
      * @return A "only one" child condition
@@ -219,7 +219,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /**
+    /* 
      * Creates a "only one" type condition
      *
      * @return A "only one" type condition
@@ -229,7 +229,7 @@ public class ConditionFactoryImpl implements ConditionFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /**
+    /* 
      * Creates a content condition
      *
      * @param data the data in the content

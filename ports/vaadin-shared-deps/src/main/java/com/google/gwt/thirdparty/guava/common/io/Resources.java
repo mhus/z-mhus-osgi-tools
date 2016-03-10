@@ -32,7 +32,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.List;
 
-/**
+/* 
  * Provides utility methods for working with resources in the classpath.
  * Note that even though these methods use {@link URL} parameters, they
  * are usually not appropriate for HTTP or other non-classpath resources.
@@ -48,7 +48,7 @@ import java.util.List;
 public final class Resources {
   private Resources() {}
 
-  /**
+  /* 
    * Returns a factory that will supply instances of {@link InputStream} that
    * read from the given URL.
    *
@@ -59,7 +59,7 @@ public final class Resources {
     return ByteStreams.asInputSupplier(asByteSource(url));
   }
 
-  /**
+  /* 
    * Returns a {@link ByteSource} that reads from the given URL.
    *
    * @since 14.0
@@ -68,7 +68,7 @@ public final class Resources {
     return new UrlByteSource(url);
   }
 
-  /**
+  /* 
    * A byte source that reads from a URL using {@link URL#openStream()}.
    */
   private static final class UrlByteSource extends ByteSource {
@@ -90,7 +90,7 @@ public final class Resources {
     }
   }
 
-  /**
+  /* 
    * Returns a factory that will supply instances of
    * {@link InputStreamReader} that read a URL using the given character set.
    *
@@ -104,7 +104,7 @@ public final class Resources {
     return CharStreams.asInputSupplier(asCharSource(url, charset));
   }
 
-  /**
+  /* 
    * Returns a {@link CharSource} that reads from the given URL using the given character set.
    *
    * @since 14.0
@@ -113,7 +113,7 @@ public final class Resources {
     return asByteSource(url).asCharSource(charset);
   }
 
-  /**
+  /* 
    * Reads all bytes from a URL into a byte array.
    *
    * @param url the URL to read from
@@ -124,7 +124,7 @@ public final class Resources {
     return asByteSource(url).read();
   }
 
-  /**
+  /* 
    * Reads all characters from a URL into a {@link String}, using the given
    * character set.
    *
@@ -138,7 +138,7 @@ public final class Resources {
     return asCharSource(url, charset).read();
   }
 
-  /**
+  /* 
    * Streams lines from a URL, stopping when our callback returns false, or we
    * have read all of the lines.
    *
@@ -154,7 +154,7 @@ public final class Resources {
     return CharStreams.readLines(newReaderSupplier(url, charset), callback);
   }
 
-  /**
+  /* 
    * Reads all of the lines from a URL. The lines do not include
    * line-termination characters, but do include other leading and trailing
    * whitespace.
@@ -189,7 +189,7 @@ public final class Resources {
     });
   }
 
-  /**
+  /* 
    * Copies all bytes from a URL to an output stream.
    *
    * @param from the URL to read from
@@ -200,7 +200,7 @@ public final class Resources {
     asByteSource(from).copyTo(to);
   }
   
-  /**
+  /* 
    * Returns a {@code URL} pointing to {@code resourceName} if the resource is
    * found using the {@linkplain Thread#getContextClassLoader() context class
    * loader}. In simple environments, the context class loader will find
@@ -223,7 +223,7 @@ public final class Resources {
     return url;
   }
 
-  /**
+  /* 
    * Given a {@code resourceName} that is relative to {@code contextClass},
    * returns a {@code URL} pointing to the named resource.
    * 

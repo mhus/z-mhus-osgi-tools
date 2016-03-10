@@ -37,7 +37,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Provides static methods that involve a {@code Table}.
  * 
  * <p>See the Guava User Guide article on <a href=
@@ -52,7 +52,7 @@ import javax.annotation.Nullable;
 public final class Tables {
   private Tables() {}
 
-  /**
+  /* 
    * Returns an immutable cell with the specified row key, column key, and
    * value.
    *
@@ -122,7 +122,7 @@ public final class Tables {
     }
   }
 
-  /**
+  /* 
    * Creates a transposed view of a given table that flips its row and column
    * keys. In other words, calling {@code get(columnKey, rowKey)} on the
    * generated table always returns the same value as calling {@code
@@ -252,7 +252,7 @@ public final class Tables {
     }
   }
 
-  /**
+  /* 
    * Creates a table that uses the specified backing map and factory. It can
    * generate a table based on arbitrary {@link Map} classes.
    *
@@ -302,7 +302,7 @@ public final class Tables {
     return new StandardTable<R, C, V>(backingMap, factory);
   }
 
-  /**
+  /* 
    * Returns a view of a table where each value is transformed by a function.
    * All other properties of the table, such as iteration order, are left
    * intact.
@@ -435,7 +435,7 @@ public final class Tables {
     }
   }
   
-  /**
+  /* 
    * Returns an unmodifiable view of the specified table. This method allows modules to provide
    * users with "read-only" access to internal tables. Query operations on the returned table
    * "read through" to the specified table, and attempts to modify the returned table, whether
@@ -534,7 +534,7 @@ public final class Tables {
     private static final long serialVersionUID = 0;
   }
 
-  /**
+  /* 
    * Returns an unmodifiable view of the specified row-sorted table. This method allows modules to
    * provide users with "read-only" access to internal tables. Query operations on the returned
    * table "read through" to the specified table, and attemps to modify the returned table, whether

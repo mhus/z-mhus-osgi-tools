@@ -33,7 +33,7 @@ import java.nio.ByteOrder;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
  * MurmurHash3_x64_128
  *

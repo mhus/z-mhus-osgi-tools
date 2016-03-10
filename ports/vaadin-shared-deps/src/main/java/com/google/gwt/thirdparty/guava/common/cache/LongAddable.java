@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.cache;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * Abstract interface for objects that can concurrently add longs.
  * 
  * @author Louis Wasserman

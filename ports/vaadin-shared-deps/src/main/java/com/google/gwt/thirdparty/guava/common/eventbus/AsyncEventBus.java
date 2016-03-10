@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
 
-/**
+/* 
  * An {@link EventBus} that takes the Executor of your choice and uses it to
  * dispatch events, allowing dispatch to occur asynchronously.
  *
@@ -34,11 +34,11 @@ import java.util.concurrent.Executor;
 public class AsyncEventBus extends EventBus {
   private final Executor executor;
 
-  /** the queue of events is shared across all threads */
+  /*  the queue of events is shared across all threads */
   private final ConcurrentLinkedQueue<EventWithHandler> eventsToDispatch =
       new ConcurrentLinkedQueue<EventWithHandler>();
 
-  /**
+  /* 
    * Creates a new AsyncEventBus that will use {@code executor} to dispatch
    * events.  Assigns {@code identifier} as the bus's name for logging purposes.
    *
@@ -52,7 +52,7 @@ public class AsyncEventBus extends EventBus {
     this.executor = checkNotNull(executor);
   }
 
-  /**
+  /* 
    * Creates a new AsyncEventBus that will use {@code executor} to dispatch
    * events.
    *
@@ -69,7 +69,7 @@ public class AsyncEventBus extends EventBus {
     eventsToDispatch.offer(new EventWithHandler(event, handler));
   }
 
-  /**
+  /* 
    * Dispatch {@code events} in the order they were posted, regardless of
    * the posting thread.
    */
@@ -86,7 +86,7 @@ public class AsyncEventBus extends EventBus {
     }
   }
 
-  /**
+  /* 
    * Calls the {@link #executor} to dispatch {@code event} to {@code handler}.
    */
   @Override

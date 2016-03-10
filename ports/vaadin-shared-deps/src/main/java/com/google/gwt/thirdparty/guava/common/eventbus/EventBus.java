@@ -41,7 +41,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/* 
  * Dispatches events to listeners, and provides ways for listeners to register
  * themselves.
  *
@@ -112,7 +112,7 @@ import java.util.logging.Logger;
 @Beta
 public class EventBus {
 
-  /**
+  /* 
    * A thread-safe cache for flattenHierarchy(). The Class class is immutable. This cache is shared
    * across all EventBus instances, which greatly improves performance if multiple such instances
    * are created and objects of the same class are posted on all of them.
@@ -128,7 +128,7 @@ public class EventBus {
             }
           });
 
-  /**
+  /* 
    * All registered event handlers, indexed by event type.
    *
    * <p>This SetMultimap is NOT safe for concurrent use; all access should be
@@ -138,20 +138,20 @@ public class EventBus {
       HashMultimap.create();
   private final ReadWriteLock handlersByTypeLock = new ReentrantReadWriteLock();
 
-  /**
+  /* 
    * Logger for event dispatch failures.  Named by the fully-qualified name of
    * this class, followed by the identifier provided at construction.
    */
   private final Logger logger;
 
-  /**
+  /* 
    * Strategy for finding handler methods in registered objects.  Currently,
    * only the {@link AnnotatedHandlerFinder} is supported, but this is
    * encapsulated for future expansion.
    */
   private final HandlerFindingStrategy finder = new AnnotatedHandlerFinder();
 
-  /** queues of events for the current thread to dispatch */
+  /*  queues of events for the current thread to dispatch */
   private final ThreadLocal<Queue<EventWithHandler>> eventsToDispatch =
       new ThreadLocal<Queue<EventWithHandler>>() {
     @Override protected Queue<EventWithHandler> initialValue() {
@@ -159,7 +159,7 @@ public class EventBus {
     }
   };
 
-  /** true if the current thread is currently dispatching an event */
+  /*  true if the current thread is currently dispatching an event */
   private final ThreadLocal<Boolean> isDispatching =
       new ThreadLocal<Boolean>() {
     @Override protected Boolean initialValue() {
@@ -167,14 +167,14 @@ public class EventBus {
     }
   };
 
-  /**
+  /* 
    * Creates a new EventBus named "default".
    */
   public EventBus() {
     this("default");
   }
 
-  /**
+  /* 
    * Creates a new EventBus with the given {@code identifier}.
    *
    * @param identifier  a brief name for this bus, for logging purposes.  Should
@@ -184,7 +184,7 @@ public class EventBus {
     logger = Logger.getLogger(EventBus.class.getName() + "." + checkNotNull(identifier));
   }
 
-  /**
+  /* 
    * Registers all handler methods on {@code object} to receive events.
    * Handler methods are selected and classified using this EventBus's
    * {@link HandlerFindingStrategy}; the default strategy is the
@@ -203,7 +203,7 @@ public class EventBus {
     }
   }
 
-  /**
+  /* 
    * Unregisters all handler methods on a registered {@code object}.
    *
    * @param object  object whose handler methods should be unregistered.
@@ -229,7 +229,7 @@ public class EventBus {
     }
   }
 
-  /**
+  /* 
    * Posts an event to all registered handlers.  This method will return
    * successfully after the event has been posted to all handlers, and
    * regardless of any exceptions thrown by handlers.
@@ -267,7 +267,7 @@ public class EventBus {
     dispatchQueuedEvents();
   }
 
-  /**
+  /* 
    * Queue the {@code event} for dispatch during
    * {@link #dispatchQueuedEvents()}. Events are queued in-order of occurrence
    * so they can be dispatched in the same order.
@@ -276,7 +276,7 @@ public class EventBus {
     eventsToDispatch.get().offer(new EventWithHandler(event, handler));
   }
 
-  /**
+  /* 
    * Drain the queue of events to be dispatched. As the queue is being drained,
    * new events may be posted to the end of the queue.
    */
@@ -301,7 +301,7 @@ public class EventBus {
     }
   }
 
-  /**
+  /* 
    * Dispatches {@code event} to the handler in {@code wrapper}.  This method
    * is an appropriate override point for subclasses that wish to make
    * event delivery asynchronous.
@@ -318,7 +318,7 @@ public class EventBus {
     }
   }
 
-  /**
+  /* 
    * Flattens a class's type hierarchy into a set of Class objects.  The set
    * will include all superclasses (transitively), and all interfaces
    * implemented by these superclasses.
@@ -335,7 +335,7 @@ public class EventBus {
     }
   }
 
-  /** simple struct representing an event and it's handler */
+  /*  simple struct representing an event and it's handler */
   static class EventWithHandler {
     final Object event;
     final EventHandler handler;

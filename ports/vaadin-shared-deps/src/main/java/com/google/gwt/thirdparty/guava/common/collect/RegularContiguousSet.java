@@ -26,7 +26,7 @@ import java.util.Collection;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An implementation of {@link ContiguousSet} that contains one or more elements.
  *
  * @author Gregory Kick

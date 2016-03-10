@@ -24,7 +24,7 @@ import com.google.gwt.thirdparty.streamhtmlparser.util.HtmlUtils;
 
 import java.util.Map;
 
-/**
+/* 
  * An implementation of the {@code Parser} interface that is common to both
  * {@code HtmlParser} and {@code JavascriptParser}.
  *
@@ -55,7 +55,7 @@ public class GenericParser implements Parser {
     this.columnNumber = 1;
   }
 
-  /**
+  /* 
    * Constructs a generic parser that is an exact copy of the
    * one given. Note that here too, data structures that do not
    * change are shallow-copied (parser state table and state mappings).
@@ -71,7 +71,7 @@ public class GenericParser implements Parser {
     columnNumber = aGenericParser.columnNumber;
   }
 
-  /**
+  /* 
    * Tell the parser to process the provided {@code String}. This is just a
    * convenience method that wraps over {@link Parser#parse(char)}.
    * @param input the {@code String} to parse
@@ -83,7 +83,7 @@ public class GenericParser implements Parser {
       parse(input.charAt(i));
   }
 
-  /**
+  /* 
    * Main loop for parsing of input.
    *
    * <p>Absent any callbacks defined, this function simply determines the
@@ -135,7 +135,7 @@ public class GenericParser implements Parser {
     }
   }
 
-  /**
+  /* 
    * Return the current state of the parser.
    */
   @Override
@@ -147,7 +147,7 @@ public class GenericParser implements Parser {
     return intToExtStateTable.get(currentState);
   }
 
-  /**
+  /* 
    * Reset the parser back to its initial default state.
    */
   @Override
@@ -157,7 +157,7 @@ public class GenericParser implements Parser {
     columnNumber = 1;
   }
 
-  /**
+  /* 
    * Sets the current line number which is returned during error messages.
    */
   @Override
@@ -165,7 +165,7 @@ public class GenericParser implements Parser {
     this.lineNumber = lineNumber;
   }
 
-  /**
+  /* 
    * Returns the current line number.
    */
   @Override
@@ -173,7 +173,7 @@ public class GenericParser implements Parser {
     return lineNumber;
   }
 
-  /**
+  /* 
    * Sets the current column number which is returned during error messages.
    */
   @Override
@@ -181,7 +181,7 @@ public class GenericParser implements Parser {
     this.columnNumber = columnNumber;
   }
 
-  /**
+  /* 
    * Returns the current column number.
    */
   @Override
@@ -211,7 +211,7 @@ public class GenericParser implements Parser {
     currentState = nextState;
   }
 
-  /**
+  /* 
    * Invoked when the parser enters a new state.
    *
    * @param currentState the current state of the parser
@@ -228,7 +228,7 @@ public class GenericParser implements Parser {
     return expectedNextState;
   }
 
-  /**
+  /* 
    * Invoked when the parser exits a state.
    *
    * @param currentState the current state of the parser
@@ -245,7 +245,7 @@ public class GenericParser implements Parser {
     return expectedNextState;
   }
 
-  /**
+  /* 
    * Invoked for each character read when no state change occured.
    *
    * @param currentState the current state of the parser
@@ -259,7 +259,7 @@ public class GenericParser implements Parser {
     return currentState;
   }
 
-  /**
+  /* 
    * Perform some processing on the given character. Derived classes
    * may override this method in order to perform additional logic
    * on every processed character beyond the logic defined in

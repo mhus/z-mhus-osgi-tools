@@ -47,7 +47,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Scans the source of a {@link ClassLoader} and finds all loadable classes and resources.
  *
  * @author Ben Yu
@@ -58,7 +58,7 @@ public final class ClassPath {
 
   private static final Logger logger = Logger.getLogger(ClassPath.class.getName());
 
-  /** Separator for the Class-Path manifest attribute value in jar files. */
+  /*  Separator for the Class-Path manifest attribute value in jar files. */
   private static final Splitter CLASS_PATH_ATTRIBUTE_SEPARATOR =
       Splitter.on(" ").omitEmptyStrings();
 
@@ -70,7 +70,7 @@ public final class ClassPath {
     this.resources = resources;
   }
 
-  /**
+  /* 
    * Returns a {@code ClassPath} representing all classes and resources loadable from {@code
    * classloader} and its parent class loaders.
    *
@@ -87,7 +87,7 @@ public final class ClassPath {
     return new ClassPath(scanner.getResources());
   }
 
-  /**
+  /* 
    * Returns all resources loadable from the current class path, including the class files of all
    * loadable classes but excluding the "META-INF/MANIFEST.MF" file.
    */
@@ -95,12 +95,12 @@ public final class ClassPath {
     return resources;
   }
 
-  /** Returns all top level classes loadable from the current class path. */
+  /*  Returns all top level classes loadable from the current class path. */
   public ImmutableSet<ClassInfo> getTopLevelClasses() {
     return FluentIterable.from(resources).filter(ClassInfo.class).toSet();
   }
 
-  /** Returns all top level classes whose package name is {@code packageName}. */
+  /*  Returns all top level classes whose package name is {@code packageName}. */
   public ImmutableSet<ClassInfo> getTopLevelClasses(String packageName) {
     checkNotNull(packageName);
     ImmutableSet.Builder<ClassInfo> builder = ImmutableSet.builder();
@@ -112,7 +112,7 @@ public final class ClassPath {
     return builder.build();
   }
 
-  /**
+  /* 
    * Returns all top level classes whose package name is {@code packageName} or starts with
    * {@code packageName} followed by a '.'.
    */
@@ -128,7 +128,7 @@ public final class ClassPath {
     return builder.build();
   }
 
-  /**
+  /* 
    * Represents a class path resource that can be either a class file or any other resource file
    * loadable from the class path.
    *
@@ -152,13 +152,13 @@ public final class ClassPath {
       this.loader = checkNotNull(loader);
     }
 
-    /** Returns the url identifying the resource. */
+    /*  Returns the url identifying the resource. */
     public final URL url() {
       return checkNotNull(loader.getResource(resourceName),
           "Failed to load resource: %s", resourceName);
     }
 
-    /** Returns the fully qualified name of the resource. Such as "com/mycomp/foo/bar.txt". */
+    /*  Returns the fully qualified name of the resource. Such as "com/mycomp/foo/bar.txt". */
     public final String getResourceName() {
       return resourceName;
     }
@@ -182,7 +182,7 @@ public final class ClassPath {
     }
   }
 
-  /**
+  /* 
    * Represents a class that can be loaded through {@link #load}.
    *
    * @since 14.0
@@ -196,12 +196,12 @@ public final class ClassPath {
       this.className = getClassName(resourceName);
     }
 
-    /** Returns the package name of the class, without attempting to load the class. */
+    /*  Returns the package name of the class, without attempting to load the class. */
     public String getPackageName() {
       return Reflection.getPackageName(className);
     }
 
-    /** Returns the simple name of the underlying class as given in the source code. */
+    /*  Returns the simple name of the underlying class as given in the source code. */
     public String getSimpleName() {
       String packageName = getPackageName();
       if (packageName.isEmpty()) {
@@ -211,12 +211,12 @@ public final class ClassPath {
       return className.substring(packageName.length() + 1);
     }
 
-    /** Returns the fully qualified name of the class. */
+    /*  Returns the fully qualified name of the class. */
     public String getName() {
       return className;
     }
 
-    /**
+    /* 
      * Loads (but doesn't link or initialize) the class.
      *
      * @throws LinkageError when there were errors in loading classes that this class depends on.
@@ -351,7 +351,7 @@ public final class ClassPath {
       }
     }
   
-    /**
+    /* 
      * Returns the class path URIs specified by the {@code Class-Path} manifest attribute, according
      * to <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/jar/jar.html#Main%20Attributes">
      * JAR File Specification</a>. If {@code manifest} is null, it means the jar file has no
@@ -381,7 +381,7 @@ public final class ClassPath {
       return builder.build();
     }
   
-    /**
+    /* 
      * Returns the absolute uri of the Class-Path entry value as specified in
      * <a href="http://docs.oracle.com/javase/6/docs/technotes/guides/jar/jar.html#Main%20Attributes">
      * JAR File Specification</a>. Even though the specification only talks about relative urls,

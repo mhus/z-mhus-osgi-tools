@@ -22,7 +22,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * @see com.google.gwt.thirdparty.guava.common.collect.Maps#immutableEntry(Object, Object)
  */
 @GwtCompatible(serializable = true)

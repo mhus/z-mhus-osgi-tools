@@ -22,20 +22,20 @@ import org.apache.commons.discovery.ResourceIterator;
 import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.discovery.resource.names.ResourceNameDiscoverImpl;
 
-/**
+/* 
  * Helper class for methods implementing the ResourceDiscover interface.
  */
 public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl implements ResourceDiscover {
 
     private ClassLoaders classLoaders;
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      */
     public ResourceDiscoverImpl() {
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param classLoaders The class laoders holder
@@ -44,7 +44,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         setClassLoaders(classLoaders);
     }
 
-    /**
+    /* 
      * Specify set of class loaders to be used in searching.
      *
      * @param loaders The class laoders holder
@@ -53,7 +53,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         classLoaders = loaders;
     }
 
-    /**
+    /* 
      * Specify a new class loader to be used in searching.
      *
      * The order of loaders determines the order of the result.
@@ -65,7 +65,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         getClassLoaders().put(loader);
     }
 
-    /**
+    /* 
      * Returns the class loaders holder.
      *
      * @return The class loaders holder
@@ -77,7 +77,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         return classLoaders;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -85,7 +85,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         return findResources(resourceName);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -93,7 +93,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
         return findResources(resourceNames);
     }
 
-    /**
+    /* 
      * Locate resources that are bound to {@code resourceName}.
      *
      * @param resourceName The resource name has to be located
@@ -101,7 +101,7 @@ public abstract class ResourceDiscoverImpl extends ResourceNameDiscoverImpl impl
      */
     public abstract ResourceIterator findResources(String resourceName);
 
-    /**
+    /* 
      * Locate resources that are bound to <code>resourceNames</code>.
      *
      * @param inputNames The resources name iterator has to be located

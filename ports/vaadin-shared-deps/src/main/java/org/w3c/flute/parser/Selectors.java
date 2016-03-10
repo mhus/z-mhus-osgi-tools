@@ -16,7 +16,7 @@ package org.w3c.flute.parser;
 import org.w3c.css.sac.SelectorList;
 import org.w3c.css.sac.Selector;
 
-/**
+/* 
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */

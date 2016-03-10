@@ -52,7 +52,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to the {@link Future} interface.
  *
  * <p>Many of these methods use the {@link ListenableFuture} API; consult the
@@ -69,7 +69,7 @@ import javax.annotation.Nullable;
 public final class Futures {
   private Futures() {}
 
-  /**
+  /* 
    * Creates a {@link CheckedFuture} out of a normal {@link ListenableFuture}
    * and a {@link Function} that maps from {@link Exception} instances into the
    * appropriate checked type.
@@ -231,7 +231,7 @@ public final class Futures {
     }
   }
 
-  /**
+  /* 
    * Creates a {@code ListenableFuture} which has its value set immediately upon
    * construction. The getters just return the value. This {@code Future} can't
    * be canceled or timed out and its {@code isDone()} method always returns
@@ -241,7 +241,7 @@ public final class Futures {
     return new ImmediateSuccessfulFuture<V>(value);
   }
 
-  /**
+  /* 
    * Returns a {@code CheckedFuture} which has its value set immediately upon
    * construction.
    *
@@ -254,7 +254,7 @@ public final class Futures {
     return new ImmediateSuccessfulCheckedFuture<V, X>(value);
   }
 
-  /**
+  /* 
    * Returns a {@code ListenableFuture} which has an exception set immediately
    * upon construction.
    *
@@ -269,7 +269,7 @@ public final class Futures {
     return new ImmediateFailedFuture<V>(throwable);
   }
 
-  /**
+  /* 
    * Creates a {@code ListenableFuture} which is cancelled immediately upon
    * construction, so that {@code isCancelled()} always returns {@code true}.
    *
@@ -279,7 +279,7 @@ public final class Futures {
     return new ImmediateCancelledFuture<V>();
   }
 
-  /**
+  /* 
    * Returns a {@code CheckedFuture} which has an exception set immediately upon
    * construction.
    *
@@ -295,7 +295,7 @@ public final class Futures {
     return new ImmediateFailedCheckedFuture<V, X>(exception);
   }
 
-  /**
+  /* 
    * Returns a {@code Future} whose result is taken from the given primary
    * {@code input} or, if the primary input fails, from the {@code Future}
    * provided by the {@code fallback}. {@link FutureFallback#create} is not
@@ -341,7 +341,7 @@ public final class Futures {
     return withFallback(input, fallback, sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Returns a {@code Future} whose result is taken from the given primary
    * {@code input} or, if the primary input fails, from the {@code Future}
    * provided by the {@code fallback}. {@link FutureFallback#create} is not
@@ -374,7 +374,7 @@ public final class Futures {
     return new FallbackFuture<V>(input, fallback, executor);
   }
 
-  /**
+  /* 
    * A future that falls back on a second, generated future, in case its
    * original future fails.
    */
@@ -435,7 +435,7 @@ public final class Futures {
     }
   }
 
-  /**
+  /* 
    * Returns a new {@code ListenableFuture} whose result is asynchronously
    * derived from the result of the given {@code Future}. More precisely, the
    * returned {@code Future} takes its result from a {@code Future} produced by
@@ -485,7 +485,7 @@ public final class Futures {
     return transform(input, function, MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Returns a new {@code ListenableFuture} whose result is asynchronously
    * derived from the result of the given {@code Future}. More precisely, the
    * returned {@code Future} takes its result from a {@code Future} produced by
@@ -523,7 +523,7 @@ public final class Futures {
     return output;
   }
 
-  /**
+  /* 
    * Returns a new {@code ListenableFuture} whose result is the product of
    * applying the given {@code Function} to the result of the given {@code
    * Future}. Example:
@@ -571,7 +571,7 @@ public final class Futures {
     return transform(input, function, MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Returns a new {@code ListenableFuture} whose result is the product of
    * applying the given {@code Function} to the result of the given {@code
    * Future}. Example:
@@ -610,7 +610,7 @@ public final class Futures {
     return transform(input, wrapperFunction, executor);
   }
 
-  /**
+  /* 
    * Like {@link #transform(ListenableFuture, Function)} except that the
    * transformation {@code function} is invoked on each call to
    * {@link Future#get() get()} on the returned future.
@@ -675,7 +675,7 @@ public final class Futures {
     };
   }
 
-  /**
+  /* 
    * An implementation of {@code ListenableFuture} that also implements
    * {@code Runnable} so that it can be used to nest ListenableFutures.
    * Once the passed-in {@code ListenableFuture} is complete, it calls the
@@ -785,7 +785,7 @@ public final class Futures {
     }
   }
 
-  /**
+  /* 
    * Returns a new {@code ListenableFuture} whose result is the product of
    * calling {@code get()} on the {@code Future} nested within the given {@code
    * Future}, effectively chaining the futures one after the other.  Example:
@@ -811,7 +811,7 @@ public final class Futures {
     return Futures.transform((ListenableFuture) nested, (AsyncFunction) DEREFERENCER);
   }
 
-  /**
+  /* 
    * Helper {@code Function} for {@link #dereference}.
    */
   private static final AsyncFunction<ListenableFuture<Object>, Object> DEREFERENCER =
@@ -821,7 +821,7 @@ public final class Futures {
         }
       };
 
-  /**
+  /* 
    * Creates a new {@code ListenableFuture} whose value is a list containing the
    * values of all its input futures, if all succeed. If any input fails, the
    * returned future fails.
@@ -844,7 +844,7 @@ public final class Futures {
         MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Creates a new {@code ListenableFuture} whose value is a list containing the
    * values of all its input futures, if all succeed. If any input fails, the
    * returned future fails.
@@ -867,7 +867,7 @@ public final class Futures {
         MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Creates a new {@code ListenableFuture} whose result is set from the
    * supplied future when it completes.  Cancelling the supplied future
    * will also cancel the returned future, but cancelling the returned
@@ -880,7 +880,7 @@ public final class Futures {
     return new NonCancellationPropagatingFuture<V>(future);
   }
 
-  /**
+  /* 
    * A wrapped future that does not propagate cancellation to its delegate.
    */
   private static class NonCancellationPropagatingFuture<V>
@@ -905,7 +905,7 @@ public final class Futures {
     }
   }
 
-  /**
+  /* 
    * Creates a new {@code ListenableFuture} whose value is a list containing the
    * values of all its successful input futures. The list of results is in the
    * same order as the input list, and if any of the provided futures fails or
@@ -927,7 +927,7 @@ public final class Futures {
         MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Creates a new {@code ListenableFuture} whose value is a list containing the
    * values of all its successful input futures. The list of results is in the
    * same order as the input list, and if any of the provided futures fails or
@@ -949,7 +949,7 @@ public final class Futures {
         MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Registers separate success and failure callbacks to be run when the {@code
    * Future}'s computation is {@linkplain java.util.concurrent.Future#isDone()
    * complete} or, if the computation is already complete, immediately.
@@ -992,7 +992,7 @@ public final class Futures {
     addCallback(future, callback, MoreExecutors.sameThreadExecutor());
   }
 
-  /**
+  /* 
    * Registers separate success and failure callbacks to be run when the {@code
    * Future}'s computation is {@linkplain java.util.concurrent.Future#isDone()
    * complete} or, if the computation is already complete, immediately.
@@ -1043,7 +1043,7 @@ public final class Futures {
     future.addListener(callbackListener, executor);
   }
 
-  /**
+  /* 
    * Returns the result of {@link Future#get()}, converting most exceptions to a
    * new instance of the given checked exception type. This reduces boilerplate
    * for a common use of {@code Future} in which it is unnecessary to
@@ -1107,7 +1107,7 @@ public final class Futures {
     }
   }
 
-  /**
+  /* 
    * Returns the result of {@link Future#get(long, TimeUnit)}, converting most
    * exceptions to a new instance of the given checked exception type. This
    * reduces boilerplate for a common use of {@code Future} in which it is
@@ -1187,7 +1187,7 @@ public final class Futures {
     throw newWithCause(exceptionClass, cause);
   }
 
-  /**
+  /* 
    * Returns the result of calling {@link Future#get()} uninterruptibly on a
    * task known not to throw a checked exception. This makes {@code Future} more
    * suitable for lightweight, fast-running tasks that, barring bugs in the
@@ -1348,7 +1348,7 @@ public final class Futures {
       init(listenerExecutor);
     }
 
-    /**
+    /* 
      * Must be called at the end of the constructor.
      */
     protected void init(final Executor listenerExecutor) {
@@ -1408,7 +1408,7 @@ public final class Futures {
       }
     }
 
-    /**
+    /* 
      * Fails this future with the given Throwable if {@link #allMustSucceed} is
      * true. Also, logs the throwable if it is an {@link Error} or if
      * {@link #allMustSucceed} is {@code true} and the throwable did not cause
@@ -1426,7 +1426,7 @@ public final class Futures {
       }
     }
 
-    /**
+    /* 
      * Sets the value at the given index to that of the given future.
      */
     private void setOneValue(int index, Future<? extends V> future) {
@@ -1480,7 +1480,7 @@ public final class Futures {
 
   }
 
-  /** Used for {@link #allAsList} and {@link #successfulAsList}. */
+  /*  Used for {@link #allAsList} and {@link #successfulAsList}. */
   private static <V> ListenableFuture<List<V>> listFuture(
       ImmutableList<ListenableFuture<? extends V>> futures,
       boolean allMustSucceed, Executor listenerExecutor) {
@@ -1498,7 +1498,7 @@ public final class Futures {
         });
   }
 
-  /**
+  /* 
    * A checked future that uses a function to map from exceptions to the
    * appropriate checked type.
    */

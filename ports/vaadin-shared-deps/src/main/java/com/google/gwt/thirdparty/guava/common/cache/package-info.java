@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * This package contains caching utilities.
  *
  * <p>The core interface used to represent caches is {@link com.google.gwt.thirdparty.guava.common.cache.Cache}.

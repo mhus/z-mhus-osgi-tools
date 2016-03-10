@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.annotations.VisibleForTesting;
 
-/**
+/* 
  * Implementation of {@link ImmutableSet} with two or more elements.
  *
  * @author Kevin Bourrillion

@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 public final class Preconditions {
   private Preconditions() {}
 
-  /**
+  /* 
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -41,7 +41,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -57,7 +57,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -85,7 +85,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -98,7 +98,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -114,7 +114,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -142,7 +142,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -157,7 +157,7 @@ public final class Preconditions {
     return reference;
   }
 
-  /**
+  /* 
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -174,7 +174,7 @@ public final class Preconditions {
     return reference;
   }
 
-  /**
+  /* 
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -231,7 +231,7 @@ public final class Preconditions {
    * Hotspot is fine with that.
    */
 
-  /**
+  /* 
    * Ensures that {@code index} specifies a valid <i>element</i> in an array,
    * list or string of size {@code size}. An element index may range from zero,
    * inclusive, to {@code size}, exclusive.
@@ -248,7 +248,7 @@ public final class Preconditions {
     return checkElementIndex(index, size, "index");
   }
 
-  /**
+  /* 
    * Ensures that {@code index} specifies a valid <i>element</i> in an array,
    * list or string of size {@code size}. An element index may range from zero,
    * inclusive, to {@code size}, exclusive.
@@ -281,7 +281,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures that {@code index} specifies a valid <i>position</i> in an array,
    * list or string of size {@code size}. A position index may range from zero
    * to {@code size}, inclusive.
@@ -298,7 +298,7 @@ public final class Preconditions {
     return checkPositionIndex(index, size, "index");
   }
 
-  /**
+  /* 
    * Ensures that {@code index} specifies a valid <i>position</i> in an array,
    * list or string of size {@code size}. A position index may range from zero
    * to {@code size}, inclusive.
@@ -332,7 +332,7 @@ public final class Preconditions {
     }
   }
 
-  /**
+  /* 
    * Ensures that {@code start} and {@code end} specify a valid <i>positions</i>
    * in an array, list or string of size {@code size}, and are in order. A
    * position index may range from zero to {@code size}, inclusive.
@@ -365,7 +365,7 @@ public final class Preconditions {
                   end, start);
   }
 
-  /**
+  /* 
    * Substitutes each {@code %s} in {@code template} with an argument. These
    * are matched by position - the first {@code %s} gets {@code args[0]}, etc.
    * If there are more arguments than placeholders, the unmatched arguments will

@@ -42,7 +42,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An implementation of {@code ListMultimap} that supports deterministic
  * iteration order for both keys and values. The iteration order is preserved
  * across non-distinct key values. For example, for the following multimap
@@ -165,7 +165,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
    */
   private transient int modCount;
 
-  /**
+  /* 
    * Creates a new, empty {@code LinkedListMultimap} with the default initial
    * capacity.
    */
@@ -173,7 +173,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     return new LinkedListMultimap<K, V>();
   }
 
-  /**
+  /* 
    * Constructs an empty {@code LinkedListMultimap} with enough capacity to hold
    * the specified number of keys without rehashing.
    *
@@ -184,7 +184,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     return new LinkedListMultimap<K, V>(expectedKeys);
   }
 
-  /**
+  /* 
    * Constructs a {@code LinkedListMultimap} with the same mappings as the
    * specified {@code Multimap}. The new multimap has the same
    * {@link Multimap#entries()} iteration order as the input multimap.
@@ -209,7 +209,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     putAll(multimap);
   }
 
-  /**
+  /* 
    * Adds a new node for the specified key-value pair before the specified
    * {@code nextSibling} element, or at the end of the list if {@code
    * nextSibling} is null. Note: if {@code nextSibling} is specified, it MUST be
@@ -261,7 +261,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     return node;
   }
 
-  /**
+  /* 
    * Removes the specified node from the linked list. This method is only
    * intended to be used from the {@code Iterator} classes. See also {@link
    * LinkedListMultimap#removeAllNodes(Object)}.
@@ -300,19 +300,19 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     size--;
   }
 
-  /** Removes all nodes for the specified key. */
+  /*  Removes all nodes for the specified key. */
   private void removeAllNodes(@Nullable Object key) {
     Iterators.clear(new ValueForKeyIterator(key));
   }
 
-  /** Helper method for verifying that an iterator element is present. */
+  /*  Helper method for verifying that an iterator element is present. */
   private static void checkElement(@Nullable Object node) {
     if (node == null) {
       throw new NoSuchElementException();
     }
   }
 
-  /** An {@code Iterator} over all nodes. */
+  /*  An {@code Iterator} over all nodes. */
   private class NodeIterator implements ListIterator<Entry<K, V>> {
     int nextIndex;
     Node<K, V> next;
@@ -406,7 +406,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     }
   }
 
-  /** An {@code Iterator} over distinct keys in key head order. */
+  /*  An {@code Iterator} over distinct keys in key head order. */
   private class DistinctKeyIterator implements Iterator<K> {
     final Set<K> seenKeys = Sets.<K>newHashSetWithExpectedSize(keySet().size());
     Node<K, V> next = head;
@@ -444,7 +444,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     }
   }
 
-  /** A {@code ListIterator} over values for a specified key. */
+  /*  A {@code ListIterator} over values for a specified key. */
   private class ValueForKeyIterator implements ListIterator<V> {
     final Object key;
     int nextIndex;
@@ -452,14 +452,14 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     Node<K, V> current;
     Node<K, V> previous;
 
-    /** Constructs a new iterator over all values for the specified key. */
+    /*  Constructs a new iterator over all values for the specified key. */
     ValueForKeyIterator(@Nullable Object key) {
       this.key = key;
       KeyList<K, V> keyList = keyToKeyList.get(key);
       next = (keyList == null) ? null : keyList.head;
     }
 
-    /**
+    /* 
      * Constructs a new iterator over all values for the specified key starting
      * at the specified index. This constructor is optimized so that it starts
      * at either the head or the tail, depending on which is closer to the
@@ -578,7 +578,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
 
   // Modification Operations
 
-  /**
+  /* 
    * Stores a key-value pair in the multimap.
    *
    * @param key key to store in the multimap
@@ -593,7 +593,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
 
   // Bulk Operations
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>If any entries for the specified {@code key} already exist in the
@@ -633,7 +633,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     return unmodifiableList(Lists.newArrayList(new ValueForKeyIterator(key)));
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>The returned list is immutable and implements
@@ -657,7 +657,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
 
   // Views
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>If the multimap is modified while an iteration over the list is in
@@ -698,7 +698,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     };
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>The iterator generated by the returned collection traverses the values
@@ -736,7 +736,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     };
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>The iterator generated by the returned collection traverses the entries
@@ -782,7 +782,7 @@ public class LinkedListMultimap<K, V> extends AbstractMultimap<K, V>
     return new Multimaps.AsMap<K, V>(this);
   }
 
-  /**
+  /* 
    * @serialData the number of distinct keys, and then for each distinct key:
    *     the first key, the number of values for that key, and the key's values,
    *     followed by successive keys and values from the entries() ordering

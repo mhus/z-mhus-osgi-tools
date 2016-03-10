@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
-/**
+/* 
  * Provides equivalent behavior to {@link String#intern} for other immutable
  * types.
  *
@@ -27,7 +27,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
  */
 @Beta
 public interface Interner<E> {
-  /**
+  /* 
    * Chooses and returns the representative instance for any of a collection of
    * instances that are equal to each other. If two {@linkplain Object#equals
    * equal} inputs are given to this method, both calls will return the same

@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Wraps an exception that occurred during a computation.
  *
  * @author Bob Lee
@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public class ComputationException extends RuntimeException {
-  /**
+  /* 
    * Creates a new instance with the given cause.
    */
   public ComputationException(@Nullable Throwable cause) {

@@ -27,7 +27,7 @@ import com.google.gwt.thirdparty.streamhtmlparser.util.HtmlUtils;
 
 import java.util.Map;
 
-/**
+/* 
  * A custom specialized parser - ported from the main C++ version - used to
  * implement context-aware escaping of run-time data in web-application
  * templates.
@@ -141,7 +141,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
   // True iff InsertText() was called at the start of a URL attribute value.
   private boolean textInsideUrlValue;
 
-  /**
+  /* 
    * Creates an {@code HtmlParserImpl} object.
    *
    * <p>Both for performance reasons and to leverage code a state-flow machine
@@ -164,7 +164,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     textInsideUrlValue = false;
   }
 
-  /**
+  /* 
    * Creates an {@code HtmlParserImpl} that is a copy of the one provided.
    * 
    * @param aHtmlParserImpl the {@code HtmlParserImpl} object to copy
@@ -214,7 +214,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
                                  || extState == STATE_VALUE));
   }
 
-  /**
+  /* 
    * Returns {@code true} if and only if the parser is currently within
    * a CSS context. A CSS context is one of the below:
    * <ul>
@@ -325,7 +325,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     return (getValueIndex() == 0);
 }
 
-  /**
+  /* 
    * {@inheritDoc}
    * 
    * Resets the state of the parser to a state consistent with the
@@ -367,7 +367,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     }
   }
 
-  /**
+  /* 
    * Resets the state of the parser to the initial state of parsing HTML.
    */
   public void reset() {
@@ -375,7 +375,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     resetMode(Mode.HTML);
   }
 
-  /**
+  /* 
    * A specialized directive to tell the parser there is some content
    * that will be inserted here but that it will not get to parse. Used
    * by the template system that may not be able to give some content
@@ -477,7 +477,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     return currentState;
   }
 
-  /**
+  /* 
    * Invokes recording on all CharacterRecorder objects. Currently we do
    * not check that one and only one of them is recording. I did a fair
    * bit of testing on the C++ parser and was not convinced there is
@@ -491,7 +491,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     cdataCloseTag.maybeRecord(input);
   }
 
-  /**
+  /* 
    * Starts recording the name of the HTML tag. Called when the parser
    * enters a new tag.
    */
@@ -507,7 +507,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     }
   }
 
-  /**
+  /* 
    * Starts recording the name of the HTML attribute. Called when the parser
    * enters a new HTML attribute.
    */
@@ -519,7 +519,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     attr.stopRecording();
   }
 
-  /**
+  /* 
    * Tracks the index within the HTML attribute value and initializes
    * the javascript parser for attributes that take javascript.
    *
@@ -537,7 +537,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     }
   }
 
-  /**
+  /* 
    * Starts recordning the contents of the attribute value.
    *
    * Called when entering an attribute value.
@@ -546,7 +546,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     value.startRecording();
   }
 
-  /**
+  /* 
    * Stops the recording of the attribute value and exits javascript
    * (in case we were inside it).
    */
@@ -555,7 +555,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     insideJavascript = false;
   }
 
-  /**
+  /* 
    * Processes javascript after performing entity resolution and updates
    * the position within the attribute value.
    * If the status of the entity resolution is <code>IN_PROGRESS</code>,
@@ -579,7 +579,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     }
   }
 
-  /**
+  /* 
    * Handles the tag it finished reading.
    *
    * <p>For a script tag, it initializes the javascript parser. For all
@@ -609,7 +609,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     return nextState;
   }
 
-  /**
+  /* 
    * Feeds the character to the javascript parser for processing.
    *
    * <p>Called inside CDATA blocks to parse javascript.
@@ -623,7 +623,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     }
   }
 
-  /**
+  /* 
    * Starts recording. This is so we find the closing tag name in order to
    * know if the tag is going to be closed or not.
    *
@@ -633,7 +633,7 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
     cdataCloseTag.startRecording();
   }
 
-  /**
+  /* 
    * Determines whether to close the tag element, It closes it if it finds
    * the corresponding end tag. Called when reading what could be a
    * closing CDATA tag.

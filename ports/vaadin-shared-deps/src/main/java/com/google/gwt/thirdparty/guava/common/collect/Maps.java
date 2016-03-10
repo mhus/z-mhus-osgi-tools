@@ -61,7 +61,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to {@link Map} instances (including instances of
  * {@link SortedMap}, {@link BiMap}, etc.). Also see this class's counterparts
  * {@link Lists}, {@link Sets} and {@link Queues}.
@@ -130,7 +130,7 @@ public final class Maps {
     };
   }
 
-  /**
+  /* 
    * Returns an immutable map instance containing the given entries.
    * Internally, the returned map will be backed by an {@link EnumMap}.
    *
@@ -160,7 +160,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i>, empty {@code HashMap} instance.
    *
    * <p><b>Note:</b> if mutability is not required, use {@link
@@ -175,7 +175,7 @@ public final class Maps {
     return new HashMap<K, V>();
   }
 
-  /**
+  /* 
    * Creates a {@code HashMap} instance, with a high enough "initial capacity"
    * that it <i>should</i> hold {@code expectedSize} elements without growth.
    * This behavior cannot be broadly guaranteed, but it is observed to be true
@@ -193,7 +193,7 @@ public final class Maps {
     return new HashMap<K, V>(capacity(expectedSize));
   }
 
-  /**
+  /* 
    * Returns a capacity that is sufficient to keep the map from being resized as
    * long as it grows no larger than expectedSize and the load factor is >= its
    * default (0.75).
@@ -209,7 +209,7 @@ public final class Maps {
     return Integer.MAX_VALUE; // any large value
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i> {@code HashMap} instance with the same mappings as
    * the specified map.
    *
@@ -228,7 +228,7 @@ public final class Maps {
     return new HashMap<K, V>(map);
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i>, empty, insertion-ordered {@code LinkedHashMap}
    * instance.
    *
@@ -241,7 +241,7 @@ public final class Maps {
     return new LinkedHashMap<K, V>();
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i>, insertion-ordered {@code LinkedHashMap} instance
    * with the same mappings as the specified map.
    *
@@ -257,7 +257,7 @@ public final class Maps {
     return new LinkedHashMap<K, V>(map);
   }
 
-  /**
+  /* 
    * Returns a general-purpose instance of {@code ConcurrentMap}, which supports
    * all optional operations of the ConcurrentMap interface. It does not permit
    * null keys or values. It is serializable.
@@ -276,7 +276,7 @@ public final class Maps {
     return new MapMaker().<K, V>makeMap();
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i>, empty {@code TreeMap} instance using the natural
    * ordering of its elements.
    *
@@ -289,7 +289,7 @@ public final class Maps {
     return new TreeMap<K, V>();
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i> {@code TreeMap} instance with the same mappings as
    * the specified map and using the same ordering as the specified map.
    *
@@ -305,7 +305,7 @@ public final class Maps {
     return new TreeMap<K, V>(map);
   }
 
-  /**
+  /* 
    * Creates a <i>mutable</i>, empty {@code TreeMap} instance using the given
    * comparator.
    *
@@ -325,7 +325,7 @@ public final class Maps {
     return new TreeMap<K, V>(comparator);
   }
 
-  /**
+  /* 
    * Creates an {@code EnumMap} instance.
    *
    * @param type the key type for this map
@@ -335,7 +335,7 @@ public final class Maps {
     return new EnumMap<K, V>(checkNotNull(type));
   }
 
-  /**
+  /* 
    * Creates an {@code EnumMap} with the same mappings as the specified map.
    *
    * @param map the map from which to initialize this {@code EnumMap}
@@ -349,7 +349,7 @@ public final class Maps {
     return new EnumMap<K, V>(map);
   }
 
-  /**
+  /* 
    * Creates an {@code IdentityHashMap} instance.
    *
    * @return a new, empty {@code IdentityHashMap}
@@ -358,7 +358,7 @@ public final class Maps {
     return new IdentityHashMap<K, V>();
   }
 
-  /**
+  /* 
    * Computes the difference between two maps. This difference is an immutable
    * snapshot of the state of the maps at the time this method is called. It
    * will never change, even if the maps change at a later time.
@@ -385,7 +385,7 @@ public final class Maps {
     return difference(left, right, Equivalence.equals());
   }
 
-  /**
+  /* 
    * Computes the difference between two maps. This difference is an immutable
    * snapshot of the state of the maps at the time this method is called. It
    * will never change, even if the maps change at a later time.
@@ -569,7 +569,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Computes the difference between two sorted maps, using the comparator of
    * the left map, or {@code Ordering.natural()} if the left map uses the
    * natural ordering of its elements. This difference is an immutable snapshot
@@ -628,7 +628,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Returns the specified comparator if not null; otherwise returns {@code
    * Ordering.natural()}. This method is an abomination of generics; the only
    * purpose of this method is to contain the ugly type-casting in one place.
@@ -642,7 +642,7 @@ public final class Maps {
     return (Comparator<E>) Ordering.natural();
   }
 
-  /**
+  /* 
    * Returns a live {@link Map} view whose keys are the contents of {@code set}
    * and whose values are computed on demand using {@code function}. To get an
    * immutable <i>copy</i> instead, use {@link #toMap(Iterable, Function)}.
@@ -679,7 +679,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Returns a view of the sorted set as a map, mapping keys from the set
    * according to the specified function.
    *
@@ -716,7 +716,7 @@ public final class Maps {
     return new SortedAsMapView<K, V>(set, function);
   }
 
-  /**
+  /* 
    * Returns a view of the navigable set as a map, mapping keys from the set
    * according to the specified function.
    *
@@ -1075,7 +1075,7 @@ public final class Maps {
     };
   }
 
-  /**
+  /* 
    * Returns an immutable map whose keys are the distinct elements of {@code
    * keys} and whose value for each key was computed by {@code valueFunction}.
    * The map's iteration order is the order of the first appearance of each key
@@ -1095,7 +1095,7 @@ public final class Maps {
     return toMap(keys.iterator(), valueFunction);
   }
 
-  /**
+  /* 
    * Returns an immutable map whose keys are the distinct elements of {@code
    * keys} and whose value for each key was computed by {@code valueFunction}.
    * The map's iteration order is the order of the first appearance of each key
@@ -1119,7 +1119,7 @@ public final class Maps {
     return ImmutableMap.copyOf(builder);
   }
 
-  /**
+  /* 
    * Returns an immutable map for which the {@link Map#values} are the given
    * elements in the given order, and each key is the product of invoking a
    * supplied function on its corresponding value.
@@ -1138,7 +1138,7 @@ public final class Maps {
     return uniqueIndex(values.iterator(), keyFunction);
   }
 
-  /**
+  /* 
    * Returns an immutable map for which the {@link Map#values} are the given
    * elements in the given order, and each key is the product of invoking a
    * supplied function on its corresponding value.
@@ -1164,7 +1164,7 @@ public final class Maps {
     return builder.build();
   }
 
-  /**
+  /* 
    * Creates an {@code ImmutableMap<String, String>} from a {@code Properties}
    * instance. Properties normally derive from {@code Map<Object, Object>}, but
    * they typically contain strings, which is awkward. This method lets you get
@@ -1190,7 +1190,7 @@ public final class Maps {
     return builder.build();
   }
 
-  /**
+  /* 
    * Returns an immutable map entry with the specified key and value. The {@link
    * Entry#setValue} operation throws an {@link UnsupportedOperationException}.
    *
@@ -1205,7 +1205,7 @@ public final class Maps {
     return new ImmutableEntry<K, V>(key, value);
   }
 
-  /**
+  /* 
    * Returns an unmodifiable view of the specified set of entries. The {@link
    * Entry#setValue} operation throws an {@link UnsupportedOperationException},
    * as do any operations that would modify the returned set.
@@ -1219,7 +1219,7 @@ public final class Maps {
         Collections.unmodifiableSet(entrySet));
   }
 
-  /**
+  /* 
    * Returns an unmodifiable view of the specified map entry. The {@link
    * Entry#setValue} operation throws an {@link UnsupportedOperationException}.
    * This also has the side-effect of redefining {@code equals} to comply with
@@ -1241,7 +1241,7 @@ public final class Maps {
     };
   }
 
-  /** @see Multimaps#unmodifiableEntries */
+  /*  @see Multimaps#unmodifiableEntries */
   static class UnmodifiableEntries<K, V>
       extends ForwardingCollection<Entry<K, V>> {
     private final Collection<Entry<K, V>> entries;
@@ -1279,7 +1279,7 @@ public final class Maps {
     }
   }
 
-  /** @see Maps#unmodifiableEntrySet(Set) */
+  /*  @see Maps#unmodifiableEntrySet(Set) */
   static class UnmodifiableEntrySet<K, V>
       extends UnmodifiableEntries<K, V> implements Set<Entry<K, V>> {
     UnmodifiableEntrySet(Set<Entry<K, V>> entries) {
@@ -1297,7 +1297,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Returns a synchronized (thread-safe) bimap backed by the specified bimap.
    * In order to guarantee serial access, it is critical that <b>all</b> access
    * to the backing bimap is accomplished through the returned bimap.
@@ -1316,7 +1316,7 @@ public final class Maps {
     return Synchronized.biMap(bimap, null);
   }
 
-  /**
+  /* 
    * Returns an unmodifiable view of the specified bimap. This method allows
    * modules to provide users with "read-only" access to internal bimaps. Query
    * operations on the returned bimap "read through" to the specified bimap, and
@@ -1334,7 +1334,7 @@ public final class Maps {
     return new UnmodifiableBiMap<K, V>(bimap, null);
   }
 
-  /** @see Maps#unmodifiableBiMap(BiMap) */
+  /*  @see Maps#unmodifiableBiMap(BiMap) */
   private static class UnmodifiableBiMap<K, V>
       extends ForwardingMap<K, V> implements BiMap<K, V>, Serializable {
     final Map<K, V> unmodifiableMap;
@@ -1376,7 +1376,7 @@ public final class Maps {
     private static final long serialVersionUID = 0;
   }
 
-  /**
+  /* 
    * Returns a view of a map where each value is transformed by a function. All
    * other properties of the map, such as iteration order, are left intact. For
    *
@@ -1404,7 +1404,7 @@ public final class Maps {
     return transformEntries(fromMap, asEntryTransformer(function));
   }
 
-  /**
+  /* 
    * Returns a view of a sorted map where each value is transformed by a
    * function. All other properties of the map, such as iteration order, are
    *
@@ -1434,7 +1434,7 @@ public final class Maps {
     return transformEntries(fromMap, asEntryTransformer(function));
   }
 
-  /**
+  /* 
    * Returns a view of a navigable map where each value is transformed by a
    * function. All other properties of the map, such as iteration order, are
    *
@@ -1465,7 +1465,7 @@ public final class Maps {
     return transformEntries(fromMap, asEntryTransformer(function));
   }
 
-  /**
+  /* 
    * Returns a view of a map whose values are derived from the original map's
    * entries. In contrast to {@link #transformValues}, this method's
    * entry-transformation logic may depend on the key as well as the value.
@@ -1510,7 +1510,7 @@ public final class Maps {
     return new TransformedEntriesMap<K, V1, V2>(fromMap, transformer);
   }
 
-  /**
+  /* 
    * Returns a view of a sorted map whose values are derived from the original
    * sorted map's entries. In contrast to {@link #transformValues}, this
    * method's entry-transformation logic may depend on the key as well as the
@@ -1553,7 +1553,7 @@ public final class Maps {
     return Platform.mapsTransformEntriesSortedMap(fromMap, transformer);
   }
 
-  /**
+  /* 
    * Returns a view of a navigable map whose values are derived from the
    * original navigable map's entries. In contrast to {@link
    * #transformValues}, this method's entry-transformation logic may
@@ -1603,7 +1603,7 @@ public final class Maps {
     return new TransformedEntriesSortedMap<K, V1, V2>(fromMap, transformer);
   }
 
-  /**
+  /* 
    * A transformation of the value of a key-value pair, using both key and value
    * as inputs. To apply the transformation to a map, use
    * {@link Maps#transformEntries(Map, EntryTransformer)}.
@@ -1614,7 +1614,7 @@ public final class Maps {
    * @since 7.0
    */
   public interface EntryTransformer<K, V1, V2> {
-    /**
+    /* 
      * Determines an output value based on a key-value pair. This method is
      * <i>generally expected</i>, but not absolutely required, to have the
      * following properties:
@@ -1634,7 +1634,7 @@ public final class Maps {
     V2 transformEntry(@Nullable K key, @Nullable V1 value);
   }
 
-  /**
+  /* 
    * Views a function as an entry transformer that ignores the entry key.
    */
   static <K, V1, V2> EntryTransformer<K, V1, V2>
@@ -1659,7 +1659,7 @@ public final class Maps {
     };
   }
 
-  /**
+  /* 
    * Views an entry transformer as a function from {@code Entry} to values.
    */
   static <K, V1, V2> Function<Entry<K, V1>, V2> asEntryToValueFunction(
@@ -1673,7 +1673,7 @@ public final class Maps {
     };
   }
 
-  /**
+  /* 
    * Returns a view of an entry transformed by the specified transformer.
    */
   static <V2, K, V1> Entry<K, V2> transformEntry(
@@ -1693,7 +1693,7 @@ public final class Maps {
     };
   }
 
-  /**
+  /* 
    * Views an entry transformer as a function from entries to entries.
    */
   static <K, V1, V2> Function<Entry<K, V1>, Entry<K, V2>> asEntryToEntryFunction(
@@ -1921,7 +1921,7 @@ public final class Maps {
     return compose(valuePredicate, Maps.<V>valueFunction());
   }
 
-  /**
+  /* 
    * Returns a map containing the mappings in {@code unfiltered} whose keys
    * satisfy a predicate. The returned map is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -1964,7 +1964,7 @@ public final class Maps {
             checkNotNull(unfiltered), keyPredicate, entryPredicate);
   }
 
-  /**
+  /* 
    * Returns a sorted map containing the mappings in {@code unfiltered} whose
    * keys satisfy a predicate. The returned map is a live view of {@code
    * unfiltered}; changes to one affect the other.
@@ -2001,7 +2001,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<K>keyPredicateOnEntries(keyPredicate));
   }
 
-  /**
+  /* 
    * Returns a navigable map containing the mappings in {@code unfiltered} whose
    * keys satisfy a predicate. The returned map is a live view of {@code
    * unfiltered}; changes to one affect the other.
@@ -2039,7 +2039,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<K>keyPredicateOnEntries(keyPredicate));
   }
 
-  /**
+  /* 
    * Returns a bimap containing the mappings in {@code unfiltered} whose keys satisfy a predicate.
    * The returned bimap is a live view of {@code unfiltered}; changes to one affect the other.
    *
@@ -2070,7 +2070,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<K>keyPredicateOnEntries(keyPredicate));
   }
 
-  /**
+  /* 
    * Returns a map containing the mappings in {@code unfiltered} whose values
    * satisfy a predicate. The returned map is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -2109,7 +2109,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<V>valuePredicateOnEntries(valuePredicate));
   }
 
-  /**
+  /* 
    * Returns a sorted map containing the mappings in {@code unfiltered} whose
    * values satisfy a predicate. The returned map is a live view of {@code
    * unfiltered}; changes to one affect the other.
@@ -2145,7 +2145,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<V>valuePredicateOnEntries(valuePredicate));
   }
 
-  /**
+  /* 
    * Returns a navigable map containing the mappings in {@code unfiltered} whose
    * values satisfy a predicate. The returned map is a live view of {@code
    * unfiltered}; changes to one affect the other.
@@ -2182,7 +2182,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<V>valuePredicateOnEntries(valuePredicate));
   }
 
-  /**
+  /* 
    * Returns a bimap containing the mappings in {@code unfiltered} whose values satisfy a
    * predicate. The returned bimap is a live view of {@code unfiltered}; changes to one affect the
    * other.
@@ -2215,7 +2215,7 @@ public final class Maps {
     return filterEntries(unfiltered, Maps.<V>valuePredicateOnEntries(valuePredicate));
   }
 
-  /**
+  /* 
    * Returns a map containing the mappings in {@code unfiltered} that satisfy a
    * predicate. The returned map is a live view of {@code unfiltered}; changes
    * to one affect the other.
@@ -2257,7 +2257,7 @@ public final class Maps {
         : new FilteredEntryMap<K, V>(checkNotNull(unfiltered), entryPredicate);
   }
 
-  /**
+  /* 
    * Returns a sorted map containing the mappings in {@code unfiltered} that
    * satisfy a predicate. The returned map is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -2303,7 +2303,7 @@ public final class Maps {
         : new FilteredEntrySortedMap<K, V>(checkNotNull(unfiltered), entryPredicate);
   }
 
-  /**
+  /* 
    * Returns a sorted map containing the mappings in {@code unfiltered} that
    * satisfy a predicate. The returned map is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -2344,7 +2344,7 @@ public final class Maps {
         : new FilteredEntryNavigableMap<K, V>(checkNotNull(unfiltered), entryPredicate);
   }
 
-  /**
+  /* 
    * Returns a bimap containing the mappings in {@code unfiltered} that satisfy a predicate. The
    * returned bimap is a live view of {@code unfiltered}; changes to one affect the other.
    *
@@ -2380,7 +2380,7 @@ public final class Maps {
         : new FilteredEntryBiMap<K, V>(unfiltered, entryPredicate);
   }
 
-  /**
+  /* 
    * Support {@code clear()}, {@code removeAll()}, and {@code retainAll()} when
    * filtering a filtered map.
    */
@@ -2513,7 +2513,7 @@ public final class Maps {
   }
 
   static class FilteredEntryMap<K, V> extends AbstractFilteredMap<K, V> {
-    /**
+    /* 
      * Entries in this set satisfy the predicate, but they don't validate the
      * input to {@code Entry.setValue()}.
      */
@@ -2600,7 +2600,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Support {@code clear()}, {@code removeAll()}, and {@code retainAll()} when
    * filtering a filtered sorted map.
    */
@@ -2701,7 +2701,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Support {@code clear()}, {@code removeAll()}, and {@code retainAll()} when
    * filtering a filtered navigable map.
    */
@@ -2844,7 +2844,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Support {@code clear()}, {@code removeAll()}, and {@code retainAll()} when
    * filtering a filtered map.
    */
@@ -2904,7 +2904,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Returns an unmodifiable view of the specified navigable map. Query operations on the returned
    * map read through to the specified map, and attempts to modify the returned map, whether direct
    * or via its views, result in an {@code UnsupportedOperationException}.
@@ -3072,7 +3072,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Returns a synchronized (thread-safe) navigable map backed by the specified
    * navigable map.  In order to guarantee serial access, it is critical that
    * <b>all</b> access to the backing navigable map is accomplished
@@ -3111,7 +3111,7 @@ public final class Maps {
     return Synchronized.navigableMap(navigableMap);
   }
 
-  /**
+  /* 
    * {@code AbstractMap} extension that implements {@link #isEmpty()} as {@code
    * entrySet().isEmpty()} instead of {@code size() == 0} to speed up
    * implementations where {@code size()} is O(n), and it delegates the {@code
@@ -3120,7 +3120,7 @@ public final class Maps {
    */
   @GwtCompatible
   abstract static class ImprovedAbstractMap<K, V> extends AbstractMap<K, V> {
-    /**
+    /* 
      * Creates the entry set to be returned by {@link #entrySet()}. This method
      * is invoked at most once on a given map, at the time when {@code entrySet}
      * is first called.
@@ -3157,7 +3157,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Delegates to {@link Map#get}. Returns {@code null} on {@code
    * ClassCastException} and {@code NullPointerException}.
    */
@@ -3172,7 +3172,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Delegates to {@link Map#containsKey}. Returns {@code false} on {@code
    * ClassCastException} and {@code NullPointerException}.
    */
@@ -3187,7 +3187,7 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * Delegates to {@link Map#remove}. Returns {@code null} on {@code
    * ClassCastException} and {@code NullPointerException}.
    */
@@ -3202,21 +3202,21 @@ public final class Maps {
     }
   }
 
-  /**
+  /* 
    * An admittedly inefficient implementation of {@link Map#containsKey}.
    */
   static boolean containsKeyImpl(Map<?, ?> map, @Nullable Object key) {
     return Iterators.contains(keyIterator(map.entrySet().iterator()), key);
   }
 
-  /**
+  /* 
    * An implementation of {@link Map#containsValue}.
    */
   static boolean containsValueImpl(Map<?, ?> map, @Nullable Object value) {
     return Iterators.contains(valueIterator(map.entrySet().iterator()), value);
   }
 
-  /**
+  /* 
    * Implements {@code Collection.contains} safely for forwarding collections of
    * map entries. If {@code o} is an instance of {@code Map.Entry}, it is
    * wrapped using {@link #unmodifiableEntry} to protect against a possible
@@ -3236,7 +3236,7 @@ public final class Maps {
     return c.contains(unmodifiableEntry((Entry<?, ?>) o));
   }
 
-  /**
+  /* 
    * Implements {@code Collection.remove} safely for forwarding collections of
    * map entries. If {@code o} is an instance of {@code Map.Entry}, it is
    * wrapped using {@link #unmodifiableEntry} to protect against a possible
@@ -3256,7 +3256,7 @@ public final class Maps {
     return c.remove(unmodifiableEntry((Entry<?, ?>) o));
   }
 
-  /**
+  /* 
    * An implementation of {@link Map#equals}.
    */
   static boolean equalsImpl(Map<?, ?> map, Object object) {
@@ -3272,7 +3272,7 @@ public final class Maps {
   static final MapJoiner STANDARD_JOINER =
       Collections2.STANDARD_JOINER.withKeyValueSeparator("=");
 
-  /**
+  /* 
    * An implementation of {@link Map#toString}.
    */
   static String toStringImpl(Map<?, ?> map) {
@@ -3282,7 +3282,7 @@ public final class Maps {
     return sb.append('}').toString();
   }
 
-  /**
+  /* 
    * An implementation of {@link Map#putAll}.
    */
   static <K, V> void putAllImpl(

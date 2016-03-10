@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Unchecked variant of {@link java.util.concurrent.ExecutionException}. As with
  * {@code ExecutionException}, the exception's {@linkplain #getCause() cause}
  * comes from a failed task, possibly run in another thread.
@@ -39,26 +39,26 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public class UncheckedExecutionException extends RuntimeException {
-  /**
+  /* 
    * Creates a new instance with {@code null} as its detail message.
    */
   protected UncheckedExecutionException() {}
 
-  /**
+  /* 
    * Creates a new instance with the given detail message.
    */
   protected UncheckedExecutionException(@Nullable String message) {
     super(message);
   }
 
-  /**
+  /* 
    * Creates a new instance with the given detail message and cause.
    */
   public UncheckedExecutionException(@Nullable String message, @Nullable Throwable cause) {
     super(message, cause);
   }
 
-  /**
+  /* 
    * Creates a new instance with the given cause.
    */
   public UncheckedExecutionException(@Nullable Throwable cause) {

@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Map;
 
-/**
+/* 
  * An implementation of {@link ImmutableTable} that holds a single cell.
  *
  * @author Gregory Kick

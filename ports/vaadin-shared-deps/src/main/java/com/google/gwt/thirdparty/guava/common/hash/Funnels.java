@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Funnels for common types. All implementations are serializable.
  *
  * @author Dimitris Andreou
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 public final class Funnels {
   private Funnels() {}
 
-  /**
+  /* 
    * Returns a funnel that extracts the bytes from a {@code byte} array.
    */
   public static Funnel<byte[]> byteArrayFunnel() {
@@ -52,7 +52,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Returns a funnel that extracts the characters from a {@code CharSequence}, a character at a
    * time, without performing any encoding. If you need to use a specific encoding, use
    * {@link Funnels#stringFunnel(Charset)} instead.
@@ -63,7 +63,7 @@ public final class Funnels {
     return UnencodedCharsFunnel.INSTANCE;
   }
 
-  /**
+  /* 
    * Returns a funnel that extracts the characters from a {@code CharSequence}.
    *
    * @deprecated Use {@link Funnels#unencodedCharsFunnel} instead. This method is scheduled for
@@ -86,7 +86,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Returns a funnel that encodes the characters of a {@code CharSequence} with the specified
    * {@code Charset}.
    *
@@ -142,7 +142,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Returns a funnel for integers.
    *
    * @since 13.0
@@ -163,7 +163,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Returns a funnel that processes an {@code Iterable} by funneling its elements in iteration
    * order with the specified funnel.  No separators are added between the elements.
    *
@@ -203,7 +203,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Returns a funnel for longs.
    *
    * @since 13.0
@@ -224,7 +224,7 @@ public final class Funnels {
     }
   }
 
-  /**
+  /* 
    * Wraps a {@code PrimitiveSink} as an {@link OutputStream}, so it is easy to
    * {@link Funnel#funnel funnel} an object to a {@code PrimitiveSink}
    * if there is already a way to write the contents of the object to an {@code OutputStream}.

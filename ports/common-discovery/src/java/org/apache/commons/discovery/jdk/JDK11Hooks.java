@@ -20,14 +20,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-/**
+/* 
  * JDK 1.1 Style Hooks implementation.
  */
 public class JDK11Hooks extends JDKHooks {
 
     private static final ClassLoader systemClassLoader = new PsuedoSystemClassLoader();
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -35,7 +35,7 @@ public class JDK11Hooks extends JDKHooks {
         return System.getProperty(propName);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -43,7 +43,7 @@ public class JDK11Hooks extends JDKHooks {
         return null;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -51,7 +51,7 @@ public class JDK11Hooks extends JDKHooks {
         return systemClassLoader;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

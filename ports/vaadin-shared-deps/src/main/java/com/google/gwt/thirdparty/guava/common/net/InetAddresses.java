@@ -32,7 +32,7 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to {@link InetAddress} instances.
  *
  * <p><b>Important note:</b> Unlike {@code InetAddress.getByName()}, the
@@ -119,7 +119,7 @@ public final class InetAddresses {
 
   private InetAddresses() {}
 
-  /**
+  /* 
    * Returns an {@link Inet4Address}, given a byte array representation of the IPv4 address.
    *
    * @param bytes byte array representing an IPv4 address (should be of length 4)
@@ -135,7 +135,7 @@ public final class InetAddresses {
     return (Inet4Address) bytesToInetAddress(bytes);
   }
 
-  /**
+  /* 
    * Returns the {@link InetAddress} having the given string representation.
    *
    * <p>This deliberately avoids all nameservice lookups (e.g. no DNS).
@@ -157,7 +157,7 @@ public final class InetAddresses {
     return bytesToInetAddress(addr);
   }
 
-  /**
+  /* 
    * Returns {@code true} if the supplied string is a valid IP string
    * literal, {@code false} otherwise.
    *
@@ -315,7 +315,7 @@ public final class InetAddresses {
     return (short) hextet;
   }
 
-  /**
+  /* 
    * Convert a byte array into an InetAddress.
    *
    * {@link InetAddress#getByAddress} is documented as throwing a checked
@@ -334,7 +334,7 @@ public final class InetAddresses {
     }
   }
 
-  /**
+  /* 
    * Returns the string representation of an {@link InetAddress}.
    *
    * <p>For IPv4 addresses, this is identical to
@@ -368,7 +368,7 @@ public final class InetAddresses {
     return hextetsToIPv6String(hextets);
   }
 
-  /**
+  /* 
    * Identify and mark the longest run of zeroes in an IPv6 address.
    *
    * <p>Only runs of two or more hextets are considered.  In case of a tie, the
@@ -400,7 +400,7 @@ public final class InetAddresses {
     }
   }
 
-  /**
+  /* 
    * Convert a list of hextets into a human-readable IPv6 address.
    *
    * <p>In order for "::" compression to work, the input should contain negative
@@ -434,7 +434,7 @@ public final class InetAddresses {
     return buf.toString();
   }
 
-  /**
+  /* 
    * Returns the string representation of an {@link InetAddress} suitable
    * for inclusion in a URI.
    *
@@ -466,7 +466,7 @@ public final class InetAddresses {
     return toAddrString(ip);
   }
 
-  /**
+  /* 
    * Returns an InetAddress representing the literal IPv4 or IPv6 host
    * portion of a URL, encoded in the format specified by RFC 3986 section 3.2.2.
    *
@@ -505,7 +505,7 @@ public final class InetAddresses {
     return bytesToInetAddress(addr);
   }
 
-  /**
+  /* 
    * Returns {@code true} if the supplied string is a valid URI IP string
    * literal, {@code false} otherwise.
    *
@@ -521,7 +521,7 @@ public final class InetAddresses {
     }
   }
 
-  /**
+  /* 
    * Evaluates whether the argument is an IPv6 "compat" address.
    *
    * <p>An "IPv4 compatible", or "compat", address is one with 96 leading
@@ -559,7 +559,7 @@ public final class InetAddresses {
     return true;
   }
 
-  /**
+  /* 
    * Returns the IPv4 address embedded in an IPv4 compatible address.
    *
    * @param ip {@link Inet6Address} to be examined for an embedded IPv4 address
@@ -573,7 +573,7 @@ public final class InetAddresses {
     return getInet4Address(Arrays.copyOfRange(ip.getAddress(), 12, 16));
   }
 
-  /**
+  /* 
    * Evaluates whether the argument is a 6to4 address.
    *
    * <p>6to4 addresses begin with the {@code "2002::/16"} prefix.
@@ -592,7 +592,7 @@ public final class InetAddresses {
     return (bytes[0] == (byte) 0x20) && (bytes[1] == (byte) 0x02);
   }
 
-  /**
+  /* 
    * Returns the IPv4 address embedded in a 6to4 address.
    *
    * @param ip {@link Inet6Address} to be examined for embedded IPv4 in 6to4 address
@@ -606,7 +606,7 @@ public final class InetAddresses {
     return getInet4Address(Arrays.copyOfRange(ip.getAddress(), 2, 6));
   }
 
-  /**
+  /* 
    * A simple immutable data class to encapsulate the information to be found in a
    * Teredo address.
    *
@@ -629,7 +629,7 @@ public final class InetAddresses {
     private final int port;
     private final int flags;
 
-    /**
+    /* 
      * Constructs a TeredoInfo instance.
      *
      * <p>Both server and client can be {@code null}, in which case the
@@ -669,7 +669,7 @@ public final class InetAddresses {
     }
   }
 
-  /**
+  /* 
    * Evaluates whether the argument is a Teredo address.
    *
    * <p>Teredo addresses begin with the {@code "2001::/32"} prefix.
@@ -683,7 +683,7 @@ public final class InetAddresses {
            && (bytes[2] == 0) && (bytes[3] == 0);
   }
 
-  /**
+  /* 
    * Returns the Teredo information embedded in a Teredo address.
    *
    * @param ip {@link Inet6Address} to be examined for embedded Teredo information
@@ -712,7 +712,7 @@ public final class InetAddresses {
     return new TeredoInfo(server, client, port, flags);
   }
 
-  /**
+  /* 
    * Evaluates whether the argument is an ISATAP address.
    *
    * <p>From RFC 5214: "ISATAP interface identifiers are constructed in
@@ -748,7 +748,7 @@ public final class InetAddresses {
            && (bytes[11] == (byte) 0xfe);
   }
 
-  /**
+  /* 
    * Returns the IPv4 address embedded in an ISATAP address.
    *
    * @param ip {@link Inet6Address} to be examined for embedded IPv4 in ISATAP address
@@ -762,7 +762,7 @@ public final class InetAddresses {
     return getInet4Address(Arrays.copyOfRange(ip.getAddress(), 12, 16));
   }
 
-  /**
+  /* 
    * Examines the Inet6Address to determine if it is an IPv6 address of one
    * of the specified address types that contain an embedded IPv4 address.
    *
@@ -778,7 +778,7 @@ public final class InetAddresses {
     return isCompatIPv4Address(ip) || is6to4Address(ip) || isTeredoAddress(ip);
   }
 
-  /**
+  /* 
    * Examines the Inet6Address to extract the embedded IPv4 client address
    * if the InetAddress is an IPv6 address of one of the specified address
    * types that contain an embedded IPv4 address.
@@ -808,7 +808,7 @@ public final class InetAddresses {
         String.format("'%s' has no embedded IPv4 address.", toAddrString(ip)));
   }
 
-  /**
+  /* 
    * Evaluates whether the argument is an "IPv4 mapped" IPv6 address.
    *
    * <p>An "IPv4 mapped" address is anything in the range ::ffff:0:0/96
@@ -848,7 +848,7 @@ public final class InetAddresses {
     return false;
   }
 
-  /**
+  /* 
    * Coerces an IPv6 address into an IPv4 address.
    *
    * <p>HACK: As long as applications continue to use IPv4 addresses for
@@ -913,7 +913,7 @@ public final class InetAddresses {
     return getInet4Address(Ints.toByteArray(coercedHash));
   }
 
-  /**
+  /* 
    * Returns an integer representing an IPv4 address regardless of
    * whether the supplied argument is an IPv4 address or not.
    *
@@ -938,7 +938,7 @@ public final class InetAddresses {
     return ByteStreams.newDataInput(getCoercedIPv4Address(ip).getAddress()).readInt();
   }
 
-  /**
+  /* 
    * Returns an Inet4Address having the integer value specified by
    * the argument.
    *
@@ -949,7 +949,7 @@ public final class InetAddresses {
     return getInet4Address(Ints.toByteArray(address));
   }
 
-  /**
+  /* 
    * Returns an address from a <b>little-endian ordered</b> byte array
    * (the opposite of what {@link InetAddress#getByAddress} expects).
    *
@@ -968,7 +968,7 @@ public final class InetAddresses {
     return InetAddress.getByAddress(reversed);
   }
 
-  /**
+  /* 
    * Returns a new InetAddress that is one more than the passed in address.
    * This method works for both IPv4 and IPv6 addresses.
    *
@@ -991,7 +991,7 @@ public final class InetAddresses {
     return bytesToInetAddress(addr);
   }
 
-  /**
+  /* 
    * Returns true if the InetAddress is either 255.255.255.255 for IPv4 or
    * ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff for IPv6.
    *

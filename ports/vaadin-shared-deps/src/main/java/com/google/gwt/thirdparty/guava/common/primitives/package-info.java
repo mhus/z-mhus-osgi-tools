@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Static utilities for working with the eight primitive types and {@code void},
  * and value types for treating them as unsigned.
  *

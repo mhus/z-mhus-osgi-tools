@@ -26,7 +26,7 @@ import java.util.concurrent.Callable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Statistics about the performance of a {@link Cache}. Instances of this class are immutable.
  *
  * <p>Cache statistics are incremented according to the following rules:
@@ -68,7 +68,7 @@ public final class CacheStats {
   private final long totalLoadTime;
   private final long evictionCount;
 
-  /**
+  /* 
    * Constructs a new {@code CacheStats} instance.
    *
    * <p>Five parameters of the same type in a row is a bad thing, but this class is not constructed
@@ -91,7 +91,7 @@ public final class CacheStats {
     this.evictionCount = evictionCount;
   }
 
-  /**
+  /* 
    * Returns the number of times {@link Cache} lookup methods have returned either a cached or
    * uncached value. This is defined as {@code hitCount + missCount}.
    */
@@ -99,14 +99,14 @@ public final class CacheStats {
     return hitCount + missCount;
   }
 
-  /**
+  /* 
    * Returns the number of times {@link Cache} lookup methods have returned a cached value.
    */
   public long hitCount() {
     return hitCount;
   }
 
-  /**
+  /* 
    * Returns the ratio of cache requests which were hits. This is defined as
    * {@code hitCount / requestCount}, or {@code 1.0} when {@code requestCount == 0}.
    * Note that {@code hitRate + missRate =~ 1.0}.
@@ -116,7 +116,7 @@ public final class CacheStats {
     return (requestCount == 0) ? 1.0 : (double) hitCount / requestCount;
   }
 
-  /**
+  /* 
    * Returns the number of times {@link Cache} lookup methods have returned an uncached (newly
    * loaded) value, or null. Multiple concurrent calls to {@link Cache} lookup methods on an absent
    * value can result in multiple misses, all returning the results of a single cache load
@@ -126,7 +126,7 @@ public final class CacheStats {
     return missCount;
   }
 
-  /**
+  /* 
    * Returns the ratio of cache requests which were misses. This is defined as
    * {@code missCount / requestCount}, or {@code 0.0} when {@code requestCount == 0}.
    * Note that {@code hitRate + missRate =~ 1.0}. Cache misses include all requests which
@@ -140,7 +140,7 @@ public final class CacheStats {
     return (requestCount == 0) ? 0.0 : (double) missCount / requestCount;
   }
 
-  /**
+  /* 
    * Returns the total number of times that {@link Cache} lookup methods attempted to load new
    * values. This includes both successful load operations, as well as those that threw
    * exceptions. This is defined as {@code loadSuccessCount + loadExceptionCount}.
@@ -149,7 +149,7 @@ public final class CacheStats {
     return loadSuccessCount + loadExceptionCount;
   }
 
-  /**
+  /* 
    * Returns the number of times {@link Cache} lookup methods have successfully loaded a new value.
    * This is always incremented in conjunction with {@link #missCount}, though {@code missCount}
    * is also incremented when an exception is encountered during cache loading (see
@@ -160,7 +160,7 @@ public final class CacheStats {
     return loadSuccessCount;
   }
 
-  /**
+  /* 
    * Returns the number of times {@link Cache} lookup methods threw an exception while loading a
    * new value. This is always incremented in conjunction with {@code missCount}, though
    * {@code missCount} is also incremented when cache loading completes successfully (see
@@ -171,7 +171,7 @@ public final class CacheStats {
     return loadExceptionCount;
   }
 
-  /**
+  /* 
    * Returns the ratio of cache loading attempts which threw exceptions. This is defined as
    * {@code loadExceptionCount / (loadSuccessCount + loadExceptionCount)}, or
    * {@code 0.0} when {@code loadSuccessCount + loadExceptionCount == 0}.
@@ -183,7 +183,7 @@ public final class CacheStats {
         : (double) loadExceptionCount / totalLoadCount;
   }
 
-  /**
+  /* 
    * Returns the total number of nanoseconds the cache has spent loading new values. This can be
    * used to calculate the miss penalty. This value is increased every time
    * {@code loadSuccessCount} or {@code loadExceptionCount} is incremented.
@@ -192,7 +192,7 @@ public final class CacheStats {
     return totalLoadTime;
   }
 
-  /**
+  /* 
    * Returns the average time spent loading new values. This is defined as
    * {@code totalLoadTime / (loadSuccessCount + loadExceptionCount)}.
    */
@@ -203,7 +203,7 @@ public final class CacheStats {
         : (double) totalLoadTime / totalLoadCount;
   }
 
-  /**
+  /* 
    * Returns the number of times an entry has been evicted. This count does not include manual
    * {@linkplain Cache#invalidate invalidations}.
    */
@@ -211,7 +211,7 @@ public final class CacheStats {
     return evictionCount;
   }
 
-  /**
+  /* 
    * Returns a new {@code CacheStats} representing the difference between this {@code CacheStats}
    * and {@code other}. Negative values, which aren't supported by {@code CacheStats} will be
    * rounded up to zero.
@@ -226,7 +226,7 @@ public final class CacheStats {
         Math.max(0, evictionCount - other.evictionCount));
   }
 
-  /**
+  /* 
    * Returns a new {@code CacheStats} representing the sum of this {@code CacheStats}
    * and {@code other}.
    *

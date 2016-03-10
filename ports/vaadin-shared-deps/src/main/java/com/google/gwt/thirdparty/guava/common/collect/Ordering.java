@@ -40,7 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A comparator, with additional methods to support common operations. This is
  * an "enriched" version of {@code Comparator}, in the same sense that {@link
  * FluentIterable} is an enriched {@link Iterable}.
@@ -91,7 +91,7 @@ import javax.annotation.Nullable;
 public abstract class Ordering<T> implements Comparator<T> {
   // Natural order
 
-  /**
+  /* 
    * Returns a serializable ordering that uses the natural order of the values.
    * The ordering throws a {@link NullPointerException} when passed a null
    * parameter.
@@ -108,7 +108,7 @@ public abstract class Ordering<T> implements Comparator<T> {
 
   // Static factories
 
-  /**
+  /* 
    * Returns an ordering based on an <i>existing</i> comparator instance. Note
    * that there's no need to create a <i>new</i> comparator just to pass it in
    * here; simply subclass {@code Ordering} and implement its {@code compare}
@@ -125,7 +125,7 @@ public abstract class Ordering<T> implements Comparator<T> {
         : new ComparatorOrdering<T>(comparator);
   }
 
-  /**
+  /* 
    * Simply returns its argument.
    *
    * @deprecated no need to use this
@@ -135,7 +135,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return checkNotNull(ordering);
   }
 
-  /**
+  /* 
    * Returns an ordering that compares objects according to the order in
    * which they appear in the given list. Only objects present in the list
    * (according to {@link Object#equals}) may be compared. This comparator
@@ -161,7 +161,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new ExplicitOrdering<T>(valuesInOrder);
   }
 
-  /**
+  /* 
    * Returns an ordering that compares objects according to the order in
    * which they are given to this method. Only objects present in the argument
    * list (according to {@link Object#equals}) may be compared. This comparator
@@ -192,7 +192,7 @@ public abstract class Ordering<T> implements Comparator<T> {
 
   // Ordering<Object> singletons
 
-  /**
+  /* 
    * Returns an ordering which treats all values as equal, indicating "no
    * ordering." Passing this ordering to any <i>stable</i> sort algorithm
    * results in no change to the order of elements. Note especially that {@link
@@ -222,7 +222,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return AllEqualOrdering.INSTANCE;
   }
 
-  /**
+  /* 
    * Returns an ordering that compares objects by the natural ordering of their
    * string representations as returned by {@code toString()}. It does not
    * support null values.
@@ -234,7 +234,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return UsingToStringOrdering.INSTANCE;
   }
 
-  /**
+  /* 
    * Returns an arbitrary ordering over all objects, for which {@code compare(a,
    * b) == 0} implies {@code a == b} (identity equality). There is no meaning
    * whatsoever to the order imposed, but it is constant for the life of the VM.
@@ -311,7 +311,7 @@ public abstract class Ordering<T> implements Comparator<T> {
 
   // Constructor
 
-  /**
+  /* 
    * Constructs a new instance of this class (only invokable by the subclass
    * constructor, typically implicit).
    */
@@ -319,7 +319,7 @@ public abstract class Ordering<T> implements Comparator<T> {
 
   // Instance-based factories (and any static equivalents)
 
-  /**
+  /* 
    * Returns the reverse of this ordering; the {@code Ordering} equivalent to
    * {@link Collections#reverseOrder(Comparator)}.
    */
@@ -330,7 +330,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new ReverseOrdering<S>(this);
   }
 
-  /**
+  /* 
    * Returns an ordering that treats {@code null} as less than all other values
    * and uses {@code this} to compare non-null values.
    */
@@ -341,7 +341,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new NullsFirstOrdering<S>(this);
   }
 
-  /**
+  /* 
    * Returns an ordering that treats {@code null} as greater than all other
    * values and uses this ordering to compare non-null values.
    */
@@ -352,7 +352,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new NullsLastOrdering<S>(this);
   }
 
-  /**
+  /* 
    * Returns a new ordering on {@code F} which orders elements by first applying
    * a function to them, then comparing those results using {@code this}. For
    * example, to compare objects by their string forms, in a case-insensitive
@@ -370,7 +370,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return onResultOf(Maps.<T2>keyFunction());
   }
 
-  /**
+  /* 
    * Returns an ordering which first uses the ordering {@code this}, but which
    * in the event of a "tie", then delegates to {@code secondaryComparator}.
    * For example, to sort a bug list first by status and second by priority, you
@@ -387,7 +387,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new CompoundOrdering<U>(this, checkNotNull(secondaryComparator));
   }
 
-  /**
+  /* 
    * Returns an ordering which tries each given comparator in order until a
    * non-zero result is found, returning that result, and returning zero only if
    * all comparators return zero. The returned ordering is based on the state of
@@ -408,7 +408,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return new CompoundOrdering<T>(comparators);
   }
 
-  /**
+  /* 
    * Returns a new ordering which sorts iterables by comparing corresponding
    * elements pairwise until a nonzero result is found; imposes "dictionary
    * order". If the end of one iterable is reached, but not the other, the
@@ -442,7 +442,7 @@ public abstract class Ordering<T> implements Comparator<T> {
   // Override to add @Nullable
   @Override public abstract int compare(@Nullable T left, @Nullable T right);
 
-  /**
+  /* 
    * Returns the least of the specified values according to this ordering. If
    * there are multiple least values, the first of those is returned. The
    * iterator will be left exhausted: its {@code hasNext()} method will return
@@ -466,7 +466,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return minSoFar;
   }
 
-  /**
+  /* 
    * Returns the least of the specified values according to this ordering. If
    * there are multiple least values, the first of those is returned.
    *
@@ -479,7 +479,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return min(iterable.iterator());
   }
 
-  /**
+  /* 
    * Returns the lesser of the two values according to this ordering. If the
    * values compare as 0, the first is returned.
    *
@@ -496,7 +496,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return (compare(a, b) <= 0) ? a : b;
   }
 
-  /**
+  /* 
    * Returns the least of the specified values according to this ordering. If
    * there are multiple least values, the first of those is returned.
    *
@@ -518,7 +518,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return minSoFar;
   }
 
-  /**
+  /* 
    * Returns the greatest of the specified values according to this ordering. If
    * there are multiple greatest values, the first of those is returned. The
    * iterator will be left exhausted: its {@code hasNext()} method will return
@@ -542,7 +542,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return maxSoFar;
   }
 
-  /**
+  /* 
    * Returns the greatest of the specified values according to this ordering. If
    * there are multiple greatest values, the first of those is returned.
    *
@@ -555,7 +555,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return max(iterable.iterator());
   }
 
-  /**
+  /* 
    * Returns the greater of the two values according to this ordering. If the
    * values compare as 0, the first is returned.
    *
@@ -572,7 +572,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return (compare(a, b) >= 0) ? a : b;
   }
 
-  /**
+  /* 
    * Returns the greatest of the specified values according to this ordering. If
    * there are multiple greatest values, the first of those is returned.
    *
@@ -594,7 +594,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return maxSoFar;
   }
 
-  /**
+  /* 
    * Returns the {@code k} least elements of the given iterable according to
    * this ordering, in order from least to greatest.  If there are fewer than
    * {@code k} elements present, all will be included.
@@ -628,7 +628,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return leastOf(iterable.iterator(), k);
   }
 
-  /**
+  /* 
    * Returns the {@code k} least elements from the given iterator according to
    * this ordering, in order from least to greatest.  If there are fewer than
    * {@code k} elements present, all will be included.
@@ -752,7 +752,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return storeIndex;
   }
 
-  /**
+  /* 
    * Returns the {@code k} greatest elements of the given iterable according to
    * this ordering, in order from greatest to least. If there are fewer than
    * {@code k} elements present, all will be included.
@@ -772,7 +772,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return reverse().leastOf(iterable, k);
   }
 
-  /**
+  /* 
    * Returns the {@code k} greatest elements from the given iterator according to
    * this ordering, in order from greatest to least. If there are fewer than
    * {@code k} elements present, all will be included.
@@ -790,7 +790,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return reverse().leastOf(iterator, k);
   }
 
-  /**
+  /* 
    * Returns a copy of the given iterable sorted by this ordering. The input is
    * not modified. The returned list is modifiable, serializable, and has random
    * access.
@@ -810,7 +810,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return Lists.newArrayList(Arrays.asList(array));
   }
 
-  /**
+  /* 
    * Returns an <i>immutable</i> copy of the given iterable sorted by this
    * ordering. The input is not modified.
    *
@@ -836,7 +836,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return ImmutableList.asImmutableList(elements);
   }
 
-  /**
+  /* 
    * Returns {@code true} if each element in {@code iterable} after the first is
    * greater than or equal to the element that preceded it, according to this
    * ordering. Note that this is always true when the iterable has fewer than
@@ -857,7 +857,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return true;
   }
 
-  /**
+  /* 
    * Returns {@code true} if each element in {@code iterable} after the first is
    * <i>strictly</i> greater than the element that preceded it, according to
    * this ordering. Note that this is always true when the iterable has fewer
@@ -878,7 +878,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return true;
   }
 
-  /**
+  /* 
    * {@link Collections#binarySearch(List, Object, Comparator) Searches}
    * {@code sortedList} for {@code key} using the binary search algorithm. The
    * list must be sorted using this ordering.
@@ -890,7 +890,7 @@ public abstract class Ordering<T> implements Comparator<T> {
     return Collections.binarySearch(sortedList, key, this);
   }
 
-  /**
+  /* 
    * Exception thrown by a {@link Ordering#explicit(List)} or {@link
    * Ordering#explicit(Object, Object[])} comparator when comparing a value
    * outside the set of values it can compare. Extending {@link

@@ -25,7 +25,7 @@ import java.lang.reflect.TypeVariable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Captures a free type variable that can be used in {@link TypeToken#where}.
  * For example:
  *

@@ -34,7 +34,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Factory and utilities pertaining to the {@code MapConstraint} interface.
  *
  * @see Constraints
@@ -46,7 +46,7 @@ import javax.annotation.Nullable;
 public final class MapConstraints {
   private MapConstraints() {}
 
-  /**
+  /* 
    * Returns a constraint that verifies that neither the key nor the value is
    * null. If either is null, a {@link NullPointerException} is thrown.
    */
@@ -69,7 +69,7 @@ public final class MapConstraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified map, using the specified
    * constraint. Any operations that add new mappings will call the provided
    * constraint. However, this method does not verify that existing mappings
@@ -86,7 +86,7 @@ public final class MapConstraints {
     return new ConstrainedMap<K, V>(map, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified multimap, using the specified
    * constraint. Any operations that add new mappings will call the provided
    * constraint. However, this method does not verify that existing mappings
@@ -107,7 +107,7 @@ public final class MapConstraints {
     return new ConstrainedMultimap<K, V>(multimap, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified list multimap, using the
    * specified constraint. Any operations that add new mappings will call the
    * provided constraint. However, this method does not verify that existing
@@ -129,7 +129,7 @@ public final class MapConstraints {
     return new ConstrainedListMultimap<K, V>(multimap, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified set multimap, using the
    * specified constraint. Any operations that add new mappings will call the
    * provided constraint. However, this method does not verify that existing
@@ -150,7 +150,7 @@ public final class MapConstraints {
     return new ConstrainedSetMultimap<K, V>(multimap, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified sorted-set multimap, using the
    * specified constraint. Any operations that add new mappings will call the
    * provided constraint. However, this method does not verify that existing
@@ -171,7 +171,7 @@ public final class MapConstraints {
     return new ConstrainedSortedSetMultimap<K, V>(multimap, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified entry, using the specified
    * constraint. The {@link Entry#setValue} operation will be verified with the
    * constraint.
@@ -196,7 +196,7 @@ public final class MapConstraints {
     };
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified {@code asMap} entry, using the
    * specified constraint. The {@link Entry#setValue} operation will be verified
    * with the constraint, and the collection returned by {@link Entry#getValue}
@@ -228,7 +228,7 @@ public final class MapConstraints {
     };
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified set of {@code asMap} entries,
    * using the specified constraint. The {@link Entry#setValue} operation will
    * be verified with the constraint, and the collection returned by {@link
@@ -246,7 +246,7 @@ public final class MapConstraints {
     return new ConstrainedAsMapEntries<K, V>(entries, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified collection (or set) of entries,
    * using the specified constraint. The {@link Entry#setValue} operation will
    * be verified with the constraint, along with add operations on the returned
@@ -267,7 +267,7 @@ public final class MapConstraints {
     return new ConstrainedEntries<K, V>(entries, constraint);
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified set of entries, using the
    * specified constraint. The {@link Entry#setValue} operation will be verified
    * with the constraint, along with add operations on the returned set. The
@@ -287,7 +287,7 @@ public final class MapConstraints {
     return new ConstrainedEntrySet<K, V>(entries, constraint);
   }
 
-  /** @see MapConstraints#constrainedMap */
+  /*  @see MapConstraints#constrainedMap */
   static class ConstrainedMap<K, V> extends ForwardingMap<K, V> {
     private final Map<K, V> delegate;
     final MapConstraint<? super K, ? super V> constraint;
@@ -318,7 +318,7 @@ public final class MapConstraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified bimap, using the specified
    * constraint. Any operations that modify the bimap will have the associated
    * keys and values verified with the constraint.
@@ -334,7 +334,7 @@ public final class MapConstraints {
     return new ConstrainedBiMap<K, V>(map, null, constraint);
   }
 
-  /** @see MapConstraints#constrainedBiMap */
+  /*  @see MapConstraints#constrainedBiMap */
   private static class ConstrainedBiMap<K, V> extends ConstrainedMap<K, V>
       implements BiMap<K, V> {
     /*
@@ -381,7 +381,7 @@ public final class MapConstraints {
     }
   }
 
-  /** @see MapConstraints#constrainedBiMap */
+  /*  @see MapConstraints#constrainedBiMap */
   private static class InverseConstraint<K, V> implements MapConstraint<K, V> {
     final MapConstraint<? super V, ? super K> constraint;
 
@@ -394,7 +394,7 @@ public final class MapConstraints {
     }
   }
 
-  /** @see MapConstraints#constrainedMultimap */
+  /*  @see MapConstraints#constrainedMultimap */
   private static class ConstrainedMultimap<K, V>
       extends ForwardingMultimap<K, V> implements Serializable {
     final MapConstraint<? super K, ? super V> constraint;
@@ -504,13 +504,13 @@ public final class MapConstraints {
     }
   }
 
-  /** @see ConstrainedMultimap#asMap */
+  /*  @see ConstrainedMultimap#asMap */
   private static class ConstrainedAsMapValues<K, V>
       extends ForwardingCollection<Collection<V>> {
     final Collection<Collection<V>> delegate;
     final Set<Entry<K, Collection<V>>> entrySet;
 
-    /**
+    /* 
      * @param entrySet map entries, linking each key with its corresponding
      *     values, that already enforce the constraint
      */
@@ -564,7 +564,7 @@ public final class MapConstraints {
     }
   }
 
-  /** @see MapConstraints#constrainedEntries */
+  /*  @see MapConstraints#constrainedEntries */
   private static class ConstrainedEntries<K, V>
       extends ForwardingCollection<Entry<K, V>> {
     final MapConstraint<? super K, ? super V> constraint;
@@ -616,7 +616,7 @@ public final class MapConstraints {
     }
   }
 
-  /** @see MapConstraints#constrainedEntrySet */
+  /*  @see MapConstraints#constrainedEntrySet */
   static class ConstrainedEntrySet<K, V>
       extends ConstrainedEntries<K, V> implements Set<Entry<K, V>> {
     ConstrainedEntrySet(Set<Entry<K, V>> entries,
@@ -635,7 +635,7 @@ public final class MapConstraints {
     }
   }
 
-  /** @see MapConstraints#constrainedAsMapEntries */
+  /*  @see MapConstraints#constrainedAsMapEntries */
   static class ConstrainedAsMapEntries<K, V>
       extends ForwardingSet<Entry<K, Collection<V>>> {
     private final MapConstraint<? super K, ? super V> constraint;

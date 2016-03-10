@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-/**
+/* 
  * A sorted set of contiguous values in a given {@link DiscreteDomain}.
  *
  * <p><b>Warning:</b> Be extremely careful what you do with conceptually large instances (such as
@@ -40,7 +40,7 @@ import java.util.Set;
 @GwtCompatible(emulated = true)
 @SuppressWarnings("rawtypes") // allow ungenerified Comparable types
 public abstract class ContiguousSet<C extends Comparable> extends ImmutableSortedSet<C> {
-  /**
+  /* 
    * Returns a {@code ContiguousSet} containing the same values in the given domain
    * {@linkplain Range#contains contained} by the range.
    *
@@ -87,7 +87,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
     return headSetImpl(checkNotNull(toElement), false);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -102,7 +102,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
     return subSetImpl(fromElement, true, toElement, false);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -118,7 +118,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
     return tailSetImpl(checkNotNull(fromElement), true);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -136,7 +136,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
 
   /*@Override*/ abstract ContiguousSet<C> tailSetImpl(C fromElement, boolean inclusive);
 
-  /**
+  /* 
    * Returns the set of values that are contained in both this set and the other.
    *
    * <p>This method should always be used instead of
@@ -144,7 +144,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
    */
   public abstract ContiguousSet<C> intersection(ContiguousSet<C> other);
 
-  /**
+  /* 
    * Returns a range, closed on both ends, whose endpoints are the minimum and maximum values
    * contained in this set.  This is equivalent to {@code range(CLOSED, CLOSED)}.
    *
@@ -152,7 +152,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
    */
   public abstract Range<C> range();
 
-  /**
+  /* 
    * Returns the minimal range with the given boundary types for which all values in this set are
    * {@linkplain Range#contains(Comparable) contained} within the range.
    *
@@ -165,12 +165,12 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
    */
   public abstract Range<C> range(BoundType lowerBoundType, BoundType upperBoundType);
 
-  /** Returns a short-hand representation of the contents such as {@code "[1..100]"}. */
+  /*  Returns a short-hand representation of the contents such as {@code "[1..100]"}. */
   @Override public String toString() {
     return range().toString();
   }
 
-  /**
+  /* 
    * Not supported. {@code ContiguousSet} instances are constructed with {@link #create}. This
    * method exists only to hide {@link ImmutableSet#builder} from consumers of {@code
    * ContiguousSet}.

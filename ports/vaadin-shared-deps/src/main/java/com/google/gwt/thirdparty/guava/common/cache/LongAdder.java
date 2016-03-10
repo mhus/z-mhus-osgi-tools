@@ -19,7 +19,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
-/**
+/* 
  * One or more variables that together maintain an initially zero
  * {@code long} sum.  When updates (method {@link #add}) are contended
  * across threads, the set of variables may grow dynamically to reduce
@@ -50,18 +50,18 @@ import java.util.concurrent.atomic.AtomicLong;
 final class LongAdder extends Striped64 implements Serializable, LongAddable {
     private static final long serialVersionUID = 7249069246863182397L;
 
-    /**
+    /* 
      * Version of plus for use in retryUpdate
      */
     final long fn(long v, long x) { return v + x; }
 
-    /**
+    /* 
      * Creates a new adder with initial sum of zero.
      */
     public LongAdder() {
     }
 
-    /**
+    /* 
      * Adds the given value.
      *
      * @param x the value to add
@@ -78,21 +78,21 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         }
     }
 
-    /**
+    /* 
      * Equivalent to {@code add(1)}.
      */
     public void increment() {
         add(1L);
     }
 
-    /**
+    /* 
      * Equivalent to {@code add(-1)}.
      */
     public void decrement() {
         add(-1L);
     }
 
-    /**
+    /* 
      * Returns the current sum.  The returned value is <em>NOT</em> an
      * atomic snapshot: Invocation in the absence of concurrent
      * updates returns an accurate result, but concurrent updates that
@@ -115,7 +115,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return sum;
     }
 
-    /**
+    /* 
      * Resets variables maintaining the sum to zero.  This method may
      * be a useful alternative to creating a new adder, but is only
      * effective if there are no concurrent updates.  Because this
@@ -126,7 +126,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         internalReset(0L);
     }
 
-    /**
+    /* 
      * Equivalent in effect to {@link #sum} followed by {@link
      * #reset}. This method may apply for example during quiescent
      * points between multithreaded computations.  If there are
@@ -153,7 +153,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return sum;
     }
 
-    /**
+    /* 
      * Returns the String representation of the {@link #sum}.
      * @return the String representation of the {@link #sum}
      */
@@ -161,7 +161,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return Long.toString(sum());
     }
 
-    /**
+    /* 
      * Equivalent to {@link #sum}.
      *
      * @return the sum
@@ -170,7 +170,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return sum();
     }
 
-    /**
+    /* 
      * Returns the {@link #sum} as an {@code int} after a narrowing
      * primitive conversion.
      */
@@ -178,7 +178,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return (int)sum();
     }
 
-    /**
+    /* 
      * Returns the {@link #sum} as a {@code float}
      * after a widening primitive conversion.
      */
@@ -186,7 +186,7 @@ final class LongAdder extends Striped64 implements Serializable, LongAddable {
         return (float)sum();
     }
 
-    /**
+    /* 
      * Returns the {@link #sum} as a {@code double} after a widening
      * primitive conversion.
      */

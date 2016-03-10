@@ -16,7 +16,7 @@ package com.google.gwt.thirdparty.guava.common.hash;
 
 import java.nio.charset.Charset;
 
-/**
+/* 
  * An abstract hasher, implementing {@link #putBoolean(boolean)}, {@link #putDouble(double)},
  * {@link #putFloat(float)}, {@link #putUnencodedChars(CharSequence)}, and
  * {@link #putString(CharSequence, Charset)} as prescribed by {@link Hasher}.
@@ -36,7 +36,7 @@ abstract class AbstractHasher implements Hasher {
     return putInt(Float.floatToRawIntBits(f));
   }
 
-  /**
+  /* 
    * @deprecated Use {@link AbstractHasher#putUnencodedChars} instead.
    */
   @Deprecated

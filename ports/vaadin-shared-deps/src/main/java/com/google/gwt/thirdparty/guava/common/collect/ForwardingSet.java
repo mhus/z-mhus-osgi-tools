@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A set which forwards all its method calls to another set. Subclasses should
  * override one or more methods to modify the behavior of the backing set as
  * desired per the <a
@@ -50,7 +50,7 @@ public abstract class ForwardingSet<E> extends ForwardingCollection<E>
     implements Set<E> {
   // TODO(user): identify places where thread safety is actually lost
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingSet() {}
 
   @Override protected abstract Set<E> delegate();
@@ -63,7 +63,7 @@ public abstract class ForwardingSet<E> extends ForwardingCollection<E>
     return delegate().hashCode();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #removeAll} in terms of {@link #iterator}
    * and {@link #remove}.  If you override {@code iterator} or {@code remove},
    * you may wish to override {@link #removeAll} to forward to this
@@ -76,7 +76,7 @@ public abstract class ForwardingSet<E> extends ForwardingCollection<E>
     return Sets.removeAllImpl(this, checkNotNull(collection)); // for GWT
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #equals} in terms of {@link #size} and
    * {@link #containsAll}. If you override either of those methods, you may wish
    * to override {@link #equals} to forward to this implementation.
@@ -87,7 +87,7 @@ public abstract class ForwardingSet<E> extends ForwardingCollection<E>
     return Sets.equalsImpl(this, object);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #hashCode} in terms of {@link #iterator}.
    * If you override {@link #iterator}, you may wish to override {@link #equals}
    * to forward to this implementation.

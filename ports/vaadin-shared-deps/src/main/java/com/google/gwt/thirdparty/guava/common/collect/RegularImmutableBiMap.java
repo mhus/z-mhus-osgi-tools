@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Bimap with two or more mappings.
  *
  * @author Louis Wasserman
@@ -46,7 +46,7 @@ class RegularImmutableBiMap<K, V> extends ImmutableBiMap<K, V> {
     this(entriesToAdd.length, entriesToAdd);
   }
   
-  /**
+  /* 
    * Constructor for RegularImmutableBiMap that takes as input an array of {@code TerminalEntry}
    * entries.  Assumes that these entries have already been checked for null.
    * 
@@ -97,7 +97,7 @@ class RegularImmutableBiMap<K, V> extends ImmutableBiMap<K, V> {
     this.hashCode = hashCode;
   }
   
-  /**
+  /* 
    * Constructor for RegularImmutableBiMap that makes no assumptions about the input entries.
    */
   RegularImmutableBiMap(Entry<?, ?>[] entriesToAdd) {

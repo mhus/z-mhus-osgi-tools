@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.RandomAccess;
 
-/**
+/* 
  * Static utility methods pertaining to {@code byte} primitives, that are not
  * already found in either {@link Byte} or {@link Arrays}, <i>and interpret
  * bytes as neither signed nor unsigned</i>. The methods which specifically
@@ -51,7 +51,7 @@ import java.util.RandomAccess;
 public final class Bytes {
   private Bytes() {}
 
-  /**
+  /* 
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Byte) value).hashCode()}.
    *
@@ -62,7 +62,7 @@ public final class Bytes {
     return value;
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -80,7 +80,7 @@ public final class Bytes {
     return false;
   }
 
-  /**
+  /* 
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -104,7 +104,7 @@ public final class Bytes {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -134,7 +134,7 @@ public final class Bytes {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -172,7 +172,7 @@ public final class Bytes {
     return result;
   }
 
-  /**
+  /* 
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -204,7 +204,7 @@ public final class Bytes {
     return copy;
   }
 
-  /**
+  /* 
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code byte} value in the manner of {@link Number#byteValue}.
    *
@@ -234,7 +234,7 @@ public final class Bytes {
     return array;
   }
 
-  /**
+  /* 
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

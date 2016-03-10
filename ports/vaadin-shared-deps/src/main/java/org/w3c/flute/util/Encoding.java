@@ -12,14 +12,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 
-/**
+/* 
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
 public class Encoding {
     private Encoding() {}
 
-    /**
+    /* 
      * Converts the format encoding information into Java encoding information.
      */
     public static String getJavaEncoding(String encoding) {

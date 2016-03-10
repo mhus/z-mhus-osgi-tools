@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
-/**
+/* 
  * <p>A thread-safe queue of listeners, each with an associated {@code Executor}, that guarantees 
  * that every {@code Runnable} that is {@linkplain #add added} will be 
  * {@link Executor#execute(Runnable) executed} in the same order that it was added and also that 
@@ -54,16 +54,16 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe final class ExecutionQueue {
   private static final Logger logger = Logger.getLogger(ExecutionQueue.class.getName());
 
-  /** The listeners to execute in order.  */
+  /*  The listeners to execute in order.  */
   private final ConcurrentLinkedQueue<RunnableExecutorPair> queuedListeners = 
       Queues.newConcurrentLinkedQueue();
-  /**
+  /* 
    * This lock is used with {@link RunnableExecutorPair#submit} to ensure that each listener is 
    * executed at most once.
    */
   private final ReentrantLock lock = new ReentrantLock();
 
-  /**
+  /* 
    * Adds the {@code Runnable} and accompanying {@code Executor} to the queue of listeners to
    * execute. 
    */
@@ -71,7 +71,7 @@ import javax.annotation.concurrent.ThreadSafe;
     queuedListeners.add(new RunnableExecutorPair(runnable, executor));
   }
 
-  /**
+  /* 
    * Executes all listeners in the queue. However, note that listeners added concurrently with this
    * method may be executed as part of this call or not, so there is no guarantee that the queue is
    * empty after calling this method.
@@ -92,7 +92,7 @@ import javax.annotation.concurrent.ThreadSafe;
     }
   }
 
-  /**
+  /* 
    * The listener object for the queue.
    *
    * <p>This ensures that:
@@ -109,7 +109,7 @@ import javax.annotation.concurrent.ThreadSafe;
   private final class RunnableExecutorPair implements Runnable {
     private final Executor executor;
     private final Runnable runnable;
-    /**
+    /* 
      * Should be set to {@code true} after {@link #executor}.{@link Executor#execute execute} has
      * been called.
      */
@@ -121,7 +121,7 @@ import javax.annotation.concurrent.ThreadSafe;
       this.executor = checkNotNull(executor);
     }
   
-    /** Submit this listener to its executor */
+    /*  Submit this listener to its executor */
     private void submit() {
       lock.lock();
       try {

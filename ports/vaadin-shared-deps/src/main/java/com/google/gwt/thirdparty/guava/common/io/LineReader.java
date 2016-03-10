@@ -25,7 +25,7 @@ import java.nio.CharBuffer;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
+/* 
  * A class for reading lines of text. Provides the same functionality
  * as {@link java.io.BufferedReader#readLine()} but for all {@link Readable}
  * objects, not just instances of {@link Reader}.
@@ -47,7 +47,7 @@ public final class LineReader {
     }
   };
 
-  /**
+  /* 
    * Creates a new instance that will read lines from the given
    * {@code Readable} object.
    */
@@ -57,7 +57,7 @@ public final class LineReader {
     this.reader = (readable instanceof Reader) ? (Reader) readable : null;
   }
 
-  /**
+  /* 
    * Reads a line of text. A line is considered to be terminated by any
    * one of a line feed ({@code '\n'}), a carriage return
    * ({@code '\r'}), or a carriage return followed immediately by a linefeed

@@ -17,7 +17,7 @@ import org.w3c.css.sac.DescendantSelector;
 import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
 
-/**
+/* 
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
@@ -26,14 +26,14 @@ public class DescendantSelectorImpl implements DescendantSelector {
     Selector       parent;
     SimpleSelector simpleSelector;
 
-    /**
+    /* 
      * An integer indicating the type of <code>Selector</code>
      */
     public short getSelectorType() {
 	return Selector.SAC_DESCENDANT_SELECTOR;
     }
 
-    /**
+    /* 
      * Creates a new DescendantSelectorImpl
      */
     public DescendantSelectorImpl(Selector parent, SimpleSelector simpleSelector) {
@@ -42,7 +42,7 @@ public class DescendantSelectorImpl implements DescendantSelector {
     }
     
         
-    /**
+    /* 
      * Returns the parent selector.
      */    
     public Selector getAncestorSelector() {

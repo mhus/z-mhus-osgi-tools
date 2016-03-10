@@ -20,7 +20,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-/**
+/* 
  * An abstract {@code ScheduledExecutorService} that allows subclasses to
  * {@linkplain #wrapTask(Callable) wrap} tasks before they are submitted to the underlying executor.
  *

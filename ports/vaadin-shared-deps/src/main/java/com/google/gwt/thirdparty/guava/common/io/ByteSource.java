@@ -36,7 +36,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Iterator;
 
-/**
+/* 
  * A readable source of bytes, such as a file. Unlike an {@link InputStream}, a
  * {@code ByteSource} is not an open, stateful stream for input that can be read and closed.
  * Instead, it is an immutable <i>supplier</i> of {@code InputStream} instances.
@@ -58,7 +58,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
 
   private static final int BUF_SIZE = 0x1000; // 4K
 
-  /**
+  /* 
    * Returns a {@link CharSource} view of this byte source that decodes bytes read from this source
    * as characters using the given {@link Charset}.
    */
@@ -66,7 +66,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return new AsCharSource(charset);
   }
 
-  /**
+  /* 
    * Opens a new {@link InputStream} for reading from this source. This method should return a new,
    * independent stream each time it is called.
    *
@@ -76,7 +76,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
    */
   public abstract InputStream openStream() throws IOException;
 
-  /**
+  /* 
    * This method is a temporary method provided for easing migration from suppliers to sources and
    * sinks.
    *
@@ -91,7 +91,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return openStream();
   }
 
-  /**
+  /* 
    * Opens a new buffered {@link InputStream} for reading from this source. The returned stream is
    * not required to be a {@link BufferedInputStream} in order to allow implementations to simply
    * delegate to {@link #openStream()} when the stream returned by that method does not benefit
@@ -110,7 +110,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
         : new BufferedInputStream(in);
   }
 
-  /**
+  /* 
    * Returns a view of a slice of this byte source that is at most {@code length} bytes long
    * starting at the given {@code offset}.
    *
@@ -120,7 +120,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return new SlicedByteSource(offset, length);
   }
 
-  /**
+  /* 
    * Returns whether the source has zero bytes. The default implementation is to open a stream and
    * check for EOF.
    *
@@ -139,7 +139,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Returns the size of this source in bytes. For most implementations, this is a heavyweight
    * operation that will open a stream, read (or {@link InputStream#skip(long) skip}, if possible)
    * to the end of the stream and return the total number of bytes that were read.
@@ -176,7 +176,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Counts the bytes in the given input stream using skip if possible. Returns SKIP_FAILED if the
    * first call to skip threw, in which case skip may just not be supported.
    */
@@ -212,7 +212,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return count;
   }
 
-  /**
+  /* 
    * Copies the contents of this byte source to the given {@code OutputStream}. Does not close
    * {@code output}.
    *
@@ -233,7 +233,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Copies the contents of this byte source to the given {@code ByteSink}.
    *
    * @throws IOException if an I/O error occurs in the process of reading from this source or
@@ -254,7 +254,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Reads the full contents of this byte source as a byte array.
    *
    * @throws IOException if an I/O error occurs in the process of reading from this source
@@ -271,7 +271,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Hashes the contents of this byte source using the given hash function.
    *
    * @throws IOException if an I/O error occurs in the process of reading from this source
@@ -282,7 +282,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return hasher.hash();
   }
 
-  /**
+  /* 
    * Checks that the contents of this byte source are equal to the contents of the given byte
    * source.
    *
@@ -315,7 +315,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * Concatenates multiple {@link ByteSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -330,7 +330,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return new ConcatenatedByteSource(sources);
   }
 
-  /**
+  /* 
    * Concatenates multiple {@link ByteSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -352,7 +352,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return concat(ImmutableList.copyOf(sources));
   }
 
-  /**
+  /* 
    * Concatenates multiple {@link ByteSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -368,7 +368,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return concat(ImmutableList.copyOf(sources));
   }
 
-  /**
+  /* 
    * Returns a view of the given byte array as a {@link ByteSource}. To view only a specific range
    * in the array, use {@code ByteSource.wrap(b).slice(offset, length)}.
    *
@@ -378,7 +378,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return new ByteArrayByteSource(b);
   }
 
-  /**
+  /* 
    * Returns an immutable {@link ByteSource} that contains no bytes.
    *
    * @since 15.0
@@ -387,7 +387,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     return EmptyByteSource.INSTANCE;
   }
 
-  /**
+  /* 
    * A char source that reads bytes from this source and decodes them as characters using a
    * charset.
    */
@@ -410,7 +410,7 @@ public abstract class ByteSource implements InputSupplier<InputStream> {
     }
   }
 
-  /**
+  /* 
    * A view of a subsection of the containing byte source.
    */
   private final class SlicedByteSource extends ByteSource {

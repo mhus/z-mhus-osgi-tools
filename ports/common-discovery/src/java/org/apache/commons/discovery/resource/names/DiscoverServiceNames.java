@@ -20,7 +20,7 @@ import org.apache.commons.discovery.ResourceDiscover;
 import org.apache.commons.discovery.ResourceNameDiscover;
 import org.apache.commons.discovery.resource.ClassLoaders;
 
-/**
+/* 
  * Provide JDK 1.3 style service discovery...
  *
  * The caller will first configure the discoverer by creating a
@@ -30,14 +30,14 @@ public class DiscoverServiceNames extends DiscoverNamesInFile implements Resourc
 
     protected static final String SERVICE_HOME = "META-INF/services/";
 
-    /**
+    /* 
      * Construct a new service discoverer.
      */
     public DiscoverServiceNames() {
         super(SERVICE_HOME, null);
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param prefix The resource name prefix
@@ -47,7 +47,7 @@ public class DiscoverServiceNames extends DiscoverNamesInFile implements Resourc
         super((prefix == null) ? SERVICE_HOME : SERVICE_HOME + prefix, suffix);
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param loaders The class loaders holder
@@ -56,7 +56,7 @@ public class DiscoverServiceNames extends DiscoverNamesInFile implements Resourc
         super(loaders, SERVICE_HOME, null);
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param loaders The class loaders holder
@@ -67,7 +67,7 @@ public class DiscoverServiceNames extends DiscoverNamesInFile implements Resourc
         super(loaders, (prefix == null) ? SERVICE_HOME : SERVICE_HOME + prefix, suffix);
     }
 
-    /**
+    /* 
      * Construct a new service discoverer.
      *
      * @param discoverer The discoverer to resolve resources
@@ -76,7 +76,7 @@ public class DiscoverServiceNames extends DiscoverNamesInFile implements Resourc
         super(discoverer, SERVICE_HOME, null);
     }
 
-    /**
+    /* 
      * Construct a new service discoverer.
      *
      * @param discoverer The discoverer to resolve resources

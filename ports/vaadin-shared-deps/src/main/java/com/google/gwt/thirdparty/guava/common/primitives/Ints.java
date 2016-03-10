@@ -36,7 +36,7 @@ import java.util.RandomAccess;
 
 import javax.annotation.CheckForNull;
 
-/**
+/* 
  * Static utility methods pertaining to {@code int} primitives, that are not
  * already found in either {@link Integer} or {@link Arrays}.
  *
@@ -51,20 +51,20 @@ import javax.annotation.CheckForNull;
 public final class Ints {
   private Ints() {}
 
-  /**
+  /* 
    * The number of bytes required to represent a primitive {@code int}
    * value.
    */
   public static final int BYTES = Integer.SIZE / Byte.SIZE;
 
-  /**
+  /* 
    * The largest power of two that can be represented as an {@code int}.
    *
    * @since 10.0
    */
   public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
 
-  /**
+  /* 
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Integer) value).hashCode()}.
    *
@@ -75,7 +75,7 @@ public final class Ints {
     return value;
   }
 
-  /**
+  /* 
    * Returns the {@code int} value that is equal to {@code value}, if possible.
    *
    * @param value any value in the range of the {@code int} type
@@ -89,7 +89,7 @@ public final class Ints {
     return result;
   }
 
-  /**
+  /* 
    * Returns the {@code int} nearest in value to {@code value}.
    *
    * @param value any {@code long} value
@@ -107,7 +107,7 @@ public final class Ints {
     return (int) value;
   }
 
-  /**
+  /* 
    * Compares the two specified {@code int} values. The sign of the value
    * returned is the same as that of {@code ((Integer) a).compareTo(b)}.
    *
@@ -120,7 +120,7 @@ public final class Ints {
     return (a < b) ? -1 : ((a > b) ? 1 : 0);
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -138,7 +138,7 @@ public final class Ints {
     return false;
   }
 
-  /**
+  /* 
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -162,7 +162,7 @@ public final class Ints {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -192,7 +192,7 @@ public final class Ints {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -216,7 +216,7 @@ public final class Ints {
     return -1;
   }
 
-  /**
+  /* 
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code int} values
@@ -235,7 +235,7 @@ public final class Ints {
     return min;
   }
 
-  /**
+  /* 
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code int} values
@@ -289,7 +289,7 @@ public final class Ints {
     return b1 << 24 | (b2 & 0xFF) << 16 | (b3 & 0xFF) << 8 | (b4 & 0xFF);
   }
 
-  /**
+  /* 
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -321,7 +321,7 @@ public final class Ints {
     return copy;
   }
 
-  /**
+  /* 
    * Returns a string containing the supplied {@code int} values separated
    * by {@code separator}. For example, {@code join("-", 1, 2, 3)} returns
    * the string {@code "1-2-3"}.
@@ -345,7 +345,7 @@ public final class Ints {
     return builder.toString();
   }
 
-  /**
+  /* 
    * Returns a comparator that compares two {@code int} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(int, int)}), the first pair of values that follow any
@@ -380,7 +380,7 @@ public final class Ints {
     }
   }
 
-  /**
+  /* 
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code int} value in the manner of {@link Number#intValue}.
    *
@@ -410,7 +410,7 @@ public final class Ints {
     return array;
   }
 
-  /**
+  /* 
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link
@@ -554,7 +554,7 @@ public final class Ints {
     private static final long serialVersionUID = 0;
   }
 
-  /**
+  /* 
    * Parses the specified string as a signed decimal integer value. The ASCII
    * character {@code '-'} (<code>'&#92;u002D'</code>) is recognized as the
    * minus sign.

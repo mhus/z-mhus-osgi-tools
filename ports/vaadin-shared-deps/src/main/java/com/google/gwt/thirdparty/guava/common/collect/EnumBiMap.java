@@ -28,7 +28,7 @@ import java.io.ObjectOutputStream;
 import java.util.EnumMap;
 import java.util.Map;
 
-/**
+/* 
  * A {@code BiMap} backed by two {@code EnumMap} instances. Null keys and values
  * are not permitted. An {@code EnumBiMap} and its inverse are both
  * serializable.
@@ -46,7 +46,7 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>>
   private transient Class<K> keyType;
   private transient Class<V> valueType;
 
-  /**
+  /* 
    * Returns a new, empty {@code EnumBiMap} using the specified key and value
    * types.
    *
@@ -58,7 +58,7 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>>
     return new EnumBiMap<K, V>(keyType, valueType);
   }
 
-  /**
+  /* 
    * Returns a new bimap with the same mappings as the specified map. If the
    * specified map is an {@code EnumBiMap}, the new bimap has the same types as
    * the provided map. Otherwise, the specified map must contain at least one
@@ -101,12 +101,12 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>>
     return map.values().iterator().next().getDeclaringClass();
   }
 
-  /** Returns the associated key type. */
+  /*  Returns the associated key type. */
   public Class<K> keyType() {
     return keyType;
   }
 
-  /** Returns the associated value type. */
+  /*  Returns the associated value type. */
   public Class<V> valueType() {
     return valueType;
   }
@@ -121,7 +121,7 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>>
     return checkNotNull(value);
   }
 
-  /**
+  /* 
    * @serialData the key class, value class, number of entries, first key, first
    *     value, second key, second value, and so on.
    */

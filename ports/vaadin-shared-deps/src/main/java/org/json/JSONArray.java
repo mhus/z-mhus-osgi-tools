@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
+/* 
  * A JSONArray is an ordered sequence of values. Its external text form is a
  * string wrapped in square brackets with commas separating the values. The
  * internal form is an object having <code>get</code> and <code>opt</code>
@@ -85,20 +85,20 @@ import java.util.Map;
 public class JSONArray {
 
 
-    /**
+    /* 
      * The arrayList where the JSONArray's properties are kept.
      */
     private ArrayList myArrayList;
 
 
-    /**
+    /* 
      * Construct an empty JSONArray.
      */
     public JSONArray() {
         this.myArrayList = new ArrayList();
     }
 
-    /**
+    /* 
      * Construct a JSONArray from a JSONTokener.
      * @param x A JSONTokener
      * @throws JSONException If there is a syntax error.
@@ -148,7 +148,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Construct a JSONArray from a source JSON text.
      * @param source     A string that begins with
      * <code>[</code>&nbsp;<small>(left bracket)</small>
@@ -160,7 +160,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Construct a JSONArray from a Collection.
      * @param collection     A Collection.
      */
@@ -170,7 +170,7 @@ public class JSONArray {
             new ArrayList(collection);
     }
 
-    /**
+    /* 
      * Construct a JSONArray from a collection of beans.
      * The collection should have Java Beans.
      * 
@@ -186,7 +186,7 @@ public class JSONArray {
     }
 
     
-    /**
+    /* 
      * Construct a JSONArray from an array
      * @throws JSONException If not an array.
      */
@@ -202,7 +202,7 @@ public class JSONArray {
         }
     }
 
-    /**
+    /* 
      * Construct a JSONArray from an array with a bean.
      * The array should have Java Beans.
      * 
@@ -222,7 +222,7 @@ public class JSONArray {
 
     
     
-    /**
+    /* 
      * Get the object value associated with an index.
      * @param index
      *  The index must be between 0 and length() - 1.
@@ -238,7 +238,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the boolean value associated with an index.
      * The string values "true" and "false" are converted to boolean.
      *
@@ -262,7 +262,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the double value associated with an index.
      *
      * @param index The index must be between 0 and length() - 1.
@@ -283,7 +283,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the int value associated with an index.
      *
      * @param index The index must be between 0 and length() - 1.
@@ -299,7 +299,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the JSONArray associated with an index.
      * @param index The index must be between 0 and length() - 1.
      * @return      A JSONArray value.
@@ -316,7 +316,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the JSONObject associated with an index.
      * @param index subscript
      * @return      A JSONObject value.
@@ -333,7 +333,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the long value associated with an index.
      *
      * @param index The index must be between 0 and length() - 1.
@@ -348,7 +348,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the string associated with an index.
      * @param index The index must be between 0 and length() - 1.
      * @return      A string value.
@@ -359,7 +359,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Determine if the value is null.
      * @param index The index must be between 0 and length() - 1.
      * @return true if the value at the index is null, or if there is no value.
@@ -369,7 +369,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Make a string from the contents of this JSONArray. The
      * <code>separator</code> string is inserted between each element.
      * Warning: This method assumes that the data structure is acyclical.
@@ -391,7 +391,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the number of elements in the JSONArray, included nulls.
      *
      * @return The length (or size).
@@ -401,7 +401,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional object value associated with an index.
      * @param index The index must be between 0 and length() - 1.
      * @return      An object value, or null if there is no
@@ -413,7 +413,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional boolean value associated with an index.
      * It returns false if there is no value at that index,
      * or if the value is not Boolean.TRUE or the String "true".
@@ -426,7 +426,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional boolean value associated with an index.
      * It returns the defaultValue if there is no value at that index or if
      * it is not a Boolean or the String "true" or "false" (case insensitive).
@@ -444,7 +444,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional double value associated with an index.
      * NaN is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -457,7 +457,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional double value associated with an index.
      * The defaultValue is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -475,7 +475,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional int value associated with an index.
      * Zero is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -488,7 +488,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional int value associated with an index.
      * The defaultValue is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -505,7 +505,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional JSONArray associated with an index.
      * @param index subscript
      * @return      A JSONArray value, or null if the index has no value,
@@ -517,7 +517,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional JSONObject associated with an index.
      * Null is returned if the key is not found, or null if the index has
      * no value, or if the value is not a JSONObject.
@@ -531,7 +531,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional long value associated with an index.
      * Zero is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -544,7 +544,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional long value associated with an index.
      * The defaultValue is returned if there is no value for the index,
      * or if the value is not a number and cannot be converted to a number.
@@ -561,7 +561,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional string value associated with an index. It returns an
      * empty string if there is no value at that index. If the value
      * is not a string and is not null, then it is coverted to a string.
@@ -574,7 +574,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Get the optional string associated with an index.
      * The defaultValue is returned if the key is not found.
      *
@@ -588,7 +588,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Append a boolean value. This increases the array's length by one.
      *
      * @param value A boolean value.
@@ -600,7 +600,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put a value in the JSONArray, where the value will be a
      * JSONArray which is produced from a Collection.
      * @param value A Collection value.
@@ -612,7 +612,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Append a double value. This increases the array's length by one.
      *
      * @param value A double value.
@@ -627,7 +627,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Append an int value. This increases the array's length by one.
      *
      * @param value An int value.
@@ -639,7 +639,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Append an long value. This increases the array's length by one.
      *
      * @param value A long value.
@@ -651,7 +651,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put a value in the JSONArray, where the value will be a
      * JSONObject which is produced from a Map.
      * @param value A Map value.
@@ -663,7 +663,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Append an object value. This increases the array's length by one.
      * @param value An object value.  The value should be a
      *  Boolean, Double, Integer, JSONArray, JSONObject, Long, or String, or the
@@ -676,7 +676,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put or replace a boolean value in the JSONArray. If the index is greater
      * than the length of the JSONArray, then null elements will be added as
      * necessary to pad it out.
@@ -691,7 +691,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put a value in the JSONArray, where the value will be a
      * JSONArray which is produced from a Collection.
      * @param index The subscript.
@@ -706,7 +706,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put or replace a double value. If the index is greater than the length of
      *  the JSONArray, then null elements will be added as necessary to pad
      *  it out.
@@ -722,7 +722,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put or replace an int value. If the index is greater than the length of
      *  the JSONArray, then null elements will be added as necessary to pad
      *  it out.
@@ -737,7 +737,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put or replace a long value. If the index is greater than the length of
      *  the JSONArray, then null elements will be added as necessary to pad
      *  it out.
@@ -752,7 +752,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put a value in the JSONArray, where the value will be a
      * JSONObject which is produced from a Map.
      * @param index The subscript.
@@ -767,7 +767,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Put or replace an object value in the JSONArray. If the index is greater
      *  than the length of the JSONArray, then null elements will be added as
      *  necessary to pad it out.
@@ -796,7 +796,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Produce a JSONObject by combining a JSONArray of names with the values
      * of this JSONArray.
      * @param names A JSONArray containing a list of key strings. These will be
@@ -817,7 +817,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Make a JSON text of this JSONArray. For compactness, no
      * unnecessary whitespace is added. If it is not possible to produce a
      * syntactically correct JSON text then null will be returned instead. This
@@ -837,7 +837,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Make a prettyprinted JSON text of this JSONArray.
      * Warning: This method assumes that the data structure is acyclical.
      * @param indentFactor The number of spaces to add to each level of
@@ -853,7 +853,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Make a prettyprinted JSON text of this JSONArray.
      * Warning: This method assumes that the data structure is acyclical.
      * @param indentFactor The number of spaces to add to each level of
@@ -896,7 +896,7 @@ public class JSONArray {
     }
 
 
-    /**
+    /* 
      * Write the contents of the JSONArray as JSON text to a writer.
      * For compactness, no whitespace is added.
      * <p>

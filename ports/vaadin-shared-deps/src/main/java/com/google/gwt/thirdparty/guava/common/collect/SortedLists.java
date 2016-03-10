@@ -27,7 +27,7 @@ import java.util.RandomAccess;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static methods pertaining to sorted {@link List} instances.
  *
  * In this documentation, the terms <i>greatest</i>, <i>greater</i>, <i>least</i>, and
@@ -41,12 +41,12 @@ import javax.annotation.Nullable;
 @Beta final class SortedLists {
   private SortedLists() {}
 
-  /**
+  /* 
    * A specification for which index to return if the list contains at least one element that
    * compares as equal to the key.
    */
   public enum KeyPresentBehavior {
-    /**
+    /* 
      * Return the index of any list element that compares as equal to the key. No guarantees are
      * made as to which index is returned, if more than one element compares as equal to the key.
      */
@@ -57,7 +57,7 @@ import javax.annotation.Nullable;
         return foundIndex;
       }
     },
-    /**
+    /* 
      * Return the index of the last list element that compares as equal to the key.
      */
     LAST_PRESENT {
@@ -81,7 +81,7 @@ import javax.annotation.Nullable;
         return lower;
       }
     },
-    /**
+    /* 
      * Return the index of the first list element that compares as equal to the key.
      */
     FIRST_PRESENT {
@@ -106,7 +106,7 @@ import javax.annotation.Nullable;
         return lower;
       }
     },
-    /**
+    /* 
      * Return the index of the first list element that compares as greater than the key, or {@code
      * list.size()} if there is no such element.
      */
@@ -117,7 +117,7 @@ import javax.annotation.Nullable;
         return LAST_PRESENT.resultIndex(comparator, key, list, foundIndex) + 1;
       }
     },
-    /**
+    /* 
      * Return the index of the last list element that compares as less than the key, or {@code -1}
      * if there is no such element.
      */
@@ -132,12 +132,12 @@ import javax.annotation.Nullable;
         Comparator<? super E> comparator, E key, List<? extends E> list, int foundIndex);
   }
 
-  /**
+  /* 
    * A specification for which index to return if the list contains no elements that compare as
    * equal to the key.
    */
   public enum KeyAbsentBehavior {
-    /**
+    /* 
      * Return the index of the next lower element in the list, or {@code -1} if there is no such
      * element.
      */
@@ -147,7 +147,7 @@ import javax.annotation.Nullable;
         return higherIndex - 1;
       }
     },
-    /**
+    /* 
      * Return the index of the next higher element in the list, or {@code list.size()} if there is
      * no such element.
      */
@@ -157,7 +157,7 @@ import javax.annotation.Nullable;
         return higherIndex;
       }
     },
-    /**
+    /* 
      * Return {@code ~insertionIndex}, where {@code insertionIndex} is defined as the point at
      * which the key would be inserted into the list: the index of the next higher element in the
      * list, or {@code list.size()} if there is no such element.
@@ -179,7 +179,7 @@ import javax.annotation.Nullable;
     abstract int resultIndex(int higherIndex);
   }
 
-  /**
+  /* 
    * Searches the specified naturally ordered list for the specified object using the binary search
    * algorithm.
    *
@@ -193,7 +193,7 @@ import javax.annotation.Nullable;
         list, checkNotNull(e), Ordering.natural(), presentBehavior, absentBehavior);
   }
 
-  /**
+  /* 
    * Binary searches the list for the specified key, using the specified key function.
    *
    * <p>Equivalent to {@link #binarySearch(List, Function, Object, Comparator, KeyPresentBehavior,
@@ -211,7 +211,7 @@ import javax.annotation.Nullable;
         absentBehavior);
   }
 
-  /**
+  /* 
    * Binary searches the list for the specified key, using the specified key function.
    *
    * <p>Equivalent to
@@ -229,7 +229,7 @@ import javax.annotation.Nullable;
         Lists.transform(list, keyFunction), key, keyComparator, presentBehavior, absentBehavior);
   }
 
-  /**
+  /* 
    * Searches the specified list for the specified object using the binary search algorithm. The
    * list must be sorted into ascending order according to the specified comparator (as by the
    * {@link Collections#sort(List, Comparator) Collections.sort(List, Comparator)} method), prior

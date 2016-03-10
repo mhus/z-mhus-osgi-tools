@@ -27,7 +27,7 @@ SOFTWARE.
 import java.util.Iterator;
 
 
-/**
+/* 
  * This provides static methods to convert an XML text into a JSONObject,
  * and to covert a JSONObject into an XML text.
  * @author JSON.org
@@ -35,34 +35,34 @@ import java.util.Iterator;
  */
 public class XML {
 
-    /** The Character '&'. */
+    /*  The Character '&'. */
     public static final Character AMP   = new Character('&');
 
-    /** The Character '''. */
+    /*  The Character '''. */
     public static final Character APOS  = new Character('\'');
 
-    /** The Character '!'. */
+    /*  The Character '!'. */
     public static final Character BANG  = new Character('!');
 
-    /** The Character '='. */
+    /*  The Character '='. */
     public static final Character EQ    = new Character('=');
 
-    /** The Character '>'. */
+    /*  The Character '>'. */
     public static final Character GT    = new Character('>');
 
-    /** The Character '<'. */
+    /*  The Character '<'. */
     public static final Character LT    = new Character('<');
 
-    /** The Character '?'. */
+    /*  The Character '?'. */
     public static final Character QUEST = new Character('?');
 
-    /** The Character '"'. */
+    /*  The Character '"'. */
     public static final Character QUOT  = new Character('"');
 
-    /** The Character '/'. */
+    /*  The Character '/'. */
     public static final Character SLASH = new Character('/');
 
-    /**
+    /* 
      * Replace special characters with XML escapes:
      * <pre>
      * &amp; <small>(ampersand)</small> is replaced by &amp;amp;
@@ -97,7 +97,7 @@ public class XML {
         return sb.toString();
     }
 
-    /**
+    /* 
      * Scan the content following the named tag, attaching it to the context.
      * @param x       The XMLTokener containing the source string.
      * @param context The JSONObject that will include the new material.
@@ -262,7 +262,7 @@ public class XML {
     }
 
 
-    /**
+    /* 
      * Convert a well-formed (but not necessarily valid) XML string into a
      * JSONObject. Some information may be lost in this transformation
      * because JSON is a data format and XML is a document format. XML uses
@@ -286,7 +286,7 @@ public class XML {
     }
 
 
-    /**
+    /* 
      * Convert a JSONObject into a well-formed, element-normal XML string.
      * @param o A JSONObject.
      * @return  A string.
@@ -297,7 +297,7 @@ public class XML {
     }
 
 
-    /**
+    /* 
      * Convert a JSONObject into a well-formed, element-normal XML string.
      * @param o A JSONObject.
      * @param tagName The optional name of the enclosing tag.

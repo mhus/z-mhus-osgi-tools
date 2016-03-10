@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A mutable value of type {@code int}, for multisets to use in tracking counts of values.
  *
  * @author Louis Wasserman

@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.base.CharMatcher.FastMatcher;
 
 import java.util.BitSet;
 
-/**
+/* 
  * An immutable version of CharMatcher for smallish sets of characters that uses a hash table
  * with linear probing to check for matches.
  *
@@ -68,7 +68,7 @@ final class SmallCharMatcher extends FastMatcher {
   // Represents how tightly we can pack things, as a maximum.
   private static final double DESIRED_LOAD_FACTOR = 0.5;
 
- /**
+ /* 
   * Returns an array size suitable for the backing array of a hash table that
   * uses open addressing with linear probing in its implementation.  The
   * returned size is the smallest power of two that can hold setSize elements

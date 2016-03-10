@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A multimap which forwards all its method calls to another multimap.
  * Subclasses should override one or more methods to modify the behavior of
  * the backing multimap as desired per the <a
@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 public abstract class ForwardingMultimap<K, V> extends ForwardingObject
     implements Multimap<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingMultimap() {}
 
   @Override protected abstract Multimap<K, V> delegate();

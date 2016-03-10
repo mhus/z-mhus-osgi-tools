@@ -21,7 +21,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * An object that converts literal text into a format safe for inclusion in a particular context
  * (such as an XML document). Typically (but not always), the inverse process of "unescaping" the
  * text is performed automatically by the relevant parser.
@@ -41,10 +41,10 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @Beta
 @GwtCompatible
 public abstract class CharEscaper extends Escaper {
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected CharEscaper() {}
 
-  /**
+  /* 
    * Returns the escaped form of a given literal string.
    *
    * @param string the literal string to be escaped
@@ -63,7 +63,7 @@ public abstract class CharEscaper extends Escaper {
     return string;
   }
 
-  /**
+  /* 
    * Returns the escaped form of a given literal string, starting at the given index. This method is
    * called by the {@link #escape(String)} method when it discovers that escaping is required. It is
    * protected to allow subclasses to override the fastpath escaping function to inline their
@@ -133,7 +133,7 @@ public abstract class CharEscaper extends Escaper {
     return new String(dest, 0, destIndex);
   }
 
-  /**
+  /* 
    * Returns the escaped form of the given character, or {@code null} if this character does not
    * need to be escaped. If an empty array is returned, this effectively strips the input character
    * from the resulting text.
@@ -150,7 +150,7 @@ public abstract class CharEscaper extends Escaper {
    */
   protected abstract char[] escape(char c);
 
-  /**
+  /* 
    * Helper method to grow the character buffer as needed, this only happens once in a while so it's
    * ok if it's in a method call. If the index passed in is 0 then no copying will be done.
    */
@@ -162,7 +162,7 @@ public abstract class CharEscaper extends Escaper {
     return copy;
   }
 
-  /**
+  /* 
    * The amount of padding to use when growing the escape buffer.
    */
   private static final int DEST_PAD = 32;

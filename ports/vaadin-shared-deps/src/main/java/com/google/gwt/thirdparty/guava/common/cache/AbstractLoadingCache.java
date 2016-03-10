@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 
-/**
+/* 
  * This class provides a skeletal implementation of the {@code Cache} interface to minimize the
  * effort required to implement this interface.
  *
@@ -44,7 +44,7 @@ import java.util.concurrent.ExecutionException;
 public abstract class AbstractLoadingCache<K, V>
     extends AbstractCache<K, V> implements LoadingCache<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected AbstractLoadingCache() {}
 
   @Override

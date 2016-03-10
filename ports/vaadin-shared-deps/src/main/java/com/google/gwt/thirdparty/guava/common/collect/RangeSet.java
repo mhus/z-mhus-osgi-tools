@@ -21,7 +21,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A set comprising zero or more {@linkplain Range#isEmpty nonempty}, 
  * {@linkplain Range#isConnected(Range) disconnected} ranges of type {@code C}.
  * 
@@ -41,24 +41,24 @@ public interface RangeSet<C extends Comparable> {
   
   // Query methods
 
-  /**
+  /* 
    * Determines whether any of this range set's member ranges contains {@code value}.
    */
   boolean contains(C value);
 
-  /**
+  /* 
    * Returns the unique range from this range set that {@linkplain Range#contains contains}
    * {@code value}, or {@code null} if this range set does not contain {@code value}.
    */
   Range<C> rangeContaining(C value);
 
-  /**
+  /* 
    * Returns {@code true} if there exists a member range in this range set which
    * {@linkplain Range#encloses encloses} the specified range.
    */
   boolean encloses(Range<C> otherRange);
 
-  /**
+  /* 
    * Returns {@code true} if for each member range in {@code other} there exists a member range in
    * this range set which {@linkplain Range#encloses encloses} it. It follows that
    * {@code this.contains(value)} whenever {@code other.contains(value)}. Returns {@code true} if
@@ -69,12 +69,12 @@ public interface RangeSet<C extends Comparable> {
    */
   boolean enclosesAll(RangeSet<C> other);
 
-  /**
+  /* 
    * Returns {@code true} if this range set contains no ranges.
    */
   boolean isEmpty();
 
-  /**
+  /* 
    * Returns the minimal range which {@linkplain Range#encloses(Range) encloses} all ranges
    * in this range set.
    *
@@ -84,7 +84,7 @@ public interface RangeSet<C extends Comparable> {
 
   // Views
   
-  /**
+  /* 
    * Returns a view of the {@linkplain Range#isConnected disconnected} ranges that make up this
    * range set.  The returned set may be empty. The iterators returned by its
    * {@link Iterable#iterator} method return the ranges in increasing order of lower bound
@@ -92,7 +92,7 @@ public interface RangeSet<C extends Comparable> {
    */
   Set<Range<C>> asRanges();
 
-  /**
+  /* 
    * Returns a view of the complement of this {@code RangeSet}.
    *
    * <p>The returned view supports the {@link #add} operation if this {@code RangeSet} supports
@@ -100,7 +100,7 @@ public interface RangeSet<C extends Comparable> {
    */
   RangeSet<C> complement();
   
-  /**
+  /* 
    * Returns a view of the intersection of this {@code RangeSet} with the specified range.
    *
    * <p>The returned view supports all optional operations supported by this {@code RangeSet}, with
@@ -112,7 +112,7 @@ public interface RangeSet<C extends Comparable> {
   
   // Modification
 
-  /**
+  /* 
    * Adds the specified range to this {@code RangeSet} (optional operation). That is, for equal
    * range sets a and b, the result of {@code a.add(range)} is that {@code a} will be the minimal
    * range set for which both {@code a.enclosesAll(b)} and {@code a.encloses(range)}.
@@ -126,7 +126,7 @@ public interface RangeSet<C extends Comparable> {
    */
   void add(Range<C> range);
 
-  /**
+  /* 
    * Removes the specified range from this {@code RangeSet} (optional operation). After this
    * operation, if {@code range.contains(c)}, {@code this.contains(c)} will return {@code false}.
    *
@@ -137,7 +137,7 @@ public interface RangeSet<C extends Comparable> {
    */
   void remove(Range<C> range);
   
-  /**
+  /* 
    * Removes all ranges from this {@code RangeSet} (optional operation).  After this operation,
    * {@code this.contains(c)} will return false for all {@code c}.
    * 
@@ -148,7 +148,7 @@ public interface RangeSet<C extends Comparable> {
    */
   void clear();
 
-  /**
+  /* 
    * Adds all of the ranges from the specified range set to this range set (optional operation).
    * After this operation, this range set is the minimal range set that
    * {@linkplain #enclosesAll(RangeSet) encloses} both the original range set and {@code other}.
@@ -160,7 +160,7 @@ public interface RangeSet<C extends Comparable> {
    */
   void addAll(RangeSet<C> other);
 
-  /**
+  /* 
    * Removes all of the ranges from the specified range set from this range set (optional
    * operation). After this operation, if {@code other.contains(c)}, {@code this.contains(c)} will
    * return {@code false}.
@@ -175,20 +175,20 @@ public interface RangeSet<C extends Comparable> {
   
   // Object methods
 
-  /**
+  /* 
    * Returns {@code true} if {@code obj} is another {@code RangeSet} that contains the same ranges
    * according to {@link Range#equals(Object)}.
    */
   @Override
   boolean equals(@Nullable Object obj);
   
-  /**
+  /* 
    * Returns {@code asRanges().hashCode()}.
    */
   @Override
   int hashCode();
 
-  /**
+  /* 
    * Returns a readable string representation of this range set. For example, if this
    * {@code RangeSet} consisted of {@code Range.closed(1, 3)} and {@code Range.greaterThan(4)},
    * this might return {@code " [1‥3](4‥+∞)}"}.

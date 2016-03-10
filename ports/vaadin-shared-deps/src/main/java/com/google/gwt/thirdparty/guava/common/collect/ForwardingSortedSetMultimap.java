@@ -23,7 +23,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A sorted set multimap which forwards all its method calls to another sorted
  * set multimap. Subclasses should override one or more methods to modify the
  * behavior of the backing multimap as desired per the <a
@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 public abstract class ForwardingSortedSetMultimap<K, V>
     extends ForwardingSetMultimap<K, V> implements SortedSetMultimap<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingSortedSetMultimap() {}
 
   @Override protected abstract SortedSetMultimap<K, V> delegate();

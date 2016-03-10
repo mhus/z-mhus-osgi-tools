@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 import java.util.Deque;
 import java.util.Iterator;
 
-/**
+/* 
  * A deque which forwards all its method calls to another deque. Subclasses
  * should override one or more methods to modify the behavior of the backing
  * deque as desired per the <a
@@ -37,7 +37,7 @@ import java.util.Iterator;
 public abstract class ForwardingDeque<E> extends ForwardingQueue<E>
     implements Deque<E> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingDeque() {}
 
   @Override protected abstract Deque<E> delegate();

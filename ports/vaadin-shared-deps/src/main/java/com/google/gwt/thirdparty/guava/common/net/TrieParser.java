@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.collect.Lists;
 
 import java.util.List;
 
-/**
+/* 
  * Parser for a set of reversed domain names stored as a serialized radix tree.
  */
 @GwtCompatible
@@ -31,7 +31,7 @@ class TrieParser {
 
   private static final Joiner PREFIX_JOINER = Joiner.on("");
 
-  /**
+  /* 
    * Parses a serialized trie representation of a set of reversed TLDs into an immutable set
    * of TLDs.
    */
@@ -48,7 +48,7 @@ class TrieParser {
     return builder.build();
   }
 
-  /**
+  /* 
    * Parses a trie node and returns the number of characters consumed.
    *
    * @param stack The prefixes that preceed the characters represented by this node. Each entry
@@ -101,7 +101,7 @@ class TrieParser {
     return idx;
   }
 
-  /**
+  /* 
    * Reverses a character sequence. This is borrowed from
    * https://code.google.com/p/google-web-toolkit/source/detail?r=11591#
    * and can be replaced with a simple {@code StringBuffer#reverse} once GWT 2.6 is available.

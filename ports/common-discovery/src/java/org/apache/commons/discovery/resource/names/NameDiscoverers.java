@@ -24,7 +24,7 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Holder for multiple ResourceNameDiscover instances.
  *
  * The result is the union of the results from each
@@ -34,7 +34,7 @@ public class NameDiscoverers extends ResourceNameDiscoverImpl implements Resourc
 
     private static Log log = LogFactory.getLog(NameDiscoverers.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -47,13 +47,13 @@ public class NameDiscoverers extends ResourceNameDiscoverImpl implements Resourc
 
     private final List<ResourceNameDiscover> discoverers = new ArrayList<ResourceNameDiscover>();
 
-    /**
+    /* 
      *  Construct a new resource name discoverer
      */
     public NameDiscoverers() {
     }
 
-    /**
+    /* 
      * Specify an discover to be used in searching.
      * The order of discover determines the order of the result.
      * It is recommended to add the most specific discover first.
@@ -66,7 +66,7 @@ public class NameDiscoverers extends ResourceNameDiscoverImpl implements Resourc
         }
     }
 
-    /**
+    /* 
      * Retrieve the discover positioned at the given index.
      *
      * @param idx The discover index position client is requiring
@@ -76,7 +76,7 @@ public class NameDiscoverers extends ResourceNameDiscoverImpl implements Resourc
         return discoverers.get(idx);
     }
 
-    /**
+    /* 
      * Returns the current size of set discovers.
      *
      * @return The current size of set discovers
@@ -85,7 +85,7 @@ public class NameDiscoverers extends ResourceNameDiscoverImpl implements Resourc
         return discoverers.size();
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

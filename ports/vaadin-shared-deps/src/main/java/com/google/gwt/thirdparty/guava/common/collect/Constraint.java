@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
-/**
+/* 
  * A constraint that an element must satisfy in order to be added to a
  * collection. For example, {@link Constraints#notNull()}, which prevents a
  * collection from including any null elements, could be implemented like this:
@@ -48,7 +48,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 @GwtCompatible
 public
 interface Constraint<E> {
-  /**
+  /* 
    * Throws a suitable {@code RuntimeException} if the specified element is
    * illegal. Typically this is either a {@link NullPointerException}, an
    * {@link IllegalArgumentException}, or a {@link ClassCastException}, though
@@ -59,7 +59,7 @@ interface Constraint<E> {
    */
   E checkElement(E element);
 
-  /**
+  /* 
    * Returns a brief human readable description of this constraint, such as
    * "Not null" or "Positive number".
    */

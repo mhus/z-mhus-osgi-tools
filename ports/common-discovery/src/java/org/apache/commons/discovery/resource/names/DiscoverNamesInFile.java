@@ -33,7 +33,7 @@ import org.apache.commons.discovery.resource.DiscoverResources;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Discover ALL files of a given name, and return resource names
  * contained within the set of files:
  * <ul>
@@ -49,7 +49,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
 
     private static Log log = LogFactory.getLog(DiscoverNamesInFile.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -66,7 +66,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
 
     private final String _suffix;
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      */
     public DiscoverNamesInFile() {
@@ -75,7 +75,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = null;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param prefix The resource name prefix
@@ -87,7 +87,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = suffix;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param loaders The class loaders holder
@@ -98,7 +98,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = null;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param loaders The class loaders holder
@@ -111,7 +111,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = suffix;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param discoverer The discoverer to resolve resources
@@ -122,7 +122,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = null;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param discoverer The discoverer to resolve resources
@@ -135,7 +135,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _suffix = suffix;
     }
 
-    /**
+    /* 
      * Set the discoverer to resolve resources.
      *
      * @param discover The discoverer to resolve resources
@@ -144,7 +144,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         _discoverResources = discover;
     }
 
-    /**
+    /* 
      * Return the discoverer to resolve resources.
      *
      * To be used by downstream elements...
@@ -155,7 +155,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         return _discoverResources;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -234,7 +234,7 @@ public class DiscoverNamesInFile extends ResourceNameDiscoverImpl implements Res
         };
     }
 
-    /**
+    /* 
      * Parses the resource info file and store all the defined SPI implementation classes
      *
      * @param info The resource file

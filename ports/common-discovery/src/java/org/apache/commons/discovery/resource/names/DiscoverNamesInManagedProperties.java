@@ -22,7 +22,7 @@ import org.apache.commons.discovery.tools.ManagedProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Recover resource name from Managed Properties.
  * @see org.apache.commons.discovery.tools.ManagedProperties
  */
@@ -30,7 +30,7 @@ public class DiscoverNamesInManagedProperties extends ResourceNameDiscoverImpl i
 
     private static Log log = LogFactory.getLog(DiscoverNamesInManagedProperties.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -45,14 +45,14 @@ public class DiscoverNamesInManagedProperties extends ResourceNameDiscoverImpl i
 
     private final String _suffix;
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      */
     public DiscoverNamesInManagedProperties() {
         this(null, null);
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param prefix The resource name prefix
@@ -63,7 +63,7 @@ public class DiscoverNamesInManagedProperties extends ResourceNameDiscoverImpl i
         _suffix = suffix;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

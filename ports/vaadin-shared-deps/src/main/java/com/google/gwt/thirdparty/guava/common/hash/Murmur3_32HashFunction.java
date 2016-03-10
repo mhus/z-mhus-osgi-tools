@@ -36,7 +36,7 @@ import java.nio.ByteBuffer;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * See http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp
  * MurmurHash3_x86_32
  *

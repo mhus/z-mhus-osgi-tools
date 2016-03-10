@@ -30,7 +30,7 @@ import java.net.URLClassLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/* 
  * A reference queue with an associated background thread that dequeues references and invokes
  * {@link FinalizableReference#finalizeReferent()} on them.
  *
@@ -82,7 +82,7 @@ public class FinalizableReferenceQueue implements Closeable {
 
   private static final String FINALIZER_CLASS_NAME = "com.google.gwt.thirdparty.guava.common.base.internal.Finalizer";
 
-  /** Reference to Finalizer.startFinalizer(). */
+  /*  Reference to Finalizer.startFinalizer(). */
   private static final Method startFinalizer;
   static {
     Class<?> finalizer = loadFinalizer(
@@ -90,19 +90,19 @@ public class FinalizableReferenceQueue implements Closeable {
     startFinalizer = getStartFinalizer(finalizer);
   }
 
-  /**
+  /* 
    * The actual reference queue that our background thread will poll.
    */
   final ReferenceQueue<Object> queue;
 
   final PhantomReference<Object> frqRef;
 
-  /**
+  /* 
    * Whether or not the background thread started successfully.
    */
   final boolean threadStarted;
 
-  /**
+  /* 
    * Constructs a new queue.
    */
   @SuppressWarnings("unchecked")
@@ -130,7 +130,7 @@ public class FinalizableReferenceQueue implements Closeable {
     cleanUp();
   }
 
-  /**
+  /* 
    * Repeatedly dequeues references from the queue and invokes {@link
    * FinalizableReference#finalizeReferent()} on them until the queue is empty. This method is a
    * no-op if the background thread was created successfully.
@@ -155,7 +155,7 @@ public class FinalizableReferenceQueue implements Closeable {
     }
   }
 
-  /**
+  /* 
    * Iterates through the given loaders until it finds one that can load Finalizer.
    *
    * @return Finalizer.class
@@ -171,12 +171,12 @@ public class FinalizableReferenceQueue implements Closeable {
     throw new AssertionError();
   }
 
-  /**
+  /* 
    * Loads Finalizer.class.
    */
   interface FinalizerLoader {
 
-    /**
+    /* 
      * Returns Finalizer.class or null if this loader shouldn't or can't load it.
      *
      * @throws SecurityException if we don't have the appropriate privileges
@@ -184,7 +184,7 @@ public class FinalizableReferenceQueue implements Closeable {
     Class<?> loadFinalizer();
   }
 
-  /**
+  /* 
    * Tries to load Finalizer from the system class loader. If Finalizer is in the system class path,
    * we needn't create a separate loader.
    */
@@ -219,7 +219,7 @@ public class FinalizableReferenceQueue implements Closeable {
     }
   }
 
-  /**
+  /* 
    * Try to load Finalizer in its own class loader. If Finalizer's thread had a direct reference to
    * our class loader (which could be that of a dynamically loaded web application or OSGi bundle),
    * it would prevent our class loader from getting garbage collected.
@@ -250,7 +250,7 @@ public class FinalizableReferenceQueue implements Closeable {
       }
     }
 
-    /**
+    /* 
      * Gets URL for base of path containing Finalizer.class.
      */
     URL getBaseUrl() throws IOException {
@@ -270,7 +270,7 @@ public class FinalizableReferenceQueue implements Closeable {
       return new URL(finalizerUrl, urlString);
     }
 
-    /** Creates a class loader with the given base URL as its classpath. */
+    /*  Creates a class loader with the given base URL as its classpath. */
     URLClassLoader newLoader(URL base) {
       // We use the bootstrap class loader as the parent because Finalizer by design uses
       // only standard Java classes. That also means that FinalizableReferenceQueueTest
@@ -279,7 +279,7 @@ public class FinalizableReferenceQueue implements Closeable {
     }
   }
 
-  /**
+  /* 
    * Loads Finalizer directly using the current class loader. We won't be able to garbage collect
    * this class loader, but at least the world doesn't end.
    */
@@ -294,7 +294,7 @@ public class FinalizableReferenceQueue implements Closeable {
     }
   }
 
-  /**
+  /* 
    * Looks up Finalizer.startFinalizer().
    */
   static Method getStartFinalizer(Class<?> finalizer) {

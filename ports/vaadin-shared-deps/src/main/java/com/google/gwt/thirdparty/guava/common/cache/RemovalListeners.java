@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.util.concurrent.Executor;
 
-/**
+/* 
  * A collection of common removal listeners.
  *
  * @author Charles Fry
@@ -33,7 +33,7 @@ public final class RemovalListeners {
 
   private RemovalListeners() {}
 
-  /**
+  /* 
    * Returns a {@code RemovalListener} which processes all eviction
    * notifications using {@code executor}.
    *

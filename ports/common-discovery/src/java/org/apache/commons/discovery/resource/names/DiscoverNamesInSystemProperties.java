@@ -21,14 +21,14 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Recover resource name from System Properties.
  */
 public class DiscoverNamesInSystemProperties extends ResourceNameDiscoverImpl implements ResourceNameDiscover {
 
     private static Log log = LogFactory.getLog(DiscoverNamesInSystemProperties.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -39,13 +39,13 @@ public class DiscoverNamesInSystemProperties extends ResourceNameDiscoverImpl im
         log = _log;
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer
      */
     public DiscoverNamesInSystemProperties() {
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

@@ -23,7 +23,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Implementation of {@link ImmutableSet} with exactly one element.
  *
  * @author Kevin Bourrillion

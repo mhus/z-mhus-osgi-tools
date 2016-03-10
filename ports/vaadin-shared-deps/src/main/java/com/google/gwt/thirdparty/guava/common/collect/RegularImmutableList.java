@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Implementation of {@link ImmutableList} with one or more elements.
  *
  * @author Kevin Bourrillion

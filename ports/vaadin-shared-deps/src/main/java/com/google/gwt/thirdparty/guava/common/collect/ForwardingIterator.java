@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Iterator;
 
-/**
+/* 
  * An iterator which forwards all its method calls to another iterator.
  * Subclasses should override one or more methods to modify the behavior of the
  * backing iterator as desired per the <a
@@ -33,7 +33,7 @@ import java.util.Iterator;
 public abstract class ForwardingIterator<T>
     extends ForwardingObject implements Iterator<T> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingIterator() {}
 
   @Override protected abstract Iterator<T> delegate();

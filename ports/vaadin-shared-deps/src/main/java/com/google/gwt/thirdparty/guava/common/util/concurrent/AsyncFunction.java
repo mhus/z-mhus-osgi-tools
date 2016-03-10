@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.util.concurrent;
 
 import java.util.concurrent.Future;
 
-/**
+/* 
  * Transforms a value, possibly asynchronously. For an example usage and more
  * information, see {@link Futures#transform(ListenableFuture, AsyncFunction)}.
  *
@@ -26,7 +26,7 @@ import java.util.concurrent.Future;
  * @since 11.0
  */
 public interface AsyncFunction<I, O> {
-  /**
+  /* 
    * Returns an output {@code Future} to use in place of the given {@code
    * input}. The output {@code Future} need not be {@linkplain Future#isDone
    * done}, making {@code AsyncFunction} suitable for asynchronous derivations.

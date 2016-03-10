@@ -32,7 +32,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtIncompatible;
 
 import java.util.concurrent.TimeUnit;
 
-/**
+/* 
  * An object that measures elapsed time in nanoseconds. It is useful to measure
  * elapsed time using this class instead of direct calls to {@link
  * System#nanoTime} for a few reasons:
@@ -79,7 +79,7 @@ public final class Stopwatch {
   private long elapsedNanos;
   private long startTick;
 
-  /**
+  /* 
    * Creates (but does not start) a new stopwatch using {@link System#nanoTime}
    * as its time source.
    *
@@ -89,7 +89,7 @@ public final class Stopwatch {
     return new Stopwatch();
   }
 
-  /**
+  /* 
    * Creates (but does not start) a new stopwatch, using the specified time
    * source.
    *
@@ -99,7 +99,7 @@ public final class Stopwatch {
     return new Stopwatch(ticker);
   }
 
-  /**
+  /* 
    * Creates (and starts) a new stopwatch using {@link System#nanoTime}
    * as its time source.
    *
@@ -109,7 +109,7 @@ public final class Stopwatch {
     return new Stopwatch().start();
   }
 
-  /**
+  /* 
    * Creates (and starts) a new stopwatch, using the specified time
    * source.
    *
@@ -119,7 +119,7 @@ public final class Stopwatch {
     return new Stopwatch(ticker).start();
   }
 
-  /**
+  /* 
    * Creates (but does not start) a new stopwatch using {@link System#nanoTime}
    * as its time source.
    *
@@ -131,7 +131,7 @@ public final class Stopwatch {
     this(Ticker.systemTicker());
   }
 
-  /**
+  /* 
    * Creates (but does not start) a new stopwatch, using the specified time
    * source.
    *
@@ -143,7 +143,7 @@ public final class Stopwatch {
     this.ticker = checkNotNull(ticker, "ticker");
   }
 
-  /**
+  /* 
    * Returns {@code true} if {@link #start()} has been called on this stopwatch,
    * and {@link #stop()} has not been called since the last call to {@code
    * start()}.
@@ -152,7 +152,7 @@ public final class Stopwatch {
     return isRunning;
   }
 
-  /**
+  /* 
    * Starts the stopwatch.
    *
    * @return this {@code Stopwatch} instance
@@ -165,7 +165,7 @@ public final class Stopwatch {
     return this;
   }
 
-  /**
+  /* 
    * Stops the stopwatch. Future reads will return the fixed duration that had
    * elapsed up to this point.
    *
@@ -180,7 +180,7 @@ public final class Stopwatch {
     return this;
   }
 
-  /**
+  /* 
    * Sets the elapsed time for this stopwatch to zero,
    * and places it in a stopped state.
    *
@@ -196,7 +196,7 @@ public final class Stopwatch {
     return isRunning ? ticker.read() - startTick + elapsedNanos : elapsedNanos;
   }
 
-  /**
+  /* 
    * Returns the current elapsed time shown on this stopwatch, expressed
    * in the desired time unit, with any fraction rounded down.
    *
@@ -210,7 +210,7 @@ public final class Stopwatch {
     return desiredUnit.convert(elapsedNanos(), NANOSECONDS);
   }
 
-  /**
+  /* 
    * Returns the current elapsed time shown on this stopwatch, expressed
    * in the desired time unit, with any fraction rounded down.
    *
@@ -226,7 +226,7 @@ public final class Stopwatch {
     return elapsed(desiredUnit);
   }
 
-  /**
+  /* 
    * Returns the current elapsed time shown on this stopwatch, expressed
    * in milliseconds, with any fraction rounded down. This is identical to
    * {@code elapsed(TimeUnit.MILLISECONDS)}.
@@ -239,7 +239,7 @@ public final class Stopwatch {
     return elapsed(MILLISECONDS);
   }
 
-  /**
+  /* 
    * Returns a string representation of the current elapsed time.
    */
   @GwtIncompatible("String.format()")

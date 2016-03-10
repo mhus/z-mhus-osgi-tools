@@ -58,7 +58,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
-/**
+/* 
  * The concurrent hash map implementation built by {@link MapMaker}.
  *
  * <p>This implementation is heavily derived from revision 1.96 of <a
@@ -99,20 +99,20 @@ class MapMakerInternalMap<K, V>
 
   // Constants
 
-  /**
+  /* 
    * The maximum capacity, used if a higher value is implicitly specified by either of the
    * constructors with arguments. MUST be a power of two <= 1<<30 to ensure that entries are
    * indexable using ints.
    */
   static final int MAXIMUM_CAPACITY = Ints.MAX_POWER_OF_TWO;
 
-  /** The maximum number of segments to allow; used to bound constructor arguments. */
+  /*  The maximum number of segments to allow; used to bound constructor arguments. */
   static final int MAX_SEGMENTS = 1 << 16; // slightly conservative
 
-  /** Number of (unsynchronized) retries in the containsValue method. */
+  /*  Number of (unsynchronized) retries in the containsValue method. */
   static final int CONTAINS_VALUE_RETRIES = 3;
 
-  /**
+  /* 
    * Number of cache access operations that can be buffered per segment before the cache's recency
    * ordering information is updated. This is used to avoid lock contention by recording a memento
    * of reads and delaying a lock acquisition until the threshold is crossed or a mutation occurs.
@@ -121,7 +121,7 @@ class MapMakerInternalMap<K, V>
    */
   static final int DRAIN_THRESHOLD = 0x3F;
 
-  /**
+  /* 
    * Maximum number of entries to be drained in a single cleanup run. This applies independently to
    * the cleanup queue and both reference queues.
    */
@@ -134,62 +134,62 @@ class MapMakerInternalMap<K, V>
 
   private static final Logger logger = Logger.getLogger(MapMakerInternalMap.class.getName());
 
-  /**
+  /* 
    * Mask value for indexing into segments. The upper bits of a key's hash code are used to choose
    * the segment.
    */
   final transient int segmentMask;
 
-  /**
+  /* 
    * Shift value for indexing within segments. Helps prevent entries that end up in the same segment
    * from also ending up in the same bucket.
    */
   final transient int segmentShift;
 
-  /** The segments, each of which is a specialized hash table. */
+  /*  The segments, each of which is a specialized hash table. */
   final transient Segment<K, V>[] segments;
 
-  /** The concurrency level. */
+  /*  The concurrency level. */
   final int concurrencyLevel;
 
-  /** Strategy for comparing keys. */
+  /*  Strategy for comparing keys. */
   final Equivalence<Object> keyEquivalence;
 
-  /** Strategy for comparing values. */
+  /*  Strategy for comparing values. */
   final Equivalence<Object> valueEquivalence;
 
-  /** Strategy for referencing keys. */
+  /*  Strategy for referencing keys. */
   final Strength keyStrength;
 
-  /** Strategy for referencing values. */
+  /*  Strategy for referencing values. */
   final Strength valueStrength;
 
-  /** The maximum size of this map. MapMaker.UNSET_INT if there is no maximum. */
+  /*  The maximum size of this map. MapMaker.UNSET_INT if there is no maximum. */
   final int maximumSize;
 
-  /** How long after the last access to an entry the map will retain that entry. */
+  /*  How long after the last access to an entry the map will retain that entry. */
   final long expireAfterAccessNanos;
 
-  /** How long after the last write to an entry the map will retain that entry. */
+  /*  How long after the last write to an entry the map will retain that entry. */
   final long expireAfterWriteNanos;
 
-  /** Entries waiting to be consumed by the removal listener. */
+  /*  Entries waiting to be consumed by the removal listener. */
   // TODO(fry): define a new type which creates event objects and automates the clear logic
   final Queue<RemovalNotification<K, V>> removalNotificationQueue;
 
-  /**
+  /* 
    * A listener that is invoked when an entry is removed due to expiration or garbage collection of
    * soft/weak entries.
    */
   final RemovalListener<K, V> removalListener;
 
-  /** Factory used to create new entries. */
+  /*  Factory used to create new entries. */
   final transient EntryFactory entryFactory;
 
-  /** Measures time in a testable way. */
+  /*  Measures time in a testable way. */
   final Ticker ticker;
 
-  /**
+  /* 
    * Creates a new, empty map with the specified strategy, initial capacity and concurrency level.
    */
   MapMakerInternalMap(MapMaker builder) {
@@ -331,13 +331,13 @@ class MapMakerInternalMap<K, V>
       }
     };
 
-    /**
+    /* 
      * Creates a reference for the given value according to this value strength.
      */
     abstract <K, V> ValueReference<K, V> referenceValue(
         Segment<K, V> segment, ReferenceEntry<K, V> entry, V value);
 
-    /**
+    /* 
      * Returns the default equivalence strategy used to compare and hash keys or values referenced
      * at this strength. This strategy will be used unless the user explicitly specifies an
      * alternate strategy.
@@ -345,7 +345,7 @@ class MapMakerInternalMap<K, V>
     abstract Equivalence<Object> defaultEquivalence();
   }
 
-  /**
+  /* 
    * Creates new entries.
    */
   enum EntryFactory {
@@ -457,13 +457,13 @@ class MapMakerInternalMap<K, V>
       }
     };
 
-    /**
+    /* 
      * Masks used to compute indices in the following table.
      */
     static final int EXPIRABLE_MASK = 1;
     static final int EVICTABLE_MASK = 2;
 
-    /**
+    /* 
      * Look-up table for factories. First dimension is the reference type. The second dimension is
      * the result of OR-ing the feature masks.
      */
@@ -479,7 +479,7 @@ class MapMakerInternalMap<K, V>
       return factories[keyStrength.ordinal()][flags];
     }
 
-    /**
+    /* 
      * Creates a new entry.
      *
      * @param segment to create the entry for
@@ -490,7 +490,7 @@ class MapMakerInternalMap<K, V>
     abstract <K, V> ReferenceEntry<K, V> newEntry(
         Segment<K, V> segment, K key, int hash, @Nullable ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Copies an entry, assigning it a new {@code next} entry.
      *
      * @param original the entry to copy
@@ -525,16 +525,16 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * A reference to a value.
    */
   interface ValueReference<K, V> {
-    /**
+    /* 
      * Gets the value. Does not block or throw exceptions.
      */
     V get();
 
-    /**
+    /* 
      * Waits for a value that may still be computing. Unlike get(), this method can block (in the
      * case of FutureValueReference).
      *
@@ -542,13 +542,13 @@ class MapMakerInternalMap<K, V>
      */
     V waitForValue() throws ExecutionException;
 
-    /**
+    /* 
      * Returns the entry associated with this value reference, or {@code null} if this value
      * reference is independent of any entry.
      */
     ReferenceEntry<K, V> getEntry();
 
-    /**
+    /* 
      * Creates a copy of this reference for the given entry.
      *
      * <p>{@code value} may be null only for a loading reference.
@@ -556,7 +556,7 @@ class MapMakerInternalMap<K, V>
     ValueReference<K, V> copyFor(
         ReferenceQueue<V> queue, @Nullable V value, ReferenceEntry<K, V> entry);
 
-    /**
+    /* 
      * Clears this reference object.
      *
      * @param newValue the new value reference which will replace this one; this is only used during
@@ -564,7 +564,7 @@ class MapMakerInternalMap<K, V>
      */
     void clear(@Nullable ValueReference<K, V> newValue);
 
-    /**
+    /* 
      * Returns {@code true} if the value type is a computing reference (regardless of whether or not
      * computation has completed). This is necessary to distiguish between partially-collected
      * entries and computing entries, which need to be cleaned up differently.
@@ -572,7 +572,7 @@ class MapMakerInternalMap<K, V>
     boolean isComputingReference();
   }
 
-  /**
+  /* 
    * Placeholder. Indicates that the value hasn't been set yet.
    */
   static final ValueReference<Object, Object> UNSET = new ValueReference<Object, Object>() {
@@ -606,7 +606,7 @@ class MapMakerInternalMap<K, V>
     public void clear(ValueReference<Object, Object> newValue) {}
   };
 
-  /**
+  /* 
    * Singleton placeholder that indicates a value is being computed.
    */
   @SuppressWarnings("unchecked") // impl never uses a parameter or returns any non-null value
@@ -614,7 +614,7 @@ class MapMakerInternalMap<K, V>
     return (ValueReference<K, V>) UNSET;
   }
 
-  /**
+  /* 
    * An entry in a reference map.
    *
    * Entries in the map can be in the following states:
@@ -628,27 +628,27 @@ class MapMakerInternalMap<K, V>
    * - Collected: key/value was partially collected, but not yet cleaned up
    */
   interface ReferenceEntry<K, V> {
-    /**
+    /* 
      * Gets the value reference from this entry.
      */
     ValueReference<K, V> getValueReference();
 
-    /**
+    /* 
      * Sets the value reference for this entry.
      */
     void setValueReference(ValueReference<K, V> valueReference);
 
-    /**
+    /* 
      * Gets the next entry in the chain.
      */
     ReferenceEntry<K, V> getNext();
 
-    /**
+    /* 
      * Gets the entry's hash.
      */
     int getHash();
 
-    /**
+    /* 
      * Gets the key for this entry.
      */
     K getKey();
@@ -659,32 +659,32 @@ class MapMakerInternalMap<K, V>
      * the head of the list.
      */
 
-    /**
+    /* 
      * Gets the entry expiration time in ns.
      */
     long getExpirationTime();
 
-    /**
+    /* 
      * Sets the entry expiration time in ns.
      */
     void setExpirationTime(long time);
 
-    /**
+    /* 
      * Gets the next entry in the recency list.
      */
     ReferenceEntry<K, V> getNextExpirable();
 
-    /**
+    /* 
      * Sets the next entry in the recency list.
      */
     void setNextExpirable(ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Gets the previous entry in the recency list.
      */
     ReferenceEntry<K, V> getPreviousExpirable();
 
-    /**
+    /* 
      * Sets the previous entry in the recency list.
      */
     void setPreviousExpirable(ReferenceEntry<K, V> previous);
@@ -695,22 +695,22 @@ class MapMakerInternalMap<K, V>
      * entries are expired from the head of the list.
      */
 
-    /**
+    /* 
      * Gets the next entry in the recency list.
      */
     ReferenceEntry<K, V> getNextEvictable();
 
-    /**
+    /* 
      * Sets the next entry in the recency list.
      */
     void setNextEvictable(ReferenceEntry<K, V> next);
 
-    /**
+    /* 
      * Gets the previous entry in the recency list.
      */
     ReferenceEntry<K, V> getPreviousEvictable();
 
-    /**
+    /* 
      * Sets the previous entry in the recency list.
      */
     void setPreviousEvictable(ReferenceEntry<K, V> previous);
@@ -892,7 +892,7 @@ class MapMakerInternalMap<K, V>
     }
   };
 
-  /**
+  /* 
    * Queue that discards all elements.
    */
   @SuppressWarnings("unchecked") // impl never uses a parameter or returns any non-null value
@@ -908,7 +908,7 @@ class MapMakerInternalMap<K, V>
    * respective superclasses.
    */
 
-  /**
+  /* 
    * Used for strongly-referenced keys.
    */
   static class StrongEntry<K, V> implements ReferenceEntry<K, V> {
@@ -1165,7 +1165,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * Used for softly-referenced keys.
    */
   static class SoftEntry<K, V> extends SoftReference<K> implements ReferenceEntry<K, V> {
@@ -1422,7 +1422,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * Used for weakly-referenced keys.
    */
   static class WeakEntry<K, V> extends WeakReference<K> implements ReferenceEntry<K, V> {
@@ -1680,7 +1680,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * References a weak value.
    */
   static final class WeakValueReference<K, V>
@@ -1719,7 +1719,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * References a soft value.
    */
   static final class SoftValueReference<K, V>
@@ -1758,7 +1758,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * References a strong value.
    */
   static final class StrongValueReference<K, V> implements ValueReference<K, V> {
@@ -1798,7 +1798,7 @@ class MapMakerInternalMap<K, V>
     public void clear(ValueReference<K, V> newValue) {}
   }
 
-  /**
+  /* 
    * Applies a supplemental hash function to a given hash code, which defends against poor quality
    * hash functions. This is critical when the concurrent hash map uses power-of-two length hash
    * tables, that otherwise encounter collisions for hash codes that do not differ in lower or
@@ -1818,7 +1818,7 @@ class MapMakerInternalMap<K, V>
     return h ^ (h >>> 16);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#newEntry} directly.
    */
   @GuardedBy("Segment.this")
@@ -1827,7 +1827,7 @@ class MapMakerInternalMap<K, V>
     return segmentFor(hash).newEntry(key, hash, next);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#copyEntry} directly.
    */
   @GuardedBy("Segment.this")
@@ -1837,7 +1837,7 @@ class MapMakerInternalMap<K, V>
     return segmentFor(hash).copyEntry(original, newNext);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#setValue} instead.
    */
   @GuardedBy("Segment.this")
@@ -1863,7 +1863,7 @@ class MapMakerInternalMap<K, V>
     segmentFor(hash).reclaimKey(entry, hash);
   }
 
-  /**
+  /* 
    * This method is a convenience for testing. Code should call {@link Segment#getLiveValue}
    * instead.
    */
@@ -1872,7 +1872,7 @@ class MapMakerInternalMap<K, V>
     return segmentFor(entry.getHash()).getLiveValue(entry) != null;
   }
 
-  /**
+  /* 
    * Returns the segment that should be used for a key with the given hash.
    *
    * @param hash the hash code for the key
@@ -1887,7 +1887,7 @@ class MapMakerInternalMap<K, V>
     return new Segment<K, V>(this, initialCapacity, maxSegmentSize);
   }
 
-  /**
+  /* 
    * Gets the value from an entry. Returns {@code null} if the entry is invalid,
    * partially-collected, computing, or expired. Unlike {@link Segment#getLiveValue} this method
    * does not attempt to clean up stale entries.
@@ -1909,14 +1909,14 @@ class MapMakerInternalMap<K, V>
 
   // expiration
 
-  /**
+  /* 
    * Returns {@code true} if the entry has expired.
    */
   boolean isExpired(ReferenceEntry<K, V> entry) {
     return isExpired(entry, ticker.read());
   }
 
-  /**
+  /* 
    * Returns {@code true} if the entry has expired.
    */
   boolean isExpired(ReferenceEntry<K, V> entry, long now) {
@@ -1939,7 +1939,7 @@ class MapMakerInternalMap<K, V>
 
   // eviction
 
-  /**
+  /* 
    * Notifies listeners that an entry has been automatically removed due to expiration, eviction,
    * or eligibility for garbage collection. This should be called every time expireEntries or
    * evictEntry is called (once the lock is released).
@@ -1955,7 +1955,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /** Links the evitables together. */
+  /*  Links the evitables together. */
   @GuardedBy("Segment.this")
   static <K, V> void connectEvictables(ReferenceEntry<K, V> previous, ReferenceEntry<K, V> next) {
     previous.setNextEvictable(next);
@@ -1976,7 +1976,7 @@ class MapMakerInternalMap<K, V>
 
   // Inner Classes
 
-  /**
+  /* 
    * Segments are specialized versions of hash tables. This subclass inherits from ReentrantLock
    * opportunistically, just to simplify some locking and avoid separate construction.
    */
@@ -2018,13 +2018,13 @@ class MapMakerInternalMap<K, V>
 
     final MapMakerInternalMap<K, V> map;
 
-    /**
+    /* 
      * The number of live elements in this segment's region. This does not include unset elements
      * which are awaiting cleanup.
      */
     volatile int count;
 
-    /**
+    /* 
      * Number of updates that alter the size of the table. This is used during bulk-read methods to
      * make sure they see a consistent snapshot: If modCounts change during a traversal of segments
      * computing size or checking containsValue, then we might have an inconsistent view of state
@@ -2032,55 +2032,55 @@ class MapMakerInternalMap<K, V>
      */
     int modCount;
 
-    /**
+    /* 
      * The table is expanded when its size exceeds this threshold. (The value of this field is
      * always {@code (int) (capacity * 0.75)}.)
      */
     int threshold;
 
-    /**
+    /* 
      * The per-segment table.
      */
     volatile AtomicReferenceArray<ReferenceEntry<K, V>> table;
 
-    /**
+    /* 
      * The maximum size of this map. MapMaker.UNSET_INT if there is no maximum.
      */
     final int maxSegmentSize;
 
-    /**
+    /* 
      * The key reference queue contains entries whose keys have been garbage collected, and which
      * need to be cleaned up internally.
      */
     final ReferenceQueue<K> keyReferenceQueue;
 
-    /**
+    /* 
      * The value reference queue contains value references whose values have been garbage collected,
      * and which need to be cleaned up internally.
      */
     final ReferenceQueue<V> valueReferenceQueue;
 
-    /**
+    /* 
      * The recency queue is used to record which entries were accessed for updating the eviction
      * list's ordering. It is drained as a batch operation when either the DRAIN_THRESHOLD is
      * crossed or a write occurs on the segment.
      */
     final Queue<ReferenceEntry<K, V>> recencyQueue;
 
-    /**
+    /* 
      * A counter of the number of reads since the last write, used to drain queues on a small
      * fraction of read operations.
      */
     final AtomicInteger readCount = new AtomicInteger();
 
-    /**
+    /* 
      * A queue of elements currently in the map, ordered by access time. Elements are added to the
      * tail of the queue on access/write.
      */
     @GuardedBy("Segment.this")
     final Queue<ReferenceEntry<K, V>> evictionQueue;
 
-    /**
+    /* 
      * A queue of elements currently in the map, ordered by expiration time (either access or write
      * time). Elements are added to the tail of the queue on access/write.
      */
@@ -2129,7 +2129,7 @@ class MapMakerInternalMap<K, V>
       return map.entryFactory.newEntry(this, key, hash, next);
     }
 
-    /**
+    /* 
      * Copies {@code original} into a new entry chained to {@code newNext}. Returns the new entry,
      * or {@code null} if {@code original} was already garbage collected.
      */
@@ -2152,7 +2152,7 @@ class MapMakerInternalMap<K, V>
       return newEntry;
     }
 
-    /**
+    /* 
      * Sets a new value of an entry. Adds newly created entries at the end of the expiration queue.
      */
     @GuardedBy("Segment.this")
@@ -2164,7 +2164,7 @@ class MapMakerInternalMap<K, V>
 
     // reference queues, for garbage collection cleanup
 
-    /**
+    /* 
      * Cleanup collected entries when the lock is available.
      */
     void tryDrainReferenceQueues() {
@@ -2177,7 +2177,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Drain the key and value reference queues, cleaning up internal entries containing garbage
      * collected keys or values.
      */
@@ -2219,7 +2219,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Clears all entries from the key and value reference queues.
      */
     void clearReferenceQueues() {
@@ -2241,7 +2241,7 @@ class MapMakerInternalMap<K, V>
 
     // recency queue, shared by expiration and eviction
 
-    /**
+    /* 
      * Records the relative order in which this read was performed by adding {@code entry} to the
      * recency queue. At write-time, or when the queue is full past the threshold, the queue will
      * be drained and the entries therein processed.
@@ -2255,7 +2255,7 @@ class MapMakerInternalMap<K, V>
       recencyQueue.add(entry);
     }
 
-    /**
+    /* 
      * Updates the eviction metadata that {@code entry} was just read. This currently amounts to
      * adding {@code entry} to relevant eviction lists.
      *
@@ -2271,7 +2271,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Updates eviction metadata that {@code entry} was just written. This currently amounts to
      * adding {@code entry} to relevant eviction lists.
      */
@@ -2291,7 +2291,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Drains the recency queue, updating eviction metadata that the entries therein were read in
      * the specified relative order. This currently amounts to adding them to relevant eviction
      * lists (accounting for the fact that they could have been removed from the map since being
@@ -2321,7 +2321,7 @@ class MapMakerInternalMap<K, V>
       entry.setExpirationTime(map.ticker.read() + expirationNanos);
     }
 
-    /**
+    /* 
      * Cleanup expired entries when the lock is available.
      */
     void tryExpireEntries() {
@@ -2366,7 +2366,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Performs eviction if the segment is full. This should only be called prior to adding a new
      * entry and increasing {@code count}.
      *
@@ -2386,7 +2386,7 @@ class MapMakerInternalMap<K, V>
       return false;
     }
 
-    /**
+    /* 
      * Returns first entry of bin for given hash.
      */
     ReferenceEntry<K, V> getFirst(int hash) {
@@ -2465,7 +2465,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * This method is a convenience for testing. Code should call {@link
      * MapMakerInternalMap#containsValue} directly.
      */
@@ -2562,7 +2562,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Expands the table if possible.
      */
     @GuardedBy("Segment.this")
@@ -2847,7 +2847,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Removes an entry from within a table. All entries following the removed node can stay, but
      * all preceding ones need to be cloned.
      *
@@ -2885,7 +2885,7 @@ class MapMakerInternalMap<K, V>
       expirationQueue.remove(entry);
     }
 
-    /**
+    /* 
      * Removes an entry whose key has been garbage collected.
      */
     boolean reclaimKey(ReferenceEntry<K, V> entry, int hash) {
@@ -2916,7 +2916,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Removes an entry whose value has been garbage collected.
      */
     boolean reclaimValue(K key, int hash, ValueReference<K, V> valueReference) {
@@ -2954,7 +2954,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Clears a value that has not yet been set, and thus does not require count to be modified.
      */
     boolean clearValue(K key, int hash, ValueReference<K, V> valueReference) {
@@ -3007,7 +3007,7 @@ class MapMakerInternalMap<K, V>
       return false;
     }
 
-    /**
+    /* 
      * Returns {@code true} if the value has been partially collected, meaning that the value is
      * null and it is not computing.
      */
@@ -3018,7 +3018,7 @@ class MapMakerInternalMap<K, V>
       return (valueReference.get() == null);
     }
 
-    /**
+    /* 
      * Gets the value from an entry. Returns {@code null} if the entry is invalid,
      * partially-collected, computing, or expired.
      */
@@ -3040,7 +3040,7 @@ class MapMakerInternalMap<K, V>
       return value;
     }
 
-    /**
+    /* 
      * Performs routine cleanup following a read. Normally cleanup happens during writes, or from
      * the cleanupExecutor. If cleanup is not observed after a sufficient number of reads, try
      * cleaning up from the read thread.
@@ -3051,7 +3051,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Performs routine cleanup prior to executing a write. This should be called every time a
      * write thread acquires the segment lock, immediately after acquiring the lock.
      *
@@ -3062,7 +3062,7 @@ class MapMakerInternalMap<K, V>
       runLockedCleanup();
     }
 
-    /**
+    /* 
      * Performs routine cleanup following a write.
      */
     void postWriteCleanup() {
@@ -3097,7 +3097,7 @@ class MapMakerInternalMap<K, V>
 
   // Queues
 
-  /**
+  /* 
    * A custom queue for managing eviction order. Note that this is tightly integrated with {@code
    * ReferenceEntry}, upon which it relies to perform its linking.
    *
@@ -3225,7 +3225,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * A custom queue for managing expiration order. Note that this is tightly integrated with
    * {@code ReferenceEntry}, upon which it reliese to perform its linking.
    *
@@ -3434,7 +3434,7 @@ class MapMakerInternalMap<K, V>
     return segmentFor(hash).get(key, hash);
   }
 
-  /**
+  /* 
    * Returns the internal entry for the specified key. The entry may be computing, expired, or
    * partially collected. Does not impact recency ordering.
    */
@@ -3629,7 +3629,7 @@ class MapMakerInternalMap<K, V>
       }
     }
 
-    /**
+    /* 
      * Finds the next entry in the current chain. Returns {@code true} if an entry was found.
      */
     boolean nextInChain() {
@@ -3643,7 +3643,7 @@ class MapMakerInternalMap<K, V>
       return false;
     }
 
-    /**
+    /* 
      * Finds the next entry in the current table. Returns {@code true} if an entry was found.
      */
     boolean nextInTable() {
@@ -3657,7 +3657,7 @@ class MapMakerInternalMap<K, V>
       return false;
     }
 
-    /**
+    /* 
      * Advances to the given entry. Returns {@code true} if the entry was valid, {@code false} if it
      * should be skipped.
      */
@@ -3715,7 +3715,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * Custom Entry class used by EntryIterator.next(), that relays setValue changes to the
    * underlying map.
    */
@@ -3889,7 +3889,7 @@ class MapMakerInternalMap<K, V>
         concurrencyLevel, removalListener, this);
   }
 
-  /**
+  /* 
    * The actual object that gets serialized. Unfortunately, readResolve() doesn't get called when a
    * circular dependency is present, so the proxy must be able to behave as the map itself.
    */
@@ -3975,7 +3975,7 @@ class MapMakerInternalMap<K, V>
     }
   }
 
-  /**
+  /* 
    * The actual object that gets serialized. Unfortunately, readResolve() doesn't get called when a
    * circular dependency is present, so the proxy must be able to behave as the map itself.
    */

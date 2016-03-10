@@ -29,7 +29,7 @@ import java.util.RandomAccess;
 import java.util.Set;
 import java.util.SortedSet;
 
-/**
+/* 
  * Factories and utilities pertaining to the {@link Constraint} interface.
  *
  * @see MapConstraints
@@ -63,7 +63,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constraint that verifies that the element is not null. If the
    * element is null, a {@link NullPointerException} is thrown.
    */
@@ -73,7 +73,7 @@ public final class Constraints {
     return (Constraint<E>) NotNullConstraint.INSTANCE;
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified collection, using the specified
    * constraint. Any operations that add new elements to the collection will
    * call the provided constraint. However, this method does not verify that
@@ -90,7 +90,7 @@ public final class Constraints {
     return new ConstrainedCollection<E>(collection, constraint);
   }
 
-  /** @see Constraints#constrainedCollection */
+  /*  @see Constraints#constrainedCollection */
   static class ConstrainedCollection<E> extends ForwardingCollection<E> {
     private final Collection<E> delegate;
     private final Constraint<? super E> constraint;
@@ -112,7 +112,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified set, using the specified
    * constraint. Any operations that add new elements to the set will call the
    * provided constraint. However, this method does not verify that existing
@@ -129,7 +129,7 @@ public final class Constraints {
     return new ConstrainedSet<E>(set, constraint);
   }
 
-  /** @see Constraints#constrainedSet */
+  /*  @see Constraints#constrainedSet */
   static class ConstrainedSet<E> extends ForwardingSet<E> {
     private final Set<E> delegate;
     private final Constraint<? super E> constraint;
@@ -150,7 +150,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified sorted set, using the specified
    * constraint. Any operations that add new elements to the sorted set will
    * call the provided constraint. However, this method does not verify that
@@ -167,7 +167,7 @@ public final class Constraints {
     return new ConstrainedSortedSet<E>(sortedSet, constraint);
   }
 
-  /** @see Constraints#constrainedSortedSet */
+  /*  @see Constraints#constrainedSortedSet */
   private static class ConstrainedSortedSet<E> extends ForwardingSortedSet<E> {
     final SortedSet<E> delegate;
     final Constraint<? super E> constraint;
@@ -199,7 +199,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified list, using the specified
    * constraint. Any operations that add new elements to the list will call the
    * provided constraint. However, this method does not verify that existing
@@ -219,7 +219,7 @@ public final class Constraints {
         : new ConstrainedList<E>(list, constraint);
   }
 
-  /** @see Constraints#constrainedList */
+  /*  @see Constraints#constrainedList */
   @GwtCompatible
   private static class ConstrainedList<E> extends ForwardingList<E> {
     final List<E> delegate;
@@ -264,7 +264,7 @@ public final class Constraints {
     }
   }
 
-  /** @see Constraints#constrainedList */
+  /*  @see Constraints#constrainedList */
   static class ConstrainedRandomAccessList<E> extends ConstrainedList<E>
       implements RandomAccess {
     ConstrainedRandomAccessList(
@@ -273,7 +273,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified list iterator, using the
    * specified constraint. Any operations that would add new elements to the
    * underlying list will be verified by the constraint.
@@ -287,7 +287,7 @@ public final class Constraints {
     return new ConstrainedListIterator<E>(listIterator, constraint);
   }
 
-  /** @see Constraints#constrainedListIterator */
+  /*  @see Constraints#constrainedListIterator */
   static class ConstrainedListIterator<E> extends ForwardingListIterator<E> {
     private final ListIterator<E> delegate;
     private final Constraint<? super E> constraint;
@@ -324,7 +324,7 @@ public final class Constraints {
     }
   }
 
-  /**
+  /* 
    * Returns a constrained view of the specified multiset, using the specified
    * constraint. Any operations that add new elements to the multiset will call
    * the provided constraint. However, this method does not verify that
@@ -341,7 +341,7 @@ public final class Constraints {
     return new ConstrainedMultiset<E>(multiset, constraint);
   }
 
-  /** @see Constraints#constrainedMultiset */
+  /*  @see Constraints#constrainedMultiset */
   static class ConstrainedMultiset<E> extends ForwardingMultiset<E> {
     private Multiset<E> delegate;
     private final Constraint<? super E> constraint;

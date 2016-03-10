@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.primitives.Ints;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-/**
+/* 
  * Collections of strategies of generating the k * log(M) bits required for an element to
  * be mapped to a BloomFilter of M bits and k hash functions. These
  * strategies are part of the serialized form of the Bloom filters that use them, thus they must be
@@ -34,7 +34,7 @@ import java.util.Arrays;
  * @author Dimitris Andreou
  */
 enum BloomFilterStrategies implements BloomFilter.Strategy {
-  /**
+  /* 
    * See "Less Hashing, Same Performance: Building a Better Bloom Filter" by Adam Kirsch and
    * Michael Mitzenmacher. The paper argues that this trick doesn't significantly deteriorate the
    * performance of a Bloom filter (yet only needs two 32bit hash functions).
@@ -94,7 +94,7 @@ enum BloomFilterStrategies implements BloomFilter.Strategy {
       this.bitCount = bitCount;
     }
 
-    /** Returns true if the bit changed value. */
+    /*  Returns true if the bit changed value. */
     boolean set(int index) {
       if (!get(index)) {
         data[index >> 6] |= (1L << index);
@@ -108,12 +108,12 @@ enum BloomFilterStrategies implements BloomFilter.Strategy {
       return (data[index >> 6] & (1L << index)) != 0;
     }
 
-    /** Number of bits */
+    /*  Number of bits */
     int bitSize() {
       return data.length * Long.SIZE;
     }
 
-    /** Number of set bits (1s) */
+    /*  Number of set bits (1s) */
     int bitCount() {
       return bitCount;
     }
@@ -122,7 +122,7 @@ enum BloomFilterStrategies implements BloomFilter.Strategy {
       return new BitArray(data.clone());
     }
 
-    /** Combines the two BitArrays using bitwise OR. */
+    /*  Combines the two BitArrays using bitwise OR. */
     void putAll(BitArray array) {
       checkArgument(data.length == array.data.length,
           "BitArrays must be of equal length (%s != %s)", data.length, array.data.length);

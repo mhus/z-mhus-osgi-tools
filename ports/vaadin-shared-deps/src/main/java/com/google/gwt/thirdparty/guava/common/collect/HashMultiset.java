@@ -24,7 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-/**
+/* 
  * Multiset implementation backed by a {@link HashMap}.
  *
  * @author Kevin Bourrillion
@@ -34,7 +34,7 @@ import java.util.HashMap;
 @GwtCompatible(serializable = true, emulated = true)
 public final class HashMultiset<E> extends AbstractMapBasedMultiset<E> {
 
-  /**
+  /* 
    * Creates a new, empty {@code HashMultiset} using the default initial
    * capacity.
    */
@@ -42,7 +42,7 @@ public final class HashMultiset<E> extends AbstractMapBasedMultiset<E> {
     return new HashMultiset<E>();
   }
 
-  /**
+  /* 
    * Creates a new, empty {@code HashMultiset} with the specified expected
    * number of distinct elements.
    *
@@ -53,7 +53,7 @@ public final class HashMultiset<E> extends AbstractMapBasedMultiset<E> {
     return new HashMultiset<E>(distinctElements);
   }
 
-  /**
+  /* 
    * Creates a new {@code HashMultiset} containing the specified elements.
    * 
    * <p>This implementation is highly efficient when {@code elements} is itself
@@ -76,7 +76,7 @@ public final class HashMultiset<E> extends AbstractMapBasedMultiset<E> {
     super(Maps.<E, Count>newHashMapWithExpectedSize(distinctElements));
   }
 
-  /**
+  /* 
    * @serialData the number of distinct elements, the first element, its count,
    *     the second element, its count, and so on
    */

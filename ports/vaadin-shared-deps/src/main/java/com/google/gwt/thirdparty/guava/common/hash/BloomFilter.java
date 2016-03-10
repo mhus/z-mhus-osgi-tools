@@ -27,7 +27,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A Bloom filter for instances of {@code T}. A Bloom filter offers an approximate containment test
  * with one-sided error: if it claims that an element is contained in it, this might be in error,
  * but if it claims that an element is <i>not</i> contained in it, then this is definitely true.
@@ -48,28 +48,28 @@ import javax.annotation.Nullable;
  */
 @Beta
 public final class BloomFilter<T> implements Predicate<T>, Serializable {
-  /**
+  /* 
    * A strategy to translate T instances, to {@code numHashFunctions} bit indexes.
    *
    * <p>Implementations should be collections of pure functions (i.e. stateless).
    */
   interface Strategy extends java.io.Serializable {
 
-    /**
+    /* 
      * Sets {@code numHashFunctions} bits of the given bit array, by hashing a user element.
      *
      * <p>Returns whether any bits changed as a result of this operation.
      */
     <T> boolean put(T object, Funnel<? super T> funnel, int numHashFunctions, BitArray bits);
 
-    /**
+    /* 
      * Queries {@code numHashFunctions} bits of the given bit array, by hashing a user element;
      * returns {@code true} if and only if all selected bits are set.
      */
     <T> boolean mightContain(
         T object, Funnel<? super T> funnel, int numHashFunctions, BitArray bits);
 
-    /**
+    /* 
      * Identifier used to encode this strategy, when marshalled as part of a BloomFilter.
      * Only values in the [-128, 127] range are valid for the compact serial form.
      * Non-negative values are reserved for enums defined in BloomFilterStrategies;
@@ -79,21 +79,21 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     int ordinal();
   }
 
-  /** The bit set of the BloomFilter (not necessarily power of 2!)*/
+  /*  The bit set of the BloomFilter (not necessarily power of 2!)*/
   private final BitArray bits;
 
-  /** Number of hashes per element */
+  /*  Number of hashes per element */
   private final int numHashFunctions;
 
-  /** The funnel to translate Ts to bytes */
+  /*  The funnel to translate Ts to bytes */
   private final Funnel<T> funnel;
 
-  /**
+  /* 
    * The strategy we employ to map an element T to {@code numHashFunctions} bit indexes.
    */
   private final Strategy strategy;
 
-  /**
+  /* 
    * Creates a BloomFilter.
    */
   private BloomFilter(BitArray bits, int numHashFunctions, Funnel<T> funnel,
@@ -108,7 +108,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     this.strategy = checkNotNull(strategy);
   }
 
-  /**
+  /* 
    * Creates a new {@code BloomFilter} that's a copy of this instance. The new instance is equal to
    * this instance but shares no mutable state.
    *
@@ -118,7 +118,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return new BloomFilter<T>(bits.copy(), numHashFunctions, funnel, strategy);
   }
 
-  /**
+  /* 
    * Returns {@code true} if the element <i>might</i> have been put in this Bloom filter,
    * {@code false} if this is <i>definitely</i> not the case.
    */
@@ -126,7 +126,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return strategy.mightContain(object, funnel, numHashFunctions, bits);
   }
 
-  /**
+  /* 
    * Equivalent to {@link #mightContain}; provided only to satisfy the {@link Predicate} interface.
    * When using a reference of type {@code BloomFilter}, always invoke {@link #mightContain}
    * directly instead.
@@ -135,7 +135,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return mightContain(input);
   }
 
-  /**
+  /* 
    * Puts an element into this {@code BloomFilter}. Ensures that subsequent invocations of
    * {@link #mightContain(Object)} with the same element will always return {@code true}.
    *
@@ -151,7 +151,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return strategy.put(object, funnel, numHashFunctions, bits);
   }
 
-  /**
+  /* 
    * Returns the probability that {@linkplain #mightContain(Object)} will erroneously return
    * {@code true} for an object that has not actually been put in the {@code BloomFilter}.
    *
@@ -167,14 +167,14 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return Math.pow((double) bits.bitCount() / bitSize(), numHashFunctions);
   }
 
-  /**
+  /* 
    * Returns the number of bits in the underlying bit array.
    */
   @VisibleForTesting long bitSize() {
     return bits.bitSize();
   }
 
-  /**
+  /* 
    * Determines whether a given bloom filter is compatible with this bloom filter. For two
    * bloom filters to be compatible, they must:
    *
@@ -198,7 +198,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
         (this.funnel.equals(that.funnel));
   }
 
-  /**
+  /* 
    * Combines this bloom filter with another bloom filter by performing a bitwise OR of the
    * underlying data. The mutations happen to <b>this</b> instance. Callers must ensure the
    * bloom filters are appropriately sized to avoid saturating them.
@@ -246,7 +246,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return Objects.hashCode(numHashFunctions, funnel, strategy, bits);
   }
 
-  /**
+  /* 
    * Creates a {@link BloomFilter BloomFilter<T>} with the expected number of
    * insertions and expected false positive probability.
    *
@@ -293,7 +293,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     }
   }
 
-  /**
+  /* 
    * Creates a {@link BloomFilter BloomFilter<T>} with the expected number of
    * insertions and a default expected false positive probability of 3%.
    *
@@ -327,7 +327,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
    * 4) For optimal k: m = -nlnp / ((ln2) ^ 2)
    */
 
-  /**
+  /* 
    * Computes the optimal k (number of hashes per element inserted in Bloom filter), given the
    * expected insertions and total number of bits in the Bloom filter.
    *
@@ -341,7 +341,7 @@ public final class BloomFilter<T> implements Predicate<T>, Serializable {
     return Math.max(1, (int) Math.round(m / n * Math.log(2)));
   }
 
-  /**
+  /* 
    * Computes m (total bits of Bloom filter) which is expected to achieve, for the specified
    * expected insertions, the required false positive probability.
    *

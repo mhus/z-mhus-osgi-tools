@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.eventbus;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-/**
+/* 
  * Wraps a single-argument 'handler' method on a specific object, and ensures
  * that only one thread may enter the method at a time.
  *
@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
  * @author Cliff Biffle
  */
 final class SynchronizedEventHandler extends EventHandler {
-  /**
+  /* 
    * Creates a new SynchronizedEventHandler to wrap {@code method} on
    * {@code target}.
    *

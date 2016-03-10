@@ -21,7 +21,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * An {@link Escaper} that converts literal text into a format safe for
  * inclusion in a particular context (such as an XML document). Typically (but
  * not always), the inverse process of "unescaping" the text is performed
@@ -53,13 +53,13 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @Beta
 @GwtCompatible
 public abstract class UnicodeEscaper extends Escaper {
-  /** The amount of padding (chars) to use when growing the escape buffer. */
+  /*  The amount of padding (chars) to use when growing the escape buffer. */
   private static final int DEST_PAD = 32;
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected UnicodeEscaper() {}
 
-  /**
+  /* 
    * Returns the escaped form of the given Unicode code point, or {@code null}
    * if this code point does not need to be escaped. When called as part of an
    * escaping operation, the given code point is guaranteed to be in the range
@@ -84,7 +84,7 @@ public abstract class UnicodeEscaper extends Escaper {
    */
   protected abstract char[] escape(int cp);
 
-  /**
+  /* 
    * Scans a sub-sequence of characters from a given {@link CharSequence},
    * returning the index of the next character that requires escaping.
    *
@@ -120,7 +120,7 @@ public abstract class UnicodeEscaper extends Escaper {
     return index;
   }
 
-  /**
+  /* 
    * Returns the escaped form of a given literal string.
    *
    * <p>If you are escaping input in arbitrary successive chunks, then it is not
@@ -145,7 +145,7 @@ public abstract class UnicodeEscaper extends Escaper {
     return index == end ? string : escapeSlow(string, index);
   }
 
-  /**
+  /* 
    * Returns the escaped form of a given literal string, starting at the given
    * index.  This method is called by the {@link #escape(String)} method when it
    * discovers that escaping is required.  It is protected to allow subclasses
@@ -220,7 +220,7 @@ public abstract class UnicodeEscaper extends Escaper {
     return new String(dest, 0, destIndex);
   }
 
-  /**
+  /* 
    * Returns the Unicode code point of the character at the given index.
    *
    * <p>Unlike {@link Character#codePointAt(CharSequence, int)} or
@@ -284,7 +284,7 @@ public abstract class UnicodeEscaper extends Escaper {
     throw new IndexOutOfBoundsException("Index exceeds specified range");
   }
 
-  /**
+  /* 
    * Helper method to grow the character buffer as needed, this only happens
    * once in a while so it's ok if it's in a method call.  If the index passed
    * in is 0 then no copying will be done.

@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.io.Serializable;
 import java.util.Comparator;
 
-/** An ordering that tries several comparators in order. */
+/*  An ordering that tries several comparators in order. */
 @GwtCompatible(serializable = true)
 final class CompoundOrdering<T> extends Ordering<T> implements Serializable {
   final ImmutableList<Comparator<? super T>> comparators;

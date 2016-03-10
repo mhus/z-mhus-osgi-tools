@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A callback for accepting the results of a {@link java.util.concurrent.Future}
  * computation asynchronously.
  *
@@ -31,13 +31,13 @@ import javax.annotation.Nullable;
  * @since 10.0
  */
 public interface FutureCallback<V> {
-  /**
+  /* 
    * Invoked with the result of the {@code Future} computation when it is
    * successful.
    */
   void onSuccess(@Nullable V result);
 
-  /**
+  /* 
    * Invoked when a {@code Future} computation fails or is canceled.
    *
    * <p>If the future's {@link Future#get() get} method throws an {@link

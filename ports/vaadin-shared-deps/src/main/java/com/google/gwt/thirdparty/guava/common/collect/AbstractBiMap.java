@@ -35,7 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A general-purpose bimap implementation using any two backing {@code Map}
  * instances.
  *
@@ -52,12 +52,12 @@ abstract class AbstractBiMap<K, V> extends ForwardingMap<K, V>
   private transient Map<K, V> delegate;
   transient AbstractBiMap<V, K> inverse;
 
-  /** Package-private constructor for creating a map-backed bimap. */
+  /*  Package-private constructor for creating a map-backed bimap. */
   AbstractBiMap(Map<K, V> forward, Map<V, K> backward) {
     setDelegates(forward, backward);
   }
 
-  /** Private constructor for inverse bimap. */
+  /*  Private constructor for inverse bimap. */
   private AbstractBiMap(Map<K, V> backward, AbstractBiMap<V, K> forward) {
     delegate = backward;
     inverse = forward;
@@ -67,21 +67,21 @@ abstract class AbstractBiMap<K, V> extends ForwardingMap<K, V>
     return delegate;
   }
 
-  /**
+  /* 
    * Returns its input, or throws an exception if this is not a valid key.
    */
   K checkKey(@Nullable K key) {
     return key;
   }
 
-  /**
+  /* 
    * Returns its input, or throws an exception if this is not a valid value.
    */
   V checkValue(@Nullable V value) {
     return value;
   }
 
-  /**
+  /* 
    * Specifies the delegate maps going in each direction. Called by the
    * constructor and by subclasses during deserialization.
    */
@@ -349,7 +349,7 @@ abstract class AbstractBiMap<K, V> extends ForwardingMap<K, V>
     }
   }
 
-  /** The inverse of any other {@code AbstractBiMap} subclass. */
+  /*  The inverse of any other {@code AbstractBiMap} subclass. */
   private static class Inverse<K, V> extends AbstractBiMap<K, V> {
     private Inverse(Map<K, V> backward, AbstractBiMap<V, K> forward) {
       super(backward, forward);
@@ -374,7 +374,7 @@ abstract class AbstractBiMap<K, V> extends ForwardingMap<K, V>
       return inverse.checkKey(value);
     }
 
-    /**
+    /* 
      * @serialData the forward bimap
      */
     @GwtIncompatible("java.io.ObjectOuputStream")

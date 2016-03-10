@@ -24,7 +24,7 @@ import com.google.gwt.thirdparty.streamhtmlparser.util.JavascriptTokenBuffer;
 
 import java.util.Map;
 
-/**
+/* 
  * <p>Many comments copied almost verbatim from the original C version.
  */
 public class JavascriptParserImpl extends GenericParser
@@ -77,7 +77,7 @@ public class JavascriptParserImpl extends GenericParser
 
   private final JavascriptTokenBuffer ccBuffer;
 
-  /**
+  /* 
    * Creates a {@code JavascriptParserImpl} object.
    */
   public JavascriptParserImpl() {
@@ -85,7 +85,7 @@ public class JavascriptParserImpl extends GenericParser
     ccBuffer = new JavascriptTokenBuffer();
   }
 
-  /**
+  /* 
    * Creates a {@code JavascriptParserImpl} object that is a copy
    * of the one provided.
    *
@@ -132,7 +132,7 @@ public class JavascriptParserImpl extends GenericParser
     return currentState;
   }
 
-  /**
+  /* 
    * Called every time we find a slash ('/') character in the javascript
    * text (except for slashes that close comments or regexp literals).
    *
@@ -233,7 +233,7 @@ public class JavascriptParserImpl extends GenericParser
     return nextState;
   }
 
-  /**
+  /* 
    * Called at the end of a javascript comment.
    *
    * <p>When we open a comment, the initial '/' was inserted into the ring

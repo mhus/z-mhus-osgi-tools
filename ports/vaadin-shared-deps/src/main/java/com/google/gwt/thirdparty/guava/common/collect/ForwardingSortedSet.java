@@ -26,7 +26,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A sorted set which forwards all its method calls to another sorted set.
  * Subclasses should override one or more methods to modify the behavior of the
  * backing sorted set as desired per the <a
@@ -57,7 +57,7 @@ import javax.annotation.Nullable;
 public abstract class ForwardingSortedSet<E> extends ForwardingSet<E>
     implements SortedSet<E> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingSortedSet() {}
 
   @Override protected abstract SortedSet<E> delegate();
@@ -101,7 +101,7 @@ public abstract class ForwardingSortedSet<E> extends ForwardingSet<E>
         : ((Comparator<Object>) comparator).compare(o1, o2);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #contains} in terms of the {@code first()}
    * method of {@link #tailSet}. If you override {@link #tailSet}, you may wish
    * to override {@link #contains} to forward to this implementation.
@@ -124,7 +124,7 @@ public abstract class ForwardingSortedSet<E> extends ForwardingSet<E>
     }
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #remove} in terms of the {@code iterator()}
    * method of {@link #tailSet}. If you override {@link #tailSet}, you may wish
    * to override {@link #remove} to forward to this implementation.
@@ -152,7 +152,7 @@ public abstract class ForwardingSortedSet<E> extends ForwardingSet<E>
     return false;
   }
 
-  /**
+  /* 
    * A sensible default implementation of {@link #subSet(Object, Object)} in
    * terms of {@link #headSet(Object)} and {@link #tailSet(Object)}. In some
    * situations, you may wish to override {@link #subSet(Object, Object)} to

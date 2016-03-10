@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-/**
+/* 
  * A type-to-instance map backed by an {@link ImmutableMap}. See also {@link
  * MutableTypeToInstanceMap}.
  *
@@ -33,17 +33,17 @@ import java.util.Map;
 public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken<? extends B>, B>
     implements TypeToInstanceMap<B> {
 
-  /** Returns an empty type to instance map. */
+  /*  Returns an empty type to instance map. */
   public static <B> ImmutableTypeToInstanceMap<B> of() {
     return new ImmutableTypeToInstanceMap<B>(ImmutableMap.<TypeToken<? extends B>, B>of());
   }
 
-  /** Returns a new builder. */
+  /*  Returns a new builder. */
   public static <B> Builder<B> builder() {
     return new Builder<B>();
   }
 
-  /**
+  /* 
    * A builder for creating immutable type-to-instance maps. Example:
    *
    * <p>After invoking {@link #build()} it is still possible to add more entries
@@ -59,7 +59,7 @@ public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken
 
     private Builder() {}
 
-    /**
+    /* 
      * Associates {@code key} with {@code value} in the built map. Duplicate
      * keys are not allowed, and will cause {@link #build} to fail.
      */
@@ -68,7 +68,7 @@ public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken
       return this;
     }
 
-    /**
+    /* 
      * Associates {@code key} with {@code value} in the built map. Duplicate
      * keys are not allowed, and will cause {@link #build} to fail.
      */
@@ -77,7 +77,7 @@ public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken
       return this;
     }
 
-    /**
+    /* 
      * Returns a new immutable type-to-instance map containing the entries
      * provided to this builder.
      *
@@ -98,7 +98,7 @@ public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken
     return trustedGet(type.rejectTypeVariables());
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the map unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -111,7 +111,7 @@ public final class ImmutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken
     return trustedGet(TypeToken.of(type));
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the map unmodified.
    *
    * @throws UnsupportedOperationException always

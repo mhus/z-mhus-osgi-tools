@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Discovery tools implementations.
  */
 package org.apache.commons.discovery.tools;

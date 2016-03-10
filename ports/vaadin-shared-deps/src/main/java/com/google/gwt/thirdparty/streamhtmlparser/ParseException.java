@@ -16,19 +16,19 @@
 
 package com.google.gwt.thirdparty.streamhtmlparser;
 
-/**
+/* 
  * Checked exception thrown on an unrecoverable error during parsing.
  * 
  * @see Parser#parse(String)
  */
 public class ParseException extends Exception {
 
-  /**
+  /* 
    * Constructs an {@code ParseException} with no detail message.
    */
   public ParseException() {}
 
-  /**
+  /* 
    * Constructs an {@code ParseException} with a detail message obtained
    * from the supplied message and the parser's line and column numbers.
    * @param parser the {@code Parser} that triggered the exception

@@ -24,7 +24,7 @@ import java.io.OutputStream;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An OutputStream that counts the number of bytes written.
  *
  * @author Chris Nokleberg
@@ -35,7 +35,7 @@ public final class CountingOutputStream extends FilterOutputStream {
 
   private long count;
 
-  /**
+  /* 
    * Wraps another output stream, counting the number of bytes written.
    *
    * @param out the output stream to be wrapped
@@ -44,7 +44,7 @@ public final class CountingOutputStream extends FilterOutputStream {
     super(out);
   }
 
-  /** Returns the number of bytes written. */
+  /*  Returns the number of bytes written. */
   public long getCount() {
     return count;
   }

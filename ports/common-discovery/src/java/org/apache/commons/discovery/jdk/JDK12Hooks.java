@@ -27,19 +27,19 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * JDK 1.2 Style Hooks implementation.
  */
 public class JDK12Hooks extends JDKHooks {
 
-    /**
+    /* 
      * Logger
      */
     private static Log log = LogFactory.getLog(JDK12Hooks.class);
 
     private static final ClassLoader systemClassLoader = findSystemClassLoader();
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -50,7 +50,7 @@ public class JDK12Hooks extends JDKHooks {
         log = _log;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -66,7 +66,7 @@ public class JDK12Hooks extends JDKHooks {
         });
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -94,7 +94,7 @@ public class JDK12Hooks extends JDKHooks {
         return classLoader;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -102,7 +102,7 @@ public class JDK12Hooks extends JDKHooks {
         return systemClassLoader;
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -163,7 +163,7 @@ public class JDK12Hooks extends JDKHooks {
         return resources;
     }
 
-    /**
+    /* 
      * Enumerates resources URL.
      *
      * @param first The first URL in the enumeration sequence
@@ -223,7 +223,7 @@ public class JDK12Hooks extends JDKHooks {
         };
     }
 
-    /**
+    /* 
      * Find the System {@code ClassLoader}.
      *
      * @return The System {@code ClassLoader}

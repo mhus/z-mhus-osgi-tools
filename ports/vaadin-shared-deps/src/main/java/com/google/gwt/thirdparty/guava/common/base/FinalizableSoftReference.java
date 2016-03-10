@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.base;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
 
-/**
+/* 
  * Soft reference with a {@code finalizeReferent()} method which a background thread invokes after
  * the garbage collector reclaims the referent. This is a simpler alternative to using a {@link
  * ReferenceQueue}.
@@ -29,7 +29,7 @@ import java.lang.ref.SoftReference;
  */
 public abstract class FinalizableSoftReference<T> extends SoftReference<T>
     implements FinalizableReference {
-  /**
+  /* 
    * Constructs a new finalizable soft reference.
    *
    * @param referent to softly reference

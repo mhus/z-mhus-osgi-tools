@@ -16,14 +16,14 @@
  */
 package org.apache.commons.discovery;
 
-/**
+/* 
  * Iterator over discovered SPI type.
  *
  * @param <T> The SPI type
  */
 public abstract class ResourceClassIterator<T> extends ResourceIterator {
 
-    /**
+    /* 
      * Returns the next SPI Class in the iteration.
      *
      * @param <S> Any type extends T
@@ -31,7 +31,7 @@ public abstract class ResourceClassIterator<T> extends ResourceIterator {
      */
     public abstract <S extends T> ResourceClass<S> nextResourceClass();
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -39,7 +39,7 @@ public abstract class ResourceClassIterator<T> extends ResourceIterator {
         return nextResourceClass();
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

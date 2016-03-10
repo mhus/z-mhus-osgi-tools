@@ -24,7 +24,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
+/* 
  * Simple helper class to build a "sparse" array of objects based on the indexes that were added to
  * it. The array will be from 0 to the maximum index given. All non-set indexes will contain null
  * (so it's not really a sparse array, just a pseudo sparse array). The builder can also return a
@@ -36,7 +36,7 @@ import java.util.Map;
 @Beta
 @GwtCompatible
 public final class CharEscaperBuilder {
-  /**
+  /* 
    * Simple decorator that turns an array of replacement char[]s into a CharEscaper, this results in
    * a very fast escape method.
    */
@@ -75,14 +75,14 @@ public final class CharEscaperBuilder {
   // The highest index we've seen so far.
   private int max = -1;
 
-  /**
+  /* 
    * Construct a new sparse array builder.
    */
   public CharEscaperBuilder() {
     this.map = new HashMap<Character, String>();
   }
 
-  /**
+  /* 
    * Add a new mapping from an index to an object to the escaping.
    */
   public CharEscaperBuilder addEscape(char c, String r) {
@@ -93,7 +93,7 @@ public final class CharEscaperBuilder {
     return this;
   }
 
-  /**
+  /* 
    * Add multiple mappings at once for a particular index.
    */
   public CharEscaperBuilder addEscapes(char[] cs, String r) {
@@ -104,7 +104,7 @@ public final class CharEscaperBuilder {
     return this;
   }
 
-  /**
+  /* 
    * Convert this builder into an array of char[]s where the maximum index is the value of the
    * highest character that has been seen. The array will be sparse in the sense that any unseen
    * index will default to null.
@@ -119,7 +119,7 @@ public final class CharEscaperBuilder {
     return result;
   }
 
-  /**
+  /* 
    * Convert this builder into a char escaper which is just a decorator around the underlying array
    * of replacement char[]s.
    *

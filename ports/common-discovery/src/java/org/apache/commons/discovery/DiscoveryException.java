@@ -16,7 +16,7 @@
  */
 package org.apache.commons.discovery;
 
-/**
+/* 
  * An exception that is thrown only if a suitable service
  * instance cannot be created by {@code ServiceFactory}.
  *
@@ -24,19 +24,19 @@ package org.apache.commons.discovery;
  */
 public class DiscoveryException extends RuntimeException {
 
-    /**
+    /* 
      * 
      */
     private static final long serialVersionUID = -2518293836976054070L;
 
-    /**
+    /* 
      * Construct a new exception with <code>null</code> as its detail message.
      */
     public DiscoveryException() {
         super();
     }
 
-    /**
+    /* 
      * Construct a new exception with the specified detail message.
      *
      * @param message The detail message
@@ -45,7 +45,7 @@ public class DiscoveryException extends RuntimeException {
         super(message);
     }
 
-    /**
+    /* 
      * Construct a new exception with the specified cause and a derived
      * detail message.
      *
@@ -55,7 +55,7 @@ public class DiscoveryException extends RuntimeException {
         super(cause);
     }
 
-    /**
+    /* 
      * Construct a new exception with the specified detail message and cause.
      *
      * @param message The detail message

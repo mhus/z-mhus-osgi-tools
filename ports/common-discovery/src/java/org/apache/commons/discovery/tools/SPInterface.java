@@ -20,7 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.discovery.DiscoveryException;
 
-/**
+/* 
  * Represents a Service Programming Interface (spi).
  * - SPI's name
  * - SPI's (provider) class
@@ -35,7 +35,7 @@ import org.apache.commons.discovery.DiscoveryException;
  */
 public class SPInterface<T> {
 
-    /**
+    /* 
      * Construct object representing Class {@code provider}.
      *
      * @param <T> The SPI type
@@ -47,7 +47,7 @@ public class SPInterface<T> {
         return newSPInterface(provider, provider.getName());
     }
 
-    /**
+    /* 
      * Construct object representing Class {@code provider}.
      *
      * @param <T> The SPI type
@@ -63,7 +63,7 @@ public class SPInterface<T> {
         return new SPInterface<T>(provider, propertyName);
     }
 
-    /**
+    /* 
      * Construct object representing Class {@code provider}.
      *
      * @param <T> The SPI type
@@ -81,7 +81,7 @@ public class SPInterface<T> {
         return newSPInterface(provider, provider.getName(), constructorParamClasses, constructorParams);
     }
 
-    /**
+    /* 
      * Construct object representing Class {@code provider}.
      *
      * @param <T> The SPI type
@@ -104,14 +104,14 @@ public class SPInterface<T> {
         return new SPInterface<T>(provider, propertyName, constructorParamClasses, constructorParams);
     }
 
-    /**
+    /* 
      * The service programming interface: intended to be
      * an interface or abstract class, but not limited
      * to those two.
      */
     private final Class<T> spi;
 
-    /**
+    /* 
      * The property name to be used for finding the name of
      * the SPI implementation class.
      */
@@ -121,7 +121,7 @@ public class SPInterface<T> {
 
     private final Object params[];
 
-    /**
+    /* 
      * Construct object representing Class <code>provider</code>.
      *
      * @param provider The SPI class
@@ -130,7 +130,7 @@ public class SPInterface<T> {
         this(provider, provider.getName());
     }
 
-    /**
+    /* 
      * Construct object representing Class <code>provider</code>.
      *
      * @param spi The SPI class
@@ -147,7 +147,7 @@ public class SPInterface<T> {
         this.params = null;
     }
 
-    /**
+    /* 
      * Construct object representing Class <code>provider</code>.
      *
      * @param provider The SPI class
@@ -167,7 +167,7 @@ public class SPInterface<T> {
              constructorParams);
     }
 
-    /**
+    /* 
      * Construct object representing Class <code>provider</code>.
      *
      * @param spi The SPI class
@@ -193,7 +193,7 @@ public class SPInterface<T> {
         this.params = constructorParams;
     }
 
-    /**
+    /* 
      * Returns the SPI class name.
      *
      * @return The SPI class name
@@ -202,7 +202,7 @@ public class SPInterface<T> {
         return spi.getName();
     }
 
-    /**
+    /* 
      * Returns the SPI class.
      *
      * @return The SPI class
@@ -211,7 +211,7 @@ public class SPInterface<T> {
         return spi;
     }
 
-    /**
+    /* 
      * Returns the property name to be used for finding
      * the name of the SPI implementation class.
      *
@@ -222,7 +222,7 @@ public class SPInterface<T> {
         return propertyName;
     }
 
-    /**
+    /* 
      * Creates a new instance of the given SPI class.
      *
      * @param <S> Any type extends T
@@ -248,7 +248,7 @@ public class SPInterface<T> {
         return ClassUtils.newInstance(impl, paramClasses, params);
     }
 
-    /**
+    /* 
      * Verifies the given SPI implementation is a SPI specialization.
      *
      * @param <S> Any type extends T

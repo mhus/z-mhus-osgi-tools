@@ -22,7 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-/**
+/* 
  * Skeleton implementation of {@link HashFunction}, appropriate for non-streaming algorithms.
  * All the hash computation done using {@linkplain #newHasher()} are delegated to the {@linkplain
  * #hashBytes(byte[], int, int)} method.
@@ -45,7 +45,7 @@ abstract class AbstractNonStreamingHashFunction implements HashFunction {
     return newHasher().putObject(instance, funnel).hash();
   }
 
-  /**
+  /* 
    * @deprecated Use {@link AbstractNonStreamingHashFunction#hashUnencodedChars} instead.
    */
   @Deprecated
@@ -78,7 +78,7 @@ abstract class AbstractNonStreamingHashFunction implements HashFunction {
     return hashBytes(input, 0, input.length);
   }
 
-  /**
+  /* 
    * In-memory stream-based implementation of Hasher.
    */
   private final class BufferingHasher extends AbstractHasher {

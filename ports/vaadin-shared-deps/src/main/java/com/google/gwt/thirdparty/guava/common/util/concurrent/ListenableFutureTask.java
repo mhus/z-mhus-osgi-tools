@@ -22,7 +22,7 @@ import java.util.concurrent.FutureTask;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A {@link FutureTask} that also implements the {@link ListenableFuture}
  * interface.  Unlike {@code FutureTask}, {@code ListenableFutureTask} does not
  * provide an overrideable {@link FutureTask#done() done()} method.  For similar
@@ -42,7 +42,7 @@ public class ListenableFutureTask<V> extends FutureTask<V>
   // The execution list to hold our listeners.
   private final ExecutionList executionList = new ExecutionList();
 
-  /**
+  /* 
    * Creates a {@code ListenableFutureTask} that will upon running, execute the
    * given {@code Callable}.
    *
@@ -53,7 +53,7 @@ public class ListenableFutureTask<V> extends FutureTask<V>
     return new ListenableFutureTask<V>(callable);
   }
 
-  /**
+  /* 
    * Creates a {@code ListenableFutureTask} that will upon running, execute the
    * given {@code Runnable}, and arrange that {@code get} will return the
    * given result on successful completion.
@@ -83,7 +83,7 @@ public class ListenableFutureTask<V> extends FutureTask<V>
     executionList.add(listener, exec);
   }
 
-  /**
+  /* 
    * Internal implementation detail used to invoke the listeners.
    */
   @Override

@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A map entry which forwards all its method calls to another map entry.
  * Subclasses should override one or more methods to modify the behavior of the
  * backing map entry as desired per the <a
@@ -56,7 +56,7 @@ public abstract class ForwardingMapEntry<K, V>
     extends ForwardingObject implements Map.Entry<K, V> {
   // TODO(user): identify places where thread safety is actually lost
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingMapEntry() {}
 
   @Override protected abstract Map.Entry<K, V> delegate();
@@ -84,7 +84,7 @@ public abstract class ForwardingMapEntry<K, V>
     return delegate().hashCode();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #equals(Object)} in terms of {@link
    * #getKey()} and {@link #getValue()}. If you override either of these
    * methods, you may wish to override {@link #equals(Object)} to forward to
@@ -101,7 +101,7 @@ public abstract class ForwardingMapEntry<K, V>
     return false;
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #hashCode()} in terms of {@link #getKey()}
    * and {@link #getValue()}. If you override either of these methods, you may
    * wish to override {@link #hashCode()} to forward to this implementation.
@@ -114,7 +114,7 @@ public abstract class ForwardingMapEntry<K, V>
     return ((k == null) ? 0 : k.hashCode()) ^ ((v == null) ? 0 : v.hashCode());
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #toString} in terms of {@link
    * #getKey} and {@link #getValue}. If you override either of these
    * methods, you may wish to override {@link #equals} to forward to this

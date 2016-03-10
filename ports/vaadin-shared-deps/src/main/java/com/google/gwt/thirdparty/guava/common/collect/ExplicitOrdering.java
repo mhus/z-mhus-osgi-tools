@@ -23,7 +23,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/** An ordering that compares objects according to a given order. */
+/*  An ordering that compares objects according to a given order. */
 @GwtCompatible(serializable = true)
 final class ExplicitOrdering<T> extends Ordering<T> implements Serializable {
   final ImmutableMap<T, Integer> rankMap;

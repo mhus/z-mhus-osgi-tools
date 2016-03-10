@@ -33,7 +33,7 @@ import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An implementation of {@link RangeSet} backed by a {@link TreeMap}.
  *
  * @author Louis Wasserman
@@ -47,14 +47,14 @@ public class TreeRangeSet<C extends Comparable<?>>
   @VisibleForTesting
   final NavigableMap<Cut<C>, Range<C>> rangesByLowerBound;
 
-  /**
+  /* 
    * Creates an empty {@code TreeRangeSet} instance.
    */
   public static <C extends Comparable<?>> TreeRangeSet<C> create() {
     return new TreeRangeSet<C>(new TreeMap<Cut<C>, Range<C>>());
   }
   
-  /**
+  /* 
    * Returns a {@code TreeRangeSet} initialized with the ranges in the specified range set.
    */
   public static <C extends Comparable<?>> TreeRangeSet<C> create(RangeSet<C> rangeSet) {
@@ -242,7 +242,7 @@ public class TreeRangeSet<C extends Comparable<?>>
       extends AbstractNavigableMap<Cut<C>, Range<C>> {
     private final NavigableMap<Cut<C>, Range<C>> rangesByLowerBound;
     
-    /**
+    /* 
      * upperBoundWindow represents the headMap/subMap/tailMap view of the entire "ranges by upper
      * bound" map; it's a constraint on the *keys*, and does not affect the values.
      */
@@ -401,7 +401,7 @@ public class TreeRangeSet<C extends Comparable<?>>
     private final NavigableMap<Cut<C>, Range<C>> positiveRangesByLowerBound;
     private final NavigableMap<Cut<C>, Range<C>> positiveRangesByUpperBound;
     
-    /**
+    /* 
      * complementLowerBoundWindow represents the headMap/subMap/tailMap view of the entire
      * "complement ranges by lower bound" map; it's a constraint on the *keys*, and does not affect
      * the values.
@@ -619,13 +619,13 @@ public class TreeRangeSet<C extends Comparable<?>>
 
   private static final class SubRangeSetRangesByLowerBound<C extends Comparable<?>>
       extends AbstractNavigableMap<Cut<C>, Range<C>> {
-    /**
+    /* 
      * lowerBoundWindow is the headMap/subMap/tailMap view; it only restricts the keys, and does not
      * affect the values.
      */
     private final Range<Cut<C>> lowerBoundWindow;
 
-    /**
+    /* 
      * restriction is the subRangeSet view; ranges are truncated to their intersection with
      * restriction.
      */

@@ -23,7 +23,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
+/* 
  * Marks an event handling method as being thread-safe.  This annotation
  * indicates that EventBus may invoke the event handler simultaneously from
  * multiple threads.

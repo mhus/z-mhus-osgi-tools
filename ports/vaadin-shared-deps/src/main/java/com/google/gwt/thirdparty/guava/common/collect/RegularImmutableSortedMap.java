@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An implementation of an immutable sorted map with one or more entries.
  *
  * @author Louis Wasserman

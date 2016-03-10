@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-/**
+/* 
  * A {@link Reader} that reads the characters in a {@link CharSequence}. Like {@code StringReader},
  * but works with any {@link CharSequence}.
  *
@@ -37,7 +37,7 @@ final class CharSequenceReader extends Reader {
   private int pos;
   private int mark;
 
-  /**
+  /* 
    * Creates a new reader wrapping the given character sequence.
    */
   public CharSequenceReader(CharSequence seq) {

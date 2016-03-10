@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Helper functions that can operate on any {@code Object}.
  *
  * <p>See the Guava User Guide on <a
@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 public final class Objects {
   private Objects() {}
 
-  /**
+  /* 
    * Determines whether two possibly-null objects are equal. Returns:
    *
    * <ul>
@@ -64,7 +64,7 @@ public final class Objects {
     return new ToStringHelper(simpleName(self.getClass()));
   }
 
-  /**
+  /* 
    * Creates an instance of {@link ToStringHelper} in the same manner as
    * {@link Objects#toStringHelper(Object)}, but using the name of {@code clazz}
    * instead of using an instance's {@link Object#getClass()}.
@@ -78,7 +78,7 @@ public final class Objects {
     return new ToStringHelper(simpleName(clazz));
   }
 
-  /**
+  /* 
    * Creates an instance of {@link ToStringHelper} in the same manner as
    * {@link Objects#toStringHelper(Object)}, but using {@code className} instead
    * of using an instance's {@link Object#getClass()}.
@@ -90,7 +90,7 @@ public final class Objects {
     return new ToStringHelper(className);
   }
 
-  /**
+  /* 
    * {@link Class#getSimpleName()} is not GWT compatible yet, so we
    * provide our own implementation.
    */
@@ -112,7 +112,7 @@ public final class Objects {
     return name.substring(start + 1);
   }
 
-  /**
+  /* 
    * Returns the first of two given parameters that is not {@code null}, if
    * either is, or otherwise throws a {@link NullPointerException}.
    *
@@ -132,7 +132,7 @@ public final class Objects {
     return first != null ? first : checkNotNull(second);
   }
 
-  /**
+  /* 
    * Support class for {@link Objects#toStringHelper}.
    *
    * @author Jason Lee
@@ -144,14 +144,14 @@ public final class Objects {
     private ValueHolder holderTail = holderHead;
     private boolean omitNullValues = false;
 
-    /**
+    /* 
      * Use {@link Objects#toStringHelper(Object)} to create an instance.
      */
     private ToStringHelper(String className) {
       this.className = checkNotNull(className);
     }
 
-    /**
+    /* 
      * Configures the {@link ToStringHelper} so {@link #toString()} will ignore
      * properties with null value. The order of calling this method, relative
      * to the {@code add()}/{@code addValue()} methods, is not significant.
@@ -163,7 +163,7 @@ public final class Objects {
       return this;
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format. If {@code value} is {@code null}, the string {@code "null"}
      * is used, unless {@link #omitNullValues()} is called, in which case this
@@ -173,7 +173,7 @@ public final class Objects {
       return addHolder(name, value);
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -183,7 +183,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -193,7 +193,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -203,7 +203,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -213,7 +213,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -223,7 +223,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds a name/value pair to the formatted output in {@code name=value}
      * format.
      *
@@ -233,7 +233,7 @@ public final class Objects {
       return addHolder(name, String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, Object)} instead
@@ -243,7 +243,7 @@ public final class Objects {
       return addHolder(value);
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, boolean)} instead
@@ -255,7 +255,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, char)} instead
@@ -267,7 +267,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, double)} instead
@@ -279,7 +279,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, float)} instead
@@ -291,7 +291,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, int)} instead
@@ -303,7 +303,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Adds an unnamed value to the formatted output.
      *
      * <p>It is strongly encouraged to use {@link #add(String, long)} instead
@@ -315,7 +315,7 @@ public final class Objects {
       return addHolder(String.valueOf(value));
     }
 
-    /**
+    /* 
      * Returns a string in the format specified by {@link
      * Objects#toStringHelper(Object)}.
      *

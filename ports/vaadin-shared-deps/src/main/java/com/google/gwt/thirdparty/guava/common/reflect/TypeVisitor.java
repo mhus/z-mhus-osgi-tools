@@ -27,7 +27,7 @@ import java.util.Set;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-/**
+/* 
  * Based on what a {@link Type} is, dispatch it to the corresponding {@code visit*} method. By
  * default, no recursion is done for type arguments or type bounds. But subclasses can opt to do
  * recursion by calling {@link #visit} for any {@code Type} while visitation is in progress. For
@@ -46,7 +46,7 @@ abstract class TypeVisitor {
 
   private final Set<Type> visited = Sets.newHashSet();
 
-  /**
+  /* 
    * Visits the given types. Null types are ignored. This allows subclasses to call
    * {@code visit(parameterizedType.getOwnerType())} safely without having to check nulls.
    */

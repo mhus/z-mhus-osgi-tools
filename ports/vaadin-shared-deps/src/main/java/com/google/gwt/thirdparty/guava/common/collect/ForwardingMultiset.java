@@ -26,7 +26,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A multiset which forwards all its method calls to another multiset.
  * Subclasses should override one or more methods to modify the behavior of the
  * backing multiset as desired per the <a
@@ -52,7 +52,7 @@ import javax.annotation.Nullable;
 public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     implements Multiset<E> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingMultiset() {}
 
   @Override protected abstract Multiset<E> delegate();
@@ -100,7 +100,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return delegate().setCount(element, oldCount, newCount);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #contains} in terms of {@link #count}. If
    * you override {@link #count}, you may wish to override {@link #contains} to
    * forward to this implementation.
@@ -111,7 +111,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return count(object) > 0;
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #clear} in terms of the {@code iterator}
    * method of {@link #entrySet}. If you override {@link #entrySet}, you may
    * wish to override {@link #clear} to forward to this implementation.
@@ -122,7 +122,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     Iterators.clear(entrySet().iterator());
   }
 
-  /**
+  /* 
    * A sensible, albeit inefficient, definition of {@link #count} in terms of
    * {@link #entrySet}. If you override {@link #entrySet}, you may wish to
    * override {@link #count} to forward to this implementation.
@@ -138,7 +138,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return 0;
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #add(Object)} in terms of {@link
    * #add(Object, int)}. If you override {@link #add(Object, int)}, you may
    * wish to override {@link #add(Object)} to forward to this implementation.
@@ -150,7 +150,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return true;
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #addAll(Collection)} in terms of {@link
    * #add(Object)} and {@link #add(Object, int)}. If you override either of
    * these methods, you may wish to override {@link #addAll(Collection)} to
@@ -163,7 +163,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.addAllImpl(this, elementsToAdd);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #remove(Object)} in terms of {@link
    * #remove(Object, int)}. If you override {@link #remove(Object, int)}, you
    * may wish to override {@link #remove(Object)} to forward to this
@@ -175,7 +175,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return remove(element, 1) > 0;
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #removeAll} in terms of the {@code
    * removeAll} method of {@link #elementSet}. If you override {@link
    * #elementSet}, you may wish to override {@link #removeAll} to forward to
@@ -188,7 +188,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.removeAllImpl(this, elementsToRemove);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #retainAll} in terms of the {@code
    * retainAll} method of {@link #elementSet}. If you override {@link
    * #elementSet}, you may wish to override {@link #retainAll} to forward to
@@ -201,7 +201,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.retainAllImpl(this, elementsToRetain);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #setCount(Object, int)} in terms of {@link
    * #count(Object)}, {@link #add(Object, int)}, and {@link #remove(Object,
    * int)}. {@link #entrySet()}. If you override any of these methods, you may
@@ -214,7 +214,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.setCountImpl(this, element, count);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #setCount(Object, int, int)} in terms of
    * {@link #count(Object)} and {@link #setCount(Object, int)}. If you override
    * either of these methods, you may wish to override {@link #setCount(Object,
@@ -226,7 +226,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.setCountImpl(this, element, oldCount, newCount);
   }
 
-  /**
+  /* 
    * A sensible implementation of {@link Multiset#elementSet} in terms of the
    * following methods: {@link ForwardingMultiset#clear}, {@link
    * ForwardingMultiset#contains}, {@link ForwardingMultiset#containsAll},
@@ -241,7 +241,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
    */
   @Beta
   protected class StandardElementSet extends Multisets.ElementSet<E> {
-    /** Constructor for use by subclasses. */
+    /*  Constructor for use by subclasses. */
     public StandardElementSet() {}
 
     @Override
@@ -250,7 +250,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     }
   }
   
-  /**
+  /* 
    * A sensible definition of {@link #iterator} in terms of {@link #entrySet}
    * and {@link #remove(Object)}. If you override either of these methods, you
    * may wish to override {@link #iterator} to forward to this implementation.
@@ -261,7 +261,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.iteratorImpl(this);
   }
 
-  /**
+  /* 
    * A sensible, albeit inefficient, definition of {@link #size} in terms of
    * {@link #entrySet}. If you override {@link #entrySet}, you may wish to
    * override {@link #size} to forward to this implementation.
@@ -272,7 +272,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.sizeImpl(this);
   }
 
-  /**
+  /* 
    * A sensible, albeit inefficient, definition of {@link #size} in terms of
    * {@code entrySet().size()} and {@link #count}. If you override either of
    * these methods, you may wish to override {@link #size} to forward to this
@@ -284,7 +284,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return Multisets.equalsImpl(this, object);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #hashCode} as {@code entrySet().hashCode()}
    * . If you override {@link #entrySet}, you may wish to override {@link
    * #hashCode} to forward to this implementation.
@@ -295,7 +295,7 @@ public abstract class ForwardingMultiset<E> extends ForwardingCollection<E>
     return entrySet().hashCode();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #toString} as {@code entrySet().toString()}
    * . If you override {@link #entrySet}, you may wish to override {@link
    * #toString} to forward to this implementation.

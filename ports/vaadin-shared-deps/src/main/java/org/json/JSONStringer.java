@@ -26,7 +26,7 @@ SOFTWARE.
 
 import java.io.StringWriter;
 
-/**
+/* 
  * JSONStringer provides a quick and convenient way of producing JSON text.
  * The texts produced strictly conform to JSON syntax rules. No whitespace is
  * added, so the results are ready for transmission or storage. Each instance of
@@ -57,14 +57,14 @@ import java.io.StringWriter;
  * @version 3
  */
 public class JSONStringer extends JSONWriter {
-    /**
+    /* 
      * Make a fresh JSONStringer. It can be used to build one JSON text.
      */
     public JSONStringer() {
         super(new StringWriter());
     }
 
-    /**
+    /* 
      * Return the JSON text. This method is used to obtain the product of the
      * JSONStringer instance. It will return <code>null</code> if there was a
      * problem in the construction of the JSON text (such as the calls to

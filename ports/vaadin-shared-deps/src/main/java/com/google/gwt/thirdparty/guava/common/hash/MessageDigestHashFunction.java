@@ -23,7 +23,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-/**
+/* 
  * {@link HashFunction} adapter for {@link MessageDigest} instances.
  *
  * @author Kevin Bourrillion
@@ -111,7 +111,7 @@ final class MessageDigestHashFunction extends AbstractStreamingHashFunction
     return new SerializedForm(prototype.getAlgorithm(), bytes, toString);
   }
 
-  /**
+  /* 
    * Hasher that updates a message digest.
    */
   private static final class MessageDigestHasher extends AbstractByteHasher {

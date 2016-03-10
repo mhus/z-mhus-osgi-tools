@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable well-formed internet domain name, such as {@code com} or {@code
  * foo.co.uk}. Only syntactic analysis is performed; no DNS lookups or other
  * network interactions take place. Thus there is no guarantee that the domain
@@ -80,7 +80,7 @@ public final class InternetDomainName {
   private static final Splitter DOT_SPLITTER = Splitter.on('.');
   private static final Joiner DOT_JOINER = Joiner.on('.');
 
-  /**
+  /* 
    * Value of {@link #publicSuffixIndex} which indicates that no public suffix
    * was found.
    */
@@ -88,7 +88,7 @@ public final class InternetDomainName {
 
   private static final String DOT_REGEX = "\\.";
 
-  /**
+  /* 
    * Maximum parts (labels) in a domain name. This value arises from
    * the 255-octet limit described in
    * <a href="http://www.ietf.org/rfc/rfc2181.txt">RFC 2181</a> part 11 with
@@ -98,30 +98,30 @@ public final class InternetDomainName {
    */
   private static final int MAX_PARTS = 127;
 
-  /**
+  /* 
    * Maximum length of a full domain name, including separators, and
    * leaving room for the root label. See
    * <a href="http://www.ietf.org/rfc/rfc2181.txt">RFC 2181</a> part 11.
    */
   private static final int MAX_LENGTH = 253;
 
-  /**
+  /* 
    * Maximum size of a single part of a domain name. See
    * <a href="http://www.ietf.org/rfc/rfc2181.txt">RFC 2181</a> part 11.
    */
   private static final int MAX_DOMAIN_PART_LENGTH = 63;
 
-  /**
+  /* 
    * The full domain name, converted to lower case.
    */
   private final String name;
 
-  /**
+  /* 
    * The parts of the domain name, converted to lower case.
    */
   private final ImmutableList<String> parts;
 
-  /**
+  /* 
    * The index in the {@link #parts()} list at which the public suffix begins.
    * For example, for the domain name {@code www.google.co.uk}, the value would
    * be 2 (the index of the {@code co} part). The value is negative
@@ -130,7 +130,7 @@ public final class InternetDomainName {
    */
   private final int publicSuffixIndex;
 
-  /**
+  /* 
    * Constructor used to implement {@link #from(String)}, and from subclasses.
    */
   InternetDomainName(String name) {
@@ -157,7 +157,7 @@ public final class InternetDomainName {
     this.publicSuffixIndex = findPublicSuffix();
   }
 
-  /**
+  /* 
    * Returns the index of the leftmost part of the public suffix, or -1 if not
    * found. Note that the value defined as the "public suffix" may not be a
    * public suffix according to {@link #isPublicSuffix()} if the domain ends
@@ -188,7 +188,7 @@ public final class InternetDomainName {
     return NO_PUBLIC_SUFFIX_FOUND;
   }
 
-  /**
+  /* 
    * A deprecated synonym for {@link #from(String)}.
    *
    * @param domain A domain name (not IP address)
@@ -202,7 +202,7 @@ public final class InternetDomainName {
     return from(domain);
   }
 
-  /**
+  /* 
    * Returns an instance of {@link InternetDomainName} after lenient
    * validation.  Specifically, validation against <a
    * href="http://www.ietf.org/rfc/rfc3490.txt">RFC 3490</a>
@@ -226,7 +226,7 @@ public final class InternetDomainName {
     return new InternetDomainName(checkNotNull(domain));
   }
 
-  /**
+  /* 
    * Validation method used by {@from} to ensure that the domain name is
    * syntactically valid according to RFC 1035.
    *
@@ -256,7 +256,7 @@ public final class InternetDomainName {
   private static final CharMatcher PART_CHAR_MATCHER =
       CharMatcher.JAVA_LETTER_OR_DIGIT.or(DASH_MATCHER);
 
-  /**
+  /* 
    * Helper method for {@link #validateSyntax(List)}. Validates that one part of
    * a domain name is valid.
    *
@@ -311,7 +311,7 @@ public final class InternetDomainName {
     return true;
   }
 
-  /**
+  /* 
    * A deprecated synonym for {@link #toString()}.
    *
    * @deprecated Use {@link #toString()}
@@ -321,7 +321,7 @@ public final class InternetDomainName {
     return toString();
   }
 
-  /**
+  /* 
    * Returns the individual components of this domain name, normalized to all
    * lower case. For example, for the domain name {@code mail.google.com}, this
    * method returns the list {@code ["mail", "google", "com"]}.
@@ -330,7 +330,7 @@ public final class InternetDomainName {
     return parts;
   }
 
-  /**
+  /* 
    * Indicates whether this domain name represents a <i>public suffix</i>, as
    * defined by the Mozilla Foundation's
    * <a href="http://publicsuffix.org/">Public Suffix List</a> (PSL). A public
@@ -347,7 +347,7 @@ public final class InternetDomainName {
     return publicSuffixIndex == 0;
   }
 
-  /**
+  /* 
    * Indicates whether this domain name ends in a {@linkplain #isPublicSuffix()
    * public suffix}, including if it is a public suffix itself. For example,
    * returns {@code true} for {@code www.google.com}, {@code foo.co.uk} and
@@ -361,7 +361,7 @@ public final class InternetDomainName {
     return publicSuffixIndex != NO_PUBLIC_SUFFIX_FOUND;
   }
 
-  /**
+  /* 
    * Returns the {@linkplain #isPublicSuffix() public suffix} portion of the
    * domain name, or {@code null} if no public suffix is present.
    *
@@ -371,7 +371,7 @@ public final class InternetDomainName {
     return hasPublicSuffix() ? ancestor(publicSuffixIndex) : null;
   }
 
-  /**
+  /* 
    * Indicates whether this domain name ends in a {@linkplain #isPublicSuffix()
    * public suffix}, while not being a public suffix itself. For example,
    * returns {@code true} for {@code www.google.com}, {@code foo.co.uk} and
@@ -394,7 +394,7 @@ public final class InternetDomainName {
     return publicSuffixIndex > 0;
   }
 
-  /**
+  /* 
    * Indicates whether this domain name is composed of exactly one subdomain
    * component followed by a {@linkplain #isPublicSuffix() public suffix}. For
    * example, returns {@code true} for {@code google.com} and {@code foo.co.uk},
@@ -418,7 +418,7 @@ public final class InternetDomainName {
     return publicSuffixIndex == 1;
   }
 
-  /**
+  /* 
    * Returns the portion of this domain name that is one level beneath the
    * public suffix. For example, for {@code x.adwords.google.co.uk} it returns
    * {@code google.co.uk}, since {@code co.uk} is a public suffix.
@@ -448,14 +448,14 @@ public final class InternetDomainName {
     return ancestor(publicSuffixIndex - 1);
   }
 
-  /**
+  /* 
    * Indicates whether this domain is composed of two or more parts.
    */
   public boolean hasParent() {
     return parts.size() > 1;
   }
 
-  /**
+  /* 
    * Returns an {@code InternetDomainName} that is the immediate ancestor of
    * this one; that is, the current domain with the leftmost part removed. For
    * example, the parent of {@code www.google.com} is {@code google.com}.
@@ -468,7 +468,7 @@ public final class InternetDomainName {
     return ancestor(1);
   }
 
-  /**
+  /* 
    * Returns the ancestor of the current domain at the given number of levels
    * "higher" (rightward) in the subdomain list. The number of levels must be
    * non-negative, and less than {@code N-1}, where {@code N} is the number of
@@ -480,7 +480,7 @@ public final class InternetDomainName {
     return from(DOT_JOINER.join(parts.subList(levels, parts.size())));
   }
 
-  /**
+  /* 
    * Creates and returns a new {@code InternetDomainName} by prepending the
    * argument and a dot to the current name. For example, {@code
    * InternetDomainName.from("foo.com").child("www.bar")} returns a new
@@ -494,7 +494,7 @@ public final class InternetDomainName {
     return from(checkNotNull(leftParts) + "." + name);
   }
 
-  /**
+  /* 
    * Indicates whether the argument is a syntactically valid domain name using
    * lenient validation. Specifically, validation against <a
    * href="http://www.ietf.org/rfc/rfc3490.txt">RFC 3490</a>
@@ -519,7 +519,7 @@ public final class InternetDomainName {
     }
   }
 
-  /**
+  /* 
    * Does the domain name match one of the "wildcard" patterns (e.g.
    * {@code "*.ar"})?
    */
@@ -528,7 +528,7 @@ public final class InternetDomainName {
     return pieces.length == 2 && TldPatterns.UNDER.contains(pieces[1]);
   }
 
-  /**
+  /* 
    * Returns the domain name, normalized to all lower case.
    */
   @Override
@@ -536,7 +536,7 @@ public final class InternetDomainName {
     return name;
   }
 
-  /**
+  /* 
    * Equality testing is based on the text supplied by the caller,
    * after normalization as described in the class documentation. For
    * example, a non-ASCII Unicode domain name and the Punycode version

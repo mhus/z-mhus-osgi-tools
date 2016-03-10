@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/**
+/* 
  * A delegating wrapper around a {@link ListenableFuture} that adds support for
  * the {@link #checkedGet()} and {@link #checkedGet(long, TimeUnit)} methods.
  *
@@ -34,14 +34,14 @@ import java.util.concurrent.TimeoutException;
 public abstract class AbstractCheckedFuture<V, X extends Exception>
     extends ForwardingListenableFuture.SimpleForwardingListenableFuture<V>
     implements CheckedFuture<V, X> {
-  /**
+  /* 
    * Constructs an {@code AbstractCheckedFuture} that wraps a delegate.
    */
   protected AbstractCheckedFuture(ListenableFuture<V> delegate) {
     super(delegate);
   }
 
-  /**
+  /* 
    * Translates from an {@link InterruptedException},
    * {@link CancellationException} or {@link ExecutionException} thrown by
    * {@code get} to an exception of type {@code X} to be thrown by
@@ -59,7 +59,7 @@ public abstract class AbstractCheckedFuture<V, X extends Exception>
    */
   protected abstract X mapException(Exception e);
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation calls {@link #get()} and maps that method's standard
@@ -86,7 +86,7 @@ public abstract class AbstractCheckedFuture<V, X extends Exception>
     }
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation calls {@link #get(long, TimeUnit)} and maps that

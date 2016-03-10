@@ -19,14 +19,14 @@ package org.apache.commons.discovery.jdk;
 import java.io.InputStream;
 import java.net.URL;
 
-/**
+/* 
  * JDK 1.1.x compatible?
  * There is no direct way to get the system class loader
  * in 1.1.x, but this should be a good work around...
  */
 class PsuedoSystemClassLoader extends ClassLoader {
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -35,7 +35,7 @@ class PsuedoSystemClassLoader extends ClassLoader {
         return findSystemClass(className);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -43,7 +43,7 @@ class PsuedoSystemClassLoader extends ClassLoader {
         return getSystemResource(resName);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

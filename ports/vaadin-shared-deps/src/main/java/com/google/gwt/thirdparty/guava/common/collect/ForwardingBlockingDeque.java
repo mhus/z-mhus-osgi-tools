@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
 
-/**
+/* 
  * A {@link BlockingDeque} which forwards all its method calls to another {@code BlockingDeque}.
  * Subclasses should override one or more methods to modify the behavior of the backing deque as
  * desired per the <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -41,7 +41,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class ForwardingBlockingDeque<E>
     extends ForwardingDeque<E> implements BlockingDeque<E> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingBlockingDeque() {}
 
   @Override protected abstract BlockingDeque<E> delegate();

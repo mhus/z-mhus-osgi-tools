@@ -25,7 +25,7 @@ import java.math.BigInteger;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A wrapper class for unsigned {@code long} values, supporting arithmetic operations.
  *
  * <p>In some cases, when speed is more important than code readability, it may be faster simply to
@@ -54,7 +54,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     this.value = value;
   }
 
-  /**
+  /* 
    * Returns an {@code UnsignedLong} corresponding to a given bit representation.
    * The argument is interpreted as an unsigned 64-bit value. Specifically, the sign bit
    * of {@code bits} is interpreted as a normal bit, and all other bits are treated as usual.
@@ -72,7 +72,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return new UnsignedLong(bits);
   }
 
-  /**
+  /* 
    * Returns an {@code UnsignedLong} representing the same value as the specified {@code long}.
    *
    * @throws IllegalArgumentException if {@code value} is negative
@@ -84,7 +84,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(value);
   }
 
-  /**
+  /* 
    * Returns a {@code UnsignedLong} representing the same value as the specified
    * {@code BigInteger}. This is the inverse operation of {@link #bigIntegerValue()}.
    *
@@ -97,7 +97,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(value.longValue());
   }
 
-  /**
+  /* 
    * Returns an {@code UnsignedLong} holding the value of the specified {@code String}, parsed as
    * an unsigned {@code long} value.
    *
@@ -108,7 +108,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return valueOf(string, 10);
   }
 
-  /**
+  /* 
    * Returns an {@code UnsignedLong} holding the value of the specified {@code String}, parsed as
    * an unsigned {@code long} value in the specified radix.
    *
@@ -120,7 +120,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(UnsignedLongs.parseUnsignedLong(string, radix));
   }
 
-  /**
+  /* 
    * Returns the result of adding this and {@code val}. If the result would have more than 64 bits,
    * returns the low 64 bits of the result.
    *
@@ -130,7 +130,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(this.value + checkNotNull(val).value);
   }
 
-  /**
+  /* 
    * Returns the result of subtracting this and {@code val}. If the result would have more than 64
    * bits, returns the low 64 bits of the result.
    *
@@ -140,7 +140,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(this.value - checkNotNull(val).value);
   }
 
-  /**
+  /* 
    * Returns the result of multiplying this and {@code val}. If the result would have more than 64
    * bits, returns the low 64 bits of the result.
    *
@@ -151,7 +151,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(value * checkNotNull(val).value);
   }
 
-  /**
+  /* 
    * Returns the result of dividing this by {@code val}.
    *
    * @since 14.0
@@ -161,7 +161,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(UnsignedLongs.divide(value, checkNotNull(val).value));
   }
 
-  /**
+  /* 
    * Returns this modulo {@code val}.
    *
    * @since 14.0
@@ -171,7 +171,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fromLongBits(UnsignedLongs.remainder(value, checkNotNull(val).value));
   }
 
-  /**
+  /* 
    * Returns the value of this {@code UnsignedLong} as an {@code int}.
    */
   @Override
@@ -179,7 +179,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return (int) value;
   }
 
-  /**
+  /* 
    * Returns the value of this {@code UnsignedLong} as a {@code long}. This is an inverse operation
    * to {@link #fromLongBits}.
    *
@@ -191,7 +191,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return value;
   }
 
-  /**
+  /* 
    * Returns the value of this {@code UnsignedLong} as a {@code float}, analogous to a widening
    * primitive conversion from {@code long} to {@code float}, and correctly rounded.
    */
@@ -205,7 +205,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return fValue;
   }
 
-  /**
+  /* 
    * Returns the value of this {@code UnsignedLong} as a {@code double}, analogous to a widening
    * primitive conversion from {@code long} to {@code double}, and correctly rounded.
    */
@@ -219,7 +219,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return dValue;
   }
 
-  /**
+  /* 
    * Returns the value of this {@code UnsignedLong} as a {@link BigInteger}.
    */
   public BigInteger bigIntegerValue() {
@@ -250,7 +250,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return false;
   }
 
-  /**
+  /* 
    * Returns a string representation of the {@code UnsignedLong} value, in base 10.
    */
   @Override
@@ -258,7 +258,7 @@ public final class UnsignedLong extends Number implements Comparable<UnsignedLon
     return UnsignedLongs.toString(value);
   }
 
-  /**
+  /* 
    * Returns a string representation of the {@code UnsignedLong} value, in base {@code radix}. If
    * {@code radix < Character.MIN_RADIX} or {@code radix > Character.MAX_RADIX}, the radix
    * {@code 10} is used.

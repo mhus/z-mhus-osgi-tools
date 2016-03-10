@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**
+/* 
  * Implementation of {@link Multimap} using hash tables.
  *
  * <p>The multimap does not store duplicate key-value pairs. Adding a new
@@ -53,7 +53,7 @@ public final class HashMultimap<K, V> extends AbstractSetMultimap<K, V> {
   @VisibleForTesting
   transient int expectedValuesPerKey = DEFAULT_VALUES_PER_KEY;
 
-  /**
+  /* 
    * Creates a new, empty {@code HashMultimap} with the default initial
    * capacities.
    */
@@ -61,7 +61,7 @@ public final class HashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return new HashMultimap<K, V>();
   }
 
-  /**
+  /* 
    * Constructs an empty {@code HashMultimap} with enough capacity to hold the
    * specified numbers of keys and values without rehashing.
    *
@@ -75,7 +75,7 @@ public final class HashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return new HashMultimap<K, V>(expectedKeys, expectedValuesPerKey);
   }
 
-  /**
+  /* 
    * Constructs a {@code HashMultimap} with the same mappings as the specified
    * multimap. If a key-value mapping appears multiple times in the input
    * multimap, it only appears once in the constructed multimap.
@@ -103,7 +103,7 @@ public final class HashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     putAll(multimap);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Creates an empty {@code HashSet} for a collection of values for one key.
@@ -114,7 +114,7 @@ public final class HashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return Sets.<V>newHashSetWithExpectedSize(expectedValuesPerKey);
   }
 
-  /**
+  /* 
    * @serialData expectedValuesPerKey, number of distinct keys, and then for
    *     each distinct key: the key, number of values for that key, and the
    *     key's values

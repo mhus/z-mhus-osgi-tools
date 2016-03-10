@@ -22,7 +22,7 @@ public interface SendQueue {
 	
 	/**
 	 * Set connection and behavior properties.
-	 * @param properties
+	 * @param properties TODO
 	 */
 	void setProperties(Properties properties) throws Exception;
 	
@@ -46,8 +46,8 @@ public interface SendQueue {
 	/**
 	 * Send a mail message.
 	 * 
-	 * @param message
-	 * @param addresses
+	 * @param message TODO
+	 * @param addresses TODO
 	 */
 	void sendMessage(Message message, Address[] addresses) throws Exception;
 	

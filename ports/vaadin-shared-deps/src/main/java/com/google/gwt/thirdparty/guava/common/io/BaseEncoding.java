@@ -49,7 +49,7 @@ import java.util.Arrays;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A binary encoding scheme for reversibly translating between byte sequences and printable ASCII
  * strings. This class includes several constants for encoding schemes specified by <a
  * href="http://tools.ietf.org/html/rfc4648">RFC 4648</a>. For example, the expression:
@@ -135,7 +135,7 @@ public abstract class BaseEncoding {
 
   BaseEncoding() {}
 
-  /**
+  /* 
    * Exception indicating invalid base-encoded input encountered while decoding.
    *
    * @author Louis Wasserman
@@ -151,14 +151,14 @@ public abstract class BaseEncoding {
     }
   }
 
-  /**
+  /* 
    * Encodes the specified byte array, and returns the encoded {@code String}.
    */
   public String encode(byte[] bytes) {
     return encode(checkNotNull(bytes), 0, bytes.length);
   }
 
-  /**
+  /* 
    * Encodes the specified range of the specified byte array, and returns the encoded
    * {@code String}.
    */
@@ -178,7 +178,7 @@ public abstract class BaseEncoding {
     return result.toString();
   }
 
-  /**
+  /* 
    * Returns an {@code OutputStream} that encodes bytes using this encoding into the specified
    * {@code Writer}.  When the returned {@code OutputStream} is closed, so is the backing
    * {@code Writer}.
@@ -188,7 +188,7 @@ public abstract class BaseEncoding {
     return asOutputStream(encodingStream(asCharOutput(writer)));
   }
 
-  /**
+  /* 
    * Returns an {@code OutputSupplier} that supplies streams that encode bytes using this encoding
    * into writers from the specified {@code OutputSupplier}.
    *
@@ -208,7 +208,7 @@ public abstract class BaseEncoding {
     };
   }
 
-  /**
+  /* 
    * Returns a {@code ByteSink} that writes base-encoded bytes to the specified {@code CharSink}.
    */
   @GwtIncompatible("ByteSink,CharSink")
@@ -234,7 +234,7 @@ public abstract class BaseEncoding {
     }
   }
 
-  /**
+  /* 
    * Decodes the specified character sequence, and returns the resulting {@code byte[]}.
    * This is the inverse operation to {@link #encode(byte[])}.
    *
@@ -249,7 +249,7 @@ public abstract class BaseEncoding {
     }
   }
 
-  /**
+  /* 
    * Decodes the specified character sequence, and returns the resulting {@code byte[]}.
    * This is the inverse operation to {@link #encode(byte[])}.
    *
@@ -273,7 +273,7 @@ public abstract class BaseEncoding {
     return extract(tmp, index);
   }
 
-  /**
+  /* 
    * Returns an {@code InputStream} that decodes base-encoded input from the specified
    * {@code Reader}.  The returned stream throws a {@link DecodingException} upon decoding-specific
    * errors.
@@ -283,7 +283,7 @@ public abstract class BaseEncoding {
     return asInputStream(decodingStream(asCharInput(reader)));
   }
 
-  /**
+  /* 
    * Returns an {@code InputSupplier} that supplies input streams that decode base-encoded input
    * from readers from the specified supplier.
    *
@@ -303,7 +303,7 @@ public abstract class BaseEncoding {
     };
   }
 
-  /**
+  /* 
    * Returns a {@code ByteSource} that reads base-encoded bytes from the specified
    * {@code CharSource}.
    */
@@ -332,7 +332,7 @@ public abstract class BaseEncoding {
 
   // Modified encoding generators
 
-  /**
+  /* 
    * Returns an encoding that behaves equivalently to this encoding, but omits any padding
    * characters as specified by <a href="http://tools.ietf.org/html/rfc4648#section-3.2">RFC 4648
    * section 3.2</a>, Padding of Encoded Data.
@@ -340,7 +340,7 @@ public abstract class BaseEncoding {
   @CheckReturnValue
   public abstract BaseEncoding omitPadding();
 
-  /**
+  /* 
    * Returns an encoding that behaves equivalently to this encoding, but uses an alternate character
    * for padding.
    *
@@ -350,7 +350,7 @@ public abstract class BaseEncoding {
   @CheckReturnValue
   public abstract BaseEncoding withPadChar(char padChar);
 
-  /**
+  /* 
    * Returns an encoding that behaves equivalently to this encoding, but adds a separator string
    * after every {@code n} characters. Any occurrences of any characters that occur in the separator
    * are skipped over in decoding.
@@ -362,7 +362,7 @@ public abstract class BaseEncoding {
   @CheckReturnValue
   public abstract BaseEncoding withSeparator(String separator, int n);
 
-  /**
+  /* 
    * Returns an encoding that behaves equivalently to this encoding, but encodes and decodes with
    * uppercase letters. Padding and separator characters remain in their original case.
    *
@@ -372,7 +372,7 @@ public abstract class BaseEncoding {
   @CheckReturnValue
   public abstract BaseEncoding upperCase();
 
-  /**
+  /* 
    * Returns an encoding that behaves equivalently to this encoding, but encodes and decodes with
    * lowercase letters. Padding and separator characters remain in their original case.
    *
@@ -385,7 +385,7 @@ public abstract class BaseEncoding {
   private static final BaseEncoding BASE64 = new StandardBaseEncoding(
       "base64()", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", '=');
 
-  /**
+  /* 
    * The "base64" base encoding specified by <a
    * href="http://tools.ietf.org/html/rfc4648#section-4">RFC 4648 section 4</a>, Base 64 Encoding.
    * (This is the same as the base 64 encoding from <a
@@ -405,7 +405,7 @@ public abstract class BaseEncoding {
   private static final BaseEncoding BASE64_URL = new StandardBaseEncoding(
       "base64Url()", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_", '=');
 
-  /**
+  /* 
    * The "base64url" encoding specified by <a
    * href="http://tools.ietf.org/html/rfc4648#section-5">RFC 4648 section 5</a>, Base 64 Encoding
    * with URL and Filename Safe Alphabet, also sometimes referred to as the "web safe Base64."
@@ -426,7 +426,7 @@ public abstract class BaseEncoding {
   private static final BaseEncoding BASE32 =
       new StandardBaseEncoding("base32()", "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", '=');
 
-  /**
+  /* 
    * The "base32" encoding specified by <a
    * href="http://tools.ietf.org/html/rfc4648#section-6">RFC 4648 section 6</a>, Base 32 Encoding.
    * (This is the same as the base 32 encoding from <a
@@ -446,7 +446,7 @@ public abstract class BaseEncoding {
   private static final BaseEncoding BASE32_HEX =
       new StandardBaseEncoding("base32Hex()", "0123456789ABCDEFGHIJKLMNOPQRSTUV", '=');
 
-  /**
+  /* 
    * The "base32hex" encoding specified by <a
    * href="http://tools.ietf.org/html/rfc4648#section-7">RFC 4648 section 7</a>, Base 32 Encoding
    * with Extended Hex Alphabet.  There is no corresponding encoding in RFC 3548.
@@ -465,7 +465,7 @@ public abstract class BaseEncoding {
   private static final BaseEncoding BASE16 =
       new StandardBaseEncoding("base16()", "0123456789ABCDEF", null);
 
-  /**
+  /* 
    * The "base16" encoding specified by <a
    * href="http://tools.ietf.org/html/rfc4648#section-8">RFC 4648 section 8</a>, Base 16 Encoding.
    * (This is the same as the base 16 encoding from <a

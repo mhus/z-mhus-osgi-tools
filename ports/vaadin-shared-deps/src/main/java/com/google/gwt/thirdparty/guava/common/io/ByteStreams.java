@@ -42,7 +42,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.util.Arrays;
 
-/**
+/* 
  * Provides utility methods for working with byte arrays and I/O streams.
  *
  * @author Chris Nokleberg
@@ -55,7 +55,7 @@ public final class ByteStreams {
 
   private ByteStreams() {}
 
-  /**
+  /* 
    * Returns a factory that will supply instances of
    * {@link ByteArrayInputStream} that read from the given byte array.
    *
@@ -67,7 +67,7 @@ public final class ByteStreams {
     return asInputSupplier(ByteSource.wrap(b));
   }
 
-  /**
+  /* 
    * Returns a factory that will supply instances of
    * {@link ByteArrayInputStream} that read from the given byte array.
    *
@@ -81,7 +81,7 @@ public final class ByteStreams {
     return asInputSupplier(ByteSource.wrap(b).slice(off, len));
   }
 
-  /**
+  /* 
    * Returns a new {@link ByteSource} that reads bytes from the given byte array.
    *
    * @since 14.0
@@ -93,7 +93,7 @@ public final class ByteStreams {
     return ByteSource.wrap(b);
   }
 
-  /**
+  /* 
    * Writes a byte array to an output stream from the given supplier.
    *
    * @param from the bytes to write
@@ -105,7 +105,7 @@ public final class ByteStreams {
     asByteSink(to).write(from);
   }
 
-  /**
+  /* 
    * Opens input and output streams from the given suppliers, copies all
    * bytes from the input to the output, and closes the streams.
    *
@@ -119,7 +119,7 @@ public final class ByteStreams {
     return asByteSource(from).copyTo(asByteSink(to));
   }
 
-  /**
+  /* 
    * Opens an input stream from the supplier, copies all bytes from the
    * input to the output, and closes the input stream. Does not close
    * or flush the output stream.
@@ -134,7 +134,7 @@ public final class ByteStreams {
     return asByteSource(from).copyTo(to);
   }
 
-  /**
+  /* 
    * Opens an output stream from the supplier, copies all bytes from the input
    * to the output, and closes the output stream. Does not close or flush the
    * input stream.
@@ -150,7 +150,7 @@ public final class ByteStreams {
     return asByteSink(to).writeFrom(from);
   }
 
-  /**
+  /* 
    * Copies all bytes from the input stream to the output stream.
    * Does not close or flush either stream.
    *
@@ -176,7 +176,7 @@ public final class ByteStreams {
     return total;
   }
 
-  /**
+  /* 
    * Copies all bytes from the readable channel to the writable channel.
    * Does not close or flush either channel.
    *
@@ -201,7 +201,7 @@ public final class ByteStreams {
     return total;
   }
 
-  /**
+  /* 
    * Reads all bytes from an input stream into a byte array.
    * Does not close the stream.
    *
@@ -215,7 +215,7 @@ public final class ByteStreams {
     return out.toByteArray();
   }
 
-  /**
+  /* 
    * Returns the data from a {@link InputStream} factory as a byte array.
    *
    * @param supplier the factory
@@ -226,7 +226,7 @@ public final class ByteStreams {
     return asByteSource(supplier).read();
   }
 
-  /**
+  /* 
    * Returns a new {@link ByteArrayDataInput} instance to read from the {@code
    * bytes} array from the beginning.
    */
@@ -234,7 +234,7 @@ public final class ByteStreams {
     return new ByteArrayDataInputStream(bytes);
   }
 
-  /**
+  /* 
    * Returns a new {@link ByteArrayDataInput} instance to read from the {@code
    * bytes} array, starting at the given position.
    *
@@ -381,14 +381,14 @@ public final class ByteStreams {
     }
   }
 
-  /**
+  /* 
    * Returns a new {@link ByteArrayDataOutput} instance with a default size.
    */
   public static ByteArrayDataOutput newDataOutput() {
     return new ByteArrayDataOutputStream();
   }
 
-  /**
+  /* 
    * Returns a new {@link ByteArrayDataOutput} instance sized to hold
    * {@code size} bytes before resizing.
    *
@@ -538,14 +538,14 @@ public final class ByteStreams {
 
   private static final OutputStream NULL_OUTPUT_STREAM =
       new OutputStream() {
-        /** Discards the specified byte. */
+        /*  Discards the specified byte. */
         @Override public void write(int b) {
         }
-        /** Discards the specified byte array. */
+        /*  Discards the specified byte array. */
         @Override public void write(byte[] b) {
           checkNotNull(b);
         }
-        /** Discards the specified byte array. */
+        /*  Discards the specified byte array. */
         @Override public void write(byte[] b, int off, int len) {
           checkNotNull(b);
         }
@@ -556,7 +556,7 @@ public final class ByteStreams {
         }
       };
 
-  /**
+  /* 
    * Returns an {@link OutputStream} that simply discards written bytes.
    *
    * @since 14.0 (since 1.0 as com.google.gwt.thirdparty.guava.common.io.NullOutputStream)
@@ -565,7 +565,7 @@ public final class ByteStreams {
     return NULL_OUTPUT_STREAM;
   }
 
-  /**
+  /* 
    * Wraps a {@link InputStream}, limiting the number of bytes which can be
    * read.
    *
@@ -645,13 +645,13 @@ public final class ByteStreams {
     }
   }
 
-  /** Returns the length of a supplied input stream, in bytes. */
+  /*  Returns the length of a supplied input stream, in bytes. */
   public static long length(
       InputSupplier<? extends InputStream> supplier) throws IOException {
     return asByteSource(supplier).size();
   }
 
-  /**
+  /* 
    * Returns true if the supplied input streams contain the same bytes.
    *
    * @throws IOException if an I/O error occurs
@@ -661,7 +661,7 @@ public final class ByteStreams {
     return asByteSource(supplier1).contentEquals(asByteSource(supplier2));
   }
 
-  /**
+  /* 
    * Attempts to read enough bytes from the stream to fill the given byte array,
    * with the same behavior as {@link DataInput#readFully(byte[])}.
    * Does not close the stream.
@@ -676,7 +676,7 @@ public final class ByteStreams {
     readFully(in, b, 0, b.length);
   }
 
-  /**
+  /* 
    * Attempts to read {@code len} bytes from the stream into the given array
    * starting at {@code off}, with the same behavior as
    * {@link DataInput#readFully(byte[], int, int)}. Does not close the
@@ -699,7 +699,7 @@ public final class ByteStreams {
     }
   }
 
-  /**
+  /* 
    * Discards {@code n} bytes of data from the input stream. This method
    * will block until the full amount has been skipped. Does not close the
    * stream.
@@ -729,7 +729,7 @@ public final class ByteStreams {
     }
   }
 
-  /**
+  /* 
    * Process the bytes of a supplied stream
    *
    * @param supplier the input stream factory
@@ -754,7 +754,7 @@ public final class ByteStreams {
     }
   }
 
-  /**
+  /* 
    * Process the bytes of the given input stream using the given processor.
    *
    * @param input the input stream to process
@@ -776,7 +776,7 @@ public final class ByteStreams {
     return processor.getResult();
   }
 
-  /**
+  /* 
    * Computes the hash code of the data supplied by {@code supplier} using {@code
    * hashFunction}.
    *
@@ -792,7 +792,7 @@ public final class ByteStreams {
     return asByteSource(supplier).hash(hashFunction);
   }
 
-  /**
+  /* 
    * Reads some bytes from an input stream and stores them into the buffer array
    * {@code b}. This method blocks until {@code len} bytes of input data have
    * been read into the array, or end of file is detected. The number of bytes
@@ -834,7 +834,7 @@ public final class ByteStreams {
     return total;
   }
 
-  /**
+  /* 
    * Returns an {@link InputSupplier} that returns input streams from the
    * an underlying supplier, where each stream starts at the given
    * offset and is limited to the specified number of bytes.
@@ -852,7 +852,7 @@ public final class ByteStreams {
     return asInputSupplier(asByteSource(supplier).slice(offset, length));
   }
 
-  /**
+  /* 
    * Joins multiple {@link InputStream} suppliers into a single supplier.
    * Streams returned from the supplier will contain the concatenated data from
    * the streams of the underlying suppliers.
@@ -880,7 +880,7 @@ public final class ByteStreams {
     return asInputSupplier(ByteSource.concat(sources));
   }
 
-  /** Varargs form of {@link #join(Iterable)}. */
+  /*  Varargs form of {@link #join(Iterable)}. */
   @SuppressWarnings("unchecked") // suppress "possible heap pollution" warning in JDK7
   public static InputSupplier<InputStream> join(
       InputSupplier<? extends InputStream>... suppliers) {
@@ -889,7 +889,7 @@ public final class ByteStreams {
 
   // TODO(user): Remove these once Input/OutputSupplier methods are removed
 
-  /**
+  /* 
    * Returns a view of the given {@code InputStream} supplier as a
    * {@code ByteSource}.
    *
@@ -914,7 +914,7 @@ public final class ByteStreams {
     };
   }
 
-  /**
+  /* 
    * Returns a view of the given {@code OutputStream} supplier as a
    * {@code ByteSink}.
    *

@@ -18,7 +18,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.nio.charset.Charset;
 
-/**
+/* 
  * A {@link PrimitiveSink} that can compute a hash code after reading the input. Each hasher should
  * translate all multibyte values ({@link #putInt(int)}, {@link #putLong(long)}, etc) to bytes
  * in little-endian order.
@@ -53,23 +53,23 @@ public interface Hasher extends PrimitiveSink {
   @Override Hasher putInt(int i);
   @Override Hasher putLong(long l);
 
-  /**
+  /* 
    * Equivalent to {@code putInt(Float.floatToRawIntBits(f))}.
    */
   @Override Hasher putFloat(float f);
 
-  /**
+  /* 
    * Equivalent to {@code putLong(Double.doubleToRawLongBits(d))}.
    */
   @Override Hasher putDouble(double d);
 
-  /**
+  /* 
    * Equivalent to {@code putByte(b ? (byte) 1 : (byte) 0)}.
    */
   @Override Hasher putBoolean(boolean b);
   @Override Hasher putChar(char c);
 
-  /**
+  /* 
    * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
    * The input must not be updated while this method is in progress.
    *
@@ -77,7 +77,7 @@ public interface Hasher extends PrimitiveSink {
    */
   @Override Hasher putUnencodedChars(CharSequence charSequence);
 
-  /**
+  /* 
    * Equivalent to processing each {@code char} value in the {@code CharSequence}, in order.
    * The input must not be updated while this method is in progress.
    *
@@ -87,17 +87,17 @@ public interface Hasher extends PrimitiveSink {
   @Deprecated
   @Override Hasher putString(CharSequence charSequence);
 
-  /**
+  /* 
    * Equivalent to {@code putBytes(charSequence.toString().getBytes(charset))}.
    */
   @Override Hasher putString(CharSequence charSequence, Charset charset);
 
-  /**
+  /* 
    * A simple convenience for {@code funnel.funnel(object, this)}.
    */
   <T> Hasher putObject(T instance, Funnel<? super T> funnel);
 
-  /**
+  /* 
    * Computes a hash code based on the data that have been provided to this hasher. The result is
    * unspecified if this method is called more than once on the same instance.
    */

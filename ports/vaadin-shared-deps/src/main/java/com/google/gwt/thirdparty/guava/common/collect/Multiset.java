@@ -26,7 +26,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A collection that supports order-independent equality, like {@link Set}, but
  * may have duplicate elements. A multiset is also sometimes called a
  * <i>bag</i>.
@@ -89,7 +89,7 @@ import javax.annotation.Nullable;
 public interface Multiset<E> extends Collection<E> {
   // Query Operations
 
-  /**
+  /* 
    * Returns the number of occurrences of an element in this multiset (the
    * <i>count</i> of the element). Note that for an {@link Object#equals}-based
    * multiset, this gives the same result as {@link Collections#frequency}
@@ -107,7 +107,7 @@ public interface Multiset<E> extends Collection<E> {
 
   // Bulk Operations
 
-  /**
+  /* 
    * Adds a number of occurrences of an element to this multiset. Note that if
    * {@code occurrences == 1}, this method has the identical effect to {@link
    * #add(Object)}. This method is functionally equivalent (except in the case
@@ -128,7 +128,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   int add(@Nullable E element, int occurrences);
 
-  /**
+  /* 
    * Removes a number of occurrences of the specified element from this
    * multiset. If the multiset contains fewer than this number of occurrences to
    * begin with, all occurrences will be removed.  Note that if
@@ -143,7 +143,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   int remove(@Nullable Object element, int occurrences);
 
-  /**
+  /* 
    * Adds or removes the necessary occurrences of an element such that the
    * element attains the desired count.
    *
@@ -158,7 +158,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   int setCount(E element, int count);
 
-  /**
+  /* 
    * Conditionally sets the count of an element to a new value, as described in
    * {@link #setCount(Object, int)}, provided that the element has the expected
    * current count. If the current count is not {@code oldCount}, no change is
@@ -182,7 +182,7 @@ public interface Multiset<E> extends Collection<E> {
 
   // Views
 
-  /**
+  /* 
    * Returns the set of distinct elements contained in this multiset. The
    * element set is backed by the same data as the multiset, so any change to
    * either is immediately reflected in the other. The order of the elements in
@@ -200,7 +200,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   Set<E> elementSet();
 
-  /**
+  /* 
    * Returns a view of the contents of this multiset, grouped into {@code
    * Multiset.Entry} instances, each providing an element of the multiset and
    * the count of that element. This set contains exactly one entry for each
@@ -221,7 +221,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   Set<Entry<E>> entrySet();
 
-  /**
+  /* 
    * An unmodifiable element-count pair for a multiset. The {@link
    * Multiset#entrySet} method returns a view of the multiset whose elements
    * are of this class. A multiset implementation may return Entry instances
@@ -233,7 +233,7 @@ public interface Multiset<E> extends Collection<E> {
    */
   interface Entry<E> {
 
-    /**
+    /* 
      * Returns the multiset element corresponding to this entry. Multiple calls
      * to this method always return the same instance.
      *
@@ -241,7 +241,7 @@ public interface Multiset<E> extends Collection<E> {
      */
     E getElement();
 
-    /**
+    /* 
      * Returns the count of the associated element in the underlying multiset.
      * This count may either be an unchanging snapshot of the count at the time
      * the entry was retrieved, or a live view of the current count of the
@@ -254,7 +254,7 @@ public interface Multiset<E> extends Collection<E> {
      */
     int getCount();
 
-    /**
+    /* 
      * {@inheritDoc}
      *
      * <p>Returns {@code true} if the given object is also a multiset entry and
@@ -268,7 +268,7 @@ public interface Multiset<E> extends Collection<E> {
     // TODO(kevinb): check this wrt TreeMultiset?
     boolean equals(Object o);
 
-    /**
+    /* 
      * {@inheritDoc}
      *
      * <p>The hash code of a multiset entry for element {@code element} and
@@ -279,7 +279,7 @@ public interface Multiset<E> extends Collection<E> {
     @Override
     int hashCode();
 
-    /**
+    /* 
      * Returns the canonical string representation of this entry, defined as
      * follows. If the count for this entry is one, this is simply the string
      * representation of the corresponding element. Otherwise, it is the string
@@ -292,7 +292,7 @@ public interface Multiset<E> extends Collection<E> {
 
   // Comparison and hashing
 
-  /**
+  /* 
    * Compares the specified object with this multiset for equality. Returns
    * {@code true} if the given object is also a multiset and contains equal
    * elements with equal counts, regardless of order.
@@ -301,7 +301,7 @@ public interface Multiset<E> extends Collection<E> {
   // TODO(kevinb): caveats about equivalence-relation?
   boolean equals(@Nullable Object object);
 
-  /**
+  /* 
    * Returns the hash code for this multiset. This is defined as the sum of
    * <pre>   {@code
    *
@@ -313,7 +313,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   int hashCode();
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>It is recommended, though not mandatory, that this method return the
@@ -325,7 +325,7 @@ public interface Multiset<E> extends Collection<E> {
 
   // Refined Collection Methods
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>Elements that occur multiple times in the multiset will appear
@@ -334,7 +334,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   Iterator<E> iterator();
 
-  /**
+  /* 
    * Determines whether this multiset contains the specified element.
    *
    * <p>This method refines {@link Collection#contains} to further specify that
@@ -348,7 +348,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   boolean contains(@Nullable Object element);
 
-  /**
+  /* 
    * Returns {@code true} if this multiset contains at least one occurrence of
    * each element in the specified collection.
    *
@@ -372,7 +372,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   boolean containsAll(Collection<?> elements);
 
-  /**
+  /* 
    * Adds a single occurrence of the specified element to this multiset.
    *
    * <p>This method refines {@link Collection#add}, which only <i>ensures</i>
@@ -392,7 +392,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   boolean add(E element);
 
-  /**
+  /* 
    * Removes a <i>single</i> occurrence of the specified element from this
    * multiset, if present.
    *
@@ -406,7 +406,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   boolean remove(@Nullable Object element);
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p><b>Note:</b> This method ignores how often any element might appear in
@@ -421,7 +421,7 @@ public interface Multiset<E> extends Collection<E> {
   @Override
   boolean removeAll(Collection<?> c);
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p><b>Note:</b> This method ignores how often any element might appear in

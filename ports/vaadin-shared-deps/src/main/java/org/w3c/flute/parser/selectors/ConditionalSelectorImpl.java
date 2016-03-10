@@ -18,7 +18,7 @@ import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
 import org.w3c.css.sac.Condition;
 
-/**
+/* 
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
@@ -27,7 +27,7 @@ public class ConditionalSelectorImpl implements ConditionalSelector {
     SimpleSelector simpleSelector;
     Condition      condition;
 
-    /**
+    /* 
      * An integer indicating the type of <code>Selector</code>
      */
     public short getSelectorType() {
@@ -35,7 +35,7 @@ public class ConditionalSelectorImpl implements ConditionalSelector {
     }
     
 
-    /**
+    /* 
      * Creates a new ConditionalSelectorImpl
      */
     public ConditionalSelectorImpl(SimpleSelector simpleSelector,
@@ -45,7 +45,7 @@ public class ConditionalSelectorImpl implements ConditionalSelector {
     }
     
 
-    /**
+    /* 
      * Returns the simple selector.
      * <p>The simple selector can't be a <code>ConditionalSelector</code>.</p>
      */    
@@ -53,7 +53,7 @@ public class ConditionalSelectorImpl implements ConditionalSelector {
 	return simpleSelector;
     }
 
-    /**
+    /* 
      * Returns the condition to be applied on the simple selector.
      */    
     public Condition getCondition() {

@@ -53,7 +53,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
+/* 
  * Factory and utility methods for {@link java.util.concurrent.Executor}, {@link
  * ExecutorService}, and {@link ThreadFactory}.
  *
@@ -65,7 +65,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public final class MoreExecutors {
   private MoreExecutors() {}
 
-  /**
+  /* 
    * Converts the given ThreadPoolExecutor into an ExecutorService that exits
    * when the application is complete.  It does so by using daemon threads and
    * adding a shutdown hook to wait for their completion.
@@ -87,7 +87,7 @@ public final class MoreExecutors {
         .getExitingExecutorService(executor, terminationTimeout, timeUnit);
   }
 
-  /**
+  /* 
    * Converts the given ScheduledThreadPoolExecutor into a
    * ScheduledExecutorService that exits when the application is complete.  It
    * does so by using daemon threads and adding a shutdown hook to wait for
@@ -110,7 +110,7 @@ public final class MoreExecutors {
         .getExitingScheduledExecutorService(executor, terminationTimeout, timeUnit);
   }
 
-  /**
+  /* 
    * Add a shutdown hook to wait for thread completion in the given
    * {@link ExecutorService service}.  This is useful if the given service uses
    * daemon threads, and we want to keep the JVM from exiting immediately on
@@ -128,7 +128,7 @@ public final class MoreExecutors {
         .addDelayedShutdownHook(service, terminationTimeout, timeUnit);
   }
 
-  /**
+  /* 
    * Converts the given ThreadPoolExecutor into an ExecutorService that exits
    * when the application is complete.  It does so by using daemon threads and
    * adding a shutdown hook to wait for their completion.
@@ -148,7 +148,7 @@ public final class MoreExecutors {
     return new Application().getExitingExecutorService(executor);
   }
 
-  /**
+  /* 
    * Converts the given ThreadPoolExecutor into a ScheduledExecutorService that
    * exits when the application is complete.  It does so by using daemon threads
    * and adding a shutdown hook to wait for their completion.
@@ -169,7 +169,7 @@ public final class MoreExecutors {
     return new Application().getExitingScheduledExecutorService(executor);
   }
 
-  /** Represents the current application to register shutdown hooks. */
+  /*  Represents the current application to register shutdown hooks. */
   @VisibleForTesting static class Application {
 
     final ExecutorService getExitingExecutorService(
@@ -231,7 +231,7 @@ public final class MoreExecutors {
         .build());
   }
 
-  /**
+  /* 
    * Creates an executor service that runs each task in the thread
    * that invokes {@code execute/submit}, as in {@link CallerRunsPolicy}  This
    * applies both to individually submitted tasks and to collections of tasks
@@ -271,13 +271,13 @@ public final class MoreExecutors {
   // See sameThreadExecutor javadoc for behavioral notes.
   private static class SameThreadExecutorService
       extends AbstractListeningExecutorService {
-    /**
+    /* 
      * Lock used whenever accessing the state variables
      * (runningTasks, shutdown, terminationCondition) of the executor
      */
     private final Lock lock = new ReentrantLock();
 
-    /** Signaled after the executor is shutdown and running tasks are done */
+    /*  Signaled after the executor is shutdown and running tasks are done */
     private final Condition termination = lock.newCondition();
 
     /*
@@ -357,7 +357,7 @@ public final class MoreExecutors {
       }
     }
 
-    /**
+    /* 
      * Checks if the executor has been shut down and increments the running
      * task count.
      *
@@ -376,7 +376,7 @@ public final class MoreExecutors {
       }
     }
 
-    /**
+    /* 
      * Decrements the running task count.
      */
     private void endTask() {
@@ -392,7 +392,7 @@ public final class MoreExecutors {
     }
   }
 
-  /**
+  /* 
    * Creates an {@link ExecutorService} whose {@code submit} and {@code
    * invokeAll} methods submit {@link ListenableFutureTask} instances to the
    * given delegate executor. Those methods, as well as {@code execute} and
@@ -419,7 +419,7 @@ public final class MoreExecutors {
         : new ListeningDecorator(delegate);
   }
 
-  /**
+  /* 
    * Creates a {@link ScheduledExecutorService} whose {@code submit} and {@code
    * invokeAll} methods submit {@link ListenableFutureTask} instances to the
    * given delegate executor. Those methods, as well as {@code execute} and
@@ -600,7 +600,7 @@ public final class MoreExecutors {
    * Pat Fisher, Mike Judd.
    */
 
-  /**
+  /* 
    * An implementation of {@link ExecutorService#invokeAny} for {@link ListeningExecutorService}
    * implementations.
    */ static <T> T invokeAnyImpl(ListeningExecutorService executorService,
@@ -673,7 +673,7 @@ public final class MoreExecutors {
     }
   }
 
-  /**
+  /* 
    * Submits the task and adds a listener that adds the future to {@code queue} when it completes.
    */
   private static <T> ListenableFuture<T> submitAndAddQueueListener(
@@ -688,7 +688,7 @@ public final class MoreExecutors {
     return future;
   }
 
-  /**
+  /* 
    * Returns a default thread factory used to create new threads.
    *
    * <p>On AppEngine, returns {@code ThreadManager.currentRequestThreadFactory()}.
@@ -740,7 +740,7 @@ public final class MoreExecutors {
     }
   }
 
-  /**
+  /* 
    * Creates a thread using {@link #platformThreadFactory}, and sets its name to {@code name}
    * unless changing the name is forbidden by the security manager.
    */
@@ -760,7 +760,7 @@ public final class MoreExecutors {
   // TODO(user): provide overloads that take constant strings? Function<Runnable, String>s to
   // calculate names?
 
-  /**
+  /* 
    * Creates an {@link Executor} that renames the {@link Thread threads} that its tasks run in.
    *
    * <p>The names are retrieved from the {@code nameSupplier} on the thread that is being renamed
@@ -784,7 +784,7 @@ public final class MoreExecutors {
     };
   }
 
-  /**
+  /* 
    * Creates an {@link ExecutorService} that renames the {@link Thread threads} that its tasks run
    * in.
    *
@@ -813,7 +813,7 @@ public final class MoreExecutors {
     };
   }
 
-  /**
+  /* 
    * Creates a {@link ScheduledExecutorService} that renames the {@link Thread threads} that its
    * tasks run in.
    *

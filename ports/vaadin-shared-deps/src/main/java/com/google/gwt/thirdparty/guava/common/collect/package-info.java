@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * This package contains generic collection interfaces and implementations, and
  * other utilities for working with collections. It is a part of the open-source
  * <a href="http://guava-libraries.googlecode.com">Guava libraries</a>.

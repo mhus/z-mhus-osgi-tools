@@ -16,7 +16,7 @@
 
 package com.google.gwt.thirdparty.streamhtmlparser;
 
-/**
+/* 
  * Methods exposed for Javascript parsing of text to facilitate implementation
  * of Automatic context-aware escaping. This interface does not add
  * additional methods on top of {@code Parser} for the time being,

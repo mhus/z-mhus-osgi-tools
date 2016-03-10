@@ -30,7 +30,7 @@ import java.io.Serializable;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-/**
+/* 
  * An immutable representation of a host and port.
  *
  * <p>Example usage:
@@ -65,16 +65,16 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 @GwtCompatible
 public final class HostAndPort implements Serializable {
-  /** Magic value indicating the absence of a port number. */
+  /*  Magic value indicating the absence of a port number. */
   private static final int NO_PORT = -1;
 
-  /** Hostname, IPv4/IPv6 literal, or unvalidated nonsense. */
+  /*  Hostname, IPv4/IPv6 literal, or unvalidated nonsense. */
   private final String host;
 
-  /** Validated port number in the range [0..65535], or NO_PORT */
+  /*  Validated port number in the range [0..65535], or NO_PORT */
   private final int port;
 
-  /** True if the parsed host has colons, but no surrounding brackets. */
+  /*  True if the parsed host has colons, but no surrounding brackets. */
   private final boolean hasBracketlessColons;
 
   private HostAndPort(String host, int port, boolean hasBracketlessColons) {
@@ -83,7 +83,7 @@ public final class HostAndPort implements Serializable {
     this.hasBracketlessColons = hasBracketlessColons;
   }
 
-  /**
+  /* 
    * Returns the portion of this {@code HostAndPort} instance that should
    * represent the hostname or IPv4/IPv6 literal.
    *
@@ -94,12 +94,12 @@ public final class HostAndPort implements Serializable {
     return host;
   }
 
-  /** Return true if this instance has a defined port. */
+  /*  Return true if this instance has a defined port. */
   public boolean hasPort() {
     return port >= 0;
   }
 
-  /**
+  /* 
    * Get the current port number, failing if no port is defined.
    *
    * @return a validated port number, in the range [0..65535]
@@ -111,14 +111,14 @@ public final class HostAndPort implements Serializable {
     return port;
   }
 
-  /**
+  /* 
    * Returns the current port number, with a default if no port is defined.
    */
   public int getPortOrDefault(int defaultPort) {
     return hasPort() ? port : defaultPort;
   }
 
-  /**
+  /* 
    * Build a HostAndPort instance from separate host and port values.
    *
    * <p>Note: Non-bracketed IPv6 literals are allowed.
@@ -137,7 +137,7 @@ public final class HostAndPort implements Serializable {
     return new HostAndPort(parsedHost.host, port, parsedHost.hasBracketlessColons);
   }
 
-  /**
+  /* 
    * Split a freeform string into a host and port, without strict validation.
    *
    * Note that the host-only formats will leave the port field undefined.  You
@@ -186,7 +186,7 @@ public final class HostAndPort implements Serializable {
     return new HostAndPort(host, port, hasBracketlessColons);
   }
 
-  /**
+  /* 
    * Parses a bracketed host-port string, throwing IllegalArgumentException if parsing fails.
    *
    * @param hostPortString the full bracketed host-port specification. Post might not be specified.
@@ -218,7 +218,7 @@ public final class HostAndPort implements Serializable {
     }
   }
 
-  /**
+  /* 
    * Provide a default port if the parsed string contained only a host.
    *
    * You can chain this after {@link #fromString(String)} to include a port in
@@ -236,7 +236,7 @@ public final class HostAndPort implements Serializable {
     return new HostAndPort(host, defaultPort, hasBracketlessColons);
   }
 
-  /**
+  /* 
    * Generate an error if the host might be a non-bracketed IPv6 literal.
    *
    * <p>URI formatting requires that IPv6 literals be surrounded by brackets,
@@ -275,7 +275,7 @@ public final class HostAndPort implements Serializable {
     return Objects.hashCode(host, port, hasBracketlessColons);
   }
 
-  /** Rebuild the host:port string, including brackets if necessary. */
+  /*  Rebuild the host:port string, including brackets if necessary. */
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder(host.length() + 7);
@@ -290,7 +290,7 @@ public final class HostAndPort implements Serializable {
     return builder.toString();
   }
 
-  /** Return true for valid port numbers. */
+  /*  Return true for valid port numbers. */
   private static boolean isValidPort(int port) {
     return port >= 0 && port <= 65535;
   }

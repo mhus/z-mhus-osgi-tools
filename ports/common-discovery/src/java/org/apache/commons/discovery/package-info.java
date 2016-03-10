@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Highlights:
  * <ul>
  * <li>JDK 1.3 Service discovery</li>

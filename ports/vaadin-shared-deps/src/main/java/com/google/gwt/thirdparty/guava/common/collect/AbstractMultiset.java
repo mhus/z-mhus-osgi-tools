@@ -28,7 +28,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * This class provides a skeletal implementation of the {@link Multiset}
  * interface. A new multiset implementation can be created easily by extending
  * this class and implementing the {@link Multiset#entrySet()} method, plus
@@ -107,7 +107,7 @@ abstract class AbstractMultiset<E> extends AbstractCollection<E>
 
   // Bulk Operations
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation is highly efficient when {@code elementsToAdd}
@@ -142,7 +142,7 @@ abstract class AbstractMultiset<E> extends AbstractCollection<E>
     return result;
   }
 
-  /**
+  /* 
    * Creates a new instance of this multiset's element set, which will be
    * returned by {@link #elementSet()}.
    */
@@ -188,7 +188,7 @@ abstract class AbstractMultiset<E> extends AbstractCollection<E>
 
   // Object methods
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation returns {@code true} if {@code object} is a multiset
@@ -199,7 +199,7 @@ abstract class AbstractMultiset<E> extends AbstractCollection<E>
     return Multisets.equalsImpl(this, object);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation returns the hash code of {@link
@@ -209,7 +209,7 @@ abstract class AbstractMultiset<E> extends AbstractCollection<E>
     return entrySet().hashCode();
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This implementation returns the result of invoking {@code toString} on

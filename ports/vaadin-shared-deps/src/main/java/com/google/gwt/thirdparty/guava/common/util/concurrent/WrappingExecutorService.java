@@ -31,7 +31,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/**
+/* 
  * An abstract {@code ExecutorService} that allows subclasses to
  * {@linkplain #wrapTask(Callable) wrap} tasks before they are submitted
  * to the underlying executor.
@@ -50,14 +50,14 @@ abstract class WrappingExecutorService implements ExecutorService {
     this.delegate = checkNotNull(delegate);
   }
 
-  /**
+  /* 
    * Wraps a task  before it is submitted to the underlying Executor.
    * Though specified in terms of Callable, this method is also applied to
    * Runnable tasks.
    */
   protected abstract <T> Callable<T> wrapTask(Callable<T> callable);
 
-  /**
+  /* 
    * Wraps a task before it is submitted to the underlying Executor.  This
    * delegates to {@link #wrapTask(Callable)} by default, but should be
    * overridden if there is a better implementation for {@link Runnable
@@ -77,7 +77,7 @@ abstract class WrappingExecutorService implements ExecutorService {
     };
   }
 
-  /**
+  /* 
    * Wraps a collection of tasks.
    *
    * @throws NullPointerException if any element of {@code tasks} is null

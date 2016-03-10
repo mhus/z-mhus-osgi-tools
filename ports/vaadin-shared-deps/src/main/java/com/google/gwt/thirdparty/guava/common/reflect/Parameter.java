@@ -26,7 +26,7 @@ import java.lang.reflect.AnnotatedElement;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Represents a method or constructor parameter.
  *
  * @author Ben Yu
@@ -51,12 +51,12 @@ public final class Parameter implements AnnotatedElement {
     this.annotations = ImmutableList.copyOf(annotations);
   }
 
-  /** Returns the type of the parameter. */
+  /*  Returns the type of the parameter. */
   public TypeToken<?> getType() {
     return type;
   }
 
-  /** Returns the {@link Invokable} that declares this parameter. */
+  /*  Returns the {@link Invokable} that declares this parameter. */
   public Invokable<?, ?> getDeclaringInvokable() {
     return declaration;
   }

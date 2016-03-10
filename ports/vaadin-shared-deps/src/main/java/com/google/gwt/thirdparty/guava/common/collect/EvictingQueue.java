@@ -26,7 +26,7 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Queue;
 
-/**
+/* 
  * A non-blocking queue which automatically evicts elements from the head of the queue when
  * attempting to add new elements onto the queue and it is full.
  *
@@ -52,7 +52,7 @@ public final class EvictingQueue<E> extends ForwardingQueue<E> {
     this.maxSize = maxSize;
   }
 
-  /**
+  /* 
    * Creates and returns a new evicting queue that will hold up to {@code maxSize} elements.
    *
    * <p>When {@code maxSize} is zero, elements will be evicted immediately after being added to the
@@ -66,7 +66,7 @@ public final class EvictingQueue<E> extends ForwardingQueue<E> {
     return delegate;
   }
 
-  /**
+  /* 
    * Adds the given element to this queue. If the queue is currently full, the element at the head
    * of the queue is evicted to make room.
    *
@@ -76,7 +76,7 @@ public final class EvictingQueue<E> extends ForwardingQueue<E> {
     return add(e);
   }
 
-  /**
+  /* 
    * Adds the given element to this queue. If the queue is currently full, the element at the head
    * of the queue is evicted to make room.
    *

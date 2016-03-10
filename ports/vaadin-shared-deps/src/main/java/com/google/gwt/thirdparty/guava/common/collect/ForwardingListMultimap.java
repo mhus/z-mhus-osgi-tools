@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A list multimap which forwards all its method calls to another list multimap.
  * Subclasses should override one or more methods to modify the behavior of
  * the backing multimap as desired per the <a
@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 public abstract class ForwardingListMultimap<K, V>
     extends ForwardingMultimap<K, V> implements ListMultimap<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingListMultimap() {}
 
   @Override protected abstract ListMultimap<K, V> delegate();

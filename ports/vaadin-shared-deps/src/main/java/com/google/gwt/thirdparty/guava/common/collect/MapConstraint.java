@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A constraint on the keys and values that may be added to a {@code Map} or
  * {@code Multimap}. For example, {@link MapConstraints#notNull()}, which
  * prevents a map from including any null keys or values, could be implemented
@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 @GwtCompatible
 @Beta
 public interface MapConstraint<K, V> {
-  /**
+  /* 
    * Throws a suitable {@code RuntimeException} if the specified key or value is
    * illegal. Typically this is either a {@link NullPointerException}, an
    * {@link IllegalArgumentException}, or a {@link ClassCastException}, though
@@ -49,7 +49,7 @@ public interface MapConstraint<K, V> {
    */
   void checkKeyValue(@Nullable K key, @Nullable V value);
 
-  /**
+  /* 
    * Returns a brief human readable description of this constraint, such as
    * "Not null".
    */

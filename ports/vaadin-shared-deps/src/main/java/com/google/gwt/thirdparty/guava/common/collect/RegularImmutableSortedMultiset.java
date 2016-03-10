@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.primitives.Ints;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable sorted multiset with one or more distinct elements.
  *
  * @author Louis Wasserman

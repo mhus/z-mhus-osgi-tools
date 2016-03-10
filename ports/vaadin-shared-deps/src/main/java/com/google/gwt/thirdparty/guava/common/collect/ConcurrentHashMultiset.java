@@ -42,7 +42,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A multiset that supports concurrent modifications and that provides atomic versions of most
  * {@code Multiset} operations (exceptions where noted). Null elements are not supported.
  *
@@ -66,7 +66,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
    * AtomicInteger).
    */
 
-  /** The number of occurrences of each element. */
+  /*  The number of occurrences of each element. */
   private final transient ConcurrentMap<E, AtomicInteger> countMap;
 
   // This constant allows the deserialization code to set a final field. This holder class
@@ -76,7 +76,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         Serialization.getFieldSetter(ConcurrentHashMultiset.class, "countMap");
   }
 
-  /**
+  /* 
    * Creates a new, empty {@code ConcurrentHashMultiset} using the default
    * initial capacity, load factor, and concurrency settings.
    */
@@ -87,7 +87,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     return new ConcurrentHashMultiset<E>(new ConcurrentHashMap<E, AtomicInteger>());
   }
 
-  /**
+  /* 
    * Creates a new {@code ConcurrentHashMultiset} containing the specified elements, using
    * the default initial capacity, load factor, and concurrency settings.
    *
@@ -101,7 +101,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     return multiset;
   }
 
-  /**
+  /* 
    * Creates a new, empty {@code ConcurrentHashMultiset} using {@code mapMaker}
    * to construct the internal backing map.
    *
@@ -127,7 +127,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     return new ConcurrentHashMultiset<E>(mapMaker.<E, AtomicInteger>makeMap());
   }
 
-  /**
+  /* 
    * Creates an instance using {@code countMap} to store elements and their counts.
    *
    * <p>This instance will assume ownership of {@code countMap}, and other code
@@ -144,7 +144,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
   // Query Operations
 
-  /**
+  /* 
    * Returns the number of occurrences of {@code element} in this multiset.
    *
    * @param element the element to look for
@@ -155,7 +155,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     return (existingCounter == null) ? 0 : existingCounter.get();
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>If the data in the multiset is modified by any other threads during this method,
@@ -199,7 +199,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
   // Modification Operations
 
-  /**
+  /* 
    * Adds a number of occurrences of the specified element to this multiset.
    *
    * @param element the element to add
@@ -255,7 +255,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     }
   }
 
-  /**
+  /* 
    * Removes a number of occurrences of the specified element from this multiset. If the multiset
    * contains fewer than this number of occurrences to begin with, all occurrences will be removed.
    *
@@ -301,7 +301,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     }
   }
 
-  /**
+  /* 
    * Removes exactly the specified number of occurrences of {@code element}, or makes no
    * change if this is not possible.
    *
@@ -339,7 +339,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     }
   }
 
-  /**
+  /* 
    * Adds or removes occurrences of {@code element} such that the {@link #count} of the
    * element becomes {@code count}.
    *
@@ -390,7 +390,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     }
   }
 
-  /**
+  /* 
    * Sets the number of occurrences of {@code element} to {@code newCount}, but only if
    * the count is currently {@code expectedOldCount}. If {@code element} does not appear
    * in the multiset exactly {@code expectedOldCount} times, no changes will be made.
@@ -561,7 +561,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     }
   }
 
-  /**
+  /* 
    * @serialData the ConcurrentMap of elements and their counts.
    */
   private void writeObject(ObjectOutputStream stream) throws IOException {

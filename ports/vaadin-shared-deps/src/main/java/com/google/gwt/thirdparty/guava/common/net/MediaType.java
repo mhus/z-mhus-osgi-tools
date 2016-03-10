@@ -50,7 +50,7 @@ import java.util.Map.Entry;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-/**
+/* 
  * Represents an <a href="http://en.wikipedia.org/wiki/Internet_media_type">Internet Media Type</a>
  * (also known as a MIME Type or Content Type). This class also supports the concept of media ranges
  * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1">defined by HTTP/1.1</a>.
@@ -84,7 +84,7 @@ public final class MediaType {
   private static final ImmutableListMultimap<String, String> UTF_8_CONSTANT_PARAMETERS =
       ImmutableListMultimap.of(CHARSET_ATTRIBUTE, Ascii.toLowerCase(UTF_8.name()));
 
-  /** Matcher for type, subtype and attributes. */
+  /*  Matcher for type, subtype and attributes. */
   private static final CharMatcher TOKEN_MATCHER = ASCII.and(JAVA_ISO_CONTROL.negate())
       .and(CharMatcher.isNot(' '))
       .and(CharMatcher.noneOf("()<>@,;:\\\"/[]?="));
@@ -145,13 +145,13 @@ public final class MediaType {
   public static final MediaType HTML_UTF_8 = createConstantUtf8(TEXT_TYPE, "html");
   public static final MediaType I_CALENDAR_UTF_8 = createConstantUtf8(TEXT_TYPE, "calendar");
   public static final MediaType PLAIN_TEXT_UTF_8 = createConstantUtf8(TEXT_TYPE, "plain");
-  /**
+  /* 
    * <a href="http://www.rfc-editor.org/rfc/rfc4329.txt">RFC 4329</a> declares
    * {@link #JAVASCRIPT_UTF_8 application/javascript} to be the correct media type for JavaScript,
    * but this may be necessary in certain situations for compatibility.
    */
   public static final MediaType TEXT_JAVASCRIPT_UTF_8 = createConstantUtf8(TEXT_TYPE, "javascript");
-  /**
+  /* 
    * <a href="http://www.iana.org/assignments/media-types/text/tab-separated-values">
    * Tab separated values</a>.
    *
@@ -160,7 +160,7 @@ public final class MediaType {
   public static final MediaType TSV_UTF_8 = createConstantUtf8(TEXT_TYPE, "tab-separated-values");
   public static final MediaType VCARD_UTF_8 = createConstantUtf8(TEXT_TYPE, "vcard");
   public static final MediaType WML_UTF_8 = createConstantUtf8(TEXT_TYPE, "vnd.wap.wml");
-  /**
+  /* 
    * As described in <a href="http://www.ietf.org/rfc/rfc3023.txt">RFC 3023</a>, this constant
    * ({@code text/xml}) is used for XML documents that are "readable by casual users."
    * {@link #APPLICATION_XML_UTF_8} is provided for documents that are intended for applications.
@@ -169,7 +169,7 @@ public final class MediaType {
 
   /* image types */
   public static final MediaType BMP = createConstant(IMAGE_TYPE, "bmp");
-  /**
+  /* 
    * The media type for the <a href="http://en.wikipedia.org/wiki/Camera_Image_File_Format">Canon
    * Image File Format</a> ({@code crw} files), a widely-used "raw image" format for cameras. It is
    * found in {@code /etc/mime.types}, e.g. in <href=
@@ -183,7 +183,7 @@ public final class MediaType {
   public static final MediaType ICO = createConstant(IMAGE_TYPE, "vnd.microsoft.icon");
   public static final MediaType JPEG = createConstant(IMAGE_TYPE, "jpeg");
   public static final MediaType PNG = createConstant(IMAGE_TYPE, "png");
-  /**
+  /* 
    * The media type for the Photoshop File Format ({@code psd} files) as defined by <a href=
    * "http://www.iana.org/assignments/media-types/image/vnd.adobe.photoshop">IANA</a>, and found in
    * {@code /etc/mime.types}, e.g. <a href=
@@ -219,7 +219,7 @@ public final class MediaType {
   public static final MediaType WMV = createConstant(VIDEO_TYPE, "x-ms-wmv");
 
   /* application types */
-  /**
+  /* 
    * As described in <a href="http://www.ietf.org/rfc/rfc3023.txt">RFC 3023</a>, this constant
    * ({@code application/xml}) is used for XML documents that are "unreadable by casual users."
    * {@link #XML_UTF_8} is provided for documents that may be read by users.
@@ -227,7 +227,7 @@ public final class MediaType {
   public static final MediaType APPLICATION_XML_UTF_8 = createConstantUtf8(APPLICATION_TYPE, "xml");
   public static final MediaType ATOM_UTF_8 = createConstantUtf8(APPLICATION_TYPE, "atom+xml");
   public static final MediaType BZIP2 = createConstant(APPLICATION_TYPE, "x-bzip2");
-  /**
+  /* 
    * As described in the <a href="http://idpf.org/epub">International Digital Publishing Forum</a>
    * EPUB is the distribution and interchange format standard for digital publications and
    * documents. This media type is defined in the
@@ -239,7 +239,7 @@ public final class MediaType {
   public static final MediaType EPUB = createConstant(APPLICATION_TYPE, "epub+zip");
   public static final MediaType FORM_DATA = createConstant(APPLICATION_TYPE,
       "x-www-form-urlencoded");
-  /**
+  /* 
    * As described in <a href="https://www.rsa.com/rsalabs/node.asp?id=2138">PKCS #12: Personal
    * Information Exchange Syntax Standard</a>, PKCS #12 defines an archive file format for storing
    * many cryptography objects as a single file.
@@ -247,7 +247,7 @@ public final class MediaType {
    * @since 15.0
    */
   public static final MediaType KEY_ARCHIVE = createConstant(APPLICATION_TYPE, "pkcs12");
-  /**
+  /* 
    * This is a non-standard media type, but is commonly used in serving hosted binary files as it is
    * <a href="http://code.google.com/p/browsersec/wiki/Part2#Survey_of_content_sniffing_behaviors">
    * known not to trigger content sniffing in current browsers</a>. It <i>should not</i> be used in
@@ -260,7 +260,7 @@ public final class MediaType {
    */
   public static final MediaType APPLICATION_BINARY = createConstant(APPLICATION_TYPE, "binary");
   public static final MediaType GZIP = createConstant(APPLICATION_TYPE, "x-gzip");
-   /**
+   /* 
     * <a href="http://www.rfc-editor.org/rfc/rfc4329.txt">RFC 4329</a> declares this to be the
     * correct media type for JavaScript, but {@link #TEXT_JAVASCRIPT_UTF_8 text/javascript} may be
     * necessary in certain situations for compatibility.
@@ -293,7 +293,7 @@ public final class MediaType {
       createConstant(APPLICATION_TYPE, "vnd.oasis.opendocument.text");
   public static final MediaType PDF = createConstant(APPLICATION_TYPE, "pdf");
   public static final MediaType POSTSCRIPT = createConstant(APPLICATION_TYPE, "postscript");
-  /**
+  /* 
    * <a href="http://tools.ietf.org/html/draft-rfernando-protocol-buffers-00">Protocol buffers</a>
    *
    * @since 15.0
@@ -306,7 +306,7 @@ public final class MediaType {
   public static final MediaType SKETCHUP = createConstant(APPLICATION_TYPE, "vnd.sketchup.skp");
   public static final MediaType TAR = createConstant(APPLICATION_TYPE, "x-tar");
   public static final MediaType XHTML_UTF_8 = createConstantUtf8(APPLICATION_TYPE, "xhtml+xml");
-  /**
+  /* 
    * Media type for Extensible Resource Descriptors. This is not yet registered with the IANA, but
    * it is specified by OASIS in the
    * <a href="http://docs.oasis-open.org/xri/xrd/v1.0/cd02/xrd-1.0-cd02.html"> XRD definition</a>
@@ -327,17 +327,17 @@ public final class MediaType {
     this.parameters = parameters;
   }
 
-  /** Returns the top-level media type.  For example, {@code "text"} in {@code "text/plain"}. */
+  /*  Returns the top-level media type.  For example, {@code "text"} in {@code "text/plain"}. */
   public String type() {
     return type;
   }
 
-  /** Returns the media subtype.  For example, {@code "plain"} in {@code "text/plain"}. */
+  /*  Returns the media subtype.  For example, {@code "plain"} in {@code "text/plain"}. */
   public String subtype() {
     return subtype;
   }
 
-  /** Returns a multimap containing the parameters of this media type. */
+  /*  Returns a multimap containing the parameters of this media type. */
   public ImmutableListMultimap<String, String> parameters() {
     return parameters;
   }
@@ -351,7 +351,7 @@ public final class MediaType {
         });
   }
 
-  /**
+  /* 
    * Returns an optional charset for the value of the charset parameter if it is specified.
    *
    * @throws IllegalStateException if multiple charset values have been set for this media type
@@ -371,7 +371,7 @@ public final class MediaType {
     }
   }
 
-  /**
+  /* 
    * Returns a new instance with the same type and subtype as this instance, but without any
    * parameters.
    */
@@ -379,7 +379,7 @@ public final class MediaType {
     return parameters.isEmpty() ? this : create(type, subtype);
   }
 
-  /**
+  /* 
    * <em>Replaces</em> all parameters with the given parameters.
    *
    * @throws IllegalArgumentException if any parameter or value is invalid
@@ -388,7 +388,7 @@ public final class MediaType {
     return create(type, subtype, parameters);
   }
 
-  /**
+  /* 
    * <em>Replaces</em> all parameters with the given attribute with a single parameter with the
    * given value. If multiple parameters with the same attributes are necessary use
    * {@link #withParameters}. Prefer {@link #withCharset} for setting the {@code charset} parameter
@@ -413,7 +413,7 @@ public final class MediaType {
     return Objects.firstNonNull(KNOWN_TYPES.get(mediaType), mediaType);
   }
 
-  /**
+  /* 
    * Returns a new instance with the same type and subtype as this instance, with the
    * {@code charset} parameter set to the {@link Charset#name name} of the given charset. Only one
    * {@code charset} parameter will be present on the new instance regardless of the number set on
@@ -427,12 +427,12 @@ public final class MediaType {
     return withParameter(CHARSET_ATTRIBUTE, charset.name());
   }
 
-  /** Returns true if either the type or subtype is the wildcard. */
+  /*  Returns true if either the type or subtype is the wildcard. */
   public boolean hasWildcard() {
     return WILDCARD.equals(type) || WILDCARD.equals(subtype);
   }
 
-  /**
+  /* 
    * Returns {@code true} if this instance falls within the range (as defined by
    * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">the HTTP Accept header</a>)
    * given by the argument according to three criteria:
@@ -464,7 +464,7 @@ public final class MediaType {
         && this.parameters.entries().containsAll(mediaTypeRange.parameters.entries());
   }
 
-  /**
+  /* 
    * Creates a new media type with the given type and subtype.
    *
    * @throws IllegalArgumentException if type or subtype is invalid or if a wildcard is used for the
@@ -474,7 +474,7 @@ public final class MediaType {
     return create(type, subtype, ImmutableListMultimap.<String, String>of());
   }
 
-  /**
+  /* 
    * Creates a media type with the "application" type and the given subtype.
    *
    * @throws IllegalArgumentException if subtype is invalid
@@ -483,7 +483,7 @@ public final class MediaType {
     return create(APPLICATION_TYPE, subtype);
   }
 
-  /**
+  /* 
    * Creates a media type with the "audio" type and the given subtype.
    *
    * @throws IllegalArgumentException if subtype is invalid
@@ -492,7 +492,7 @@ public final class MediaType {
     return create(AUDIO_TYPE, subtype);
   }
 
-  /**
+  /* 
    * Creates a media type with the "image" type and the given subtype.
    *
    * @throws IllegalArgumentException if subtype is invalid
@@ -501,7 +501,7 @@ public final class MediaType {
     return create(IMAGE_TYPE, subtype);
   }
 
-  /**
+  /* 
    * Creates a media type with the "text" type and the given subtype.
    *
    * @throws IllegalArgumentException if subtype is invalid
@@ -510,7 +510,7 @@ public final class MediaType {
     return create(TEXT_TYPE, subtype);
   }
 
-  /**
+  /* 
    * Creates a media type with the "video" type and the given subtype.
    *
    * @throws IllegalArgumentException if subtype is invalid
@@ -547,7 +547,7 @@ public final class MediaType {
     return CHARSET_ATTRIBUTE.equals(attribute) ? Ascii.toLowerCase(value) : value;
   }
 
-  /**
+  /* 
    * Parses a media type from its string representation.
    *
    * @throws IllegalArgumentException if the input is not parsable
@@ -657,7 +657,7 @@ public final class MediaType {
 
   private static final MapJoiner PARAMETER_JOINER = Joiner.on("; ").withKeyValueSeparator("=");
 
-  /**
+  /* 
    * Returns the string representation of this media type in the format described in <a
    * href="http://www.ietf.org/rfc/rfc2045.txt">RFC 2045</a>.
    */

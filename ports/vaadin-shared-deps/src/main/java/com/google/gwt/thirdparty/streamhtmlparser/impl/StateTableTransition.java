@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.streamhtmlparser.impl;
 
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
-/**
+/* 
  * Holds one state transition as derived from a Python configuration
  * file. A state transition is a triplet as follows:
  * <ul>
@@ -38,7 +38,7 @@ class StateTableTransition {
   private final InternalState from;
   private final InternalState to;
 
-   /**
+   /* 
    * Returns the full state of the {@code StateTableTransition} in a
    * human readable form. The format of the returned {@code String} is not
    * specified and is subject to change.

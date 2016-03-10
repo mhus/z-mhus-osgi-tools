@@ -30,7 +30,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable hash-based multiset. Does not permit null elements.
  *
  * <p>Its iterator orders elements according to the first appearance of the
@@ -55,7 +55,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
   private static final ImmutableMultiset<Object> EMPTY =
       new RegularImmutableMultiset<Object>(ImmutableMap.<Object, Integer>of(), 0);
 
-  /**
+  /* 
    * Returns the empty immutable multiset.
    */
   @SuppressWarnings("unchecked") // all supported methods are covariant
@@ -63,7 +63,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return (ImmutableMultiset<E>) EMPTY;
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing a single element.
    *
    * @throws NullPointerException if {@code element} is null
@@ -74,7 +74,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOfInternal(element);
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements, in order.
    *
    * @throws NullPointerException if any element is null
@@ -85,7 +85,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOfInternal(e1, e2);
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements, in order.
    *
    * @throws NullPointerException if any element is null
@@ -96,7 +96,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOfInternal(e1, e2, e3);
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements, in order.
    *
    * @throws NullPointerException if any element is null
@@ -107,7 +107,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOfInternal(e1, e2, e3, e4);
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements, in order.
    *
    * @throws NullPointerException if any element is null
@@ -118,7 +118,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOfInternal(e1, e2, e3, e4, e5);
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements, in order.
    *
    * @throws NullPointerException if any element is null
@@ -138,7 +138,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
         .build();
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements.
    *
    * <p>The multiset is ordered by the first occurrence of each element. For
@@ -152,7 +152,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return copyOf(Arrays.asList(elements));
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements.
    *
    * <p>The multiset is ordered by the first occurrence of each element. For
@@ -216,7 +216,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
         builder.build(), Ints.saturatedCast(size));
   }
 
-  /**
+  /* 
    * Returns an immutable multiset containing the given elements.
    *
    * <p>The multiset is ordered by the first occurrence of each element. For
@@ -269,7 +269,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return elementSet().containsAll(targets);
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -281,7 +281,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -293,7 +293,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -305,7 +305,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the collection unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -458,7 +458,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return new SerializedForm(this);
   }
 
-  /**
+  /* 
    * Returns a new builder. The generated builder is equivalent to the builder
    * created by the {@link Builder} constructor.
    */
@@ -466,7 +466,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
     return new Builder<E>();
   }
 
-  /**
+  /* 
    * A builder for creating immutable multiset instances, especially {@code
    * public static final} multisets ("constant multisets"). Example:
    * <pre> {@code
@@ -487,7 +487,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
   public static class Builder<E> extends ImmutableCollection.Builder<E> {
     final Multiset<E> contents;
 
-    /**
+    /* 
      * Creates a new builder. The returned builder is equivalent to the builder
      * generated by {@link ImmutableMultiset#builder}.
      */
@@ -499,7 +499,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       this.contents = contents;
     }
 
-    /**
+    /* 
      * Adds {@code element} to the {@code ImmutableMultiset}.
      *
      * @param element the element to add
@@ -511,7 +511,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds a number of occurrences of an element to this {@code
      * ImmutableMultiset}.
      *
@@ -529,7 +529,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds or removes the necessary occurrences of an element such that the
      * element attains the desired count.
      *
@@ -544,7 +544,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableMultiset}.
      *
      * @param elements the elements to add
@@ -557,7 +557,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableMultiset}.
      *
      * @param elements the {@code Iterable} to add to the {@code
@@ -578,7 +578,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableMultiset}.
      *
      * @param elements the elements to add to the {@code ImmutableMultiset}
@@ -591,7 +591,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /**
+    /* 
      * Returns a newly-created {@code ImmutableMultiset} based on the contents
      * of the {@code Builder}.
      */

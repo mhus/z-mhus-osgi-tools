@@ -36,7 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable sorted set with one or more elements. TODO(jlevy): Consider
  * separate class for a single-element sorted set.
  *

@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.io.Serializable;
 
-/** An ordering that uses the natural order of the values. */
+/*  An ordering that uses the natural order of the values. */
 @GwtCompatible(serializable = true)
 @SuppressWarnings("unchecked") // TODO(kevinb): the right way to explain this??
 final class NaturalOrdering

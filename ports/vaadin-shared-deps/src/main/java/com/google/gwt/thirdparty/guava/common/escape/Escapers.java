@@ -26,7 +26,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to {@link Escaper} instances.
  *
  * @author Sven Mawson
@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
 public final class Escapers {
   private Escapers() {}
 
-  /**
+  /* 
    * Returns an {@link Escaper} that does no escaping, passing all character
    * data through unchanged.
    */
@@ -59,7 +59,7 @@ public final class Escapers {
     }
   };
 
-  /**
+  /* 
    * Returns a builder for creating simple, fast escapers. A builder instance
    * can be reused and each escaper that is created will be a snapshot of the
    * current builder state. Builders are not thread safe.
@@ -78,7 +78,7 @@ public final class Escapers {
     return new Builder();
   }
 
-  /**
+  /* 
    * A builder for simple, fast escapers.
    *
    * <p>Typically an escaper needs to deal with the escaping of high valued
@@ -101,7 +101,7 @@ public final class Escapers {
     // The constructor is exposed via the builder() method above.
     private Builder() {}
 
-    /**
+    /* 
      * Sets the safe range of characters for the escaper. Characters in this
      * range that have no explicit replacement are considered 'safe' and remain
      * unescaped in the output. If {@code safeMax < safeMin} then the safe range
@@ -117,7 +117,7 @@ public final class Escapers {
       return this;
     }
 
-    /**
+    /* 
      * Sets the replacement string for any characters outside the 'safe' range
      * that have no explicit replacement. If {@code unsafeReplacement} is
      * {@code null} then no replacement will occur, if it is {@code ""} then
@@ -131,7 +131,7 @@ public final class Escapers {
       return this;
     }
 
-    /**
+    /* 
      * Adds a replacement string for the given input character. The specified
      * character will be replaced by the given string whenever it occurs in the
      * input, irrespective of whether it lies inside or outside the 'safe'
@@ -149,7 +149,7 @@ public final class Escapers {
       return this;
     }
 
-    /**
+    /* 
      * Returns a new escaper based on the current state of the builder.
      */
     public Escaper build() {
@@ -163,7 +163,7 @@ public final class Escapers {
     }
   }
 
-  /**
+  /* 
    * Returns a {@link UnicodeEscaper} equivalent to the given escaper instance.
    * If the escaper is already a UnicodeEscaper then it is simply returned,
    * otherwise it is wrapped in a UnicodeEscaper.
@@ -192,7 +192,7 @@ public final class Escapers {
         escaper.getClass().getName());
   }
 
-  /**
+  /* 
    * Returns a string that would replace the given character in the specified
    * escaper, or {@code null} if no replacement should be made. This method is
    * intended for use in tests through the {@code EscaperAsserts} class;
@@ -206,7 +206,7 @@ public final class Escapers {
     return stringOrNull(escaper.escape(c));
   }
 
-  /**
+  /* 
    * Returns a string that would replace the given character in the specified
    * escaper, or {@code null} if no replacement should be made. This method is
    * intended for use in tests through the {@code EscaperAsserts} class;
@@ -224,7 +224,7 @@ public final class Escapers {
     return (in == null) ? null : new String(in);
   }
 
-  /** Private helper to wrap a CharEscaper as a UnicodeEscaper. */
+  /*  Private helper to wrap a CharEscaper as a UnicodeEscaper. */
   private static UnicodeEscaper wrap(final CharEscaper escaper) {
     return new UnicodeEscaper() {
       @Override protected char[] escape(int cp) {

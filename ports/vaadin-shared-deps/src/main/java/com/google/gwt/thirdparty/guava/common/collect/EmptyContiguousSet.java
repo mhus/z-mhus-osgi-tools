@@ -22,7 +22,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An empty contiguous set.
  *
  * @author Gregory Kick

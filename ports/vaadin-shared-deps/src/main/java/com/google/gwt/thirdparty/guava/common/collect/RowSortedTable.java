@@ -24,7 +24,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-/**
+/* 
  * Interface that extends {@code Table} and whose rows are sorted.
  *
  * <p>The {@link #rowKeySet} method returns a {@link SortedSet} and the {@link
@@ -37,7 +37,7 @@ import java.util.SortedSet;
 @GwtCompatible
 @Beta
 public interface RowSortedTable<R, C, V> extends Table<R, C, V> {
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This method returns a {@link SortedSet}, instead of the {@code Set}
@@ -45,7 +45,7 @@ public interface RowSortedTable<R, C, V> extends Table<R, C, V> {
    */
   @Override SortedSet<R> rowKeySet();
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This method returns a {@link SortedMap}, instead of the {@code Map}

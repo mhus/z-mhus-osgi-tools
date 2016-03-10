@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.escape.Escaper;
 import com.google.gwt.thirdparty.guava.common.escape.Escapers;
 
-/**
+/* 
  * {@code Escaper} instances suitable for strings to be included in XML
  * attribute values and elements' text contents. When possible, avoid manual
  * escaping by using templating systems and high-level APIs that provide
@@ -62,7 +62,7 @@ public class XmlEscapers {
   // <a href="http://www.w3.org/TR/2008/REC-xml-20081126/#charsets">2.2</a> of
   // the XML specification.
 
-  /**
+  /* 
    * Returns an {@link Escaper} instance that escapes special characters in a
    * string so it can safely be included in an XML document as element content.
    * See section
@@ -87,7 +87,7 @@ public class XmlEscapers {
     return XML_CONTENT_ESCAPER;
   }
 
-  /**
+  /* 
    * Returns an {@link Escaper} instance that escapes special characters in a
    * string so it can safely be included in XML document as an attribute value.
    * See section

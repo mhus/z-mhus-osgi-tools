@@ -24,21 +24,21 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.discovery.resource.ClassLoaders;
 import org.apache.commons.discovery.resource.ResourceDiscoverImpl;
 
-/**
+/* 
  * Default {@link ResourceClassDiscover} implementation.
  *
  * @param <T> The SPI type
  */
 public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl implements ResourceClassDiscover<T> {
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      */
     public ResourceClassDiscoverImpl() {
         super();
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer.
      *
      * @param classLoaders The class loaders holder
@@ -47,7 +47,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
         super(classLoaders);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -55,7 +55,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
         return findResourceClasses(resourceName);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -63,7 +63,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
         return findResourceClasses(resourceNames);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -71,7 +71,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
         return findResourceClasses(resourceName);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override
@@ -79,7 +79,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
         return findResourceClasses(resourceNames);
     }
 
-    /**
+    /* 
      * Locate class resources that are bound to <code>className</code>.
      *
      * @param className The class name has to be located
@@ -87,7 +87,7 @@ public abstract class ResourceClassDiscoverImpl<T> extends ResourceDiscoverImpl 
      */
     public abstract ResourceClassIterator<T> findResourceClasses(String className);
 
-    /**
+    /* 
      * Locate class resources that are bound to {@code resourceNames}.
      *
      * @param inputNames The resource name iterator

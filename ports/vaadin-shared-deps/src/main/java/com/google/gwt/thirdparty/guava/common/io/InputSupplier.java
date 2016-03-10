@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.io;
 
 import java.io.IOException;
 
-/**
+/* 
  * A factory for readable streams of bytes or characters.
  *
  * @author Chris Nokleberg
@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 public interface InputSupplier<T> {
 
-  /**
+  /* 
    * Returns an object that encapsulates a readable resource.
    * <p>
    * Like {@link Iterable#iterator}, this method may be called repeatedly to

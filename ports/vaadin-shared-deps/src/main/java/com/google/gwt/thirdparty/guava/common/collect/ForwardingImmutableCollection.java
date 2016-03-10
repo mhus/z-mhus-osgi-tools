@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * Dummy class that makes the GWT serialization policy happy.  It isn't used
  * on the server-side.
  *

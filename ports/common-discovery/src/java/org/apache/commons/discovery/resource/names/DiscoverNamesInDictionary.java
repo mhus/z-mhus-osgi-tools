@@ -24,7 +24,7 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
+/* 
  * Recover resources from a Dictionary.  This covers Properties as well,
  * since <code>Properties extends Hashtable extends Dictionary</code>.
  *
@@ -35,7 +35,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
 
     private static Log log = LogFactory.getLog(DiscoverNamesInDictionary.class);
 
-    /**
+    /* 
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -48,14 +48,14 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
 
     private Dictionary<String, String[]> dictionary;
 
-    /**
+    /* 
      * Construct a new resource discoverer with an empty Dictionary.
      */
     public DiscoverNamesInDictionary() {
         setDictionary(new Hashtable<String, String[]>());
     }
 
-    /**
+    /* 
      * Construct a new resource discoverer with the given Dictionary.
      *
      * @param dictionary The initial Dictionary
@@ -64,7 +64,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
         setDictionary(dictionary);
     }
 
-    /**
+    /* 
      * Returns the current Dictionary for names mapping.
      *
      * @return The current Dictionary for names mapping
@@ -73,7 +73,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
         return dictionary;
     }
 
-    /**
+    /* 
      * Specify the Dictionary for names mapping.
      *
      * @param table The Dictionary for names mapping
@@ -82,7 +82,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
         this.dictionary = table;
     }
 
-    /**
+    /* 
      * Add a resource name to a single name mapping.
      *
      * @param resourceName The resource name
@@ -92,7 +92,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
         addResource(resourceName, new String[]{ resource });
     }
 
-    /**
+    /* 
      * Add a resource name to multiple names mapping.
      *
      * @param resourceName The resource name
@@ -102,7 +102,7 @@ public class DiscoverNamesInDictionary extends ResourceNameDiscoverImpl implemen
         dictionary.put(resourceName, resources);
     }
 
-    /**
+    /* 
      * {@inheritDoc}
      */
     @Override

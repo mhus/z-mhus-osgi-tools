@@ -27,7 +27,7 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedMap;
 
-/**
+/* 
  * A navigable map which forwards all its method calls to another navigable map. Subclasses should
  * override one or more methods to modify the behavior of the backing map as desired per the <a
  * href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -52,7 +52,7 @@ import java.util.SortedMap;
 public abstract class ForwardingNavigableMap<K, V>
     extends ForwardingSortedMap<K, V> implements NavigableMap<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingNavigableMap() {}
 
   @Override
@@ -63,7 +63,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().lowerEntry(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #lowerEntry} in terms of the {@code lastEntry()} of
    * {@link #headMap(Object, boolean)}. If you override {@code headMap}, you may wish to override
    * {@code lowerEntry} to forward to this implementation.
@@ -77,7 +77,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().lowerKey(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #lowerKey} in terms of {@code lowerEntry}. If you override
    * {@link #lowerEntry}, you may wish to override {@code lowerKey} to forward to this
    * implementation.
@@ -91,7 +91,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().floorEntry(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #floorEntry} in terms of the {@code lastEntry()} of
    * {@link #headMap(Object, boolean)}. If you override {@code headMap}, you may wish to override
    * {@code floorEntry} to forward to this implementation.
@@ -105,7 +105,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().floorKey(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #floorKey} in terms of {@code floorEntry}. If you override
    * {@code floorEntry}, you may wish to override {@code floorKey} to forward to this
    * implementation.
@@ -119,7 +119,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().ceilingEntry(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #ceilingEntry} in terms of the {@code firstEntry()} of
    * {@link #tailMap(Object, boolean)}. If you override {@code tailMap}, you may wish to override
    * {@code ceilingEntry} to forward to this implementation.
@@ -133,7 +133,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().ceilingKey(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #ceilingKey} in terms of {@code ceilingEntry}. If you override
    * {@code ceilingEntry}, you may wish to override {@code ceilingKey} to forward to this
    * implementation.
@@ -147,7 +147,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().higherEntry(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #higherEntry} in terms of the {@code firstEntry()} of
    * {@link #tailMap(Object, boolean)}. If you override {@code tailMap}, you may wish to override
    * {@code higherEntry} to forward to this implementation.
@@ -161,7 +161,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().higherKey(key);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #higherKey} in terms of {@code higherEntry}. If you override
    * {@code higherEntry}, you may wish to override {@code higherKey} to forward to this
    * implementation.
@@ -175,7 +175,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().firstEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #firstEntry} in terms of the {@code iterator()} of
    * {@link #entrySet}. If you override {@code entrySet}, you may wish to override
    * {@code firstEntry} to forward to this implementation.
@@ -184,7 +184,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return Iterables.getFirst(entrySet(), null);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #firstKey} in terms of {@code firstEntry}. If you override
    * {@code firstEntry}, you may wish to override {@code firstKey} to forward to this
    * implementation.
@@ -203,7 +203,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().lastEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #lastEntry} in terms of the {@code iterator()} of the
    * {@link #entrySet} of {@link #descendingMap}. If you override {@code descendingMap}, you may
    * wish to override {@code lastEntry} to forward to this implementation.
@@ -212,7 +212,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return Iterables.getFirst(descendingMap().entrySet(), null);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #lastKey} in terms of {@code lastEntry}. If you override
    * {@code lastEntry}, you may wish to override {@code lastKey} to forward to this implementation.
    */
@@ -230,7 +230,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().pollFirstEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #pollFirstEntry} in terms of the {@code iterator} of
    * {@code entrySet}. If you override {@code entrySet}, you may wish to override
    * {@code pollFirstEntry} to forward to this implementation.
@@ -244,7 +244,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().pollLastEntry();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #pollFirstEntry} in terms of the {@code iterator} of the
    * {@code entrySet} of {@code descendingMap}. If you override {@code descendingMap}, you may wish
    * to override {@code pollFirstEntry} to forward to this implementation.
@@ -258,7 +258,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().descendingMap();
   }
 
-  /**
+  /* 
    * A sensible implementation of {@link NavigableMap#descendingMap} in terms of the methods of
    * this {@code NavigableMap}. In many cases, you may wish to override
    * {@link ForwardingNavigableMap#descendingMap} to forward to this implementation or a subclass
@@ -272,7 +272,7 @@ public abstract class ForwardingNavigableMap<K, V>
    */
   @Beta
   protected class StandardDescendingMap extends Maps.DescendingMap<K, V> {
-    /** Constructor for use by subclasses. */
+    /*  Constructor for use by subclasses. */
     public StandardDescendingMap() {}
 
     @Override
@@ -319,7 +319,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().navigableKeySet();
   }
 
-  /**
+  /* 
    * A sensible implementation of {@link NavigableMap#navigableKeySet} in terms of the methods of
    * this {@code NavigableMap}. In many cases, you may wish to override
    * {@link ForwardingNavigableMap#navigableKeySet} to forward to this implementation or a subclass
@@ -329,7 +329,7 @@ public abstract class ForwardingNavigableMap<K, V>
    */
   @Beta
   protected class StandardNavigableKeySet extends Maps.NavigableKeySet<K, V> {
-    /** Constructor for use by subclasses. */
+    /*  Constructor for use by subclasses. */
     public StandardNavigableKeySet() {
       super(ForwardingNavigableMap.this);
     }
@@ -340,7 +340,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().descendingKeySet();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #descendingKeySet} as the {@code navigableKeySet} of
    * {@link #descendingMap}. (The {@link StandardDescendingMap} implementation implements
    * {@code navigableKeySet} on its own, so as not to cause an infinite loop.) If you override
@@ -352,7 +352,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return descendingMap().navigableKeySet();
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #subMap(Object, Object)} in terms of
    * {@link #subMap(Object, boolean, Object, boolean)}. If you override
    * {@code subMap(K, boolean, K, boolean)}, you may wish to override {@code subMap} to forward to
@@ -378,7 +378,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return delegate().tailMap(fromKey, inclusive);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #headMap(Object)} in terms of
    * {@link #headMap(Object, boolean)}. If you override {@code headMap(K, boolean)}, you may wish
    * to override {@code headMap} to forward to this implementation.
@@ -387,7 +387,7 @@ public abstract class ForwardingNavigableMap<K, V>
     return headMap(toKey, false);
   }
 
-  /**
+  /* 
    * A sensible definition of {@link #tailMap(Object)} in terms of
    * {@link #tailMap(Object, boolean)}. If you override {@code tailMap(K, boolean)}, you may wish
    * to override {@code tailMap} to forward to this implementation.

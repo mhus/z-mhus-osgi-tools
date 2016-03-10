@@ -17,7 +17,7 @@ package com.google.gwt.thirdparty.guava.common.cache;
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/**
+/* 
  * Calculates the weights of cache entries.
  *
  * @author Charles Fry
@@ -27,7 +27,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @GwtCompatible
 public interface Weigher<K, V> {
 
-  /**
+  /* 
    * Returns the weight of a cache entry. There is no unit for entry weights; rather they are simply
    * relative to each other.
    *

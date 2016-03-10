@@ -20,7 +20,7 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
-/**
+/* 
  * Wraps an event that was posted, but which had no subscribers and thus could
  * not be delivered.
  *
@@ -36,7 +36,7 @@ public class DeadEvent {
   private final Object source;
   private final Object event;
 
-  /**
+  /* 
    * Creates a new DeadEvent.
    *
    * @param source  object broadcasting the DeadEvent (generally the
@@ -48,7 +48,7 @@ public class DeadEvent {
     this.event = checkNotNull(event);
   }
 
-  /**
+  /* 
    * Returns the object that originated this event (<em>not</em> the object that
    * originated the wrapped event).  This is generally an {@link EventBus}.
    *
@@ -58,7 +58,7 @@ public class DeadEvent {
     return source;
   }
 
-  /**
+  /* 
    * Returns the wrapped, 'dead' event, which the system was unable to deliver
    * to any registered handler.
    *

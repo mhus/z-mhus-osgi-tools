@@ -33,7 +33,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An efficient immutable implementation of a {@link RangeSet}.
  *
  * @author Louis Wasserman
@@ -49,7 +49,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
   @SuppressWarnings("unchecked")
   private static final ImmutableRangeSet ALL = new ImmutableRangeSet(ImmutableList.of(Range.all()));
 
-  /**
+  /* 
    * Returns an empty immutable range set.
    */
   @SuppressWarnings("unchecked")
@@ -57,7 +57,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     return EMPTY;
   }
 
-  /**
+  /* 
    * Returns an immutable range set containing the single range {@link Range#all()}.
    */
   @SuppressWarnings("unchecked")
@@ -65,7 +65,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     return ALL;
   }
 
-  /**
+  /* 
    * Returns an immutable range set containing the specified single range. If {@link Range#isEmpty()
    * range.isEmpty()}, this is equivalent to {@link ImmutableRangeSet#of()}.
    */
@@ -80,7 +80,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     }
   }
 
-  /**
+  /* 
    * Returns an immutable copy of the specified {@code RangeSet}.
    */
   public static <C extends Comparable> ImmutableRangeSet<C> copyOf(RangeSet<C> rangeSet) {
@@ -253,7 +253,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     return result;
   }
 
-  /**
+  /* 
    * Returns a list containing the nonempty intersections of {@code range}
    * with the ranges in this range set.
    */
@@ -309,7 +309,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     }
   }
   
-  /**
+  /* 
    * Returns a view of the intersection of this range set with the given range.
    */
   @Override
@@ -325,7 +325,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     return of();
   }
 
-  /**
+  /* 
    * Returns an {@link ImmutableSortedSet} containing the same values in the given domain
    * {@linkplain RangeSet#contains contained} by this range set.
    *
@@ -522,7 +522,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     }
   }
 
-  /**
+  /* 
    * Returns {@code true} if this immutable range set's implementation contains references to
    * user-created objects that aren't accessible via this range set's methods. This is generally
    * used to determine whether {@code copyOf} implementations should make an explicit copy to avoid
@@ -532,14 +532,14 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     return ranges.isPartialView();
   }
 
-  /**
+  /* 
    * Returns a new builder for an immutable range set.
    */
   public static <C extends Comparable<?>> Builder<C> builder() {
     return new Builder<C>();
   }
 
-  /**
+  /* 
    * A builder for immutable range sets.
    */
   public static class Builder<C extends Comparable<?>> {
@@ -549,7 +549,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
       this.rangeSet = TreeRangeSet.create();
     }
 
-    /**
+    /* 
      * Add the specified range to this builder.  Adjacent/abutting ranges are permitted, but
      * empty ranges, or ranges with nonempty overlap, are forbidden.
      *
@@ -571,7 +571,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
       return this;
     }
 
-    /**
+    /* 
      * Add all ranges from the specified range set to this builder. Duplicate or connected ranges
      * are permitted, and will be merged in the resulting immutable range set.
      */
@@ -582,7 +582,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
       return this;
     }
 
-    /**
+    /* 
      * Returns an {@code ImmutableRangeSet} containing the ranges added to this builder.
      */
     public ImmutableRangeSet<C> build() {

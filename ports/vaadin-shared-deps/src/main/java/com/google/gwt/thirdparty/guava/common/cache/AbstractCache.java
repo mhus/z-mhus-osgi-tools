@@ -26,7 +26,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 
-/**
+/* 
  * This class provides a skeletal implementation of the {@code Cache} interface to minimize the
  * effort required to implement this interface.
  *
@@ -44,10 +44,10 @@ import java.util.concurrent.ExecutionException;
 @GwtCompatible
 public abstract class AbstractCache<K, V> implements Cache<K, V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected AbstractCache() {}
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -55,7 +55,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * This implementation of {@code getAllPresent} lacks any insight into the internal cache data
    * structure, and is thus forced to return the query keys instead of the cached keys. This is only
    * possible with an unsafe cast which requires {@code keys} to actually be of type {@code K}.
@@ -77,7 +77,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     return ImmutableMap.copyOf(result);
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -85,7 +85,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @Override
@@ -108,7 +108,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * @since 11.0
    */
   @Override
@@ -133,7 +133,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Accumulates statistics during the operation of a {@link Cache} for presentation by {@link
    * Cache#stats}. This is solely intended for consumption by {@code Cache} implementors.
    *
@@ -141,7 +141,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
    */
   @Beta
   public interface StatsCounter {
-    /**
+    /* 
      * Records cache hits. This should be called when a cache request returns a cached value.
      *
      * @param count the number of hits to record
@@ -149,7 +149,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
      */
     public void recordHits(int count);
 
-    /**
+    /* 
      * Records cache misses. This should be called when a cache request returns a value that was
      * not found in the cache. This method should be called by the loading thread, as well as by
      * threads blocking on the load. Multiple concurrent calls to {@link Cache} lookup methods with
@@ -162,7 +162,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
      */
     public void recordMisses(int count);
 
-    /**
+    /* 
      * Records the successful load of a new entry. This should be called when a cache request
      * causes an entry to be loaded, and the loading completes successfully. In contrast to
      * {@link #recordMisses}, this method should only be called by the loading thread.
@@ -172,7 +172,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
      */
     public void recordLoadSuccess(long loadTime);
 
-    /**
+    /* 
      * Records the failed load of a new entry. This should be called when a cache request causes
      * an entry to be loaded, but an exception is thrown while loading the entry. In contrast to
      * {@link #recordMisses}, this method should only be called by the loading thread.
@@ -182,21 +182,21 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
      */
     public void recordLoadException(long loadTime);
 
-    /**
+    /* 
      * Records the eviction of an entry from the cache. This should only been called when an entry
      * is evicted due to the cache's eviction strategy, and not as a result of manual {@linkplain
      * Cache#invalidate invalidations}.
      */
     public void recordEviction();
 
-    /**
+    /* 
      * Returns a snapshot of this counter's values. Note that this may be an inconsistent view, as
      * it may be interleaved with update operations.
      */
     public CacheStats snapshot();
   }
 
-  /**
+  /* 
    * A thread-safe {@link StatsCounter} implementation for use by {@link Cache} implementors.
    *
    * @since 10.0
@@ -210,12 +210,12 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
     private final LongAddable totalLoadTime = LongAddables.create();
     private final LongAddable evictionCount = LongAddables.create();
 
-    /**
+    /* 
      * Constructs an instance with all counts initialized to zero.
      */
     public SimpleStatsCounter() {}
 
-    /**
+    /* 
      * @since 11.0
      */
     @Override
@@ -223,7 +223,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
       hitCount.add(count);
     }
 
-    /**
+    /* 
      * @since 11.0
      */
     @Override
@@ -259,7 +259,7 @@ public abstract class AbstractCache<K, V> implements Cache<K, V> {
           evictionCount.sum());
     }
 
-    /**
+    /* 
      * Increments all counters by the values in {@code other}.
      */
     public void incrementBy(StatsCounter other) {

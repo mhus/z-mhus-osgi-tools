@@ -23,7 +23,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Implementation of the {@code equals}, {@code hashCode}, and {@code toString}
  * methods of {@code Entry}.
  *

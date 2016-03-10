@@ -27,7 +27,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A generalized interval on any ordering, for internal use. Supports {@code null}. Unlike
  * {@link Range}, this allows the use of an arbitrary comparator. This is designed for use in the
  * implementation of subcollections of sorted collection types.
@@ -38,7 +38,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(serializable = true)
 final class GeneralRange<T> implements Serializable {
-  /**
+  /* 
    * Converts a Range to a GeneralRange.
    */
   static <T extends Comparable> GeneralRange<T> from(Range<T> range) {
@@ -53,14 +53,14 @@ final class GeneralRange<T> implements Serializable {
         lowerBoundType, range.hasUpperBound(), upperEndpoint, upperBoundType);
   }
 
-  /**
+  /* 
    * Returns the whole range relative to the specified comparator.
    */
   static <T> GeneralRange<T> all(Comparator<? super T> comparator) {
     return new GeneralRange<T>(comparator, false, null, OPEN, false, null, OPEN);
   }
 
-  /**
+  /* 
    * Returns everything above the endpoint relative to the specified comparator, with the specified
    * endpoint behavior.
    */
@@ -69,7 +69,7 @@ final class GeneralRange<T> implements Serializable {
     return new GeneralRange<T>(comparator, true, endpoint, boundType, false, null, OPEN);
   }
 
-  /**
+  /* 
    * Returns everything below the endpoint relative to the specified comparator, with the specified
    * endpoint behavior.
    */
@@ -78,7 +78,7 @@ final class GeneralRange<T> implements Serializable {
     return new GeneralRange<T>(comparator, false, null, OPEN, true, endpoint, boundType);
   }
 
-  /**
+  /* 
    * Returns everything between the endpoints relative to the specified comparator, with the
    * specified endpoint behavior.
    */
@@ -164,7 +164,7 @@ final class GeneralRange<T> implements Serializable {
     return !tooLow(t) && !tooHigh(t);
   }
 
-  /**
+  /* 
    * Returns the intersection of the two ranges, or an empty range if their intersection is empty.
    */
   GeneralRange<T> intersect(GeneralRange<T> other) {
@@ -237,7 +237,7 @@ final class GeneralRange<T> implements Serializable {
 
   private transient GeneralRange<T> reverse;
 
-  /**
+  /* 
    * Returns the same range relative to the reversed comparator.
    */
   GeneralRange<T> reverse() {

@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.escape.Escaper;
 
-/**
+/* 
  * {@code Escaper} instances suitable for strings to be included in particular
  * sections of URLs.
  *
@@ -48,7 +48,7 @@ public final class UrlEscapers {
       "!$'()*,;&=" +  // The subdelim characters (excluding '+').
       "@:";           // The gendelim characters permitted in paths.
 
-  /**
+  /* 
    * Returns an {@link Escaper} instance that escapes strings so they can be
    * safely included in <a href="http://goo.gl/OQEc8">URL form parameter names
    * and values</a>. Escaping is performed with the UTF-8 character encoding.
@@ -88,7 +88,7 @@ public final class UrlEscapers {
   private static final Escaper URL_FORM_PARAMETER_ESCAPER =
       new PercentEscaper(URL_FORM_PARAMETER_OTHER_SAFE_CHARS, true);
 
-  /**
+  /* 
    * Returns an {@link Escaper} instance that escapes strings so they can be
    * safely included in <a href="http://goo.gl/swjbR">URL path segments</a>. The
    * returned escaper escapes all non-ASCII characters, even though <a
@@ -129,7 +129,7 @@ public final class UrlEscapers {
   private static final Escaper URL_PATH_SEGMENT_ESCAPER =
       new PercentEscaper(URL_PATH_OTHER_SAFE_CHARS_LACKING_PLUS + "+", false);
 
-  /**
+  /* 
    * Returns an {@link Escaper} instance that escapes strings so they can be
    * safely included in a <a href="http://goo.gl/xXEq4p">URL fragment</a>. The
    * returned escaper escapes all non-ASCII characters, even though <a

@@ -24,7 +24,7 @@ import java.util.concurrent.Callable;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * Static utility methods pertaining to the {@link Callable} interface.
  *
  * @author Isaac Shum
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
 public final class Callables {
   private Callables() {}
 
-  /**
+  /* 
    * Creates a {@code Callable} which immediately returns a preset value each
    * time it is called.
    */
@@ -45,7 +45,7 @@ public final class Callables {
     };
   }
 
-  /**
+  /* 
    * Wraps the given callable such that for the duration of {@link Callable#call} the thread that is
    * running will have the given name.
    *
@@ -73,7 +73,7 @@ public final class Callables {
     };
   }
 
-  /**
+  /* 
    * Wraps the given runnable such that for the duration of {@link Runnable#run} the thread that is
    * running with have the given name.
    *
@@ -100,7 +100,7 @@ public final class Callables {
     };
   }
 
-  /** Tries to set name of the given {@link Thread}, returns true if successful. */
+  /*  Tries to set name of the given {@link Thread}, returns true if successful. */
   private static boolean trySetName(final String threadName, Thread currentThread) {
     // In AppEngine this will always fail, should we test for that explicitly using
     // MoreExecutors.isAppEngine.  More generally, is there a way to see if we have the modifyThread

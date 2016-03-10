@@ -36,7 +36,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * An immutable {@code SortedSet} that stores its elements in a sorted array.
  * Some instances are ordered by an explicit comparator, while others follow the
  * natural sort ordering of their elements. Either way, null elements are not
@@ -106,14 +106,14 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     }
   }
 
-  /**
+  /* 
    * Returns the empty immutable sorted set.
    */
   public static <E> ImmutableSortedSet<E> of() {
     return emptySet();
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing a single element.
    */
   public static <E extends Comparable<? super E>> ImmutableSortedSet<E> of(
@@ -122,7 +122,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
         ImmutableList.of(element), Ordering.natural());
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -135,7 +135,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(Ordering.natural(), 2, e1, e2);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -148,7 +148,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(Ordering.natural(), 3, e1, e2, e3);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -161,7 +161,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(Ordering.natural(), 4, e1, e2, e3, e4);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -174,7 +174,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(Ordering.natural(), 5, e1, e2, e3, e4, e5);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -198,7 +198,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
 
   // TODO(kevinb): Consider factory methods that reject duplicates
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@link Comparable#compareTo}, only the first one specified is included.
@@ -211,7 +211,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(Ordering.natural(), elements.length, elements.clone());
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@code compareTo()}, only the first one specified is included. To create a
@@ -246,7 +246,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return copyOf(naturalOrder, elements);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@code compareTo()}, only the first one specified is included. To create a
@@ -284,7 +284,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return copyOf(naturalOrder, elements);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * their natural ordering. When multiple elements are equivalent according to
    * {@code compareTo()}, only the first one specified is included.
@@ -304,7 +304,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return copyOf(naturalOrder, elements);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * the given {@code Comparator}. When multiple elements are equivalent
    * according to {@code compareTo()}, only the first one specified is
@@ -318,7 +318,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return new Builder<E>(comparator).addAll(elements).build();
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * the given {@code Comparator}. When multiple elements are equivalent
    * according to {@code compare()}, only the first one specified is
@@ -349,7 +349,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return construct(comparator, array.length, array);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the given elements sorted by
    * the given {@code Comparator}. When multiple elements are equivalent
    * according to {@code compareTo()}, only the first one specified is
@@ -372,7 +372,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return copyOf(comparator, (Iterable<? extends E>) elements);
   }
 
-  /**
+  /* 
    * Returns an immutable sorted set containing the elements of a sorted set,
    * sorted by the same {@code Comparator}. That behavior differs from {@link
    * #copyOf(Iterable)}, which always uses the natural ordering of the
@@ -399,7 +399,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     }
   }
 
-  /**
+  /* 
    * Constructs an {@code ImmutableSortedSet} from the first {@code n} elements of
    * {@code contents}.  If {@code k} is the size of the returned {@code ImmutableSortedSet}, then
    * the sorted unique elements are in the first {@code k} positions of {@code contents}, and
@@ -431,7 +431,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
         ImmutableList.<E>asImmutableList(contents, uniques), comparator);
   }
 
-  /**
+  /* 
    * Returns a builder that creates immutable sorted sets with an explicit
    * comparator. If the comparator has a more general type than the set being
    * generated, such as creating a {@code SortedSet<Integer>} with a
@@ -443,7 +443,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return new Builder<E>(comparator);
   }
 
-  /**
+  /* 
    * Returns a builder that creates immutable sorted sets whose elements are
    * ordered by the reverse of their natural ordering.
    */
@@ -451,7 +451,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return new Builder<E>(Ordering.natural().reverse());
   }
 
-  /**
+  /* 
    * Returns a builder that creates immutable sorted sets whose elements are
    * ordered by their natural ordering. The sorted sets use {@link
    * Ordering#natural()} as the comparator. This method provides more
@@ -462,7 +462,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return new Builder<E>(Ordering.natural());
   }
 
-  /**
+  /* 
    * A builder for creating immutable sorted set instances, especially {@code
    * public static final} sets ("constant sets"), with a given comparator.
    * Example: <pre>   {@code
@@ -482,7 +482,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
   public static final class Builder<E> extends ImmutableSet.Builder<E> {
     private final Comparator<? super E> comparator;
 
-    /**
+    /* 
      * Creates a new builder. The returned builder is equivalent to the builder
      * generated by {@link ImmutableSortedSet#orderedBy}.
      */
@@ -490,7 +490,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       this.comparator = checkNotNull(comparator);
     }
 
-    /**
+    /* 
      * Adds {@code element} to the {@code ImmutableSortedSet}.  If the
      * {@code ImmutableSortedSet} already contains {@code element}, then
      * {@code add} has no effect. (only the previously added element
@@ -505,7 +505,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableSortedSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -518,7 +518,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableSortedSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -531,7 +531,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       return this;
     }
 
-    /**
+    /* 
      * Adds each element of {@code elements} to the {@code ImmutableSortedSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -544,7 +544,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       return this;
     }
 
-    /**
+    /* 
      * Returns a newly-created {@code ImmutableSortedSet} based on the contents
      * of the {@code Builder} and its comparator.
      */
@@ -577,7 +577,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     this.comparator = comparator;
   }
 
-  /**
+  /* 
    * Returns the comparator that orders the elements, which is
    * {@link Ordering#natural()} when the natural ordering of the
    * elements is used. Note that its behavior is not consistent with
@@ -592,7 +592,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
   @Override // needed to unify the iterator() methods in Collection and SortedIterable
   public abstract UnmodifiableIterator<E> iterator();
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This method returns a serializable {@code ImmutableSortedSet}.
@@ -608,7 +608,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return headSet(toElement, false);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -617,7 +617,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return headSetImpl(checkNotNull(toElement), inclusive);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This method returns a serializable {@code ImmutableSortedSet}.
@@ -635,7 +635,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return subSet(fromElement, true, toElement, false);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -648,7 +648,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return subSetImpl(fromElement, fromInclusive, toElement, toInclusive);
   }
 
-  /**
+  /* 
    * {@inheritDoc}
    *
    * <p>This method returns a serializable {@code ImmutableSortedSet}.
@@ -664,7 +664,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return tailSet(fromElement, true);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -684,7 +684,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
 
   abstract ImmutableSortedSet<E> tailSetImpl(E fromElement, boolean inclusive);
   
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -693,7 +693,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return Iterators.getNext(headSet(e, false).descendingIterator(), null);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -702,7 +702,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return Iterators.getNext(headSet(e, true).descendingIterator(), null);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -711,7 +711,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return Iterables.getFirst(tailSet(e, true), null);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -730,7 +730,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return descendingIterator().next();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the set unmodified.
    *
    * @since 12.0
@@ -744,7 +744,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     throw new UnsupportedOperationException();
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the set unmodified.
    *
    * @since 12.0
@@ -761,7 +761,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
   @GwtIncompatible("NavigableSet")
   transient ImmutableSortedSet<E> descendingSet;
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
@@ -781,14 +781,14 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     return new DescendingImmutableSortedSet<E>(this);
   }
 
-  /**
+  /* 
    * @since 12.0
    */
   @GwtIncompatible("NavigableSet")
   @Override
   public abstract UnmodifiableIterator<E> descendingIterator();
 
-  /**
+  /* 
    * Returns the position of an element within the set, or -1 if not present.
    */
   abstract int indexOf(@Nullable Object target);

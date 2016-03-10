@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/**
+/* 
  * A {@link Future} which forwards all its method calls to another future.
  * Subclasses should override one or more methods to modify the behavior of
  * the backing future as desired per the <a
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeoutException;
 public abstract class ForwardingFuture<V> extends ForwardingObject
     implements Future<V> {
 
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected ForwardingFuture() {}
 
   @Override protected abstract Future<V> delegate();
@@ -73,7 +73,7 @@ public abstract class ForwardingFuture<V> extends ForwardingObject
    * TODO(cpovirk): Use standard Javadoc form for SimpleForwarding* class and
    * constructor
    */
-  /**
+  /* 
    * A simplified version of {@link ForwardingFuture} where subclasses
    * can pass in an already constructed {@link Future} as the delegate.
    * 

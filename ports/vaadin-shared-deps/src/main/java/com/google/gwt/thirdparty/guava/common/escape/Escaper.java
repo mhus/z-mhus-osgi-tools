@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.base.Function;
 
-/**
+/* 
  * An object that converts literal text into a format safe for inclusion in a particular context
  * (such as an XML document). Typically (but not always), the inverse process of "unescaping" the
  * text is performed automatically by the relevant parser.
@@ -56,10 +56,10 @@ import com.google.gwt.thirdparty.guava.common.base.Function;
 @GwtCompatible
 public abstract class Escaper {
   // TODO(user): evaluate custom implementations, considering package private constructor.
-  /** Constructor for use by subclasses. */
+  /*  Constructor for use by subclasses. */
   protected Escaper() {}
 
-  /**
+  /* 
    * Returns the escaped form of a given literal string.
    *
    * <p>Note that this method may treat input characters differently depending on the specific
@@ -90,7 +90,7 @@ public abstract class Escaper {
         }
       };
 
-  /**
+  /* 
    * Returns a {@link Function} that invokes {@link #escape(String)} on this escaper.
    */
   public final Function<String, String> asFunction() {

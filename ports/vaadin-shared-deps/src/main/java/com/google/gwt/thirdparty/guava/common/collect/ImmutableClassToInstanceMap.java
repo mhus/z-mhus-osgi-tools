@@ -24,7 +24,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A class-to-instance map backed by an {@link ImmutableMap}. See also {@link
  * MutableClassToInstanceMap}.
  *
@@ -33,7 +33,7 @@ import javax.annotation.Nullable;
  */
 public final class ImmutableClassToInstanceMap<B> extends
     ForwardingMap<Class<? extends B>, B> implements ClassToInstanceMap<B> {
-  /**
+  /* 
    * Returns a new builder. The generated builder is equivalent to the builder
    * created by the {@link Builder} constructor.
    */
@@ -41,7 +41,7 @@ public final class ImmutableClassToInstanceMap<B> extends
     return new Builder<B>();
   }
 
-  /**
+  /* 
    * A builder for creating immutable class-to-instance maps. Example:
    * <pre>   {@code
    *
@@ -62,7 +62,7 @@ public final class ImmutableClassToInstanceMap<B> extends
     private final ImmutableMap.Builder<Class<? extends B>, B> mapBuilder
         = ImmutableMap.builder();
 
-    /**
+    /* 
      * Associates {@code key} with {@code value} in the built map. Duplicate
      * keys are not allowed, and will cause {@link #build} to fail.
      */
@@ -71,7 +71,7 @@ public final class ImmutableClassToInstanceMap<B> extends
       return this;
     }
 
-    /**
+    /* 
      * Associates all of {@code map's} keys and values in the built map.
      * Duplicate keys are not allowed, and will cause {@link #build} to fail.
      *
@@ -94,7 +94,7 @@ public final class ImmutableClassToInstanceMap<B> extends
       return Primitives.wrap(type).cast(value);
     }
 
-    /**
+    /* 
      * Returns a new immutable class-to-instance map containing the entries
      * provided to this builder.
      *
@@ -105,7 +105,7 @@ public final class ImmutableClassToInstanceMap<B> extends
     }
   }
 
-  /**
+  /* 
    * Returns an immutable map containing the same entries as {@code map}. If
    * {@code map} somehow contains entries with duplicate keys (for example, if
    * it is a {@code SortedMap} whose comparator is not <i>consistent with
@@ -147,7 +147,7 @@ public final class ImmutableClassToInstanceMap<B> extends
     return (T) delegate.get(checkNotNull(type));
   }
 
-  /**
+  /* 
    * Guaranteed to throw an exception and leave the map unmodified.
    *
    * @throws UnsupportedOperationException always

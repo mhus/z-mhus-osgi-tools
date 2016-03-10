@@ -16,7 +16,7 @@ package org.w3c.flute.parser.selectors;
 import org.w3c.css.sac.LangCondition;
 import org.w3c.css.sac.Condition;
 
-/**
+/* 
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
@@ -24,21 +24,21 @@ public class LangConditionImpl implements LangCondition {
 
     String lang;
 
-    /**
+    /* 
      * Creates a new LangConditionImpl
      */
     public LangConditionImpl(String lang) {
         this.lang = lang;
     }
     
-    /**
+    /* 
      * An integer indicating the type of <code>Condition</code>.
      */    
     public short getConditionType() {
 	return Condition.SAC_LANG_CONDITION;
     }
 
-    /**
+    /* 
      * Returns the language
      */
     public String getLang() {

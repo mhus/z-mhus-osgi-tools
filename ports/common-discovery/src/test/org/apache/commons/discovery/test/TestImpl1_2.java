@@ -17,7 +17,7 @@
 package org.apache.commons.discovery.test;
 
 
-/**
+/* 
  * @version $Revision: 1088931 $
  */
 public class TestImpl1_2 implements TestInterface1 {

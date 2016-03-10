@@ -20,7 +20,7 @@ import java.util.Properties;
 
 import org.apache.commons.discovery.resource.ClassLoaders;
 
-/**
+/* 
  * Holder for a default class.
  *
  * Class may be specified by name (String) or class (Class).
@@ -32,7 +32,7 @@ public class PropertiesHolder {
 
     private final String propertiesFileName;
 
-    /**
+    /* 
      * Creates a new {@code PropertiesHolder} instance given an
      * already load {@code Properties} set.
      *
@@ -43,7 +43,7 @@ public class PropertiesHolder {
         this.propertiesFileName = null;
     }
 
-    /**
+    /* 
      * Creates a new {@code PropertiesHolder} instance given a
      * property file name.
      *
@@ -54,7 +54,7 @@ public class PropertiesHolder {
         this.propertiesFileName = propertiesFileName;
     }
 
-    /**
+    /* 
      * Returns the {@code Properties} instance, loaded if necessary from {@code propertiesFileName}.
      *
      * @param spi Optional SPI (may be null).
@@ -72,7 +72,7 @@ public class PropertiesHolder {
         return properties;
     }
 
-    /**
+    /* 
      * Returns the property file name
      *
      * @return The property file name

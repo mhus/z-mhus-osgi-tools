@@ -24,7 +24,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * {@code values()} implementation for {@link ImmutableMap}.
  *
  * @author Jesse Wilson

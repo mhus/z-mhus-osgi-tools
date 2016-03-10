@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/**
+/* 
  * Apache Commons-Discovery tasks for Apache Ant.
  */
 package org.apache.commons.discovery.ant;

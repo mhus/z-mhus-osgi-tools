@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * This class provides a skeletal implementation of the {@code Iterator}
  * interface for sequences whose next element can always be derived from the
  * previous element. Null elements are not supported, nor is the
@@ -36,7 +36,7 @@ public abstract class AbstractSequentialIterator<T>
     extends UnmodifiableIterator<T> {
   private T nextOrNull;
 
-  /**
+  /* 
    * Creates a new iterator with the given first element, or, if {@code
    * firstOrNull} is null, creates a new empty iterator.
    */
@@ -44,7 +44,7 @@ public abstract class AbstractSequentialIterator<T>
     this.nextOrNull = firstOrNull;
   }
 
-  /**
+  /* 
    * Returns the element that follows {@code previous}, or returns {@code null}
    * if no elements remain. This method is invoked during each call to
    * {@link #next()} in order to compute the result of a <i>future</i> call to

@@ -26,7 +26,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/**
+/* 
  * A {@code SetMultimap} whose set of values for a given key are kept sorted;
  * that is, they comprise a {@link SortedSet}. It cannot hold duplicate
  * key-value pairs; adding a key-value pair that's already in the multimap has
@@ -51,7 +51,7 @@ import javax.annotation.Nullable;
 public interface SortedSetMultimap<K, V> extends SetMultimap<K, V> {
   // Following Javadoc copied from Multimap.
 
-  /**
+  /* 
    * Returns a collection view of all values associated with a key. If no
    * mappings in the multimap have the provided key, an empty collection is
    * returned.
@@ -66,7 +66,7 @@ public interface SortedSetMultimap<K, V> extends SetMultimap<K, V> {
   @Override
   SortedSet<V> get(@Nullable K key);
 
-  /**
+  /* 
    * Removes all values associated with a given key.
    *
    * <p>Because a {@code SortedSetMultimap} has unique sorted values for a given
@@ -76,7 +76,7 @@ public interface SortedSetMultimap<K, V> extends SetMultimap<K, V> {
   @Override
   SortedSet<V> removeAll(@Nullable Object key);
 
-  /**
+  /* 
    * Stores a collection of values with the same key, replacing any existing
    * values for that key.
    *
@@ -89,7 +89,7 @@ public interface SortedSetMultimap<K, V> extends SetMultimap<K, V> {
   @Override
   SortedSet<V> replaceValues(K key, Iterable<? extends V> values);
 
-  /**
+  /* 
    * Returns a map view that associates each key with the corresponding values
    * in the multimap. Changes to the returned map, such as element removal, will
    * update the underlying multimap. The map does not support {@code setValue()}
@@ -107,7 +107,7 @@ public interface SortedSetMultimap<K, V> extends SetMultimap<K, V> {
    */
   @Override Map<K, Collection<V>> asMap();
 
-  /**
+  /* 
    * Returns the comparator that orders the multimap values, with {@code null}
    * indicating that natural ordering is used.
    */
