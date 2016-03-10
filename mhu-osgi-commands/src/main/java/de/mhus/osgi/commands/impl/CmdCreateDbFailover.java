@@ -35,6 +35,8 @@ public class CmdCreateDbFailover implements Action {
 
 	public Object execute() throws Exception {
 
+        this.util = new DataSourceUtil(context);
+        
 		if (online) {
 	        
 	        FailoverDataSource dataSource = new FailoverDataSource();
@@ -63,10 +65,5 @@ public class CmdCreateDbFailover implements Action {
 
 		return null;
 	}
-
-	public void setContext(BundleContext context) {
-        this.context = context;
-        this.util = new DataSourceUtil(context);
-    }
 
 }

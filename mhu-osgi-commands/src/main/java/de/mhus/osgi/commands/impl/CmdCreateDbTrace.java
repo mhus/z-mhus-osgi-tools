@@ -34,6 +34,8 @@ public class CmdCreateDbTrace implements Action {
 	private DataSourceUtil util;
 
 	public Object execute() throws Exception {
+        
+		util = new DataSourceUtil(context);
 
 		if (online) {
 	        
@@ -63,10 +65,5 @@ public class CmdCreateDbTrace implements Action {
 				
 		return null;
 	}
-
-	public void setContext(BundleContext context) {
-        this.context = context;
-        this.util = new DataSourceUtil(context);
-    }
 
 }

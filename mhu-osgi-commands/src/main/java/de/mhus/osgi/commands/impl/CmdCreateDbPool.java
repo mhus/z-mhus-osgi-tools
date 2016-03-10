@@ -35,6 +35,8 @@ public class CmdCreateDbPool implements Action {
 	
 	public Object execute() throws Exception {
 		
+        util = new DataSourceUtil(context);
+
 		if (online) {
 	        
 	        PoolDataSource dataSource = new PoolDataSource();
@@ -65,9 +67,4 @@ public class CmdCreateDbPool implements Action {
 	}
 
 	
-	public void setContext(BundleContext context) {
-        this.context = context;
-        this.util = new DataSourceUtil(context);
-    }
-
 }

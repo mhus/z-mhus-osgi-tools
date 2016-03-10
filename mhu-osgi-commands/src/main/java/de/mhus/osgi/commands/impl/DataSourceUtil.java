@@ -31,13 +31,13 @@ public class DataSourceUtil {
         return null;
     }
 
-	public ServiceReference<?>[] getDataSources() {
+	public ServiceReference<DataSource>[] getDataSources() {
         try {
             ServiceReference<?>[] dsRefs = getContext().getServiceReferences(DataSource.class.getName(), null);
             if (dsRefs == null) {
                 dsRefs = new ServiceReference[]{};
             }
-            return dsRefs;
+            return (ServiceReference<DataSource>[]) dsRefs;
         } catch (InvalidSyntaxException e) {
             throw new RuntimeException(e);
         }
