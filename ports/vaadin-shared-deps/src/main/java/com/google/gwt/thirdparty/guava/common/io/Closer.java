@@ -42,19 +42,6 @@ import javax.annotation.Nullable;
  *
  * <p>This class is intended to be used in the following pattern:
  *
- * <pre>   {@code
- *   Closer closer = Closer.create();
- *   try {
- *     InputStream in = closer.register(openInputStream());
- *     OutputStream out = closer.register(openOutputStream());
- *     // do stuff
- *   } catch (Throwable e) {
- *     // ensure that any checked exception types other than IOException that could be thrown are
- *     // provided here, e.g. throw closer.rethrow(e, CheckedException.class);
- *     throw closer.rethrow(e);
- *   } finally {
- *     closer.close();
- *   }}</pre>
  *
  * <p>Note that this try-catch-finally block is not equivalent to a try-catch-finally block using
  * try-with-resources. To get the equivalent of that, you must wrap the above code in <i>another</i>

@@ -307,38 +307,6 @@ public final class Futures {
    * <p>Below is an example of a fallback that returns a default value if an
    * exception occurs:
    *
-   * <pre>   {@code
-   *   ListenableFuture<Integer> fetchCounterFuture = ...;
-   *
-   *   // Falling back to a zero counter in case an exception happens when
-   *   // processing the RPC to fetch counters.
-   *   ListenableFuture<Integer> faultTolerantFuture = Futures.withFallback(
-   *       fetchCounterFuture, new FutureFallback<Integer>() {
-   *         public ListenableFuture<Integer> create(Throwable t) {
-   *           // Returning "0" as the default for the counter when the
-   *           // exception happens.
-   *           return immediateFuture(0);
-   *         }
-   *       });}</pre>
-   *
-   * <p>The fallback can also choose to propagate the original exception when
-   * desired:
-   *
-   * <pre>   {@code
-   *   ListenableFuture<Integer> fetchCounterFuture = ...;
-   *
-   *   // Falling back to a zero counter only in case the exception was a
-   *   // TimeoutException.
-   *   ListenableFuture<Integer> faultTolerantFuture = Futures.withFallback(
-   *       fetchCounterFuture, new FutureFallback<Integer>() {
-   *         public ListenableFuture<Integer> create(Throwable t) {
-   *           if (t instanceof TimeoutException) {
-   *             return immediateFuture(0);
-   *           }
-   *           return immediateFailedFuture(t);
-   *         }
-   *       });}</pre>
-   *
    * <p>Note: If the derived {@code Future} is slow or heavyweight to create
    * (whether the {@code Future} itself is slow or heavyweight to complete is
    * irrelevant), consider {@linkplain #withFallback(ListenableFuture,
@@ -384,38 +352,6 @@ public final class Futures {
    *
    * <p>Below is an example of a fallback that returns a default value if an
    * exception occurs:
-   *
-   * <pre>   {@code
-   *   ListenableFuture<Integer> fetchCounterFuture = ...;
-   *
-   *   // Falling back to a zero counter in case an exception happens when
-   *   // processing the RPC to fetch counters.
-   *   ListenableFuture<Integer> faultTolerantFuture = Futures.withFallback(
-   *       fetchCounterFuture, new FutureFallback<Integer>() {
-   *         public ListenableFuture<Integer> create(Throwable t) {
-   *           // Returning "0" as the default for the counter when the
-   *           // exception happens.
-   *           return immediateFuture(0);
-   *         }
-   *       }, sameThreadExecutor());}</pre>
-   *
-   * <p>The fallback can also choose to propagate the original exception when
-   * desired:
-   *
-   * <pre>   {@code
-   *   ListenableFuture<Integer> fetchCounterFuture = ...;
-   *
-   *   // Falling back to a zero counter only in case the exception was a
-   *   // TimeoutException.
-   *   ListenableFuture<Integer> faultTolerantFuture = Futures.withFallback(
-   *       fetchCounterFuture, new FutureFallback<Integer>() {
-   *         public ListenableFuture<Integer> create(Throwable t) {
-   *           if (t instanceof TimeoutException) {
-   *             return immediateFuture(0);
-   *           }
-   *           return immediateFailedFuture(t);
-   *         }
-   *       }, sameThreadExecutor());}</pre>
    *
    * <p>When the execution of {@code fallback.create} is fast and lightweight
    * (though the {@code Future} it returns need not meet these criteria),
@@ -506,16 +442,6 @@ public final class Futures {
    * applying the given {@code AsyncFunction} to the result of the original
    * {@code Future}. Example:
    *
-   * <pre>   {@code
-   *   ListenableFuture<RowKey> rowKeyFuture = indexService.lookUp(query);
-   *   AsyncFunction<RowKey, QueryResult> queryFunction =
-   *       new AsyncFunction<RowKey, QueryResult>() {
-   *         public ListenableFuture<QueryResult> apply(RowKey rowKey) {
-   *           return dataService.read(rowKey);
-   *         }
-   *       };
-   *   ListenableFuture<QueryResult> queryFuture =
-   *       transform(rowKeyFuture, queryFunction);}</pre>
    *
    * <p>Note: If the derived {@code Future} is slow or heavyweight to create
    * (whether the {@code Future} itself is slow or heavyweight to complete is
@@ -566,16 +492,6 @@ public final class Futures {
    * applying the given {@code AsyncFunction} to the result of the original
    * {@code Future}. Example:
    *
-   * <pre>   {@code
-   *   ListenableFuture<RowKey> rowKeyFuture = indexService.lookUp(query);
-   *   AsyncFunction<RowKey, QueryResult> queryFunction =
-   *       new AsyncFunction<RowKey, QueryResult>() {
-   *         public ListenableFuture<QueryResult> apply(RowKey rowKey) {
-   *           return dataService.read(rowKey);
-   *         }
-   *       };
-   *   ListenableFuture<QueryResult> queryFuture =
-   *       transform(rowKeyFuture, queryFunction, executor);}</pre>
    *
    * <p>The returned {@code Future} attempts to keep its cancellation state in
    * sync with that of the input future and that of the future returned by the
@@ -612,16 +528,6 @@ public final class Futures {
    * applying the given {@code Function} to the result of the given {@code
    * Future}. Example:
    *
-   * <pre>   {@code
-   *   ListenableFuture<QueryResult> queryFuture = ...;
-   *   Function<QueryResult, List<Row>> rowsFunction =
-   *       new Function<QueryResult, List<Row>>() {
-   *         public List<Row> apply(QueryResult queryResult) {
-   *           return queryResult.getRows();
-   *         }
-   *       };
-   *   ListenableFuture<List<Row>> rowsFuture =
-   *       transform(queryFuture, rowsFunction);}</pre>
    *
    * <p>Note: If the transformation is slow or heavyweight, consider {@linkplain
    * #transform(ListenableFuture, Function, Executor) supplying an executor}.
@@ -669,17 +575,6 @@ public final class Futures {
    * Returns a new {@code ListenableFuture} whose result is the product of
    * applying the given {@code Function} to the result of the given {@code
    * Future}. Example:
-   *
-   * <pre>   {@code
-   *   ListenableFuture<QueryResult> queryFuture = ...;
-   *   Function<QueryResult, List<Row>> rowsFunction =
-   *       new Function<QueryResult, List<Row>>() {
-   *         public List<Row> apply(QueryResult queryResult) {
-   *           return queryResult.getRows();
-   *         }
-   *       };
-   *   ListenableFuture<List<Row>> rowsFuture =
-   *       transform(queryFuture, rowsFunction, executor);}</pre>
    *
    * <p>The returned {@code Future} attempts to keep its cancellation state in
    * sync with that of the input future. That is, if the returned {@code Future}
@@ -1063,17 +958,6 @@ public final class Futures {
    * callback added through this method is guaranteed to be called once the
    * computation is complete.
    *
-   * Example: <pre> {@code
-   * ListenableFuture<QueryResult> future = ...;
-   * addCallback(future,
-   *     new FutureCallback<QueryResult> {
-   *       public void onSuccess(QueryResult result) {
-   *         storeInCache(result);
-   *       }
-   *       public void onFailure(Throwable t) {
-   *         reportError(t);
-   *       }
-   *     });}</pre>
    *
    * <p>Note: If the callback is slow or heavyweight, consider {@linkplain
    * #addCallback(ListenableFuture, FutureCallback, Executor) supplying an
@@ -1117,19 +1001,6 @@ public final class Futures {
    * There is no guaranteed ordering of execution of callbacks, but any
    * callback added through this method is guaranteed to be called once the
    * computation is complete.
-   *
-   * Example: <pre> {@code
-   * ListenableFuture<QueryResult> future = ...;
-   * Executor e = ...
-   * addCallback(future, e,
-   *     new FutureCallback<QueryResult> {
-   *       public void onSuccess(QueryResult result) {
-   *         storeInCache(result);
-   *       }
-   *       public void onFailure(Throwable t) {
-   *         reportError(t);
-   *       }
-   *     });}</pre>
    *
    * <p>When the callback is fast and lightweight, consider {@linkplain
    * #addCallback(ListenableFuture, FutureCallback) omitting the executor} or

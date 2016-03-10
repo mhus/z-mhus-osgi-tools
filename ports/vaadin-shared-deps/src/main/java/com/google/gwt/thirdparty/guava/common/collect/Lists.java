@@ -372,16 +372,7 @@ public final class Lists {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
-   * <pre>   {@code
-   *
-   *   for (B b0 : lists.get(0)) {
-   *     for (B b1 : lists.get(1)) {
-   *       ...
-   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *       // operate on tuple
-   *     }
-   *   }}</pre>
-   *
+   * 
    * <p>Note that if any input list is empty, the Cartesian product will also be
    * empty. If no lists at all are provided (an empty list), the resulting
    * Cartesian product has one element, an empty list (counter-intuitive, but
@@ -432,15 +423,6 @@ public final class Lists {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
-   * <pre>   {@code
-   *
-   *   for (B b0 : lists.get(0)) {
-   *     for (B b1 : lists.get(1)) {
-   *       ...
-   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *       // operate on tuple
-   *     }
-   *   }}</pre>
    *
    * <p>Note that if any input list is empty, the Cartesian product will also be
    * empty. If no lists at all are provided (an empty list), the resulting

@@ -236,15 +236,6 @@ public final class Floats {
     return max;
   }
 
-  /**
-   * Returns the values from each provided array combined into a single array.
-   * For example, {@code concat(new float[] {a, b}, new float[] {}, new
-   * float[] {c}} returns the array {@code {a, b, c}}.
-   *
-   * @param arrays zero or more {@code float} arrays
-   * @return a single array containing all the values from the source arrays, in
-   *     order
-   */
   public static float[] concat(float[]... arrays) {
     int length = 0;
     for (float[] array : arrays) {

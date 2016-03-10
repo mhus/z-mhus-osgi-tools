@@ -103,11 +103,6 @@ import java.nio.charset.Charset;
  * from that object into the function. (See {@linkplain Hasher#putObject an example} of
  * this.)
  *
- * <p><b>Compatibility note:</b> Throughout this API, multibyte values are always
- * interpreted in <i>little-endian</i> order. That is, hashing the byte array {@code
- * {0x01, 0x02, 0x03, 0x04}} is equivalent to hashing the {@code int} value {@code
- * 0x04030201}. If this isn't what you need, methods such as {@link Integer#reverseBytes}
- * and {@link Ints#toByteArray} will help.
  *
  * <h3>Relationship to {@link Object#hashCode}</h3>
  *

@@ -247,15 +247,6 @@ public final class Chars {
     return max;
   }
 
-  /**
-   * Returns the values from each provided array combined into a single array.
-   * For example, {@code concat(new char[] {a, b}, new char[] {}, new
-   * char[] {c}} returns the array {@code {a, b, c}}.
-   *
-   * @param arrays zero or more {@code char} arrays
-   * @return a single array containing all the values from the source arrays, in
-   *     order
-   */
   public static char[] concat(char[]... arrays) {
     int length = 0;
     for (char[] array : arrays) {
@@ -270,17 +261,6 @@ public final class Chars {
     return result;
   }
 
-  /**
-   * Returns a big-endian representation of {@code value} in a 2-element byte
-   * array; equivalent to {@code
-   * ByteBuffer.allocate(2).putChar(value).array()}.  For example, the input
-   * value {@code '\\u5432'} would yield the byte array {@code {0x54, 0x32}}.
-   *
-   * <p>If you need to convert and concatenate several values (possibly even of
-   * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
-   * {@link com.google.gwt.thirdparty.guava.common.io.ByteStreams#newDataOutput()} to get a growable
-   * buffer.
-   */
   @GwtIncompatible("doesn't work")
   public static byte[] toByteArray(char value) {
     return new byte[] {
@@ -288,18 +268,6 @@ public final class Chars {
         (byte) value};
   }
 
-  /**
-   * Returns the {@code char} value whose big-endian representation is
-   * stored in the first 2 bytes of {@code bytes}; equivalent to {@code
-   * ByteBuffer.wrap(bytes).getChar()}. For example, the input byte array
-   * {@code {0x54, 0x32}} would yield the {@code char} value {@code '\\u5432'}.
-   *
-   * <p>Arguably, it's preferable to use {@link java.nio.ByteBuffer}; that
-   * library exposes much more flexibility at little cost in readability.
-   *
-   * @throws IllegalArgumentException if {@code bytes} has fewer than 2
-   *     elements
-   */
   @GwtIncompatible("doesn't work")
   public static char fromByteArray(byte[] bytes) {
     checkArgument(bytes.length >= BYTES,
@@ -307,13 +275,6 @@ public final class Chars {
     return fromBytes(bytes[0], bytes[1]);
   }
 
-  /**
-   * Returns the {@code char} value whose byte representation is the given 2
-   * bytes, in big-endian order; equivalent to {@code Chars.fromByteArray(new
-   * byte[] {b1, b2})}.
-   *
-   * @since 7.0
-   */
   @GwtIncompatible("doesn't work")
   public static char fromBytes(byte b1, byte b2) {
     return (char) ((b1 << 8) | (b2 & 0xFF));

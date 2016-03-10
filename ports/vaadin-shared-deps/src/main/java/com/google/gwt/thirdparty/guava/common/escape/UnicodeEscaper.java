@@ -46,11 +46,6 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
  * <p>A {@code UnicodeEscaper} instance is required to be stateless, and safe
  * when used concurrently by multiple threads.
  *
- * <p>Several popular escapers are defined as constants in classes like {@link
- * com.google.gwt.thirdparty.guava.common.html.HtmlEscapers}, {@link
- * com.google.gwt.thirdparty.guava.common.xml.XmlEscapers}, and {@link SourceCodeEscapers}. To create
- * your own escapers extend this class and implement the {@link #escape(int)}
- * method.
  *
  * @author David Beaumont
  * @since 15.0
@@ -135,12 +130,6 @@ public abstract class UnicodeEscaper extends Escaper {
    * href="http://en.wikipedia.org/wiki/UTF-16">UTF-16</a> before calling this
    * method.
    *
-   * <p><b>Note:</b> When implementing an escaper it is a good idea to override
-   * this method for efficiency by inlining the implementation of
-   * {@link #nextEscapeIndex(CharSequence, int, int)} directly. Doing this for
-   * {@link com.google.gwt.thirdparty.guava.common.net.PercentEscaper} more than doubled the
-   * performance for unescaped strings (as measured by {@link
-   * CharEscapersBenchmark}).
    *
    * @param string the literal string to be escaped
    * @return the escaped form of {@code string}

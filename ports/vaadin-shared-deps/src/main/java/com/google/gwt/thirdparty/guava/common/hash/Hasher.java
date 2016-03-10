@@ -34,11 +34,6 @@ import java.nio.charset.Charset;
  * <p><b>Warning:</b> Chunks of data that are put into the {@link Hasher} are not delimited.
  * The resulting {@link HashCode} is dependent only on the bytes inserted, and the order in which
  * they were inserted, not how those bytes were chunked into discrete put() operations. For example,
- * the following three expressions all generate colliding hash codes: <pre>   {@code
- *
- *   newHasher().putByte(b1).putByte(b2).putByte(b3).hash()
- *   newHasher().putByte(b1).putBytes(new byte[] { b2, b3 }).hash()
- *   newHasher().putBytes(new byte[] { b1, b2, b3 }).hash()}</pre>
  *
  * <p>If you wish to avoid this, you should either prepend or append the size of each chunk. Keep in
  * mind that when dealing with char sequences, the encoded form of two concatenated char sequences

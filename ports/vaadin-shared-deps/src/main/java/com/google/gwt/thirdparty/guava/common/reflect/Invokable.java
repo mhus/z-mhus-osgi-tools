@@ -44,11 +44,6 @@ import javax.annotation.Nullable;
  * TypeToken#constructor} will resolve the type parameters of the method or constructor in the
  * context of the owner type, which may be a subtype of the declaring class. For example:
  *
- * <pre>   {@code
- *   Method getMethod = List.class.getMethod("get", int.class);
- *   Invokable<List<String>, ?> invokable = new TypeToken<List<String>>() {}.method(getMethod);
- *   assertEquals(TypeToken.of(String.class), invokable.getReturnType()); // Not Object.class!
- *   assertEquals(new TypeToken<List<String>>() {}, invokable.getOwnerType());}</pre>
  * 
  * @param <T> the type that owns this method or constructor.
  * @param <R> the return type of (or supertype thereof) the method or the declaring type of the

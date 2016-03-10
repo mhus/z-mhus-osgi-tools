@@ -358,28 +358,7 @@ public final class Collections2 {
    * {@link Iterable} using the specified {@link Comparator} for establishing
    * the lexicographical ordering.
    *
-   * <p>Examples: <pre>   {@code
-   *
-   *   for (List<String> perm : orderedPermutations(asList("b", "c", "a"))) {
-   *     println(perm);
-   *   }
-   *   // -> ["a", "b", "c"]
-   *   // -> ["a", "c", "b"]
-   *   // -> ["b", "a", "c"]
-   *   // -> ["b", "c", "a"]
-   *   // -> ["c", "a", "b"]
-   *   // -> ["c", "b", "a"]
-   *
-   *   for (List<Integer> perm : orderedPermutations(asList(1, 2, 2, 1))) {
-   *     println(perm);
-   *   }
-   *   // -> [1, 1, 2, 2]
-   *   // -> [1, 2, 1, 2]
-   *   // -> [1, 2, 2, 1]
-   *   // -> [2, 1, 1, 2]
-   *   // -> [2, 1, 2, 1]
-   *   // -> [2, 2, 1, 1]}</pre>
-   *
+
    * <p><i>Notes:</i> This is an implementation of the algorithm for
    * Lexicographical Permutations Generation, described in Knuth's "The Art of
    * Computer Programming", Volume 4, Chapter 7, Section 7.2.1.2. The

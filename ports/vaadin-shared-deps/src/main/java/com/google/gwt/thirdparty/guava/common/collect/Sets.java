@@ -1018,15 +1018,6 @@ public final class Sets {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
-   * <pre>   {@code
-   *
-   *   for (B b0 : sets.get(0)) {
-   *     for (B b1 : sets.get(1)) {
-   *       ...
-   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *       // operate on tuple
-   *     }
-   *   }}</pre>
    *
    * <p>Note that if any input set is empty, the Cartesian product will also be
    * empty. If no sets at all are provided (an empty list), the resulting
@@ -1078,15 +1069,6 @@ public final class Sets {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
-   * <pre>   {@code
-   *
-   *   for (B b0 : sets.get(0)) {
-   *     for (B b1 : sets.get(1)) {
-   *       ...
-   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *       // operate on tuple
-   *     }
-   *   }}</pre>
    *
    * <p>Note that if any input set is empty, the Cartesian product will also be
    * empty. If no sets at all are provided (an empty list), the resulting
@@ -1197,8 +1179,6 @@ public final class Sets {
 
   /**
    * Returns the set of all possible subsets of {@code set}. For example,
-   * {@code powerSet(ImmutableSet.of(1, 2))} returns the set {@code {{},
-   * {1}, {2}, {1, 2}}}.
    *
    * <p>Elements appear in these subsets in the same iteration order as they
    * appeared in the input set. The order in which these subsets appear in the
@@ -1491,30 +1471,6 @@ public final class Sets {
    *
    * <p>It is imperative that the user manually synchronize on the returned
    * sorted set when iterating over it or any of its {@code descendingSet},
-   * {@code subSet}, {@code headSet}, or {@code tailSet} views. <pre>   {@code
-   *
-   *   NavigableSet<E> set = synchronizedNavigableSet(new TreeSet<E>());
-   *    ...
-   *   synchronized (set) {
-   *     // Must be in the synchronized block
-   *     Iterator<E> it = set.iterator();
-   *     while (it.hasNext()) {
-   *       foo(it.next());
-   *     }
-   *   }}</pre>
-   *
-   * <p>or: <pre>   {@code
-   *
-   *   NavigableSet<E> set = synchronizedNavigableSet(new TreeSet<E>());
-   *   NavigableSet<E> set2 = set.descendingSet().headSet(foo);
-   *    ...
-   *   synchronized (set) { // Note: set, not set2!!!
-   *     // Must be in the synchronized block
-   *     Iterator<E> it = set2.descendingIterator();
-   *     while (it.hasNext())
-   *       foo(it.next());
-   *     }
-   *   }}</pre>
    *
    * <p>Failure to follow this advice may result in non-deterministic behavior.
    *

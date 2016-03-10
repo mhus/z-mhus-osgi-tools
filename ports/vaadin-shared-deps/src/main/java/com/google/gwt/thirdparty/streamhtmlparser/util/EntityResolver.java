@@ -29,7 +29,6 @@ import java.util.Map;
  *
  * <p>This class is designed to be 100% compatible with the corresponding
  * logic in the C-version of the
- * {@link com.com.google.gwt.thirdparty.streamhtmlparser.security.streamhtmlparser.HtmlParser}, found
  * in <code>htmlparser.c</code>. There are however a few intentional
  * differences outlines below:
  * <ul>

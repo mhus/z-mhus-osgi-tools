@@ -58,9 +58,6 @@ abstract class AbstractMapEntry<K, V> implements Entry<K, V> {
     return ((k == null) ? 0 : k.hashCode()) ^ ((v == null) ? 0 : v.hashCode());
   }
 
-  /**
-   * Returns a string representation of the form {@code {key}={value}}.
-   */
   @Override public String toString() {
     return getKey() + "=" + getValue();
   }

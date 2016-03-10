@@ -507,12 +507,6 @@ public final class InternetDomainName {
    *       ? InternetDomainName.from(name)
    *       : DEFAULT_DOMAIN;}</pre>
    *
-   * <pre>   {@code
-   *   try {
-   *     domainName = InternetDomainName.from(name);
-   *   } catch (IllegalArgumentException e) {
-   *     domainName = DEFAULT_DOMAIN;
-   *   }}</pre>
    *
    * @since 8.0 (previously named {@code isValidLenient})
    */

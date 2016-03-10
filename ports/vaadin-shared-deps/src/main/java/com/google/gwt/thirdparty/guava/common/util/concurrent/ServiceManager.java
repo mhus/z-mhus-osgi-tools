@@ -63,38 +63,6 @@ import javax.inject.Singleton;
  * when appropriate and {@link #awaitHealthy} will still work as expected.
  *
  * <p>Here is a simple example of how to use a {@link ServiceManager} to start a server.
- * <pre>   {@code
- * class Server {
- *   public static void main(String[] args) {
- *     Set<Service> services = ...;
- *     ServiceManager manager = new ServiceManager(services);
- *     manager.addListener(new Listener() {
- *         public void stopped() {}
- *         public void healthy() {
- *           // Services have been initialized and are healthy, start accepting requests...
- *         }
- *         public void failure(Service service) {
- *           // Something failed, at this point we could log it, notify a load balancer, or take
- *           // some other action.  For now we will just exit.
- *           System.exit(1);
- *         }
- *       },
- *       MoreExecutors.sameThreadExecutor());
- *
- *     Runtime.getRuntime().addShutdownHook(new Thread() {
- *       public void run() {
- *         // Give the services 5 seconds to stop to ensure that we are responsive to shutdown 
- *         // requests.
- *         try {
- *           manager.stopAsync().awaitStopped(5, TimeUnit.SECONDS);
- *         } catch (TimeoutException timeout) {
- *           // stopping timed out
- *         }
- *       }
- *     });
- *     manager.startAsync();  // start all the services asynchronously
- *   }
- * }}</pre>
  *
  * <p>This class uses the ServiceManager's methods to start all of its services, to respond to
  * service failure and to ensure that when the JVM is shutting down all the services are stopped.

@@ -54,25 +54,6 @@ import javax.annotation.Nullable;
  *
  * <h3>Example</h3>
  *
- * <p>The following code: <pre>   {@code
- *
- *   ListMultimap<String, String> multimap = ArrayListMultimap.create();
- *   for (President pres : US_PRESIDENTS_IN_ORDER) {
- *     multimap.put(pres.firstName(), pres.lastName());
- *   }
- *   for (String firstName : multimap.keySet()) {
- *     List<String> lastNames = multimap.get(firstName);
- *     out.println(firstName + ": " + lastNames);
- *   }}</pre>
- *
- * ... produces output such as: <pre>   {@code
- *
- *   Zachary: [Taylor]
- *   John: [Adams, Adams, Tyler, Kennedy]  // Remember, Quincy!
- *   George: [Washington, Bush, Bush]
- *   Grover: [Cleveland, Cleveland]        // Two, non-consecutive terms, rep'ing NJ!
- *   ...}</pre>
- *
  * <h3>Views</h3>
  *
  * <p>Much of the power of the multimap API comes from the <i>view
@@ -225,11 +206,6 @@ public interface Multimap<K, V> {
   /**
    * Stores key-value pairs in this multimap with one key and multiple values.
    * 
-   * <p>This is equivalent to <pre>   {@code
-   * 
-   *   for (V value : values) {
-   *     put(key, value);
-   *   } }</pre>
    * 
    * <p>In particular, this is a no-op if {@code values} is empty.
    *

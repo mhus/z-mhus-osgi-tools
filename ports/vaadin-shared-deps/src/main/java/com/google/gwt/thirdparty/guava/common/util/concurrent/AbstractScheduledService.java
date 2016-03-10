@@ -56,32 +56,6 @@ import javax.annotation.concurrent.GuardedBy;
  * 
  * <h3>Usage Example</h3>
  * 
- * <p>Here is a sketch of a service which crawls a website and uses the scheduling capabilities to 
- * rate limit itself. <pre> {@code
- * class CrawlingService extends AbstractScheduledService {
- *   private Set<Uri> visited;
- *   private Queue<Uri> toCrawl; 
- *   protected void startUp() throws Exception {
- *     toCrawl = readStartingUris();
- *   }
- * 
- *   protected void runOneIteration() throws Exception {
- *     Uri uri = toCrawl.remove();
- *     Collection<Uri> newUris = crawl(uri);
- *     visited.add(uri);
- *     for (Uri newUri : newUris) {
- *       if (!visited.contains(newUri)) { toCrawl.add(newUri); }
- *     }
- *   }
- *   
- *   protected void shutDown() throws Exception {
- *     saveUris(toCrawl);
- *   }
- * 
- *   protected Scheduler scheduler() {
- *     return Scheduler.newFixedRateSchedule(0, 1, TimeUnit.SECONDS);
- *   }
- * }}</pre>
  * 
  * <p>This class uses the life cycle methods to read in a list of starting URIs and save the set of 
  * outstanding URIs when shutting down.  Also, it takes advantage of the scheduling functionality to

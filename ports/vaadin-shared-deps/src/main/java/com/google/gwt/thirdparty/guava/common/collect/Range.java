@@ -47,21 +47,9 @@ import javax.annotation.Nullable;
  * endpoint) or <i>closed</i> (includes the endpoint) on that side. With three possibilities on each
  * side, this yields nine basic types of ranges, enumerated below. (Notation: a square bracket
  * ({@code [ ]}) indicates that the range is closed on that side; a parenthesis ({@code ( )}) means
- * it is either open or unbounded. The construct {@code {x | statement}} is read "the set of all
+ * it is either open or unbounded. The construct is read "the set of all
  * <i>x</i> such that <i>statement</i>.")
  *
- * <blockquote><table>
- * <tr><td><b>Notation</b> <td><b>Definition</b>        <td><b>Factory method</b>
- * <tr><td>{@code (a..b)}  <td>{@code {x | a < x < b}}  <td>{@link Range#open open}
- * <tr><td>{@code [a..b]}  <td>{@code {x | a <= x <= b}}<td>{@link Range#closed closed}
- * <tr><td>{@code (a..b]}  <td>{@code {x | a < x <= b}} <td>{@link Range#openClosed openClosed}
- * <tr><td>{@code [a..b)}  <td>{@code {x | a <= x < b}} <td>{@link Range#closedOpen closedOpen}
- * <tr><td>{@code (a..+∞)} <td>{@code {x | x > a}}      <td>{@link Range#greaterThan greaterThan}
- * <tr><td>{@code [a..+∞)} <td>{@code {x | x >= a}}     <td>{@link Range#atLeast atLeast}
- * <tr><td>{@code (-∞..b)} <td>{@code {x | x < b}}      <td>{@link Range#lessThan lessThan}
- * <tr><td>{@code (-∞..b]} <td>{@code {x | x <= b}}     <td>{@link Range#atMost atMost}
- * <tr><td>{@code (-∞..+∞)}<td>{@code {x}}              <td>{@link Range#all all}
- * </table></blockquote>
  *
  * <p>When both endpoints exist, the upper endpoint may not be less than the lower. The endpoints
  * may be equal only if at least one of the bounds is closed:

@@ -43,19 +43,6 @@ import java.util.concurrent.RejectedExecutionException;
  * <p>It is possible to call {@link #addListener addListener} directly, but this
  * is uncommon because the {@code Runnable} interface does not provide direct
  * access to the {@code Future} result. (Users who want such access may prefer
- * {@link Futures#addCallback Futures.addCallback}.) Still, direct {@code
- * addListener} calls are occasionally useful:<pre>   {@code
- *   final String name = ...;
- *   inFlight.add(name);
- *   ListenableFuture<Result> future = service.query(name);
- *   future.addListener(new Runnable() {
- *     public void run() {
- *       processedCount.incrementAndGet();
- *       inFlight.remove(name);
- *       lastProcessed.set(name);
- *       logger.info("Done with {0}", name);
- *     }
- *   }, executor);}</pre>
  *
  * <h3>How to get an instance</h3>
  *

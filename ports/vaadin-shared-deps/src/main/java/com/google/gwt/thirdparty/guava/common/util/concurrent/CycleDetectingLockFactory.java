@@ -365,22 +365,6 @@ public class CycleDetectingLockFactory {
    * {@link Enum#ordinal()} should only be acquired before locks with larger
    * ordinals. Example:
    *
-   * <pre>   {@code
-   * enum MyLockOrder {
-   *   FIRST, SECOND, THIRD;
-   * }
-   *
-   * CycleDetectingLockFactory.WithExplicitOrdering<MyLockOrder> factory =
-   *   CycleDetectingLockFactory.newInstanceWithExplicitOrdering(Policies.THROW);
-   *
-   * Lock lock1 = factory.newReentrantLock(MyLockOrder.FIRST);
-   * Lock lock2 = factory.newReentrantLock(MyLockOrder.SECOND);
-   * Lock lock3 = factory.newReentrantLock(MyLockOrder.THIRD);
-   *
-   * lock1.lock();
-   * lock3.lock();
-   * lock2.lock();  // will throw an IllegalStateException}</pre>
-   *
    * <p>As with all locks created by instances of {@code CycleDetectingLockFactory}
    * explicitly ordered locks participate in general cycle detection with all
    * other cycle detecting locks, and a lock's behavior when detecting a cyclic

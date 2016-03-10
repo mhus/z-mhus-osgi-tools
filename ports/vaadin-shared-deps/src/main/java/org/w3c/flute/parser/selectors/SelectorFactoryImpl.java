@@ -83,9 +83,6 @@ public class SelectorFactoryImpl implements SelectorFactory {
      * 
      * @param namespaceURI the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
      *                     URI</a> of the element selector.
-     * @param tagName the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local
-     *        part</a> of the element name. <code>NULL</code> if this element
-     *        selector can match any element.</p>
      * @return the element selector
      * @exception CSSException If this selector is not supported.
      */    
@@ -199,7 +196,6 @@ public class SelectorFactoryImpl implements SelectorFactory {
      * Creates a direct adjacent selector.
      *
      * @param child the child selector
-     * @param adjacent the direct adjacent selector
      * @return the combinator selector.
      * @exception CSSException If this selector is not supported.
      */

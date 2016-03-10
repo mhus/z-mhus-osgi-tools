@@ -254,15 +254,6 @@ public final class Ints {
     return max;
   }
 
-  /**
-   * Returns the values from each provided array combined into a single array.
-   * For example, {@code concat(new int[] {a, b}, new int[] {}, new
-   * int[] {c}} returns the array {@code {a, b, c}}.
-   *
-   * @param arrays zero or more {@code int} arrays
-   * @return a single array containing all the values from the source arrays, in
-   *     order
-   */
   public static int[] concat(int[]... arrays) {
     int length = 0;
     for (int[] array : arrays) {
@@ -277,17 +268,6 @@ public final class Ints {
     return result;
   }
 
-  /**
-   * Returns a big-endian representation of {@code value} in a 4-element byte
-   * array; equivalent to {@code ByteBuffer.allocate(4).putInt(value).array()}.
-   * For example, the input value {@code 0x12131415} would yield the byte array
-   * {@code {0x12, 0x13, 0x14, 0x15}}.
-   *
-   * <p>If you need to convert and concatenate several values (possibly even of
-   * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
-   * {@link com.google.gwt.thirdparty.guava.common.io.ByteStreams#newDataOutput()} to get a growable
-   * buffer.
-   */
   @GwtIncompatible("doesn't work")
   public static byte[] toByteArray(int value) {
     return new byte[] {
@@ -297,18 +277,6 @@ public final class Ints {
         (byte) value};
   }
 
-  /**
-   * Returns the {@code int} value whose big-endian representation is stored in
-   * the first 4 bytes of {@code bytes}; equivalent to {@code
-   * ByteBuffer.wrap(bytes).getInt()}. For example, the input byte array {@code
-   * {0x12, 0x13, 0x14, 0x15, 0x33}} would yield the {@code int} value {@code
-   * 0x12131415}.
-   *
-   * <p>Arguably, it's preferable to use {@link java.nio.ByteBuffer}; that
-   * library exposes much more flexibility at little cost in readability.
-   *
-   * @throws IllegalArgumentException if {@code bytes} has fewer than 4 elements
-   */
   @GwtIncompatible("doesn't work")
   public static int fromByteArray(byte[] bytes) {
     checkArgument(bytes.length >= BYTES,
@@ -316,13 +284,6 @@ public final class Ints {
     return fromBytes(bytes[0], bytes[1], bytes[2], bytes[3]);
   }
 
-  /**
-   * Returns the {@code int} value whose byte representation is the given 4
-   * bytes, in big-endian order; equivalent to {@code Ints.fromByteArray(new
-   * byte[] {b1, b2, b3, b4})}.
-   *
-   * @since 7.0
-   */
   @GwtIncompatible("doesn't work")
   public static int fromBytes(byte b1, byte b2, byte b3, byte b4) {
     return b1 << 24 | (b2 & 0xFF) << 16 | (b3 & 0xFF) << 8 | (b4 & 0xFF);

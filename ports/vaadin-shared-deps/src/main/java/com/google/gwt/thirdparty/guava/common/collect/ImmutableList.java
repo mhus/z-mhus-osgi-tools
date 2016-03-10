@@ -38,12 +38,6 @@ import javax.annotation.Nullable;
  * A high-performance, immutable, random-access {@code List} implementation.
  * Does not permit null elements.
  *
- * <p>Unlike {@link Collections#unmodifiableList}, which is a <i>view</i> of a
- * separate collection that can still change, an instance of {@code
- * ImmutableList} contains its own private data and will <i>never</i> change.
- * {@code ImmutableList} is convenient for {@code public static final} lists
- * ("constant lists") and also lets you easily make a "defensive copy" of a list
- * provided to your class by a caller.
  *
  * <p><b>Note:</b> Although this class is not final, it cannot be subclassed as
  * it has no public or protected constructors. Thus, instances of this type are
@@ -66,25 +60,12 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
   private static final ImmutableList<Object> EMPTY =
       new RegularImmutableList<Object>(ObjectArrays.EMPTY_ARRAY);
 
-  /**
-   * Returns the empty immutable list. This set behaves and performs comparably
-   * to {@link Collections#emptyList}, and is preferable mainly for consistency
-   * and maintainability of your code.
-   */
   // Casting to any type is safe because the list will never hold any elements.
   @SuppressWarnings("unchecked")
   public static <E> ImmutableList<E> of() {
     return (ImmutableList<E>) EMPTY;
   }
 
-  /**
-   * Returns an immutable list containing a single element. This list behaves
-   * and performs comparably to {@link Collections#singleton}, but will not
-   * accept a null element. It is preferable mainly for consistency and
-   * maintainability of your code.
-   *
-   * @throws NullPointerException if {@code element} is null
-   */
   public static <E> ImmutableList<E> of(E element) {
     return new SingletonImmutableList<E>(element);
   }

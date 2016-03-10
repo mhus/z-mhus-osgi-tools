@@ -178,15 +178,6 @@ public final class Booleans {
     return -1;
   }
 
-  /**
-   * Returns the values from each provided array combined into a single array.
-   * For example, {@code concat(new boolean[] {a, b}, new boolean[] {}, new
-   * boolean[] {c}} returns the array {@code {a, b, c}}.
-   *
-   * @param arrays zero or more {@code boolean} arrays
-   * @return a single array containing all the values from the source arrays, in
-   *     order
-   */
   public static boolean[] concat(boolean[]... arrays) {
     int length = 0;
     for (boolean[] array : arrays) {

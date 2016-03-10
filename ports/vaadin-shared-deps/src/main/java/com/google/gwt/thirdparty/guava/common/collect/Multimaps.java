@@ -420,19 +420,6 @@ public final class Multimaps {
    * returned multimap.
    *
    * <p>It is imperative that the user manually synchronize on the returned
-   * multimap when accessing any of its collection views: <pre>   {@code
-   *
-   *   Multimap<K, V> multimap = Multimaps.synchronizedMultimap(
-   *       HashMultimap.<K, V>create());
-   *   ...
-   *   Collection<V> values = multimap.get(key);  // Needn't be in synchronized block
-   *   ...
-   *   synchronized (multimap) {  // Synchronizing on multimap, not values!
-   *     Iterator<V> i = values.iterator(); // Must be in synchronized block
-   *     while (i.hasNext()) {
-   *       foo(i.next());
-   *     }
-   *   }}</pre>
    *
    * <p>Failure to follow this advice may result in non-deterministic behavior.
    *
@@ -1063,20 +1050,6 @@ public final class Multimaps {
   /**
    * Returns a view of a multimap where each value is transformed by a function.
    * All other properties of the multimap, such as iteration order, are left
-   * intact. For example, the code: <pre>   {@code
-   *
-   * Multimap<String, Integer> multimap =
-   *     ImmutableSetMultimap.of("a", 2, "b", -3, "b", -3, "a", 4, "c", 6);
-   * Function<Integer, String> square = new Function<Integer, String>() {
-   *     public String apply(Integer in) {
-   *       return Integer.toString(in * in);
-   *     }
-   * };
-   * Multimap<String, String> transformed =
-   *     Multimaps.transformValues(multimap, square);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=[4, 16], b=[9, 9], c=[36]}}.
    *
    * <p>Changes in the underlying multimap are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -1117,21 +1090,6 @@ public final class Multimaps {
    * entry-transformation logic may depend on the key as well as the value.
    *
    * <p>All other properties of the transformed multimap, such as iteration
-   * order, are left intact. For example, the code: <pre>   {@code
-   *
-   *   SetMultimap<String, Integer> multimap =
-   *       ImmutableSetMultimap.of("a", 1, "a", 4, "b", -6);
-   *   EntryTransformer<String, Integer, String> transformer =
-   *       new EntryTransformer<String, Integer, String>() {
-   *         public String transformEntry(String key, Integer value) {
-   *            return (value >= 0) ? key : "no" + key;
-   *         }
-   *       };
-   *   Multimap<String, String> transformed =
-   *       Multimaps.transformEntries(multimap, transformer);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=[a, a], b=[nob]}}.
    *
    * <p>Changes in the underlying multimap are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -1276,21 +1234,6 @@ public final class Multimaps {
   /**
    * Returns a view of a {@code ListMultimap} where each value is transformed by
    * a function. All other properties of the multimap, such as iteration order,
-   * are left intact. For example, the code: <pre>   {@code
-   *
-   *   ListMultimap<String, Integer> multimap
-   *        = ImmutableListMultimap.of("a", 4, "a", 16, "b", 9);
-   *   Function<Integer, Double> sqrt =
-   *       new Function<Integer, Double>() {
-   *         public Double apply(Integer in) {
-   *           return Math.sqrt((int) in);
-   *         }
-   *       };
-   *   ListMultimap<String, Double> transformed = Multimaps.transformValues(map,
-   *       sqrt);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=[2.0, 4.0], b=[3.0]}}.
    *
    * <p>Changes in the underlying multimap are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -1329,21 +1272,6 @@ public final class Multimaps {
    * entry-transformation logic may depend on the key as well as the value.
    *
    * <p>All other properties of the transformed multimap, such as iteration
-   * order, are left intact. For example, the code: <pre>   {@code
-   *
-   *   Multimap<String, Integer> multimap =
-   *       ImmutableMultimap.of("a", 1, "a", 4, "b", 6);
-   *   EntryTransformer<String, Integer, String> transformer =
-   *       new EntryTransformer<String, Integer, String>() {
-   *         public String transformEntry(String key, Integer value) {
-   *           return key + value;
-   *         }
-   *       };
-   *   Multimap<String, String> transformed =
-   *       Multimaps.transformEntries(multimap, transformer);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {"a"=["a1", "a4"], "b"=["b6"]}}.
    *
    * <p>Changes in the underlying multimap are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -1428,9 +1356,6 @@ public final class Multimaps {
    *       Multimaps.index(badGuys, stringLengthFunction);
    *   System.out.println(index);}</pre>
    *
-   * <p>prints <pre>   {@code
-   *
-   *   {4=[Inky], 6=[Blinky], 5=[Pinky, Pinky, Clyde]}}</pre>
    *
    * <p>The returned multimap is serializable if its keys and values are all
    * serializable.
@@ -1466,18 +1391,6 @@ public final class Multimaps {
    * encountered, and the values corresponding to each key appear in the same
    * order as they are encountered.
    *
-   * <p>For example, <pre>   {@code
-   *
-   *   List<String> badGuys =
-   *       Arrays.asList("Inky", "Blinky", "Pinky", "Pinky", "Clyde");
-   *   Function<String, Integer> stringLengthFunction = ...;
-   *   Multimap<Integer, String> index =
-   *       Multimaps.index(badGuys.iterator(), stringLengthFunction);
-   *   System.out.println(index);}</pre>
-   *
-   * <p>prints <pre>   {@code
-   *
-   *   {4=[Inky], 6=[Blinky], 5=[Pinky, Pinky, Clyde]}}</pre>
    *
    * <p>The returned multimap is serializable if its keys and values are all
    * serializable.

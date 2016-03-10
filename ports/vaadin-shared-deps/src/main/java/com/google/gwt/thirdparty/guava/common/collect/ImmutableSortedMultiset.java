@@ -51,16 +51,6 @@ import java.util.List;
  * are equivalent. Instead, with an explicit comparator, the following relation determines whether
  * elements {@code x} and {@code y} are equivalent:
  *
- * <pre>   {@code
- *
- *   {(x, y) | comparator.compare(x, y) == 0}}</pre>
- *
- * <p>With natural ordering of elements, the following relation determines whether two elements are
- * equivalent:
- *
- * <pre>   {@code
- *
- *   {(x, y) | x.compareTo(y) == 0}}</pre>
  *
  * <b>Warning:</b> Like most multisets, an {@code ImmutableSortedMultiset} will not function
  * correctly if an element is modified after being placed in the multiset. For this reason, and to

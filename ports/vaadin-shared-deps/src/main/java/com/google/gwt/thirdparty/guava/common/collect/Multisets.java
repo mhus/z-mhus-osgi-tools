@@ -715,11 +715,6 @@ public final class Multisets {
    * {@link Multiset#removeAll removeAll}{@code (occurrencesToRemove)}, which
    * removes all occurrences of elements that appear in
    * {@code occurrencesToRemove}. However, this operation <i>is</i> equivalent
-   * to, albeit more efficient than, the following: <pre>   {@code
-   *
-   *   for (E e : occurrencesToRemove) {
-   *     multisetToModify.remove(e);
-   *   }}</pre>
    *
    * @return {@code true} if {@code multisetToModify} was changed as a result of
    *         this operation

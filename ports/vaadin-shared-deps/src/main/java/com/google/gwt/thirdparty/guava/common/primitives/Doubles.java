@@ -240,15 +240,6 @@ public final class Doubles {
     return max;
   }
 
-  /**
-   * Returns the values from each provided array combined into a single array.
-   * For example, {@code concat(new double[] {a, b}, new double[] {}, new
-   * double[] {c}} returns the array {@code {a, b, c}}.
-   *
-   * @param arrays zero or more {@code double} arrays
-   * @return a single array containing all the values from the source arrays, in
-   *     order
-   */
   public static double[] concat(double[]... arrays) {
     int length = 0;
     for (double[] array : arrays) {

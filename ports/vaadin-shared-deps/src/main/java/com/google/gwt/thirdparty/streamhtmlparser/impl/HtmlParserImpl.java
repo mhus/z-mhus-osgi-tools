@@ -333,8 +333,6 @@ public class HtmlParserImpl extends GenericParser implements HtmlParser {
    * information back to a default value, hence use only when
    * you want to parse text from a very clean slate.
    *
-   * <p>See the {@link HtmlParser.Mode} enum for information on all
-   * the valid modes.
    *
    * @param mode is an enum representing the high-level state of the parser
    */

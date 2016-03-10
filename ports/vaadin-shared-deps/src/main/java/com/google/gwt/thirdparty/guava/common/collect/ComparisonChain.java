@@ -27,16 +27,7 @@ import javax.annotation.Nullable;
 
 /**
  * A utility for performing a chained comparison statement. For example:
- * <pre>   {@code
- *
- *   public int compareTo(Foo that) {
- *     return ComparisonChain.start()
- *         .compare(this.aString, that.aString)
- *         .compare(this.anInt, that.anInt)
- *         .compare(this.anEnum, that.anEnum, Ordering.natural().nullsLast())
- *         .result();
- *   }}</pre>
- *
+
  * <p>The value of this expression will have the same sign as the <i>first
  * nonzero</i> comparison result in the chain, or will be zero if every
  * comparison result was zero.

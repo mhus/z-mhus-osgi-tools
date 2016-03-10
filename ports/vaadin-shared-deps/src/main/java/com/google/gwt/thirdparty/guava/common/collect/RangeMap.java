@@ -55,7 +55,6 @@ public interface RangeMap<K extends Comparable, V> {
    * Returns the minimal range {@linkplain Range#encloses(Range) enclosing} the ranges
    * in this {@code RangeMap}.
    *
-   * @throws NoSuchElementException if this range map is empty
    */
   Range<K> span();
 

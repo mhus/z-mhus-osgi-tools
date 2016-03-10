@@ -31,7 +31,7 @@ public interface SendQueueManager {
 	 * Get a queue.
 	 * 
 	 * @param name
-	 * @return
+	 * @return the queue
 	 */
 	SendQueue getQueue(String name);
 	
@@ -52,7 +52,7 @@ public interface SendQueueManager {
 	/**
 	 * Return a list of queue names.
 	 * 
-	 * @return
+	 * @return the list
 	 */
 	String[] getQueueNames();
 

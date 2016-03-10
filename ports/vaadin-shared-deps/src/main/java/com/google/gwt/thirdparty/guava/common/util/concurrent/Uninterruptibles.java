@@ -124,7 +124,6 @@ public final class Uninterruptibles {
    * or {@link Futures#makeChecked}.
    *
    * @throws ExecutionException if the computation threw an exception
-   * @throws CancellationException if the computation was cancelled
    */
   public static <V> V getUninterruptibly(Future<V> future)
       throws ExecutionException {
@@ -154,7 +153,6 @@ public final class Uninterruptibles {
    * or {@link Futures#makeChecked}.
    *
    * @throws ExecutionException if the computation threw an exception
-   * @throws CancellationException if the computation was cancelled
    * @throws TimeoutException if the wait timed out
    */
   public static <V> V getUninterruptibly(

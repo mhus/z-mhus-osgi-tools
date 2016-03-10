@@ -55,30 +55,6 @@ import javax.annotation.Nullable;
  * #getComponentType}. It also provides additional utilities such as {@link #getTypes} and {@link
  * #resolveType} etc.
  *
- * <p>There are three ways to get a {@code TypeToken} instance: <ul>
- * <li>Wrap a {@code Type} obtained via reflection. For example: {@code
- * TypeToken.of(method.getGenericReturnType())}.
- * <li>Capture a generic type with a (usually anonymous) subclass. For example: <pre>   {@code
- *   new TypeToken<List<String>>() {}}</pre>
- * <p>Note that it's critical that the actual type argument is carried by a subclass.
- * The following code is wrong because it only captures the {@code <T>} type variable
- * of the {@code listType()} method signature; while {@code <String>} is lost in erasure:
- * <pre>   {@code
- *   class Util {
- *     static <T> TypeToken<List<T>> listType() {
- *       return new TypeToken<List<T>>() {};
- *     }
- *   }
- *
- *   TypeToken<List<String>> stringListType = Util.<String>listType();}</pre>
- * <li>Capture a generic type with a (usually anonymous) subclass and resolve it against
- * a context class that knows what the type parameters are. For example: <pre>   {@code
- *   abstract class IKnowMyType<T> {
- *     TypeToken<T> type = new TypeToken<T>(getClass()) {};
- *   }
- *   new IKnowMyType<String>() {}.type => String}</pre>
- * </ul>
- *
  * <p>{@code TypeToken} is serializable when no type variable is contained in the type.
  *
  * <p>Note to Guice users: {@code} TypeToken is similar to Guice's {@code TypeLiteral} class
@@ -105,8 +81,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
    * parameter in the anonymous class's type hierarchy so we can reconstitute
    * it at runtime despite erasure.
    *
-   * <p>For example: <pre>   {@code
-   *   TypeToken<List<String>> t = new TypeToken<List<String>>() {};}</pre>
    */
   protected TypeToken() {
     this.runtimeType = capture();
@@ -126,14 +100,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
    * parameter in the anonymous class's type hierarchy so we can reconstitute
    * it at runtime despite erasure.
    *
-   * <p>For example: <pre>   {@code
-   *   abstract class IKnowMyType<T> {
-   *     TypeToken<T> getMyType() {
-   *       return new TypeToken<T>(getClass()) {};
-   *     }
-   *   }
-   *
-   *   new IKnowMyType<String>() {}.getMyType() => String}</pre>
    */
   protected TypeToken(Class<?> declaringClass) {
     Type captured = super.capture();
@@ -198,13 +164,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
   /**
    * <p>Returns a new {@code TypeToken} where type variables represented by {@code typeParam}
    * are substituted by {@code typeArg}. For example, it can be used to construct
-   * {@code Map<K, V>} for any {@code K} and {@code V} type: <pre>   {@code
-   *   static <K, V> TypeToken<Map<K, V>> mapOf(
-   *       TypeToken<K> keyType, TypeToken<V> valueType) {
-   *     return new TypeToken<Map<K, V>>() {}
-   *         .where(new TypeParameter<K>() {}, keyType)
-   *         .where(new TypeParameter<V>() {}, valueType);
-   *   }}</pre>
    *
    * @param <X> The parameter type
    * @param typeParam the parameter type variable
@@ -220,13 +179,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
   /**
    * <p>Returns a new {@code TypeToken} where type variables represented by {@code typeParam}
    * are substituted by {@code typeArg}. For example, it can be used to construct
-   * {@code Map<K, V>} for any {@code K} and {@code V} type: <pre>   {@code
-   *   static <K, V> TypeToken<Map<K, V>> mapOf(
-   *       Class<K> keyType, Class<V> valueType) {
-   *     return new TypeToken<Map<K, V>>() {}
-   *         .where(new TypeParameter<K>() {}, keyType)
-   *         .where(new TypeParameter<V>() {}, valueType);
-   *   }}</pre>
    *
    * @param <X> The parameter type
    * @param typeParam the parameter type variable
@@ -238,10 +190,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
 
   /**
    * <p>Resolves the given {@code type} against the type context represented by this type.
-   * For example: <pre>   {@code
-   *   new TypeToken<List<String>>() {}.resolveType(
-   *       List.class.getMethod("get", int.class).getGenericReturnType())
-   *   => String.class}</pre>
    */
   public final TypeToken<?> resolveType(Type type) {
     checkNotNull(type);
@@ -266,19 +214,6 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
     return supertype;
   }
 
-  /**
-   * Returns the generic superclass of this type or {@code null} if the type represents
-   * {@link Object} or an interface. This method is similar but different from {@link
-   * Class#getGenericSuperclass}. For example, {@code
-   * new TypeToken<StringArrayList>() {}.getGenericSuperclass()} will return {@code
-   * new TypeToken<ArrayList<String>>() {}}; while {@code
-   * StringArrayList.class.getGenericSuperclass()} will return {@code ArrayList<E>}, where {@code E}
-   * is the type variable declared by class {@code ArrayList}.
-   *
-   * <p>If this type is a type variable or wildcard, its first upper bound is examined and returned
-   * if the bound is a class or extends from a class. This means that the returned type could be a
-   * type variable too.
-   */
   @Nullable
   final TypeToken<? super T> getGenericSuperclass() {
     if (runtimeType instanceof TypeVariable) {
@@ -308,18 +243,7 @@ public abstract class TypeToken<T> extends TypeCapture<T> implements Serializabl
     return superclass;
   }
 
-  /**
-   * Returns the generic interfaces that this type directly {@code implements}. This method is
-   * similar but different from {@link Class#getGenericInterfaces()}. For example, {@code
-   * new TypeToken<List<String>>() {}.getGenericInterfaces()} will return a list that contains
-   * {@code new TypeToken<Iterable<String>>() {}}; while {@code List.class.getGenericInterfaces()}
-   * will return an array that contains {@code Iterable<T>}, where the {@code T} is the type
-   * variable declared by interface {@code Iterable}.
-   *
-   * <p>If this type is a type variable or wildcard, its upper bounds are examined and those that
-   * are either an interface or upper-bounded only by interfaces are returned. This means that the
-   * returned types could include type variables too.
-   */
+
   final ImmutableList<TypeToken<? super T>> getGenericInterfaces() {
     if (runtimeType instanceof TypeVariable) {
       return boundsAsInterfaces(((TypeVariable<?>) runtimeType).getBounds());

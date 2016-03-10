@@ -1303,19 +1303,6 @@ public final class Maps {
    * to the backing bimap is accomplished through the returned bimap.
    *
    * <p>It is imperative that the user manually synchronize on the returned map
-   * when accessing any of its collection views: <pre>   {@code
-   *
-   *   BiMap<Long, String> map = Maps.synchronizedBiMap(
-   *       HashBiMap.<Long, String>create());
-   *   ...
-   *   Set<Long> set = map.keySet();  // Needn't be in synchronized block
-   *   ...
-   *   synchronized (map) {  // Synchronizing on map, not set!
-   *     Iterator<Long> it = set.iterator(); // Must be in synchronized block
-   *     while (it.hasNext()) {
-   *       foo(it.next());
-   *     }
-   *   }}</pre>
    *
    * <p>Failure to follow this advice may result in non-deterministic behavior.
    *
@@ -1392,19 +1379,6 @@ public final class Maps {
   /**
    * Returns a view of a map where each value is transformed by a function. All
    * other properties of the map, such as iteration order, are left intact. For
-   * example, the code: <pre>   {@code
-   *
-   *   Map<String, Integer> map = ImmutableMap.of("a", 4, "b", 9);
-   *   Function<Integer, Double> sqrt =
-   *       new Function<Integer, Double>() {
-   *         public Double apply(Integer in) {
-   *           return Math.sqrt((int) in);
-   *         }
-   *       };
-   *   Map<String, Double> transformed = Maps.transformValues(map, sqrt);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=2.0, b=3.0}}.
    *
    * <p>Changes in the underlying map are reflected in this view. Conversely,
    * this view supports removal operations, and these are reflected in the
@@ -1433,20 +1407,6 @@ public final class Maps {
   /**
    * Returns a view of a sorted map where each value is transformed by a
    * function. All other properties of the map, such as iteration order, are
-   * left intact. For example, the code: <pre>   {@code
-   *
-   *   SortedMap<String, Integer> map = ImmutableSortedMap.of("a", 4, "b", 9);
-   *   Function<Integer, Double> sqrt =
-   *       new Function<Integer, Double>() {
-   *         public Double apply(Integer in) {
-   *           return Math.sqrt((int) in);
-   *         }
-   *       };
-   *   SortedMap<String, Double> transformed =
-   *        Maps.transformValues(map, sqrt);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=2.0, b=3.0}}.
    *
    * <p>Changes in the underlying map are reflected in this view. Conversely,
    * this view supports removal operations, and these are reflected in the
@@ -1477,22 +1437,6 @@ public final class Maps {
   /**
    * Returns a view of a navigable map where each value is transformed by a
    * function. All other properties of the map, such as iteration order, are
-   * left intact.  For example, the code: <pre>   {@code
-   *
-   *   NavigableMap<String, Integer> map = Maps.newTreeMap();
-   *   map.put("a", 4);
-   *   map.put("b", 9);
-   *   Function<Integer, Double> sqrt =
-   *       new Function<Integer, Double>() {
-   *         public Double apply(Integer in) {
-   *           return Math.sqrt((int) in);
-   *         }
-   *       };
-   *   NavigableMap<String, Double> transformed =
-   *        Maps.transformNavigableValues(map, sqrt);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {a=2.0, b=3.0}}.
    *
    * Changes in the underlying map are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -1527,21 +1471,6 @@ public final class Maps {
    * entry-transformation logic may depend on the key as well as the value.
    *
    * <p>All other properties of the transformed map, such as iteration order,
-   * are left intact. For example, the code: <pre>   {@code
-   *
-   *   Map<String, Boolean> options =
-   *       ImmutableMap.of("verbose", true, "sort", false);
-   *   EntryTransformer<String, Boolean, String> flagPrefixer =
-   *       new EntryTransformer<String, Boolean, String>() {
-   *         public String transformEntry(String key, Boolean value) {
-   *           return value ? key : "no" + key;
-   *         }
-   *       };
-   *   Map<String, String> transformed =
-   *       Maps.transformEntries(options, flagPrefixer);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {verbose=verbose, sort=nosort}}.
    *
    * <p>Changes in the underlying map are reflected in this view. Conversely,
    * this view supports removal operations, and these are reflected in the
@@ -1588,21 +1517,6 @@ public final class Maps {
    * value.
    *
    * <p>All other properties of the transformed map, such as iteration order,
-   * are left intact. For example, the code: <pre>   {@code
-   *
-   *   Map<String, Boolean> options =
-   *       ImmutableSortedMap.of("verbose", true, "sort", false);
-   *   EntryTransformer<String, Boolean, String> flagPrefixer =
-   *       new EntryTransformer<String, Boolean, String>() {
-   *         public String transformEntry(String key, Boolean value) {
-   *           return value ? key : "yes" + key;
-   *         }
-   *       };
-   *   SortedMap<String, String> transformed =
-   *       Maps.transformEntries(options, flagPrefixer);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {sort=yessort, verbose=verbose}}.
    *
    * <p>Changes in the underlying map are reflected in this view. Conversely,
    * this view supports removal operations, and these are reflected in the
@@ -1646,22 +1560,6 @@ public final class Maps {
    * depend on the key as well as the value.
    *
    * <p>All other properties of the transformed map, such as iteration order,
-   * are left intact. For example, the code: <pre>   {@code
-   *
-   *   NavigableMap<String, Boolean> options = Maps.newTreeMap();
-   *   options.put("verbose", false);
-   *   options.put("sort", true);
-   *   EntryTransformer<String, Boolean, String> flagPrefixer =
-   *       new EntryTransformer<String, Boolean, String>() {
-   *         public String transformEntry(String key, Boolean value) {
-   *           return value ? key : ("yes" + key);
-   *         }
-   *       };
-   *   NavigableMap<String, String> transformed =
-   *       LabsMaps.transformNavigableEntries(options, flagPrefixer);
-   *   System.out.println(transformed);}</pre>
-   *
-   * ... prints {@code {sort=yessort, verbose=verbose}}.
    *
    * <p>Changes in the underlying map are reflected in this view.
    * Conversely, this view supports removal operations, and these are reflected
@@ -3183,21 +3081,6 @@ public final class Maps {
    * <p>It is imperative that the user manually synchronize on the returned
    * navigable map when iterating over any of its collection views, or the
    * collections views of any of its {@code descendingMap}, {@code subMap},
-   * {@code headMap} or {@code tailMap} views. <pre>   {@code
-   *
-   *   NavigableMap<K, V> map = synchronizedNavigableMap(new TreeMap<K, V>());
-   *
-   *   // Needn't be in synchronized block
-   *   NavigableSet<K> set = map.navigableKeySet();
-   *
-   *   synchronized (map) { // Synchronizing on map, not set!
-   *     Iterator<K> it = set.iterator(); // Must be in synchronized block
-   *     while (it.hasNext()) {
-   *       foo(it.next());
-   *     }
-   *   }}</pre>
-   *
-   * <p>or: <pre>   {@code
    *
    *   NavigableMap<K, V> map = synchronizedNavigableMap(new TreeMap<K, V>());
    *   NavigableMap<K, V> map2 = map.subMap(foo, false, bar, true);

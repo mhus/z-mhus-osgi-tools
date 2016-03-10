@@ -25,13 +25,6 @@ import javax.annotation.Nullable;
  * A constraint on the keys and values that may be added to a {@code Map} or
  * {@code Multimap}. For example, {@link MapConstraints#notNull()}, which
  * prevents a map from including any null keys or values, could be implemented
- * like this: <pre>   {@code
- *
- *   public void checkKeyValue(Object key, Object value) {
- *     if (key == null || value == null) {
- *       throw new NullPointerException();
- *     }
- *   }}</pre>
  *
  * <p>In order to be effective, constraints should be deterministic; that is, they
  * should not depend on state that can change (such as external state, random

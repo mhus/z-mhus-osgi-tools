@@ -23,44 +23,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-/**
- * Simple static methods to be called at the start of your own methods to verify
- * correct arguments and state. This allows constructs such as
- *
- * <pre>   {@code
- *   if (count <= 0) {
- *     throw new IllegalArgumentException("must be positive: " + count);
- *   }}</pre>
- *
- * <p>to be replaced with the more compact
- * <pre>   {@code
- *   checkArgument(count > 0, "must be positive: %s", count);}</pre>
- *
- * <p>Note that the sense of the expression is inverted; with {@code Preconditions}
- * you declare what you expect to be <i>true</i>, just as you do with an
- * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html">
- * {@code assert}</a> or a JUnit {@code assertTrue} call.
- *
- * <p><b>Warning:</b> only the {@code "%s"} specifier is recognized as a
- * placeholder in these messages, not the full range of {@link
- * String#format(String, Object[])} specifiers.
- *
- * <p>Take care not to confuse precondition checking with other similar types
- * of checks! Precondition exceptions -- including those provided here, but also
- * {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
- * UnsupportedOperationException} and others -- are used to signal that the
- * <i>calling method</i> has made an error. This tells the caller that it should
- * not have invoked the method when it did, with the arguments it did, or
- * perhaps ever. Postcondition or other invariant failures should not throw
- * these types of exceptions.
- *
- * <p>See the Guava User Guide on <a href=
- * "http://code.google.com/p/guava-libraries/wiki/PreconditionsExplained">
- * using {@code Preconditions}</a>.
- *
- * @author Kevin Bourrillion
- * @since 2.0 (imported from Google Collections Library)
- */
+
 @GwtCompatible
 public final class Preconditions {
   private Preconditions() {}

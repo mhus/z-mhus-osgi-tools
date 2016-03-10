@@ -23,7 +23,6 @@ package com.google.gwt.thirdparty.streamhtmlparser.util;
  * <p>When {@link #maybeRecord(char)} is called, it will add the
  * supplied character to the recording buffer but only if
  * recording is in progress. This is useful in our
- * {@link com.com.google.gwt.thirdparty.streamhtmlparser.security.streamhtmlparser.HtmlParser}
  * as the caller logic to enable/disable recording is decoupled from the logic
  * of recording.
  *

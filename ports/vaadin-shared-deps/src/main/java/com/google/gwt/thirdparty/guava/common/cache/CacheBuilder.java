@@ -62,32 +62,6 @@ import javax.annotation.CheckReturnValue;
  * <p>These features are all optional; caches can be created using all or none of them. By default
  * cache instances created by {@code CacheBuilder} will not perform any type of eviction.
  *
- * <p>Usage example: <pre>   {@code
- *
- *   LoadingCache<Key, Graph> graphs = CacheBuilder.newBuilder()
- *       .maximumSize(10000)
- *       .expireAfterWrite(10, TimeUnit.MINUTES)
- *       .removalListener(MY_LISTENER)
- *       .build(
- *           new CacheLoader<Key, Graph>() {
- *             public Graph load(Key key) throws AnyException {
- *               return createExpensiveGraph(key);
- *             }
- *           });}</pre>
- *
- * <p>Or equivalently, <pre>   {@code
- *
- *   // In real life this would come from a command-line flag or config file
- *   String spec = "maximumSize=10000,expireAfterWrite=10m";
- *
- *   LoadingCache<Key, Graph> graphs = CacheBuilder.from(spec)
- *       .removalListener(MY_LISTENER)
- *       .build(
- *           new CacheLoader<Key, Graph>() {
- *             public Graph load(Key key) throws AnyException {
- *               return createExpensiveGraph(key);
- *             }
- *           });}</pre>
  *
  * <p>The returned cache is implemented as a hash table with similar performance characteristics to
  * {@link ConcurrentHashMap}. It implements all optional operations of the {@link LoadingCache} and

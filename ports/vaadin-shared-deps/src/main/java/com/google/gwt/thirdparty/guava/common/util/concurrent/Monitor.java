@@ -50,28 +50,9 @@ import javax.annotation.concurrent.GuardedBy;
  *
  * <p>A call to any of the <i>enter</i> methods with <b>void</b> return type should always be
  * followed immediately by a <i>try/finally</i> block to ensure that the current thread leaves the
- * monitor cleanly: <pre>   {@code
- *
- *   monitor.enter();
- *   try {
- *     // do things while occupying the monitor
- *   } finally {
- *     monitor.leave();
- *   }}</pre>
  *
  * <p>A call to any of the <i>enter</i> methods with <b>boolean</b> return type should always
  * appear as the condition of an <i>if</i> statement containing a <i>try/finally</i> block to
- * ensure that the current thread leaves the monitor cleanly: <pre>   {@code
- *
- *   if (monitor.tryEnter()) {
- *     try {
- *       // do things while occupying the monitor
- *     } finally {
- *       monitor.leave();
- *     }
- *   } else {
- *     // do other things since the monitor was not available
- *   }}</pre>
  *
  * <h2>Comparison with {@code synchronized} and {@code ReentrantLock}</h2>
  *
@@ -84,116 +65,20 @@ import javax.annotation.concurrent.GuardedBy;
  * is built into the language and runtime. But the programmer has to remember to avoid a couple of
  * common bugs: The {@code wait()} must be inside a {@code while} instead of an {@code if}, and
  * {@code notifyAll()} must be used instead of {@code notify()} because there are two different
- * logical conditions being awaited. <pre>   {@code
- *
- *   public class SafeBox<V> {
- *     private V value;
- *
- *     public synchronized V get() throws InterruptedException {
- *       while (value == null) {
- *         wait();
- *       }
- *       V result = value;
- *       value = null;
- *       notifyAll();
- *       return result;
- *     }
- *
- *     public synchronized void set(V newValue) throws InterruptedException {
- *       while (value != null) {
- *         wait();
- *       }
- *       value = newValue;
- *       notifyAll();
- *     }
- *   }}</pre>
- *
+
  * <h3>{@code ReentrantLock}</h3>
  *
  * <p>This version is much more verbose than the {@code synchronized} version, and still suffers
  * from the need for the programmer to remember to use {@code while} instead of {@code if}.
  * However, one advantage is that we can introduce two separate {@code Condition} objects, which
  * allows us to use {@code signal()} instead of {@code signalAll()}, which may be a performance
- * benefit. <pre>   {@code
- *
- *   public class SafeBox<V> {
- *     private final ReentrantLock lock = new ReentrantLock();
- *     private final Condition valuePresent = lock.newCondition();
- *     private final Condition valueAbsent = lock.newCondition();
- *     private V value;
- *
- *     public V get() throws InterruptedException {
- *       lock.lock();
- *       try {
- *         while (value == null) {
- *           valuePresent.await();
- *         }
- *         V result = value;
- *         value = null;
- *         valueAbsent.signal();
- *         return result;
- *       } finally {
- *         lock.unlock();
- *       }
- *     }
- *
- *     public void set(V newValue) throws InterruptedException {
- *       lock.lock();
- *       try {
- *         while (value != null) {
- *           valueAbsent.await();
- *         }
- *         value = newValue;
- *         valuePresent.signal();
- *       } finally {
- *         lock.unlock();
- *       }
- *     }
- *   }}</pre>
- *
+
  * <h3>{@code Monitor}</h3>
  *
  * <p>This version adds some verbosity around the {@code Guard} objects, but removes that same
  * verbosity, and more, from the {@code get} and {@code set} methods. {@code Monitor} implements the
  * same efficient signaling as we had to hand-code in the {@code ReentrantLock} version above.
  * Finally, the programmer no longer has to hand-code the wait loop, and therefore doesn't have to
- * remember to use {@code while} instead of {@code if}. <pre>   {@code
- *
- *   public class SafeBox<V> {
- *     private final Monitor monitor = new Monitor();
- *     private final Monitor.Guard valuePresent = new Monitor.Guard(monitor) {
- *       public boolean isSatisfied() {
- *         return value != null;
- *       }
- *     };
- *     private final Monitor.Guard valueAbsent = new Monitor.Guard(monitor) {
- *       public boolean isSatisfied() {
- *         return value == null;
- *       }
- *     };
- *     private V value;
- *
- *     public V get() throws InterruptedException {
- *       monitor.enterWhen(valuePresent);
- *       try {
- *         V result = value;
- *         value = null;
- *         return result;
- *       } finally {
- *         monitor.leave();
- *       }
- *     }
- *
- *     public void set(V newValue) throws InterruptedException {
- *       monitor.enterWhen(valueAbsent);
- *       try {
- *         value = newValue;
- *       } finally {
- *         monitor.leave();
- *       }
- *     }
- *   }}</pre>
- *
  * @author Justin T. Sampson
  * @author Martin Buchholz
  * @since 10.0
