@@ -72,6 +72,7 @@
 		<dependency.jetty.version>8.1.14.v20131031</dependency.jetty.version>
 		 <pax.version>3.1.0</pax.version>
 		
+		<servlet.version>3.1.0</servlet.version>
       </properties>
 
    <build>
