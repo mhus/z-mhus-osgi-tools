@@ -3,12 +3,6 @@ package de.mhus.osgi.commands.shell;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.StringWriter;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -17,7 +11,6 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
-import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "shell", name = "write", description = "Write to file")
 @Service

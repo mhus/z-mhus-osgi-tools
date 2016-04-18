@@ -1,17 +1,14 @@
 package de.mhus.osgi.mail.karaf;
 
-import java.io.PrintStream;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-
-import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.mail.core.SendQueue;
 import de.mhus.osgi.mail.core.SendQueueManager;
 
 @Command(scope = "mail", name = "unregister", description = "Remove Mail Send Queues")
+@Service
 public class CmdUnregister implements Action {
 
 	private SendQueueManager admin;
@@ -20,7 +17,7 @@ public class CmdUnregister implements Action {
     String name;
 
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		admin.unregisterQueue(name);
 		System.out.println("OK");

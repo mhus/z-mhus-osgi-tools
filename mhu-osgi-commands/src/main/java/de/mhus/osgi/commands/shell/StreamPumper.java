@@ -19,9 +19,9 @@
 
 package de.mhus.osgi.commands.shell;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
 /**
  * Copies all data from an input stream to an output stream.

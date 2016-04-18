@@ -7,7 +7,6 @@ import java.net.URL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 
 import org.apache.commons.io.IOUtils;
 import org.osgi.framework.Bundle;

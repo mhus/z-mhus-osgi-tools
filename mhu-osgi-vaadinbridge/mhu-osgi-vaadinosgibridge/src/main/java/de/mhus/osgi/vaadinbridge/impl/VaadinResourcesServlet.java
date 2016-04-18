@@ -3,8 +3,6 @@ package de.mhus.osgi.vaadinbridge.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -23,20 +21,15 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 import org.w3c.css.sac.InputSource;
 
-import com.google.gwt.thirdparty.guava.common.base.Charsets;
-import com.google.gwt.thirdparty.guava.common.io.Files;
 import com.vaadin.sass.SassCompiler;
 import com.vaadin.sass.internal.ScssStylesheet;
 import com.vaadin.sass.internal.resolver.ScssStylesheetResolver;
-import com.vaadin.shared.Version;
 
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.osgi.vaadinbridge.Resource;
 import de.mhus.osgi.vaadinbridge.VaadinResourceProvider;
-import elemental.json.Json;
-import elemental.json.JsonObject;
 
 @Component(provide = Servlet.class, properties = { "alias=/VAADIN" }, name="VAADINResources",servicefactory=true)
 public class VaadinResourcesServlet extends HttpServlet {

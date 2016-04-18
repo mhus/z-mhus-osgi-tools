@@ -1,11 +1,9 @@
 package de.mhus.osgi.sop.impl;
 
 import java.io.File;
-import java.util.HashSet;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;

@@ -1,7 +1,7 @@
 package de.mhus.osgi.sop.impl;
 
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.LoginContext;
@@ -16,10 +16,8 @@ import org.apache.karaf.jaas.modules.BackingEngineFactory;
 
 import de.mhus.lib.core.security.LoginCallbackHandler;
 import de.mhus.lib.karaf.MOsgi;
-import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.Account;
 import de.mhus.osgi.sop.api.aaa.AccountSource;
-import de.mhus.osgi.sop.api.aaa.Trust;
 
 public class KarafAaaSource implements AccountSource {
 

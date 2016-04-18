@@ -2,21 +2,22 @@ package de.mhus.osgi.mail.karaf;
 
 import java.io.PrintStream;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.mail.core.SendQueue;
 import de.mhus.osgi.mail.core.SendQueueManager;
 
 @Command(scope = "mail", name = "list", description = "List current Mail Send Queues")
+@Service
 public class CmdList implements Action {
 
 	private SendQueueManager admin;
 
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		PrintStream out = System.out;
 		ConsoleTable table = new ConsoleTable();
 		table.setHeaderValues("id","valid","status");

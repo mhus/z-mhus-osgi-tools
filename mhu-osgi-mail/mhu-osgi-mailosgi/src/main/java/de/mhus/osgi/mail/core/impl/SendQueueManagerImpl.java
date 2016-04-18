@@ -11,8 +11,8 @@ import javax.mail.Message;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.osgi.mail.core.QueueNotFoundException;
-import de.mhus.osgi.mail.core.SendQueueManager;
 import de.mhus.osgi.mail.core.SendQueue;
+import de.mhus.osgi.mail.core.SendQueueManager;
 import de.mhus.osgi.mail.core.SmtpSendQueue;
 
 @Component(name="DefaultSendQueueManager",immediate=true)

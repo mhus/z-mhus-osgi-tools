@@ -1,9 +1,5 @@
 package de.mhus.osgi.vaadin_groovy;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-import groovy.lang.Script;
-
 import java.lang.reflect.Method;
 
 import org.codehaus.groovy.control.CompilerConfiguration;
@@ -31,6 +27,9 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.VerticalSplitPanel;
 
 import de.mhus.lib.core.logging.Log;
+import groovy.lang.Binding;
+import groovy.lang.GroovyShell;
+import groovy.lang.Script;
 
 public class ConsoleView extends VerticalLayout implements View {
 

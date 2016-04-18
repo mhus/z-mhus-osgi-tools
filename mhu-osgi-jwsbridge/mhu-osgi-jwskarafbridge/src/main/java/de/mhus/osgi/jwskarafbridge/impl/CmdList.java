@@ -2,20 +2,21 @@ package de.mhus.osgi.jwskarafbridge.impl;
 
 import java.io.PrintStream;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.jwsbridge.JavaWebServiceAdmin;
 import de.mhus.osgi.jwsbridge.WebServiceInfo;
 
 @Command(scope = "jws", name = "list", description = "List current Web Services")
+@Service
 public class CmdList implements Action {
 
 	private JavaWebServiceAdmin admin;
 
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		PrintStream out = System.out;
 		//session.getConsole();
 		ConsoleTable table = new ConsoleTable();

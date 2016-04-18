@@ -1,8 +1,5 @@
 package de.mhus.osgi.sop.api.aaa;
 
-import java.util.List;
-import java.util.UUID;
-
 public interface Trust {
 
 

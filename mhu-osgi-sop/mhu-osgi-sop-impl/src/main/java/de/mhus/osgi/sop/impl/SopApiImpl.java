@@ -1,14 +1,11 @@
 package de.mhus.osgi.sop.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
 import java.util.WeakHashMap;
@@ -30,15 +27,13 @@ import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.adb.query.Db;
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPassword;
-import de.mhus.lib.core.MProperties;
-import de.mhus.lib.core.MSingleton;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.cfg.CfgProperties;
-import de.mhus.lib.core.io.FileWatch;
 import de.mhus.lib.core.pojo.MPojo;
 import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.lib.errors.MException;
@@ -50,10 +45,10 @@ import de.mhus.osgi.sop.api.aaa.AccountSource;
 import de.mhus.osgi.sop.api.aaa.AuthorizationSource;
 import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
 import de.mhus.osgi.sop.api.aaa.Reference;
+import de.mhus.osgi.sop.api.aaa.Reference.TYPE;
 import de.mhus.osgi.sop.api.aaa.ReferenceCollector;
 import de.mhus.osgi.sop.api.aaa.Trust;
 import de.mhus.osgi.sop.api.aaa.TrustSource;
-import de.mhus.osgi.sop.api.aaa.Reference.TYPE;
 import de.mhus.osgi.sop.api.action.BpmApi;
 import de.mhus.osgi.sop.api.action.BpmCase;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
@@ -67,7 +62,6 @@ import de.mhus.osgi.sop.api.rest.RestResult;
 import de.mhus.osgi.sop.api.rest.RestUtil;
 import de.mhus.osgi.sop.api.util.TicketUtil;
 import de.mhus.osgi.sop.impl.adb.SopDbImpl;
-import de.mhus.lib.core.MCollection;
 
 @Component(immediate=true,provide=SopApi.class,name="SopApi")
 public class SopApiImpl extends MLog implements SopApi {

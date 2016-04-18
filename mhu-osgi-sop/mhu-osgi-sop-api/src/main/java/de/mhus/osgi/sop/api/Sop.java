@@ -11,7 +11,6 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.lib.jms.MJms;
 import de.mhus.lib.karaf.jms.JmsUtil;
 
 public class Sop {

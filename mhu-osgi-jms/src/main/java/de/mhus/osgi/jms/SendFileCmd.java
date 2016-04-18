@@ -2,7 +2,6 @@ package de.mhus.osgi.jms;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.jms.BytesMessage;
 import javax.jms.Connection;
@@ -10,21 +9,19 @@ import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.transport.stomp.Stomp;
-import org.apache.activemq.transport.stomp.StompConnection;
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MStopWatch;
 
 @Command(scope = "jms", name = "direct-sendfile", description = "send file")
+@Service
 public class SendFileCmd implements Action {
 
     private static final Boolean NON_TRANSACTED = false;
@@ -47,7 +44,7 @@ public class SendFileCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
-	public Object execute(CommandSession s) throws Exception {
+	public Object execute() throws Exception {
 
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
         Connection connection = null;
@@ -67,7 +64,7 @@ public class SendFileCmd implements Action {
             watch.start();
             send(session, producer, f);
             watch.stop();
-            System.out.println(watch.getCurrentTimeAsString(true));
+            System.out.println(watch.getCurrentTimeAsString());
 
             producer.close();
             session.close();

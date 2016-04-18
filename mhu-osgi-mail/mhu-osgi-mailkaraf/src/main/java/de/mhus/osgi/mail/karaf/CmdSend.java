@@ -1,23 +1,18 @@
 package de.mhus.osgi.mail.karaf;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.PrintStream;
-import java.util.Properties;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MString;
-import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.mail.core.MailUtil;
 import de.mhus.osgi.mail.core.SendQueue;
 import de.mhus.osgi.mail.core.SendQueueManager;
-import de.mhus.osgi.mail.core.SmtpSendQueue;
 
 @Command(scope = "mail", name = "send", description = "Send a mail via send queue")
+@Service
 public class CmdSend implements Action {
 
 	private SendQueueManager admin;
@@ -36,7 +31,7 @@ public class CmdSend implements Action {
     String[] attachments;
 
 	@Override
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 		
 		SendQueue q = admin.getQueue(name);
 		if (q == null) {

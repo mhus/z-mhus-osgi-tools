@@ -1,15 +1,16 @@
 package de.mhus.osgi.jms;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.karaf.jms.JmsUtil;
 
 @Command(scope = "jms", name = "direct-listen", description = "listen")
+@Service
 public class ReceiverAddCmd implements Action {
 
 	@Argument(index=0, name="url", required=true, description="url or connection name", multiValued=false)
@@ -27,7 +28,7 @@ public class ReceiverAddCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
-	public Object execute(CommandSession s) throws Exception {
+	public Object execute() throws Exception {
 		
 		if (url.indexOf(':') > 0) {
 		

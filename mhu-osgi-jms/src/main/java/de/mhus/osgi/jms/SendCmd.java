@@ -1,29 +1,18 @@
 package de.mhus.osgi.jms;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.Serializable;
-import java.util.UUID;
 
 import javax.jms.BytesMessage;
-import javax.jms.Connection;
-import javax.jms.Destination;
-import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Session;
-import javax.jms.TemporaryQueue;
-import javax.jms.TextMessage;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MStopWatch;
@@ -46,11 +35,15 @@ hello queue a^@
  */
 
 @Command(scope = "jms", name = "direct-send", description = "send")
+@Service
 public class SendCmd implements Action {
 
     private static final Boolean NON_TRANSACTED = false;
     private static final long DELAY = 100;
     private static Log log = Log.getLog(SendCmd.class);
+
+    @Reference
+    private org.apache.karaf.shell.api.console.Session session;
     
 	@Argument(index=0, name="url", required=true, description="url tcp:// or name of the connection", multiValued=false)
     String url;
@@ -90,7 +83,7 @@ public class SendCmd implements Action {
 	
 	boolean ownConnection = false;
 	
-	public Object execute(CommandSession s) throws Exception {
+	public Object execute() throws Exception {
 
         JmsConnection connection = null;
         
@@ -129,7 +122,7 @@ public class SendCmd implements Action {
                     mm.writeBytes(b);
             	} else
             	if (object != null) {
-            		Object o = s.get(object);
+            		Object o = session.get(object);
             		message = connection.getSession().createObjectMessage((Serializable) o);
             	} else
             		message = connection.getSession().createTextMessage(msg);
@@ -153,13 +146,13 @@ public class SendCmd implements Action {
                 		if (res instanceof MapMessage)
                 			((MapMessage)res).getMapNames(); // touch the map message
                 	}
-            		log.i("Answer", watch.getCurrentTimeAsString(true), res);
+            		log.i("Answer", watch.getCurrentTimeAsString(), res);
                 } else
                 	client.sendJmsOneWay(message);
 
             }
             watch.stop();
-            log.i(watch.getCurrentTimeAsString(true));
+            log.i(watch.getCurrentTimeAsString());
             // tell the subscribers we're done
 //            producer.send(session.createTextMessage("END"));
 

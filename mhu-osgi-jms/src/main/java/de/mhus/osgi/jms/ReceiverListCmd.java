@@ -1,15 +1,14 @@
 package de.mhus.osgi.jms;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Command(scope = "jms", name = "direct-list", description = "listen")
+@Service
 public class ReceiverListCmd implements Action {
 
-	public Object execute(CommandSession s) throws Exception {
+	public Object execute() throws Exception {
 		
 		JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
 		

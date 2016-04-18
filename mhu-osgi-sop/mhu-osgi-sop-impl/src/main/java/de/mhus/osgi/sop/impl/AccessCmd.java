@@ -2,7 +2,6 @@ package de.mhus.osgi.sop.impl;
 
 import java.util.Map.Entry;
 
-import org.apache.felix.service.command.CommandSession;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -17,8 +16,6 @@ import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.Account;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
-import de.mhus.osgi.sop.api.model.DbMetadata;
-import de.mhus.osgi.sop.api.util.ObjectUtil;
 
 @Command(scope = "sop", name = "access", description = "Access actions")
 @Service

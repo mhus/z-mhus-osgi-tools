@@ -7,13 +7,12 @@ import javax.sql.DataSource;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
-import de.mhus.osgi.commands.db.TraceDataSource;
 import de.mhus.lib.karaf.DataSourceUtil;
+import de.mhus.osgi.commands.db.TraceDataSource;
 
 @Command(scope = "jdbc", name = "dbtrace", description = "Modify DB Trace")
 @Service

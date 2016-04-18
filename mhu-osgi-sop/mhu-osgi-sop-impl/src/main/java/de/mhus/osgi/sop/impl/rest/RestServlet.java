@@ -1,6 +1,5 @@
 package de.mhus.osgi.sop.impl.rest;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -19,9 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import aQute.bnd.annotation.component.Component;
-import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MSingleton;
-import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.TrailLevelMapper;
@@ -29,7 +26,6 @@ import de.mhus.lib.core.util.Base64;
 import de.mhus.lib.core.util.MNls;
 import de.mhus.lib.core.util.Rfc1738;
 import de.mhus.lib.errors.AccessDeniedException;
-import de.mhus.lib.logging.FileLogger;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;

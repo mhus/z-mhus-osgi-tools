@@ -2,8 +2,8 @@ package de.mhus.osgi.jwsclient.impl;
 
 import java.io.IOException;
 
-import de.mhus.osgi.jwsclient.Connection;
 import de.mhus.osgi.jwsclient.Client;
+import de.mhus.osgi.jwsclient.Connection;
 import de.mhus.osgi.jwsclient.Target;
 
 public class JwsTarget extends Target {

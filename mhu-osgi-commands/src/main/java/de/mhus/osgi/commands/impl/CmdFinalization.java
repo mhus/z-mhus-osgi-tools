@@ -1,9 +1,7 @@
 package de.mhus.osgi.commands.impl;
 
 import org.apache.karaf.shell.api.action.Action;
-import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Command(scope = "java", name = "finalization", description = "Trigger the finalization of the JVM")

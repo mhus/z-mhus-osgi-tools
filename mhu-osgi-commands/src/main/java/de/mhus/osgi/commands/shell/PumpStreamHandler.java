@@ -19,9 +19,9 @@
 
 package de.mhus.osgi.commands.shell;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
 
 /**
  * Copies standard output and error of children streams to standard output and error of the parent.

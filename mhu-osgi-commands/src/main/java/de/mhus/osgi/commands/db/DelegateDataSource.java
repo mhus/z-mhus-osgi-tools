@@ -7,8 +7,8 @@ import javax.sql.DataSource;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
-import de.mhus.osgi.commands.impl.AbstractDataSource;
 import de.mhus.lib.karaf.DataSourceUtil;
+import de.mhus.osgi.commands.impl.AbstractDataSource;
 
 
 public class DelegateDataSource extends AbstractDataSource {

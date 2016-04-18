@@ -2,20 +2,19 @@ package de.mhus.osgi.jms;
 
 import java.net.URL;
 
-import org.apache.activemq.transport.stomp.Stomp;
 import org.apache.activemq.transport.stomp.StompConnection;
-import org.apache.activemq.transport.stomp.StompFrame;
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 /*
  http://activemq.apache.org/stomp.html
  
  */
 @Command(scope = "jms", name = "direct-stomp-send", description = "send")
+@Service
 public class StompSendCmd implements Action {
 
 	@Argument(index=0, name="url", required=true, description="...", multiValued=false)
@@ -39,7 +38,7 @@ public class StompSendCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
-	public Object execute(CommandSession session) throws Exception {
+	public Object execute() throws Exception {
 
 		StompConnection connection = new StompConnection();
 		try {

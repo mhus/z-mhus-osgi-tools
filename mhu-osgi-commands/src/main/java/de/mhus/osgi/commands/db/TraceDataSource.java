@@ -12,9 +12,9 @@ import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.logging.Log;
+import de.mhus.lib.karaf.DataSourceUtil;
 import de.mhus.lib.logging.FileLogger;
 import de.mhus.osgi.commands.impl.AbstractDataSource;
-import de.mhus.lib.karaf.DataSourceUtil;
 import de.mhus.osgi.commands.impl.TracedConnection;
 
 

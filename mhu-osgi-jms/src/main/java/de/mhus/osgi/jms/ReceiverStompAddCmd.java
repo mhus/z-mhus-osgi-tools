@@ -1,12 +1,13 @@
 package de.mhus.osgi.jms;
 
-import org.apache.felix.service.command.CommandSession;
-import org.apache.karaf.shell.commands.Action;
-import org.apache.karaf.shell.commands.Argument;
-import org.apache.karaf.shell.commands.Command;
-import org.apache.karaf.shell.commands.Option;
+import org.apache.karaf.shell.api.action.Action;
+import org.apache.karaf.shell.api.action.Argument;
+import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 @Command(scope = "jms", name = "direct-stomp-add", description = "listen")
+@Service
 public class ReceiverStompAddCmd implements Action {
 
 	@Argument(index=0, name="url", required=true, description="...", multiValued=false)
@@ -27,7 +28,7 @@ public class ReceiverStompAddCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
-	public Object execute(CommandSession s) throws Exception {
+	public Object execute() throws Exception {
 		
 		JmsReceiver receiver = new JmsReceiverStomp(user, password, url, topic, queue);
 		

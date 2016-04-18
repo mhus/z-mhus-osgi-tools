@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.felix.webconsole.SimpleWebConsolePlugin;
 import org.osgi.service.component.ComponentContext;
 
-import de.mhus.lib.core.MXml;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
+import de.mhus.lib.core.MXml;
 
 @Component(immediate=true,provide=DummyService.class,name="SystemEnvironment")
 public class SystemEnvironment extends SimpleWebConsolePlugin implements DummyService {
