@@ -88,7 +88,7 @@ public class WSClientMain {
 		}	
 		watch.stop();
 		System.out.println();
-		System.out.println(watch.getCurrentTimeAsString(true));
+		System.out.println(watch.getCurrentTimeAsString());
 		System.out.println(cnt + " Read / Write " + ((double)watch.getCurrentSeconds() / (double)cnt));
 
 		
