@@ -16,8 +16,8 @@ import org.apache.karaf.jaas.modules.BackingEngineFactory;
 
 import de.mhus.lib.core.security.LoginCallbackHandler;
 import de.mhus.lib.karaf.MOsgi;
-import de.mhus.osgi.sop.api.aaa.Account;
-import de.mhus.osgi.sop.api.aaa.AccountSource;
+import de.mhus.lib.core.security.Account;
+import de.mhus.lib.core.security.AccountSource;
 
 public class KarafAaaSource implements AccountSource {
 

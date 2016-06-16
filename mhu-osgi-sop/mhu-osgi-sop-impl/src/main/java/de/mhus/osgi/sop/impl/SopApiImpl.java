@@ -35,14 +35,14 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.cfg.CfgProperties;
 import de.mhus.lib.core.pojo.MPojo;
+import de.mhus.lib.core.security.Account;
+import de.mhus.lib.core.security.AccountSource;
+import de.mhus.lib.core.security.AuthorizationSource;
 import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
-import de.mhus.osgi.sop.api.aaa.Account;
-import de.mhus.osgi.sop.api.aaa.AccountSource;
-import de.mhus.osgi.sop.api.aaa.AuthorizationSource;
 import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
 import de.mhus.osgi.sop.api.aaa.Reference;
 import de.mhus.osgi.sop.api.aaa.Reference.TYPE;
@@ -879,13 +879,13 @@ public class SopApiImpl extends MLog implements SopApi {
 	public boolean hasResourceAccess(Account account, String mappingName, String id, String action) {
 		if (account == null || authorizationSource == null || mappingName == null ) return false;
 		
-		Boolean res = authorizationSource.hasResourceAccess(this, account,mappingName, id, action);
+		Boolean res = authorizationSource.hasResourceAccess(account,mappingName, id, action);
 		if (res != null) return res;
 		
 		// action mapping
 		if (action == null) return false;
 		if (action.equals(Account.ACT_READ)) {
-			res = authorizationSource.hasResourceAccess(this, account,mappingName, id, Account.ACT_MODIFY);
+			res = authorizationSource.hasResourceAccess(account,mappingName, id, Account.ACT_MODIFY);
 			if (res != null) return res;
 		}
 		

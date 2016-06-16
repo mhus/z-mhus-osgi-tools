@@ -1,6 +1,6 @@
 package de.mhus.osgi.sop.impl;
 
-import de.mhus.osgi.sop.api.aaa.Account;
+import de.mhus.lib.core.security.Account;
 
 public class AccountRoot implements Account {
 

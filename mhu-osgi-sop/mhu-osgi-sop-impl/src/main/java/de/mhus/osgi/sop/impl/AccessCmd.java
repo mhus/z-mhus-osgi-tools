@@ -11,10 +11,10 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
-import de.mhus.osgi.sop.api.aaa.Account;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 
 @Command(scope = "sop", name = "access", description = "Access actions")

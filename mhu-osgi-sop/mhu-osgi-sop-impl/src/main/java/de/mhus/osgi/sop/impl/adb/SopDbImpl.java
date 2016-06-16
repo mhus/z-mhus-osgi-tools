@@ -12,7 +12,7 @@ import de.mhus.lib.karaf.adb.DbManagerService;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
-import de.mhus.osgi.sop.api.aaa.Account;
+import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.aaa.Reference;
 import de.mhus.osgi.sop.api.aaa.Reference.TYPE;
 import de.mhus.osgi.sop.api.aaa.ReferenceCollector;

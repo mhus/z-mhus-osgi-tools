@@ -16,9 +16,9 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
+import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
-import de.mhus.osgi.sop.api.aaa.Account;
 
 public class AccountFile extends MLog implements Account {
 	
