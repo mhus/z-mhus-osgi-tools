@@ -58,7 +58,6 @@ install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.5
 install -s mvn:de.mhus.lib/mhu-lib-annotations/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-core/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-jms/3.3.0-SNAPSHOT
-install -s mvn:de.mhus.lib/mhu-lib-logging/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-persistence/3.3.0-SNAPSHOT
 install -s mvn:de.mhus.lib/mhu-lib-karaf/3.3.0-SNAPSHOT
 
@@ -75,7 +74,6 @@ install -s mvn:de.mhus.osgi/mhu-osgi-mailkaraf/1.3.0-SNAPSHOT
 
 bundle:persistentwatch add mhu-lib-annotations
 bundle:persistentwatch add mhu-lib-persistence
-bundle:persistentwatch add mhu-lib-logging
 bundle:persistentwatch add mhu-lib-karaf
 bundle:persistentwatch add mhu-lib-jms
 bundle:persistentwatch add mhu-lib-vaadin
