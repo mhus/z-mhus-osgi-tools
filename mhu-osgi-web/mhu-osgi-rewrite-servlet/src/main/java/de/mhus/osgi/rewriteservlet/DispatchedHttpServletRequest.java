@@ -5,15 +5,26 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.AsyncContext;
+import javax.servlet.DispatcherType;
+import javax.servlet.ReadListener;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpUpgradeHandler;
+import javax.servlet.http.Part;
 
 public class DispatchedHttpServletRequest implements HttpServletRequest {
 
@@ -268,6 +279,97 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 			cnt++;
 			return inputBytes[cnt-1];
 		}
+
+		@Override
+		public boolean isFinished() {
+			return inputBytes == null || cnt >= inputBytes.length;
+		}
+
+		@Override
+		public boolean isReady() {
+			return true;
+		}
+
+		@Override
+		public void setReadListener(ReadListener readListener) {
+			
+		}
 		
+	}
+
+	@Override
+	public long getContentLengthLong() {
+		return instance.getContentLengthLong();
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return instance.getServletContext();
+	}
+
+	@Override
+	public AsyncContext startAsync() throws IllegalStateException {
+		return instance.startAsync();
+	}
+
+	@Override
+	public AsyncContext startAsync(ServletRequest servletRequest, ServletResponse servletResponse)
+			throws IllegalStateException {
+		return instance.startAsync(servletRequest, servletResponse);
+	}
+
+	@Override
+	public boolean isAsyncStarted() {
+		return instance.isAsyncStarted();
+	}
+
+	@Override
+	public boolean isAsyncSupported() {
+		return instance.isAsyncSupported();
+	}
+
+	@Override
+	public AsyncContext getAsyncContext() {
+		return instance.getAsyncContext();
+	}
+
+	@Override
+	public DispatcherType getDispatcherType() {
+		return instance.getDispatcherType();
+	}
+
+	@Override
+	public String changeSessionId() {
+		return instance.changeSessionId();
+	}
+
+	@Override
+	public boolean authenticate(HttpServletResponse response) throws IOException, ServletException {
+		return instance.authenticate(response);
+	}
+
+	@Override
+	public void login(String username, String password) throws ServletException {
+		instance.login(username, password);		
+	}
+
+	@Override
+	public void logout() throws ServletException {
+		instance.logout();		
+	}
+
+	@Override
+	public Collection<Part> getParts() throws IOException, ServletException {
+		return instance.getParts();
+	}
+
+	@Override
+	public Part getPart(String name) throws IOException, ServletException {
+		return instance.getPart(name);
+	}
+
+	@Override
+	public <T extends HttpUpgradeHandler> T upgrade(Class<T> handlerClass) throws IOException, ServletException {
+		return instance.upgrade(handlerClass);
 	}
 }

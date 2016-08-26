@@ -4,9 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -125,6 +127,15 @@ public class DispatchedHttpServletResponse implements HttpServletResponse {
 				public void write(int b) throws IOException {
 					os.write(b);
 				}
+
+				@Override
+				public boolean isReady() {
+					return true;
+				}
+
+				@Override
+				public void setWriteListener(WriteListener writeListener) {
+				}
 			};
 		}
 		return sos;
@@ -181,5 +192,30 @@ public class DispatchedHttpServletResponse implements HttpServletResponse {
 
 	public DispatchedHttpServletResponse(HttpServletResponse instance) {
 		this.instace = instance;
+	}
+
+	@Override
+	public void setContentLengthLong(long len) {
+		instace.setContentLengthLong(len);
+	}
+
+	@Override
+	public int getStatus() {
+		return instace.getStatus();
+	}
+
+	@Override
+	public String getHeader(String name) {
+		return instace.getHeader(name);
+	}
+
+	@Override
+	public Collection<String> getHeaders(String name) {
+		return instace.getHeaders(name);
+	}
+
+	@Override
+	public Collection<String> getHeaderNames() {
+		return instace.getHeaderNames();
 	}
 }

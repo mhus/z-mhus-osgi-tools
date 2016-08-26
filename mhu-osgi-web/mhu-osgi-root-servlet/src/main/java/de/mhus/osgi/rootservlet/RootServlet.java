@@ -66,7 +66,13 @@ public class RootServlet extends HttpServlet {
 			return;
 		}
 		
-		res.setStatus(404);
+		String msg = props.getProperty(action + ".errormsg");
+		int erno = Integer.valueOf( props.getProperty(action + ".error", "404") );
+		
+		if (msg != null)
+			res.setStatus(erno,msg);
+		else
+			res.setStatus(erno);
 	}
 	
 	
