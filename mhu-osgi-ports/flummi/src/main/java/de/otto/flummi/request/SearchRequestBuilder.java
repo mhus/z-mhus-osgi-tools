@@ -104,10 +104,19 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
         if (fields == null) {
             fields = new JsonArray();
         }
-        fields.add(new JsonPrimitive(fieldName));
+        if (fieldName != null)
+        	fields.add(new JsonPrimitive(fieldName));
         return this;
     }
-
+    
+    public SearchRequestBuilder setFields(String ... fieldNames) {
+        fields = new JsonArray();
+        for (String fieldName : fieldNames)
+	        if (fieldName != null)
+	        	fields.add(new JsonPrimitive(fieldName));
+        return this;
+    }
+    
     public SearchRequestBuilder setTimeoutMillis(Integer timeoutMillis) {
         this.timeoutMillis = timeoutMillis;
         return this;
@@ -211,12 +220,16 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
             JsonElement scoreElem = asJsonObject.get("_score");
             Float score = scoreElem.isJsonNull() ? null : scoreElem.getAsFloat();
             String id = asJsonObject.get("_id").getAsString();
+            String type = asJsonObject.get("_type").getAsString();
+            String index = asJsonObject.get("_index").getAsString();
             JsonElement source = asJsonObject.get("_source");
             JsonElement hitFields = asJsonObject.get("fields");
             SearchHit hit = new SearchHit(id,
                     source != null ? source.getAsJsonObject() : null,
                     hitFields != null ? hitFields.getAsJsonObject() : EMPTY_JSON_OBJECT,
-                    score);
+                    score,
+                    type,
+                    index);
             searchHitsCurrentPage.add(hit);
         }
         if(scroll!=null) {

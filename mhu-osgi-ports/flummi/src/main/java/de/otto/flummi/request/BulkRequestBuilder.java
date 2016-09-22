@@ -81,8 +81,9 @@ public class BulkRequestBuilder implements RequestBuilder<Void> {
                         for (Map.Entry<String, JsonElement> opElement : jsonElement.getAsJsonObject().entrySet()) {
                             JsonObject opObject = opElement.getValue().getAsJsonObject();
                             JsonElement errorObj = opObject.get("error");
-                            if (opObject != null && errorObj != null && !errorObj.getAsString().isEmpty()) {
+                            if (opObject != null && errorObj != null && errorObj.isJsonObject() ) {
                                 foundError = true;
+                                LOG.debug(errorObj.toString());
                             }
                         }
                     }

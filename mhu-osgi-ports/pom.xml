@@ -36,6 +36,7 @@
     <modules>
     <module>common-discovery</module>
     <module>vaadin-shared-deps</module>
+    <module>flummi</module>
     </modules>
 
 </project>

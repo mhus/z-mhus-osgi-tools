@@ -114,6 +114,6 @@ public class ScrollingSearchHitsTest {
     }
 
     private List<SearchHit> someSearchHits(String... ids) {
-        return Arrays.stream(ids).map(id -> new SearchHit(id, object(), null, 1F)).collect(toList());
+        return Arrays.stream(ids).map(id -> new SearchHit(id, object(), null, 1F, null, null)).collect(toList());
     }
 }

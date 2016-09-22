@@ -188,4 +188,8 @@ public class Flummi {
     public AdminClient admin() {
         return new AdminClient(httpClient);
     }
+    
+    public PingBuilder preparePing() {
+    	return new PingBuilder(httpClient);
+    }
 }

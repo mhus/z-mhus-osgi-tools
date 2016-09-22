@@ -8,12 +8,16 @@ public class SearchHit {
     private final JsonObject source;
     private JsonObject fields;
     private final Float score;
-
-    public SearchHit(final String id, final JsonObject source, final JsonObject fields, final Float score) {
+	private String type;
+	private String index;
+	
+    public SearchHit(final String id, final JsonObject source, final JsonObject fields, final Float score, String type, String index) {
         this.id = id;
         this.source = source;
         this.fields = fields;
         this.score = score;
+        this.type = type;
+        this.index = index;
     }
 
     public String getId() {
@@ -31,4 +35,13 @@ public class SearchHit {
     public JsonObject getFields() {
         return fields;
     }
+    
+	public String getType() {
+		return type;
+	}
+
+	public void setIndex(String index) {
+		this.index = index;
+	}
+
 }
