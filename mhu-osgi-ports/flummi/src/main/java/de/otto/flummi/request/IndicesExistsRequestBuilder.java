@@ -1,21 +1,20 @@
 package de.otto.flummi.request;
 
 
-import com.ning.http.client.Response;
-import de.otto.flummi.response.HttpServerErrorException;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutionException;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.response.HttpServerErrorException;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class IndicesExistsRequestBuilder implements RequestBuilder<Boolean> {
     private final String indexName;
 
-    public static final Logger LOG = getLogger(IndicesExistsRequestBuilder.class);
+    public static final Log LOG = Log.getLog(IndicesExistsRequestBuilder.class);
     private HttpClientWrapper httpClient;
 
     public IndicesExistsRequestBuilder(HttpClientWrapper httpClient, String indexName) {

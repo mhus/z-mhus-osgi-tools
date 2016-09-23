@@ -5,6 +5,7 @@ import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import de.otto.flummi.request.ClusterHealthRequestBuilder;
 import de.otto.flummi.request.CreateIndexRequestBuilder;
+import de.otto.flummi.request.HttpRequest;
 import de.otto.flummi.util.HttpClientWrapper;
 import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
@@ -33,7 +34,7 @@ public class AdminClientTest {
     @Test
     public void shouldCreateClusterAdminClient() throws ExecutionException, InterruptedException, IOException {
         // Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         final ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);
         final Response response = mock(Response.class);
         when(response.getStatusCode()).thenReturn(200);
@@ -55,7 +56,7 @@ public class AdminClientTest {
     @Test
     public void shouldCreateIndicesAdminClient() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         when(httpClient.preparePut(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBodyEncoding(anyString())).thenReturn(boundRequestBuilder);

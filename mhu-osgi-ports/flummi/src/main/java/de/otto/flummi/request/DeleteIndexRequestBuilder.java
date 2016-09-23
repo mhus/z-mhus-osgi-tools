@@ -1,10 +1,11 @@
 package de.otto.flummi.request;
 
+import java.util.concurrent.ExecutionException;
+
 import com.ning.http.client.Response;
+
 import de.otto.flummi.RequestBuilderUtil;
 import de.otto.flummi.util.HttpClientWrapper;
-
-import java.util.concurrent.ExecutionException;
 
 public class DeleteIndexRequestBuilder implements RequestBuilder<Void> {
     private final HttpClientWrapper httpClient;

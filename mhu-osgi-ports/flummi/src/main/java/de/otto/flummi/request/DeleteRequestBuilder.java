@@ -1,16 +1,16 @@
 package de.otto.flummi.request;
 
-import com.ning.http.client.Response;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.buildUrl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.buildUrl;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class DeleteRequestBuilder implements RequestBuilder<Void> {
     private final HttpClientWrapper httpClient;
@@ -18,7 +18,7 @@ public class DeleteRequestBuilder implements RequestBuilder<Void> {
     private String documentType;
     private String id;
 
-    public static final Logger LOG = getLogger(DeleteRequestBuilder.class);
+    public static final Log LOG = Log.getLog(DeleteRequestBuilder.class);
 
     public DeleteRequestBuilder(HttpClientWrapper httpClient) {
         this.httpClient = httpClient;

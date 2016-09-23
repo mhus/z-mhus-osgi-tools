@@ -1,15 +1,6 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.InvalidElasticsearchResponseException;
-import de.otto.flummi.bulkactions.BulkActionBuilder;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -18,14 +9,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.InvalidElasticsearchResponseException;
+import de.otto.flummi.bulkactions.BulkActionBuilder;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class BulkRequestBuilder implements RequestBuilder<Void> {
     private final Gson gson;
     private List<BulkActionBuilder> actions = new ArrayList();
 
-    public static final Logger LOG = getLogger(BulkRequestBuilder.class);
+    public static final Log LOG = Log.getLog(BulkRequestBuilder.class);
     private HttpClientWrapper httpClient;
 
     public BulkRequestBuilder(HttpClientWrapper httpClient) {
@@ -52,7 +51,7 @@ public class BulkRequestBuilder implements RequestBuilder<Void> {
                 postBody.append(action.toBulkRequestAction()).append("\n");
             }
 
-            final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = httpClient
+            final HttpRequestBuilder boundRequestBuilder = httpClient
                     .preparePost("/_bulk")
                     .setBody(postBody.toString())
                     .setBodyEncoding("UTF-8");
@@ -83,7 +82,7 @@ public class BulkRequestBuilder implements RequestBuilder<Void> {
                             JsonElement errorObj = opObject.get("error");
                             if (opObject != null && errorObj != null && errorObj.isJsonObject() ) {
                                 foundError = true;
-                                LOG.debug(errorObj.toString());
+                                LOG.d(errorObj);
                             }
                         }
                     }

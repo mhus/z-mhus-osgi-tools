@@ -279,8 +279,8 @@ public class FlummiTest {
     @Test
     public void shouldPrepareCount() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.prepareGet(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.prepareGet(anyString()) )).thenReturn(boundRequestBuilder);
         final ListenableFuture listenableFuture = mock(ListenableFuture.class);
         when(boundRequestBuilder.execute()).thenReturn(listenableFuture);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
@@ -300,8 +300,8 @@ public class FlummiTest {
     @Test
     public void shouldPrepareBulk() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.preparePost(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.preparePost(anyString()))).thenReturn(boundRequestBuilder);
         final ListenableFuture listenableFuture = mock(ListenableFuture.class);
         when(boundRequestBuilder.execute()).thenReturn(listenableFuture);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
@@ -323,8 +323,8 @@ public class FlummiTest {
     @Test
     public void shouldPrepareGet() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.prepareGet(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.prepareGet(anyString()))).thenReturn(boundRequestBuilder);
         final ListenableFuture listenableFuture = mock(ListenableFuture.class);
         when(boundRequestBuilder.execute()).thenReturn(listenableFuture);
         final Response response = mock(Response.class);
@@ -343,8 +343,8 @@ public class FlummiTest {
     @Test
     public void shouldPrepareDelete() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.prepareDelete(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.prepareDelete(anyString()))).thenReturn(boundRequestBuilder);
         final ListenableFuture listenableFuture = mock(ListenableFuture.class);
         when(boundRequestBuilder.execute()).thenReturn(listenableFuture);
         final Response response = mock(Response.class);
@@ -365,8 +365,8 @@ public class FlummiTest {
     @Test
     public void shouldPrepareIndex() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.preparePost(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.preparePost(anyString()))).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBodyEncoding(anyString())).thenReturn(boundRequestBuilder);
         final ListenableFuture listenableFuture = mock(ListenableFuture.class);
@@ -387,14 +387,14 @@ public class FlummiTest {
     @Test
     public void shouldGetAdminClientCluster() throws ExecutionException, InterruptedException, IOException {
         // Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         final ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);
         final Response response = mock(Response.class);
         when(response.getStatusCode()).thenReturn(200);
         when(response.getResponseBody()).thenReturn("{\"status\":\"GREEN\", \"cluster_name\":\"someClusterName\", \"timed_out\":\"someTimedOut\"}");
         when(listenableFuture.get()).thenReturn(response);
         when(boundRequestBuilder.execute()).thenReturn(listenableFuture);
-        when(asyncHttpClient.prepareGet(anyString())).thenReturn(boundRequestBuilder);
+        when(new HttpRequest( asyncHttpClient.prepareGet(anyString()))).thenReturn(boundRequestBuilder);
         final ClusterAdminClient cluster = client.admin().cluster();
         final ClusterHealthRequestBuilder clusterHealthRequestBuilder = cluster.prepareHealth("someIndexName");
 
@@ -409,8 +409,8 @@ public class FlummiTest {
     @Test
     public void shouldGetAdminClientIndices() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
-        when(asyncHttpClient.preparePut(anyString())).thenReturn(boundRequestBuilder);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
+        when(new HttpRequest( asyncHttpClient.preparePut(anyString()))).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBodyEncoding(anyString())).thenReturn(boundRequestBuilder);
         final ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);

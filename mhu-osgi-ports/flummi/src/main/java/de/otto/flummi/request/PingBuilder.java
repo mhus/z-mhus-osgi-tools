@@ -1,11 +1,7 @@
 package de.otto.flummi.request;
 
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.ning.http.client.Response;
 
 import de.otto.flummi.response.PingResponse;

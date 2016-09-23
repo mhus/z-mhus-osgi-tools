@@ -1,10 +1,10 @@
 package de.otto.flummi.query;
 
+import static de.otto.flummi.request.GsonHelper.object;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import static de.otto.flummi.request.GsonHelper.object;
 
 public class QueryBuilders {
 

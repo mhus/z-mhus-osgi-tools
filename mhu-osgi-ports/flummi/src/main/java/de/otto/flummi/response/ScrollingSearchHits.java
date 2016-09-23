@@ -1,9 +1,5 @@
 package de.otto.flummi.response;
 
-import de.otto.flummi.request.SearchScrollRequestBuilder;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Spliterator;
@@ -11,7 +7,9 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.request.SearchScrollRequestBuilder;
+import de.otto.flummi.util.HttpClientWrapper;
 
 /**
  * Auto-scrolling implementation of SearchHits. Contains a page of search results
@@ -25,7 +23,7 @@ public class ScrollingSearchHits implements SearchHits {
     private final HttpClientWrapper client;
     private List<SearchHit> hitsCurrentPage;
     private boolean dirty;
-    public static final Logger LOG = getLogger(ScrollingSearchHits.class);
+    public static final Log LOG = Log.getLog(ScrollingSearchHits.class);
 
 
     public ScrollingSearchHits(long totalHits, Float maxScore, String scrollId, String scroll, List<SearchHit> hitsCurrentPage, HttpClientWrapper client) {

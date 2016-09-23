@@ -1,10 +1,10 @@
 package de.otto.flummi.response;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchResponse {
 

@@ -21,12 +21,12 @@ public class IndexRequestBuilderTest {
 
     HttpClientWrapper httpClient;
 
-    AsyncHttpClient.BoundRequestBuilder boundRequestBuilder;
+    HttpRequest boundRequestBuilder;
 
     @BeforeMethod
     public void setUp() throws Exception {
         httpClient = mock(HttpClientWrapper.class);
-        boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        boundRequestBuilder = mock(HttpRequest.class);
         when(boundRequestBuilder.setBody(any(String.class))).thenReturn(boundRequestBuilder);
         testee = new IndexRequestBuilder(httpClient);
     }

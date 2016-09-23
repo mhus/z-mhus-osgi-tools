@@ -91,7 +91,7 @@ public class MultiGetRequestBuilderTest {
     @Test
     public void shouldReturnOneMatchedDocument() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.preparePost("/some-index/_mget")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody(any(String.class))).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBodyEncoding(anyString())).thenReturn(boundRequestBuilderMock);
@@ -110,7 +110,7 @@ public class MultiGetRequestBuilderTest {
     @Test
     public void shouldReturnMultipleMatchedDocument() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.preparePost("/some-index/_mget")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody(any(String.class))).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBodyEncoding(anyString())).thenReturn(boundRequestBuilderMock);
@@ -130,7 +130,7 @@ public class MultiGetRequestBuilderTest {
     @Test
     public void shouldBuildAndReturnDocumentWithTypeAndIndex() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.preparePost("/some-index/_mget")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody(any(String.class))).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBodyEncoding(anyString())).thenReturn(boundRequestBuilderMock);
@@ -146,7 +146,7 @@ public class MultiGetRequestBuilderTest {
     @Test
     public void shouldReturnAnEmptyResultFor404Response() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.preparePost("/some-index/_mget")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody(any(String.class))).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBodyEncoding(anyString())).thenReturn(boundRequestBuilderMock);
@@ -162,7 +162,7 @@ public class MultiGetRequestBuilderTest {
     @Test
     public void shouldParseNotFoundDocument() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.preparePost("/some-index/_mget")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody(any(String.class))).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBodyEncoding(anyString())).thenReturn(boundRequestBuilderMock);

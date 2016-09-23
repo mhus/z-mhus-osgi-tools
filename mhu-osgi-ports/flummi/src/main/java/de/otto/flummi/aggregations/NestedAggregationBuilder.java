@@ -2,6 +2,7 @@ package de.otto.flummi.aggregations;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
 import de.otto.flummi.response.AggregationResult;
 
 public class NestedAggregationBuilder extends AggregationBuilder<NestedAggregationBuilder> {

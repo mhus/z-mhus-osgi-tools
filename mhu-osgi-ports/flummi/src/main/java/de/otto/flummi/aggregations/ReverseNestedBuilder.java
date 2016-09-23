@@ -1,14 +1,15 @@
 package de.otto.flummi.aggregations;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import de.otto.flummi.response.AggregationResult;
-import de.otto.flummi.response.Bucket;
+import static de.otto.flummi.request.GsonHelper.object;
 
 import java.util.ArrayList;
 
-import static de.otto.flummi.request.GsonHelper.object;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import de.otto.flummi.response.AggregationResult;
+import de.otto.flummi.response.Bucket;
 
 
 /**

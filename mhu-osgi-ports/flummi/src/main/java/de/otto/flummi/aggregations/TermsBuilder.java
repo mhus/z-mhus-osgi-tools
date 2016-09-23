@@ -1,15 +1,16 @@
 package de.otto.flummi.aggregations;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import de.otto.flummi.SortOrder;
-import de.otto.flummi.response.AggregationResult;
-import javafx.util.Pair;
+import static de.otto.flummi.aggregations.AggregationResultParser.parseBuckets;
 
 import java.util.ArrayList;
 
-import static de.otto.flummi.aggregations.AggregationResultParser.parseBuckets;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
+import de.otto.flummi.SortOrder;
+import de.otto.flummi.response.AggregationResult;
+import javafx.util.Pair;
 
 public class TermsBuilder extends AggregationBuilder<TermsBuilder> {
     private String fieldName;

@@ -1,9 +1,10 @@
 package de.otto.flummi.query;
 
-import com.google.gson.JsonObject;
-import de.otto.flummi.GsonCollectors;
-
 import static java.util.Arrays.stream;
+
+import com.google.gson.JsonObject;
+
+import de.otto.flummi.GsonCollectors;
 
 public class AndQueryBuilder implements QueryBuilder {
 

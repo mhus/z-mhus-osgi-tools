@@ -25,7 +25,7 @@ public class DeleteRequestBuilderTest {
 
     @Test
     public void shouldDeleteDocument() {
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(httpClient.prepareDelete("/someIndexName/someType/someId")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(200, "ok", "")));
@@ -71,7 +71,7 @@ public class DeleteRequestBuilderTest {
 
     @Test(expectedExceptions = HttpServerErrorException.class)
     public void shouldThrowExceptionIfStatusIsNot200() {
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(httpClient.prepareDelete("/someIndexName/someType/someId")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(400, "not ok", "errorResponse")));

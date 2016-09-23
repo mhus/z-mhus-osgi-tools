@@ -1,20 +1,19 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.ClusterHealthResponse;
-import de.otto.flummi.ClusterHealthStatus;
-import de.otto.flummi.InvalidElasticsearchResponseException;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.ClusterHealthResponse;
+import de.otto.flummi.ClusterHealthStatus;
+import de.otto.flummi.InvalidElasticsearchResponseException;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class ClusterHealthRequestBuilder implements RequestBuilder<ClusterHealthResponse> {
     private final String[] indexNames;
@@ -22,7 +21,7 @@ public class ClusterHealthRequestBuilder implements RequestBuilder<ClusterHealth
     private boolean waitForYellowStatus;
     private Long timeout;
 
-    public static final Logger LOG = getLogger(ClusterHealthRequestBuilder.class);
+    public static final Log LOG = Log.getLog(ClusterHealthRequestBuilder.class);
     private HttpClientWrapper httpClient;
 
 
@@ -43,7 +42,7 @@ public class ClusterHealthRequestBuilder implements RequestBuilder<ClusterHealth
             if (indexNames != null) {
                 url.append("/").append(String.join(",", indexNames));
             }
-            AsyncHttpClient.BoundRequestBuilder requestBuilder = httpClient.prepareGet(url.toString());
+            HttpRequestBuilder requestBuilder = httpClient.prepareGet(url.toString());
             if (waitForYellowStatus) {
                 requestBuilder.addQueryParam("wait_for_status", "yellow");
             }

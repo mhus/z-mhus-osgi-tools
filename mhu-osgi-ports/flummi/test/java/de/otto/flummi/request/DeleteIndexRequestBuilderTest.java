@@ -29,7 +29,7 @@ public class DeleteIndexRequestBuilderTest {
     @Test
     public void shouldDeleteIndex() {
         testee = new DeleteIndexRequestBuilder(httpClient, "someIndexName");
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(httpClient.prepareDelete("/someIndexName")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(200, "ok", "")));
@@ -40,7 +40,7 @@ public class DeleteIndexRequestBuilderTest {
     @Test
     public void shouldDeleteMultipleIndices() throws Exception {
         testee = new DeleteIndexRequestBuilder(httpClient, "someIndexName", "someOtherIndex");
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(httpClient.prepareDelete("/someIndexName,someOtherIndex")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(200, "ok", "")));
@@ -51,7 +51,7 @@ public class DeleteIndexRequestBuilderTest {
     @Test(expectedExceptions = HttpServerErrorException.class)
     public void shouldThrowExceptionIfStatusCodeNotOk() {
         testee = new DeleteIndexRequestBuilder(httpClient, "someIndexName");
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.prepareDelete("/someIndexName")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(400, "not ok", "")));
         try {
@@ -65,7 +65,7 @@ public class DeleteIndexRequestBuilderTest {
 
     @Test
     public void shouldNotDeleteIndexForAcknowledgedFalse() throws ExecutionException, InterruptedException, IOException {
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
         when(httpClient.prepareDelete("/someIndexName")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.execute()).thenReturn(new CompletedFuture(new MockResponse(200, "OK", "{\"acknowledged\":\"false\"}")));
         try {

@@ -1,15 +1,16 @@
 package de.otto.flummi.aggregations;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import de.otto.flummi.response.AggregationResult;
-import de.otto.flummi.response.Bucket;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import de.otto.flummi.response.AggregationResult;
+import de.otto.flummi.response.Bucket;
 
 public class AggregationResultParser {
     public static AggregationResult parseBuckets(JsonObject jsonObject) {

@@ -1,18 +1,17 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.ning.http.client.Response;
-import de.otto.flummi.InvalidElasticsearchResponseException;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutionException;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.InvalidElasticsearchResponseException;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class CreateIndexRequestBuilder implements RequestBuilder<Void> {
     private final Gson gson;
@@ -21,7 +20,7 @@ public class CreateIndexRequestBuilder implements RequestBuilder<Void> {
     private JsonObject mappings;
     private final HttpClientWrapper httpClient;
 
-    public static final Logger LOG = getLogger(CreateIndexRequestBuilder.class);
+    public static final Log LOG = Log.getLog(CreateIndexRequestBuilder.class);
 
     public CreateIndexRequestBuilder(HttpClientWrapper httpClient, String indexName) {
         this.httpClient = httpClient;

@@ -1,12 +1,7 @@
 package de.otto.flummi;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.request.*;
-import de.otto.flummi.util.HttpClientWrapper;
+import static de.otto.flummi.request.GsonHelper.object;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -15,14 +10,33 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.request.GsonHelper.object;
-import static java.util.stream.Collectors.toList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.ning.http.client.AsyncHttpClient;
+import com.ning.http.client.Response;
+
+import de.otto.flummi.request.BulkRequestBuilder;
+import de.otto.flummi.request.CountRequestBuilder;
+import de.otto.flummi.request.DeleteRequestBuilder;
+import de.otto.flummi.request.GetRequestBuilder;
+import de.otto.flummi.request.IndexRequestBuilder;
+import de.otto.flummi.request.MultiGetRequestBuilder;
+import de.otto.flummi.request.PingBuilder;
+import de.otto.flummi.request.RefreshRequestBuilder;
+import de.otto.flummi.request.SearchRequestBuilder;
+import de.otto.flummi.request.SearchScrollRequestBuilder;
+import de.otto.flummi.util.HttpClientWrapper;
 
 
 public class Flummi {
     private final HttpClientWrapper httpClient;
     private final Gson gson;
 
+    public Flummi(String baseUrl) {
+    	this(new AsyncHttpClient(), baseUrl);
+    }
+    
     public Flummi(AsyncHttpClient asyncHttpClient, String baseUrl) {
         this.httpClient = new HttpClientWrapper(asyncHttpClient, baseUrl);
         this.gson = new Gson();

@@ -1,20 +1,19 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.buildUrl;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.buildUrl;
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class IndexRequestBuilder implements RequestBuilder<Void> {
     private final Gson gson;
@@ -24,7 +23,7 @@ public class IndexRequestBuilder implements RequestBuilder<Void> {
     private JsonObject source;
     private String parent;
 
-    public static final Logger LOG = getLogger(IndexRequestBuilder.class);
+    public static final Log LOG = Log.getLog(IndexRequestBuilder.class);
     private HttpClientWrapper httpClient;
 
     public IndexRequestBuilder(HttpClientWrapper httpClient) {
@@ -65,7 +64,7 @@ public class IndexRequestBuilder implements RequestBuilder<Void> {
     @Override
     public Void execute() {
         try {
-            AsyncHttpClient.BoundRequestBuilder reqBuilder;
+            HttpRequestBuilder reqBuilder;
             if (id != null) {
                 String url = buildUrl(indexName, documentType, URLEncoder.encode(id.getAsString(), "UTF-8"));
                 reqBuilder = httpClient.preparePut(url);

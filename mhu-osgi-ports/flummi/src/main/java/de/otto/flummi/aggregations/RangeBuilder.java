@@ -1,15 +1,16 @@
 package de.otto.flummi.aggregations;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import de.otto.flummi.response.AggregationResult;
+import static de.otto.flummi.GsonCollectors.toJsonArray;
+import static de.otto.flummi.aggregations.AggregationResultParser.parseBuckets;
+import static de.otto.flummi.request.GsonHelper.object;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static de.otto.flummi.GsonCollectors.toJsonArray;
-import static de.otto.flummi.aggregations.AggregationResultParser.parseBuckets;
-import static de.otto.flummi.request.GsonHelper.object;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+
+import de.otto.flummi.response.AggregationResult;
 
 public class RangeBuilder extends AggregationBuilder<RangeBuilder> {
 

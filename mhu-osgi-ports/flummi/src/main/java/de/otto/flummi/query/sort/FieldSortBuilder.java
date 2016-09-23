@@ -1,11 +1,12 @@
 package de.otto.flummi.query.sort;
 
+import static de.otto.flummi.request.GsonHelper.object;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+
 import de.otto.flummi.SortOrder;
 import de.otto.flummi.query.QueryBuilder;
-
-import static de.otto.flummi.request.GsonHelper.object;
 
 public class FieldSortBuilder implements SortBuilder {
     private final String fieldName;

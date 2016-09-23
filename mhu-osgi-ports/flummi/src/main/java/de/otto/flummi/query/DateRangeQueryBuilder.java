@@ -1,11 +1,11 @@
 package de.otto.flummi.query;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 public class DateRangeQueryBuilder implements QueryBuilder{
 

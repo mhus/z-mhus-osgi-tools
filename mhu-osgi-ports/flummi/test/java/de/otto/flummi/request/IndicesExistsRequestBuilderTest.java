@@ -25,7 +25,7 @@ public class IndicesExistsRequestBuilderTest {
     HttpClientWrapper httpClient;
 
     @Mock
-    AsyncHttpClient.BoundRequestBuilder boundRequestBuilder;
+    HttpRequest boundRequestBuilder;
 
     @BeforeMethod
     public void setUp() throws Exception {

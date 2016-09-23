@@ -5,6 +5,7 @@ import com.ning.http.client.ListenableFuture;
 import com.ning.http.client.Response;
 import de.otto.flummi.request.CreateIndexRequestBuilder;
 import de.otto.flummi.request.DeleteIndexRequestBuilder;
+import de.otto.flummi.request.HttpRequest;
 import de.otto.flummi.request.IndicesExistsRequestBuilder;
 import de.otto.flummi.util.HttpClientWrapper;
 import de.otto.flummi.IndicesAdminClient;
@@ -30,7 +31,7 @@ public class IndicesAdminClientTest {
     @Test
     public void shouldPrepareCreate() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         when(httpClient.preparePut(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBodyEncoding(anyString())).thenReturn(boundRequestBuilder);
@@ -52,7 +53,7 @@ public class IndicesAdminClientTest {
     @Test
     public void shouldPrepareExists() throws ExecutionException, InterruptedException, IOException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         when(httpClient.prepareHead(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         final ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);
@@ -72,7 +73,7 @@ public class IndicesAdminClientTest {
     @Test
     public void shouldPrepareDelete() throws ExecutionException, InterruptedException {
         //Given
-        final AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        final HttpRequest boundRequestBuilder = mock(HttpRequest.class);
         when(httpClient.prepareDelete(anyString())).thenReturn(boundRequestBuilder);
         when(boundRequestBuilder.setBody(anyString())).thenReturn(boundRequestBuilder);
         final ListenableFuture<Response> listenableFuture = mock(ListenableFuture.class);

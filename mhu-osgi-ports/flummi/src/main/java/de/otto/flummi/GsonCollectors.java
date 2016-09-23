@@ -1,14 +1,14 @@
 package de.otto.flummi;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import static java.util.function.Function.identity;
 
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-import static java.util.function.Function.identity;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 public class GsonCollectors {
     public static Collector<JsonElement, JsonArray, JsonArray> toJsonArray() {

@@ -34,7 +34,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldFireBulkRequest() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -55,7 +55,7 @@ public class BulkRequestBuilderTest {
     @Test(expectedExceptions = HttpServerErrorException.class)
     public void shouldThrowExceptionIfHttpStatusIsNot200() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -79,7 +79,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldThrowAnExceptionIfOneOpIsPresentAndItIsNotAnUpdate404() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -100,7 +100,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldNotThrowAnExceptionIfOneOpIsPresentAndItIsAnUpdate404() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -117,7 +117,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldThrowAnExceptionIfOneOpIsPresentAndItIsNotAnUpdate503() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -138,7 +138,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldThrowAnExceptionIfTwoOpsArePresentAndDeleteHasAnError() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -159,7 +159,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldNotThrowAnExceptionIfTwoOpsArePresentAndUpdateHasAn404Error() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);
@@ -176,7 +176,7 @@ public class BulkRequestBuilderTest {
     @Test
     public void shouldNotThrowExceptionForResponseItemWithoutErrors() throws Exception {
         // given
-        AsyncHttpClient.BoundRequestBuilder boundRequestBuilderMock = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        HttpRequest boundRequestBuilderMock = mock(HttpRequest.class);
 
         when(asyncHttpClient.preparePost("/_bulk")).thenReturn(boundRequestBuilderMock);
         when(boundRequestBuilderMock.setBody("{\"index\":{\"_index\":\"someIndex\",\"_type\":\"Flutschfinger\"}}\n{\"Eis\":\"am Stiel\"}\n")).thenReturn(boundRequestBuilderMock);

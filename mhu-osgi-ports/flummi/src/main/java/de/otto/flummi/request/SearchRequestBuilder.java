@@ -1,16 +1,7 @@
 package de.otto.flummi.request;
 
-import com.google.gson.*;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.SortOrder;
-import de.otto.flummi.aggregations.AggregationBuilder;
-import de.otto.flummi.query.QueryBuilder;
-import de.otto.flummi.query.sort.SortBuilder;
-import de.otto.flummi.response.*;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
+import static de.otto.flummi.response.SearchResponse.emptyResponse;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -18,9 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static de.otto.flummi.response.SearchResponse.emptyResponse;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.SortOrder;
+import de.otto.flummi.aggregations.AggregationBuilder;
+import de.otto.flummi.query.QueryBuilder;
+import de.otto.flummi.query.sort.SortBuilder;
+import de.otto.flummi.response.AggregationResult;
+import de.otto.flummi.response.ScrollingSearchHits;
+import de.otto.flummi.response.SearchHit;
+import de.otto.flummi.response.SearchResponse;
+import de.otto.flummi.response.SimpleSearchHits;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
     private static final JsonObject EMPTY_JSON_OBJECT = new JsonObject();
@@ -38,8 +45,9 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
     private String scroll;
     private QueryBuilder postFilter;
     private List<AggregationBuilder> aggregations;
+    private Boolean explain;
 
-    public static final Logger LOG = getLogger(SearchRequestBuilder.class);
+    public static final Log LOG = Log.getLog(SearchRequestBuilder.class);
 
     public SearchRequestBuilder(HttpClientWrapper httpClient, String... indices) {
         this.httpClient = httpClient;
@@ -139,6 +147,9 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
             if (size != null) {
                 body.add("size", new JsonPrimitive(size));
             }
+            if (explain != null) {
+            	body.add("explain", new JsonPrimitive(explain));
+            }
             if (sorts != null) {
                 body.add("sort", sorts);
             }
@@ -152,7 +163,7 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
                                 jsonObject.add(a.getName(), a.build()));
                 body.add("aggregations", jsonObject);
             }
-            AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = httpClient
+            HttpRequestBuilder boundRequestBuilder = httpClient
                     .preparePost(url)
                     .setBodyEncoding("UTF-8");
             if (timeoutMillis != null) {
@@ -244,4 +255,13 @@ public class SearchRequestBuilder implements RequestBuilder<SearchResponse> {
         this.postFilter = postFilter;
         return this;
     }
+
+	public Boolean isExplain() {
+		return explain;
+	}
+
+	public SearchRequestBuilder setExplain(Boolean explain) {
+		this.explain = explain;
+		return this;
+	}
 }

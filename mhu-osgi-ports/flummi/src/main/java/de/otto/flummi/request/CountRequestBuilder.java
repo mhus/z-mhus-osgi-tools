@@ -1,18 +1,18 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.ning.http.client.Response;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class CountRequestBuilder implements RequestBuilder<Long> {
 
@@ -20,7 +20,7 @@ public class CountRequestBuilder implements RequestBuilder<Long> {
     private final Gson gson;
     private String[] types;
 
-    public static final Logger LOG = getLogger(CountRequestBuilder.class);
+    public static final Log LOG = Log.getLog(CountRequestBuilder.class);
     private HttpClientWrapper httpClient;
 
     public CountRequestBuilder(HttpClientWrapper httpClient, String... indices) {

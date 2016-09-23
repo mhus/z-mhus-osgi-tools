@@ -2,6 +2,8 @@ package de.otto.flummi.util;
 
 import com.ning.http.client.AsyncHttpClient;
 
+import de.otto.flummi.request.HttpRequestBuilder;
+
 public class HttpClientWrapper {
 
     private final AsyncHttpClient asyncHttpClient;
@@ -12,23 +14,23 @@ public class HttpClientWrapper {
         this.baseUrl = baseUrl;
     }
 
-    public AsyncHttpClient.BoundRequestBuilder prepareGet(String url) {
-        return asyncHttpClient.prepareGet(baseUrl + url);
+    public HttpRequestBuilder prepareGet(String url) {
+        return new HttpRequestBuilder( asyncHttpClient.prepareGet(baseUrl + url) );
     }
 
-    public AsyncHttpClient.BoundRequestBuilder preparePost(String url) {
-        return asyncHttpClient.preparePost(baseUrl + url);
+    public HttpRequestBuilder preparePost(String url) {
+        return new HttpRequestBuilder( asyncHttpClient.preparePost(baseUrl + url) );
     }
 
-    public AsyncHttpClient.BoundRequestBuilder preparePut(String url) {
-        return asyncHttpClient.preparePut(baseUrl + url);
+    public HttpRequestBuilder preparePut(String url) {
+        return new HttpRequestBuilder( asyncHttpClient.preparePut(baseUrl + url) );
     }
 
-    public AsyncHttpClient.BoundRequestBuilder prepareDelete(String url) {
-        return asyncHttpClient.prepareDelete(baseUrl + url);
+    public HttpRequestBuilder prepareDelete(String url) {
+        return new HttpRequestBuilder( asyncHttpClient.prepareDelete(baseUrl + url) );
     }
 
-    public AsyncHttpClient.BoundRequestBuilder prepareHead(String url) {
-        return asyncHttpClient.prepareHead(baseUrl + url);
+    public HttpRequestBuilder prepareHead(String url) {
+        return new HttpRequestBuilder( asyncHttpClient.prepareHead(baseUrl + url) );
     }
 }

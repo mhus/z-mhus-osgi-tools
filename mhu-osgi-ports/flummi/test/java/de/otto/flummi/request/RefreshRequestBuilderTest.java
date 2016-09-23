@@ -14,12 +14,12 @@ public class RefreshRequestBuilderTest {
 
     private HttpClientWrapper httpClient;
 
-    private AsyncHttpClient.BoundRequestBuilder boundRequestBuilder;
+    private HttpRequest boundRequestBuilder;
 
     @BeforeMethod
     public void setup() {
         httpClient = mock(HttpClientWrapper.class);
-        boundRequestBuilder = mock(AsyncHttpClient.BoundRequestBuilder.class);
+        boundRequestBuilder = mock(HttpRequest.class);
     }
 
     @Test

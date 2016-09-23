@@ -1,20 +1,20 @@
 package de.otto.flummi.request;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.ning.http.client.Response;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.response.GetResponse;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.response.GetResponse;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class GetRequestBuilder implements RequestBuilder<GetResponse> {
     private HttpClientWrapper httpClient;
@@ -23,7 +23,7 @@ public class GetRequestBuilder implements RequestBuilder<GetResponse> {
     private final String id;
     private final Gson gson;
 
-    public static final Logger LOG = getLogger(GetRequestBuilder.class);
+    public static final Log LOG = Log.getLog(GetRequestBuilder.class);
 
     public GetRequestBuilder(HttpClientWrapper httpClient, String indexName, String documentType, String id) {
         this.httpClient = httpClient;

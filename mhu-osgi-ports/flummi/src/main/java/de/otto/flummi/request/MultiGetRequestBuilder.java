@@ -1,25 +1,28 @@
 package de.otto.flummi.request;
 
-import com.google.gson.*;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.Response;
-import de.otto.flummi.RequestBuilderUtil;
-import de.otto.flummi.response.MultiGetRequestDocument;
-import de.otto.flummi.response.MultiGetResponse;
-import de.otto.flummi.response.MultiGetResponseDocument;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
+import static de.otto.flummi.request.GsonHelper.array;
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static de.otto.flummi.request.GsonHelper.array;
-import static java.util.Collections.emptyList;
-import static java.util.stream.Collectors.toList;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.RequestBuilderUtil;
+import de.otto.flummi.response.MultiGetRequestDocument;
+import de.otto.flummi.response.MultiGetResponse;
+import de.otto.flummi.response.MultiGetResponseDocument;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class MultiGetRequestBuilder implements RequestBuilder<MultiGetResponse> {
 
@@ -30,7 +33,7 @@ public class MultiGetRequestBuilder implements RequestBuilder<MultiGetResponse> 
     private Integer timeoutMillis;
     private List<MultiGetRequestDocument> documents;
 
-    public static final Logger LOG = getLogger(MultiGetRequestBuilder.class);
+    public static final Log LOG = Log.getLog(MultiGetRequestBuilder.class);
 
     public MultiGetRequestBuilder(HttpClientWrapper httpClient, String... indices) {
         this.gson = new Gson();
@@ -62,7 +65,7 @@ public class MultiGetRequestBuilder implements RequestBuilder<MultiGetResponse> 
             if (documents != null) {
                 body.add("docs", array(documents.stream().map(d -> create(d)).collect(toList())));
             }
-            AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = httpClient
+            HttpRequestBuilder boundRequestBuilder = httpClient
                     .preparePost(url)
                     .setBodyEncoding("UTF-8");
             if (timeoutMillis != null) {

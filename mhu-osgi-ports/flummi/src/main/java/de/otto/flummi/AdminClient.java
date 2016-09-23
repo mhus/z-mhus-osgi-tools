@@ -1,13 +1,11 @@
 package de.otto.flummi;
 
+import de.mhus.lib.core.logging.Log;
 import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
-
-import static org.slf4j.LoggerFactory.getLogger;
 
 public class AdminClient {
 
-    public static final Logger LOG = getLogger(AdminClient.class);
+    public static final Log LOG = Log.getLog(AdminClient.class);
     private HttpClientWrapper httpClient;
 
     public AdminClient(HttpClientWrapper httpClient) {

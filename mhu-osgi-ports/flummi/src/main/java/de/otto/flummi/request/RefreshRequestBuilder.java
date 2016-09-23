@@ -1,19 +1,19 @@
 package de.otto.flummi.request;
 
-import com.ning.http.client.Response;
-import de.otto.flummi.util.HttpClientWrapper;
-import org.slf4j.Logger;
+import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
 
 import java.util.concurrent.ExecutionException;
 
-import static de.otto.flummi.RequestBuilderUtil.toHttpServerErrorException;
-import static org.slf4j.LoggerFactory.getLogger;
+import com.ning.http.client.Response;
+
+import de.mhus.lib.core.logging.Log;
+import de.otto.flummi.util.HttpClientWrapper;
 
 public class RefreshRequestBuilder {
     private HttpClientWrapper httpClient;
     private final String indexName;
 
-    public static final Logger LOG = getLogger(RefreshRequestBuilder.class);
+    public static final Log LOG = Log.getLog(RefreshRequestBuilder.class);
 
     public RefreshRequestBuilder(HttpClientWrapper httpClient, String indexName) {
         this.httpClient = httpClient;

@@ -1,10 +1,11 @@
 package de.otto.flummi.aggregations;
 
-import com.google.gson.JsonObject;
-import de.otto.flummi.response.AggregationResult;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.JsonObject;
+
+import de.otto.flummi.response.AggregationResult;
 
 public abstract class AggregationBuilder<T extends AggregationBuilder<T>> {
     private final String name;

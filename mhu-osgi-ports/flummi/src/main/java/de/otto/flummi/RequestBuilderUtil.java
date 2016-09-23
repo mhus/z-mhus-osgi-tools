@@ -1,10 +1,11 @@
 package de.otto.flummi;
 
-import com.ning.http.client.Response;
-import de.otto.flummi.response.HttpServerErrorException;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
+
+import com.ning.http.client.Response;
+
+import de.otto.flummi.response.HttpServerErrorException;
 
 public class RequestBuilderUtil {
 

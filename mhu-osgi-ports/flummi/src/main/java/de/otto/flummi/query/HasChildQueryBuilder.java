@@ -1,9 +1,9 @@
 package de.otto.flummi.query;
 
+import static de.otto.flummi.request.GsonHelper.object;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import static de.otto.flummi.request.GsonHelper.object;
 
 public class HasChildQueryBuilder implements QueryBuilder {
     private final String type;

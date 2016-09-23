@@ -1,13 +1,13 @@
 package de.otto.flummi.request;
 
+import static java.util.Arrays.asList;
+
+import java.util.List;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import java.util.List;
-
-import static java.util.Arrays.asList;
 
 public final class GsonHelper {
 

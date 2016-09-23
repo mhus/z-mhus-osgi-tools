@@ -25,7 +25,7 @@ public class CreateIndexRequestBuilderTest {
     HttpClientWrapper httpClient;
 
     @Mock
-    AsyncHttpClient.BoundRequestBuilder boundRequestBuilder;
+    HttpRequest boundRequestBuilder;
 
     CreateIndexRequestBuilder testee;
 

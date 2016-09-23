@@ -1,10 +1,10 @@
 package de.otto.flummi.bulkactions;
 
+import static de.otto.flummi.request.GsonHelper.object;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-
-import static de.otto.flummi.request.GsonHelper.object;
 
 
 public class DeleteActionBuilder implements BulkActionBuilder {
