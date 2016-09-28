@@ -37,6 +37,7 @@
     <module>common-discovery</module>
     <module>vaadin-shared-deps</module>
     <module>flummi</module>
+    <module>groovy</module>
     </modules>
 
 </project>

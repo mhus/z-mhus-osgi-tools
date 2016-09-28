@@ -15,7 +15,7 @@ import de.mhus.osgi.commands.watch.PersistentWatch;
 @Service
 public class CmdBundleWatch implements Action  {
 
-	@Argument(index=0, name="cmd", required=false, description="Command add, remove,list, clear, watch, rewatch", multiValued=false)
+	@Argument(index=0, name="cmd", required=false, description="Command add, remove,list, clear, watch, remember", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="lines", required=false, description="lines to add or remove", multiValued=true)
