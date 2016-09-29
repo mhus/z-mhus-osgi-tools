@@ -144,11 +144,6 @@
 
 
 	<distributionManagement>
-	  <snapshotRepository>
-	     <id>doexecute</id>
-	     <name>Internal Snapshot Releases</name>
-	     <url>http://nexus.doexecute.com/nexus/content/repositories/snapshots/</url>
-	  </snapshotRepository>
 	  
           <repository>
             <id>sonatype-nexus-staging</id>
