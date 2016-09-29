@@ -123,7 +123,7 @@ public interface SopApi extends SApi {
 	 * @param resourceName Name of the resource
 	 * @param resourceId The id of the resource or null for general access
 	 * @param action The action to do or null for general access
-	 * @return
+	 * @return x
 	 */
 	boolean hasResourceAccess(Account account, String resourceName, String resourceId, String action);
 
@@ -137,7 +137,7 @@ public interface SopApi extends SApi {
 	 * - group name to allow group
 	 * @param account
 	 * @param mapDef
-	 * @return
+	 * @return x
 	 */
 	boolean hasGroupAccess(Account account, List<String> mapDef);
 
@@ -146,7 +146,7 @@ public interface SopApi extends SApi {
 	 * 
 	 * @param account
 	 * @param mapDef
-	 * @return
+	 * @return x
 	 */
 	boolean hasGroupAccess(Account account, String mapDef);
 

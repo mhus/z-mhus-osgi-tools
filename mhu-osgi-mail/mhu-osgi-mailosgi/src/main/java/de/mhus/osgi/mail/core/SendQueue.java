@@ -10,13 +10,13 @@ public interface SendQueue {
 
 	/**
 	 * Return a unique name of the service.
-	 * @return
+	 * @return x
 	 */
 	String getName();
 	
 	/**
 	 * Return connection and behavior properties.
-	 * @return
+	 * @return x
 	 */
 	Properties getProperties();
 	
@@ -33,13 +33,13 @@ public interface SendQueue {
 	
 	/**
 	 * Return the current status as string.
-	 * @return
+	 * @return x
 	 */
 	String getStatus();
 	
 	/**
 	 * Return true if the connection is working.
-	 * @return
+	 * @return x
 	 */
 	boolean isValid();
 	

@@ -15,8 +15,7 @@ public class TicketUtil {
 	 * 
 	 * @param trust
 	 * @param trustSecret
-	 * @param user
-	 * @return
+	 * @return x
 	 */
 	public static String createRawTrustTicket(String trust, String trustSecret, String accountInfo) {
 		return TRUST + SEP + trust + SEP + MPassword.encode(trustSecret) + SEP + accountInfo;

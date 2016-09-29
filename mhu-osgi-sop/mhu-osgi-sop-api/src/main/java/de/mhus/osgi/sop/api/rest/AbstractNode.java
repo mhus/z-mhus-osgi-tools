@@ -45,7 +45,7 @@ public abstract class AbstractNode<T> implements RestNodeService {
  
 	/**
 	 * Return a the managed class as class
-	 * @return
+	 * @return x
 	 */
 	public abstract Class<T> getManagedClass();
 
