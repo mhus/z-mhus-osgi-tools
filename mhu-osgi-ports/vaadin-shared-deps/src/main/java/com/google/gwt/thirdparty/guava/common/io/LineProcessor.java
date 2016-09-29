@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.io.IOException;
 
-/* 
+/**
  * A callback to be used with the streaming {@code readLines} methods.
  *
  * <p>{@link #processLine} will be called for each line that is read, and
@@ -32,7 +32,7 @@ import java.io.IOException;
 @Beta
 public interface LineProcessor<T> {
 
-  /* 
+  /**
    * This method will be called once for each line.
    *
    * @param line the line read from the input, without delimiter
@@ -40,6 +40,6 @@ public interface LineProcessor<T> {
    */
   boolean processLine(String line) throws IOException;
 
-  /*  Return the result of processing all the lines. */
+  /** Return the result of processing all the lines. */
   T getResult();
 }

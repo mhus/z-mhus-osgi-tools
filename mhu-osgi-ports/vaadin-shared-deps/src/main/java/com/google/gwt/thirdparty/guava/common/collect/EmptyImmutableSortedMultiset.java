@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An empty immutable sorted multiset.
  *
  * @author Louis Wasserman

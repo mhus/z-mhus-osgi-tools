@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A map, each entry of which maps a Java
  * <a href="http://tinyurl.com/2cmwkz">raw type</a> to an instance of that type.
  * In addition to implementing {@code Map}, the additional type-safe operations
@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public interface ClassToInstanceMap<B> extends Map<Class<? extends B>, B> {
-  /* 
+  /**
    * Returns the value the specified class is mapped to, or {@code null} if no
    * entry for this class is present. This will only return a value that was
    * bound to this specific class, not a value that may have been bound to a
@@ -55,7 +55,7 @@ public interface ClassToInstanceMap<B> extends Map<Class<? extends B>, B> {
    */
   <T extends B> T getInstance(Class<T> type);
 
-  /* 
+  /**
    * Maps the specified class to the specified value. Does <i>not</i> associate
    * this value with any of the class's supertypes.
    *

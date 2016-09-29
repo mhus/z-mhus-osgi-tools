@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@code Function} instances.
  *
  * <p>All methods return serializable functions as long as they're given serializable parameters.
@@ -44,7 +44,7 @@ import javax.annotation.Nullable;
 public final class Functions {
   private Functions() {}
 
-  /* 
+  /**
    * Returns a function that calls {@code toString()} on its argument. The function does not accept
    * nulls; it will throw a {@link NullPointerException} when applied to {@code null}.
    *
@@ -71,7 +71,7 @@ public final class Functions {
     }
   }
 
-  /* 
+  /**
    * Returns the identity function.
    */
   @SuppressWarnings("unchecked")
@@ -94,7 +94,7 @@ public final class Functions {
     }
   }
 
-  /* 
+  /**
    * Returns a function which performs a map lookup. The returned function throws an {@link
    * IllegalArgumentException} if given a key that does not exist in the map.
    */
@@ -135,7 +135,7 @@ public final class Functions {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a function which performs a map lookup with a default value. The function created by
    * this method returns {@code defaultValue} for all inputs that do not belong to the map's key
    * set.
@@ -183,7 +183,7 @@ public final class Functions {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns the composition of two functions. For {@code f: A->B} and {@code g: B->C}, composition
    * is defined as the function h such that {@code h(a) == g(f(a))} for each {@code a}.
    *
@@ -229,7 +229,7 @@ public final class Functions {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates a function that returns the same boolean output as the given predicate for all inputs.
    *
    * <p>The returned function is <i>consistent with equals</i> (as documented at {@link
@@ -239,7 +239,7 @@ public final class Functions {
     return new PredicateFunction<T>(predicate);
   }
 
-  /*  @see Functions#forPredicate */
+  /** @see Functions#forPredicate */
   private static class PredicateFunction<T> implements Function<T, Boolean>, Serializable {
     private final Predicate<T> predicate;
 
@@ -271,7 +271,7 @@ public final class Functions {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates a function that returns {@code value} for any input.
    *
    * @param value the constant value for the function to return
@@ -312,7 +312,7 @@ public final class Functions {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a function that always returns the result of invoking {@link Supplier#get} on {@code
    * supplier}, regardless of its input.
    * 
@@ -323,7 +323,7 @@ public final class Functions {
     return new SupplierFunction<T>(supplier);
   }
 
-  /*  @see Functions#forSupplier*/
+  /** @see Functions#forSupplier*/
   private static class SupplierFunction<T> implements Function<Object, T>, Serializable {
     
     private final Supplier<T> supplier;

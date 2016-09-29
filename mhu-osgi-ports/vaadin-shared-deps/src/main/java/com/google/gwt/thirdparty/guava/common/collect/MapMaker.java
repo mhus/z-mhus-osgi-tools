@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * <p>A builder of {@link ConcurrentMap} instances having any combination of the following features:
  *
  * <ul>
@@ -130,13 +130,13 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
 
   Ticker ticker;
 
-  /* 
+  /**
    * Constructs a new {@code MapMaker} instance with default settings, including strong keys, strong
    * values, and no automatic eviction of any kind.
    */
   public MapMaker() {}
 
-  /* 
+  /**
    * Sets a custom {@code Equivalence} strategy for comparing keys.
    *
    * <p>By default, the map uses {@link Equivalence#identity} to determine key equality when {@link
@@ -156,7 +156,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return firstNonNull(keyEquivalence, getKeyStrength().defaultEquivalence());
   }
 
-  /* 
+  /**
    * Sets the minimum total size for the internal hash tables. For example, if the initial capacity
    * is {@code 60}, and the concurrency level is {@code 8}, then eight segments are created, each
    * having a hash table of size eight. Providing a large enough estimate at construction time
@@ -179,7 +179,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return (initialCapacity == UNSET_INT) ? DEFAULT_INITIAL_CAPACITY : initialCapacity;
   }
 
-  /* 
+  /**
    * Specifies the maximum number of entries the map may contain. Note that the map <b>may evict an
    * entry before this limit is exceeded</b>. As the map size grows close to the maximum, the map
    * evicts entries that are less likely to be used again. For example, the map may evict an entry
@@ -217,7 +217,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return this;
   }
 
-  /* 
+  /**
    * Guides the allowed concurrency among update operations. Used as a hint for internal sizing. The
    * table is internally partitioned to try to permit the indicated number of concurrent updates
    * without contention. Because assignment of entries to these partitions is not necessarily
@@ -249,7 +249,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return (concurrencyLevel == UNSET_INT) ? DEFAULT_CONCURRENCY_LEVEL : concurrencyLevel;
   }
 
-  /* 
+  /**
    * Specifies that each key (not value) stored in the map should be wrapped in a {@link
    * WeakReference} (by default, strong references are used).
    *
@@ -281,7 +281,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return firstNonNull(keyStrength, Strength.STRONG);
   }
 
-  /* 
+  /**
    * Specifies that each value (not key) stored in the map should be wrapped in a
    * {@link WeakReference} (by default, strong references are used).
    *
@@ -304,7 +304,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return setValueStrength(Strength.WEAK);
   }
 
-  /* 
+  /**
    * Specifies that each value (not key) stored in the map should be wrapped in a
    * {@link SoftReference} (by default, strong references are used). Softly-referenced objects will
    * be garbage-collected in a <i>globally</i> least-recently-used manner, in response to memory
@@ -350,7 +350,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return firstNonNull(valueStrength, Strength.STRONG);
   }
 
-  /* 
+  /**
    * Specifies that each entry should be automatically removed from the map once a fixed duration
    * has elapsed after the entry's creation, or the most recent replacement of its value.
    *
@@ -400,7 +400,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return (expireAfterWriteNanos == UNSET_INT) ? DEFAULT_EXPIRATION_NANOS : expireAfterWriteNanos;
   }
 
-  /* 
+  /**
    * Specifies that each entry should be automatically removed from the map once a fixed duration
    * has elapsed after the entry's last read or write access.
    *
@@ -448,7 +448,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return firstNonNull(ticker, Ticker.systemTicker());
   }
 
-  /* 
+  /**
    * Specifies a listener instance, which all maps built using this {@code MapMaker} will notify
    * each time an entry is removed from the map by any means.
    *
@@ -490,7 +490,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return me;
   }
 
-  /* 
+  /**
    * Builds a thread-safe map, without on-demand computation of values. This method does not alter
    * the state of this {@code MapMaker} instance, so it can be invoked again to create multiple
    * independent maps.
@@ -512,7 +512,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
         : new NullConcurrentMap<K, V>(this);
   }
 
-  /* 
+  /**
    * Returns a MapMakerInternalMap for the benefit of internal callers that use features of
    * that class not exposed through ConcurrentMap.
    */
@@ -522,7 +522,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return new MapMakerInternalMap<K, V>(this);
   }
 
-  /* 
+  /**
    * Builds a map that supports atomic, on-demand computation of values. {@link Map#get} either
    * returns an already-computed value for the given key, atomically computes it using the supplied
    * function, or, if another thread is currently computing the value for this key, simply waits for
@@ -588,7 +588,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
         : new NullComputingConcurrentMap<K, V>(this, computingFunction);
   }
 
-  /* 
+  /**
    * Returns a string representation for this MapMaker instance. The exact form of the returned
    * string is not specificed.
    */
@@ -625,7 +625,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     return s.toString();
   }
 
-  /* 
+  /**
    * An object that can receive a notification when an entry is removed from a map. The removal
    * resulting in notification could have occured to an entry being manually removed or replaced, or
    * due to eviction resulting from timed expiration, exceeding a maximum size, or garbage
@@ -641,13 +641,13 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
    *     example {@code Object} if any key is acceptable
    */
   interface RemovalListener<K, V> {
-    /* 
+    /**
      * Notifies the listener that a removal occurred at some point in the past.
      */
     void onRemoval(RemovalNotification<K, V> notification);
   }
 
-  /* 
+  /**
    * A notification of the removal of a single entry. The key or value may be null if it was already
    * garbage collected.
    *
@@ -664,14 +664,14 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       this.cause = cause;
     }
 
-    /* 
+    /**
      * Returns the cause for which the entry was removed.
      */
     public RemovalCause getCause() {
       return cause;
     }
 
-    /* 
+    /**
      * Returns {@code true} if there was an automatic removal due to eviction (the cause is neither
      * {@link RemovalCause#EXPLICIT} nor {@link RemovalCause#REPLACED}).
      */
@@ -680,11 +680,11 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     }
   }
 
-  /* 
+  /**
    * The reason why an entry was removed.
    */
   enum RemovalCause {
-    /* 
+    /**
      * The entry was manually removed by the user. This can result from the user invoking
      * {@link Map#remove}, {@link ConcurrentMap#remove}, or {@link java.util.Iterator#remove}.
      */
@@ -695,7 +695,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       }
     },
 
-    /* 
+    /**
      * The entry itself was not actually removed, but its value was replaced by the user. This can
      * result from the user invoking {@link Map#put}, {@link Map#putAll},
      * {@link ConcurrentMap#replace(Object, Object)}, or
@@ -708,7 +708,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       }
     },
 
-    /* 
+    /**
      * The entry was removed automatically because its key or value was garbage-collected. This can
      * occur when using {@link #softValues}, {@link #weakKeys}, or {@link #weakValues}.
      */
@@ -719,7 +719,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       }
     },
 
-    /* 
+    /**
      * The entry's expiration timestamp has passed. This can occur when using {@link
      * #expireAfterWrite} or {@link #expireAfterAccess}.
      */
@@ -730,7 +730,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       }
     },
 
-    /* 
+    /**
      * The entry was evicted due to size constraints. This can occur when using {@link
      * #maximumSize}.
      */
@@ -741,14 +741,14 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
       }
     };
 
-    /* 
+    /**
      * Returns {@code true} if there was an automatic removal due to eviction (the cause is neither
      * {@link #EXPLICIT} nor {@link #REPLACED}).
      */
     abstract boolean wasEvicted();
   }
 
-  /*  A map that is always empty and evicts on insertion. */
+  /** A map that is always empty and evicts on insertion. */
   static class NullConcurrentMap<K, V> extends AbstractMap<K, V>
       implements ConcurrentMap<K, V>, Serializable {
     private static final long serialVersionUID = 0;
@@ -827,7 +827,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     }
   }
 
-  /*  Computes on retrieval and evicts the result. */
+  /** Computes on retrieval and evicts the result. */
   static final class NullComputingConcurrentMap<K, V> extends NullConcurrentMap<K, V> {
     private static final long serialVersionUID = 0;
 
@@ -861,7 +861,7 @@ public final class MapMaker extends GenericMapMaker<Object, Object> {
     }
   }
 
-  /* 
+  /**
    * Overrides get() to compute on demand. Also throws an exception when {@code null} is returned
    * from a computation.
    */

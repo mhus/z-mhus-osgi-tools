@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * A {@code CheckedFuture} is a {@link ListenableFuture} that includes versions
  * of the {@code get} methods that can throw a checked exception.  This makes it
  * easier to create a future that executes logic which can throw an exception.
@@ -52,7 +52,7 @@ import java.util.concurrent.TimeoutException;
 public interface CheckedFuture<V, X extends Exception>
     extends ListenableFuture<V> {
 
-  /* 
+  /**
    * Exception checking version of {@link Future#get()} that will translate
    * {@link InterruptedException}, {@link CancellationException} and
    * {@link ExecutionException} into application-specific exceptions.
@@ -62,7 +62,7 @@ public interface CheckedFuture<V, X extends Exception>
    */
   V checkedGet() throws X;
 
-  /* 
+  /**
    * Exception checking version of {@link Future#get(long, TimeUnit)} that will
    * translate {@link InterruptedException}, {@link CancellationException} and
    * {@link ExecutionException} into application-specific exceptions.  On

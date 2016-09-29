@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation detail for the internal structure of {@link Range} instances. Represents
  * a unique way of "cutting" a "number line" (actually of instances of type {@code C}, not
  * necessarily "numbers") into two sections; this can be done below a certain value, above

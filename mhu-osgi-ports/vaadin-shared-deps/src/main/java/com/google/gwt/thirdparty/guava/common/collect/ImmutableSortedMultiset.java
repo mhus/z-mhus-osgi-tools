@@ -28,7 +28,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-/* 
+/**
  * An immutable {@code SortedMultiset} that stores its elements in a sorted array. Some instances
  * are ordered by an explicit comparator, while others follow the natural sort ordering of their
  * elements. Either way, null elements are not supported.
@@ -51,6 +51,16 @@ import java.util.List;
  * are equivalent. Instead, with an explicit comparator, the following relation determines whether
  * elements {@code x} and {@code y} are equivalent:
  *
+ * <pre>   {@code
+ *
+ *   {(x, y) | comparator.compare(x, y) == 0}}</pre>
+ *
+ * <p>With natural ordering of elements, the following relation determines whether two elements are
+ * equivalent:
+ *
+ * <pre>   {@code
+ *
+ *   {(x, y) | x.compareTo(y) == 0}}</pre>
  *
  * <b>Warning:</b> Like most multisets, an {@code ImmutableSortedMultiset} will not function
  * correctly if an element is modified after being placed in the multiset. For this reason, and to
@@ -78,7 +88,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
   private static final ImmutableSortedMultiset<Comparable> NATURAL_EMPTY_MULTISET =
       new EmptyImmutableSortedMultiset<Comparable>(NATURAL_ORDER);
 
-  /* 
+  /**
    * Returns the empty immutable sorted multiset.
    */
   @SuppressWarnings("unchecked")
@@ -86,7 +96,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return (ImmutableSortedMultiset) NATURAL_EMPTY_MULTISET;
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing a single element.
    */
   public static <E extends Comparable<? super E>> ImmutableSortedMultiset<E> of(E element) {
@@ -97,7 +107,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return new RegularImmutableSortedMultiset<E>(elementSet, counts, cumulativeCounts, 0, 1);
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -108,7 +118,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), Arrays.asList(e1, e2));
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -119,7 +129,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), Arrays.asList(e1, e2, e3));
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -131,7 +141,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), Arrays.asList(e1, e2, e3, e4));
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -143,7 +153,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), Arrays.asList(e1, e2, e3, e4, e5));
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -159,7 +169,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), all);
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -169,7 +179,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(Ordering.natural(), Arrays.asList(elements));
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering. To create a copy of a {@code SortedMultiset} that preserves the
    * comparator, call {@link #copyOfSorted} instead. This method iterates over {@code elements} at
@@ -199,7 +209,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(naturalOrder, elements);
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by their natural
    * ordering.
    *
@@ -217,7 +227,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOf(naturalOrder, elements);
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by the given {@code
    * Comparator}.
    *
@@ -229,7 +239,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return new Builder<E>(comparator).addAll(elements).build();
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the given elements sorted by the given {@code
    * Comparator}. This method iterates over {@code elements} at most once.
    *
@@ -258,7 +268,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return copyOfSortedEntries(comparator, sortedCopy.entrySet());
   }
 
-  /* 
+  /**
    * Returns an immutable sorted multiset containing the elements of a sorted multiset, sorted by
    * the same {@code Comparator}. That behavior differs from {@link #copyOf(Iterable)}, which
    * always uses the natural ordering of the elements.
@@ -326,7 +336,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return result;
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>This implementation is guaranteed to throw an {@link UnsupportedOperationException}.
@@ -340,7 +350,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>This implementation is guaranteed to throw an {@link UnsupportedOperationException}.
@@ -368,7 +378,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
   @Override
   public abstract ImmutableSortedMultiset<E> tailMultiset(E lowerBound, BoundType boundType);
 
-  /* 
+  /**
    * Returns a builder that creates immutable sorted multisets with an explicit comparator. If the
    * comparator has a more general type than the set being generated, such as creating a {@code
    * SortedMultiset<Integer>} with a {@code Comparator<Number>}, use the {@link Builder}
@@ -380,7 +390,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return new Builder<E>(comparator);
   }
 
-  /* 
+  /**
    * Returns a builder that creates immutable sorted multisets whose elements are ordered by the
    * reverse of their natural ordering.
    *
@@ -392,7 +402,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return new Builder<E>(Ordering.natural().reverse());
   }
 
-  /* 
+  /**
    * Returns a builder that creates immutable sorted multisets whose elements are ordered by their
    * natural ordering. The sorted multisets use {@link Ordering#natural()} as the comparator. This
    * method provides more type-safety than {@link #builder}, as it can be called only for classes
@@ -406,7 +416,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     return new Builder<E>(Ordering.natural());
   }
 
-  /* 
+  /**
    * A builder for creating immutable multiset instances, especially {@code public static final}
    * multisets ("constant multisets"). Example:
    *
@@ -428,7 +438,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
   public static class Builder<E> extends ImmutableMultiset.Builder<E> {
     private final Comparator<? super E> comparator;
 
-    /* 
+    /**
      * Creates a new builder. The returned builder is equivalent to the builder generated by
      * {@link ImmutableSortedMultiset#orderedBy(Comparator)}.
      */
@@ -437,7 +447,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       this.comparator = checkNotNull(comparator);
     }
 
-    /* 
+    /**
      * Adds {@code element} to the {@code ImmutableSortedMultiset}.
      *
      * @param element the element to add
@@ -450,7 +460,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Adds a number of occurrences of an element to this {@code ImmutableSortedMultiset}.
      *
      * @param element the element to add
@@ -467,7 +477,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Adds or removes the necessary occurrences of an element such that the element attains the
      * desired count.
      *
@@ -483,7 +493,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSortedMultiset}.
      *
      * @param elements the elements to add
@@ -496,7 +506,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSortedMultiset}.
      *
      * @param elements the {@code Iterable} to add to the {@code ImmutableSortedMultiset}
@@ -509,7 +519,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSortedMultiset}.
      *
      * @param elements the elements to add to the {@code ImmutableSortedMultiset}
@@ -522,7 +532,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
       return this;
     }
 
-    /* 
+    /**
      * Returns a newly-created {@code ImmutableSortedMultiset} based on the contents of the {@code
      * Builder}.
      */

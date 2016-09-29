@@ -8,7 +8,7 @@ import java.util.Set;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.collect.ImmutableSet;
 
-/* 
+/**
  * A generated static class containing public members which provide domain
  * name patterns used in determining whether a given domain name is an
  * effective top-level domain (TLD).
@@ -19,7 +19,7 @@ class TldPatterns {
     // Prevent instantiation.
   }
 
-  /* 
+  /**
    * If a hostname is contained in this set, it is a TLD.
    */
   static final Set<String> EXACT = ImmutableSet.of(
@@ -4417,7 +4417,7 @@ class TldPatterns {
       "ng"
   );
 
-  /* 
+  /**
    * If a hostname is not in the EXCLUDE set, and if removing its
    * leftmost component results in a name which is contained in this
    * set, it is a TLD.
@@ -4514,7 +4514,7 @@ class TldPatterns {
       "zw"
   );
 
-  /* 
+  /**
    * The elements in this set would pass the UNDER test, but are
    * known not to be TLDs and are thus excluded from consideration.
    */

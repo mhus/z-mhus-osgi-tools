@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-/* 
+/**
  * Provides a backup {@code Future} to replace an earlier failed {@code Future}.
  * An implementation of this interface can be applied to an input {@code Future}
  * with {@link Futures#withFallback}.
@@ -33,7 +33,7 @@ import java.util.concurrent.Future;
  */
 @Beta
 public interface FutureFallback<V> {
-  /* 
+  /**
    * Returns a {@code Future} to be used in place of the {@code Future} that
    * failed with the given exception. The exception is provided so that the
    * {@code Fallback} implementation can conditionally determine whether to

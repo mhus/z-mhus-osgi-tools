@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/* 
+/**
  * The HTTPTokener extends the JSONTokener to provide additional methods
  * for the parsing of HTTP headers.
  * @author JSON.org
@@ -32,7 +32,7 @@ SOFTWARE.
  */
 public class HTTPTokener extends JSONTokener {
 
-    /* 
+    /**
      * Construct an XMLTokener from a string.
      * @param s A source string.
      */
@@ -41,7 +41,7 @@ public class HTTPTokener extends JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the next token or string. This is used in parsing HTTP headers.
      * @throws JSONException
      * @return A String.

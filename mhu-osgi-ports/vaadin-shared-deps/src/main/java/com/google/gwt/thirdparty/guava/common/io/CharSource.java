@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A readable source of characters, such as a text file. Unlike a {@link Reader}, a
  * {@code CharSource} is not an open, stateful stream of characters that can be read and closed.
  * Instead, it is an immutable <i>supplier</i> of {@code Reader} instances.
@@ -62,7 +62,7 @@ import javax.annotation.Nullable;
  */
 public abstract class CharSource implements InputSupplier<Reader> {
 
-  /* 
+  /**
    * Opens a new {@link Reader} for reading from this source. This method should return a new,
    * independent reader each time it is called.
    *
@@ -72,7 +72,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
    */
   public abstract Reader openStream() throws IOException;
 
-  /* 
+  /**
    * This method is a temporary method provided for easing migration from suppliers to sources and
    * sinks.
    *
@@ -87,7 +87,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     return openStream();
   }
 
-  /* 
+  /**
    * Opens a new {@link BufferedReader} for reading from this source. This method should return a
    * new, independent reader each time it is called.
    *
@@ -102,7 +102,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
         : new BufferedReader(reader);
   }
 
-  /* 
+  /**
    * Appends the contents of this source to the given {@link Appendable} (such as a {@link Writer}).
    * Does not close {@code appendable} if it is {@code Closeable}.
    *
@@ -123,7 +123,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Copies the contents of this source to the given sink.
    *
    * @throws IOException if an I/O error occurs in the process of reading from this source or
@@ -144,7 +144,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Reads the contents of this source as a string.
    *
    * @throws IOException if an I/O error occurs in the process of reading from this source
@@ -161,7 +161,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Reads the first link of this source as a string. Returns {@code null} if this source is empty.
    *
    * <p>Like {@link BufferedReader}, this method breaks lines on any of {@code \n}, {@code \r} or
@@ -182,7 +182,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Reads all the lines of this source as a list of strings. The returned list will be empty if
    * this source is empty.
    *
@@ -209,7 +209,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Returns whether the source has zero chars. The default implementation is to open a stream and
    * check for EOF.
    *
@@ -228,7 +228,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     }
   }
 
-  /* 
+  /**
    * Concatenates multiple {@link CharSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -243,7 +243,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     return new ConcatenatedCharSource(sources);
   }
 
-  /* 
+  /**
    * Concatenates multiple {@link CharSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -265,7 +265,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     return concat(ImmutableList.copyOf(sources));
   }
 
-  /* 
+  /**
    * Concatenates multiple {@link CharSource} instances into a single source. Streams returned from
    * the source will contain the concatenated data from the streams of the underlying sources.
    *
@@ -281,7 +281,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     return concat(ImmutableList.copyOf(sources));
   }
 
-  /* 
+  /**
    * Returns a view of the given character sequence as a {@link CharSource}. The behavior of the
    * returned {@code CharSource} and any {@code Reader} instances created by it is unspecified if
    * the {@code charSequence} is mutated while it is being read, so don't do that.
@@ -292,7 +292,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
     return new CharSequenceCharSource(charSequence);
   }
 
-  /* 
+  /**
    * Returns an immutable {@link CharSource} that contains no characters.
    *
    * @since 15.0
@@ -327,7 +327,7 @@ public abstract class CharSource implements InputSupplier<Reader> {
       return seq.length() == 0;
     }
 
-    /* 
+    /**
      * Returns an iterable over the lines in the string. If the string ends in
      * a newline, a final empty string is not included to match the behavior of
      * BufferedReader/LineReader.readLine().

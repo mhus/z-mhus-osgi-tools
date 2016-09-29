@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * A supertype for filtered {@link SetMultimap} implementations.
  * 
  * @author Louis Wasserman

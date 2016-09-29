@@ -24,7 +24,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
-/* 
+/**
  * A ThreadFactory builder, providing any combination of these features:
  * <ul>
  * <li> whether threads should be marked as {@linkplain Thread#setDaemon daemon}
@@ -49,12 +49,12 @@ public final class ThreadFactoryBuilder {
   private UncaughtExceptionHandler uncaughtExceptionHandler = null;
   private ThreadFactory backingThreadFactory = null;
 
-  /* 
+  /**
    * Creates a new {@link ThreadFactory} builder.
    */
   public ThreadFactoryBuilder() {}
 
-  /* 
+  /**
    * Sets the naming format to use when naming threads ({@link Thread#setName})
    * which are created with this ThreadFactory.
    *
@@ -73,7 +73,7 @@ public final class ThreadFactoryBuilder {
     return this;
   }
 
-  /* 
+  /**
    * Sets daemon or not for new threads created with this ThreadFactory.
    *
    * @param daemon whether or not new Threads created with this ThreadFactory
@@ -85,7 +85,7 @@ public final class ThreadFactoryBuilder {
     return this;
   }
 
-  /* 
+  /**
    * Sets the priority for new threads created with this ThreadFactory.
    *
    * @param priority the priority for new Threads created with this
@@ -103,7 +103,7 @@ public final class ThreadFactoryBuilder {
     return this;
   }
 
-  /* 
+  /**
    * Sets the {@link UncaughtExceptionHandler} for new threads created with this
    * ThreadFactory.
    *
@@ -117,7 +117,7 @@ public final class ThreadFactoryBuilder {
     return this;
   }
 
-  /* 
+  /**
    * Sets the backing {@link ThreadFactory} for new threads created with this
    * ThreadFactory. Threads will be created by invoking #newThread(Runnable) on
    * this backing {@link ThreadFactory}.
@@ -134,7 +134,7 @@ public final class ThreadFactoryBuilder {
     return this;
   }
 
-  /* 
+  /**
    * Returns a new thread factory using the options supplied during the building
    * process. After building, it is still possible to change the options used to
    * build the ThreadFactory and/or build again. State is not shared amongst

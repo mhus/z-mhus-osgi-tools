@@ -25,7 +25,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@link UnicodeEscaper} that uses an array to quickly look up replacement
  * characters for a given code point. An additional safe range is provided that
  * determines whether code points without specific replacements are to be
@@ -62,7 +62,7 @@ public abstract class ArrayBasedUnicodeEscaper extends UnicodeEscaper {
   private final char safeMinChar;
   private final char safeMaxChar;
 
-  /* 
+  /**
    * Creates a new ArrayBasedUnicodeEscaper instance with the given replacement
    * map and specified safe range. If {@code safeMax < safeMin} then no code
    * points are considered safe.
@@ -84,7 +84,7 @@ public abstract class ArrayBasedUnicodeEscaper extends UnicodeEscaper {
         unsafeReplacement);
   }
 
-  /* 
+  /**
    * Creates a new ArrayBasedUnicodeEscaper instance with the given replacement
    * map and specified safe range. If {@code safeMax < safeMin} then no code
    * points are considered safe. This initializer is useful when explicit
@@ -175,7 +175,7 @@ public abstract class ArrayBasedUnicodeEscaper extends UnicodeEscaper {
     return index;
   }
 
-  /* 
+  /**
    * Escapes a single Unicode code point using the replacement array and safe
    * range values. If the given character does not have an explicit replacement
    * and lies outside the safe range then {@link #escapeUnsafe} is called.
@@ -194,7 +194,7 @@ public abstract class ArrayBasedUnicodeEscaper extends UnicodeEscaper {
     return escapeUnsafe(cp);
   }
 
-  /* 
+  /**
    * Escapes a code point that has no direct explicit value in the replacement
    * array and lies outside the stated safe range. Subclasses should override
    * this method to provide generalized escaping for code points if required.

@@ -44,7 +44,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.CheckReturnValue;
 
-/* 
+/**
  * <p>A builder of {@link LoadingCache} and {@link Cache} instances having any combination of the
  * following features:
  *
@@ -62,6 +62,32 @@ import javax.annotation.CheckReturnValue;
  * <p>These features are all optional; caches can be created using all or none of them. By default
  * cache instances created by {@code CacheBuilder} will not perform any type of eviction.
  *
+ * <p>Usage example: <pre>   {@code
+ *
+ *   LoadingCache<Key, Graph> graphs = CacheBuilder.newBuilder()
+ *       .maximumSize(10000)
+ *       .expireAfterWrite(10, TimeUnit.MINUTES)
+ *       .removalListener(MY_LISTENER)
+ *       .build(
+ *           new CacheLoader<Key, Graph>() {
+ *             public Graph load(Key key) throws AnyException {
+ *               return createExpensiveGraph(key);
+ *             }
+ *           });}</pre>
+ *
+ * <p>Or equivalently, <pre>   {@code
+ *
+ *   // In real life this would come from a command-line flag or config file
+ *   String spec = "maximumSize=10000,expireAfterWrite=10m";
+ *
+ *   LoadingCache<Key, Graph> graphs = CacheBuilder.from(spec)
+ *       .removalListener(MY_LISTENER)
+ *       .build(
+ *           new CacheLoader<Key, Graph>() {
+ *             public Graph load(Key key) throws AnyException {
+ *               return createExpensiveGraph(key);
+ *             }
+ *           });}</pre>
  *
  * <p>The returned cache is implemented as a hash table with similar performance characteristics to
  * {@link ConcurrentHashMap}. It implements all optional operations of the {@link LoadingCache} and
@@ -215,7 +241,7 @@ public final class CacheBuilder<K, V> {
   // TODO(fry): make constructor private and update tests to use newBuilder
   CacheBuilder() {}
 
-  /* 
+  /**
    * Constructs a new {@code CacheBuilder} instance with default settings, including strong keys,
    * strong values, and no automatic eviction of any kind.
    */
@@ -223,7 +249,7 @@ public final class CacheBuilder<K, V> {
     return new CacheBuilder<Object, Object>();
   }
 
-  /* 
+  /**
    * Constructs a new {@code CacheBuilder} instance with the settings specified in {@code spec}.
    *
    * @since 12.0
@@ -235,7 +261,7 @@ public final class CacheBuilder<K, V> {
         .lenientParsing();
   }
 
-  /* 
+  /**
    * Constructs a new {@code CacheBuilder} instance with the settings specified in {@code spec}.
    * This is especially useful for command-line configuration of a {@code CacheBuilder}.
    *
@@ -248,7 +274,7 @@ public final class CacheBuilder<K, V> {
     return from(CacheBuilderSpec.parse(spec));
   }
 
-  /* 
+  /**
    * Enables lenient parsing. Useful for tests and spec parsing.
    */
   @GwtIncompatible("To be supported")
@@ -257,7 +283,7 @@ public final class CacheBuilder<K, V> {
     return this;
   }
 
-  /* 
+  /**
    * Sets a custom {@code Equivalence} strategy for comparing keys.
    *
    * <p>By default, the cache uses {@link Equivalence#identity} to determine key equality when
@@ -274,7 +300,7 @@ public final class CacheBuilder<K, V> {
     return firstNonNull(keyEquivalence, getKeyStrength().defaultEquivalence());
   }
 
-  /* 
+  /**
    * Sets a custom {@code Equivalence} strategy for comparing values.
    *
    * <p>By default, the cache uses {@link Equivalence#identity} to determine value equality when
@@ -293,7 +319,7 @@ public final class CacheBuilder<K, V> {
     return firstNonNull(valueEquivalence, getValueStrength().defaultEquivalence());
   }
 
-  /* 
+  /**
    * Sets the minimum total size for the internal hash tables. For example, if the initial capacity
    * is {@code 60}, and the concurrency level is {@code 8}, then eight segments are created, each
    * having a hash table of size eight. Providing a large enough estimate at construction time
@@ -315,7 +341,7 @@ public final class CacheBuilder<K, V> {
     return (initialCapacity == UNSET_INT) ? DEFAULT_INITIAL_CAPACITY : initialCapacity;
   }
 
-  /* 
+  /**
    * Guides the allowed concurrency among update operations. Used as a hint for internal sizing. The
    * table is internally partitioned to try to permit the indicated number of concurrent updates
    * without contention. Because assignment of entries to these partitions is not necessarily
@@ -357,7 +383,7 @@ public final class CacheBuilder<K, V> {
     return (concurrencyLevel == UNSET_INT) ? DEFAULT_CONCURRENCY_LEVEL : concurrencyLevel;
   }
 
-  /* 
+  /**
    * Specifies the maximum number of entries the cache may contain. Note that the cache <b>may evict
    * an entry before this limit is exceeded</b>. As the cache size grows close to the maximum, the
    * cache evicts entries that are less likely to be used again. For example, the cache may evict an
@@ -383,7 +409,7 @@ public final class CacheBuilder<K, V> {
     return this;
   }
 
-  /* 
+  /**
    * Specifies the maximum weight of entries the cache may contain. Weight is determined using the
    * {@link Weigher} specified with {@link #weigher}, and use of this method requires a
    * corresponding call to {@link #weigher} prior to calling {@link #build}.
@@ -418,7 +444,7 @@ public final class CacheBuilder<K, V> {
     return this;
   }
 
-  /* 
+  /**
    * Specifies the weigher to use in determining the weight of entries. Entry weight is taken
    * into consideration by {@link #maximumWeight(long)} when determining which entries to evict, and
    * use of this method requires a corresponding call to {@link #maximumWeight(long)} prior to
@@ -475,7 +501,7 @@ public final class CacheBuilder<K, V> {
     return (Weigher<K1, V1>) Objects.firstNonNull(weigher, OneWeigher.INSTANCE);
   }
 
-  /* 
+  /**
    * Specifies that each key (not value) stored in the cache should be wrapped in a {@link
    * WeakReference} (by default, strong references are used).
    *
@@ -503,7 +529,7 @@ public final class CacheBuilder<K, V> {
     return firstNonNull(keyStrength, Strength.STRONG);
   }
 
-  /* 
+  /**
    * Specifies that each value (not key) stored in the cache should be wrapped in a
    * {@link WeakReference} (by default, strong references are used).
    *
@@ -524,7 +550,7 @@ public final class CacheBuilder<K, V> {
     return setValueStrength(Strength.WEAK);
   }
 
-  /* 
+  /**
    * Specifies that each value (not key) stored in the cache should be wrapped in a
    * {@link SoftReference} (by default, strong references are used). Softly-referenced objects will
    * be garbage-collected in a <i>globally</i> least-recently-used manner, in response to memory
@@ -558,7 +584,7 @@ public final class CacheBuilder<K, V> {
     return firstNonNull(valueStrength, Strength.STRONG);
   }
 
-  /* 
+  /**
    * Specifies that each entry should be automatically removed from the cache once a fixed duration
    * has elapsed after the entry's creation, or the most recent replacement of its value.
    *
@@ -589,7 +615,7 @@ public final class CacheBuilder<K, V> {
     return (expireAfterWriteNanos == UNSET_INT) ? DEFAULT_EXPIRATION_NANOS : expireAfterWriteNanos;
   }
 
-  /* 
+  /**
    * Specifies that each entry should be automatically removed from the cache once a fixed duration
    * has elapsed after the entry's creation, the most recent replacement of its value, or its last
    * access. Access time is reset by all cache read and write operations (including
@@ -624,7 +650,7 @@ public final class CacheBuilder<K, V> {
         ? DEFAULT_EXPIRATION_NANOS : expireAfterAccessNanos;
   }
 
-  /* 
+  /**
    * Specifies that active entries are eligible for automatic refresh once a fixed duration has
    * elapsed after the entry's creation, or the most recent replacement of its value. The semantics
    * of refreshes are specified in {@link LoadingCache#refresh}, and are performed by calling
@@ -663,7 +689,7 @@ public final class CacheBuilder<K, V> {
     return (refreshNanos == UNSET_INT) ? DEFAULT_REFRESH_NANOS : refreshNanos;
   }
 
-  /* 
+  /**
    * Specifies a nanosecond-precision time source for use in determining when entries should be
    * expired. By default, {@link System#nanoTime} is used.
    *
@@ -685,7 +711,7 @@ public final class CacheBuilder<K, V> {
     return recordsTime ? Ticker.systemTicker() : NULL_TICKER;
   }
 
-  /* 
+  /**
    * Specifies a listener instance that caches should notify each time an entry is removed for any
    * {@linkplain RemovalCause reason}. Each cache created by this builder will invoke this listener
    * as part of the routine maintenance described in the class documentation above.
@@ -724,7 +750,7 @@ public final class CacheBuilder<K, V> {
     return (RemovalListener<K1, V1>) Objects.firstNonNull(removalListener, NullListener.INSTANCE);
   }
 
-  /* 
+  /**
    * Enable the accumulation of {@link CacheStats} during the operation of the cache. Without this
    * {@link Cache#stats} will return zero for all statistics. Note that recording stats requires
    * bookkeeping to be performed with each operation, and thus imposes a performance penalty on
@@ -745,7 +771,7 @@ public final class CacheBuilder<K, V> {
     return statsCounterSupplier;
   }
 
-  /* 
+  /**
    * Builds a cache, which either returns an already-loaded value for a given key or atomically
    * computes or retrieves it using the supplied {@code CacheLoader}. If another thread is currently
    * loading the value for this key, simply waits for that thread to finish and returns its
@@ -763,7 +789,7 @@ public final class CacheBuilder<K, V> {
     return new LocalCache.LocalLoadingCache<K1, V1>(this, loader);
   }
 
-  /* 
+  /**
    * Builds a cache which does not automatically load values when keys are requested.
    *
    * <p>Consider {@link #build(CacheLoader)} instead, if it is feasible to implement a
@@ -799,7 +825,7 @@ public final class CacheBuilder<K, V> {
     }
   }
 
-  /* 
+  /**
    * Returns a string representation for this CacheBuilder instance. The exact form of the returned
    * string is not specified.
    */

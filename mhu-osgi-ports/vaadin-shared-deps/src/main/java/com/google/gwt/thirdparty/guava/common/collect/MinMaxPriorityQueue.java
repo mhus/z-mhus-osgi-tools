@@ -39,7 +39,7 @@ import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-/* 
+/**
  * A double-ended priority queue, which provides constant-time access to both
  * its least element and its greatest element, as determined by the queue's
  * specified comparator. If no comparator is given at construction time, the
@@ -90,7 +90,7 @@ import java.util.Queue;
 @Beta
 public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
 
-  /* 
+  /**
    * Creates a new min-max priority queue with default settings: natural order,
    * no maximum size, no initial contents, and an initial expected size of 11.
    */
@@ -98,7 +98,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return new Builder<Comparable>(Ordering.natural()).create();
   }
 
-  /* 
+  /**
    * Creates a new min-max priority queue using natural order, no maximum size,
    * and initially containing the given elements.
    */
@@ -107,7 +107,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return new Builder<E>(Ordering.<E>natural()).create(initialContents);
   }
 
-  /* 
+  /**
    * Creates and returns a new builder, configured to build {@code
    * MinMaxPriorityQueue} instances that use {@code comparator} to determine the
    * least and greatest elements.
@@ -116,7 +116,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return new Builder<B>(comparator);
   }
 
-  /* 
+  /**
    * Creates and returns a new builder, configured to build {@code
    * MinMaxPriorityQueue} instances sized appropriately to hold {@code
    * expectedSize} elements.
@@ -126,7 +126,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
         .expectedSize(expectedSize);
   }
 
-  /* 
+  /**
    * Creates and returns a new builder, configured to build {@code
    * MinMaxPriorityQueue} instances that are limited to {@code maximumSize}
    * elements. Each time a queue grows beyond this bound, it immediately
@@ -138,7 +138,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
         .maximumSize(maximumSize);
   }
 
-  /* 
+  /**
    * The builder class used in creation of min-max priority queues. Instead of
    * constructing one directly, use {@link
    * MinMaxPriorityQueue#orderedBy(Comparator)}, {@link
@@ -167,7 +167,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       this.comparator = checkNotNull(comparator);
     }
 
-    /* 
+    /**
      * Configures this builder to build min-max priority queues with an initial
      * expected size of {@code expectedSize}.
      */
@@ -177,7 +177,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return this;
     }
 
-    /* 
+    /**
      * Configures this builder to build {@code MinMaxPriorityQueue} instances
      * that are limited to {@code maximumSize} elements. Each time a queue grows
      * beyond this bound, it immediately removes its greatest element (according
@@ -189,7 +189,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return this;
     }
 
-    /* 
+    /**
      * Builds a new min-max priority queue using the previously specified
      * options, and having no initial contents.
      */
@@ -197,7 +197,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return create(Collections.<T>emptySet());
     }
 
-    /* 
+    /**
      * Builds a new min-max priority queue using the previously specified
      * options, and having the given initial elements.
      */
@@ -240,7 +240,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return size;
   }
 
-  /* 
+  /**
    * Adds the given element to this queue. If this queue has a maximum size,
    * after adding {@code element} the queue will automatically evict its
    * greatest element (according to its comparator), which may be {@code
@@ -262,7 +262,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return modified;
   }
 
-  /* 
+  /**
    * Adds the given element to this queue. If this queue has a maximum size,
    * after adding {@code element} the queue will automatically evict its
    * greatest element (according to its comparator), which may be {@code
@@ -294,7 +294,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return isEmpty() ? null : elementData(0);
   }
 
-  /* 
+  /**
    * Returns the index of the max element.
    */
   private int getMaxElementIndex() {
@@ -310,7 +310,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     }
   }
 
-  /* 
+  /**
    * Removes and returns the least element of this queue, or returns {@code
    * null} if the queue is empty.
    */
@@ -318,7 +318,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return poll();
   }
 
-  /* 
+  /**
    * Removes and returns the least element of this queue.
    *
    * @throws NoSuchElementException if the queue is empty
@@ -327,7 +327,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return remove();
   }
 
-  /* 
+  /**
    * Retrieves, but does not remove, the least element of this queue, or returns
    * {@code null} if the queue is empty.
    */
@@ -335,7 +335,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return peek();
   }
 
-  /* 
+  /**
    * Removes and returns the greatest element of this queue, or returns {@code
    * null} if the queue is empty.
    */
@@ -343,7 +343,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return isEmpty() ? null : removeAndGet(getMaxElementIndex());
   }
 
-  /* 
+  /**
    * Removes and returns the greatest element of this queue.
    *
    * @throws NoSuchElementException if the queue is empty
@@ -355,7 +355,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return removeAndGet(getMaxElementIndex());
   }
 
-  /* 
+  /**
    * Retrieves, but does not remove, the greatest element of this queue, or
    * returns {@code null} if the queue is empty.
    */
@@ -363,7 +363,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return isEmpty() ? null : elementData(getMaxElementIndex());
   }
 
-  /* 
+  /**
    * Removes the element at position {@code index}.
    *
    * <p>Normally this method leaves the elements at up to {@code index - 1},
@@ -442,7 +442,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     }
   }
 
-  /* 
+  /**
    * Removes and returns the value at {@code index}.
    */
   private E removeAndGet(int index) {
@@ -464,7 +464,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return (oneBased & EVEN_POWERS_OF_TWO) > (oneBased & ODD_POWERS_OF_TWO);
   }
 
-  /* 
+  /**
    * Returns {@code true} if the MinMax heap structure holds. This is only used
    * in testing.
    *
@@ -479,7 +479,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return true;
   }
 
-  /* 
+  /**
    * Each instance of MinMaxPriortyQueue encapsulates two instances of Heap:
    * a min-heap and a max-heap. Conceptually, these might each have their own
    * array for storage, but for efficiency's sake they are stored interleaved on
@@ -497,7 +497,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return ordering.compare(elementData(a), elementData(b));
     }
 
-    /* 
+    /**
      * Tries to move {@code toTrickle} from a min to a max level and
      * bubble up there. If it moved before {@code removeIndex} this method
      * returns a pair as described in {@link #removeAt}.
@@ -530,7 +530,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       }
     }
 
-    /* 
+    /**
      * Bubbles a value from {@code index} up the appropriate heap if required.
      */
     void bubbleUp(int index, E x) {
@@ -546,7 +546,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       heap.bubbleUpAlternatingLevels(index, x);
     }
 
-    /* 
+    /**
      * Bubbles a value from {@code index} up the levels of this heap, and
      * returns the index the element ended up at.
      */
@@ -564,7 +564,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return index;
     }
 
-    /* 
+    /**
      * Returns the index of minimum value between {@code index} and
      * {@code index + len}, or {@code -1} if {@code index} is greater than
      * {@code size}.
@@ -584,14 +584,14 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return minIndex;
     }
 
-    /* 
+    /**
      * Returns the minimum child or {@code -1} if no child exists.
      */
     int findMinChild(int index) {
       return findMin(getLeftChildIndex(index), 2);
     }
 
-    /* 
+    /**
      * Returns the minimum grand child or -1 if no grand child exists.
      */
     int findMinGrandChild(int index) {
@@ -602,7 +602,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return findMin(getLeftChildIndex(leftChildIndex), 4);
     }
 
-    /* 
+    /**
      * Moves an element one level up from a min level to a max level
      * (or vice versa).
      * Returns the new position of the element.
@@ -639,7 +639,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return index;
     }
 
-    /* 
+    /**
      * Returns the conceptually correct last element of the heap.
      *
      * <p>Since the last element of the array is actually in the
@@ -666,7 +666,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return size;
     }
 
-    /* 
+    /**
      * Crosses an element over to the opposite heap by moving it one level down
      * (or up if there are no elements below it).
      *
@@ -685,7 +685,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       return crossOverUp(index, x);
     }
 
-    /* 
+    /**
      * Fills the hole at {@code index} by moving in the least of its
      * grandchildren to this position, then recursively filling the new hole
      * created.
@@ -739,7 +739,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     }
   }
 
-  /* 
+  /**
    * Iterates the elements of the queue in no particular order.
    *
    * If the underlying queue is modified during iteration an exception will be
@@ -827,7 +827,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
       }
     }
 
-    /* 
+    /**
      * Returns the index of the first element after {@code c} that is not in
      * {@code skipMe} and returns {@code size()} if there is no such element.
      */
@@ -841,7 +841,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     }
   }
 
-  /* 
+  /**
    * Returns an iterator over the elements contained in this collection,
    * <i>in no particular order</i>.
    *
@@ -880,7 +880,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return copyTo;
   }
 
-  /* 
+  /**
    * Returns the comparator used to order the elements in this queue. Obeys the
    * general contract of {@link PriorityQueue#comparator}, but returns {@link
    * Ordering#natural} instead of {@code null} to indicate natural ordering.
@@ -923,7 +923,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     }
   }
 
-  /*  Returns ~2x the old capacity if small; ~1.5x otherwise. */
+  /** Returns ~2x the old capacity if small; ~1.5x otherwise. */
   private int calculateNewCapacity() {
     int oldCapacity = queue.length;
     int newCapacity = (oldCapacity < 64)
@@ -932,7 +932,7 @@ public final class MinMaxPriorityQueue<E> extends AbstractQueue<E> {
     return capAtMaximumSize(newCapacity, maximumSize);
   }
 
-  /*  There's no reason for the queueSize to ever be more than maxSize + 1 */
+  /** There's no reason for the queueSize to ever be more than maxSize + 1 */
   private static int capAtMaximumSize(int queueSize, int maximumSize) {
     return Math.min(queueSize - 1, maximumSize) + 1; // don't overflow
   }

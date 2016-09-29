@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * Unused stub class, unreferenced under Java and manually emulated under GWT.
  *
  * @author Chris Povirk

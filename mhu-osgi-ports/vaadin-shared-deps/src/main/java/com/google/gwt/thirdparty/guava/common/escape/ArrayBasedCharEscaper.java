@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Map;
 
-/* 
+/**
  * A {@link CharEscaper} that uses an array to quickly look up replacement
  * characters for a given {@code char} value. An additional safe range is
  * provided that determines whether {@code char} values without specific
@@ -58,7 +58,7 @@ public abstract class ArrayBasedCharEscaper extends CharEscaper {
   // The last character in the safe range.
   private final char safeMax;
 
-  /* 
+  /**
    * Creates a new ArrayBasedCharEscaper instance with the given replacement map
    * and specified safe range. If {@code safeMax < safeMin} then no characters
    * are considered safe.
@@ -77,7 +77,7 @@ public abstract class ArrayBasedCharEscaper extends CharEscaper {
     this(ArrayBasedEscaperMap.create(replacementMap), safeMin, safeMax);
   }
 
-  /* 
+  /**
    * Creates a new ArrayBasedCharEscaper instance with the given replacement map
    * and specified safe range. If {@code safeMax < safeMin} then no characters
    * are considered safe. This initializer is useful when explicit instances of
@@ -126,7 +126,7 @@ public abstract class ArrayBasedCharEscaper extends CharEscaper {
     return s;
   }
 
-  /* 
+  /**
    * Escapes a single character using the replacement array and safe range
    * values. If the given character does not have an explicit replacement and
    * lies outside the safe range then {@link #escapeUnsafe} is called.
@@ -144,7 +144,7 @@ public abstract class ArrayBasedCharEscaper extends CharEscaper {
     return escapeUnsafe(c);
   }
 
-  /* 
+  /**
    * Escapes a {@code char} value that has no direct explicit value in the
    * replacement array and lies outside the stated safe range. Subclasses should
    * override this method to provide generalized escaping for characters.

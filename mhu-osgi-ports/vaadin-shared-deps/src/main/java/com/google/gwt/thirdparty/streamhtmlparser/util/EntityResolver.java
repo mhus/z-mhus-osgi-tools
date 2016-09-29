@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.collect.ImmutableMap;
 
 import java.util.Map;
 
-/* 
+/**
  * <p>Decodes (unescapes) HTML entities with the complication that these
  * are received one character at a time hence must be stored temporarily.
  * Also, we may receive some "junk" characters before the actual
@@ -29,6 +29,7 @@ import java.util.Map;
  *
  * <p>This class is designed to be 100% compatible with the corresponding
  * logic in the C-version of the
+ * {@link com.com.google.gwt.thirdparty.streamhtmlparser.security.streamhtmlparser.HtmlParser}, found
  * in <code>htmlparser.c</code>. There are however a few intentional
  * differences outlines below:
  * <ul>
@@ -58,7 +59,7 @@ import java.util.Map;
  */
 public class EntityResolver {
 
-  /* 
+  /**
    * Returned in <code>processChar</code> method.
    * <p>
    * <ul>
@@ -83,7 +84,7 @@ public class EntityResolver {
       this.message = message;
     }
 
-    /* 
+    /**
      * Returns a brief description of the {@code Status} for
      * debugging purposes. The format of the returned {@code String}
      * is not fully specified nor guaranteed to remain the same.
@@ -94,7 +95,7 @@ public class EntityResolver {
     }
   }
 
-  /* 
+  /**
    * How many characters to store as we are processing an entity. Once we
    * reach that size, we know the entity is definitely invalid. The size
    * is higher than needed but keeping it as-is for compatibility with
@@ -102,7 +103,7 @@ public class EntityResolver {
    */
   private static final int MAX_ENTITY_SIZE = 10;
 
-  /* 
+  /**
    * Map containing the recognized HTML entities and their decoded values.
    * The trailing ';' is not included in the key but it is accounted for.
    */
@@ -114,16 +115,16 @@ public class EntityResolver {
           .put("&apos", "'")
           .build();
 
-  /*  Storage for received until characters until an HTML entity is complete. */
+  /** Storage for received until characters until an HTML entity is complete. */
   private final StringBuilder sb;
 
-  /* 
+  /**
    * Indicates the state we are in. see {@link EntityResolver.Status}.
    */
   private Status status;
   private String entity;
 
-  /* 
+  /**
    * Constructs an entity resolver that is initially empty and
    * with status {@code NOT_STARTED}, see {@link EntityResolver.Status}.
    * 
@@ -134,7 +135,7 @@ public class EntityResolver {
     entity = "";
   }
 
-  /* 
+  /**
    * Constructs an entity resolver that is an exact copy of
    * the one provided. In particular it has the same contents
    * and status.
@@ -148,7 +149,7 @@ public class EntityResolver {
     status = aEntityResolver.status;
   }
 
-  /* 
+  /**
    * Returns the object to its original state for re-use, deleting any
    * stored characters that may be present.
    */
@@ -158,7 +159,7 @@ public class EntityResolver {
     entity = "";
   }
 
-  /* 
+  /**
    * Returns the full state of the <code>StreamEntityResolver</code>
    * in a human readable form. The format of the returned <code>String</code>
    * is not specified and is subject to change.
@@ -171,7 +172,7 @@ public class EntityResolver {
                          sb.length(), sb.toString());
   }
 
-  /* 
+  /**
    * Returns the decoded HTML Entity. Should only be called
    * after {@code processChar} returned status {@code COMPLETED}.
    *
@@ -182,7 +183,7 @@ public class EntityResolver {
     return entity;
   }
 
-  /* 
+  /**
    * Processes a character from the input stream and decodes any html entities
    * from that processed input stream.
    *
@@ -217,7 +218,7 @@ public class EntityResolver {
     return status;
   }
 
-  /* 
+  /**
    * Performs the decoding of a complete HTML entity and saves the
    * result back into the buffer.
    * <a href="http://www.w3.org/TR/REC-html40/charset.html#h-5.3.1">

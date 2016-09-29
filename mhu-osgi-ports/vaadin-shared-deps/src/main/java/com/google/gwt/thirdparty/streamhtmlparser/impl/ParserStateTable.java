@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.streamhtmlparser.impl;
 
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
-/* 
+/**
  * Holds a state table which is defined as the set of all
  * recognized state transitions and the set of characters that
  * trigger them.
@@ -50,19 +50,19 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
  */
 class ParserStateTable {
 
-  /* 
+  /**
    * A limit on how many different states we can have in one state table.
    * Can be increased should it no longer be sufficient.
    */
   private static final int MAX_STATES = 256;
 
-  /* 
+  /**
    * We only check transitions for (extended) ASCII characters, hence
    * characters in the range 0 to MAX_CHARS -1.
    */
   private static final int MAX_CHARS = 256;
 
-  /* 
+  /**
    * Records all state transitions except those identified as DEFAULT
    * transitions. It is two dimensional: Stores a target {@code InternalState}
    * given a source state (referenced by its numeric ID) and the current
@@ -70,7 +70,7 @@ class ParserStateTable {
    */
   private final InternalState[][] stateTable;
 
-  /* 
+  /**
    * Records all DEFAULT state transitions. These are transitions provided
    * using the {@code "[:default:]"} syntax in the Python configuration file.
    * There can be only one such transition for any given source state, hence
@@ -83,7 +83,7 @@ class ParserStateTable {
     defaultStateTable = new InternalState[MAX_STATES];
   }
 
-  /* 
+  /**
    * Returns the state to go to when receiving the current {@code char}
    * in the {@code from} state.
    * Returns {@code InternalState.INTERNAL_ERROR_STATE} if there is no

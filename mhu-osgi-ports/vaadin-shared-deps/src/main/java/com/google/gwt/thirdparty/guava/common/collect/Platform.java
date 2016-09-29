@@ -30,14 +30,14 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-/* 
+/**
  * Methods factored out so that they can be emulated differently in GWT.
  *
  * @author Hayward Chan
  */
 @GwtCompatible(emulated = true)
 class Platform {
-  /* 
+  /**
    * Returns a new array of the given length with the same type as a reference
    * array.
    *
@@ -58,7 +58,7 @@ class Platform {
     return Collections.newSetFromMap(map);
   }
 
-  /* 
+  /**
    * Configures the given map maker to use weak keys, if possible; does nothing
    * otherwise (i.e., in GWT). This is sometimes acceptable, when only
    * server-side code could generate enough volume that reclamation becomes

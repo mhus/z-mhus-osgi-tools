@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A strategy for determining whether two instances are considered equivalent. Examples of
  * equivalences are the {@linkplain #identity() identity equivalence} and {@linkplain #equals equals
  * equivalence}.
@@ -38,12 +38,12 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public abstract class Equivalence<T> {
-  /* 
+  /**
    * Constructor for use by subclasses.
    */
   protected Equivalence() {}
 
-  /* 
+  /**
    * Returns {@code true} if the given objects are considered equivalent.
    *
    * <p>The {@code equivalent} method implements an equivalence relation on object references:
@@ -71,7 +71,7 @@ public abstract class Equivalence<T> {
     return doEquivalent(a, b);
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code a} and {@code b} are considered equivalent.
    *
    * <p>Called by {@link #equivalent}. {@code a} and {@code b} are not the same
@@ -81,7 +81,7 @@ public abstract class Equivalence<T> {
    */
   protected abstract boolean doEquivalent(T a, T b);
 
-  /* 
+  /**
    * Returns a hash code for {@code t}.
    *
    * <p>The {@code hash} has the following properties:
@@ -104,7 +104,7 @@ public abstract class Equivalence<T> {
     return doHash(t);
   }
 
-  /* 
+  /**
    * Returns a hash code for non-null object {@code t}.
    *
    * <p>Called by {@link #hash}.
@@ -113,7 +113,7 @@ public abstract class Equivalence<T> {
    */
   protected abstract int doHash(T t);
 
-  /* 
+  /**
    * Returns a new equivalence relation for {@code F} which evaluates equivalence by first applying
    * {@code function} to the argument, then evaluating using {@code this}. That is, for any pair of
    * non-null objects {@code x} and {@code y}, {@code
@@ -140,7 +140,7 @@ public abstract class Equivalence<T> {
     return new FunctionalEquivalence<F, T>(function, this);
   }
   
-  /* 
+  /**
    * Returns a wrapper of {@code reference} that implements
    * {@link Wrapper#equals(Object) Object.equals()} such that
    * {@code wrap(this, a).equals(wrap(this, b))} if and only if {@code this.equivalent(a, b)}.
@@ -151,7 +151,7 @@ public abstract class Equivalence<T> {
     return new Wrapper<S>(this, reference);
   }
 
-  /* 
+  /**
    * Wraps an object so that {@link #equals(Object)} and {@link #hashCode()} delegate to an
    * {@link Equivalence}.
    *
@@ -178,12 +178,12 @@ public abstract class Equivalence<T> {
       this.reference = reference;
     }
 
-    /*  Returns the (possibly null) reference wrapped by this instance. */
+    /** Returns the (possibly null) reference wrapped by this instance. */
     @Nullable public T get() {
       return reference;
     }
 
-    /* 
+    /**
      * Returns {@code true} if {@link Equivalence#equivalent(Object, Object)} applied to the wrapped
      * references is {@code true} and both wrappers use the {@link Object#equals(Object) same}
      * equivalence.
@@ -207,14 +207,14 @@ public abstract class Equivalence<T> {
       }
     }
 
-    /* 
+    /**
      * Returns the result of {@link Equivalence#hash(Object)} applied to the wrapped reference.
      */
     @Override public int hashCode() {
       return equivalence.hash(reference);
     }
 
-    /* 
+    /**
      * Returns a string representation for this equivalence wrapper. The form of this string
      * representation is not specified.
      */
@@ -225,7 +225,7 @@ public abstract class Equivalence<T> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns an equivalence over iterables based on the equivalence of their elements.  More
    * specifically, two iterables are considered equivalent if they both contain the same number of
    * elements, and each pair of corresponding elements is equivalent according to
@@ -243,7 +243,7 @@ public abstract class Equivalence<T> {
     return new PairwiseEquivalence<S>(this);
   }
   
-  /* 
+  /**
    * Returns a predicate that evaluates to true if and only if the input is
    * equivalent to {@code target} according to this equivalence relation.
    * 
@@ -291,7 +291,7 @@ public abstract class Equivalence<T> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns an equivalence that delegates to {@link Object#equals} and {@link Object#hashCode}.
    * {@link Equivalence#equivalent} returns {@code true} if both values are null, or if neither
    * value is null and {@link Object#equals} returns {@code true}. {@link Equivalence#hash} returns
@@ -305,7 +305,7 @@ public abstract class Equivalence<T> {
     return Equals.INSTANCE;
   }
 
-  /* 
+  /**
    * Returns an equivalence that uses {@code ==} to compare values and {@link
    * System#identityHashCode(Object)} to compute the hash code.  {@link Equivalence#equivalent}
    * returns {@code true} if {@code a == b}, including in the case that a and b are both null.

@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-/* 
+/**
  * Implementation of {@code Table} whose iteration ordering across row keys is
  * sorted by their natural ordering or by a supplied comparator. Note that
  * iterations across the columns keys for a single row key may or may not be
@@ -63,7 +63,7 @@ class StandardRowSortedTable<R, C, V> extends StandardTable<R, C, V>
     return (SortedMap<R, Map<C, V>>) backingMap;
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>This method returns a {@link SortedSet}, instead of the {@code Set}
@@ -73,7 +73,7 @@ class StandardRowSortedTable<R, C, V> extends StandardTable<R, C, V>
     return (SortedSet<R>) rowMap().keySet();
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>This method returns a {@link SortedMap}, instead of the {@code Map}

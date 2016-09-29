@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * This package contains utility methods and classes for working with Java I/O,
  * for example input streams, output streams, readers, writers, and files.
  *

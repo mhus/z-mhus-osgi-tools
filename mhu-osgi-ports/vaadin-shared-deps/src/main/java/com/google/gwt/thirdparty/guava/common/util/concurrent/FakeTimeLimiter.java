@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-/* 
+/**
  * A TimeLimiter implementation which actually does not attempt to limit time
  * at all.  This may be desirable to use in some unit tests.  More importantly,
  * attempting to debug a call which is time-limited would be extremely annoying,

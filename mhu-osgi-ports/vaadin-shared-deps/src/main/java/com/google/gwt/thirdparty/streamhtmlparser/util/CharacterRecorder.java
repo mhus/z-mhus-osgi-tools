@@ -16,13 +16,14 @@
 
 package com.google.gwt.thirdparty.streamhtmlparser.util;
 
-/* 
+/**
  * Records (stores) characters supplied one at a time conditional on
  * whether recording is currently enabled.
  *
  * <p>When {@link #maybeRecord(char)} is called, it will add the
  * supplied character to the recording buffer but only if
  * recording is in progress. This is useful in our
+ * {@link com.com.google.gwt.thirdparty.streamhtmlparser.security.streamhtmlparser.HtmlParser}
  * as the caller logic to enable/disable recording is decoupled from the logic
  * of recording.
  *
@@ -42,24 +43,24 @@ package com.google.gwt.thirdparty.streamhtmlparser.util;
  */
 public class CharacterRecorder {
 
-  /* 
+  /**
    * How many characters can be recorded before stopping to accept new
    * ones. Set to one less than in the C-version as we do not need
    * to reserve a character for the terminating null.
    */
   public static final int RECORDING_BUFFER_SIZE = 255;
 
-  /* 
+  /**
    * This is where characters provided for recording are stored. Given
    * that the <code>CharacterRecorder</code> object is re-used, might as well
    * allocate the full size from the get-go.
    */
   private final StringBuilder sb;
 
-  /*  Holds whether we are currently recording characters or not. */
+  /** Holds whether we are currently recording characters or not. */
   private boolean recording;
 
-  /* 
+  /**
    * Constructs an empty character recorder of fixed size currently
    * not recording. See {@link #RECORDING_BUFFER_SIZE} for the size.
    */
@@ -68,7 +69,7 @@ public class CharacterRecorder {
     recording = false;
   }
 
-  /* 
+  /**
    * Constructs a character recorder of fixed size that is a copy
    * of the one provided. In particular it has the same recording
    * setting and the same contents.
@@ -81,7 +82,7 @@ public class CharacterRecorder {
     sb.append(aCharacterRecorder.getContent());
   }
 
-  /* 
+  /**
    * Enables recording for incoming characters. The recording buffer is cleared
    * of content it may have contained.
    */
@@ -91,14 +92,14 @@ public class CharacterRecorder {
     recording = true;
   }
 
-  /* 
+  /**
    * Disables recording further characters.
    */
   public void stopRecording() {
     recording = false;
   }
 
-  /* 
+  /**
    * Records the {@code input} if recording is currently on and we
    * have space available in the buffer. If recording is not
    * currently on, this method will not perform any action.
@@ -111,7 +112,7 @@ public class CharacterRecorder {
     }
   }
 
-  /* 
+  /**
    * Empties the underlying storage but does not change the recording
    * state [i.e whether we are recording or not incoming characters].
    */
@@ -119,7 +120,7 @@ public class CharacterRecorder {
     sb.setLength(0);
   }
 
-  /* 
+  /**
    * Empties the underlying storage and resets the recording indicator
    * to indicate we are not recording currently.
    */
@@ -128,7 +129,7 @@ public class CharacterRecorder {
     recording = false;
   }
 
-  /* 
+  /**
    * Returns the characters recorded in a {@code String} form. This
    * method has no side-effects, the characters remain stored as is.
    *
@@ -138,7 +139,7 @@ public class CharacterRecorder {
     return sb.toString();
   }
 
-  /* 
+  /**
    * Returns whether or not we are currently recording incoming characters.
    *
    * @return {@code true} if we are recording, {@code false} otherwise
@@ -147,7 +148,7 @@ public class CharacterRecorder {
     return recording;
   }
 
-  /* 
+  /**
    * Returns the full state of the object in a human readable form. The
    * format of the returned {@code String} is not specified and is
    * subject to change.

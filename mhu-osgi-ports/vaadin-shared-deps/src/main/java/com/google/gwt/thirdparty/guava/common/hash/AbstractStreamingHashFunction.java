@@ -22,7 +22,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 
-/* 
+/**
  * Skeleton implementation of {@link HashFunction}. Provides default implementations which
  * invokes the appropriate method on {@link #newHasher()}, then return the result of
  * {@link Hasher#hash}.
@@ -37,7 +37,7 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
     return newHasher().putObject(instance, funnel).hash();
   }
 
-  /* 
+  /**
    * @deprecated Use {@link AbstractStreamingHashFunction#hashUnencodedChars} instead.
    */
   @Deprecated
@@ -74,7 +74,7 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
     return newHasher();
   }
 
-  /* 
+  /**
    * A convenience base class for implementors of {@code Hasher}; handles accumulating data
    * until an entire "chunk" (of implementation-dependent length) is ready to be hashed.
    *
@@ -83,16 +83,16 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
    */
   // TODO(kevinb): this class still needs some design-and-document-for-inheritance love
   protected static abstract class AbstractStreamingHasher extends AbstractHasher {
-    /*  Buffer via which we pass data to the hash algorithm (the implementor) */
+    /** Buffer via which we pass data to the hash algorithm (the implementor) */
     private final ByteBuffer buffer;
 
-    /*  Number of bytes to be filled before process() invocation(s). */
+    /** Number of bytes to be filled before process() invocation(s). */
     private final int bufferSize;
 
-    /*  Number of bytes processed per process() invocation. */
+    /** Number of bytes processed per process() invocation. */
     private final int chunkSize;
 
-    /* 
+    /**
      * Constructor for use by subclasses. This hasher instance will process chunks of the specified
      * size.
      *
@@ -103,7 +103,7 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
       this(chunkSize, chunkSize);
     }
 
-    /* 
+    /**
      * Constructor for use by subclasses. This hasher instance will process chunks of the specified
      * size, using an internal buffer of {@code bufferSize} size, which must be a multiple of
      * {@code chunkSize}.
@@ -124,12 +124,12 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
       this.chunkSize = chunkSize;
     }
 
-    /* 
+    /**
      * Processes the available bytes of the buffer (at most {@code chunk} bytes).
      */
     protected abstract void process(ByteBuffer bb);
 
-    /* 
+    /**
      * This is invoked for the last bytes of the input, which are not enough to
      * fill a whole chunk. The passed {@code ByteBuffer} is guaranteed to be
      * non-empty.
@@ -183,7 +183,7 @@ abstract class AbstractStreamingHashFunction implements HashFunction {
       return this;
     }
 
-    /* 
+    /**
      * @deprecated Use {@link AbstractStreamingHasher#putUnencodedChars} instead.
      */
     @Deprecated

@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.base;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * Methods factored out so that they can be emulated differently in GWT.
  *
  * @author Jesse Wilson
@@ -27,17 +27,17 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 final class Platform {
   private Platform() {}
 
-  /*  Returns a thread-local 1024-char array. */
+  /** Returns a thread-local 1024-char array. */
   static char[] charBufferFromThreadLocal() {
     return DEST_TL.get();
   }
   
-  /*  Calls {@link System#nanoTime()}. */
+  /** Calls {@link System#nanoTime()}. */
   static long systemNanoTime() {
     return System.nanoTime();
   }
 
-  /* 
+  /**
    * A thread-local destination buffer to keep us from creating new buffers.
    * The starting size is 1024 characters.  If we grow past this we don't
    * put it back in the threadlocal, we just keep going and grow as needed.

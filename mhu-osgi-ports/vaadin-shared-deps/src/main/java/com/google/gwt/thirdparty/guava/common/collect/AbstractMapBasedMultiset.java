@@ -35,7 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Basic implementation of {@code Multiset<E>} backed by an instance of {@code
  * Map<E, Count>}.
  *
@@ -57,20 +57,20 @@ abstract class AbstractMapBasedMultiset<E> extends AbstractMultiset<E>
    */
   private transient long size;
 
-  /*  Standard constructor. */
+  /** Standard constructor. */
   protected AbstractMapBasedMultiset(Map<E, Count> backingMap) {
     this.backingMap = checkNotNull(backingMap);
     this.size = super.size();
   }
 
-  /*  Used during deserialization only. The backing map must be empty. */
+  /** Used during deserialization only. The backing map must be empty. */
   void setBackingMap(Map<E, Count> backingMap) {
     this.backingMap = backingMap;
   }
 
   // Required Implementations
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Invoking {@link Multiset.Entry#getCount} on an entry in the returned
@@ -204,7 +204,7 @@ abstract class AbstractMapBasedMultiset<E> extends AbstractMultiset<E>
 
   // Optional Operations - Modification Operations
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * @throws IllegalArgumentException if the call would result in more than

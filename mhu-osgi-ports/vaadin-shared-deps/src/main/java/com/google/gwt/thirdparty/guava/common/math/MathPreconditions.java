@@ -20,7 +20,7 @@ import java.math.BigInteger;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A collection of preconditions for math functions.
  *
  * @author Louis Wasserman

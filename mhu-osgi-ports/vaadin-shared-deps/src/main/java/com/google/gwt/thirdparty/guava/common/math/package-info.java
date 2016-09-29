@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Arithmetic functions operating on primitive values and {@link java.math.BigInteger} instances.
  *
  * <p>This package is a part of the open-source

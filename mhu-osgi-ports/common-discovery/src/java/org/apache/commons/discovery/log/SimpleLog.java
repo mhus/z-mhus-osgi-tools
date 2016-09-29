@@ -23,7 +23,7 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 
-/* 
+/**
  * <p>Simple implementation of Log that sends all enabled log messages,
  * for all defined loggers, to System.err.
  * </p>
@@ -44,28 +44,28 @@ import org.apache.commons.logging.Log;
 public class SimpleLog implements Log {
       // ---------------------------------------------------- Log Level Constants
 
-    /*  "Trace" level logging. */
+    /** "Trace" level logging. */
     public static final int LOG_LEVEL_TRACE  = 1;
 
-    /*  "Debug" level logging. */
+    /** "Debug" level logging. */
     public static final int LOG_LEVEL_DEBUG  = 2;
 
-    /*  "Info" level logging. */
+    /** "Info" level logging. */
     public static final int LOG_LEVEL_INFO   = 3;
 
-    /*  "Warn" level logging. */
+    /** "Warn" level logging. */
     public static final int LOG_LEVEL_WARN   = 4;
 
-    /*  "Error" level logging. */
+    /** "Error" level logging. */
     public static final int LOG_LEVEL_ERROR  = 5;
 
-    /*  "Fatal" level logging. */
+    /** "Fatal" level logging. */
     public static final int LOG_LEVEL_FATAL  = 6;
 
-    /*  Enable all logging levels */
+    /** Enable all logging levels */
     public static final int LOG_LEVEL_ALL    = (LOG_LEVEL_TRACE - 1);
 
-    /*  Enable no logging levels */
+    /** Enable no logging levels */
     public static final int LOG_LEVEL_OFF    = (LOG_LEVEL_FATAL + 1);
 
     // ------------------------------------------------------- Class Attributes
@@ -73,25 +73,25 @@ public class SimpleLog implements Log {
     static protected final String PROP_LEVEL =
         "org.apache.commons.discovery.log.level";
 
-    /*  Include the instance name in the log message? */
+    /** Include the instance name in the log message? */
     static protected boolean showLogName = false;
 
-    /*  Include the short name ( last component ) of the logger in the log
+    /** Include the short name ( last component ) of the logger in the log
         message. Default to true - otherwise we'll be lost in a flood of
         messages without knowing who sends them.
     */
     static protected boolean showShortName = true;
 
-    /*  Include the current time in the log message */
+    /** Include the current time in the log message */
     static protected boolean showDateTime = false;
 
-    /*  Used to format times */
+    /** Used to format times */
     static protected DateFormat dateFormatter = null;
 
-    /*  The current log level */
+    /** The current log level */
     static protected int logLevel = LOG_LEVEL_INFO;
 
-    /* 
+    /**
      * Use 'out' instead of 'err' for logging
      * to keep in-sync with test messages.
      */
@@ -137,7 +137,7 @@ public class SimpleLog implements Log {
 
     // -------------------------------------------------------- Properties
 
-    /* 
+    /**
      * <p> Set logging level. </p>
      *
      * @param currentLogLevel new logging level
@@ -146,7 +146,7 @@ public class SimpleLog implements Log {
         logLevel = currentLogLevel;
     }
 
-    /* 
+    /**
      * Get logging level.
      *
      * @return The logging level
@@ -155,7 +155,7 @@ public class SimpleLog implements Log {
         return logLevel;
     }
 
-    /* 
+    /**
      * Is the given log level currently enabled?
      *
      * @param level is this level enabled?
@@ -169,14 +169,14 @@ public class SimpleLog implements Log {
 
     // ------------------------------------------------------------- Attributes
 
-    /*  The name of this simple log instance */
+    /** The name of this simple log instance */
     protected String logName = null;
 
     private String prefix=null;
 
     // ------------------------------------------------------------ Constructor
 
-    /* 
+    /**
      * Construct a simple log with given name.
      *
      * @param name log name
@@ -187,7 +187,7 @@ public class SimpleLog implements Log {
 
     // -------------------------------------------------------- Logging Methods
 
-    /* 
+    /**
      * Do the actual logging.
      *
      * This method assembles the message and then prints to {@code System.err}.
@@ -248,7 +248,7 @@ public class SimpleLog implements Log {
 
     // -------------------------------------------------------- Log Implementation
 
-    /* 
+    /**
      * Log a message with debug log level.
      *
      * @param message The message to log
@@ -259,7 +259,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with debug log level.
      *
      * @param message The message to log
@@ -271,7 +271,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log a message with debug log level.
      *
      * @param message The message to log
@@ -282,7 +282,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with debug log level.
      *
      * @param message The message to log
@@ -294,7 +294,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log a message with info log level.
      *
      * @param message The message to log
@@ -305,7 +305,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with info log level.
      *
      * @param message The message to log
@@ -317,7 +317,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log a message with warn log level.
      *
      * @param message The message to log
@@ -328,7 +328,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with warn log level.
      *
      * @param message The message to log
@@ -340,7 +340,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log a message with error log level.
      *
      * @param message The message to log
@@ -351,7 +351,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with error log level.
      *
      * @param message The message to log
@@ -363,7 +363,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log a message with fatal log level.
      *
      * @param message The message to log
@@ -374,7 +374,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * Log an error with fatal log level.
      *
      * @param message The message to log
@@ -386,7 +386,7 @@ public class SimpleLog implements Log {
         }
     }
 
-    /* 
+    /**
      * <p> Are debug messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>
@@ -399,7 +399,7 @@ public class SimpleLog implements Log {
         return isLevelEnabled(SimpleLog.LOG_LEVEL_DEBUG);
     }
 
-    /* 
+    /**
      * <p> Are error messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>
@@ -412,7 +412,7 @@ public class SimpleLog implements Log {
         return isLevelEnabled(SimpleLog.LOG_LEVEL_ERROR);
     }
 
-    /* 
+    /**
      * <p> Are fatal messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>
@@ -425,7 +425,7 @@ public class SimpleLog implements Log {
         return isLevelEnabled(SimpleLog.LOG_LEVEL_FATAL);
     }
 
-    /* 
+    /**
      * <p> Are info messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>
@@ -438,7 +438,7 @@ public class SimpleLog implements Log {
         return isLevelEnabled(SimpleLog.LOG_LEVEL_INFO);
     }
 
-    /* 
+    /**
      * <p> Are trace messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>
@@ -451,7 +451,7 @@ public class SimpleLog implements Log {
         return isLevelEnabled(SimpleLog.LOG_LEVEL_TRACE);
     }
 
-    /* 
+    /**
      * <p> Are warn messages currently enabled? </p>
      *
      * <p> This allows expensive operations such as <code>String</code>

@@ -41,7 +41,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An implementation of {@code RangeMap} based on a {@code TreeMap}, supporting
  * all optional operations.
  *

@@ -14,7 +14,7 @@
 
 package com.google.gwt.thirdparty.guava.common.collect;
 
-/* 
+/**
  * "Overrides" the {@link ImmutableMultiset} static methods that lack
  * {@link ImmutableSortedMultiset} equivalents with deprecated, exception-throwing versions. This
  * prevents accidents like the following:
@@ -32,7 +32,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
  * @author Louis Wasserman
  */
 abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultiset<E> {
-  /* 
+  /**
    * Not supported. Use {@link ImmutableSortedMultiset#naturalOrder}, which offers better
    * type-safety, instead. This method exists only to hide {@link ImmutableMultiset#builder} from
    * consumers of {@code ImmutableSortedMultiset}.
@@ -45,7 +45,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -59,7 +59,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -73,7 +73,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -87,7 +87,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -101,7 +101,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -116,7 +116,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain a non-{@code
    * Comparable} element.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.
@@ -138,7 +138,7 @@ abstract class ImmutableSortedMultisetFauxverideShim<E> extends ImmutableMultise
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a multiset that may contain non-{@code
    * Comparable} elements.</b> Proper calls will resolve to the version in {@code
    * ImmutableSortedMultiset}, not this dummy version.

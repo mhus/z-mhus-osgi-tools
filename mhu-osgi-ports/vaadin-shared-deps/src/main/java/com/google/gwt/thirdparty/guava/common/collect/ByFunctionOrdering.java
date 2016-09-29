@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An ordering that orders elements by applying an order to the result of a
  * function on those elements.
  */

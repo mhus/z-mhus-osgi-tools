@@ -24,7 +24,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
-/* 
+/**
  * Static utilities relating to Java reflection.
  *
  * @since 12.0
@@ -32,7 +32,7 @@ import java.lang.reflect.Proxy;
 @Beta
 public final class Reflection {
 
-  /* 
+  /**
    * Returns the package name of {@code clazz} according to the Java Language Specification (section
    * 6.7). Unlike {@link Class#getPackage}, this method only parses the class name, without
    * attempting to define the {@link Package} and hence load files.
@@ -41,7 +41,7 @@ public final class Reflection {
     return getPackageName(clazz.getName());
   }
 
-  /* 
+  /**
    * Returns the package name of {@code classFullName} according to the Java Language Specification
    * (section 6.7). Unlike {@link Class#getPackage}, this method only parses the class name, without
    * attempting to define the {@link Package} and hence load files.
@@ -51,7 +51,7 @@ public final class Reflection {
     return (lastDot < 0) ? "" : classFullName.substring(0, lastDot);
   }
 
-  /* 
+  /**
    * Ensures that the given classes are initialized, as described in
    * <a href="http://java.sun.com/docs/books/jls/third_edition/html/execution.html#12.4.2">
    * JLS Section 12.4.2</a>.
@@ -73,7 +73,7 @@ public final class Reflection {
     }
   }
 
-  /* 
+  /**
    * Returns a proxy instance that implements {@code interfaceType} by
    * dispatching method invocations to {@code handler}. The class loader of
    * {@code interfaceType} will be used to define the proxy class. To implement

@@ -33,7 +33,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
-/* 
+/**
  * Adds computing functionality to {@link MapMakerInternalMap}.
  *
  * @author Bob Lee
@@ -42,7 +42,7 @@ import javax.annotation.concurrent.GuardedBy;
 class ComputingConcurrentHashMap<K, V> extends MapMakerInternalMap<K, V> {
   final Function<? super K, ? extends V> computingFunction;
 
-  /* 
+  /**
    * Creates a new, empty map with the specified strategy, initial capacity, load factor and
    * concurrency level.
    */
@@ -202,7 +202,7 @@ class ComputingConcurrentHashMap<K, V> extends MapMakerInternalMap<K, V> {
     }
   }
 
-  /* 
+  /**
    * Used to provide computation exceptions to other threads.
    */
   private static final class ComputationExceptionReference<K, V> implements ValueReference<K, V> {
@@ -242,7 +242,7 @@ class ComputingConcurrentHashMap<K, V> extends MapMakerInternalMap<K, V> {
     public void clear(ValueReference<K, V> newValue) {}
   }
 
-  /* 
+  /**
    * Used to provide computation result to other threads.
    */
   private static final class ComputedReference<K, V> implements ValueReference<K, V> {
@@ -315,7 +315,7 @@ class ComputingConcurrentHashMap<K, V> extends MapMakerInternalMap<K, V> {
       return true;
     }
 
-    /* 
+    /**
      * Waits for a computation to complete. Returns the result of the computation.
      */
     @Override

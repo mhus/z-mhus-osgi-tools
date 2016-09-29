@@ -10,7 +10,7 @@ package org.w3c.flute.parser;
 
 import org.w3c.css.sac.Locator;
 
-/* 
+/**
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
@@ -47,7 +47,7 @@ public class LocatorImpl implements Locator {
 	return column;
     }
 
-    /* 
+    /**
      * Creates a new LocatorImpl
      */
     public LocatorImpl(Parser p) {
@@ -59,7 +59,7 @@ public class LocatorImpl implements Locator {
 	column = p.token.beginColumn;
     }
     
-    /* 
+    /**
      * Reinitializes a LocatorImpl
      */
     public LocatorImpl(Parser p, Token tok) {
@@ -72,7 +72,7 @@ public class LocatorImpl implements Locator {
 	column = tok.beginColumn;
     }
     
-    /* 
+    /**
      * Reinitializes a LocatorImpl
      */
     public LocatorImpl(Parser p, int line, int column) {
@@ -86,7 +86,7 @@ public class LocatorImpl implements Locator {
 	this.column = column;
     }
     
-    /* 
+    /**
      * Reinitializes a LocatorImpl
      */
     public LocatorImpl reInit(Parser p) {
@@ -99,7 +99,7 @@ public class LocatorImpl implements Locator {
 	return this;
     }
     
-    /* 
+    /**
      * Reinitializes a LocatorImpl
      */
     public LocatorImpl reInit(Parser p, Token tok) {
@@ -113,7 +113,7 @@ public class LocatorImpl implements Locator {
 	return this;
     }
     
-    /* 
+    /**
      * Reinitializes a LocatorImpl
      */
     public LocatorImpl reInit(Parser p, int line, int column) {

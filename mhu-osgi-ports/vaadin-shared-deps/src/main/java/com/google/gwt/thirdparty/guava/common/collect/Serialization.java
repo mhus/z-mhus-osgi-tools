@@ -23,7 +23,7 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Map;
 
-/* 
+/**
  * Provides static methods for serializing collection classes.
  *
  * <p>This class assists the implementation of collection classes. Do not use
@@ -34,7 +34,7 @@ import java.util.Map;
 final class Serialization {
   private Serialization() {}
 
-  /* 
+  /**
    * Reads a count corresponding to a serialized map, multiset, or multimap. It
    * returns the size of a map serialized by {@link
    * #writeMap(Map, ObjectOutputStream)}, the number of distinct elements in a
@@ -50,7 +50,7 @@ final class Serialization {
     return stream.readInt();
   }
 
-  /* 
+  /**
    * Stores the contents of a map in an output stream, as part of serialization.
    * It does not support concurrent maps whose content may change while the
    * method is running.
@@ -67,7 +67,7 @@ final class Serialization {
     }
   }
 
-  /* 
+  /**
    * Populates a map by reading an input stream, as part of deserialization.
    * See {@link #writeMap} for the data format.
    */
@@ -77,7 +77,7 @@ final class Serialization {
     populateMap(map, stream, size);
   }
 
-  /* 
+  /**
    * Populates a map by reading an input stream, as part of deserialization.
    * See {@link #writeMap} for the data format. The size is determined by a
    * prior call to {@link #readCount}.
@@ -93,7 +93,7 @@ final class Serialization {
     }
   }
 
-  /* 
+  /**
    * Stores the contents of a multiset in an output stream, as part of
    * serialization. It does not support concurrent multisets whose content may
    * change while the method is running.
@@ -111,7 +111,7 @@ final class Serialization {
     }
   }
 
-  /* 
+  /**
    * Populates a multiset by reading an input stream, as part of
    * deserialization. See {@link #writeMultiset} for the data format.
    */
@@ -122,7 +122,7 @@ final class Serialization {
     populateMultiset(multiset, stream, distinctElements);
   }
 
-  /* 
+  /**
    * Populates a multiset by reading an input stream, as part of
    * deserialization. See {@link #writeMultiset} for the data format. The number
    * of distinct elements is determined by a prior call to {@link #readCount}.
@@ -138,7 +138,7 @@ final class Serialization {
     }
   }
 
-  /* 
+  /**
    * Stores the contents of a multimap in an output stream, as part of
    * serialization. It does not support concurrent multimaps whose content may
    * change while the method is running. The {@link Multimap#asMap} view
@@ -160,7 +160,7 @@ final class Serialization {
     }
   }
 
-  /* 
+  /**
    * Populates a multimap by reading an input stream, as part of
    * deserialization. See {@link #writeMultimap} for the data format.
    */
@@ -171,7 +171,7 @@ final class Serialization {
     populateMultimap(multimap, stream, distinctKeys);
   }
 
-  /* 
+  /**
    * Populates a multimap by reading an input stream, as part of
    * deserialization. See {@link #writeMultimap} for the data format. The number
    * of distinct keys is determined by a prior call to {@link #readCount}.

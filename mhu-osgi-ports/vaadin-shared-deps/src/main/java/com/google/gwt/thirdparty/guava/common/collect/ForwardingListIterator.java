@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.ListIterator;
 
-/* 
+/**
  * A list iterator which forwards all its method calls to another list
  * iterator. Subclasses should override one or more methods to modify the
  * behavior of the backing iterator as desired per the <a
@@ -33,7 +33,7 @@ import java.util.ListIterator;
 public abstract class ForwardingListIterator<E> extends ForwardingIterator<E>
     implements ListIterator<E> {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingListIterator() {}
 
   @Override protected abstract ListIterator<E> delegate();

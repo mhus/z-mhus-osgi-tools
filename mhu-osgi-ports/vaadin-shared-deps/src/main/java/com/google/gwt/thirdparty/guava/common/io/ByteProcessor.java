@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.io.IOException;
 
-/* 
+/**
  * A callback interface to process bytes from a stream.
  *
  * <p>{@link #processBytes} will be called for each line that is read, and
@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 @Beta
 public interface ByteProcessor<T> {
-  /* 
+  /**
    * This method will be called for each chunk of bytes in an
    * input stream. The implementation should process the bytes
    * from {@code buf[off]} through {@code buf[off + len - 1]}
@@ -44,6 +44,6 @@ public interface ByteProcessor<T> {
    */
   boolean processBytes(byte[] buf, int off, int len) throws IOException;
 
-  /*  Return the result of processing all the bytes. */
+  /** Return the result of processing all the bytes. */
   T getResult();
 }

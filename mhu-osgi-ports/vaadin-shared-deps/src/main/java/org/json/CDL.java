@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/* 
+/**
  * This provides static methods to convert comma delimited text into a
  * JSONArray, and to covert a JSONArray into comma delimited text. Comma
  * delimited text is a very popular format for data interchange. It is
@@ -45,7 +45,7 @@ SOFTWARE.
  */
 public class CDL {
 
-    /* 
+    /**
      * Get the next value. The value can be wrapped in quotes. The value can
      * be empty.
      * @param x A JSONTokener of the source text.
@@ -72,7 +72,7 @@ public class CDL {
         }
     }
 
-    /* 
+    /**
      * Produce a JSONArray of strings from a row of comma delimited values.
      * @param x A JSONTokener of the source text.
      * @return A JSONArray of strings.
@@ -102,7 +102,7 @@ public class CDL {
         }
     }
 
-    /* 
+    /**
      * Produce a JSONObject from a row of comma delimited text, using a
      * parallel JSONArray of strings to provides the names of the elements.
      * @param names A JSONArray of names. This is commonly obtained from the
@@ -118,7 +118,7 @@ public class CDL {
         return ja != null ? ja.toJSONObject(names) :  null;
     }
 
-    /* 
+    /**
      * Produce a JSONArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param string The comma delimited text.
@@ -129,7 +129,7 @@ public class CDL {
         return toJSONArray(new JSONTokener(string));
     }
 
-    /* 
+    /**
      * Produce a JSONArray of JSONObjects from a comma delimited text string,
      * using the first row as a source of names.
      * @param x The JSONTokener containing the comma delimited text.
@@ -140,7 +140,7 @@ public class CDL {
         return toJSONArray(rowToJSONArray(x), x);
     }
 
-    /* 
+    /**
      * Produce a JSONArray of JSONObjects from a comma delimited text string
      * using a supplied JSONArray as the source of element names.
      * @param names A JSONArray of strings.
@@ -153,7 +153,7 @@ public class CDL {
         return toJSONArray(names, new JSONTokener(string));
     }
 
-    /* 
+    /**
      * Produce a JSONArray of JSONObjects from a comma delimited text string
      * using a supplied JSONArray as the source of element names.
      * @param names A JSONArray of strings.
@@ -181,7 +181,7 @@ public class CDL {
     }
 
 
-    /* 
+    /**
      * Produce a comma delimited text row from a JSONArray. Values containing
      * the comma character will be quoted.
      * @param ja A JSONArray of strings.
@@ -216,7 +216,7 @@ public class CDL {
 
     }
 
-    /* 
+    /**
      * Produce a comma delimited text from a JSONArray of JSONObjects. The
      * first row will be a list of names obtained by inspecting the first
      * JSONObject.
@@ -235,7 +235,7 @@ public class CDL {
         return null;
     }
 
-    /* 
+    /**
      * Produce a comma delimited text from a JSONArray of JSONObjects using
      * a provided list of names. The list of names is not included in the
      * output.

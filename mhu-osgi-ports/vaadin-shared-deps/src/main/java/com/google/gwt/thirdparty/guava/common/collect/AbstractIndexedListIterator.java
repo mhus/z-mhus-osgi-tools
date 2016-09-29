@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-/* 
+/**
  * This class provides a skeletal implementation of the {@link ListIterator}
  * interface across a fixed number of elements that may be retrieved by
  * position. It does not support {@link #remove}, {@link #set}, or {@link #add}.
@@ -36,13 +36,13 @@ abstract class AbstractIndexedListIterator<E>
   private final int size;
   private int position;
 
-  /* 
+  /**
    * Returns the element with the specified index. This method is called by
    * {@link #next()}.
    */
   protected abstract E get(int index);
 
-  /* 
+  /**
    * Constructs an iterator across a sequence of the given size whose initial
    * position is 0. That is, the first call to {@link #next()} will return the
    * first element (or throw {@link NoSuchElementException} if {@code size} is
@@ -54,7 +54,7 @@ abstract class AbstractIndexedListIterator<E>
     this(size, 0);
   }
 
-  /* 
+  /**
    * Constructs an iterator across a sequence of the given size with the given
    * initial position. That is, the first call to {@link #nextIndex()} will
    * return {@code position}, and the first call to {@link #next()} will return

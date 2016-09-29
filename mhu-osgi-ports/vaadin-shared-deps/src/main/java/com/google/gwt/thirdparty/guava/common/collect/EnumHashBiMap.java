@@ -30,7 +30,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@code BiMap} backed by an {@code EnumMap} instance for keys-to-values, and
  * a {@code HashMap} instance for values-to-keys. Null keys are not permitted,
  * but null values are. An {@code EnumHashBiMap} and its inverse are both
@@ -48,7 +48,7 @@ public final class EnumHashBiMap<K extends Enum<K>, V>
     extends AbstractBiMap<K, V> {
   private transient Class<K> keyType;
 
-  /* 
+  /**
    * Returns a new, empty {@code EnumHashBiMap} using the specified key type.
    *
    * @param keyType the key type
@@ -58,7 +58,7 @@ public final class EnumHashBiMap<K extends Enum<K>, V>
     return new EnumHashBiMap<K, V>(keyType);
   }
 
-  /* 
+  /**
    * Constructs a new bimap with the same mappings as the specified map. If the
    * specified map is an {@code EnumHashBiMap} or an {@link EnumBiMap}, the new
    * bimap has the same key type as the input bimap. Otherwise, the specified
@@ -98,12 +98,12 @@ public final class EnumHashBiMap<K extends Enum<K>, V>
     return super.forcePut(key, value);
   }
 
-  /*  Returns the associated key type. */
+  /** Returns the associated key type. */
   public Class<K> keyType() {
     return keyType;
   }
 
-  /* 
+  /**
    * @serialData the key class, number of entries, first key, first value,
    *     second key, second value, and so on.
    */

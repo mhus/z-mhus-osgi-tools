@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * "Overrides" the {@link ImmutableMap} static methods that lack
  * {@link ImmutableSortedMap} equivalents with deprecated, exception-throwing
  * versions. See {@link ImmutableSortedSetFauxverideShim} for details.
@@ -28,7 +28,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @GwtCompatible
 abstract class ImmutableSortedMapFauxverideShim<K, V>
     extends ImmutableMap<K, V> {
-  /* 
+  /**
    * Not supported. Use {@link ImmutableSortedMap#naturalOrder}, which offers
    * better type-safety, instead. This method exists only to hide
    * {@link ImmutableMap#builder} from consumers of {@code ImmutableSortedMap}.
@@ -41,7 +41,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a map that may contain a
    * non-{@code Comparable} key.</b> Proper calls will resolve to the version in
    * {@code ImmutableSortedMap}, not this dummy version.
@@ -54,7 +54,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a map that may contain
    * non-{@code Comparable} keys.</b> Proper calls will resolve to the version
    * in {@code ImmutableSortedMap}, not this dummy version.
@@ -68,7 +68,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a map that may contain
    * non-{@code Comparable} keys.</b> Proper calls to will resolve to the
    * version in {@code ImmutableSortedMap}, not this dummy version.
@@ -83,7 +83,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a map that may contain
    * non-{@code Comparable} keys.</b> Proper calls will resolve to the version
    * in {@code ImmutableSortedMap}, not this dummy version.
@@ -98,7 +98,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a map that may contain
    * non-{@code Comparable} keys.</b> Proper calls will resolve to the version
    * in {@code ImmutableSortedMap}, not this dummy version.

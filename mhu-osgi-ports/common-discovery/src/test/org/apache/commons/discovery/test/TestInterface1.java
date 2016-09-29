@@ -16,7 +16,7 @@
  */
 package org.apache.commons.discovery.test;
 
-/* 
+/**
  * @version $Revision: 1090198 $
  */
 public interface TestInterface1 {

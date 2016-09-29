@@ -43,7 +43,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Synchronized collection views. The returned synchronized collection views are
  * serializable if the backing collection and the mutex are serializable.
  *

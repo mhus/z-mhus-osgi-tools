@@ -16,7 +16,7 @@ package org.w3c.flute.parser.selectors;
 import org.w3c.css.sac.ElementSelector;
 import org.w3c.css.sac.Selector;
 
-/* 
+/**
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
@@ -24,21 +24,21 @@ public class PseudoElementSelectorImpl implements ElementSelector {
 
     String localName;
 
-    /* 
+    /**
      * Creates a new ElementSelectorImpl
      */
     public PseudoElementSelectorImpl(String localName) {
         this.localName = localName;
     }
     
-    /* 
+    /**
      * An integer indicating the type of <code>Selector</code>
      */
     public short getSelectorType() {
 	return Selector.SAC_PSEUDO_ELEMENT_SELECTOR;
     }
     
-    /* 
+    /**
      * Returns the
      * <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
      * URI</a> of this element selector.
@@ -48,7 +48,7 @@ public class PseudoElementSelectorImpl implements ElementSelector {
 	return null;
     }
 
-    /* 
+    /**
      * Returns the
      * <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a>
      * of the

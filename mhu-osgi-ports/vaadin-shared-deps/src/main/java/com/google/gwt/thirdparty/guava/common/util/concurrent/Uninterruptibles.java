@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * Utilities for treating interruptible operations as uninterruptible.
  * In all cases, if a thread is interrupted during such a call, the call
  * continues to block until the result is available or the timeout elapses,
@@ -43,7 +43,7 @@ public final class Uninterruptibles {
   // Implementation Note: As of 3-7-11, the logic for each blocking/timeout
   // methods is identical, save for method being invoked.
 
-  /* 
+  /**
    * Invokes {@code latch.}{@link CountDownLatch#await() await()}
    * uninterruptibly.
    */
@@ -65,7 +65,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes
    * {@code latch.}{@link CountDownLatch#await(long, TimeUnit)
    * await(timeout, unit)} uninterruptibly.
@@ -93,7 +93,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes {@code toJoin.}{@link Thread#join() join()} uninterruptibly.
    */
   public static void joinUninterruptibly(Thread toJoin) {
@@ -114,7 +114,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes {@code future.}{@link Future#get() get()} uninterruptibly.
    * To get uninterruptibility and remove checked exceptions, see
    * {@link Futures#getUnchecked}.
@@ -124,6 +124,7 @@ public final class Uninterruptibles {
    * or {@link Futures#makeChecked}.
    *
    * @throws ExecutionException if the computation threw an exception
+   * @throws CancellationException if the computation was cancelled
    */
   public static <V> V getUninterruptibly(Future<V> future)
       throws ExecutionException {
@@ -143,7 +144,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes
    * {@code future.}{@link Future#get(long, TimeUnit) get(timeout, unit)}
    * uninterruptibly.
@@ -153,6 +154,7 @@ public final class Uninterruptibles {
    * or {@link Futures#makeChecked}.
    *
    * @throws ExecutionException if the computation threw an exception
+   * @throws CancellationException if the computation was cancelled
    * @throws TimeoutException if the wait timed out
    */
   public static <V> V getUninterruptibly(
@@ -179,7 +181,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes
    * {@code unit.}{@link TimeUnit#timedJoin(Thread, long)
    * timedJoin(toJoin, timeout)} uninterruptibly.
@@ -208,7 +210,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes {@code queue.}{@link BlockingQueue#take() take()} uninterruptibly.
    */
   public static <E> E takeUninterruptibly(BlockingQueue<E> queue) {
@@ -228,7 +230,7 @@ public final class Uninterruptibles {
     }
   }
 
-  /* 
+  /**
    * Invokes {@code queue.}{@link BlockingQueue#put(Object) put(element)}
    * uninterruptibly.
    *
@@ -256,7 +258,7 @@ public final class Uninterruptibles {
   }
 
   // TODO(user): Support Sleeper somehow (wrapper or interface method)?
-  /* 
+  /**
    * Invokes {@code unit.}{@link TimeUnit#sleep(long) sleep(sleepFor)}
    * uninterruptibly.
    */

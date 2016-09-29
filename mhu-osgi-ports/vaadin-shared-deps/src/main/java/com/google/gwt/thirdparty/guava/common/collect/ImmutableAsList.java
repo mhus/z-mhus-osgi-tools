@@ -23,7 +23,7 @@ import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
-/* 
+/**
  * List returned by {@link ImmutableCollection#asList} that delegates {@code contains} checks
  * to the backing collection.
  *
@@ -56,7 +56,7 @@ abstract class ImmutableAsList<E> extends ImmutableList<E> {
     return delegateCollection().isPartialView();
   }
 
-  /* 
+  /**
    * Serialized form that leads to the same performance as the original list.
    */
   @GwtIncompatible("serialization")

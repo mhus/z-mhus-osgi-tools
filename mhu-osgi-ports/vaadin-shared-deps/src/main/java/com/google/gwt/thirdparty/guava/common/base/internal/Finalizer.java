@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/* 
+/**
  * Thread that finalizes referents. All references should implement
  * {@code com.google.gwt.thirdparty.guava.common.base.FinalizableReference}.
  *
@@ -51,11 +51,11 @@ public class Finalizer implements Runnable {
   private static final Logger logger
       = Logger.getLogger(Finalizer.class.getName());
 
-  /*  Name of FinalizableReference.class. */
+  /** Name of FinalizableReference.class. */
   private static final String FINALIZABLE_REFERENCE
       = "com.google.gwt.thirdparty.guava.common.base.FinalizableReference";
 
-  /* 
+  /**
    * Starts the Finalizer thread. FinalizableReferenceQueue calls this method
    * reflectively.
    *
@@ -106,7 +106,7 @@ public class Finalizer implements Runnable {
   private static final Field inheritableThreadLocals
       = getInheritableThreadLocalsField();
 
-  /*  Constructs a new finalizer thread. */
+  /** Constructs a new finalizer thread. */
   private Finalizer(
       Class<?> finalizableReferenceClass,
       ReferenceQueue<Object> queue,
@@ -120,7 +120,7 @@ public class Finalizer implements Runnable {
     this.frqReference = frqReference;
   }
 
-  /* 
+  /**
    * Loops continuously, pulling references off the queue and cleaning them up.
    */
   @SuppressWarnings("InfiniteLoopStatement")
@@ -135,7 +135,7 @@ public class Finalizer implements Runnable {
     }
   }
 
-  /* 
+  /**
    * Cleans up a single reference. Catches and logs all throwables.
    * @return true if the caller should continue, false if the associated FinalizableReferenceQueue
    * is no longer referenced.
@@ -174,7 +174,7 @@ public class Finalizer implements Runnable {
     return true;
   }
 
-  /* 
+  /**
    * Looks up FinalizableReference.finalizeReferent() method.
    */
   private Method getFinalizeReferentMethod() {

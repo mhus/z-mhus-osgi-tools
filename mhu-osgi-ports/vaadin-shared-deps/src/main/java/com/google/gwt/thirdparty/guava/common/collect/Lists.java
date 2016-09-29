@@ -51,7 +51,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@link List} instances. Also see this
  * class's counterparts {@link Sets}, {@link Maps} and {@link Queues}.
  *
@@ -70,7 +70,7 @@ public final class Lists {
 
   // ArrayList
 
-  /* 
+  /**
    * Creates a <i>mutable</i>, empty {@code ArrayList} instance.
    *
    * <p><b>Note:</b> if mutability is not required, use {@link
@@ -83,7 +83,7 @@ public final class Lists {
     return new ArrayList<E>();
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code ArrayList} instance containing the given
    * elements.
    *
@@ -111,7 +111,7 @@ public final class Lists {
     return Ints.saturatedCast(5L + arraySize + (arraySize / 10));
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code ArrayList} instance containing the given
    * elements.
    *
@@ -130,7 +130,7 @@ public final class Lists {
         : newArrayList(elements.iterator());
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code ArrayList} instance containing the given
    * elements.
    *
@@ -147,7 +147,7 @@ public final class Lists {
     return list;
   }
 
-  /* 
+  /**
    * Creates an {@code ArrayList} instance backed by an array of the
    * <i>exact</i> size specified; equivalent to
    * {@link ArrayList#ArrayList(int)}.
@@ -174,7 +174,7 @@ public final class Lists {
     return new ArrayList<E>(initialArraySize);
   }
 
-  /* 
+  /**
    * Creates an {@code ArrayList} instance sized appropriately to hold an
    * <i>estimated</i> number of elements without resizing. A small amount of
    * padding is added in case the estimate is low.
@@ -197,7 +197,7 @@ public final class Lists {
 
   // LinkedList
 
-  /* 
+  /**
    * Creates an empty {@code LinkedList} instance.
    *
    * <p><b>Note:</b> if you need an immutable empty {@link List}, use
@@ -210,7 +210,7 @@ public final class Lists {
     return new LinkedList<E>();
   }
 
-  /* 
+  /**
    * Creates a {@code LinkedList} instance containing the given elements.
    *
    * @param elements the elements that the list should contain, in order
@@ -224,7 +224,7 @@ public final class Lists {
     return list;
   }
 
-  /* 
+  /**
    * Creates an empty {@code CopyOnWriteArrayList} instance.
    *
    * <p><b>Note:</b> if you need an immutable empty {@link List}, use
@@ -238,7 +238,7 @@ public final class Lists {
     return new CopyOnWriteArrayList<E>();
   }
 
-  /* 
+  /**
    * Creates a {@code CopyOnWriteArrayList} instance containing the given elements.
    *
    * @param elements the elements that the list should contain, in order
@@ -256,7 +256,7 @@ public final class Lists {
     return new CopyOnWriteArrayList<E>(elementsCollection);
   }
 
-  /* 
+  /**
    * Returns an unmodifiable list containing the specified first element and
    * backed by the specified array of additional elements. Changes to the {@code
    * rest} array will be reflected in the returned list. Unlike {@link
@@ -276,7 +276,7 @@ public final class Lists {
     return new OnePlusArrayList<E>(first, rest);
   }
 
-  /*  @see Lists#asList(Object, Object[]) */
+  /** @see Lists#asList(Object, Object[]) */
   private static class OnePlusArrayList<E> extends AbstractList<E>
       implements Serializable, RandomAccess {
     final E first;
@@ -297,7 +297,7 @@ public final class Lists {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns an unmodifiable list containing the specified first and second
    * element, and backed by the specified array of additional elements. Changes
    * to the {@code rest} array will be reflected in the returned list. Unlike
@@ -319,7 +319,7 @@ public final class Lists {
     return new TwoPlusArrayList<E>(first, second, rest);
   }
 
-  /*  @see Lists#asList(Object, Object, Object[]) */
+  /** @see Lists#asList(Object, Object, Object[]) */
   private static class TwoPlusArrayList<E> extends AbstractList<E>
       implements Serializable, RandomAccess {
     final E first;
@@ -349,7 +349,7 @@ public final class Lists {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns every possible list that can be formed by choosing one element
    * from each of the given lists in order; the "n-ary
    * <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
@@ -372,7 +372,16 @@ public final class Lists {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
-   * 
+   * <pre>   {@code
+   *
+   *   for (B b0 : lists.get(0)) {
+   *     for (B b1 : lists.get(1)) {
+   *       ...
+   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
+   *       // operate on tuple
+   *     }
+   *   }}</pre>
+   *
    * <p>Note that if any input list is empty, the Cartesian product will also be
    * empty. If no lists at all are provided (an empty list), the resulting
    * Cartesian product has one element, an empty list (counter-intuitive, but
@@ -400,7 +409,7 @@ public final class Lists {
     return CartesianList.create(lists);
   }
 
-  /* 
+  /**
    * Returns every possible list that can be formed by choosing one element
    * from each of the given lists in order; the "n-ary
    * <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
@@ -423,6 +432,15 @@ public final class Lists {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
+   * <pre>   {@code
+   *
+   *   for (B b0 : lists.get(0)) {
+   *     for (B b1 : lists.get(1)) {
+   *       ...
+   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
+   *       // operate on tuple
+   *     }
+   *   }}</pre>
    *
    * <p>Note that if any input list is empty, the Cartesian product will also be
    * empty. If no lists at all are provided (an empty list), the resulting
@@ -451,7 +469,7 @@ public final class Lists {
     return cartesianProduct(Arrays.asList(lists));
   }
 
-  /* 
+  /**
    * Returns a list that applies {@code function} to each element of {@code
    * fromList}. The returned list is a transformed view of {@code fromList};
    * changes to {@code fromList} will be reflected in the returned list and vice
@@ -491,7 +509,7 @@ public final class Lists {
         : new TransformingSequentialList<F, T>(fromList, function);
   }
 
-  /* 
+  /**
    * Implementation of a sequential transforming list.
    *
    * @see Lists#transform
@@ -506,7 +524,7 @@ public final class Lists {
       this.fromList = checkNotNull(fromList);
       this.function = checkNotNull(function);
     }
-    /* 
+    /**
      * The default implementation inherited is based on iteration and removal of
      * each element which can be overkill. That's why we forward this call
      * directly to the backing list.
@@ -529,7 +547,7 @@ public final class Lists {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Implementation of a transforming random access list. We try to make as many
    * of these methods pass-through to the source list as possible so that the
    * performance characteristics of the source list and transformed list are
@@ -565,7 +583,7 @@ public final class Lists {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns consecutive {@linkplain List#subList(int, int) sublists} of a list,
    * each of the same size (the final list may be smaller). For example,
    * partitioning a list containing {@code [a, b, c, d, e]} with a partition
@@ -623,7 +641,7 @@ public final class Lists {
     }
   }
 
-  /* 
+  /**
    * Returns a view of the specified string as an immutable list of {@code
    * Character} values.
    *
@@ -673,7 +691,7 @@ public final class Lists {
     }
   }
 
-  /* 
+  /**
    * Returns a view of the specified {@code CharSequence} as a {@code
    * List<Character>}, viewing {@code sequence} as a sequence of Unicode code
    * units. The view does not support any modification operations, but reflects
@@ -706,7 +724,7 @@ public final class Lists {
     }
   }
 
-  /* 
+  /**
    * Returns a reversed view of the specified list. For example, {@code
    * Lists.reverse(Arrays.asList(1, 2, 3))} returns a list containing {@code 3,
    * 2, 1}. The returned list is backed by this list, so changes in the returned
@@ -857,7 +875,7 @@ public final class Lists {
     }
   }
 
-  /* 
+  /**
    * An implementation of {@link List#hashCode()}.
    */
   static int hashCodeImpl(List<?> list) {
@@ -872,7 +890,7 @@ public final class Lists {
     return hashCode;
   }
 
-  /* 
+  /**
    * An implementation of {@link List#equals(Object)}.
    */
   static boolean equalsImpl(List<?> list, @Nullable Object object) {
@@ -889,7 +907,7 @@ public final class Lists {
         && Iterators.elementsEqual(list.iterator(), o.iterator());
   }
 
-  /* 
+  /**
    * An implementation of {@link List#addAll(int, Collection)}.
    */
   static <E> boolean addAllImpl(
@@ -903,7 +921,7 @@ public final class Lists {
     return changed;
   }
 
-  /* 
+  /**
    * An implementation of {@link List#indexOf(Object)}.
    */
   static int indexOfImpl(List<?> list, @Nullable Object element) {
@@ -916,7 +934,7 @@ public final class Lists {
     return -1;
   }
 
-  /* 
+  /**
    * An implementation of {@link List#lastIndexOf(Object)}.
    */
   static int lastIndexOfImpl(List<?> list, @Nullable Object element) {
@@ -929,14 +947,14 @@ public final class Lists {
     return -1;
   }
 
-  /* 
+  /**
    * Returns an implementation of {@link List#listIterator(int)}.
    */
   static <E> ListIterator<E> listIteratorImpl(List<E> list, int index) {
     return new AbstractListWrapper<E>(list).listIterator(index);
   }
 
-  /* 
+  /**
    * An implementation of {@link List#subList(int, int)}.
    */
   static <E> List<E> subListImpl(
@@ -1005,7 +1023,7 @@ public final class Lists {
     }
   }
 
-  /* 
+  /**
    * Used to avoid http://bugs.sun.com/view_bug.do?bug_id=6558557
    */
   static <T> List<T> cast(Iterable<T> iterable) {

@@ -26,7 +26,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-/* 
+/**
  * Provides simple GWT-compatible substitutes for {@code InputStream}, {@code OutputStream},
  * {@code Reader}, and {@code Writer} so that {@code BaseEncoding} can use streaming implementations
  * while remaining GWT-compatible.
@@ -37,7 +37,7 @@ import java.io.Writer;
 final class GwtWorkarounds {
   private GwtWorkarounds() {}
 
-  /* 
+  /**
    * A GWT-compatible substitute for a {@code Reader}.
    */
   interface CharInput {
@@ -45,7 +45,7 @@ final class GwtWorkarounds {
     void close() throws IOException;
   }
 
-  /* 
+  /**
    * Views a {@code Reader} as a {@code CharInput}.
    */
   @GwtIncompatible("Reader")
@@ -64,7 +64,7 @@ final class GwtWorkarounds {
     };
   }
 
-  /* 
+  /**
    * Views a {@code CharSequence} as a {@code CharInput}.
    */
   static CharInput asCharInput(final CharSequence chars) {
@@ -88,7 +88,7 @@ final class GwtWorkarounds {
     };
   }
 
-  /* 
+  /**
    * A GWT-compatible substitute for an {@code InputStream}.
    */
   interface ByteInput {
@@ -96,7 +96,7 @@ final class GwtWorkarounds {
     void close() throws IOException;
   }
 
-  /* 
+  /**
    * Views a {@code ByteInput} as an {@code InputStream}.
    */
   @GwtIncompatible("InputStream")
@@ -137,7 +137,7 @@ final class GwtWorkarounds {
     };
   }
 
-  /* 
+  /**
    * A GWT-compatible substitute for an {@code OutputStream}.
    */
   interface ByteOutput {
@@ -146,7 +146,7 @@ final class GwtWorkarounds {
     void close() throws IOException;
   }
 
-  /* 
+  /**
    * Views a {@code ByteOutput} as an {@code OutputStream}.
    */
   @GwtIncompatible("OutputStream")
@@ -170,7 +170,7 @@ final class GwtWorkarounds {
     };
   }
 
-  /* 
+  /**
    * A GWT-compatible substitute for a {@code Writer}.
    */
   interface CharOutput {
@@ -179,7 +179,7 @@ final class GwtWorkarounds {
     void close() throws IOException;
   }
 
-  /* 
+  /**
    * Views a {@code Writer} as a {@code CharOutput}.
    */
   @GwtIncompatible("Writer")
@@ -203,7 +203,7 @@ final class GwtWorkarounds {
     };
   }
 
-  /* 
+  /**
    * Returns a {@code CharOutput} whose {@code toString()} method can be used
    * to get the combined output.
    */

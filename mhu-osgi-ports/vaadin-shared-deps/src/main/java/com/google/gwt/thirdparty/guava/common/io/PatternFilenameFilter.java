@@ -26,7 +26,7 @@ import java.util.regex.PatternSyntaxException;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * File name filter that only accepts files matching a regular expression. This
  * class is thread-safe and immutable.
  *
@@ -38,7 +38,7 @@ public final class PatternFilenameFilter implements FilenameFilter {
 
   private final Pattern pattern;
 
-  /* 
+  /**
    * Constructs a pattern file name filter object.
    * @param patternStr the pattern string on which to filter file names
    *
@@ -48,7 +48,7 @@ public final class PatternFilenameFilter implements FilenameFilter {
     this(Pattern.compile(patternStr));
   }
 
-  /* 
+  /**
    * Constructs a pattern file name filter object.
    * @param pattern the pattern on which to filter file names
    */

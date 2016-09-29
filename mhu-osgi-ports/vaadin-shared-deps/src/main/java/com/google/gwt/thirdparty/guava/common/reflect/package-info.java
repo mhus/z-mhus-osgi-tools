@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * This package contains utilities to work with Java reflection.
  * It is a part of the open-source
  * <a href="http://guava-libraries.googlecode.com">Guava libraries</a>.

@@ -29,7 +29,7 @@ import java.util.zip.Checksum;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static methods to obtain {@link HashFunction} instances, and other static hashing-related
  * utilities.
  *
@@ -43,7 +43,7 @@ import javax.annotation.Nullable;
  */
 @Beta
 public final class Hashing {
-  /* 
+  /**
    * Returns a general-purpose, <b>temporary-use</b>, non-cryptographic hash function. The algorithm
    * the returned function implements is unspecified and subject to change without notice.
    *
@@ -80,19 +80,19 @@ public final class Hashing {
     return new ConcatenatedHashFunction(hashFunctions);
   }
 
-  /* 
+  /**
    * Used to randomize {@link #goodFastHash} instances, so that programs which persist anything
    * dependent on the hash codes they produce will fail sooner.
    */
   private static final int GOOD_FAST_HASH_SEED = (int) System.currentTimeMillis();
 
-  /*  Returned by {@link #goodFastHash} when {@code minimumBits <= 32}. */
+  /** Returned by {@link #goodFastHash} when {@code minimumBits <= 32}. */
   private static final HashFunction GOOD_FAST_HASH_FUNCTION_32 = murmur3_32(GOOD_FAST_HASH_SEED);
 
-  /*  Returned by {@link #goodFastHash} when {@code 32 < minimumBits <= 128}. */
+  /** Returned by {@link #goodFastHash} when {@code 32 < minimumBits <= 128}. */
   private static final HashFunction GOOD_FAST_HASH_FUNCTION_128 = murmur3_128(GOOD_FAST_HASH_SEED);
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp">
    * 32-bit murmur3 algorithm, x86 variant</a> (little-endian variant),
@@ -104,7 +104,7 @@ public final class Hashing {
     return new Murmur3_32HashFunction(seed);
   }
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp">
    * 32-bit murmur3 algorithm, x86 variant</a> (little-endian variant),
@@ -118,7 +118,7 @@ public final class Hashing {
 
   private static final HashFunction MURMUR3_32 = new Murmur3_32HashFunction(0);
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp">
    * 128-bit murmur3 algorithm, x64 variant</a> (little-endian variant),
@@ -130,7 +130,7 @@ public final class Hashing {
     return new Murmur3_128HashFunction(seed);
   }
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="http://smhasher.googlecode.com/svn/trunk/MurmurHash3.cpp">
    * 128-bit murmur3 algorithm, x64 variant</a> (little-endian variant),
@@ -144,7 +144,7 @@ public final class Hashing {
 
   private static final HashFunction MURMUR3_128 = new Murmur3_128HashFunction(0);
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="https://131002.net/siphash/">64-bit SipHash-2-4 algorithm</a>
    * using a seed value of {@code k = 00 01 02 ...}.
@@ -158,7 +158,7 @@ public final class Hashing {
   private static final HashFunction SIP_HASH_24 =
       new SipHashFunction(2, 4, 0x0706050403020100L, 0x0f0e0d0c0b0a0908L);
 
-  /* 
+  /**
    * Returns a hash function implementing the
    * <a href="https://131002.net/siphash/">64-bit SipHash-2-4 algorithm</a>
    * using the given seed.
@@ -169,7 +169,7 @@ public final class Hashing {
     return new SipHashFunction(2, 4, k0, k1);
   }
 
-  /* 
+  /**
    * Returns a hash function implementing the MD5 hash algorithm (128 hash bits) by delegating to
    * the MD5 {@link MessageDigest}.
    */
@@ -179,7 +179,7 @@ public final class Hashing {
 
   private static final HashFunction MD5 = new MessageDigestHashFunction("MD5", "Hashing.md5()");
 
-  /* 
+  /**
    * Returns a hash function implementing the SHA-1 algorithm (160 hash bits) by delegating to the
    * SHA-1 {@link MessageDigest}.
    */
@@ -190,7 +190,7 @@ public final class Hashing {
   private static final HashFunction SHA_1 =
       new MessageDigestHashFunction("SHA-1", "Hashing.sha1()");
 
-  /* 
+  /**
    * Returns a hash function implementing the SHA-256 algorithm (256 hash bits) by delegating to
    * the SHA-256 {@link MessageDigest}.
    */
@@ -201,7 +201,7 @@ public final class Hashing {
   private static final HashFunction SHA_256 =
       new MessageDigestHashFunction("SHA-256", "Hashing.sha256()");
 
-  /* 
+  /**
    * Returns a hash function implementing the SHA-512 algorithm (512 hash bits) by delegating to the
    * SHA-512 {@link MessageDigest}.
    */
@@ -212,7 +212,7 @@ public final class Hashing {
   private static final HashFunction SHA_512 =
       new MessageDigestHashFunction("SHA-512", "Hashing.sha512()");
 
-  /* 
+  /**
    * Returns a hash function implementing the CRC-32 checksum algorithm (32 hash bits) by delegating
    * to the {@link CRC32} {@link Checksum}.
    *
@@ -228,7 +228,7 @@ public final class Hashing {
   private static final HashFunction CRC_32 =
       checksumHashFunction(ChecksumType.CRC_32, "Hashing.crc32()");
 
-  /* 
+  /**
    * Returns a hash function implementing the Adler-32 checksum algorithm (32 hash bits) by
    * delegating to the {@link Adler32} {@link Checksum}.
    *
@@ -276,7 +276,7 @@ public final class Hashing {
   // TODO(user): Investigate whether we need to still use this idiom now that we have a fallback
   // option for our use of Unsafe.
 
-  /* 
+  /**
    * Assigns to {@code hashCode} a "bucket" in the range {@code [0, buckets)}, in a uniform
    * manner that minimizes the need for remapping as {@code buckets} grows. That is,
    * {@code consistentHash(h, n)} equals:
@@ -293,7 +293,7 @@ public final class Hashing {
     return consistentHash(hashCode.padToLong(), buckets);
   }
 
-  /* 
+  /**
    * Assigns to {@code input} a "bucket" in the range {@code [0, buckets)}, in a uniform
    * manner that minimizes the need for remapping as {@code buckets} grows. That is,
    * {@code consistentHash(h, n)} equals:
@@ -323,7 +323,7 @@ public final class Hashing {
     }
   }
 
-  /* 
+  /**
    * Returns a hash code, having the same bit length as each of the input hash codes,
    * that combines the information of these hash codes in an ordered fashion. That
    * is, whenever two equal hash codes are produced by two calls to this method, it
@@ -349,7 +349,7 @@ public final class Hashing {
     return HashCode.fromBytesNoCopy(resultBytes);
   }
 
-  /* 
+  /**
    * Returns a hash code, having the same bit length as each of the input hash codes,
    * that combines the information of these hash codes in an unordered fashion. That
    * is, whenever two equal hash codes are produced by two calls to this method, it
@@ -374,7 +374,7 @@ public final class Hashing {
     return HashCode.fromBytesNoCopy(resultBytes);
   }
 
-  /* 
+  /**
    * Checks that the passed argument is positive, and ceils it to a multiple of 32.
    */
   static int checkPositiveAndMakeMultipleOf32(int bits) {
@@ -439,7 +439,7 @@ public final class Hashing {
     }
   }
 
-  /* 
+  /**
    * Linear CongruentialGenerator to use for consistent hashing.
    * See http://en.wikipedia.org/wiki/Linear_congruential_generator
    */

@@ -23,12 +23,49 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-
+/**
+ * Simple static methods to be called at the start of your own methods to verify
+ * correct arguments and state. This allows constructs such as
+ *
+ * <pre>   {@code
+ *   if (count <= 0) {
+ *     throw new IllegalArgumentException("must be positive: " + count);
+ *   }}</pre>
+ *
+ * <p>to be replaced with the more compact
+ * <pre>   {@code
+ *   checkArgument(count > 0, "must be positive: %s", count);}</pre>
+ *
+ * <p>Note that the sense of the expression is inverted; with {@code Preconditions}
+ * you declare what you expect to be <i>true</i>, just as you do with an
+ * <a href="http://java.sun.com/j2se/1.5.0/docs/guide/language/assert.html">
+ * {@code assert}</a> or a JUnit {@code assertTrue} call.
+ *
+ * <p><b>Warning:</b> only the {@code "%s"} specifier is recognized as a
+ * placeholder in these messages, not the full range of {@link
+ * String#format(String, Object[])} specifiers.
+ *
+ * <p>Take care not to confuse precondition checking with other similar types
+ * of checks! Precondition exceptions -- including those provided here, but also
+ * {@link IndexOutOfBoundsException}, {@link NoSuchElementException}, {@link
+ * UnsupportedOperationException} and others -- are used to signal that the
+ * <i>calling method</i> has made an error. This tells the caller that it should
+ * not have invoked the method when it did, with the arguments it did, or
+ * perhaps ever. Postcondition or other invariant failures should not throw
+ * these types of exceptions.
+ *
+ * <p>See the Guava User Guide on <a href=
+ * "http://code.google.com/p/guava-libraries/wiki/PreconditionsExplained">
+ * using {@code Preconditions}</a>.
+ *
+ * @author Kevin Bourrillion
+ * @since 2.0 (imported from Google Collections Library)
+ */
 @GwtCompatible
 public final class Preconditions {
   private Preconditions() {}
 
-  /* 
+  /**
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -41,7 +78,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -57,7 +94,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures the truth of an expression involving one or more parameters to the
    * calling method.
    *
@@ -85,7 +122,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -98,7 +135,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -114,7 +151,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures the truth of an expression involving the state of the calling
    * instance, but not involving any parameters to the calling method.
    *
@@ -142,7 +179,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -157,7 +194,7 @@ public final class Preconditions {
     return reference;
   }
 
-  /* 
+  /**
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -174,7 +211,7 @@ public final class Preconditions {
     return reference;
   }
 
-  /* 
+  /**
    * Ensures that an object reference passed as a parameter to the calling
    * method is not null.
    *
@@ -231,7 +268,7 @@ public final class Preconditions {
    * Hotspot is fine with that.
    */
 
-  /* 
+  /**
    * Ensures that {@code index} specifies a valid <i>element</i> in an array,
    * list or string of size {@code size}. An element index may range from zero,
    * inclusive, to {@code size}, exclusive.
@@ -248,7 +285,7 @@ public final class Preconditions {
     return checkElementIndex(index, size, "index");
   }
 
-  /* 
+  /**
    * Ensures that {@code index} specifies a valid <i>element</i> in an array,
    * list or string of size {@code size}. An element index may range from zero,
    * inclusive, to {@code size}, exclusive.
@@ -281,7 +318,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures that {@code index} specifies a valid <i>position</i> in an array,
    * list or string of size {@code size}. A position index may range from zero
    * to {@code size}, inclusive.
@@ -298,7 +335,7 @@ public final class Preconditions {
     return checkPositionIndex(index, size, "index");
   }
 
-  /* 
+  /**
    * Ensures that {@code index} specifies a valid <i>position</i> in an array,
    * list or string of size {@code size}. A position index may range from zero
    * to {@code size}, inclusive.
@@ -332,7 +369,7 @@ public final class Preconditions {
     }
   }
 
-  /* 
+  /**
    * Ensures that {@code start} and {@code end} specify a valid <i>positions</i>
    * in an array, list or string of size {@code size}, and are in order. A
    * position index may range from zero to {@code size}, inclusive.
@@ -365,7 +402,7 @@ public final class Preconditions {
                   end, start);
   }
 
-  /* 
+  /**
    * Substitutes each {@code %s} in {@code template} with an argument. These
    * are matched by position - the first {@code %s} gets {@code args[0]}, etc.
    * If there are more arguments than placeholders, the unmatched arguments will

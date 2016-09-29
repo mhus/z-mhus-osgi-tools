@@ -26,7 +26,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A notification of the removal of a single entry. The key and/or value may be null if they were
  * already garbage collected.
  *
@@ -50,14 +50,14 @@ public final class RemovalNotification<K, V> implements Entry<K, V> {
     this.cause = checkNotNull(cause);
   }
 
-  /* 
+  /**
    * Returns the cause for which the entry was removed.
    */
   public RemovalCause getCause() {
     return cause;
   }
 
-  /* 
+  /**
    * Returns {@code true} if there was an automatic removal due to eviction (the cause is neither
    * {@link RemovalCause#EXPLICIT} nor {@link RemovalCause#REPLACED}).
    */
@@ -92,7 +92,7 @@ public final class RemovalNotification<K, V> implements Entry<K, V> {
     return ((k == null) ? 0 : k.hashCode()) ^ ((v == null) ? 0 : v.hashCode());
   }
 
-  /* 
+  /**
    * Returns a string representation of the form <code>{key}={value}</code>.
    */
   @Override public String toString() {

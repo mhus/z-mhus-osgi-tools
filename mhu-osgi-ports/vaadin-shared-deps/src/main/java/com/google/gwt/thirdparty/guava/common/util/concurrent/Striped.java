@@ -37,7 +37,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-/* 
+/**
  * A striped {@code Lock/Semaphore/ReadWriteLock}. This offers the underlying lock striping
  * similar to that of {@code ConcurrentHashMap} in a reusable form, and extends it for
  * semaphores and read-write locks. Conceptually, lock striping is the technique of dividing a lock
@@ -83,7 +83,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public abstract class Striped<L> {
   private Striped() {}
 
-  /* 
+  /**
    * Returns the stripe that corresponds to the passed key. It is always guaranteed that if
    * {@code key1.equals(key2)}, then {@code get(key1) == get(key2)}.
    *
@@ -92,7 +92,7 @@ public abstract class Striped<L> {
    */
   public abstract L get(Object key);
 
-  /* 
+  /**
    * Returns the stripe at the specified index. Valid indexes are 0, inclusively, to
    * {@code size()}, exclusively.
    *
@@ -101,17 +101,17 @@ public abstract class Striped<L> {
    */
   public abstract L getAt(int index);
 
-  /* 
+  /**
    * Returns the index to which the given key is mapped, so that getAt(indexFor(key)) == get(key).
    */
   abstract int indexFor(Object key);
 
-  /* 
+  /**
    * Returns the total number of stripes in this instance.
    */
   public abstract int size();
 
-  /* 
+  /**
    * Returns the stripes that correspond to the passed objects, in ascending (as per
    * {@link #getAt(int)}) order. Thus, threads that use the stripes in the order returned
    * by this method are guaranteed to not deadlock each other.
@@ -164,7 +164,7 @@ public abstract class Striped<L> {
 
   // Static factories
 
-  /* 
+  /**
    * Creates a {@code Striped<Lock>} with eagerly initialized, strongly referenced locks.
    * Every lock is reentrant.
    *
@@ -179,7 +179,7 @@ public abstract class Striped<L> {
     });
   }
 
-  /* 
+  /**
    * Creates a {@code Striped<Lock>} with lazily initialized, weakly referenced locks.
    * Every lock is reentrant.
    *
@@ -194,7 +194,7 @@ public abstract class Striped<L> {
     });
   }
 
-  /* 
+  /**
    * Creates a {@code Striped<Semaphore>} with eagerly initialized, strongly referenced semaphores,
    * with the specified number of permits.
    *
@@ -210,7 +210,7 @@ public abstract class Striped<L> {
     });
   }
 
-  /* 
+  /**
    * Creates a {@code Striped<Semaphore>} with lazily initialized, weakly referenced semaphores,
    * with the specified number of permits.
    *
@@ -226,7 +226,7 @@ public abstract class Striped<L> {
     });
   }
 
-  /* 
+  /**
    * Creates a {@code Striped<ReadWriteLock>} with eagerly initialized, strongly referenced
    * read-write locks. Every lock is reentrant.
    *
@@ -237,7 +237,7 @@ public abstract class Striped<L> {
     return new CompactStriped<ReadWriteLock>(stripes, READ_WRITE_LOCK_SUPPLIER);
   }
 
-  /* 
+  /**
    * Creates a {@code Striped<ReadWriteLock>} with lazily initialized, weakly referenced
    * read-write locks. Every lock is reentrant.
    *
@@ -257,7 +257,7 @@ public abstract class Striped<L> {
   };
 
   private abstract static class PowerOfTwoStriped<L> extends Striped<L> {
-    /*  Capacity (power of two) minus one, for fast mod evaluation */
+    /** Capacity (power of two) minus one, for fast mod evaluation */
     final int mask;
 
     PowerOfTwoStriped(int stripes) {
@@ -275,12 +275,12 @@ public abstract class Striped<L> {
     }
   }
 
-  /* 
+  /**
    * Implementation of Striped where 2^k stripes are represented as an array of the same length,
    * eagerly initialized.
    */
   private static class CompactStriped<L> extends PowerOfTwoStriped<L> {
-    /*  Size is a power of two. */
+    /** Size is a power of two. */
     private final Object[] array;
 
     private CompactStriped(int stripes, Supplier<L> supplier) {
@@ -303,7 +303,7 @@ public abstract class Striped<L> {
     }
   }
 
-  /* 
+  /**
    * Implementation of Striped where up to 2^k stripes can be represented, using a Cache
    * where the key domain is [0..2^k). To map a user key into a stripe, we take a k-bit slice of the
    * user key's (smeared) hashCode(). The stripes are lazily initialized and are weakly referenced.
@@ -338,7 +338,7 @@ public abstract class Striped<L> {
     }
   }
 
-  /* 
+  /**
    * A bit mask were all bits are set.
    */
   private static final int ALL_SET = ~0;

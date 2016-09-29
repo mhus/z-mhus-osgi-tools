@@ -28,7 +28,7 @@ import java.util.BitSet;
 
 import javax.annotation.CheckReturnValue;
 
-/* 
+/**
  * Determines a true or false value for any Java {@code char} value, just as {@link Predicate} does
  * for any {@link Object}. Also offers basic text processing methods based on this function.
  * Implementations are strongly encouraged to be side-effect-free and immutable.
@@ -56,7 +56,7 @@ import javax.annotation.CheckReturnValue;
 @GwtCompatible(emulated = true)
 public abstract class CharMatcher implements Predicate<Character> {
   // Constants
-  /* 
+  /**
    * Determines whether a character is a breaking whitespace (that is, a whitespace which can be
    * interpreted as a break between words for formatting purposes). See {@link #WHITESPACE} for a
    * discussion of that term.
@@ -93,7 +93,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is ASCII, meaning that its code point is less than 128.
    */
   public static final CharMatcher ASCII = inRange('\0', '\u007f', "CharMatcher.ASCII");
@@ -141,14 +141,14 @@ public abstract class CharMatcher implements Predicate<Character> {
     NINES = builder.toString();
   }
 
-  /* 
+  /**
    * Determines whether a character is a digit according to
    * <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5Cp%7Bdigit%7D">Unicode</a>.
    */
   public static final CharMatcher DIGIT = new RangesMatcher(
       "CharMatcher.DIGIT", ZEROES.toCharArray(), NINES.toCharArray());
 
-  /* 
+  /**
    * Determines whether a character is a digit according to {@link Character#isDigit(char) Java's
    * definition}. If you only care to match ASCII digits, you can use {@code inRange('0', '9')}.
    */
@@ -158,7 +158,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is a letter according to {@link Character#isLetter(char) Java's
    * definition}. If you only care to match letters of the Latin alphabet, you can use {@code
    * inRange('a', 'z').or(inRange('A', 'Z'))}.
@@ -169,7 +169,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is a letter or digit according to {@link
    * Character#isLetterOrDigit(char) Java's definition}.
    */
@@ -180,7 +180,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is upper case according to {@link Character#isUpperCase(char)
    * Java's definition}.
    */
@@ -191,7 +191,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is lower case according to {@link Character#isLowerCase(char)
    * Java's definition}.
    */
@@ -202,7 +202,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   };
 
-  /* 
+  /**
    * Determines whether a character is an ISO control character as specified by {@link
    * Character#isISOControl(char)}.
    */
@@ -211,7 +211,7 @@ public abstract class CharMatcher implements Predicate<Character> {
       .or(inRange('\u007f', '\u009f'))
       .withToString("CharMatcher.JAVA_ISO_CONTROL");
 
-  /* 
+  /**
    * Determines whether a character is invisible; that is, if its Unicode category is any of
    * SPACE_SEPARATOR, LINE_SEPARATOR, PARAGRAPH_SEPARATOR, CONTROL, FORMAT, SURROGATE, and
    * PRIVATE_USE according to ICU4J.
@@ -233,7 +233,7 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   }
 
-  /* 
+  /**
    * Determines whether a character is single-width (not double-width). When in doubt, this matcher
    * errs on the side of returning {@code false} (that is, it tends to assume a character is
    * double-width).
@@ -245,7 +245,7 @@ public abstract class CharMatcher implements Predicate<Character> {
       "\u0000\u05be\u05d0\u05f3\u0600\u0750\u0e00\u1e00\u2100\ufb50\ufe70\uff61".toCharArray(),
       "\u04f9\u05be\u05ea\u05f4\u06ff\u077f\u0e7f\u20af\u213a\ufdff\ufeff\uffdc".toCharArray());
 
-  /*  Matches any character. */
+  /** Matches any character. */
   public static final CharMatcher ANY =
       new FastMatcher("CharMatcher.ANY") {
         @Override public boolean matches(char c) {
@@ -321,7 +321,7 @@ public abstract class CharMatcher implements Predicate<Character> {
         }
       };
 
-  /*  Matches no characters. */
+  /** Matches no characters. */
   public static final CharMatcher NONE =
       new FastMatcher("CharMatcher.NONE") {
         @Override public boolean matches(char c) {
@@ -405,7 +405,7 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   // Static factories
 
-  /* 
+  /**
    * Returns a {@code char} matcher that matches only one specified character.
    */
   public static CharMatcher is(final char match) {
@@ -439,7 +439,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     };
   }
 
-  /* 
+  /**
    * Returns a {@code char} matcher that matches any character except the one specified.
    *
    * <p>To negate another {@code CharMatcher}, use {@link #negate()}.
@@ -472,7 +472,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     };
   }
 
-  /* 
+  /**
    * Returns a {@code char} matcher that matches any character present in the given character
    * sequence.
    */
@@ -528,7 +528,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     };
   }
 
-  /* 
+  /**
    * Returns a {@code char} matcher that matches any character not present in the given character
    * sequence.
    */
@@ -536,7 +536,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return anyOf(sequence).negate();
   }
 
-  /* 
+  /**
    * Returns a {@code char} matcher that matches any character in a given range (both endpoints are
    * inclusive). For example, to match any lowercase letter of the English alphabet, use {@code
    * CharMatcher.inRange('a', 'z')}.
@@ -565,7 +565,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     };
   }
 
-  /* 
+  /**
    * Returns a matcher with identical behavior to the given {@link Character}-based predicate, but
    * which operates on primitive {@code char} instances instead.
    */
@@ -591,14 +591,14 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   // Constructors
 
-  /* 
+  /**
    * Sets the {@code toString()} from the given description.
    */
   CharMatcher(String description) {
     this.description = description;
   }
 
-  /* 
+  /**
    * Constructor for use by subclasses. When subclassing, you may want to override
    * {@code toString()} to provide a useful description.
    */
@@ -608,12 +608,12 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   // Abstract methods
 
-  /*  Determines a true or false value for the given character. */
+  /** Determines a true or false value for the given character. */
   public abstract boolean matches(char c);
 
   // Non-static factories
 
-  /* 
+  /**
    * Returns a matcher that matches any character not matched by this matcher.
    */
   public CharMatcher negate() {
@@ -667,7 +667,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * Returns a matcher that matches any character matched by both this matcher and {@code other}.
    */
   public CharMatcher and(CharMatcher other) {
@@ -710,7 +710,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * Returns a matcher that matches any character matched by either this matcher or {@code other}.
    */
   public CharMatcher or(CharMatcher other) {
@@ -749,7 +749,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * Returns a {@code char} matcher functionally equivalent to this one, but which may be faster to
    * query than the original; your mileage may vary. Precomputation takes time and is likely to be
    * worthwhile only if the precomputed matcher is queried many thousands of times.
@@ -762,7 +762,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return Platform.precomputeCharMatcher(this);
   }
 
-  /* 
+  /**
    * Subclasses should provide a new CharMatcher with the same characteristics as {@code this},
    * but with their {@code toString} method overridden with the new description.
    *
@@ -774,7 +774,7 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   private static final int DISTINCT_CHARS = Character.MAX_VALUE - Character.MIN_VALUE + 1;
 
-  /* 
+  /**
    * This is the actual implementation of {@link #precomputed}, but we bounce calls through a
    * method on {@link Platform} so that we can have different behavior in GWT.
    *
@@ -804,7 +804,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * A matcher for which precomputation will not yield any significant benefit.
    */
   abstract static class FastMatcher extends CharMatcher {
@@ -847,7 +847,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * Helper method for {@link #precomputedInternal} that doesn't test if the negation is cheaper.
    */
   @GwtIncompatible("java.util.BitSet")
@@ -900,7 +900,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     }
   }
 
-  /* 
+  /**
    * Sets bits in {@code table} matched by this matcher.
    */
   @GwtIncompatible("java.util.BitSet")
@@ -914,7 +914,7 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   // Text processing routines
 
-  /* 
+  /**
    * Returns {@code true} if a character sequence contains at least one matching character.
    * Equivalent to {@code !matchesNoneOf(sequence)}.
    *
@@ -929,7 +929,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return !matchesNoneOf(sequence);
   }
 
-  /* 
+  /**
    * Returns {@code true} if a character sequence contains only matching characters.
    *
    * <p>The default implementation iterates over the sequence, invoking {@link #matches} for each
@@ -948,7 +948,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return true;
   }
 
-  /* 
+  /**
    * Returns {@code true} if a character sequence contains no matching characters. Equivalent to
    * {@code !matchesAnyOf(sequence)}.
    *
@@ -963,7 +963,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return indexIn(sequence) == -1;
   }
 
-  /* 
+  /**
    * Returns the index of the first matching character in a character sequence, or {@code -1} if no
    * matching character is present.
    *
@@ -983,7 +983,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the first matching character in a character sequence, starting from a
    * given position, or {@code -1} if no character matches after that position.
    *
@@ -1009,7 +1009,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the last matching character in a character sequence, or {@code -1} if no
    * matching character is present.
    *
@@ -1028,7 +1028,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the number of matching characters found in a character sequence.
    */
   public int countIn(CharSequence sequence) {
@@ -1041,7 +1041,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return count;
   }
 
-  /* 
+  /**
    * Returns a string containing all non-matching characters of a character sequence, in order. For
    * example: <pre>   {@code
    *
@@ -1078,7 +1078,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return new String(chars, 0, pos - spread);
   }
 
-  /* 
+  /**
    * Returns a string containing all matching characters of a character sequence, in order. For
    * example: <pre>   {@code
    *
@@ -1091,7 +1091,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return negate().removeFrom(sequence);
   }
 
-  /* 
+  /**
    * Returns a string copy of the input character sequence, with each character that matches this
    * matcher replaced by a given replacement character. For example: <pre>   {@code
    *
@@ -1125,7 +1125,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return new String(chars);
   }
 
-  /* 
+  /**
    * Returns a string copy of the input character sequence, with each character that matches this
    * matcher replaced by a given replacement sequence. For example: <pre>   {@code
    *
@@ -1172,7 +1172,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return buf.toString();
   }
 
-  /* 
+  /**
    * Returns a substring of the input character sequence that omits all characters this matcher
    * matches from the beginning and from the end of the string. For example: <pre>   {@code
    *
@@ -1206,7 +1206,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return sequence.subSequence(first, last + 1).toString();
   }
 
-  /* 
+  /**
    * Returns a substring of the input character sequence that omits all characters this matcher
    * matches from the beginning of the string. For example: <pre> {@code
    *
@@ -1225,7 +1225,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return "";
   }
 
-  /* 
+  /**
    * Returns a substring of the input character sequence that omits all characters this matcher
    * matches from the end of the string. For example: <pre> {@code
    *
@@ -1244,7 +1244,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return "";
   }
 
-  /* 
+  /**
    * Returns a string copy of the input character sequence, with each group of consecutive
    * characters that match this matcher replaced by a single replacement character. For example:
    * <pre>   {@code
@@ -1285,7 +1285,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return sequence.toString();
   }
 
-  /* 
+  /**
    * Collapses groups of matching characters exactly as {@link #collapseFrom} does, except that
    * groups of matching characters at the start or end of the sequence are removed without
    * replacement.
@@ -1328,7 +1328,7 @@ public abstract class CharMatcher implements Predicate<Character> {
 
   // Predicate interface
 
-  /* 
+  /**
    * Equivalent to {@link #matches}; provided only to satisfy the {@link Predicate} interface. When
    * using a reference of type {@code CharMatcher}, invoke {@link #matches} directly instead.
    */
@@ -1336,7 +1336,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return matches(character);
   }
 
-  /* 
+  /**
    * Returns a string representation of this {@code CharMatcher}, such as
    * {@code CharMatcher.or(WHITESPACE, JAVA_DIGIT)}.
    */
@@ -1345,7 +1345,7 @@ public abstract class CharMatcher implements Predicate<Character> {
     return description;
   }
 
-  /* 
+  /**
    * A special-case CharMatcher for Unicode whitespace characters that is extremely
    * efficient both in space required and in time to check for matches.
    *
@@ -1375,7 +1375,7 @@ public abstract class CharMatcher implements Predicate<Character> {
       + "\u0000\u0000\u0085\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a"
       + "\u0000\u0000\u0000\u0000\u0000\u205f\u1680\u0000\u0000\u180e\u0000\u0000\u0000";
 
-  /* 
+  /**
    * Determines whether a character is whitespace according to the latest Unicode standard, as
    * illustrated
    * <a href="http://unicode.org/cldr/utility/list-unicodeset.jsp?a=%5Cp%7Bwhitespace%7D">here</a>.

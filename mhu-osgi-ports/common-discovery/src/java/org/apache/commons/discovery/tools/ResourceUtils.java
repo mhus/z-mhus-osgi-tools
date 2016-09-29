@@ -26,7 +26,7 @@ import org.apache.commons.discovery.ResourceIterator;
 import org.apache.commons.discovery.resource.ClassLoaders;
 import org.apache.commons.discovery.resource.DiscoverResources;
 
-/* 
+/**
  * Mechanisms to locate and load a class.
  *
  * The load methods locate a class only.
@@ -35,7 +35,7 @@ import org.apache.commons.discovery.resource.DiscoverResources;
  */
 public class ResourceUtils {
 
-    /* 
+    /**
      * Get package name.
      *
      * Not all class loaders 'keep' package information,
@@ -58,7 +58,7 @@ public class ResourceUtils {
         return packageName;
     }
 
-    /* 
+    /**
      * Load the resource <code>resourceName</code>.
      *
      * Try each classloader in succession,
@@ -86,7 +86,7 @@ public class ResourceUtils {
         if (spi != null  &&
             !resources.hasNext()  &&
             resourceName.charAt(0) != '/') {
-            /* 
+            /**
              * If we didn't find the resource, and if the resourceName
              * isn't an 'absolute' path name, then qualify with
              * package name of the spi.
@@ -100,7 +100,7 @@ public class ResourceUtils {
                : null;
     }
 
-    /* 
+    /**
      * Load named property file, optionally qualified by spi's package name
      * as per Class.getResource.
      *

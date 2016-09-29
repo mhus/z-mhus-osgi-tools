@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation for {@link FilteredMultimap#values()}.
  * 
  * @author Louis Wasserman

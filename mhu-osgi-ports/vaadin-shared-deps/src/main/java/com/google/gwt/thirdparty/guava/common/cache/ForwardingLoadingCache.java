@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.collect.ImmutableMap;
 
 import java.util.concurrent.ExecutionException;
 
-/* 
+/**
  * A cache which forwards all its method calls to another cache. Subclasses should override one or
  * more methods to modify the behavior of the backing cache as desired per the
  * <a href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -37,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 public abstract class ForwardingLoadingCache<K, V>
     extends ForwardingCache<K, V> implements LoadingCache<K, V> {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingLoadingCache() {}
 
   @Override
@@ -68,7 +68,7 @@ public abstract class ForwardingLoadingCache<K, V>
     delegate().refresh(key);
   }
 
-  /* 
+  /**
    * A simplified version of {@link ForwardingLoadingCache} where subclasses can pass in an already
    * constructed {@link LoadingCache} as the delegete.
    *

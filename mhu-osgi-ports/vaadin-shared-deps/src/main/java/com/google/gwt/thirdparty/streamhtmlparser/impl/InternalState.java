@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-/* 
+/**
  * A very simple representation of the parser internal state. The state
  * contains a small integer identifier (from 1 to 255) to allow for
  * the implementation of a simple finite state machine. The name is
@@ -50,7 +50,7 @@ class InternalState {
   private final String name;
   private final int id;
 
-  /* 
+  /**
    * @param name the {@code String} identifier for this state
    * @param id the integer identiifer for this state, guaranteed to be unique
    */
@@ -62,7 +62,7 @@ class InternalState {
     this.id = id;
   }
 
-  /* 
+  /**
    * Used only for the error state. Bypasses assert checks.
    */
   private InternalState() {
@@ -70,21 +70,21 @@ class InternalState {
     id = 0;
   }
 
-  /* 
+  /**
    * @return {@code String} name of that state.
    */
   public String getName() {
     return name;
   }
 
-  /* 
+  /**
    * @return {@code int} id of that state.
    */
   public int getId() {
     return id;
   }
 
-  /* 
+  /**
    * @return {@code String} representation of that object, the format
    *         may change.
    */
@@ -93,7 +93,7 @@ class InternalState {
     return String.format("InternalState: Name: %s; Id: %d", name, id);
   }
 
-  /* 
+  /**
    * Obtain a new {@code InternalState} instance for the HTML parser.
    *
    * @param name a unique identifier for this state useful during debugging
@@ -104,7 +104,7 @@ class InternalState {
     return new InternalState(name, htmlStateId);
   }
 
-  /* 
+  /**
    * Obtain a new <code>InternalState</code> instance for the Javascript parser.
    *
    * @param name A unique identifier for this state useful during debugging

@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.ListIterator;
 
-/* 
+/**
  * A list iterator that does not support {@link #remove}, {@link #add}, or
  * {@link #set}.
  *
@@ -30,10 +30,10 @@ import java.util.ListIterator;
 @GwtCompatible
 public abstract class UnmodifiableListIterator<E>
     extends UnmodifiableIterator<E> implements ListIterator<E> {
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected UnmodifiableListIterator() {}
 
-  /* 
+  /**
    * Guaranteed to throw an exception and leave the underlying data unmodified.
    *
    * @throws UnsupportedOperationException always
@@ -43,7 +43,7 @@ public abstract class UnmodifiableListIterator<E>
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Guaranteed to throw an exception and leave the underlying data unmodified.
    *
    * @throws UnsupportedOperationException always

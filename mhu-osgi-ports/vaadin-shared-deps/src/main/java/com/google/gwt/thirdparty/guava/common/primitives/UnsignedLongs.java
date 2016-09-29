@@ -24,7 +24,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Comparator;
 
-/* 
+/**
  * Static utility methods pertaining to {@code long} primitives that interpret values as
  * <i>unsigned</i> (that is, any negative value {@code x} is treated as the positive value
  * {@code 2^64 + x}). The methods for which signedness is not an issue are in {@link Longs}, as
@@ -54,7 +54,7 @@ public final class UnsignedLongs {
 
   public static final long MAX_VALUE = -1L; // Equivalent to 2^64 - 1
 
-  /* 
+  /**
    * A (self-inverse) bijection which converts the ordering on unsigned longs to the ordering on
    * longs, that is, {@code a <= b} as unsigned longs if and only if {@code flip(a) <= flip(b)}
    * as signed longs.
@@ -63,7 +63,7 @@ public final class UnsignedLongs {
     return a ^ Long.MIN_VALUE;
   }
 
-  /* 
+  /**
    * Compares the two specified {@code long} values, treating them as unsigned values between
    * {@code 0} and {@code 2^64 - 1} inclusive.
    *
@@ -76,7 +76,7 @@ public final class UnsignedLongs {
     return Longs.compare(flip(a), flip(b));
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}, treating values as unsigned.
    *
    * @param array a <i>nonempty</i> array of unsigned {@code long} values
@@ -96,7 +96,7 @@ public final class UnsignedLongs {
     return flip(min);
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}, treating values as unsigned.
    *
    * @param array a <i>nonempty</i> array of unsigned {@code long} values
@@ -116,7 +116,7 @@ public final class UnsignedLongs {
     return flip(max);
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied unsigned {@code long} values separated by
    * {@code separator}. For example, {@code join("-", 1, 2, 3)} returns the string {@code "1-2-3"}.
    *
@@ -139,7 +139,7 @@ public final class UnsignedLongs {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two arrays of unsigned {@code long} values
    * lexicographically. That is, it compares, using {@link #compare(long, long)}), the first pair of
    * values that follow any common prefix, or when one array is a prefix of the other, treats the
@@ -171,7 +171,7 @@ public final class UnsignedLongs {
     }
   }
 
-  /* 
+  /**
    * Returns dividend / divisor, where the dividend and divisor are treated as unsigned 64-bit
    * quantities.
    *
@@ -204,7 +204,7 @@ public final class UnsignedLongs {
     return quotient + (compare(rem, divisor) >= 0 ? 1 : 0);
   }
 
-  /* 
+  /**
    * Returns dividend % divisor, where the dividend and divisor are treated as unsigned 64-bit
    * quantities.
    *
@@ -238,7 +238,7 @@ public final class UnsignedLongs {
     return rem - (compare(rem, divisor) >= 0 ? divisor : 0);
   }
 
-  /* 
+  /**
    * Returns the unsigned {@code long} value represented by the given decimal string.
    *
    * @throws NumberFormatException if the string does not contain a valid unsigned {@code long}
@@ -250,7 +250,7 @@ public final class UnsignedLongs {
     return parseUnsignedLong(s, 10);
   }
 
-  /* 
+  /**
    * Returns the unsigned {@code long} value represented by the given string.
    *
    * Accepts a decimal, hexadecimal, or octal number given by specifying the following prefix:
@@ -279,7 +279,7 @@ public final class UnsignedLongs {
     }
   }
 
-  /* 
+  /**
    * Returns the unsigned {@code long} value represented by a string with the given radix.
    *
    * @param s the string containing the unsigned {@code long} representation to be parsed.
@@ -315,7 +315,7 @@ public final class UnsignedLongs {
     return value;
   }
 
-  /* 
+  /**
    * Returns true if (current * radix) + digit is a number too large to be represented by an
    * unsigned long. This is useful for detecting overflow while parsing a string representation of
    * a number. Does not verify whether supplied radix is valid, passing an invalid radix will give
@@ -337,14 +337,14 @@ public final class UnsignedLongs {
     return true;
   }
 
-  /* 
+  /**
    * Returns a string representation of x, where x is treated as unsigned.
    */
   public static String toString(long x) {
     return toString(x, 10);
   }
 
-  /* 
+  /**
    * Returns a string representation of {@code x} for the given radix, where {@code x} is treated
    * as unsigned.
    *

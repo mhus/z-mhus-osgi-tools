@@ -36,7 +36,7 @@ import java.util.RandomAccess;
 
 import javax.annotation.CheckForNull;
 
-/* 
+/**
  * Static utility methods pertaining to {@code int} primitives, that are not
  * already found in either {@link Integer} or {@link Arrays}.
  *
@@ -51,20 +51,20 @@ import javax.annotation.CheckForNull;
 public final class Ints {
   private Ints() {}
 
-  /* 
+  /**
    * The number of bytes required to represent a primitive {@code int}
    * value.
    */
   public static final int BYTES = Integer.SIZE / Byte.SIZE;
 
-  /* 
+  /**
    * The largest power of two that can be represented as an {@code int}.
    *
    * @since 10.0
    */
   public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
 
-  /* 
+  /**
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Integer) value).hashCode()}.
    *
@@ -75,7 +75,7 @@ public final class Ints {
     return value;
   }
 
-  /* 
+  /**
    * Returns the {@code int} value that is equal to {@code value}, if possible.
    *
    * @param value any value in the range of the {@code int} type
@@ -89,7 +89,7 @@ public final class Ints {
     return result;
   }
 
-  /* 
+  /**
    * Returns the {@code int} nearest in value to {@code value}.
    *
    * @param value any {@code long} value
@@ -107,7 +107,7 @@ public final class Ints {
     return (int) value;
   }
 
-  /* 
+  /**
    * Compares the two specified {@code int} values. The sign of the value
    * returned is the same as that of {@code ((Integer) a).compareTo(b)}.
    *
@@ -120,7 +120,7 @@ public final class Ints {
     return (a < b) ? -1 : ((a > b) ? 1 : 0);
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -138,7 +138,7 @@ public final class Ints {
     return false;
   }
 
-  /* 
+  /**
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -162,7 +162,7 @@ public final class Ints {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -192,7 +192,7 @@ public final class Ints {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -216,7 +216,7 @@ public final class Ints {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code int} values
@@ -235,7 +235,7 @@ public final class Ints {
     return min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code int} values
@@ -254,6 +254,15 @@ public final class Ints {
     return max;
   }
 
+  /**
+   * Returns the values from each provided array combined into a single array.
+   * For example, {@code concat(new int[] {a, b}, new int[] {}, new
+   * int[] {c}} returns the array {@code {a, b, c}}.
+   *
+   * @param arrays zero or more {@code int} arrays
+   * @return a single array containing all the values from the source arrays, in
+   *     order
+   */
   public static int[] concat(int[]... arrays) {
     int length = 0;
     for (int[] array : arrays) {
@@ -268,6 +277,17 @@ public final class Ints {
     return result;
   }
 
+  /**
+   * Returns a big-endian representation of {@code value} in a 4-element byte
+   * array; equivalent to {@code ByteBuffer.allocate(4).putInt(value).array()}.
+   * For example, the input value {@code 0x12131415} would yield the byte array
+   * {@code {0x12, 0x13, 0x14, 0x15}}.
+   *
+   * <p>If you need to convert and concatenate several values (possibly even of
+   * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
+   * {@link com.google.gwt.thirdparty.guava.common.io.ByteStreams#newDataOutput()} to get a growable
+   * buffer.
+   */
   @GwtIncompatible("doesn't work")
   public static byte[] toByteArray(int value) {
     return new byte[] {
@@ -277,6 +297,18 @@ public final class Ints {
         (byte) value};
   }
 
+  /**
+   * Returns the {@code int} value whose big-endian representation is stored in
+   * the first 4 bytes of {@code bytes}; equivalent to {@code
+   * ByteBuffer.wrap(bytes).getInt()}. For example, the input byte array {@code
+   * {0x12, 0x13, 0x14, 0x15, 0x33}} would yield the {@code int} value {@code
+   * 0x12131415}.
+   *
+   * <p>Arguably, it's preferable to use {@link java.nio.ByteBuffer}; that
+   * library exposes much more flexibility at little cost in readability.
+   *
+   * @throws IllegalArgumentException if {@code bytes} has fewer than 4 elements
+   */
   @GwtIncompatible("doesn't work")
   public static int fromByteArray(byte[] bytes) {
     checkArgument(bytes.length >= BYTES,
@@ -284,12 +316,19 @@ public final class Ints {
     return fromBytes(bytes[0], bytes[1], bytes[2], bytes[3]);
   }
 
+  /**
+   * Returns the {@code int} value whose byte representation is the given 4
+   * bytes, in big-endian order; equivalent to {@code Ints.fromByteArray(new
+   * byte[] {b1, b2, b3, b4})}.
+   *
+   * @since 7.0
+   */
   @GwtIncompatible("doesn't work")
   public static int fromBytes(byte b1, byte b2, byte b3, byte b4) {
     return b1 << 24 | (b2 & 0xFF) << 16 | (b3 & 0xFF) << 8 | (b4 & 0xFF);
   }
 
-  /* 
+  /**
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -321,7 +360,7 @@ public final class Ints {
     return copy;
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code int} values separated
    * by {@code separator}. For example, {@code join("-", 1, 2, 3)} returns
    * the string {@code "1-2-3"}.
@@ -345,7 +384,7 @@ public final class Ints {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code int} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(int, int)}), the first pair of values that follow any
@@ -380,7 +419,7 @@ public final class Ints {
     }
   }
 
-  /* 
+  /**
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code int} value in the manner of {@link Number#intValue}.
    *
@@ -410,7 +449,7 @@ public final class Ints {
     return array;
   }
 
-  /* 
+  /**
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link
@@ -554,7 +593,7 @@ public final class Ints {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Parses the specified string as a signed decimal integer value. The ASCII
    * character {@code '-'} (<code>'&#92;u002D'</code>) is recognized as the
    * minus sign.

@@ -27,7 +27,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * An executor service which forwards all its method calls to another executor
  * service. Subclasses should override one or more methods to modify the
  * behavior of the backing executor service as desired per the <a
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeoutException;
  */
 public abstract class ForwardingExecutorService extends ForwardingObject
     implements ExecutorService {
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingExecutorService() {}
   
   @Override

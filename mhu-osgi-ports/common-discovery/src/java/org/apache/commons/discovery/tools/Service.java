@@ -26,7 +26,7 @@ import org.apache.commons.discovery.resource.ClassLoaders;
 import org.apache.commons.discovery.resource.classes.DiscoverClasses;
 import org.apache.commons.discovery.resource.names.DiscoverServiceNames;
 
-/* 
+/**
  * [this was ServiceDiscovery12... the 1.1 versus 1.2 issue
  * has been abstracted to org.apache.commons.discover.jdk.JDKHooks]
  *
@@ -45,13 +45,13 @@ import org.apache.commons.discovery.resource.names.DiscoverServiceNames;
  */
 public class Service {
 
-    /* 
+    /**
      * Construct a new service discoverer
      */
     protected Service() {
     }
 
-    /* 
+    /**
      * as described in
      * sun/jdk1.3.1/docs/guide/jar/jar.html#Service Provider,
      * Except this uses <code>Enumeration</code>
@@ -66,7 +66,7 @@ public class Service {
         return providers(new SPInterface<T>(spiClass), null);
     }
 
-    /* 
+    /**
      * This version lets you specify constructor arguments..
      *
      * @param <T> Service Provider Interface type

@@ -16,7 +16,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A skeletal implementation of {@code RangeSet}.
  *
  * @author Louis Wasserman

@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.io.Serializable;
 import java.util.Iterator;
 
-/*  An ordering that uses the reverse of the natural order of the values. */
+/** An ordering that uses the reverse of the natural order of the values. */
 @GwtCompatible(serializable = true)
 @SuppressWarnings("unchecked") // TODO(kevinb): the right way to explain this??
 final class ReverseNaturalOrdering

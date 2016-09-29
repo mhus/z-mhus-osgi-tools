@@ -10,49 +10,49 @@ public interface SendQueueManager {
 	/**
 	 * Send a mail.
 	 * 
-	 * @param queue TODO
-	 * @param message TODO
-	 * @param addresse TODO
-	 * @throws Exception TODO
+	 * @param queue
+	 * @param message
+	 * @param addresse
+	 * @throws Exception
 	 */
 	void sendMail(String queue, Message message, Address addresse) throws Exception;
 
 	/**
 	 * Send a mail.
 	 * 
-	 * @param queue TODO
-	 * @param message TODO
-	 * @param addresses TODO
-	 * @throws Exception  TODO
+	 * @param queue
+	 * @param message
+	 * @param adresses
+	 * @throws Exception 
 	 */
 	void sendMail(String queue, Message message, Address[] addresses) throws Exception;
 	
 	/**
 	 * Get a queue.
 	 * 
-	 * @param name TODO
-	 * @return the queue
+	 * @param name
+	 * @return
 	 */
 	SendQueue getQueue(String name);
 	
 	/**
 	 * Register a new queue or overwrite a queue.
 	 * 
-	 * @param queue TODO
+	 * @param queue
 	 */
 	void registerQueue(SendQueue queue);
 	
 	/**
 	 * Unregister a existing queue.
 	 * 
-	 * @param name TODO
+	 * @param name
 	 */
 	void unregisterQueue(String name);
 	
 	/**
 	 * Return a list of queue names.
 	 * 
-	 * @return the list
+	 * @return
 	 */
 	String[] getQueueNames();
 

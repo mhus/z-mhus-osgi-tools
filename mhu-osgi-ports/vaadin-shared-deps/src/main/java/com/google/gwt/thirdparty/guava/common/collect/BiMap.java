@@ -23,7 +23,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A bimap (or "bidirectional map") is a map that preserves the uniqueness of
  * its values as well as that of its keys. This constraint enables bimaps to
  * support an "inverse view", which is another bimap containing the same entries
@@ -40,7 +40,7 @@ import javax.annotation.Nullable;
 public interface BiMap<K, V> extends Map<K, V> {
   // Modification Operations
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * @throws IllegalArgumentException if the given value is already bound to a
@@ -50,7 +50,7 @@ public interface BiMap<K, V> extends Map<K, V> {
   @Override
   V put(@Nullable K key, @Nullable V value);
 
-  /* 
+  /**
    * An alternate form of {@code put} that silently removes any existing entry
    * with the value {@code value} before proceeding with the {@link #put}
    * operation. If the bimap previously contained the provided key-value
@@ -71,7 +71,7 @@ public interface BiMap<K, V> extends Map<K, V> {
 
   // Bulk Operations
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p><b>Warning:</b> the results of calling this method may vary depending on
@@ -86,7 +86,7 @@ public interface BiMap<K, V> extends Map<K, V> {
 
   // Views
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a bimap has unique values, this method returns a {@link Set},
@@ -96,7 +96,7 @@ public interface BiMap<K, V> extends Map<K, V> {
   @Override
   Set<V> values();
 
-  /* 
+  /**
    * Returns the inverse view of this bimap, which maps each of this bimap's
    * values to its associated key. The two bimaps are backed by the same data;
    * any changes to one will appear in the other.

@@ -23,7 +23,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
-/* 
+/**
  * The reason why a cached entry was removed.
  *
  * @author Charles Fry
@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentMap;
 @Beta
 @GwtCompatible
 public enum RemovalCause {
-  /* 
+  /**
    * The entry was manually removed by the user. This can result from the user invoking
    * {@link Cache#invalidate}, {@link Cache#invalidateAll(Iterable)}, {@link Cache#invalidateAll()},
    * {@link Map#remove}, {@link ConcurrentMap#remove}, or {@link Iterator#remove}.
@@ -44,7 +44,7 @@ public enum RemovalCause {
     }
   },
 
-  /* 
+  /**
    * The entry itself was not actually removed, but its value was replaced by the user. This can
    * result from the user invoking {@link Cache#put}, {@link LoadingCache#refresh}, {@link Map#put},
    * {@link Map#putAll}, {@link ConcurrentMap#replace(Object, Object)}, or
@@ -57,7 +57,7 @@ public enum RemovalCause {
     }
   },
 
-  /* 
+  /**
    * The entry was removed automatically because its key or value was garbage-collected. This
    * can occur when using {@link CacheBuilder#weakKeys}, {@link CacheBuilder#weakValues}, or
    * {@link CacheBuilder#softValues}.
@@ -69,7 +69,7 @@ public enum RemovalCause {
     }
   },
 
-  /* 
+  /**
    * The entry's expiration timestamp has passed. This can occur when using
    * {@link CacheBuilder#expireAfterWrite} or {@link CacheBuilder#expireAfterAccess}.
    */
@@ -80,7 +80,7 @@ public enum RemovalCause {
     }
   },
 
-  /* 
+  /**
    * The entry was evicted due to size constraints. This can occur when using
    * {@link CacheBuilder#maximumSize} or {@link CacheBuilder#maximumWeight}.
    */
@@ -91,7 +91,7 @@ public enum RemovalCause {
     }
   };
 
-  /* 
+  /**
    * Returns {@code true} if there was an automatic removal due to eviction (the cause is neither
    * {@link #EXPLICIT} nor {@link #REPLACED}).
    */

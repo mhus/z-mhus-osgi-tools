@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * List returned by {@code ImmutableSortedSet.asList()} when the set isn't empty.
  *
  * @author Jared Levy

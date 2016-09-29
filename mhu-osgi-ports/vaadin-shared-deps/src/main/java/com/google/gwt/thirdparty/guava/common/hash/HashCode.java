@@ -28,7 +28,7 @@ import java.security.MessageDigest;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An immutable hash code of arbitrary bit length.
  *
  * @author Dimitris Andreou
@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 public abstract class HashCode {
   HashCode() {}
 
-  /* 
+  /**
    * Returns the first four bytes of {@linkplain #asBytes() this hashcode's bytes}, converted to
    * an {@code int} value in little-endian order.
    *
@@ -47,7 +47,7 @@ public abstract class HashCode {
    */
   public abstract int asInt();
 
-  /* 
+  /**
    * Returns the first eight bytes of {@linkplain #asBytes() this hashcode's bytes}, converted to
    * a {@code long} value in little-endian order.
    *
@@ -55,7 +55,7 @@ public abstract class HashCode {
    */
   public abstract long asLong();
 
-  /* 
+  /**
    * If this hashcode has enough bits, returns {@code asLong()}, otherwise returns a {@code long}
    * value with {@code asBytes()} as the least-significant bytes and {@code 0x00} as the remaining
    * most-significant bytes.
@@ -64,7 +64,7 @@ public abstract class HashCode {
    */
   public abstract long padToLong();
 
-  /* 
+  /**
    * Returns the value of this hash code as a byte array. The caller may modify the byte array;
    * changes to it will <i>not</i> be reflected in this {@code HashCode} object or any other arrays
    * returned by this method.
@@ -72,7 +72,7 @@ public abstract class HashCode {
   // TODO(user): consider ByteString here, when that is available
   public abstract byte[] asBytes();
 
-  /* 
+  /**
    * Creates a 32-bit {@code HashCode} representation of the given int value. The underlying bytes
    * are interpreted in little endian order.
    *
@@ -121,7 +121,7 @@ public abstract class HashCode {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates a 64-bit {@code HashCode} representation of the given long value. The underlying bytes
    * are interpreted in little endian order.
    *
@@ -174,7 +174,7 @@ public abstract class HashCode {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates a {@code HashCode} from a byte array. The array is defensively copied to preserve
    * the immutability contract of {@code HashCode}. The array cannot be empty.
    *
@@ -185,7 +185,7 @@ public abstract class HashCode {
     return fromBytesNoCopy(bytes.clone());
   }
 
-  /* 
+  /**
    * Creates a {@code HashCode} from a byte array. The array is <i>not</i> copied defensively,
    * so it must be handed-off so as to preserve the immutability contract of {@code HashCode}.
    */
@@ -239,12 +239,12 @@ public abstract class HashCode {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns the number of bits in this hash code; a positive multiple of 8.
    */
   public abstract int bits();
 
-  /* 
+  /**
    * Creates a {@code HashCode} from a hexadecimal ({@code base 16}) encoded string. The string must
    * be at least 2 characters long, and contain only valid, lower-cased hexadecimal characters.
    *
@@ -279,7 +279,7 @@ public abstract class HashCode {
     throw new IllegalArgumentException("Illegal hexadecimal character: " + ch);
   }
 
-  /* 
+  /**
    * Copies bytes from this hash code into {@code dest}.
    *
    * @param dest the byte array into which the hash code will be written
@@ -309,7 +309,7 @@ public abstract class HashCode {
     return false;
   }
 
-  /* 
+  /**
    * Returns a "Java hash code" for this {@code HashCode} instance; this is well-defined
    * (so, for example, you can safely put {@code HashCode} instances into a {@code
    * HashSet}) but is otherwise probably not what you want to use.
@@ -330,7 +330,7 @@ public abstract class HashCode {
     return val;
   }
 
-  /* 
+  /**
    * Returns a string containing each byte of {@link #asBytes}, in order, as a two-digit unsigned
    * hexadecimal number in lower case.
    *

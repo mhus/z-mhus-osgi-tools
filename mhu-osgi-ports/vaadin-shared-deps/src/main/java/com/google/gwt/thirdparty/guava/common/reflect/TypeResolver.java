@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An object of this class encapsulates type mappings from type variables. Mappings are established
  * with {@link #where} and types are resolved using {@link #resolveType}.
  *
@@ -66,7 +66,7 @@ public final class TypeResolver {
     return new TypeResolver().where(TypeMappingIntrospector.getTypeMappings(type));
   }
 
-  /* 
+  /**
    * Returns a new {@code TypeResolver} with type variables in {@code formal} mapping to types in
    * {@code actual}.
    *
@@ -91,7 +91,7 @@ public final class TypeResolver {
     return where(mappings);
   }
 
-  /*  Returns a new {@code TypeResolver} with {@code variable} mapping to {@code type}. */
+  /** Returns a new {@code TypeResolver} with {@code variable} mapping to {@code type}. */
   TypeResolver where(Map<? extends TypeVariable<?>, ? extends Type> mappings) {
     return new TypeResolver(typeTable.where(mappings));
   }
@@ -148,7 +148,7 @@ public final class TypeResolver {
     }.visit(from);
   }
 
-  /* 
+  /**
    * Resolves all type variables in {@code type} and all downstream types and
    * returns a corresponding type with type variables resolved.
    */
@@ -206,7 +206,7 @@ public final class TypeResolver {
     }
   }
 
-  /*  A TypeTable maintains mapping from {@link TypeVariable} to types. */
+  /** A TypeTable maintains mapping from {@link TypeVariable} to types. */
   private static class TypeTable {
     private final ImmutableMap<TypeVariable<?>, Type> map;
   
@@ -218,7 +218,7 @@ public final class TypeResolver {
       this.map = map;
     }
 
-    /*  Returns a new {@code TypeResolver} with {@code variable} mapping to {@code type}. */
+    /** Returns a new {@code TypeResolver} with {@code variable} mapping to {@code type}. */
     final TypeTable where(Map<? extends TypeVariable<?>, ? extends Type> mappings) {
       ImmutableMap.Builder<TypeVariable<?>, Type> builder = ImmutableMap.builder();
       builder.putAll(map);
@@ -245,7 +245,7 @@ public final class TypeResolver {
       return resolveInternal(var, guarded);
     }
 
-    /* 
+    /**
      * Resolves {@code var} using the encapsulated type mapping. If it maps to yet another
      * non-reified type or has bounds, {@code forDependants} is used to do further resolution, which
      * doesn't try to resolve any type variable on generic declarations that are already being
@@ -276,7 +276,7 @@ public final class TypeResolver {
 
     private final Map<TypeVariable<?>, Type> mappings = Maps.newHashMap();
 
-    /* 
+    /**
      * Returns type mappings using type parameters and type arguments found in
      * the generic superclass and the super interfaces of {@code contextClass}.
      */

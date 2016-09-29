@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.streamhtmlparser.impl.HtmlParserImpl;
 import java.util.Set;
 import java.util.logging.Logger;
 
-/* 
+/**
  * A factory class to obtain instances of an {@link HtmlParser}.
  * Currently each instance is a new object given these are fairly
  * light-weight.
@@ -36,14 +36,14 @@ public class HtmlParserFactory {
   private static final Logger logger =
       Logger.getLogger(HtmlParserFactory.class.getName());
 
-  /* 
+  /**
    * To provide additional options when creating an {@code HtmlParser} using
    * {@link HtmlParserFactory#createParserInAttribute(HtmlParser.ATTR_TYPE,
    *        boolean, Set)} 
    */
   public enum AttributeOptions {
 
-    /* 
+    /**
      * Indicates that the attribute value is Javascript-quoted. Only takes
      * effect for Javascript-accepting attributes - as identified by
      * {@link HtmlParser.ATTR_TYPE#JS} - and only when the attribute is also
@@ -51,7 +51,7 @@ public class HtmlParserFactory {
      */
     JS_QUOTED,
 
-    /* 
+    /**
      * Indicates the attribute value is only a part of a URL as opposed to a
      * full URL. In particular, the value is not at the start of a URL and
      * hence does not necessitate validation of the URL scheme.
@@ -61,13 +61,13 @@ public class HtmlParserFactory {
     URL_PARTIAL,
   }
 
-  /* 
+  /**
    * To provide additional options when creating an {@code HtmlParser} using
    * {@link HtmlParserFactory#createParserInMode(HtmlParser.Mode, Set)}
    */
   public enum ModeOptions {
 
-    /* 
+    /**
      * Indicates that the parser is inside a quoted {@code String}. Only
      * valid in the {@link HtmlParser.Mode#JS} mode.
      */
@@ -87,7 +87,7 @@ public class HtmlParserFactory {
   private static final HtmlParser parserInStyleAttrQ = createParser();
   private static final HtmlParser parserInJsQ = createParser();
 
-  /* 
+  /**
    * Protects all the createParserXXX methods by throwing a run-time exception
    * if this class failed to initialize properly.
    */
@@ -111,7 +111,7 @@ public class HtmlParserFactory {
   private HtmlParserFactory() {
   }  // COV_NF_LINE
 
-  /* 
+  /**
    * Returns an {@code HtmlParser} object ready to parse HTML input.
    *
    * @return an {@code HtmlParser} in the provided mode
@@ -120,7 +120,7 @@ public class HtmlParserFactory {
     return new HtmlParserImpl();
   }
 
-  /* 
+  /**
    * Returns an {@code HtmlParser} object initialized with the
    * requested Mode. Provide non {@code null} options to provide
    * a more precise initialization with the desired Mode.
@@ -144,7 +144,7 @@ public class HtmlParserFactory {
     return parser;
   }
 
-  /* 
+  /**
    * Returns an {@code HtmlParser} that is a copy of the one
    * supplied. It holds the same internal state and hence can
    * proceed with parsing in-lieu of the supplied parser.
@@ -161,7 +161,7 @@ public class HtmlParserFactory {
     return new HtmlParserImpl((HtmlParserImpl) aHtmlParser);
   }
 
-  /* 
+  /**
    * A very specialized {@code HtmlParser} accessor that returns a parser
    * in a state where it expects to read the value of an attribute
    * of an HTML tag. This is only useful when the parser has not seen a
@@ -237,7 +237,7 @@ public class HtmlParserFactory {
     return parser;
   }
 
-  /* 
+  /**
    * Initializes a set of static parsers to be subsequently used
    * by the various createParserXXX methods.
    * The parsers are set to their proper states by making them parse
@@ -290,7 +290,7 @@ public class HtmlParserFactory {
     parserInStyleAttrQ.parse("<xparsertag style=\"");
   }
 
-  /* 
+  /**
    * Throws an {@link AssertionError} if the class was not initialized
    * correctly, otherwise simply returns. This is to protect against the
    * possibility the needed parsers were not created successfully during

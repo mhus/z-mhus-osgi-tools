@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-/* 
+/**
  * Basic implementation of a {@link SortedSetMultimap} with a sorted key set.
  * 
  * This superclass allows {@code TreeMultimap} to override methods to return

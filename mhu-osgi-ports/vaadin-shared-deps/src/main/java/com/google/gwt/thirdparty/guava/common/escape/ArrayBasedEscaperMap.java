@@ -25,7 +25,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.VisibleForTesting;
 import java.util.Collections;
 import java.util.Map;
 
-/* 
+/**
  * An implementation-specific parameter class suitable for initializing
  * {@link ArrayBasedCharEscaper} or {@link ArrayBasedUnicodeEscaper} instances.
  * This class should be used when more than one escaper is created using the
@@ -45,7 +45,7 @@ import java.util.Map;
 @Beta
 @GwtCompatible
 public final class ArrayBasedEscaperMap {
-  /* 
+  /**
    * Returns a new ArrayBasedEscaperMap for creating ArrayBasedCharEscaper or
    * ArrayBasedUnicodeEscaper instances.
    *

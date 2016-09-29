@@ -27,7 +27,7 @@ import sun.misc.Unsafe;
 import java.nio.ByteOrder;
 import java.util.Comparator;
 
-/* 
+/**
  * Static utility methods pertaining to {@code byte} primitives that interpret
  * values as <i>unsigned</i> (that is, any negative value {@code b} is treated
  * as the positive value {@code 256 + b}). The corresponding methods that treat
@@ -47,7 +47,7 @@ import java.util.Comparator;
 public final class UnsignedBytes {
   private UnsignedBytes() {}
 
-  /* 
+  /**
    * The largest power of two that can be represented as an unsigned {@code
    * byte}.
    *
@@ -55,7 +55,7 @@ public final class UnsignedBytes {
    */
   public static final byte MAX_POWER_OF_TWO = (byte) 0x80;
 
-  /* 
+  /**
    * The largest value that fits into an unsigned byte.
    *
    * @since 13.0
@@ -64,7 +64,7 @@ public final class UnsignedBytes {
 
   private static final int UNSIGNED_MASK = 0xFF;
 
-  /* 
+  /**
    * Returns the value of the given byte as an integer, when treated as
    * unsigned. That is, returns {@code value + 256} if {@code value} is
    * negative; {@code value} itself otherwise.
@@ -75,7 +75,7 @@ public final class UnsignedBytes {
     return value & UNSIGNED_MASK;
   }
 
-  /* 
+  /**
    * Returns the {@code byte} value that, when treated as unsigned, is equal to
    * {@code value}, if possible.
    *
@@ -90,7 +90,7 @@ public final class UnsignedBytes {
     return (byte) value;
   }
 
-  /* 
+  /**
    * Returns the {@code byte} value that, when treated as unsigned, is nearest
    * in value to {@code value}.
    *
@@ -108,7 +108,7 @@ public final class UnsignedBytes {
     return (byte) value;
   }
 
-  /* 
+  /**
    * Compares the two specified {@code byte} values, treating them as unsigned
    * values between 0 and 255 inclusive. For example, {@code (byte) -127} is
    * considered greater than {@code (byte) 127} because it is seen as having
@@ -123,7 +123,7 @@ public final class UnsignedBytes {
     return toInt(a) - toInt(b);
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code byte} values
@@ -143,7 +143,7 @@ public final class UnsignedBytes {
     return (byte) min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code byte} values
@@ -163,7 +163,7 @@ public final class UnsignedBytes {
     return (byte) max;
   }
 
-  /* 
+  /**
    * Returns a string representation of x, where x is treated as unsigned.
    *
    * @since 13.0
@@ -173,7 +173,7 @@ public final class UnsignedBytes {
     return toString(x, 10);
   }
 
-  /* 
+  /**
    * Returns a string representation of {@code x} for the given radix, where {@code x} is treated
    * as unsigned.
    *
@@ -191,7 +191,7 @@ public final class UnsignedBytes {
     return Integer.toString(toInt(x), radix);
   }
 
-  /* 
+  /**
    * Returns the unsigned {@code byte} value represented by the given decimal string.
    *
    * @throws NumberFormatException if the string does not contain a valid unsigned {@code byte}
@@ -205,7 +205,7 @@ public final class UnsignedBytes {
     return parseUnsignedByte(string, 10);
   }
 
-  /* 
+  /**
    * Returns the unsigned {@code byte} value represented by a string with the given radix.
    *
    * @param string the string containing the unsigned {@code byte} representation to be parsed.
@@ -228,7 +228,7 @@ public final class UnsignedBytes {
     }
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code byte} values separated by
    * {@code separator}. For example, {@code join(":", (byte) 1, (byte) 2,
    * (byte) 255)} returns the string {@code "1:2:255"}.
@@ -252,7 +252,7 @@ public final class UnsignedBytes {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code byte} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(byte, byte)}), the first pair of values that follow any common
@@ -277,7 +277,7 @@ public final class UnsignedBytes {
     return LexicographicalComparatorHolder.PureJavaComparator.INSTANCE;
   }
 
-  /* 
+  /**
    * Provides a lexicographical comparator implementation; either a Java
    * implementation or a faster implementation based on {@link Unsafe}.
    *
@@ -319,7 +319,7 @@ public final class UnsignedBytes {
 
       static final Unsafe theUnsafe;
 
-      /*  The offset to the first element in a byte array. */
+      /** The offset to the first element in a byte array. */
       static final int BYTE_ARRAY_BASE_OFFSET;
 
       static {
@@ -333,7 +333,7 @@ public final class UnsignedBytes {
         }
       }
       
-      /* 
+      /**
        * Returns a sun.misc.Unsafe.  Suitable for use in a 3rd party package.
        * Replace with a simple call to Unsafe.getUnsafe when integrating
        * into a jdk.
@@ -418,7 +418,7 @@ public final class UnsignedBytes {
       }
     }
 
-    /* 
+    /**
      * Returns the Unsafe-using Comparator, or falls back to the pure-Java
      * implementation if unable to do so.
      */

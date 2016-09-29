@@ -43,7 +43,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Provides static methods for working with {@code Collection} instances.
  *
  * @author Chris Povirk
@@ -55,7 +55,7 @@ import javax.annotation.Nullable;
 public final class Collections2 {
   private Collections2() {}
 
-  /* 
+  /**
    * Returns the elements of {@code unfiltered} that satisfy a predicate. The
    * returned collection is a live view of {@code unfiltered}; changes to one
    * affect the other.
@@ -97,7 +97,7 @@ public final class Collections2 {
         checkNotNull(unfiltered), checkNotNull(predicate));
   }
 
-  /* 
+  /**
    * Delegates to {@link Collection#contains}. Returns {@code false} if the
    * {@code contains} method throws a {@code ClassCastException} or
    * {@code NullPointerException}.
@@ -114,7 +114,7 @@ public final class Collections2 {
     }
   }
 
-  /* 
+  /**
    * Delegates to {@link Collection#remove}. Returns {@code false} if the
    * {@code remove} method throws a {@code ClassCastException} or
    * {@code NullPointerException}.
@@ -222,7 +222,7 @@ public final class Collections2 {
     }
   }
 
-  /* 
+  /**
    * Returns a collection that applies {@code function} to each element of
    * {@code fromCollection}. The returned collection is a live view of {@code
    * fromCollection}; changes to one affect the other.
@@ -273,7 +273,7 @@ public final class Collections2 {
     }
   }
 
-  /* 
+  /**
    * Returns {@code true} if the collection {@code self} contains all of the
    * elements in the collection {@code c}.
    *
@@ -289,7 +289,7 @@ public final class Collections2 {
     return Iterables.all(c, Predicates.in(self));
   }
 
-  /* 
+  /**
    * An implementation of {@link Collection#toString()}.
    */
   static String toStringImpl(final Collection<?> collection) {
@@ -304,7 +304,7 @@ public final class Collections2 {
     return sb.append(']').toString();
   }
 
-  /* 
+  /**
    * Returns best-effort-sized StringBuilder based on the given collection size.
    */
   static StringBuilder newStringBuilderForCollection(int size) {
@@ -312,7 +312,7 @@ public final class Collections2 {
     return new StringBuilder((int) Math.min(size * 8L, Ints.MAX_POWER_OF_TWO));
   }
 
-  /* 
+  /**
    * Used to avoid http://bugs.sun.com/view_bug.do?bug_id=6558557
    */
   static <T> Collection<T> cast(Iterable<T> iterable) {
@@ -321,7 +321,7 @@ public final class Collections2 {
 
   static final Joiner STANDARD_JOINER = Joiner.on(", ").useForNull("null");
 
-  /* 
+  /**
    * Returns a {@link Collection} of all the permutations of the specified
    * {@link Iterable}.
    *
@@ -353,12 +353,33 @@ public final class Collections2 {
     return orderedPermutations(elements, Ordering.natural());
   }
 
-  /* 
+  /**
    * Returns a {@link Collection} of all the permutations of the specified
    * {@link Iterable} using the specified {@link Comparator} for establishing
    * the lexicographical ordering.
    *
-
+   * <p>Examples: <pre>   {@code
+   *
+   *   for (List<String> perm : orderedPermutations(asList("b", "c", "a"))) {
+   *     println(perm);
+   *   }
+   *   // -> ["a", "b", "c"]
+   *   // -> ["a", "c", "b"]
+   *   // -> ["b", "a", "c"]
+   *   // -> ["b", "c", "a"]
+   *   // -> ["c", "a", "b"]
+   *   // -> ["c", "b", "a"]
+   *
+   *   for (List<Integer> perm : orderedPermutations(asList(1, 2, 2, 1))) {
+   *     println(perm);
+   *   }
+   *   // -> [1, 1, 2, 2]
+   *   // -> [1, 2, 1, 2]
+   *   // -> [1, 2, 2, 1]
+   *   // -> [2, 1, 1, 2]
+   *   // -> [2, 1, 2, 1]
+   *   // -> [2, 2, 1, 1]}</pre>
+   *
    * <p><i>Notes:</i> This is an implementation of the algorithm for
    * Lexicographical Permutations Generation, described in Knuth's "The Art of
    * Computer Programming", Volume 4, Chapter 7, Section 7.2.1.2. The
@@ -397,7 +418,7 @@ public final class Collections2 {
       this.size = calculateSize(inputList, comparator);
     }
 
-    /* 
+    /**
      * The number of permutations with repeated elements is calculated as
      * follows:
      * <ul>
@@ -512,7 +533,7 @@ public final class Collections2 {
     }
   }
 
-  /* 
+  /**
    * Returns a {@link Collection} of all the permutations of the specified
    * {@link Collection}.
    *
@@ -633,7 +654,7 @@ public final class Collections2 {
     }
   }
 
-  /* 
+  /**
    * Returns {@code true} if the second list is a permutation of the first.
    */
   private static boolean isPermutation(List<?> first,

@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Useful suppliers.
  *
  * <p>All methods return serializable suppliers as long as they're given
@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
 public final class Suppliers {
   private Suppliers() {}
 
-  /* 
+  /**
    * Returns a new supplier which is the composition of the provided function
    * and supplier. In other words, the new supplier's value will be computed by
    * retrieving the value from {@code supplier}, and then applying
@@ -86,7 +86,7 @@ public final class Suppliers {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a supplier which caches the instance retrieved during the first
    * call to {@code get()} and returns that value on subsequent calls to
    * {@code get()}. See:
@@ -139,7 +139,7 @@ public final class Suppliers {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a supplier that caches the instance supplied by the delegate and
    * removes the cached value after the specified time has passed. Subsequent
    * calls to {@code get()} return the cached value if the expiration time has
@@ -212,7 +212,7 @@ public final class Suppliers {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a supplier that always supplies {@code instance}.
    */
   public static <T> Supplier<T> ofInstance(@Nullable T instance) {
@@ -250,7 +250,7 @@ public final class Suppliers {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a supplier whose {@code get()} method synchronizes on
    * {@code delegate} before calling it, making it thread-safe.
    */
@@ -279,7 +279,7 @@ public final class Suppliers {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a function that accepts a supplier and returns the result of
    * invoking {@link Supplier#get} on that supplier.
    *

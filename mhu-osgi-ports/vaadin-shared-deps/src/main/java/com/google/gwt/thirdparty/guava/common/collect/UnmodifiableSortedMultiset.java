@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.collect.Multisets.UnmodifiableMult
 import java.util.Comparator;
 import java.util.NavigableSet;
 
-/* 
+/**
  * Implementation of {@link Multisets#unmodifiableSortedMultiset(SortedMultiset)},
  * split out into its own file so it can be GWT emulated (to deal with the differing
  * elementSet() types in GWT and non-GWT).

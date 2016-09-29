@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.escape.UnicodeEscaper;
 
-/* 
+/**
  * A {@code UnicodeEscaper} that escapes some set of Java characters using a
  * UTF-8 based percent encoding scheme. The set of safe characters (those which
  * remain unescaped) can be specified on construction.
@@ -65,19 +65,19 @@ public final class PercentEscaper extends UnicodeEscaper {
   private static final char[] UPPER_HEX_DIGITS =
       "0123456789ABCDEF".toCharArray();
 
-  /* 
+  /**
    * If true we should convert space to the {@code +} character.
    */
   private final boolean plusForSpace;
 
-  /* 
+  /**
    * An array of flags where for any {@code char c} if {@code safeOctets[c]} is
    * true then {@code c} should remain unmodified in the output. If
    * {@code c > safeOctets.length} then it should be escaped.
    */
   private final boolean[] safeOctets;
 
-  /* 
+  /**
    * Constructs a percent escaper with the specified safe characters and
    * optional handling of the space character.
    *
@@ -115,7 +115,7 @@ public final class PercentEscaper extends UnicodeEscaper {
     this.safeOctets = createSafeOctets(safeChars);
   }
 
-  /* 
+  /**
    * Creates a boolean array with entries corresponding to the character values
    * specified in safeChars set to true. The array is as small as is required to
    * hold the given character information.
@@ -168,7 +168,7 @@ public final class PercentEscaper extends UnicodeEscaper {
     return s;
   }
 
-  /* 
+  /**
    * Escapes the given Unicode code point in UTF-8.
    */
   @Override

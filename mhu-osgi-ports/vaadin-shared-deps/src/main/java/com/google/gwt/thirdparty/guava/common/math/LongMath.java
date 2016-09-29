@@ -34,7 +34,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.VisibleForTesting;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-/* 
+/**
  * A class for arithmetic on values of type {@code long}. Where possible, methods are defined and
  * named analogously to their {@code BigInteger} counterparts.
  *
@@ -52,7 +52,7 @@ import java.math.RoundingMode;
 public final class LongMath {
   // NOTE: Whenever both tests are cheap and functional, it's faster to use &, | instead of &&, ||
 
-  /* 
+  /**
    * Returns {@code true} if {@code x} represents a power of two.
    *
    * <p>This differs from {@code Long.bitCount(x) == 1}, because
@@ -62,7 +62,7 @@ public final class LongMath {
     return x > 0 & (x & (x - 1)) == 0;
   }
   
-  /* 
+  /**
    * Returns 1 if {@code x < y} as unsigned longs, and 0 otherwise.  Assumes that x - y fits into a
    * signed long.  The implementation is branch-free, and benchmarks suggest it is measurably
    * faster than the straightforward ternary expression.
@@ -73,7 +73,7 @@ public final class LongMath {
     return (int) (~~(x - y) >>> (Long.SIZE - 1));
   }
 
-  /* 
+  /**
    * Returns the base-2 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -111,10 +111,10 @@ public final class LongMath {
     }
   }
 
-  /*  The biggest half power of two that fits into an unsigned long */
+  /** The biggest half power of two that fits into an unsigned long */
   @VisibleForTesting static final long MAX_POWER_OF_SQRT2_UNSIGNED = 0xB504F333F9DE6484L;
 
-  /* 
+  /**
    * Returns the base-10 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -220,7 +220,7 @@ public final class LongMath {
     3162277660168379331L
   };
 
-  /* 
+  /**
    * Returns {@code b} to the {@code k}th power. Even if the result overflows, it will be equal to
    * {@code BigInteger.valueOf(b).pow(k).longValue()}. This implementation runs in {@code O(log k)}
    * time.
@@ -263,7 +263,7 @@ public final class LongMath {
     }
   }
 
-  /* 
+  /**
    * Returns the square root of {@code x}, rounded with the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x < 0}
@@ -335,7 +335,7 @@ public final class LongMath {
     }
   }
 
-  /* 
+  /**
    * Returns the result of dividing {@code p} by {@code q}, rounding using the specified
    * {@code RoundingMode}.
    *
@@ -397,7 +397,7 @@ public final class LongMath {
     return increment ? div + signum : div;
   }
 
-  /* 
+  /**
    * Returns {@code x mod m}. This differs from {@code x % m} in that it always returns a
    * non-negative result.
    *
@@ -419,7 +419,7 @@ public final class LongMath {
     return (int) mod(x, (long) m);
   }
 
-  /* 
+  /**
    * Returns {@code x mod m}. This differs from {@code x % m} in that it always returns a
    * non-negative result.
    *
@@ -444,7 +444,7 @@ public final class LongMath {
     return (result >= 0) ? result : result + m;
   }
 
-  /* 
+  /**
    * Returns the greatest common divisor of {@code a, b}. Returns {@code 0} if
    * {@code a == 0 && b == 0}.
    *
@@ -495,7 +495,7 @@ public final class LongMath {
     return a << min(aTwos, bTwos);
   }
 
-  /* 
+  /**
    * Returns the sum of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a + b} overflows in signed {@code long} arithmetic
@@ -507,7 +507,7 @@ public final class LongMath {
     return result;
   }
 
-  /* 
+  /**
    * Returns the difference of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a - b} overflows in signed {@code long} arithmetic
@@ -519,7 +519,7 @@ public final class LongMath {
     return result;
   }
 
-  /* 
+  /**
    * Returns the product of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a * b} overflows in signed {@code long} arithmetic
@@ -549,7 +549,7 @@ public final class LongMath {
     return result;
   }
 
-  /* 
+  /**
    * Returns the {@code b} to the {@code k}th power, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code b} to the {@code k}th power overflows in signed
@@ -598,7 +598,7 @@ public final class LongMath {
 
   @VisibleForTesting static final long FLOOR_SQRT_MAX_LONG = 3037000499L;
 
-  /* 
+  /**
    * Returns {@code n!}, that is, the product of the first {@code n} positive
    * integers, {@code 1} if {@code n == 0}, or {@link Long#MAX_VALUE} if the
    * result does not fit in a {@code long}.
@@ -635,7 +635,7 @@ public final class LongMath {
       1L * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12 * 13 * 14 * 15 * 16 * 17 * 18 * 19 * 20
   };
 
-  /* 
+  /**
    * Returns {@code n} choose {@code k}, also known as the binomial coefficient of {@code n} and
    * {@code k}, or {@link Long#MAX_VALUE} if the result does not fit in a {@code long}.
    *
@@ -701,7 +701,7 @@ public final class LongMath {
     }
   }
   
-  /* 
+  /**
    * Returns (x * numerator / denominator), which is assumed to come out to an integral value.
    */
   static long multiplyFraction(long x, long numerator, long denominator) {
@@ -740,7 +740,7 @@ public final class LongMath {
     return (int) x == x;
   }
 
-  /* 
+  /**
    * Returns the arithmetic mean of {@code x} and {@code y}, rounded toward
    * negative infinity. This method is resilient to overflow.
    *

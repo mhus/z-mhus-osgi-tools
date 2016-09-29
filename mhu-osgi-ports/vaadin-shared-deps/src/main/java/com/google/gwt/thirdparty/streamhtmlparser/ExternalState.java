@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.streamhtmlparser;
 
 import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
-/* 
+/**
  * A representation of the parser state suitable for use by the caller
  * of the Parser. The meaning of each state and therefore which action
  * the caller should perform on that state is not self-evident. In particular,
@@ -45,7 +45,7 @@ public class ExternalState {
 
   private final String name;
 
-  /* 
+  /**
    * Creates an {@code ExternalState} object.
    *
    * @param name the name to assign to that state
@@ -57,7 +57,7 @@ public class ExternalState {
     this.name = name;
   }
 
-  /* 
+  /**
    * Returns the name of the object. The name is only needed
    * to provide human-readable information when debugging.
    *
@@ -67,7 +67,7 @@ public class ExternalState {
     return name;
   }
 
-  /* 
+  /**
    * Returns the string representation of this external state.
    * The details of this representation are subject to change.
    */

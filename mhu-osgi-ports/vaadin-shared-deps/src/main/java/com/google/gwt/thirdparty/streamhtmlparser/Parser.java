@@ -16,7 +16,7 @@
 
 package com.google.gwt.thirdparty.streamhtmlparser;
 
-/* 
+/**
  * Defines essential functionality that every parser we implement
  * will support. This is then extended for HTML and Javascript parsing.
  *
@@ -34,7 +34,7 @@ public interface Parser {
   public final static ExternalState STATE_ERROR =
       new ExternalState("STATE_ERROR");
 
-  /* 
+  /**
    * Tell the parser to process the provided {@code char}. Throws exception
    * on an unrecoverable parsing error.
    *
@@ -43,7 +43,7 @@ public interface Parser {
    */
   void parse(char input) throws ParseException;
 
-  /* 
+  /**
    * Tell the parser to process the provided {@code String}. Throws exception
    * on an unrecoverable parsing error.
    *
@@ -52,12 +52,12 @@ public interface Parser {
    */
   void parse(String input) throws ParseException;
 
-  /* 
+  /**
    * Reset the parser back to its initial default state.
    */
   void reset();
 
-  /* 
+  /**
    * Returns the current state of the parser. May be {@link #STATE_ERROR}
    * if the parser encountered an error. Such an error may be recoverable
    * and the caller may want to continue parsing until {@link #parse(String)}
@@ -67,24 +67,24 @@ public interface Parser {
    */
   ExternalState getState();
 
-  /* 
+  /**
    * Sets the current line number which is returned during error messages.
    * @param lineNumber the line number to set in the parser
    */
   void setLineNumber(int lineNumber);
 
-  /* 
+  /**
    * Returns the current line number.
    */
   int getLineNumber();
 
-  /* 
+  /**
    * Sets the current column number which is returned during error messages.
    * @param columnNumber the column number to set in the parser
    */
   void setColumnNumber(int columnNumber);
 
-  /* 
+  /**
    * Returns the current column number.
    */
   int getColumnNumber();

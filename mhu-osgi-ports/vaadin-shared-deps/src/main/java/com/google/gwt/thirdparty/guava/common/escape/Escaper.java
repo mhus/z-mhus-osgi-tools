@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.base.Function;
 
-/* 
+/**
  * An object that converts literal text into a format safe for inclusion in a particular context
  * (such as an XML document). Typically (but not always), the inverse process of "unescaping" the
  * text is performed automatically by the relevant parser.
@@ -48,6 +48,10 @@ import com.google.gwt.thirdparty.guava.common.base.Function;
  * extend one of these classes. If you find that you are unable to achieve the desired behavior
  * using either of these classes, please contact the Java libraries team for advice.
  *
+ * <p>Several popular escapers are defined as constants in classes like {@link
+ * com.google.gwt.thirdparty.guava.common.html.HtmlEscapers}, {@link com.google.gwt.thirdparty.guava.common.xml.XmlEscapers}, and {@link
+ * SourceCodeEscapers}. To create your own escapers, use {@link CharEscaperBuilder}, or extend
+ * {@code CharEscaper} or {@code UnicodeEscaper}.
  *
  * @author David Beaumont
  * @since 15.0
@@ -56,10 +60,10 @@ import com.google.gwt.thirdparty.guava.common.base.Function;
 @GwtCompatible
 public abstract class Escaper {
   // TODO(user): evaluate custom implementations, considering package private constructor.
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected Escaper() {}
 
-  /* 
+  /**
    * Returns the escaped form of a given literal string.
    *
    * <p>Note that this method may treat input characters differently depending on the specific
@@ -90,7 +94,7 @@ public abstract class Escaper {
         }
       };
 
-  /* 
+  /**
    * Returns a {@link Function} that invokes {@link #escape(String)} on this escaper.
    */
   public final Function<String, String> asFunction() {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * This package contains utility methods and classes for working with net
  * addresses (numeric IP and domain names).
  *

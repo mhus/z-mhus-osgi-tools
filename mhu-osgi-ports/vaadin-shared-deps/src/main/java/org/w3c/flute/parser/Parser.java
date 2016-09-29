@@ -25,7 +25,7 @@ import org.w3c.flute.parser.selectors.ConditionFactoryImpl;
 
 import org.w3c.flute.util.Encoding;
 
-/* 
+/**
  * A CSS2 parser
  *
  * @author Philippe Le H�garet
@@ -49,14 +49,14 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
     // temporary place holder for pseudo-element ...
     private String pseudoElt;
 
-    /* 
+    /**
      * Creates a new Parser
      */
     public Parser() {
         this((CharStream) null);
     }
 
-    /* 
+    /**
      * @@TODO
      * @exception CSSException Not yet implemented
      */
@@ -64,7 +64,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Set the document handler for this parser
      */
     public void setDocumentHandler(DocumentHandler handler) {
@@ -79,14 +79,14 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         this.conditionFactory = conditionFactory;
     }
 
-    /* 
+    /**
      * Set the error handler for this parser
      */
     public void setErrorHandler(ErrorHandler error) {
         this.errorHandler = error;
     }
 
-    /* 
+    /**
      * Main parse methods
      *
      * @param source the source of the style sheet.
@@ -107,7 +107,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         parserUnit();
     }
 
-    /* 
+    /**
      * Convenient method for URIs.
      *
      * @param systemId the fully resolved URI of the style sheet.
@@ -119,7 +119,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         parseStyleSheet(new InputSource(systemId));
     }
 
-    /* 
+    /**
      * This method parses only one rule (style rule or at-rule, except @charset).
      *
      * @param source the source of the rule.
@@ -140,7 +140,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         _parseRule();
     }
 
-    /* 
+    /**
      * This method parses a style declaration (including the surrounding curly
      * braces).
      *
@@ -162,7 +162,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         _parseDeclarationBlock();
     }
 
-    /* 
+    /**
      * This methods returns "http://www.w3.org/TR/REC-CSS2".
      * @return the string "http://www.w3.org/TR/REC-CSS2".
      */
@@ -170,7 +170,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         return "http://www.w3.org/TR/REC-CSS2";
     }
 
-    /* 
+    /**
      * Parse methods used by DOM Level 2 implementation.
      */
     public void parseImportRule(InputSource source)
@@ -231,7 +231,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         return prio();
     }
 
-    /* 
+    /**
      * Convert the source into a Reader. Used only by DOM Level 2 parser methods.
      */
     private Reader getReader(InputSource source) throws IOException {
@@ -253,7 +253,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
         }
     }
 
-    /* 
+    /**
      * Convert the source into a CharStream with encoding informations.
      * The encoding can be found in the InputSource or in the CSS document.
      * Since this method marks the reader and make a reset after looking for
@@ -413,7 +413,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
  * The grammar of CSS2
  */
 
-/* 
+/**
  * The main entry for the parser.
  *
  * @exception ParseException exception during the parse
@@ -628,7 +628,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
     }
   }
 
-/* 
+/**
  * The import statement
  *
  * @exception ParseException exception during the parse
@@ -716,7 +716,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
     }
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public void media() throws ParseException {
@@ -889,7 +889,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
      ml.addItem(m);
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public String medium() throws ParseException {
@@ -911,7 +911,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public void page() throws ParseException {
@@ -1165,7 +1165,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
     }
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public void atRuleDeclaration() throws ParseException {
@@ -1268,7 +1268,7 @@ public class Parser implements org.w3c.css.sac.Parser, ParserConstants {
      }
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public char combinator() throws ParseException {
@@ -1352,7 +1352,7 @@ char connector = ' ';
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public String property() throws ParseException {
@@ -1374,7 +1374,7 @@ char connector = ' ';
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public void styleRule() throws ParseException {
@@ -1509,7 +1509,7 @@ char connector = ' ';
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Selector selector() throws ParseException {
@@ -1565,7 +1565,7 @@ char connector = ' ';
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Selector simple_selector(Selector selector, char comb) throws ParseException {
@@ -1788,7 +1788,7 @@ char connector = ' ';
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Condition _class(Condition pred) throws ParseException {
@@ -1805,7 +1805,7 @@ Condition c;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public SimpleSelector element_name() throws ParseException {
@@ -1827,7 +1827,7 @@ Condition c;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Condition attrib(Condition pred) throws ParseException {
@@ -1959,7 +1959,7 @@ Condition c;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Condition pseudo(Condition pred) throws ParseException {
@@ -2047,7 +2047,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public Condition hash(Condition pred) throws ParseException {
@@ -2063,7 +2063,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public void declaration() throws ParseException {
@@ -2131,7 +2131,7 @@ Token language;
     }
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public boolean prio() throws ParseException {
@@ -2152,7 +2152,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public LexicalUnitImpl operator(LexicalUnitImpl prev) throws ParseException {
@@ -2202,7 +2202,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public LexicalUnit expr() throws ParseException {
@@ -2262,7 +2262,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public char unaryOperator() throws ParseException {
@@ -2283,7 +2283,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public LexicalUnitImpl term(LexicalUnitImpl prev) throws ParseException {
@@ -2512,7 +2512,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * Handle all CSS2 functions.
  * @exception ParseException exception during the parse
  */
@@ -2795,7 +2795,7 @@ Token language;
     throw new Error("Missing return statement in function");
   }
 
-/* 
+/**
  * @exception ParseException exception during the parse
  */
   final public LexicalUnitImpl hexcolor(LexicalUnitImpl prev) throws ParseException {
@@ -3012,7 +3012,7 @@ Token language;
     return s.toString();
   }
 
-/* 
+/**
  * The following functions are useful for a DOM CSS implementation only and are
  * not part of the general CSS2 parser.
  */

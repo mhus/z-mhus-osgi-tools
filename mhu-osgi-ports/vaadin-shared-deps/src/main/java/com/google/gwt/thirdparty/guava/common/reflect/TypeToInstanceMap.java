@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A map, each entry of which maps a {@link TypeToken} to an instance of that type.
  * In addition to implementing {@code Map}, the additional type-safe operations
  * {@link #putInstance} and {@link #getInstance} are available.
@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 @Beta
 public interface TypeToInstanceMap<B> extends Map<TypeToken<? extends B>, B>  {
 
-  /* 
+  /**
    * Returns the value the specified class is mapped to, or {@code null} if no
    * entry for this class is present. This will only return a value that was
    * bound to this specific class, not a value that may have been bound to a
@@ -59,7 +59,7 @@ public interface TypeToInstanceMap<B> extends Map<TypeToken<? extends B>, B>  {
   @Nullable
   <T extends B> T getInstance(Class<T> type);
 
-  /* 
+  /**
    * Maps the specified class to the specified value. Does <i>not</i> associate
    * this value with any of the class's supertypes.
    * 
@@ -72,7 +72,7 @@ public interface TypeToInstanceMap<B> extends Map<TypeToken<? extends B>, B>  {
   @Nullable
   <T extends B> T putInstance(Class<T> type, @Nullable T value);
 
-  /* 
+  /**
    * Returns the value the specified type is mapped to, or {@code null} if no
    * entry for this type is present. This will only return a value that was
    * bound to this specific type, not a value that may have been bound to a subtype.
@@ -80,7 +80,7 @@ public interface TypeToInstanceMap<B> extends Map<TypeToken<? extends B>, B>  {
   @Nullable
   <T extends B> T getInstance(TypeToken<T> type);
 
-  /* 
+  /**
    * Maps the specified type to the specified value. Does <i>not</i> associate
    * this value with any of the type's supertypes.
    *

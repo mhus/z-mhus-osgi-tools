@@ -36,7 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@link HandlerFindingStrategy} for collecting all event handler methods that are marked with
  * the {@link Subscribe} annotation.
  *
@@ -44,7 +44,7 @@ import javax.annotation.Nullable;
  * @author Louis Wasserman
  */
 class AnnotatedHandlerFinder implements HandlerFindingStrategy {
-  /* 
+  /**
    * A thread-safe cache that contains the mapping from each class to all methods in that class and
    * all super-classes, that are annotated with {@code @Subscribe}. The cache is shared across all
    * instances of this class; this greatly improves performance if multiple EventBus instances are
@@ -60,7 +60,7 @@ class AnnotatedHandlerFinder implements HandlerFindingStrategy {
             }
           });
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * This implementation finds all methods marked with a {@link Subscribe} annotation.
@@ -133,7 +133,7 @@ class AnnotatedHandlerFinder implements HandlerFindingStrategy {
     return ImmutableList.copyOf(identifiers.values());
   }
 
-  /* 
+  /**
    * Creates an {@code EventHandler} for subsequently calling {@code method} on
    * {@code listener}.
    * Selects an EventHandler implementation based on the annotations on
@@ -154,7 +154,7 @@ class AnnotatedHandlerFinder implements HandlerFindingStrategy {
     return wrapper;
   }
 
-  /* 
+  /**
    * Checks whether {@code method} is thread-safe, as indicated by the
    * {@link AllowConcurrentEvents} annotation.
    *

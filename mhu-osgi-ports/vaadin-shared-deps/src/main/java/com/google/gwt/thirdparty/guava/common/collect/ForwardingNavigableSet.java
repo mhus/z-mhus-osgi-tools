@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.SortedSet;
 
-/* 
+/**
  * A navigable set which forwards all its method calls to another navigable set. Subclasses should
  * override one or more methods to modify the behavior of the backing set as desired per the <a
  * href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
@@ -47,7 +47,7 @@ import java.util.SortedSet;
 public abstract class ForwardingNavigableSet<E>
     extends ForwardingSortedSet<E> implements NavigableSet<E> {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingNavigableSet() {}
 
   @Override
@@ -58,7 +58,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().lower(e);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #lower} in terms of the {@code descendingIterator} method of
    * {@link #headSet(Object, boolean)}. If you override {@link #headSet(Object, boolean)}, you may
    * wish to override {@link #lower} to forward to this implementation.
@@ -72,7 +72,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().floor(e);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #floor} in terms of the {@code descendingIterator} method of
    * {@link #headSet(Object, boolean)}. If you override {@link #headSet(Object, boolean)}, you may
    * wish to override {@link #floor} to forward to this implementation.
@@ -86,7 +86,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().ceiling(e);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #ceiling} in terms of the {@code iterator} method of
    * {@link #tailSet(Object, boolean)}. If you override {@link #tailSet(Object, boolean)}, you may
    * wish to override {@link #ceiling} to forward to this implementation.
@@ -100,7 +100,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().higher(e);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #higher} in terms of the {@code iterator} method of
    * {@link #tailSet(Object, boolean)}. If you override {@link #tailSet(Object, boolean)}, you may
    * wish to override {@link #higher} to forward to this implementation.
@@ -114,7 +114,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().pollFirst();
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #pollFirst} in terms of the {@code iterator} method. If you
    * override {@link #iterator} you may wish to override {@link #pollFirst} to forward to this
    * implementation.
@@ -128,7 +128,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().pollLast();
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #pollLast} in terms of the {@code descendingIterator} method.
    * If you override {@link #descendingIterator} you may wish to override {@link #pollLast} to
    * forward to this implementation.
@@ -150,7 +150,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().descendingSet();
   }
 
-  /* 
+  /**
    * A sensible implementation of {@link NavigableSet#descendingSet} in terms of the other methods
    * of {@link NavigableSet}, notably including {@link NavigableSet#descendingIterator}.
    *
@@ -161,7 +161,7 @@ public abstract class ForwardingNavigableSet<E>
    */
   @Beta
   protected class StandardDescendingSet extends Sets.DescendingSet<E> {
-    /*  Constructor for use by subclasses. */
+    /** Constructor for use by subclasses. */
     public StandardDescendingSet() {
       super(ForwardingNavigableSet.this);
     }
@@ -181,7 +181,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().subSet(fromElement, fromInclusive, toElement, toInclusive);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #subSet(Object, boolean, Object, boolean)} in terms of the
    * {@code headSet} and {@code tailSet} methods. In many cases, you may wish to override
    * {@link #subSet(Object, boolean, Object, boolean)} to forward to this implementation.
@@ -195,7 +195,7 @@ public abstract class ForwardingNavigableSet<E>
     return tailSet(fromElement, fromInclusive).headSet(toElement, toInclusive);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #subSet(Object, Object)} in terms of the
    * {@link #subSet(Object, boolean, Object, boolean)} method. If you override
    * {@link #subSet(Object, boolean, Object, boolean)}, you may wish to override
@@ -211,7 +211,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().headSet(toElement, inclusive);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #headSet(Object)} in terms of the
    * {@link #headSet(Object, boolean)} method. If you override
    * {@link #headSet(Object, boolean)}, you may wish to override
@@ -226,7 +226,7 @@ public abstract class ForwardingNavigableSet<E>
     return delegate().tailSet(fromElement, inclusive);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #tailSet(Object)} in terms of the
    * {@link #tailSet(Object, boolean)} method. If you override
    * {@link #tailSet(Object, boolean)}, you may wish to override

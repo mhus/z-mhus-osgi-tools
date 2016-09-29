@@ -24,7 +24,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@code Multimap} that can hold duplicate key-value pairs and that maintains
  * the insertion ordering of values for a given key. See the {@link Multimap}
  * documentation for information common to all multimaps.
@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public interface ListMultimap<K, V> extends Multimap<K, V> {
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -52,7 +52,7 @@ public interface ListMultimap<K, V> extends Multimap<K, V> {
   @Override
   List<V> get(@Nullable K key);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -62,7 +62,7 @@ public interface ListMultimap<K, V> extends Multimap<K, V> {
   @Override
   List<V> removeAll(@Nullable Object key);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -72,7 +72,7 @@ public interface ListMultimap<K, V> extends Multimap<K, V> {
   @Override
   List<V> replaceValues(K key, Iterable<? extends V> values);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p><b>Note:</b> The returned map's values are guaranteed to be of type
@@ -83,7 +83,7 @@ public interface ListMultimap<K, V> extends Multimap<K, V> {
   @Override
   Map<K, Collection<V>> asMap();
 
-  /* 
+  /**
    * Compares the specified object to this multimap for equality.
    *
    * <p>Two {@code ListMultimap} instances are equal if, for each key, they

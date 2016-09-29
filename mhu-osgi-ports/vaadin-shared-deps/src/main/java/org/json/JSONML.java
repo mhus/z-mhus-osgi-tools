@@ -27,7 +27,7 @@ SOFTWARE.
 import java.util.Iterator;
 
 
-/* 
+/**
  * This provides static methods to convert an XML text into a JSONObject,
  * and to covert a JSONObject into an XML text using the JsonML transform.
  * @author JSON.org
@@ -35,7 +35,7 @@ import java.util.Iterator;
  */
 public class JSONML {
 	
-    /* 
+    /**
      * Parse XML values and store them in a JSONArray.
      * @param x       The XMLTokener containing the source string.
      * @param ja      The JSONArray that is containing the current tag or null
@@ -188,7 +188,7 @@ public class JSONML {
     }
 
 
-    /* 
+    /**
      * Convert a well-formed (but not necessarily valid) XML string into a
      * JSONArray using the JsonML transform. Each XML tag is represented as
      * a JSONArray in which the first element is the tag name. If the tag has
@@ -205,7 +205,7 @@ public class JSONML {
     }
 
 
-    /* 
+    /**
      * Convert a well-formed (but not necessarily valid) XML string into a
      * JSONArray using the JsonML transform. Each XML tag is represented as
      * a JSONArray in which the first element is the tag name. If the tag has
@@ -222,7 +222,7 @@ public class JSONML {
     }
 
 
-    /* 
+    /**
      * Reverse the JSONML transformation, making an XML text from a JSONArray.
      * @param ja A JSONArray.
      * @param b A string buffer in which to build the text.
@@ -283,7 +283,7 @@ public class JSONML {
          }
     }
     
-    /* 
+    /**
      * Reverse the JSONML transformation, making an XML text from a JSONArray.
      * @param ja A JSONArray.
      * @return An XML string.

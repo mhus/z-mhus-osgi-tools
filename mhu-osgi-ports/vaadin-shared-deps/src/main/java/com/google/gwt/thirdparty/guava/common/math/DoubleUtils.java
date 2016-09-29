@@ -27,7 +27,7 @@ import static java.lang.Math.getExponent;
 
 import java.math.BigInteger;
 
-/* 
+/**
  * Utilities for {@code double} primitives.
  *
  * @author Louis Wasserman
@@ -56,7 +56,7 @@ final class DoubleUtils {
 
   static final int EXPONENT_BIAS = 1023;
 
-  /* 
+  /**
    * The implicit 1 bit that is omitted in significands of normal doubles.
    */
   static final long IMPLICIT_BIT = SIGNIFICAND_MASK + 1;
@@ -132,7 +132,7 @@ final class DoubleUtils {
     return longBitsToDouble(bits);
   }
 
-  /* 
+  /**
    * Returns its argument if it is non-negative, zero if it is negative.
    */
   static double ensureNonNegative(double value) {

@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.cache;
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * An object that can receive a notification when an entry is removed from a cache. The removal
  * resulting in notification could have occured to an entry being manually removed or replaced, or
  * due to eviction resulting from timed expiration, exceeding a maximum size, or garbage
@@ -39,7 +39,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @Beta
 @GwtCompatible
 public interface RemovalListener<K, V> {
-  /* 
+  /**
    * Notifies the listener that a removal occurred at some point in the past.
    */
   // Technically should accept RemovalNotification<? extends K, ? extends V>, but because

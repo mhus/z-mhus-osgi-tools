@@ -35,7 +35,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/* 
+/**
  * A class for arithmetic on values of type {@code BigInteger}.
  *
  * <p>The implementations of many methods in this class are based on material from Henry S. Warren,
@@ -49,7 +49,7 @@ import java.util.List;
  */
 @GwtCompatible(emulated = true)
 public final class BigIntegerMath {
-  /* 
+  /**
    * Returns {@code true} if {@code x} represents a power of two.
    */
   public static boolean isPowerOfTwo(BigInteger x) {
@@ -57,7 +57,7 @@ public final class BigIntegerMath {
     return x.signum() > 0 && x.getLowestSetBit() == x.bitLength() - 1;
   }
 
-  /* 
+  /**
    * Returns the base-2 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -117,7 +117,7 @@ public final class BigIntegerMath {
   @VisibleForTesting static final BigInteger SQRT2_PRECOMPUTED_BITS =
       new BigInteger("16a09e667f3bcc908b2fb1366ea957d3e3adec17512775099da2f590b0667322a", 16);
 
-  /* 
+  /**
    * Returns the base-10 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -195,7 +195,7 @@ public final class BigIntegerMath {
   private static final double LN_10 = Math.log(10);
   private static final double LN_2 = Math.log(2);
 
-  /* 
+  /**
    * Returns the square root of {@code x}, rounded with the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x < 0}
@@ -283,7 +283,7 @@ public final class BigIntegerMath {
     return DoubleMath.roundToBigInteger(Math.sqrt(DoubleUtils.bigToDouble(x)), HALF_EVEN);
   }
 
-  /* 
+  /**
    * Returns the result of dividing {@code p} by {@code q}, rounding using the specified
    * {@code RoundingMode}.
    *
@@ -297,7 +297,7 @@ public final class BigIntegerMath {
     return pDec.divide(qDec, 0, mode).toBigIntegerExact();
   }
 
-  /* 
+  /**
    * Returns {@code n!}, that is, the product of the first {@code n} positive
    * integers, or {@code 1} if {@code n == 0}.
    *
@@ -385,7 +385,7 @@ public final class BigIntegerMath {
     }
   }
 
- /* 
+ /**
    * Returns {@code n} choose {@code k}, also known as the binomial coefficient of {@code n} and
    * {@code k}, that is, {@code n! / (k! (n - k)!)}.
    *

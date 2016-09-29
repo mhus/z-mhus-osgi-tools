@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link ImmutableMap} backed by a non-empty {@link
  * java.util.EnumMap}.
  *

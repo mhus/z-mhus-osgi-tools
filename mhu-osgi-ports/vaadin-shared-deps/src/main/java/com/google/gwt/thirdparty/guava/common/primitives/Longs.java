@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
 
-/* 
+/**
  * Static utility methods pertaining to {@code long} primitives, that are not
  * already found in either {@link Long} or {@link Arrays}.
  *
@@ -48,20 +48,20 @@ import java.util.RandomAccess;
 public final class Longs {
   private Longs() {}
 
-  /* 
+  /**
    * The number of bytes required to represent a primitive {@code long}
    * value.
    */
   public static final int BYTES = Long.SIZE / Byte.SIZE;
 
-  /* 
+  /**
    * The largest power of two that can be represented as a {@code long}.
    *
    * @since 10.0
    */
   public static final long MAX_POWER_OF_TWO = 1L << (Long.SIZE - 2);
 
-  /* 
+  /**
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Long) value).hashCode()}.
    *
@@ -77,7 +77,7 @@ public final class Longs {
     return (int) (value ^ (value >>> 32));
   }
 
-  /* 
+  /**
    * Compares the two specified {@code long} values. The sign of the value
    * returned is the same as that of {@code ((Long) a).compareTo(b)}.
    *
@@ -90,7 +90,7 @@ public final class Longs {
     return (a < b) ? -1 : ((a > b) ? 1 : 0);
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -108,7 +108,7 @@ public final class Longs {
     return false;
   }
 
-  /* 
+  /**
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -132,7 +132,7 @@ public final class Longs {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -162,7 +162,7 @@ public final class Longs {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -186,7 +186,7 @@ public final class Longs {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code long} values
@@ -205,7 +205,7 @@ public final class Longs {
     return min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code long} values
@@ -224,6 +224,15 @@ public final class Longs {
     return max;
   }
 
+  /**
+   * Returns the values from each provided array combined into a single array.
+   * For example, {@code concat(new long[] {a, b}, new long[] {}, new
+   * long[] {c}} returns the array {@code {a, b, c}}.
+   *
+   * @param arrays zero or more {@code long} arrays
+   * @return a single array containing all the values from the source arrays, in
+   *     order
+   */
   public static long[] concat(long[]... arrays) {
     int length = 0;
     for (long[] array : arrays) {
@@ -238,6 +247,17 @@ public final class Longs {
     return result;
   }
 
+  /**
+   * Returns a big-endian representation of {@code value} in an 8-element byte
+   * array; equivalent to {@code ByteBuffer.allocate(8).putLong(value).array()}.
+   * For example, the input value {@code 0x1213141516171819L} would yield the
+   * byte array {@code {0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19}}.
+   *
+   * <p>If you need to convert and concatenate several values (possibly even of
+   * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
+   * {@link com.google.gwt.thirdparty.guava.common.io.ByteStreams#newDataOutput()} to get a growable
+   * buffer.
+   */
   public static byte[] toByteArray(long value) {
     // Note that this code needs to stay compatible with GWT, which has known
     // bugs when narrowing byte casts of long values occur.
@@ -249,6 +269,19 @@ public final class Longs {
     return result;
   }
 
+  /**
+   * Returns the {@code long} value whose big-endian representation is
+   * stored in the first 8 bytes of {@code bytes}; equivalent to {@code
+   * ByteBuffer.wrap(bytes).getLong()}. For example, the input byte array
+   * {@code {0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19}} would yield the
+   * {@code long} value {@code 0x1213141516171819L}.
+   *
+   * <p>Arguably, it's preferable to use {@link java.nio.ByteBuffer}; that
+   * library exposes much more flexibility at little cost in readability.
+   *
+   * @throws IllegalArgumentException if {@code bytes} has fewer than 8
+   *     elements
+   */
   public static long fromByteArray(byte[] bytes) {
     checkArgument(bytes.length >= BYTES,
         "array too small: %s < %s", bytes.length, BYTES);
@@ -256,6 +289,13 @@ public final class Longs {
         bytes[4], bytes[5], bytes[6], bytes[7]) ;
   }
 
+  /**
+   * Returns the {@code long} value whose byte representation is the given 8
+   * bytes, in big-endian order; equivalent to {@code Longs.fromByteArray(new
+   * byte[] {b1, b2, b3, b4, b5, b6, b7, b8})}.
+   *
+   * @since 7.0
+   */
   public static long fromBytes(byte b1, byte b2, byte b3, byte b4,
       byte b5, byte b6, byte b7, byte b8) {
     return (b1 & 0xFFL) << 56
@@ -268,7 +308,7 @@ public final class Longs {
         | (b8 & 0xFFL);
   }
 
-  /* 
+  /**
    * Parses the specified string as a signed decimal long value. The ASCII
    * character {@code '-'} (<code>'&#92;u002D'</code>) is recognized as the
    * minus sign.
@@ -322,7 +362,7 @@ public final class Longs {
     }
   }
 
-  /* 
+  /**
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -354,7 +394,7 @@ public final class Longs {
     return copy;
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code long} values separated
    * by {@code separator}. For example, {@code join("-", 1L, 2L, 3L)} returns
    * the string {@code "1-2-3"}.
@@ -378,7 +418,7 @@ public final class Longs {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code long} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(long, long)}), the first pair of values that follow any
@@ -414,7 +454,7 @@ public final class Longs {
     }
   }
 
-  /* 
+  /**
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code long} value in the manner of {@link Number#longValue}.
    *
@@ -444,7 +484,7 @@ public final class Longs {
     return array;
   }
 
-  /* 
+  /**
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

@@ -35,7 +35,7 @@ import java.util.Arrays;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Wrapper around either a {@link Method} or a {@link Constructor}.
  * Convenience API is provided to make common reflective operation easier to deal with,
  * such as {@link #isPublic}, {@link #getParameters} etc.
@@ -44,6 +44,11 @@ import javax.annotation.Nullable;
  * TypeToken#constructor} will resolve the type parameters of the method or constructor in the
  * context of the owner type, which may be a subtype of the declaring class. For example:
  *
+ * <pre>   {@code
+ *   Method getMethod = List.class.getMethod("get", int.class);
+ *   Invokable<List<String>, ?> invokable = new TypeToken<List<String>>() {}.method(getMethod);
+ *   assertEquals(TypeToken.of(String.class), invokable.getReturnType()); // Not Object.class!
+ *   assertEquals(new TypeToken<List<String>>() {}, invokable.getOwnerType());}</pre>
  * 
  * @param <T> the type that owns this method or constructor.
  * @param <R> the return type of (or supertype thereof) the method or the declaring type of the
@@ -58,26 +63,26 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     super(member);
   }
 
-  /*  Returns {@link Invokable} of {@code method}. */
+  /** Returns {@link Invokable} of {@code method}. */
   public static Invokable<?, Object> from(Method method) {
     return new MethodInvokable<Object>(method);
   }
 
-  /*  Returns {@link Invokable} of {@code constructor}. */
+  /** Returns {@link Invokable} of {@code constructor}. */
   public static <T> Invokable<T, T> from(Constructor<T> constructor) {
     return new ConstructorInvokable<T>(constructor);
   }
 
-  /* 
+  /**
    * Returns {@code true} if this is an overridable method. Constructors, private, static or final
    * methods, or methods declared by final classes are not overridable.
    */
   public abstract boolean isOverridable();
 
-  /*  Returns {@code true} if this was declared to take a variable number of arguments. */
+  /** Returns {@code true} if this was declared to take a variable number of arguments. */
   public abstract boolean isVarArgs();
 
-  /* 
+  /**
    * Invokes with {@code receiver} as 'this' and {@code args} passed to the underlying method
    * and returns the return value; or calls the underlying constructor with {@code args} and returns
    * the constructed instance.
@@ -97,14 +102,14 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     return (R) invokeInternal(receiver, checkNotNull(args));
   }
 
-  /*  Returns the return type of this {@code Invokable}. */
+  /** Returns the return type of this {@code Invokable}. */
   // All subclasses are owned by us and we'll make sure to get the R type right.
   @SuppressWarnings("unchecked")
   public final TypeToken<? extends R> getReturnType() {
     return (TypeToken<? extends R>) TypeToken.of(getGenericReturnType());
   }
 
-  /* 
+  /**
    * Returns all declared parameters of this {@code Invokable}. Note that if this is a constructor
    * of a non-static inner class, unlike {@link Constructor#getParameterTypes}, the hidden
    * {@code this} parameter of the enclosing class is excluded from the returned parameters.
@@ -120,7 +125,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     return builder.build();
   }
 
-  /*  Returns all declared exception types of this {@code Invokable}. */
+  /** Returns all declared exception types of this {@code Invokable}. */
   public final ImmutableList<TypeToken<? extends Throwable>> getExceptionTypes() {
     ImmutableList.Builder<TypeToken<? extends Throwable>> builder = ImmutableList.builder();
     for (Type type : getGenericExceptionTypes()) {
@@ -133,7 +138,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     return builder.build();
   }
 
-  /* 
+  /**
    * Explicitly specifies the return type of this {@code Invokable}. For example:
    * <pre>   {@code
    *   Method factoryMethod = Person.class.getMethod("create");
@@ -143,7 +148,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     return returning(TypeToken.of(returnType));
   }
 
-  /*  Explicitly specifies the return type of this {@code Invokable}. */
+  /** Explicitly specifies the return type of this {@code Invokable}. */
   public final <R1 extends R> Invokable<T, R1> returning(TypeToken<R1> returnType) {
     if (!returnType.isAssignableFrom(getReturnType())) {
       throw new IllegalArgumentException(
@@ -159,7 +164,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
     return (Class<? super T>) super.getDeclaringClass();
   }
 
-  /*  Returns the type of {@code T}. */
+  /** Returns the type of {@code T}. */
   // Overridden in TypeToken#method() and TypeToken#constructor()
   @SuppressWarnings("unchecked") // The declaring class is T.
   public TypeToken<T> getOwnerType() {
@@ -171,7 +176,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
 
   abstract Type[] getGenericParameterTypes();
 
-  /*  This should never return a type that's not a subtype of Throwable. */
+  /** This should never return a type that's not a subtype of Throwable. */
   abstract Type[] getGenericExceptionTypes();
 
   abstract Annotation[][] getParameterAnnotations();
@@ -240,7 +245,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
       }
     }
 
-    /*  If the class is parameterized, such as ArrayList, this returns ArrayList<E>. */
+    /** If the class is parameterized, such as ArrayList, this returns ArrayList<E>. */
     @Override Type getGenericReturnType() {
       Class<?> declaringClass = getDeclaringClass();
       TypeVariable<?>[] typeParams = declaringClass.getTypeParameters();
@@ -272,7 +277,7 @@ public abstract class Invokable<T, R> extends Element implements GenericDeclarat
       return constructor.getParameterAnnotations();
     }
 
-    /* 
+    /**
      * {@inheritDoc}
      *
      * {@code [<E>]} will be returned for ArrayList's constructor. When both the class and the

@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import com.google.gwt.thirdparty.guava.common.escape.Escaper;
 import com.google.gwt.thirdparty.guava.common.escape.Escapers;
 
-/* 
+/**
  * {@code Escaper} instances suitable for strings to be included in HTML
  * attribute values and <em>most</em> elements' text contents. When possible,
  * avoid manual escaping by using templating systems and high-level APIs that
@@ -45,7 +45,7 @@ public final class HtmlEscapers {
   // For each xxxEscaper() method, please add links to external reference pages
   // that are considered authoritative for the behavior of that escaper.
 
-  /* 
+  /**
    * Returns an {@link Escaper} instance that escapes HTML metacharacters as
    * specified by <a href="http://www.w3.org/TR/html4/">HTML 4.01</a>. The
    * resulting strings can be used both in attribute values and in <em>most</em>

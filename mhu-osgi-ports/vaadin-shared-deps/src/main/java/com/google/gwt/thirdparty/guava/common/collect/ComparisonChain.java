@@ -25,9 +25,18 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A utility for performing a chained comparison statement. For example:
-
+ * <pre>   {@code
+ *
+ *   public int compareTo(Foo that) {
+ *     return ComparisonChain.start()
+ *         .compare(this.aString, that.aString)
+ *         .compare(this.anInt, that.anInt)
+ *         .compare(this.anEnum, that.anEnum, Ordering.natural().nullsLast())
+ *         .result();
+ *   }}</pre>
+ *
  * <p>The value of this expression will have the same sign as the <i>first
  * nonzero</i> comparison result in the chain, or will be zero if every
  * comparison result was zero.
@@ -52,7 +61,7 @@ import javax.annotation.Nullable;
 public abstract class ComparisonChain {
   private ComparisonChain() {}
 
-  /* 
+  /**
    * Begins a new chained comparison statement. See example in the class
    * documentation.
    */
@@ -137,7 +146,7 @@ public abstract class ComparisonChain {
     }
   }
 
-  /* 
+  /**
    * Compares two comparable objects as specified by {@link
    * Comparable#compareTo}, <i>if</i> the result of this comparison chain
    * has not already been determined.
@@ -145,42 +154,42 @@ public abstract class ComparisonChain {
   public abstract ComparisonChain compare(
       Comparable<?> left, Comparable<?> right);
 
-  /* 
+  /**
    * Compares two objects using a comparator, <i>if</i> the result of this
    * comparison chain has not already been determined.
    */
   public abstract <T> ComparisonChain compare(
       @Nullable T left, @Nullable T right, Comparator<T> comparator);
 
-  /* 
+  /**
    * Compares two {@code int} values as specified by {@link Ints#compare},
    * <i>if</i> the result of this comparison chain has not already been
    * determined.
    */
   public abstract ComparisonChain compare(int left, int right);
 
-  /* 
+  /**
    * Compares two {@code long} values as specified by {@link Longs#compare},
    * <i>if</i> the result of this comparison chain has not already been
    * determined.
    */
   public abstract ComparisonChain compare(long left, long right);
 
-  /* 
+  /**
    * Compares two {@code float} values as specified by {@link
    * Float#compare}, <i>if</i> the result of this comparison chain has not
    * already been determined.
    */
   public abstract ComparisonChain compare(float left, float right);
 
-  /* 
+  /**
    * Compares two {@code double} values as specified by {@link
    * Double#compare}, <i>if</i> the result of this comparison chain has not
    * already been determined.
    */
   public abstract ComparisonChain compare(double left, double right);
 
-  /* 
+  /**
    * Compares two {@code boolean} values, considering {@code true} to be less
    * than {@code false}, <i>if</i> the result of this comparison chain has not
    * already been determined.
@@ -189,7 +198,7 @@ public abstract class ComparisonChain {
    */
   public abstract ComparisonChain compareTrueFirst(boolean left, boolean right);
 
-  /* 
+  /**
    * Compares two {@code boolean} values, considering {@code false} to be less
    * than {@code true}, <i>if</i> the result of this comparison chain has not
    * already been determined.
@@ -198,7 +207,7 @@ public abstract class ComparisonChain {
    */
   public abstract ComparisonChain compareFalseFirst(boolean left, boolean right);
 
-  /* 
+  /**
    * Old name of {@link #compareFalseFirst}.
    *
    * @deprecated Use {@link #compareFalseFirst}; or, if the parameters passed
@@ -211,7 +220,7 @@ public abstract class ComparisonChain {
     return compareFalseFirst(left, right);
   }
 
-  /* 
+  /**
    * Ends this comparison chain and returns its result: a value having the
    * same sign as the first nonzero comparison result in the chain, or zero if
    * every result was zero.

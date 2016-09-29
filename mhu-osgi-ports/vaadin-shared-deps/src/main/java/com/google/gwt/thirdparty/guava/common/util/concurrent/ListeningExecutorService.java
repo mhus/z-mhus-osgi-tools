@@ -24,7 +24,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/* 
+/**
  * An {@link ExecutorService} that returns {@link ListenableFuture} instances. To create an instance
  * from an existing {@link ExecutorService}, call
  * {@link MoreExecutors#listeningDecorator(ExecutorService)}.
@@ -33,28 +33,28 @@ import java.util.concurrent.TimeUnit;
  * @since 10.0
  */
 public interface ListeningExecutorService extends ExecutorService {
-  /* 
+  /**
    * @return a {@code ListenableFuture} representing pending completion of the task
    * @throws RejectedExecutionException {@inheritDoc}
    */
   @Override
   <T> ListenableFuture<T> submit(Callable<T> task);
 
-  /* 
+  /**
    * @return a {@code ListenableFuture} representing pending completion of the task
    * @throws RejectedExecutionException {@inheritDoc}
    */
   @Override
   ListenableFuture<?> submit(Runnable task);
 
-  /* 
+  /**
    * @return a {@code ListenableFuture} representing pending completion of the task
    * @throws RejectedExecutionException {@inheritDoc}
    */
   @Override
   <T> ListenableFuture<T> submit(Runnable task, T result);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>All elements in the returned list must be {@link ListenableFuture} instances. The easiest
@@ -74,7 +74,7 @@ public interface ListeningExecutorService extends ExecutorService {
   <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks)
       throws InterruptedException;
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>All elements in the returned list must be {@link ListenableFuture} instances. The easiest

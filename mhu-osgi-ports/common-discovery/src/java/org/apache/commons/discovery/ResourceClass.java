@@ -23,7 +23,7 @@ import java.security.PrivilegedAction;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/* 
+/**
  * 'Resource' located by discovery.
  * Naming of methods becomes a real pain ('getClass()')
  * so I've patterned this after ClassLoader...
@@ -36,7 +36,7 @@ public class ResourceClass<T> extends Resource {
 
     private static Log log = LogFactory.getLog(ResourceClass.class);
 
-    /* 
+    /**
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -49,7 +49,7 @@ public class ResourceClass<T> extends Resource {
 
     protected Class<? extends T> resourceClass;
 
-    /* 
+    /**
      * Create a new {@code Resource} class located by discovery.
      *
      * @param <S> Any type extends T
@@ -61,7 +61,7 @@ public class ResourceClass<T> extends Resource {
         this.resourceClass = resourceClass;
     }
 
-    /* 
+    /**
      * Create a new {@code Resource} class located by discovery.
      *
      * @param resourceName The resource class name has to be located
@@ -72,7 +72,7 @@ public class ResourceClass<T> extends Resource {
         super(resourceName, resource, loader);
     }
 
-    /* 
+    /**
      * Get the value of resourceClass.
      * Loading the class does NOT guarentee that the class can be
      * instantiated.  Go figure.
@@ -115,7 +115,7 @@ public class ResourceClass<T> extends Resource {
         return returned;
     }
 
-    /* 
+    /**
      * {@inheritDoc}
      */
     @Override

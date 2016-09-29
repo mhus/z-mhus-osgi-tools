@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Determines an output value based on an input value.
  *
  * <p>The {@link Functions} class provides common functions and related utilites.
@@ -34,7 +34,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public interface Function<F, T> {
-  /* 
+  /**
    * Returns the result of applying this function to {@code input}. This method is <i>generally
    * expected</i>, but not absolutely required, to have the following properties:
    *
@@ -50,7 +50,7 @@ public interface Function<F, T> {
    */
   @Nullable T apply(@Nullable F input);
 
-  /* 
+  /**
    * Indicates whether another object is equal to this function.
    *
    * <p>Most implementations will have no reason to override the behavior of {@link Object#equals}.

@@ -32,7 +32,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A mutable type-to-instance map.
  * See also {@link ImmutableTypeToInstanceMap}.
  *
@@ -69,12 +69,12 @@ public final class MutableTypeToInstanceMap<B> extends ForwardingMap<TypeToken<?
     return trustedPut(type.rejectTypeVariables(), value);
   }
 
-  /*  Not supported. Use {@link #putInstance} instead. */
+  /** Not supported. Use {@link #putInstance} instead. */
   @Override public B put(TypeToken<? extends B> key, B value) {
     throw new UnsupportedOperationException("Please use putInstance() instead.");
   }
 
-  /*  Not supported. Use {@link #putInstance} instead. */
+  /** Not supported. Use {@link #putInstance} instead. */
   @Override public void putAll(Map<? extends TypeToken<? extends B>, ? extends B> map) {
     throw new UnsupportedOperationException("Please use putInstance() instead.");
   }

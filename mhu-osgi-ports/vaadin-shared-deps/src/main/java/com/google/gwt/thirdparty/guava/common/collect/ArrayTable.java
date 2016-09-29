@@ -36,7 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Fixed-size {@link Table} implementation backed by a two-dimensional array.
  *
  * <p>The allowed row and column keys must be supplied when the table is
@@ -85,7 +85,7 @@ import javax.annotation.Nullable;
 @GwtCompatible(emulated = true)
 public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements Serializable {
 
-  /* 
+  /**
    * Creates an empty {@code ArrayTable}.
    *
    * @param rowKeys row keys that may be stored in the generated table
@@ -106,7 +106,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
    * serialization and deserialization.
    */
 
-  /* 
+  /**
    * Creates an {@code ArrayTable} with the mappings in the provided table.
    *
    * <p>If {@code table} includes a mapping with row key {@code r} and a
@@ -297,7 +297,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns, as an immutable list, the row keys provided when the table was
    * constructed, including those that are mapped to null values only.
    */
@@ -305,7 +305,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return rowList;
   }
 
-  /* 
+  /**
    * Returns, as an immutable list, the column keys provided when the table was
    * constructed, including those that are mapped to null values only.
    */
@@ -313,7 +313,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return columnList;
   }
 
-  /* 
+  /**
    * Returns the value corresponding to the specified row and column indices.
    * The same value is returned by {@code
    * get(rowKeyList().get(rowIndex), columnKeyList().get(columnIndex))}, but
@@ -334,7 +334,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return array[rowIndex][columnIndex];
   }
 
-  /* 
+  /**
    * Associates {@code value} with the specified row and column indices. The
    * logic {@code
    * put(rowKeyList().get(rowIndex), columnKeyList().get(columnIndex), value)}
@@ -358,7 +358,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return oldValue;
   }
 
-  /* 
+  /**
    * Returns a two-dimensional array with the table contents. The row and column
    * indices correspond to the positions of the row and column in the iterables
    * provided during table construction. If the table lacks a mapping for a
@@ -380,7 +380,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return copy;
   }
 
-  /* 
+  /**
    * Not supported. Use {@link #eraseAll} instead.
    *
    * @throws UnsupportedOperationException always
@@ -391,7 +391,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Associates the value {@code null} with every pair of allowed row and column
    * keys.
    */
@@ -401,7 +401,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns {@code true} if the provided keys are among the keys provided when
    * the table was constructed.
    */
@@ -410,7 +410,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return containsRow(rowKey) && containsColumn(columnKey);
   }
 
-  /* 
+  /**
    * Returns {@code true} if the provided column key is among the column keys
    * provided when the table was constructed.
    */
@@ -419,7 +419,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return columnKeyToIndex.containsKey(columnKey);
   }
 
-  /* 
+  /**
    * Returns {@code true} if the provided row key is among the row keys
    * provided when the table was constructed.
    */
@@ -448,7 +448,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
         ? null : at(rowIndex, columnIndex);
   }
 
-  /* 
+  /**
    * Always returns {@code false}.
    */
   @Override
@@ -456,7 +456,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return false;
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * @throws IllegalArgumentException if {@code rowKey} is not in {@link
@@ -479,7 +479,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
    * copying non-null values only.
    */
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>If {@code table} is an {@code ArrayTable}, its null values will be
@@ -495,7 +495,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     super.putAll(table);
   }
 
-  /* 
+  /**
    * Not supported. Use {@link #erase} instead.
    *
    * @throws UnsupportedOperationException always
@@ -506,7 +506,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Associates the value {@code null} with the specified keys, assuming both
    * keys are valid. If either key is null or isn't among the keys provided
    * during construction, this method has no effect.
@@ -535,7 +535,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     return rowList.size() * columnList.size();
   }
 
-  /* 
+  /**
    * Returns an unmodifiable set of all row key / column key / value
    * triplets. Changes to the table will update the returned set.
    *
@@ -577,7 +577,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     };
   }
 
-  /* 
+  /**
    * Returns a view of all mappings that have the given column key. If the
    * column key isn't in {@link #columnKeySet()}, an empty immutable map is
    * returned.
@@ -621,7 +621,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns an immutable set of the valid column keys, including those that
    * are associated with null values only.
    *
@@ -666,7 +666,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns a view of all mappings that have the given row key. If the
    * row key isn't in {@link #rowKeySet()}, an empty immutable map is
    * returned.
@@ -710,7 +710,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns an immutable set of the valid row keys, including those that are
    * associated with null values only.
    *
@@ -755,7 +755,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V> implements
     }
   }
 
-  /* 
+  /**
    * Returns an unmodifiable collection of all values, which may contain
    * duplicates. Changes to the table will update the returned collection.
    *

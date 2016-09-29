@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
-/* 
+/**
  * <p>A list of listeners, each with an associated {@code Executor}, that
  * guarantees that every {@code Runnable} that is {@linkplain #add added} will
  * be executed after {@link #execute()} is called. Any {@code Runnable} added
@@ -48,7 +48,7 @@ public final class ExecutionList {
   // Logger to log exceptions caught when running runnables.
   @VisibleForTesting static final Logger log = Logger.getLogger(ExecutionList.class.getName());
 
-  /* 
+  /**
    * The runnable, executor pairs to execute.  This acts as a stack threaded through the 
    * {@link RunnableExecutorPair#next} field.
    */
@@ -57,10 +57,10 @@ public final class ExecutionList {
   @GuardedBy("this")
   private boolean executed;
 
-  /*  Creates a new, empty {@link ExecutionList}. */
+  /** Creates a new, empty {@link ExecutionList}. */
   public ExecutionList() {}
 
-  /* 
+  /**
    * Adds the {@code Runnable} and accompanying {@code Executor} to the list of
    * listeners to execute. If execution has already begun, the listener is
    * executed immediately.
@@ -101,7 +101,7 @@ public final class ExecutionList {
     executeListener(runnable, executor);
   }
 
-  /* 
+  /**
    * Runs this execution list, executing all existing pairs in the order they
    * were added. However, note that listeners added after this point may be
    * executed before those previously added, and note that the execution order
@@ -147,7 +147,7 @@ public final class ExecutionList {
     }
   }
 
-  /* 
+  /**
    * Submits the given runnable to the given {@link Executor} catching and logging all 
    * {@linkplain RuntimeException runtime exceptions} thrown by the executor.
    */

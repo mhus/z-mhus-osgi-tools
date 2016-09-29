@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.io;
 
 import java.io.IOException;
 
-/* 
+/**
  * Package-protected abstract class that implements the line reading
  * algorithm used by {@link LineReader}. Line separators are per {@link
  * java.io.BufferedReader}: line feed, carriage return, or carriage
@@ -31,12 +31,12 @@ import java.io.IOException;
  * @since 1.0
  */
 abstract class LineBuffer {
-  /*  Holds partial line contents. */
+  /** Holds partial line contents. */
   private StringBuilder line = new StringBuilder();
-  /*  Whether a line ending with a CR is pending processing. */
+  /** Whether a line ending with a CR is pending processing. */
   private boolean sawReturn;
 
-  /* 
+  /**
    * Process additional characters from the stream. When a line separator
    * is found the contents of the line and the line separator itself
    * are passed to the abstract {@link #handleLine} method.
@@ -83,7 +83,7 @@ abstract class LineBuffer {
     line.append(cbuf, start, off + len - start);
   }
 
-  /*  Called when a line is complete. */
+  /** Called when a line is complete. */
   private boolean finishLine(boolean sawNewline) throws IOException {
     handleLine(line.toString(), sawReturn
         ? (sawNewline ? "\r\n" : "\r")
@@ -93,7 +93,7 @@ abstract class LineBuffer {
     return sawNewline;
   }
 
-  /* 
+  /**
    * Subclasses must call this method after finishing character processing,
    * in order to ensure that any unterminated line in the buffer is
    * passed to {@link #handleLine}.
@@ -106,7 +106,7 @@ abstract class LineBuffer {
     }
   }
 
-  /* 
+  /**
    * Called for each line found in the character data passed to
    * {@link #add}.
    *

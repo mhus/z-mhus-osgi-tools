@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.base;
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtIncompatible;
 
-/* 
+/**
  * Represents a {@linkplain System#getProperties() standard system property}.
  *
  * @author Kurt Alfred Kluever
@@ -29,88 +29,88 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtIncompatible;
 @GwtIncompatible("java.lang.System#getProperty")
 public enum StandardSystemProperty {
 
-  /*  Java Runtime Environment version. */
+  /** Java Runtime Environment version. */
   JAVA_VERSION("java.version"),
 
-  /*  Java Runtime Environment vendor. */
+  /** Java Runtime Environment vendor. */
   JAVA_VENDOR("java.vendor"),
 
-  /*  Java vendor URL. */
+  /** Java vendor URL. */
   JAVA_VENDOR_URL("java.vendor.url"),
 
-  /*  Java installation directory. */
+  /** Java installation directory. */
   JAVA_HOME("java.home"),
 
-  /*  Java Virtual Machine specification version. */
+  /** Java Virtual Machine specification version. */
   JAVA_VM_SPECIFICATION_VERSION("java.vm.specification.version"),
 
-  /*  Java Virtual Machine specification vendor. */
+  /** Java Virtual Machine specification vendor. */
   JAVA_VM_SPECIFICATION_VENDOR("java.vm.specification.vendor"),
 
-  /*  Java Virtual Machine specification name. */
+  /** Java Virtual Machine specification name. */
   JAVA_VM_SPECIFICATION_NAME("java.vm.specification.name"),
 
-  /*  Java Virtual Machine implementation version. */
+  /** Java Virtual Machine implementation version. */
   JAVA_VM_VERSION("java.vm.version"),
 
-  /*  Java Virtual Machine implementation vendor. */
+  /** Java Virtual Machine implementation vendor. */
   JAVA_VM_VENDOR("java.vm.vendor"),
 
-  /*  Java Virtual Machine implementation name. */
+  /** Java Virtual Machine implementation name. */
   JAVA_VM_NAME("java.vm.name"),
 
-  /*  Java Runtime Environment specification version. */
+  /** Java Runtime Environment specification version. */
   JAVA_SPECIFICATION_VERSION("java.specification.version"),
 
-  /*  Java Runtime Environment specification vendor. */
+  /** Java Runtime Environment specification vendor. */
   JAVA_SPECIFICATION_VENDOR("java.specification.vendor"),
 
-  /*  Java Runtime Environment specification name. */
+  /** Java Runtime Environment specification name. */
   JAVA_SPECIFICATION_NAME("java.specification.name"),
 
-  /*  Java class format version number. */
+  /** Java class format version number. */
   JAVA_CLASS_VERSION("java.class.version"),
 
-  /*  Java class path. */
+  /** Java class path. */
   JAVA_CLASS_PATH("java.class.path"),
 
-  /*  List of paths to search when loading libraries. */
+  /** List of paths to search when loading libraries. */
   JAVA_LIBRARY_PATH("java.library.path"),
 
-  /*  Default temp file path. */
+  /** Default temp file path. */
   JAVA_IO_TMPDIR("java.io.tmpdir"),
 
-  /*  Name of JIT compiler to use. */
+  /** Name of JIT compiler to use. */
   JAVA_COMPILER("java.compiler"),
 
-  /*  Path of extension directory or directories. */
+  /** Path of extension directory or directories. */
   JAVA_EXT_DIRS("java.ext.dirs"),
 
-  /*  Operating system name. */
+  /** Operating system name. */
   OS_NAME("os.name"),
 
-  /*  Operating system architecture. */
+  /** Operating system architecture. */
   OS_ARCH("os.arch"),
 
-  /*  Operating system version. */
+  /** Operating system version. */
   OS_VERSION("os.version"),
 
-  /*  File separator ("/" on UNIX). */
+  /** File separator ("/" on UNIX). */
   FILE_SEPARATOR("file.separator"),
 
-  /*  Path separator (":" on UNIX). */
+  /** Path separator (":" on UNIX). */
   PATH_SEPARATOR("path.separator"),
 
-  /*  Line separator ("\n" on UNIX). */
+  /** Line separator ("\n" on UNIX). */
   LINE_SEPARATOR("line.separator"),
 
-  /*  User's account name. */
+  /** User's account name. */
   USER_NAME("user.name"),
 
-  /*  User's home directory. */
+  /** User's home directory. */
   USER_HOME("user.home"),
 
-  /*  User's current working directory. */
+  /** User's current working directory. */
   USER_DIR("user.dir");
 
   private final String key;
@@ -119,14 +119,14 @@ public enum StandardSystemProperty {
     this.key = key;
   }
 
-  /* 
+  /**
    * Returns the key used to lookup this system property.
    */
   public String key() {
     return key;
   }
 
-  /* 
+  /**
    * Returns the current value for this system property by delegating to
    * {@link System#getProperty(String)}.
    */
@@ -134,7 +134,7 @@ public enum StandardSystemProperty {
     return System.getProperty(key);
   }
 
-  /* 
+  /**
    * Returns a string representation of this system property.
    */
   @Override public String toString() {

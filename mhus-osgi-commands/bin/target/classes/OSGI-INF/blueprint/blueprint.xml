@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" default-activation="lazy">
+
+    <command-bundle xmlns="http://karaf.apache.org/xmlns/shell/v1.0.0">
+        <command name="jdbc/createdbpool">
+            <action class="de.mhus.osgi.commands.impl.CmdCreateDbPool">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="jdbc/createdbfailover">
+            <action class="de.mhus.osgi.commands.impl.CmdCreateDbFailover">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="jdbc/createdbdelegate">
+            <action class="de.mhus.osgi.commands.impl.CmdCreateDbDelegate">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="jdbc/createdbtrace">
+            <action class="de.mhus.osgi.commands.impl.CmdCreateDbTrace">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="jdbc/dbtrace">
+            <action class="de.mhus.osgi.commands.impl.CmdDbTrace">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="jdbc/blueprint">
+            <action class="de.mhus.osgi.commands.impl.CmdJdbcBlueprint">
+            </action>
+        </command>
+        <command name="bundle/rawlist">
+            <action class="de.mhus.osgi.commands.impl.CmdBundleList">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+        <command name="bundle/persistentwatch">
+            <action class="de.mhus.osgi.commands.impl.CmdBundleWatch">
+            </action>
+        </command>
+        <command name="java/gc">
+            <action class="de.mhus.osgi.commands.impl.CmdGC">
+            </action>
+        </command>
+        <command name="java/finalization">
+            <action class="de.mhus.osgi.commands.impl.CmdFinalization">
+            </action>
+        </command>
+        <command name="java/mem">
+            <action class="de.mhus.osgi.commands.impl.CmdMem">
+            </action>
+        </command>
+                
+        <command name="bundle/reinstall">
+            <action class="de.mhus.osgi.commands.impl.CmdBundleReinstall">
+		        <property name="context" ref="blueprintBundleContext" />
+            </action>
+        </command>
+
+        <command name="java/threads">
+            <action class="de.mhus.osgi.commands.shell.CmdThreads">
+            </action>
+        </command>
+        <command name="java/kill">
+            <action class="de.mhus.osgi.commands.shell.CmdThreadKill">
+            </action>
+        </command>
+        <command name="shell/write">
+            <action class="de.mhus.osgi.commands.shell.CmdWrite">
+            </action>
+        </command>
+        <command name="shell/bash">
+            <action class="de.mhus.osgi.commands.shell.CmdBash">
+            </action>
+        </command>
+        <command name="shell/run">
+            <action class="de.mhus.osgi.commands.shell.CmdRun">
+            </action>
+        </command>
+        <command name="shell/read">
+            <action class="de.mhus.osgi.commands.shell.CmdRead">
+            </action>
+        </command>
+        <command name="shell/cut">
+            <action class="de.mhus.osgi.commands.shell.CmdCut">
+            </action>
+        </command>
+        	        
+    </command-bundle>
+
+</blueprint>

@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.annotation.concurrent.Immutable;
 
-/* 
+/**
  * A {@code RegularImmutableTable} optimized for sparse data.
  */
 @GwtCompatible

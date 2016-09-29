@@ -28,7 +28,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to instances of {@link Throwable}.
  *
  * <p>See the Guava User Guide entry on <a href=
@@ -42,7 +42,7 @@ import javax.annotation.Nullable;
 public final class Throwables {
   private Throwables() {}
 
-  /* 
+  /**
    * Propagates {@code throwable} exactly as-is, if and only if it is an
    * instance of {@code declaredType}.  Example usage:
    * <pre>
@@ -65,7 +65,7 @@ public final class Throwables {
     }
   }
 
-  /* 
+  /**
    * Propagates {@code throwable} exactly as-is, if and only if it is an
    * instance of {@link RuntimeException} or {@link Error}.  Example usage:
    * <pre>
@@ -84,7 +84,7 @@ public final class Throwables {
     propagateIfInstanceOf(throwable, RuntimeException.class);
   }
 
-  /* 
+  /**
    * Propagates {@code throwable} exactly as-is, if and only if it is an
    * instance of {@link RuntimeException}, {@link Error}, or
    * {@code declaredType}. Example usage:
@@ -109,7 +109,7 @@ public final class Throwables {
     propagateIfPossible(throwable);
   }
 
-  /* 
+  /**
    * Propagates {@code throwable} exactly as-is, if and only if it is an
    * instance of {@link RuntimeException}, {@link Error}, {@code declaredType1},
    * or {@code declaredType2}.  In the unlikely case that you have three or more
@@ -131,7 +131,7 @@ public final class Throwables {
     propagateIfPossible(throwable, declaredType2);
   }
 
-  /* 
+  /**
    * Propagates {@code throwable} as-is if it is an instance of
    * {@link RuntimeException} or {@link Error}, or else as a last resort, wraps
    * it in a {@code RuntimeException} then propagates.
@@ -160,7 +160,7 @@ public final class Throwables {
     throw new RuntimeException(throwable);
   }
 
-  /* 
+  /**
    * Returns the innermost cause of {@code throwable}. The first throwable in a
    * chain provides context from when the error or exception was initially
    * detected. Example usage:
@@ -177,7 +177,7 @@ public final class Throwables {
     return throwable;
   }
 
-  /* 
+  /**
    * Gets a {@code Throwable} cause chain as a list.  The first entry in the
    * list will be {@code throwable} followed by its cause hierarchy.  Note
    * that this is a snapshot of the cause chain and will not reflect
@@ -205,7 +205,7 @@ public final class Throwables {
     return Collections.unmodifiableList(causes);
   }
 
-  /* 
+  /**
    * Returns a string containing the result of
    * {@link Throwable#toString() toString()}, followed by the full, recursive
    * stack trace of {@code throwable}. Note that you probably should not be

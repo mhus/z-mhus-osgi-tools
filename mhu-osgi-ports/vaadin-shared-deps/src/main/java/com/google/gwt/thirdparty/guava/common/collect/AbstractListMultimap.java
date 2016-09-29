@@ -24,7 +24,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Basic implementation of the {@link ListMultimap} interface. It's a wrapper
  * around {@link AbstractMapBasedMultimap} that converts the returned collections into
  * {@code Lists}. The {@link #createCollection} method must return a {@code
@@ -36,7 +36,7 @@ import javax.annotation.Nullable;
 @GwtCompatible
 abstract class AbstractListMultimap<K, V>
     extends AbstractMapBasedMultimap<K, V> implements ListMultimap<K, V> {
-  /* 
+  /**
    * Creates a new multimap that uses the provided map.
    *
    * @param map place to store the mapping from each key to its corresponding
@@ -55,7 +55,7 @@ abstract class AbstractListMultimap<K, V>
 
   // Following Javadoc copied from ListMultimap.
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -66,7 +66,7 @@ abstract class AbstractListMultimap<K, V>
     return (List<V>) super.get(key);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -77,7 +77,7 @@ abstract class AbstractListMultimap<K, V>
     return (List<V>) super.removeAll(key);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because the values for a given key may have duplicates and follow the
@@ -89,7 +89,7 @@ abstract class AbstractListMultimap<K, V>
     return (List<V>) super.replaceValues(key, values);
   }
 
-  /* 
+  /**
    * Stores a key-value pair in the multimap.
    *
    * @param key key to store in the multimap
@@ -100,7 +100,7 @@ abstract class AbstractListMultimap<K, V>
     return super.put(key, value);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Though the method signature doesn't say so explicitly, the returned map
@@ -110,7 +110,7 @@ abstract class AbstractListMultimap<K, V>
     return super.asMap();
   }
 
-  /* 
+  /**
    * Compares the specified object to this multimap for equality.
    *
    * <p>Two {@code ListMultimap} instances are equal if, for each key, they

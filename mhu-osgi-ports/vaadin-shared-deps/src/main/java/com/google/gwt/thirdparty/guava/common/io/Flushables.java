@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/* 
+/**
  * Utility methods for working with {@link Flushable} objects.
  *
  * @author Michael Lancaster
@@ -36,7 +36,7 @@ public final class Flushables {
 
   private Flushables() {}
 
-  /* 
+  /**
    * Flush a {@link Flushable}, with control over whether an
    * {@code IOException} may be thrown.
    *
@@ -64,7 +64,7 @@ public final class Flushables {
     }
   }
 
-  /* 
+  /**
    * Equivalent to calling {@code flush(flushable, true)}, but with no
    * {@code IOException} in the signature.
    *

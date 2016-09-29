@@ -23,7 +23,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * A {@link Service} that forwards all method calls to another service.
  *
  * @deprecated Instead of using a {@link ForwardingService}, consider using the
@@ -40,7 +40,7 @@ import java.util.concurrent.TimeoutException;
 public abstract class ForwardingService extends ForwardingObject
     implements Service {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingService() {}
 
   @Override protected abstract Service delegate();
@@ -77,21 +77,21 @@ public abstract class ForwardingService extends ForwardingObject
     return delegate().isRunning();
   }
 
-  /* 
+  /**
    * @since 13.0
    */
   @Override public void addListener(Listener listener, Executor executor) {
     delegate().addListener(listener, executor);
   }
 
-  /* 
+  /**
    * @since 14.0
    */
   @Override public Throwable failureCause() {
     return delegate().failureCause();
   }
 
-  /* 
+  /**
    * @since 15.0
    */
   @Override public Service startAsync() {
@@ -99,42 +99,42 @@ public abstract class ForwardingService extends ForwardingObject
     return this;
   }
 
-  /* 
+  /**
    * @since 15.0
    */
   @Override public Service stopAsync() {
     delegate().stopAsync();
     return this;
   }
-  /* 
+  /**
    * @since 15.0
    */
   @Override public void awaitRunning() {
     delegate().awaitRunning();
   }
 
-  /* 
+  /**
    * @since 15.0
    */
   @Override public void awaitRunning(long timeout, TimeUnit unit) throws TimeoutException {
     delegate().awaitRunning(timeout, unit);
   }
 
-  /* 
+  /**
    * @since 15.0
    */
   @Override public void awaitTerminated() {
     delegate().awaitTerminated();
   }
 
-  /* 
+  /**
    * @since 15.0
    */
   @Override public void awaitTerminated(long timeout, TimeUnit unit) throws TimeoutException {
     delegate().awaitTerminated(timeout, unit);
   }
 
-  /* 
+  /**
    * A sensible default implementation of {@link #startAndWait()}, in terms of
    * {@link #start}. If you override {@link #start}, you may wish to override
    * {@link #startAndWait()} to forward to this implementation.
@@ -144,7 +144,7 @@ public abstract class ForwardingService extends ForwardingObject
     return Futures.getUnchecked(start());
   }
 
-  /* 
+  /**
    * A sensible default implementation of {@link #stopAndWait()}, in terms of
    * {@link #stop}. If you override {@link #stop}, you may wish to override
    * {@link #stopAndWait()} to forward to this implementation.

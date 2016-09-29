@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/* 
+/**
  * An {@link OutputStream} that starts buffering to a byte array, but
  * switches to file buffering once the data reaches a configurable size.
  *
@@ -48,7 +48,7 @@ public final class FileBackedOutputStream extends OutputStream {
   private MemoryOutput memory;
   private File file;
 
-  /*  ByteArrayOutputStream that exposes its internals. */
+  /** ByteArrayOutputStream that exposes its internals. */
   private static class MemoryOutput extends ByteArrayOutputStream {
     byte[] getBuffer() {
       return buf;
@@ -59,12 +59,12 @@ public final class FileBackedOutputStream extends OutputStream {
     }
   }
 
-  /*  Returns the file holding the data (possibly null). */
+  /** Returns the file holding the data (possibly null). */
   @VisibleForTesting synchronized File getFile() {
     return file;
   }
 
-  /* 
+  /**
    * Creates a new instance that uses the given file threshold, and does
    * not reset the data when the {@link ByteSource} returned by
    * {@link #asByteSource} is finalized.
@@ -76,7 +76,7 @@ public final class FileBackedOutputStream extends OutputStream {
     this(fileThreshold, false);
   }
 
-  /* 
+  /**
    * Creates a new instance that uses the given file threshold, and
    * optionally resets the data when the {@link ByteSource} returned
    * by {@link #asByteSource} is finalized.
@@ -118,7 +118,7 @@ public final class FileBackedOutputStream extends OutputStream {
     }
   }
 
-  /* 
+  /**
    * Returns a supplier that may be used to retrieve the data buffered
    * by this stream. This method returns the same object as
    * {@link #asByteSource()}.
@@ -131,7 +131,7 @@ public final class FileBackedOutputStream extends OutputStream {
     return asByteSource();
   }
 
-  /* 
+  /**
    * Returns a readable {@link ByteSource} view of the data that has been
    * written to this stream.
    *
@@ -150,7 +150,7 @@ public final class FileBackedOutputStream extends OutputStream {
     }
   }
 
-  /* 
+  /**
    * Calls {@link #close} if not already closed, and then resets this
    * object back to its initial state, for reuse. If data was buffered
    * to a file, it will be deleted.
@@ -200,7 +200,7 @@ public final class FileBackedOutputStream extends OutputStream {
     out.flush();
   }
 
-  /* 
+  /**
    * Checks if writing {@code len} bytes would go over threshold, and
    * switches to file buffering if so.
    */

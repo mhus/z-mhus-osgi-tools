@@ -28,7 +28,7 @@ import java.lang.reflect.Modifier;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Represents either a {@link Field}, a {@link Method} or a {@link Constructor}.
  * Provides convenience methods such as {@link #isPublic} and {@link #isPackagePrivate}.
  * 
@@ -85,32 +85,32 @@ class Element extends AccessibleObject implements Member {
     return member.isSynthetic();
   }
 
-  /*  Returns true if the element is public. */
+  /** Returns true if the element is public. */
   public final boolean isPublic() {
     return Modifier.isPublic(getModifiers());
   }
 
-  /*  Returns true if the element is protected. */
+  /** Returns true if the element is protected. */
   public final boolean isProtected() {
     return Modifier.isProtected(getModifiers());
   }
 
-  /*  Returns true if the element is package-private. */
+  /** Returns true if the element is package-private. */
   public final boolean isPackagePrivate() {
     return !isPrivate() && !isPublic() && !isProtected();
   }
 
-  /*  Returns true if the element is private. */
+  /** Returns true if the element is private. */
   public final boolean isPrivate() {
     return Modifier.isPrivate(getModifiers());
   }
 
-  /*  Returns true if the element is static. */
+  /** Returns true if the element is static. */
   public final boolean isStatic() {
     return Modifier.isStatic(getModifiers());
   }
 
-  /* 
+  /**
    * Returns {@code true} if this method is final, per {@code Modifier.isFinal(getModifiers())}.
    * 
    * <p>Note that a method may still be effectively "final", or non-overridable when it has no
@@ -121,27 +121,27 @@ class Element extends AccessibleObject implements Member {
     return Modifier.isFinal(getModifiers());
   }
 
-  /*  Returns true if the method is abstract. */
+  /** Returns true if the method is abstract. */
   public final boolean isAbstract() {
     return Modifier.isAbstract(getModifiers());
   }
 
-  /*  Returns true if the element is native. */
+  /** Returns true if the element is native. */
   public final boolean isNative() {
     return Modifier.isNative(getModifiers());
   }
 
-  /*  Returns true if the method is synchronized. */
+  /** Returns true if the method is synchronized. */
   public final boolean isSynchronized() {
     return Modifier.isSynchronized(getModifiers());
   }
 
-  /*  Returns true if the field is volatile. */
+  /** Returns true if the field is volatile. */
   final boolean isVolatile() {
     return Modifier.isVolatile(getModifiers());
   }
 
-  /*  Returns true if the field is transient. */
+  /** Returns true if the field is transient. */
   final boolean isTransient() {
     return Modifier.isTransient(getModifiers());
   }

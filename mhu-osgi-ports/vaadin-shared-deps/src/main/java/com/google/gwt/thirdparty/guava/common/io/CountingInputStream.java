@@ -24,7 +24,7 @@ import java.io.InputStream;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An {@link InputStream} that counts the number of bytes read.
  *
  * @author Chris Nokleberg
@@ -36,7 +36,7 @@ public final class CountingInputStream extends FilterInputStream {
   private long count;
   private long mark = -1;
 
-  /* 
+  /**
    * Wraps another input stream, counting the number of bytes read.
    *
    * @param in the input stream to be wrapped
@@ -45,7 +45,7 @@ public final class CountingInputStream extends FilterInputStream {
     super(in);
   }
 
-  /*  Returns the number of bytes read. */
+  /** Returns the number of bytes read. */
   public long getCount() {
     return count;
   }

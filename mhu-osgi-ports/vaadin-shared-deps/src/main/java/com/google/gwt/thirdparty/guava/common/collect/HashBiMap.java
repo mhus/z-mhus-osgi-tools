@@ -35,7 +35,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@link BiMap} backed by two hash tables. This implementation allows null keys and values. A
  * {@code HashBiMap} and its inverse are both serializable.
  *
@@ -50,14 +50,14 @@ import javax.annotation.Nullable;
 @GwtCompatible(emulated = true)
 public final class HashBiMap<K, V> extends AbstractMap<K, V> implements BiMap<K, V>, Serializable {
 
-  /* 
+  /**
    * Returns a new, empty {@code HashBiMap} with the default initial capacity (16).
    */
   public static <K, V> HashBiMap<K, V> create() {
     return create(16);
   }
 
-  /* 
+  /**
    * Constructs a new, empty bimap with the specified expected size.
    *
    * @param expectedSize the expected number of entries
@@ -67,7 +67,7 @@ public final class HashBiMap<K, V> extends AbstractMap<K, V> implements BiMap<K,
     return new HashBiMap<K, V>(expectedSize);
   }
 
-  /* 
+  /**
    * Constructs a new bimap containing initial values from {@code map}. The bimap is created with an
    * initial capacity sufficient to hold the mappings in the specified map.
    */
@@ -116,7 +116,7 @@ public final class HashBiMap<K, V> extends AbstractMap<K, V> implements BiMap<K,
     this.size = 0;
   }
 
-  /* 
+  /**
    * Finds and removes {@code entry} from the bucket linked lists in both the
    * key-to-value direction and the value-to-key direction.
    */
@@ -644,7 +644,7 @@ public final class HashBiMap<K, V> extends AbstractMap<K, V> implements BiMap<K,
     }
   }
 
-  /* 
+  /**
    * @serialData the number of entries, first key, first value, second key, second value, and so on.
    */
   @GwtIncompatible("java.io.ObjectOutputStream")

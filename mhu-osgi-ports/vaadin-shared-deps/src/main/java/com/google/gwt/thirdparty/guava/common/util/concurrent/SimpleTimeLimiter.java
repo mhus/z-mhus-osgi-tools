@@ -36,7 +36,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * A TimeLimiter that runs method calls in the background using an
  * {@link ExecutorService}.  If the time limit expires for a given method call,
  * the thread running the call will be interrupted.
@@ -49,7 +49,7 @@ public final class SimpleTimeLimiter implements TimeLimiter {
 
   private final ExecutorService executor;
 
-  /* 
+  /**
    * Constructs a TimeLimiter instance using the given executor service to
    * execute proxied method calls.
    * <p>
@@ -67,7 +67,7 @@ public final class SimpleTimeLimiter implements TimeLimiter {
     this.executor = checkNotNull(executor);
   }
 
-  /* 
+  /**
    * Constructs a TimeLimiter instance using a {@link
    * Executors#newCachedThreadPool()} to execute proxied method calls.
    *

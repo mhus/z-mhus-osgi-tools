@@ -13,7 +13,7 @@ package com.google.gwt.thirdparty.guava.common.cache;
 
 import java.util.Random;
 
-/* 
+/**
  * A package-local class holding common representation and mechanics
  * for classes supporting dynamic striping on 64bit values. The class
  * extends Number so that concrete subclasses must publicly do so.
@@ -82,7 +82,7 @@ abstract class Striped64 extends Number {
      * needed again; and for short-lived ones, it does not matter.
      */
 
-    /* 
+    /**
      * Padded variant of AtomicLong supporting only raw accesses plus CAS.
      * The value field is placed between pads, hoping that the JVM doesn't
      * reorder them.
@@ -116,7 +116,7 @@ abstract class Striped64 extends Number {
 
     }
 
-    /* 
+    /**
      * Holder for the thread-local hash code. The code is initially
      * random, but may be set to a different value upon collisions.
      */
@@ -129,14 +129,14 @@ abstract class Striped64 extends Number {
         }
     }
 
-    /* 
+    /**
      * The corresponding ThreadLocal class
      */
     static final class ThreadHashCode extends ThreadLocal<HashCode> {
         public HashCode initialValue() { return new HashCode(); }
     }
 
-    /* 
+    /**
      * Static per-thread hash codes. Shared across all instances to
      * reduce ThreadLocal pollution and because adjustments due to
      * collisions in one table are likely to be appropriate for
@@ -144,46 +144,46 @@ abstract class Striped64 extends Number {
      */
     static final ThreadHashCode threadHashCode = new ThreadHashCode();
 
-    /*  Number of CPUS, to place bound on table size */
+    /** Number of CPUS, to place bound on table size */
     static final int NCPU = Runtime.getRuntime().availableProcessors();
 
-    /* 
+    /**
      * Table of cells. When non-null, size is a power of 2.
      */
     transient volatile Cell[] cells;
 
-    /* 
+    /**
      * Base value, used mainly when there is no contention, but also as
      * a fallback during table initialization races. Updated via CAS.
      */
     transient volatile long base;
 
-    /* 
+    /**
      * Spinlock (locked via CAS) used when resizing and/or creating Cells.
      */
     transient volatile int busy;
 
-    /* 
+    /**
      * Package-private default constructor
      */
     Striped64() {
     }
 
-    /* 
+    /**
      * CASes the base field.
      */
     final boolean casBase(long cmp, long val) {
         return UNSAFE.compareAndSwapLong(this, baseOffset, cmp, val);
     }
 
-    /* 
+    /**
      * CASes the busy field from 0 to 1 to acquire lock.
      */
     final boolean casBusy() {
         return UNSAFE.compareAndSwapInt(this, busyOffset, 0, 1);
     }
 
-    /* 
+    /**
      * Computes the function of current and new value. Subclasses
      * should open-code this update function for most uses, but the
      * virtualized form is needed within retryUpdate.
@@ -194,7 +194,7 @@ abstract class Striped64 extends Number {
      */
     abstract long fn(long currentValue, long newValue);
 
-    /* 
+    /**
      * Handles cases of updates involving initialization, resizing,
      * creating new Cells, and/or contention. See above for
      * explanation. This method suffers the usual non-modularity
@@ -281,7 +281,7 @@ abstract class Striped64 extends Number {
         hc.code = h;                            // Record index for next time
     }
 
-    /* 
+    /**
      * Sets base and all cells to the given value.
      */
     final void internalReset(long initialValue) {
@@ -314,7 +314,7 @@ abstract class Striped64 extends Number {
         }
     }
 
-    /* 
+    /**
      * Returns a sun.misc.Unsafe.  Suitable for use in a 3rd party package.
      * Replace with a simple call to Unsafe.getUnsafe when integrating
      * into a jdk.

@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A collection that associates an ordered pair of keys, called a row key and a
  * column key, with a single value. A table may be sparse, with only a small
  * fraction of row key / column key pairs possessing a corresponding value.
@@ -60,7 +60,7 @@ public interface Table<R, C, V> {
 
   // Accessors
 
-  /* 
+  /**
    * Returns {@code true} if the table contains a mapping with the specified
    * row and column keys.
    *
@@ -69,7 +69,7 @@ public interface Table<R, C, V> {
    */
   boolean contains(@Nullable Object rowKey, @Nullable Object columnKey);
 
-  /* 
+  /**
    * Returns {@code true} if the table contains a mapping with the specified
    * row key.
    *
@@ -77,7 +77,7 @@ public interface Table<R, C, V> {
    */
   boolean containsRow(@Nullable Object rowKey);
 
-  /* 
+  /**
    * Returns {@code true} if the table contains a mapping with the specified
    * column.
    *
@@ -85,7 +85,7 @@ public interface Table<R, C, V> {
    */
   boolean containsColumn(@Nullable Object columnKey);
 
-  /* 
+  /**
    * Returns {@code true} if the table contains a mapping with the specified
    * value.
    *
@@ -93,7 +93,7 @@ public interface Table<R, C, V> {
    */
   boolean containsValue(@Nullable Object value);
 
-  /* 
+  /**
    * Returns the value corresponding to the given row and column keys, or
    * {@code null} if no such mapping exists.
    *
@@ -102,22 +102,22 @@ public interface Table<R, C, V> {
    */
   V get(@Nullable Object rowKey, @Nullable Object columnKey);
 
-  /*  Returns {@code true} if the table contains no mappings. */
+  /** Returns {@code true} if the table contains no mappings. */
   boolean isEmpty();
 
-  /* 
+  /**
    * Returns the number of row key / column key / value mappings in the table.
    */
   int size();
 
-  /* 
+  /**
    * Compares the specified object with this table for equality. Two tables are
    * equal when their cell views, as returned by {@link #cellSet}, are equal.
    */
   @Override
   boolean equals(@Nullable Object obj);
 
-  /* 
+  /**
    * Returns the hash code for this table. The hash code of a table is defined
    * as the hash code of its cell view, as returned by {@link #cellSet}.
    */
@@ -126,10 +126,10 @@ public interface Table<R, C, V> {
 
   // Mutators
 
-  /*  Removes all mappings from the table. */
+  /** Removes all mappings from the table. */
   void clear();
 
-  /* 
+  /**
    * Associates the specified value with the specified keys. If the table
    * already contained a mapping for those keys, the old value is replaced with
    * the specified value.
@@ -142,7 +142,7 @@ public interface Table<R, C, V> {
    */
   V put(R rowKey, C columnKey, V value);
 
-  /* 
+  /**
    * Copies all mappings from the specified table to this table. The effect is
    * equivalent to calling {@link #put} with each row key / column key / value
    * mapping in {@code table}.
@@ -151,7 +151,7 @@ public interface Table<R, C, V> {
    */
   void putAll(Table<? extends R, ? extends C, ? extends V> table);
 
-  /* 
+  /**
    * Removes the mapping, if any, associated with the given keys.
    *
    * @param rowKey row key of mapping to be removed
@@ -163,7 +163,7 @@ public interface Table<R, C, V> {
 
   // Views
 
-  /* 
+  /**
    * Returns a view of all mappings that have the given row key. For each row
    * key / column key / value mapping in the table with that row key, the
    * returned map associates the column key with the value. If no mappings in
@@ -177,7 +177,7 @@ public interface Table<R, C, V> {
    */
   Map<C, V> row(R rowKey);
 
-  /* 
+  /**
    * Returns a view of all mappings that have the given column key. For each row
    * key / column key / value mapping in the table with that column key, the
    * returned map associates the row key with the value. If no mappings in the
@@ -191,7 +191,7 @@ public interface Table<R, C, V> {
    */
   Map<R, V> column(C columnKey);
 
-  /* 
+  /**
    * Returns a set of all row key / column key / value triplets. Changes to the
    * returned set will update the underlying table, and vice versa. The cell set
    * does not support the {@code add} or {@code addAll} methods.
@@ -201,7 +201,7 @@ public interface Table<R, C, V> {
    */
   Set<Cell<R, C, V>> cellSet();
 
-  /* 
+  /**
    * Returns a set of row keys that have one or more values in the table.
    * Changes to the set will update the underlying table, and vice versa.
    *
@@ -209,7 +209,7 @@ public interface Table<R, C, V> {
    */
   Set<R> rowKeySet();
 
-  /* 
+  /**
    * Returns a set of column keys that have one or more values in the table.
    * Changes to the set will update the underlying table, and vice versa.
    *
@@ -217,7 +217,7 @@ public interface Table<R, C, V> {
    */
   Set<C> columnKeySet();
 
-  /* 
+  /**
    * Returns a collection of all values, which may contain duplicates. Changes
    * to the returned collection will update the underlying table, and vice
    * versa.
@@ -226,7 +226,7 @@ public interface Table<R, C, V> {
    */
   Collection<V> values();
 
-  /* 
+  /**
    * Returns a view that associates each row key with the corresponding map from
    * column keys to values. Changes to the returned map will update this table.
    * The returned map does not support {@code put()} or {@code putAll()}, or
@@ -241,7 +241,7 @@ public interface Table<R, C, V> {
    */
   Map<R, Map<C, V>> rowMap();
 
-  /* 
+  /**
    * Returns a view that associates each column key with the corresponding map
    * from row keys to values. Changes to the returned map will update this
    * table. The returned map does not support {@code put()} or {@code putAll()},
@@ -256,35 +256,35 @@ public interface Table<R, C, V> {
    */
   Map<C, Map<R, V>> columnMap();
 
-  /* 
+  /**
    * Row key / column key / value triplet corresponding to a mapping in a table.
    *
    * @since 7.0
    */
   interface Cell<R, C, V> {
-    /* 
+    /**
      * Returns the row key of this cell.
      */
     R getRowKey();
 
-    /* 
+    /**
      * Returns the column key of this cell.
      */
     C getColumnKey();
 
-    /* 
+    /**
      * Returns the value of this cell.
      */
     V getValue();
 
-    /* 
+    /**
      * Compares the specified object with this cell for equality. Two cells are
      * equal when they have equal row keys, column keys, and values.
      */
     @Override
     boolean equals(@Nullable Object obj);
 
-    /* 
+    /**
      * Returns the hash code of this cell.
      *
      * <p>The hash code of a table cell is equal to {@link

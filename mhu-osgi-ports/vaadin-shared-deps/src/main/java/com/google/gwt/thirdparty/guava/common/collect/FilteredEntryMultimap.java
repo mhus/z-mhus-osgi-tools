@@ -36,7 +36,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link Multimaps#filterEntries(Multimap, Predicate)}.
  * 
  * @author Jared Levy

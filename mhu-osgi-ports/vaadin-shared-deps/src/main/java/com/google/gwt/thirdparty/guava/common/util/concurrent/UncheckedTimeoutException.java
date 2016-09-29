@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.util.concurrent;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Unchecked version of {@link java.util.concurrent.TimeoutException}.
  *
  * @author Kevin Bourrillion

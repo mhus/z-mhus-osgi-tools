@@ -16,7 +16,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A descending wrapper around an {@code ImmutableSortedMultiset}
  *
  * @author Louis Wasserman

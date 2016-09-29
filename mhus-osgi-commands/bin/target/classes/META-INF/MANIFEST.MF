@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1457607926571
+Build-Jdk: 1.8.0_66
+Built-By: mikehummel
+Bundle-Blueprint: OSGI-INF/blueprint/blueprint.xml
+Bundle-Description: commands OSGi blueprint bundle project.
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: mhus-osgi-commands
+Bundle-SymbolicName: mhus-osgi-commands
+Bundle-Version: 1.0.5
+Created-By: Apache Maven Bundle Plugin
+Export-Package: de.mhus.osgi.commands.db;version="1.0.5";uses:="de.mhus.
+ osgi.commands.impl,javax.sql,org.osgi.framework",de.mhus.osgi.commands.
+ impl;version="1.0.5";uses:="de.mhus.osgi.commands.db,javax.sql,org.apac
+ he.felix.service.command,org.apache.karaf.shell.commands,org.osgi.frame
+ work",de.mhus.osgi.commands.shell;version="1.0.5";uses:="de.mhus.lib.co
+ re,org.apache.felix.service.command,org.apache.karaf.shell.commands",de
+ .mhus.osgi.commands.watch;version="1.0.5";uses:="de.mhus.lib.core,org.o
+ sgi.framework,org.osgi.service.cm,org.osgi.service.component"
+Import-Package: org.apache.karaf.bundle.core;resolution:=optional;versio
+ n="[3.0,4)",de.mhus.lib.core;version="[3.2,4)",de.mhus.lib.core.console
+ ;version="[3.2,4)",de.mhus.lib.core.logging;version="[3.2,4)",de.mhus.l
+ ib.core.util;version="[3.2,4)",de.mhus.lib.karaf;version="[3.2,4)",de.m
+ hus.lib.logging;version="[3.2,4)",javax.sql,org.apache.commons.dbcp;ver
+ sion="[1.4,2)",org.apache.commons.pool;version="[1.6,2)",org.apache.com
+ mons.pool.impl;version="[1.6,2)",org.apache.felix.service.command;versi
+ on="[0.10,1)";status=provisional,org.apache.karaf.shell.commands;versio
+ n="[3.0,4)",org.osgi.framework;version="[1.7,2)",org.osgi.service.bluep
+ rint;version="[1.0.0,2.0.0)",org.osgi.service.cm;version="[1.5,2)",org.
+ osgi.service.component;version="[1.2,2)"
+Provide-Capability: osgi.service;effective:=active;objectClass="de.mhus.
+ osgi.commands.watch.PersistentWatch"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Service-Component: OSGI-INF/de.mhus.osgi.commands.watch.PersistentWatch.
+ xml
+Tool: Bnd-2.3.0.201405100607

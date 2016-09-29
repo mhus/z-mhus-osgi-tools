@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * A future which forwards all its method calls to another future. Subclasses
  * should override one or more methods to modify the behavior of the backing 
  * future as desired per the <a href=
@@ -55,7 +55,7 @@ public abstract class ForwardingCheckedFuture<V, X extends Exception>
   protected abstract CheckedFuture<V, X> delegate();
 
   // TODO(cpovirk): Use Standard Javadoc form for SimpleForwarding*
-  /* 
+  /**
    * A simplified version of {@link ForwardingCheckedFuture} where subclasses
    * can pass in an already constructed {@link CheckedFuture} as the delegate.
    * 

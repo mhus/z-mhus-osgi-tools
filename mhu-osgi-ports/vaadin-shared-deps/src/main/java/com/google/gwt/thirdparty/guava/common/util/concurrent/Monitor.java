@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.annotation.concurrent.GuardedBy;
 
-/* 
+/**
  * A synchronization abstraction supporting waiting on arbitrary boolean conditions.
  *
  * <p>This class is intended as a replacement for {@link ReentrantLock}. Code using {@code Monitor}
@@ -50,9 +50,28 @@ import javax.annotation.concurrent.GuardedBy;
  *
  * <p>A call to any of the <i>enter</i> methods with <b>void</b> return type should always be
  * followed immediately by a <i>try/finally</i> block to ensure that the current thread leaves the
+ * monitor cleanly: <pre>   {@code
+ *
+ *   monitor.enter();
+ *   try {
+ *     // do things while occupying the monitor
+ *   } finally {
+ *     monitor.leave();
+ *   }}</pre>
  *
  * <p>A call to any of the <i>enter</i> methods with <b>boolean</b> return type should always
  * appear as the condition of an <i>if</i> statement containing a <i>try/finally</i> block to
+ * ensure that the current thread leaves the monitor cleanly: <pre>   {@code
+ *
+ *   if (monitor.tryEnter()) {
+ *     try {
+ *       // do things while occupying the monitor
+ *     } finally {
+ *       monitor.leave();
+ *     }
+ *   } else {
+ *     // do other things since the monitor was not available
+ *   }}</pre>
  *
  * <h2>Comparison with {@code synchronized} and {@code ReentrantLock}</h2>
  *
@@ -65,20 +84,116 @@ import javax.annotation.concurrent.GuardedBy;
  * is built into the language and runtime. But the programmer has to remember to avoid a couple of
  * common bugs: The {@code wait()} must be inside a {@code while} instead of an {@code if}, and
  * {@code notifyAll()} must be used instead of {@code notify()} because there are two different
-
+ * logical conditions being awaited. <pre>   {@code
+ *
+ *   public class SafeBox<V> {
+ *     private V value;
+ *
+ *     public synchronized V get() throws InterruptedException {
+ *       while (value == null) {
+ *         wait();
+ *       }
+ *       V result = value;
+ *       value = null;
+ *       notifyAll();
+ *       return result;
+ *     }
+ *
+ *     public synchronized void set(V newValue) throws InterruptedException {
+ *       while (value != null) {
+ *         wait();
+ *       }
+ *       value = newValue;
+ *       notifyAll();
+ *     }
+ *   }}</pre>
+ *
  * <h3>{@code ReentrantLock}</h3>
  *
  * <p>This version is much more verbose than the {@code synchronized} version, and still suffers
  * from the need for the programmer to remember to use {@code while} instead of {@code if}.
  * However, one advantage is that we can introduce two separate {@code Condition} objects, which
  * allows us to use {@code signal()} instead of {@code signalAll()}, which may be a performance
-
+ * benefit. <pre>   {@code
+ *
+ *   public class SafeBox<V> {
+ *     private final ReentrantLock lock = new ReentrantLock();
+ *     private final Condition valuePresent = lock.newCondition();
+ *     private final Condition valueAbsent = lock.newCondition();
+ *     private V value;
+ *
+ *     public V get() throws InterruptedException {
+ *       lock.lock();
+ *       try {
+ *         while (value == null) {
+ *           valuePresent.await();
+ *         }
+ *         V result = value;
+ *         value = null;
+ *         valueAbsent.signal();
+ *         return result;
+ *       } finally {
+ *         lock.unlock();
+ *       }
+ *     }
+ *
+ *     public void set(V newValue) throws InterruptedException {
+ *       lock.lock();
+ *       try {
+ *         while (value != null) {
+ *           valueAbsent.await();
+ *         }
+ *         value = newValue;
+ *         valuePresent.signal();
+ *       } finally {
+ *         lock.unlock();
+ *       }
+ *     }
+ *   }}</pre>
+ *
  * <h3>{@code Monitor}</h3>
  *
  * <p>This version adds some verbosity around the {@code Guard} objects, but removes that same
  * verbosity, and more, from the {@code get} and {@code set} methods. {@code Monitor} implements the
  * same efficient signaling as we had to hand-code in the {@code ReentrantLock} version above.
  * Finally, the programmer no longer has to hand-code the wait loop, and therefore doesn't have to
+ * remember to use {@code while} instead of {@code if}. <pre>   {@code
+ *
+ *   public class SafeBox<V> {
+ *     private final Monitor monitor = new Monitor();
+ *     private final Monitor.Guard valuePresent = new Monitor.Guard(monitor) {
+ *       public boolean isSatisfied() {
+ *         return value != null;
+ *       }
+ *     };
+ *     private final Monitor.Guard valueAbsent = new Monitor.Guard(monitor) {
+ *       public boolean isSatisfied() {
+ *         return value == null;
+ *       }
+ *     };
+ *     private V value;
+ *
+ *     public V get() throws InterruptedException {
+ *       monitor.enterWhen(valuePresent);
+ *       try {
+ *         V result = value;
+ *         value = null;
+ *         return result;
+ *       } finally {
+ *         monitor.leave();
+ *       }
+ *     }
+ *
+ *     public void set(V newValue) throws InterruptedException {
+ *       monitor.enterWhen(valueAbsent);
+ *       try {
+ *         value = newValue;
+ *       } finally {
+ *         monitor.leave();
+ *       }
+ *     }
+ *   }}</pre>
+ *
  * @author Justin T. Sampson
  * @author Martin Buchholz
  * @since 10.0
@@ -133,7 +248,7 @@ public final class Monitor {
    * participating in the signal-passing game.
    */
 
-  /* 
+  /**
    * A boolean condition for which a thread may wait. A {@code Guard} is associated with a single
    * {@code Monitor}. The monitor may check the guard at arbitrary times from any thread occupying
    * the monitor, so code should not be written to rely on how often a guard might or might not be
@@ -153,7 +268,7 @@ public final class Monitor {
     @GuardedBy("monitor.lock")
     int waiterCount = 0;
 
-    /*  The next active guard */
+    /** The next active guard */
     @GuardedBy("monitor.lock")
     Guard next;
 
@@ -162,7 +277,7 @@ public final class Monitor {
       this.condition = monitor.lock.newCondition();
     }
 
-    /* 
+    /**
      * Evaluates this guard's boolean condition. This method is always called with the associated
      * monitor already occupied. Implementations of this method must depend only on state protected
      * by the associated monitor, and must not modify that state.
@@ -171,24 +286,24 @@ public final class Monitor {
 
   }
 
-  /* 
+  /**
    * Whether this monitor is fair.
    */
   private final boolean fair;
 
-  /* 
+  /**
    * The lock underlying this monitor.
    */
   private final ReentrantLock lock;
 
-  /* 
+  /**
    * The guards associated with this monitor that currently have waiters ({@code waiterCount > 0}).
    * A linked list threaded through the Guard.next field.
    */
   @GuardedBy("lock")
   private Guard activeGuards = null;
 
-  /* 
+  /**
    * Creates a monitor with a non-fair (but fast) ordering policy. Equivalent to {@code
    * Monitor(false)}.
    */
@@ -196,7 +311,7 @@ public final class Monitor {
     this(false);
   }
 
-  /* 
+  /**
    * Creates a monitor with the given ordering policy.
    *
    * @param fair whether this monitor should use a fair ordering policy rather than a non-fair (but
@@ -207,21 +322,21 @@ public final class Monitor {
     this.lock = new ReentrantLock(fair);
   }
 
-  /* 
+  /**
    * Enters this monitor. Blocks indefinitely.
    */
   public void enter() {
     lock.lock();
   }
 
-  /* 
+  /**
    * Enters this monitor. Blocks indefinitely, but may be interrupted.
    */
   public void enterInterruptibly() throws InterruptedException {
     lock.lockInterruptibly();
   }
 
-  /* 
+  /**
    * Enters this monitor. Blocks at most the given time.
    *
    * @return whether the monitor was entered
@@ -250,7 +365,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor. Blocks at most the given time, and may be interrupted.
    *
    * @return whether the monitor was entered
@@ -259,7 +374,7 @@ public final class Monitor {
     return lock.tryLock(time, unit);
   }
 
-  /* 
+  /**
    * Enters this monitor if it is possible to do so immediately. Does not block.
    *
    * <p><b>Note:</b> This method disregards the fairness setting of this monitor.
@@ -270,7 +385,7 @@ public final class Monitor {
     return lock.tryLock();
   }
 
-  /* 
+  /**
    * Enters this monitor when the guard is satisfied. Blocks indefinitely, but may be interrupted.
    */
   public void enterWhen(Guard guard) throws InterruptedException {
@@ -294,7 +409,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor when the guard is satisfied. Blocks indefinitely.
    */
   public void enterWhenUninterruptibly(Guard guard) {
@@ -318,7 +433,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor when the guard is satisfied. Blocks at most the given time, including both
    * the time to acquire the lock and the time to wait for the guard to be satisfied, and may be
    * interrupted.
@@ -360,7 +475,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor when the guard is satisfied. Blocks at most the given time, including
    * both the time to acquire the lock and the time to wait for the guard to be satisfied.
    *
@@ -415,7 +530,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor if the guard is satisfied. Blocks indefinitely acquiring the lock, but
    * does not wait for the guard to be satisfied.
    *
@@ -438,7 +553,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor if the guard is satisfied. Blocks indefinitely acquiring the lock, but does
    * not wait for the guard to be satisfied, and may be interrupted.
    *
@@ -461,7 +576,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor if the guard is satisfied. Blocks at most the given time acquiring the
    * lock, but does not wait for the guard to be satisfied.
    *
@@ -485,7 +600,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor if the guard is satisfied. Blocks at most the given time acquiring the
    * lock, but does not wait for the guard to be satisfied, and may be interrupted.
    *
@@ -511,7 +626,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Enters this monitor if it is possible to do so immediately and the guard is satisfied. Does not
    * block acquiring the lock and does not wait for the guard to be satisfied.
    *
@@ -538,7 +653,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Waits for the guard to be satisfied. Waits indefinitely, but may be interrupted. May be
    * called only by a thread currently occupying this monitor.
    */
@@ -551,7 +666,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Waits for the guard to be satisfied. Waits indefinitely. May be called only by a thread
    * currently occupying this monitor.
    */
@@ -564,7 +679,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Waits for the guard to be satisfied. Waits at most the given time, and may be interrupted.
    * May be called only by a thread currently occupying this monitor.
    *
@@ -578,7 +693,7 @@ public final class Monitor {
     return guard.isSatisfied() || awaitNanos(guard, timeoutNanos, true);
   }
 
-  /* 
+  /**
    * Waits for the guard to be satisfied. Waits at most the given time. May be called only by a
    * thread currently occupying this monitor.
    *
@@ -615,7 +730,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Leaves this monitor. May be called only by a thread currently occupying this monitor.
    */
   public void leave() {
@@ -630,14 +745,14 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Returns whether this monitor is using a fair ordering policy.
    */
   public boolean isFair() {
     return fair;
   }
 
-  /* 
+  /**
    * Returns whether this monitor is occupied by any thread. This method is designed for use in
    * monitoring of the system state, not for synchronization control.
    */
@@ -645,7 +760,7 @@ public final class Monitor {
     return lock.isLocked();
   }
 
-  /* 
+  /**
    * Returns whether the current thread is occupying this monitor (has entered more times than it
    * has left).
    */
@@ -653,7 +768,7 @@ public final class Monitor {
     return lock.isHeldByCurrentThread();
   }
 
-  /* 
+  /**
    * Returns the number of times the current thread has entered this monitor in excess of the number
    * of times it has left. Returns 0 if the current thread is not occupying this monitor.
    */
@@ -661,7 +776,7 @@ public final class Monitor {
     return lock.getHoldCount();
   }
 
-  /* 
+  /**
    * Returns an estimate of the number of threads waiting to enter this monitor. The value is only
    * an estimate because the number of threads may change dynamically while this method traverses
    * internal data structures. This method is designed for use in monitoring of the system state,
@@ -671,7 +786,7 @@ public final class Monitor {
     return lock.getQueueLength();
   }
 
-  /* 
+  /**
    * Returns whether any threads are waiting to enter this monitor. Note that because cancellations
    * may occur at any time, a {@code true} return does not guarantee that any other thread will ever
    * enter this monitor. This method is designed primarily for use in monitoring of the system
@@ -681,7 +796,7 @@ public final class Monitor {
     return lock.hasQueuedThreads();
   }
 
-  /* 
+  /**
    * Queries whether the given thread is waiting to enter this monitor. Note that because
    * cancellations may occur at any time, a {@code true} return does not guarantee that this thread
    * will ever enter this monitor. This method is designed primarily for use in monitoring of the
@@ -691,7 +806,7 @@ public final class Monitor {
     return lock.hasQueuedThread(thread);
   }
 
-  /* 
+  /**
    * Queries whether any threads are waiting for the given guard to become satisfied. Note that
    * because timeouts and interrupts may occur at any time, a {@code true} return does not guarantee
    * that the guard becoming satisfied in the future will awaken any threads. This method is
@@ -701,7 +816,7 @@ public final class Monitor {
     return getWaitQueueLength(guard) > 0;
   }
 
-  /* 
+  /**
    * Returns an estimate of the number of threads waiting for the given guard to become satisfied.
    * Note that because timeouts and interrupts may occur at any time, the estimate serves only as an
    * upper bound on the actual number of waiters. This method is designed for use in monitoring of
@@ -719,7 +834,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Signals some other thread waiting on a satisfied guard, if one exists.
    *
    * We manage calls to this method carefully, to signal only when necessary, but never losing a
@@ -753,7 +868,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Exactly like signalNextWaiter, but caller guarantees that guardToSkip need not be considered,
    * because caller has previously checked that guardToSkip.isSatisfied() returned false.
    * An optimization for the case that guardToSkip.isSatisfied() may be expensive.
@@ -771,7 +886,7 @@ public final class Monitor {
 //     }
 //   }
 
-  /* 
+  /**
    * Exactly like guard.isSatisfied(), but in addition signals all waiting threads in the
    * (hopefully unlikely) event that isSatisfied() throws.
    */
@@ -785,7 +900,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Signals all threads waiting on guards.
    */
   @GuardedBy("lock")
@@ -795,7 +910,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Records that the current thread is about to wait on the specified guard.
    */
   @GuardedBy("lock")
@@ -808,7 +923,7 @@ public final class Monitor {
     }
   }
 
-  /* 
+  /**
    * Records that the current thread is no longer waiting on the specified guard.
    */
   @GuardedBy("lock")

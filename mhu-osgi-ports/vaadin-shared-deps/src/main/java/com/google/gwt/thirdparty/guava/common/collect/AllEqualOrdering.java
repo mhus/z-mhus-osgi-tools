@@ -23,7 +23,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An ordering that treats all references as equals, even nulls.
  *
  * @author Emily Soldal

@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A multiset which maintains the ordering of its elements, according to either their natural order
  * or an explicit {@link Comparator}. In all cases, this implementation uses
  * {@link Comparable#compareTo} or {@link Comparator#compare} instead of {@link Object#equals} to
@@ -57,7 +57,7 @@ import javax.annotation.Nullable;
 @GwtCompatible(emulated = true)
 public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements Serializable {
 
-  /* 
+  /**
    * Creates a new, empty multiset, sorted according to the elements' natural order. All elements
    * inserted into the multiset must implement the {@code Comparable} interface. Furthermore, all
    * such elements must be <i>mutually comparable</i>: {@code e1.compareTo(e2)} must not throw a
@@ -73,7 +73,7 @@ public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements 
     return new TreeMultiset<E>(Ordering.natural());
   }
 
-  /* 
+  /**
    * Creates a new, empty multiset, sorted according to the specified comparator. All elements
    * inserted into the multiset must be <i>mutually comparable</i> by the specified comparator:
    * {@code comparator.compare(e1,
@@ -92,7 +92,7 @@ public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements 
         : new TreeMultiset<E>(comparator);
   }
 
-  /* 
+  /**
    * Creates an empty multiset containing the given initial elements, sorted according to the
    * elements' natural order.
    *
@@ -126,7 +126,7 @@ public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements 
     this.rootReference = new Reference<AvlNode<E>>();
   }
 
-  /* 
+  /**
    * A function which can be summed across a subtree.
    */
   private enum Aggregate {
@@ -349,7 +349,7 @@ public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements 
     };
   }
 
-  /* 
+  /**
    * Returns the first node in the tree that is in range.
    */
   @Nullable private AvlNode<E> firstNode() {
@@ -949,7 +949,7 @@ public final class TreeMultiset<E> extends AbstractSortedMultiset<E> implements 
    * AbstractMultiset.equals() can simply check whether two multisets have equal entry sets.
    */
 
-  /* 
+  /**
    * @serialData the comparator, the number of distinct elements, the first element, its count, the
    *             second element, its count, and so on
    */

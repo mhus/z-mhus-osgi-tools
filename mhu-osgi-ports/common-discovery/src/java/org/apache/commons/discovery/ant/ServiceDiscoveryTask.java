@@ -23,7 +23,7 @@ import org.apache.commons.discovery.ResourceNameIterator;
 import org.apache.commons.discovery.jdk.JDKHooks;
 import org.apache.commons.discovery.resource.DiscoverResources;
 
-/* 
+/**
  * Small ant task that will use discovery to locate a particular impl.
  * and display all values.
  *
@@ -37,7 +37,7 @@ public class ServiceDiscoveryTask {
 
     String[] drivers = null;
 
-    /* 
+    /**
      * Sets the service name has to be discovered.
      *
      * @param name The service name has to be discovered.
@@ -46,7 +46,7 @@ public class ServiceDiscoveryTask {
         this.name=name;
     }
 
-    /* 
+    /**
      * Sets the debug level.
      *
      * @param i The debug level
@@ -55,7 +55,7 @@ public class ServiceDiscoveryTask {
         this.debug=i;
     }
 
-    /* 
+    /**
      * Returns the discovered SPIs name.
      *
      * @return The discovered SPIs name
@@ -64,7 +64,7 @@ public class ServiceDiscoveryTask {
         return drivers;
     }
 
-    /* 
+    /**
      * Executes the Apache Ant task, discovering the set service name
      *
      * @throws Exception if any error occurs

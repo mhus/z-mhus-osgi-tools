@@ -21,7 +21,7 @@ import java.util.Map;
 
 import org.apache.commons.discovery.jdk.JDKHooks;
 
-/* 
+/**
  * Cache by a 'key' unique to the environment:
  *
  * - ClassLoader::groupContext::Object Cache
@@ -40,7 +40,7 @@ import org.apache.commons.discovery.jdk.JDKHooks;
  */
 public class EnvironmentCache {
 
-    /* 
+    /**
      * Allows null key, important as default groupContext is null.
      *
      * We will manage synchronization directly, so all caches are implemented
@@ -49,12 +49,12 @@ public class EnvironmentCache {
     private static final Map<ClassLoader, Map<String, Object>> root_cache =
         new HashMap<ClassLoader, Map<String, Object>>();
 
-    /* 
+    /**
      * Initial hash size for SPI's, default just seem TO big today..
      */
     public static final int smallHashSize = 13;
 
-    /* 
+    /**
      * Get object keyed by classLoader.
      *
      * @param classLoader The class loader key
@@ -68,7 +68,7 @@ public class EnvironmentCache {
         return root_cache.get(classLoader);
     }
 
-    /* 
+    /**
      * Put service keyed by spi & classLoader.
      *
      * @param classLoader The class loader key
@@ -84,9 +84,9 @@ public class EnvironmentCache {
         }
     }
 
-    /* ******************** CACHE-MANAGEMENT SUPPORT **********************/
+    /********************** CACHE-MANAGEMENT SUPPORT **********************/
 
-    /* 
+    /**
      * Release all internal references to previously created service
      * instances associated with the current thread context class loader.
      * The <code>release()</code> method is called for service instances that
@@ -105,7 +105,7 @@ public class EnvironmentCache {
         root_cache.remove(JDKHooks.getJDKHooks().getThreadContextClassLoader());
     }
 
-    /* 
+    /**
      * Release any internal references to a previously created service
      * instance associated with the current thread context class loader.
      * If the SPI instance implements <code>Service</code>, then call

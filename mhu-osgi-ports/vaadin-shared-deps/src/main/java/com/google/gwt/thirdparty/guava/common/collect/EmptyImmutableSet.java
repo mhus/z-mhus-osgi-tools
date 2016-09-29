@@ -23,7 +23,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An empty immutable set.
  *
  * @author Kevin Bourrillion

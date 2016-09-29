@@ -44,7 +44,7 @@ import org.apache.commons.discovery.tools.SPInterface;
 import org.apache.commons.logging.Log;
 import org.junit.Test;
 
-/* 
+/**
  * @version $Revision: 1090705 $
  */
 public class TestAll {

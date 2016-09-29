@@ -41,7 +41,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.Immutable;
 
-/* 
+/**
  * Base class for implementing services that can handle {@link #doStart} and {@link #doStop}
  * requests, responding to them with {@link #notifyStarted()} and {@link #notifyStopped()}
  * callbacks. Its subclasses must manage threads manually; consider
@@ -82,13 +82,13 @@ public abstract class AbstractService implements Service {
     }
   };
 
-  /* 
+  /**
    * The listeners to notify during a state transition.
    */
   @GuardedBy("monitor")
   private final List<ListenerExecutorPair> listeners = Lists.newArrayList();
 
-  /* 
+  /**
    * The queue of listeners that are waiting to be executed.
    *
    * <p>Enqueue operations should be protected by {@link #monitor} while calling
@@ -96,7 +96,7 @@ public abstract class AbstractService implements Service {
    */
   private final ExecutionQueue queuedListeners = new ExecutionQueue();
 
-  /* 
+  /**
    * The current state of the service.  This should be written with the lock held but can be read
    * without it because it is an immutable object in a volatile field.  This is desirable so that
    * methods like {@link #state}, {@link #failureCause} and notably {@link #toString} can be run
@@ -108,7 +108,7 @@ public abstract class AbstractService implements Service {
   @GuardedBy("monitor")
   private volatile StateSnapshot snapshot = new StateSnapshot(NEW);
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected AbstractService() {
     // Add a listener to update the futures. This needs to be added first so that it is executed
     // before the other listeners. This way the other listeners can access the completed futures.
@@ -154,7 +154,7 @@ public abstract class AbstractService implements Service {
         MoreExecutors.sameThreadExecutor());
   }
 
-  /* 
+  /**
    * This method is called by {@link #start} to initiate service startup. The invocation of this
    * method should cause a call to {@link #notifyStarted()}, either during this method's run, or
    * after it has returned. If startup fails, the invocation should cause a call to
@@ -166,7 +166,7 @@ public abstract class AbstractService implements Service {
    */
   protected abstract void doStart();
 
-  /* 
+  /**
    * This method should be used to initiate service shutdown. The invocation of this method should
    * cause a call to {@link #notifyStopped()}, either during this method's run, or after it has
    * returned. If shutdown fails, the invocation should cause a call to
@@ -325,7 +325,7 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /*  Checks that the current state is equal to the expected state. */
+  /** Checks that the current state is equal to the expected state. */
   @GuardedBy("monitor")
   private void checkCurrentState(State expected) {
     State actual = state();
@@ -340,7 +340,7 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /* 
+  /**
    * Implementing classes should invoke this method once their service has started. It will cause
    * the service to transition from {@link State#STARTING} to {@link State#RUNNING}.
    *
@@ -373,7 +373,7 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /* 
+  /**
    * Implementing classes should invoke this method once their service has stopped. It will cause
    * the service to transition from {@link State#STOPPING} to {@link State#TERMINATED}.
    *
@@ -400,7 +400,7 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /* 
+  /**
    * Invoke this method to transition the service to the {@link State#FAILED}. The service will
    * <b>not be stopped</b> if it is running. Invoke this method when a service has failed critically
    * or otherwise cannot be started nor stopped.
@@ -443,7 +443,7 @@ public abstract class AbstractService implements Service {
     return snapshot.externalState();
   }
 
-  /* 
+  /**
    * @since 14.0
    */
   @Override
@@ -451,7 +451,7 @@ public abstract class AbstractService implements Service {
     return snapshot.failureCause();
   }
 
-  /* 
+  /**
    * @since 13.0
    */
   @Override
@@ -473,7 +473,7 @@ public abstract class AbstractService implements Service {
     return getClass().getSimpleName() + " [" + state() + "]";
   }
 
-  /* 
+  /**
    * A change from one service state to another, plus the result of the change.
    */
   private class Transition extends AbstractFuture<State> {
@@ -488,7 +488,7 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /* 
+  /**
    * Attempts to execute all the listeners in {@link #queuedListeners} while not holding the
    * {@link #monitor}.
    */
@@ -557,7 +557,7 @@ public abstract class AbstractService implements Service {
     listeners.clear();
   }
 
-  /*  A simple holder for a listener and its executor. */
+  /** A simple holder for a listener and its executor. */
   private static class ListenerExecutorPair {
     final Listener listener;
     final Executor executor;
@@ -568,26 +568,26 @@ public abstract class AbstractService implements Service {
     }
   }
 
-  /* 
+  /**
    * An immutable snapshot of the current state of the service. This class represents a consistent
    * snapshot of the state and therefore it can be used to answer simple queries without needing to
    * grab a lock.
    */
   @Immutable
   private static final class StateSnapshot {
-    /* 
+    /**
      * The internal state, which equals external state unless
      * shutdownWhenStartupFinishes is true.
      */
     final State state;
 
-    /* 
+    /**
      * If true, the user requested a shutdown while the service was still starting
      * up.
      */
     final boolean shutdownWhenStartupFinishes;
 
-    /* 
+    /**
      * The exception that caused this service to fail.  This will be {@code null}
      * unless the service has failed.
      */
@@ -611,7 +611,7 @@ public abstract class AbstractService implements Service {
       this.failure = failure;
     }
 
-    /*  @see Service#state() */
+    /** @see Service#state() */
     State externalState() {
       if (shutdownWhenStartupFinishes && state == STARTING) {
         return STOPPING;
@@ -620,7 +620,7 @@ public abstract class AbstractService implements Service {
       }
     }
 
-    /*  @see Service#failureCause() */
+    /** @see Service#failureCause() */
     Throwable failureCause() {
       checkState(state == FAILED,
           "failureCause() is only valid if the service has failed, service is %s", state);

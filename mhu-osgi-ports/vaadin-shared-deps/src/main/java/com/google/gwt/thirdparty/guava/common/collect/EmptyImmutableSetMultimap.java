@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * Implementation of {@link ImmutableListMultimap} with no entries.
  *
  * @author Mike Ward

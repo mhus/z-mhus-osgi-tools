@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import java.util.Arrays;
 
-/* 
+/**
  * Implements a circular (ring) buffer of characters with specialized
  * application logic in order to determine the context of some
  * Javascript content that is being parsed.
@@ -43,7 +43,7 @@ import java.util.Arrays;
  */
 public class JavascriptTokenBuffer {
 
-  /* 
+  /**
    * Size of the ring buffer used to lookup the last token in the javascript
    * stream. The size is somewhat arbitrary but must be larger than
    * the biggest token we want to lookup plus three: Two delimiters plus
@@ -51,16 +51,16 @@ public class JavascriptTokenBuffer {
    */
   private static final int BUFFER_SIZE = 18;
 
-  /*  Storage implementing the circular buffer. */
+  /** Storage implementing the circular buffer. */
   private final char[] buffer;
 
-  /*  Index of the first item in our circular buffer. */
+  /** Index of the first item in our circular buffer. */
   private int startIndex;
 
-  /*  Index of the last item in our circular buffer. */
+  /** Index of the last item in our circular buffer. */
   private int endIndex;
 
-  /* 
+  /**
    * Constructs an empty javascript token buffer. The size is fixed,
    * see {@link #BUFFER_SIZE}.
    */
@@ -70,7 +70,7 @@ public class JavascriptTokenBuffer {
     endIndex = 0;
   }
 
-  /* 
+  /**
    * Constructs a javascript token buffer that is identical to
    * the one given. In particular, it has the same size and contents.
    *
@@ -83,7 +83,7 @@ public class JavascriptTokenBuffer {
     endIndex = aJavascriptTokenBuffer.endIndex;
   }
 
-  /* 
+  /**
    * A simple wrapper over <code>appendChar</code>, it appends a string
    * to the buffer. Sequences of whitespace and newlines
    * are folded into one character to save space. Null strings are
@@ -101,7 +101,7 @@ public class JavascriptTokenBuffer {
     }
   }
 
-  /* 
+  /**
    * Appends a character to the buffer. We fold sequences of whitespace and
    * newlines into one to save space.
    *
@@ -119,7 +119,7 @@ public class JavascriptTokenBuffer {
     }
   }
 
-  /* 
+  /**
    * Returns the last character in the buffer and removes it from the buffer
    * or the NUL character '\0' if the buffer is empty.
    *
@@ -136,7 +136,7 @@ public class JavascriptTokenBuffer {
     return buffer[endIndex];
   }
 
-  /* 
+  /**
    * Returns the character at a given index in the buffer or nul ('\0')
    * if the index is outside the range of the buffer. Such could happen
    * if the buffer is not filled enough or the index is larger than the
@@ -160,7 +160,7 @@ public class JavascriptTokenBuffer {
     return buffer[absolutePosition];
   }
 
-  /* 
+  /**
    * Sets the given {@code input} at the given {@code position} of the buffer.
    * Returns {@code true} if we succeeded or {@code false} if we
    * failed (i.e. the write was beyond the buffer boundary).
@@ -185,7 +185,7 @@ public class JavascriptTokenBuffer {
   }
 
 
-  /* 
+  /**
    * Returns the last javascript identifier/keyword in the buffer.
    *
    * @return the last identifier or {@code null} if none was found
@@ -206,7 +206,7 @@ public class JavascriptTokenBuffer {
     return slice(position + 1, end);
   }
 
-  /* 
+  /**
    * Returns a slice of the buffer delimited by the given indices.
    *
    * The start and end indexes represent the start and end of the
@@ -235,7 +235,7 @@ public class JavascriptTokenBuffer {
     return new String(output);
   }
 
-  /* 
+  /**
    * Returns the position relative to the start of the buffer or -1
    * if the position is past the size of the buffer.
    *

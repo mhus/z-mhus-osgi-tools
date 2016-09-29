@@ -22,7 +22,7 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-/* 
+/**
  * 'Resource' located by discovery.
  * Naming of methods becomes a real pain ('getClass()')
  * so I've patterned this after ClassLoader...
@@ -37,7 +37,7 @@ public class Resource {
 
     protected final ClassLoader loader;
 
-    /* 
+    /**
      * Create a new {@link Resource} instance.
      *
      * @param resourceName The resource name has to be located
@@ -50,7 +50,7 @@ public class Resource {
         this.loader = loader;
     }
 
-    /* 
+    /**
      * Get the value of resourceName.
      * @return value of resourceName.
      */
@@ -58,7 +58,7 @@ public class Resource {
         return name;
     }
 
-    /* 
+    /**
      * Get the value of URL.
      * @return value of URL.
      */
@@ -66,7 +66,7 @@ public class Resource {
         return resource;
     }
 
-    /* 
+    /**
      * Get the value of URL.
      * @return value of URL.
      */
@@ -78,7 +78,7 @@ public class Resource {
         }
     }
 
-    /* 
+    /**
      * Get the value of loader.
      * @return value of loader.
      */
@@ -86,7 +86,7 @@ public class Resource {
         return loader ;
     }
 
-    /* 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -94,7 +94,7 @@ public class Resource {
         return "Resource[" + getName() +  ", " + getResource() + ", " + getClassLoader() + "]";
     }
 
-    /* 
+    /**
      * Returns an array containing all of the elements in this {@link ResourceIterator} in proper sequence.
      *
      * @param iterator The {@link ResourceIterator} containing the 

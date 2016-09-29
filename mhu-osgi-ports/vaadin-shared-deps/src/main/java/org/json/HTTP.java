@@ -26,17 +26,17 @@ SOFTWARE.
 
 import java.util.Iterator;
 
-/* 
+/**
  * Convert an HTTP header to a JSONObject and back.
  * @author JSON.org
  * @version 3
  */
 public class HTTP {
 
-    /*  Carriage return/line feed. */
+    /** Carriage return/line feed. */
     public static final String CRLF = "\r\n";
 
-    /* 
+    /**
      * Convert an HTTP header string into a JSONObject. It can be a request
      * header or a response header. A request header will contain
      * <pre>{
@@ -104,7 +104,7 @@ public class HTTP {
     }
 
 
-    /* 
+    /**
      * Convert a JSONObject into an HTTP header. A request header must contain
      * <pre>{
      *    Method: "POST" (for example),

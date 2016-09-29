@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.EnumSet;
 
-/* 
+/**
  * Implementation of {@link ImmutableSet} backed by a non-empty {@link
  * java.util.EnumSet}.
  *

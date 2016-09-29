@@ -23,7 +23,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-/* 
+/**
  * A {@code RegularImmutableTable} optimized for dense data.
  */
 @GwtCompatible
@@ -81,7 +81,7 @@ final class DenseImmutableTable<R, C, V>
     this.columnMap = new ColumnMap();
   }
 
-  /* 
+  /**
    * An immutable map implementation backed by an indexed nullable array.
    */
   private abstract static class ImmutableArrayMap<K, V> extends ImmutableMap<K, V> {

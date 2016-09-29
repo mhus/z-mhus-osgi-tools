@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An immutable implementation of {@code RangeMap}, supporting all query operations efficiently.
  *
  * <p>Like all {@code RangeMap} implementations, this supports neither null keys nor null values.
@@ -45,7 +45,7 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
   private static final ImmutableRangeMap EMPTY =
       new ImmutableRangeMap(ImmutableList.of(), ImmutableList.of());
 
-  /* 
+  /**
    * Returns an empty immutable range map.
    */
   @SuppressWarnings("unchecked")
@@ -53,7 +53,7 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
     return EMPTY;
   }
 
-  /* 
+  /**
    * Returns an immutable range map mapping a single range to a single value.
    */
   public static <K extends Comparable<?>, V> ImmutableRangeMap<K, V> of(
@@ -77,14 +77,14 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
     return new ImmutableRangeMap<K, V>(rangesBuilder.build(), valuesBuilder.build());
   }
 
-  /* 
+  /**
    * Returns a new builder for an immutable range map.
    */
   public static <K extends Comparable<?>, V> Builder<K, V> builder() {
     return new Builder<K, V>();
   }
 
-  /* 
+  /**
    * A builder for immutable range maps. Overlapping ranges are prohibited.
    */
   public static final class Builder<K extends Comparable<?>, V> {
@@ -96,7 +96,7 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
       this.rangeMap = TreeRangeMap.create();
     }
 
-    /* 
+    /**
      * Associates the specified range with the specified value.
      *
      * @throws IllegalArgumentException if {@code range} overlaps with any other ranges inserted
@@ -121,7 +121,7 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
       return this;
     }
 
-    /* 
+    /**
      * Copies all associations from the specified range map into this builder.
      *
      * @throws IllegalArgumentException if any of the ranges in {@code rangeMap} overlap with ranges
@@ -134,7 +134,7 @@ public class ImmutableRangeMap<K extends Comparable<?>, V> implements RangeMap<K
       return this;
     }
 
-    /* 
+    /**
      * Returns an {@code ImmutableRangeMap} containing the associations previously added to this
      * builder.
      */

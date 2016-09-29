@@ -28,7 +28,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-/* 
+/**
  * An implementation of {@link DataInput} that uses little-endian byte ordering
  * for reading {@code short}, {@code int}, {@code float}, {@code double}, and
  * {@code long} values.
@@ -44,7 +44,7 @@ import java.io.InputStream;
 public final class LittleEndianDataInputStream extends FilterInputStream
     implements DataInput {
 
-  /* 
+  /**
    * Creates a {@code LittleEndianDataInputStream} that wraps the given stream.
    *
    * @param in the stream to delegate to
@@ -53,7 +53,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     super(Preconditions.checkNotNull(in));
   }
 
-  /* 
+  /**
    * This method will throw an {@link UnsupportedOperationException}.
    */
   @Override
@@ -86,7 +86,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return b1;
   }
 
-  /* 
+  /**
    * Reads an unsigned {@code short} as specified by
    * {@link DataInputStream#readUnsignedShort()}, except using little-endian
    * byte order.
@@ -103,7 +103,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return Ints.fromBytes((byte) 0, (byte) 0, b2, b1);
   }
 
-  /* 
+  /**
    * Reads an integer as specified by {@link DataInputStream#readInt()}, except
    * using little-endian byte order.
    *
@@ -121,7 +121,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return Ints.fromBytes( b4, b3, b2, b1);
   }
 
-  /* 
+  /**
    * Reads a {@code long} as specified by {@link DataInputStream#readLong()},
    * except using little-endian byte order.
    *
@@ -143,7 +143,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return Longs.fromBytes(b8, b7, b6, b5, b4, b3, b2, b1);
   }
 
-  /* 
+  /**
    * Reads a {@code float} as specified by {@link DataInputStream#readFloat()},
    * except using little-endian byte order.
    *
@@ -156,7 +156,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return Float.intBitsToFloat(readInt());
   }
 
-  /* 
+  /**
    * Reads a {@code double} as specified by
    * {@link DataInputStream#readDouble()}, except using little-endian byte
    * order.
@@ -175,7 +175,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return new DataInputStream(in).readUTF();
   }
 
-  /* 
+  /**
    * Reads a {@code short} as specified by {@link DataInputStream#readShort()},
    * except using little-endian byte order.
    *
@@ -188,7 +188,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return (short) readUnsignedShort();
   }
 
-  /* 
+  /**
    * Reads a char as specified by {@link DataInputStream#readChar()}, except
    * using little-endian byte order.
    *
@@ -211,7 +211,7 @@ public final class LittleEndianDataInputStream extends FilterInputStream
     return readUnsignedByte() != 0;
   }
 
-  /* 
+  /**
    * Reads a byte from the input stream checking that the end of file (EOF)
    * has not been encountered.
    *  

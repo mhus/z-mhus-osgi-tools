@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Interfaces, utilities, and simple implementations of escapers and encoders.  The primary type is
  * {@link com.google.gwt.thirdparty.guava.common.escape.Escaper}.
  *

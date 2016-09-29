@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.apache.commons.discovery.jdk.JDKHooks;
 
-/* 
+/**
  * There are many different contexts in which
  * loaders can be used.  This provides a holder
  * for a set of class loaders, so that they
@@ -31,13 +31,13 @@ public class ClassLoaders {
 
     protected List<ClassLoader> classLoaders = new LinkedList<ClassLoader>();
 
-    /* 
+    /**
      * Construct a new class loader set.
      */
     public ClassLoaders() {
     }
 
-    /* 
+    /**
      * Returns the size of class loaders set.
      *
      * @return The size of class loaders set
@@ -46,7 +46,7 @@ public class ClassLoaders {
         return classLoaders.size();
     }
 
-    /* 
+    /**
      * Returns the class loader positioned at the given index.
      *
      * @param idx The index the class loader has to be retrieved from
@@ -56,7 +56,7 @@ public class ClassLoaders {
         return classLoaders.get(idx);
     }
 
-    /* 
+    /**
      * Specify a new class loader to be used in searching.
      *
      * The order of loaders determines the order of the result.
@@ -71,7 +71,7 @@ public class ClassLoaders {
         }
     }
 
-    /* 
+    /**
      * Specify a new class loader to be used in searching.
      * The order of loaders determines the order of the result.
      * It is recommended to add the most specific loaders first;
@@ -88,7 +88,7 @@ public class ClassLoaders {
         }
     }
 
-    /* 
+    /**
      * Check to see if <code>classLoader</code> is an
      * ancestor of any contained class loader.
      *
@@ -123,7 +123,7 @@ public class ClassLoaders {
         return false;
     }
 
-    /* 
+    /**
      * Utility method.  Returns a preloaded ClassLoaders instance
      * containing the following class loaders, in order:
      *
@@ -157,7 +157,7 @@ public class ClassLoaders {
         return loaders;
     }
 
-    /* 
+    /**
      * Utility method.  Returns a preloaded ClassLoaders instance
      * containing the following class loaders, in order:
      *

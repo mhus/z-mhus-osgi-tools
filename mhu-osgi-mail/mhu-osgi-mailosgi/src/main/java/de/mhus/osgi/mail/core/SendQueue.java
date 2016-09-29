@@ -10,19 +10,19 @@ public interface SendQueue {
 
 	/**
 	 * Return a unique name of the service.
-	 * @return The name
+	 * @return
 	 */
 	String getName();
 	
 	/**
 	 * Return connection and behavior properties.
-	 * @return the properties
+	 * @return
 	 */
 	Properties getProperties();
 	
 	/**
 	 * Set connection and behavior properties.
-	 * @param properties TODO
+	 * @param properties
 	 */
 	void setProperties(Properties properties) throws Exception;
 	
@@ -33,21 +33,21 @@ public interface SendQueue {
 	
 	/**
 	 * Return the current status as string.
-	 * @return the status
+	 * @return
 	 */
 	String getStatus();
 	
 	/**
 	 * Return true if the connection is working.
-	 * @return true it its valid
+	 * @return
 	 */
 	boolean isValid();
 	
 	/**
 	 * Send a mail message.
 	 * 
-	 * @param message TODO
-	 * @param addresses TODO
+	 * @param message
+	 * @param addresses
 	 */
 	void sendMessage(Message message, Address[] addresses) throws Exception;
 	

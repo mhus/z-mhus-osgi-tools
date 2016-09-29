@@ -23,7 +23,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A set multimap which forwards all its method calls to another set multimap.
  * Subclasses should override one or more methods to modify the behavior of
  * the backing multimap as desired per the <a

@@ -25,7 +25,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link ImmutableList} with exactly one element.
  *
  * @author Hayward Chan

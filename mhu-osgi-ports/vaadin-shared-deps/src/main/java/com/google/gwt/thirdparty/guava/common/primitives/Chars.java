@@ -33,7 +33,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.RandomAccess;
 
-/* 
+/**
  * Static utility methods pertaining to {@code char} primitives, that are not
  * already found in either {@link Character} or {@link Arrays}.
  *
@@ -51,13 +51,13 @@ import java.util.RandomAccess;
 public final class Chars {
   private Chars() {}
 
-  /* 
+  /**
    * The number of bytes required to represent a primitive {@code char}
    * value.
    */
   public static final int BYTES = Character.SIZE / Byte.SIZE;
 
-  /* 
+  /**
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Character) value).hashCode()}.
    *
@@ -68,7 +68,7 @@ public final class Chars {
     return value;
   }
 
-  /* 
+  /**
    * Returns the {@code char} value that is equal to {@code value}, if possible.
    *
    * @param value any value in the range of the {@code char} type
@@ -82,7 +82,7 @@ public final class Chars {
     return result;
   }
 
-  /* 
+  /**
    * Returns the {@code char} nearest in value to {@code value}.
    *
    * @param value any {@code long} value
@@ -100,7 +100,7 @@ public final class Chars {
     return (char) value;
   }
 
-  /* 
+  /**
    * Compares the two specified {@code char} values. The sign of the value
    * returned is the same as that of {@code ((Character) a).compareTo(b)}.
    *
@@ -113,7 +113,7 @@ public final class Chars {
     return a - b; // safe due to restricted range
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}.
    *
@@ -131,7 +131,7 @@ public final class Chars {
     return false;
   }
 
-  /* 
+  /**
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}.
    *
@@ -155,7 +155,7 @@ public final class Chars {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -185,7 +185,7 @@ public final class Chars {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}.
    *
@@ -209,7 +209,7 @@ public final class Chars {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code char} values
@@ -228,7 +228,7 @@ public final class Chars {
     return min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code char} values
@@ -247,6 +247,15 @@ public final class Chars {
     return max;
   }
 
+  /**
+   * Returns the values from each provided array combined into a single array.
+   * For example, {@code concat(new char[] {a, b}, new char[] {}, new
+   * char[] {c}} returns the array {@code {a, b, c}}.
+   *
+   * @param arrays zero or more {@code char} arrays
+   * @return a single array containing all the values from the source arrays, in
+   *     order
+   */
   public static char[] concat(char[]... arrays) {
     int length = 0;
     for (char[] array : arrays) {
@@ -261,6 +270,17 @@ public final class Chars {
     return result;
   }
 
+  /**
+   * Returns a big-endian representation of {@code value} in a 2-element byte
+   * array; equivalent to {@code
+   * ByteBuffer.allocate(2).putChar(value).array()}.  For example, the input
+   * value {@code '\\u5432'} would yield the byte array {@code {0x54, 0x32}}.
+   *
+   * <p>If you need to convert and concatenate several values (possibly even of
+   * different types), use a shared {@link java.nio.ByteBuffer} instance, or use
+   * {@link com.google.gwt.thirdparty.guava.common.io.ByteStreams#newDataOutput()} to get a growable
+   * buffer.
+   */
   @GwtIncompatible("doesn't work")
   public static byte[] toByteArray(char value) {
     return new byte[] {
@@ -268,6 +288,18 @@ public final class Chars {
         (byte) value};
   }
 
+  /**
+   * Returns the {@code char} value whose big-endian representation is
+   * stored in the first 2 bytes of {@code bytes}; equivalent to {@code
+   * ByteBuffer.wrap(bytes).getChar()}. For example, the input byte array
+   * {@code {0x54, 0x32}} would yield the {@code char} value {@code '\\u5432'}.
+   *
+   * <p>Arguably, it's preferable to use {@link java.nio.ByteBuffer}; that
+   * library exposes much more flexibility at little cost in readability.
+   *
+   * @throws IllegalArgumentException if {@code bytes} has fewer than 2
+   *     elements
+   */
   @GwtIncompatible("doesn't work")
   public static char fromByteArray(byte[] bytes) {
     checkArgument(bytes.length >= BYTES,
@@ -275,12 +307,19 @@ public final class Chars {
     return fromBytes(bytes[0], bytes[1]);
   }
 
+  /**
+   * Returns the {@code char} value whose byte representation is the given 2
+   * bytes, in big-endian order; equivalent to {@code Chars.fromByteArray(new
+   * byte[] {b1, b2})}.
+   *
+   * @since 7.0
+   */
   @GwtIncompatible("doesn't work")
   public static char fromBytes(byte b1, byte b2) {
     return (char) ((b1 << 8) | (b2 & 0xFF));
   }
 
-  /* 
+  /**
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -312,7 +351,7 @@ public final class Chars {
     return copy;
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code char} values separated
    * by {@code separator}. For example, {@code join("-", '1', '2', '3')} returns
    * the string {@code "1-2-3"}.
@@ -337,7 +376,7 @@ public final class Chars {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code char} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(char, char)}), the first pair of values that follow any
@@ -373,7 +412,7 @@ public final class Chars {
     }
   }
 
-  /* 
+  /**
    * Copies a collection of {@code Character} instances into a new array of
    * primitive {@code char} values.
    *
@@ -402,7 +441,7 @@ public final class Chars {
     return array;
   }
 
-  /* 
+  /**
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link

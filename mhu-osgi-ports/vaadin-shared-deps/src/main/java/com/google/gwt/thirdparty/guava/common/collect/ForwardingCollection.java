@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A collection which forwards all its method calls to another collection.
  * Subclasses should override one or more methods to modify the behavior of the
  * backing collection as desired per the <a
@@ -49,7 +49,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     implements Collection<E> {
   // TODO(user): identify places where thread safety is actually lost
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingCollection() {}
 
   @Override protected abstract Collection<E> delegate();
@@ -119,7 +119,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return delegate().toArray(array);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #contains} in terms of {@link #iterator}.
    * If you override {@link #iterator}, you may wish to override {@link
    * #contains} to forward to this implementation.
@@ -130,7 +130,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Iterators.contains(iterator(), object);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #containsAll} in terms of {@link #contains}
    * . If you override {@link #contains}, you may wish to override {@link
    * #containsAll} to forward to this implementation.
@@ -141,7 +141,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Collections2.containsAllImpl(this, collection);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #addAll} in terms of {@link #add}. If you
    * override {@link #add}, you may wish to override {@link #addAll} to forward
    * to this implementation.
@@ -152,7 +152,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Iterators.addAll(this, collection.iterator());
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #remove} in terms of {@link #iterator},
    * using the iterator's {@code remove} method. If you override {@link
    * #iterator}, you may wish to override {@link #remove} to forward to this
@@ -171,7 +171,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return false;
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #removeAll} in terms of {@link #iterator},
    * using the iterator's {@code remove} method. If you override {@link
    * #iterator}, you may wish to override {@link #removeAll} to forward to this
@@ -183,7 +183,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Iterators.removeAll(iterator(), collection);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #retainAll} in terms of {@link #iterator},
    * using the iterator's {@code remove} method. If you override {@link
    * #iterator}, you may wish to override {@link #retainAll} to forward to this
@@ -195,7 +195,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Iterators.retainAll(iterator(), collection);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #clear} in terms of {@link #iterator},
    * using the iterator's {@code remove} method. If you override {@link
    * #iterator}, you may wish to override {@link #clear} to forward to this
@@ -207,7 +207,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     Iterators.clear(iterator());
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #isEmpty} as {@code !iterator().hasNext}.
    * If you override {@link #isEmpty}, you may wish to override {@link #isEmpty}
    * to forward to this implementation. Alternately, it may be more efficient to
@@ -219,7 +219,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return !iterator().hasNext();
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #toString} in terms of {@link #iterator}.
    * If you override {@link #iterator}, you may wish to override {@link
    * #toString} to forward to this implementation.
@@ -230,7 +230,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return Collections2.toStringImpl(this);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #toArray()} in terms of {@link
    * #toArray(Object[])}. If you override {@link #toArray(Object[])}, you may
    * wish to override {@link #toArray} to forward to this implementation.
@@ -242,7 +242,7 @@ public abstract class ForwardingCollection<E> extends ForwardingObject
     return toArray(newArray);
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #toArray(Object[])} in terms of {@link
    * #size} and {@link #iterator}. If you override either of these methods, you
    * may wish to override {@link #toArray} to forward to this implementation.

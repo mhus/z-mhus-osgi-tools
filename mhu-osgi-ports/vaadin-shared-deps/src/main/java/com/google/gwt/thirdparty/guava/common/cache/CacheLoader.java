@@ -29,23 +29,32 @@ import com.google.gwt.thirdparty.guava.common.util.concurrent.ListenableFuture;
 import java.io.Serializable;
 import java.util.Map;
 
-/* 
+/**
  * Computes or retrieves values, based on a key, for use in populating a {@link LoadingCache}.
  *
  * <p>Most implementations will only need to implement {@link #load}. Other methods may be
  * overridden as desired.
+ *
+ * <p>Usage example: <pre>   {@code
+ *
+ *   CacheLoader<Key, Graph> loader = new CacheLoader<Key, Graph>() {
+ *     public Graph load(Key key) throws AnyException {
+ *       return createExpensiveGraph(key);
+ *     }
+ *   };
+ *   LoadingCache<Key, Graph> cache = CacheBuilder.newBuilder().build(loader);}</pre>
  *
  * @author Charles Fry
  * @since 10.0
  */
 @GwtCompatible(emulated = true)
 public abstract class CacheLoader<K, V> {
-  /* 
+  /**
    * Constructor for use by subclasses.
    */
   protected CacheLoader() {}
 
-  /* 
+  /**
    * Computes or retrieves the value corresponding to {@code key}.
    *
    * @param key the non-null key whose value should be loaded
@@ -57,7 +66,7 @@ public abstract class CacheLoader<K, V> {
    */
   public abstract V load(K key) throws Exception;
 
-  /* 
+  /**
    * Computes or retrieves a replacement value corresponding to an already-cached {@code key}. This
    * method is called when an existing cache entry is refreshed by
    * {@link CacheBuilder#refreshAfterWrite}, or through a call to {@link LoadingCache#refresh}.
@@ -85,7 +94,7 @@ public abstract class CacheLoader<K, V> {
     return Futures.immediateFuture(load(key));
   }
 
-  /* 
+  /**
    * Computes or retrieves the values corresponding to {@code keys}. This method is called by
    * {@link LoadingCache#getAll}.
    *
@@ -113,7 +122,7 @@ public abstract class CacheLoader<K, V> {
     throw new UnsupportedLoadingOperationException();
   }
 
-  /* 
+  /**
    * Returns a cache loader based on an <i>existing</i> function instance. Note that there's no need
    * to create a <i>new</i> function just to pass it in here; just subclass {@code CacheLoader} and
    * implement {@link #load load} instead.
@@ -142,7 +151,7 @@ public abstract class CacheLoader<K, V> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a cache loader based on an <i>existing</i> supplier instance. Note that there's no need
    * to create a <i>new</i> supplier just to pass it in here; just subclass {@code CacheLoader} and
    * implement {@link #load load} instead.
@@ -175,7 +184,7 @@ public abstract class CacheLoader<K, V> {
 
   static final class UnsupportedLoadingOperationException extends UnsupportedOperationException {}
 
-  /* 
+  /**
    * Thrown to indicate that an invalid response was returned from a call to {@link CacheLoader}.
    *
    * @since 11.0

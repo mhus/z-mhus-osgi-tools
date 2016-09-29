@@ -23,7 +23,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An empty immutable sorted map.
  *
  * @author Louis Wasserman

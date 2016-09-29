@@ -26,7 +26,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.Queue;
 
-/* 
+/**
  * Views elements of a type {@code T} as nodes in a tree, and provides methods to traverse the trees
  * induced by this traverser.
  *
@@ -54,12 +54,12 @@ import java.util.Queue;
 public abstract class TreeTraverser<T> {
   // TODO(user): make this GWT-compatible when we've checked in ArrayDeque emulation
 
-  /* 
+  /**
    * Returns the children of the specified node.  Must not contain null.
    */
   public abstract Iterable<T> children(T root);
 
-  /* 
+  /**
    * Returns an unmodifiable iterable over the nodes in a tree structure, using pre-order
    * traversal. That is, each node's subtrees are traversed after the node itself is returned.
    *
@@ -109,7 +109,7 @@ public abstract class TreeTraverser<T> {
     }
   }
 
-  /* 
+  /**
    * Returns an unmodifiable iterable over the nodes in a tree structure, using post-order
    * traversal. That is, each node's subtrees are traversed before the node itself is returned.
    *
@@ -169,7 +169,7 @@ public abstract class TreeTraverser<T> {
     }
   }
 
-  /* 
+  /**
    * Returns an unmodifiable iterable over the nodes in a tree structure, using breadth-first
    * traversal. That is, all the nodes of depth 0 are returned, then depth 1, then 2, and so on.
    *

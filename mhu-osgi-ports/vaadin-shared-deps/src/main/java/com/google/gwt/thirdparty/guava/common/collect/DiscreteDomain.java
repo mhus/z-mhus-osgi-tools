@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.NoSuchElementException;
 
-/* 
+/**
  * A descriptor for a <i>discrete</i> {@code Comparable} domain such as all
  * {@link Integer} instances. A discrete domain is one that supports the three basic
  * operations: {@link #next}, {@link #previous} and {@link #distance}, according
@@ -45,7 +45,7 @@ import java.util.NoSuchElementException;
 @Beta
 public abstract class DiscreteDomain<C extends Comparable> {
 
-  /* 
+  /**
    * Returns the discrete domain for values of type {@code Integer}.
    * 
    * @since 14.0 (since 10.0 as {@code DiscreteDomains.integers()})
@@ -92,7 +92,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns the discrete domain for values of type {@code Long}.
    * 
    * @since 14.0 (since 10.0 as {@code DiscreteDomains.longs()})
@@ -146,7 +146,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
     private static final long serialVersionUID = 0;
   }
   
-  /* 
+  /**
    * Returns the discrete domain for values of type {@code BigInteger}.
    *
    * @since 15.0
@@ -188,10 +188,10 @@ public abstract class DiscreteDomain<C extends Comparable> {
     private static final long serialVersionUID = 0;
   }
   
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected DiscreteDomain() {}
 
-  /* 
+  /**
    * Returns the unique least value of type {@code C} that is greater than
    * {@code value}, or {@code null} if none exists. Inverse operation to {@link
    * #previous}.
@@ -202,7 +202,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
    */
   public abstract C next(C value);
 
-  /* 
+  /**
    * Returns the unique greatest value of type {@code C} that is less than
    * {@code value}, or {@code null} if none exists. Inverse operation to {@link
    * #next}.
@@ -213,7 +213,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
    */
   public abstract C previous(C value);
 
-  /* 
+  /**
    * Returns a signed value indicating how many nested invocations of {@link
    * #next} (if positive) or {@link #previous} (if negative) are needed to reach
    * {@code end} starting from {@code start}. For example, if {@code end =
@@ -230,7 +230,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
    */
   public abstract long distance(C start, C end);
 
-  /* 
+  /**
    * Returns the minimum value of type {@code C}, if it has one. The minimum
    * value is the unique value for which {@link Comparable#compareTo(Object)}
    * never returns a positive value for any input of type {@code C}.
@@ -245,7 +245,7 @@ public abstract class DiscreteDomain<C extends Comparable> {
     throw new NoSuchElementException();
   }
 
-  /* 
+  /**
    * Returns the maximum value of type {@code C}, if it has one. The maximum
    * value is the unique value for which {@link Comparable#compareTo(Object)}
    * never returns a negative value for any input of type {@code C}.

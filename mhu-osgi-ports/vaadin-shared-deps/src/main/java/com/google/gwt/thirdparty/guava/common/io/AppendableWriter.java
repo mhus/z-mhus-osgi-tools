@@ -25,7 +25,7 @@ import java.io.Writer;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Writer that places all output on an {@link Appendable} target. If the target
  * is {@link Flushable} or {@link Closeable}, flush()es and close()s will also
  * be delegated to the target.
@@ -38,7 +38,7 @@ class AppendableWriter extends Writer {
   private final Appendable target;
   private boolean closed;
 
-  /* 
+  /**
    * Creates a new writer that appends everything it writes to {@code target}.
    *
    * @param target target to which to append output

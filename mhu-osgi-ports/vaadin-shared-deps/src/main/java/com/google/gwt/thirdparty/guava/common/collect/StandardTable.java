@@ -41,7 +41,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * {@link Table} implementation backed by a map that associates row keys with
  * column key / value secondary maps. This class provides rapid access to
  * records by the row key alone or by both keys, but not by just the column key.
@@ -179,7 +179,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     return value != null && value.equals(get(rowKey, columnKey));
   }
 
-  /*  Remove a row key / column key / value mapping, if present. */
+  /** Remove a row key / column key / value mapping, if present. */
   private boolean removeMapping(Object rowKey, Object columnKey, Object value) {
     if (containsMapping(rowKey, columnKey, value)) {
       remove(rowKey, columnKey);
@@ -190,7 +190,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
 
   // Views
 
-  /* 
+  /**
    * Abstract set whose {@code isEmpty()} returns whether the table is empty and
    * whose {@code clear()} clears all table mappings.
    */
@@ -204,7 +204,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     }
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>The set's iterator traverses the mappings for the first row, the
@@ -383,7 +383,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     }
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>The returned map's views have iterators that don't support
@@ -416,7 +416,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
       return StandardTable.this.remove(key, columnKey);
     }
 
-    /* 
+    /**
      * Removes all {@code Column} mappings whose row key and value satisfy the
      * given predicate.
      */
@@ -564,7 +564,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
 
   private transient Set<C> columnKeySet;
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>The returned set has an iterator that does not support {@code remove()}.
@@ -645,7 +645,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     }
   }
 
-  /* 
+  /**
    * Creates an iterator that returns each column value with duplicates
    * omitted.
    */
@@ -677,7 +677,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
     }
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>The collection's iterator traverses the values for the first row,

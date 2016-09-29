@@ -24,7 +24,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@code Multimap} that cannot hold duplicate key-value pairs. Adding a
  * key-value pair that's already in the multimap has no effect. See the {@link
  * Multimap} documentation for information common to all multimaps.
@@ -53,7 +53,7 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public interface SetMultimap<K, V> extends Multimap<K, V> {
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -63,7 +63,7 @@ public interface SetMultimap<K, V> extends Multimap<K, V> {
   @Override
   Set<V> get(@Nullable K key);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -73,7 +73,7 @@ public interface SetMultimap<K, V> extends Multimap<K, V> {
   @Override
   Set<V> removeAll(@Nullable Object key);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -85,7 +85,7 @@ public interface SetMultimap<K, V> extends Multimap<K, V> {
   @Override
   Set<V> replaceValues(K key, Iterable<? extends V> values);
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code SetMultimap} has unique values for a given key, this
@@ -95,7 +95,7 @@ public interface SetMultimap<K, V> extends Multimap<K, V> {
   @Override
   Set<Map.Entry<K, V>> entries();
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p><b>Note:</b> The returned map's values are guaranteed to be of type
@@ -105,7 +105,7 @@ public interface SetMultimap<K, V> extends Multimap<K, V> {
   @Override
   Map<K, Collection<V>> asMap();
 
-  /* 
+  /**
    * Compares the specified object to this multimap for equality.
    *
    * <p>Two {@code SetMultimap} instances are equal if, for each key, they

@@ -16,14 +16,14 @@
  */
 package org.apache.commons.discovery;
 
-/* 
+/**
  * Interface representing a mapping
  * from a set of source resource names
  * to a resultant set of resource names.
  */
 public interface ResourceNameDiscover {
 
-    /* 
+    /**
      * Locate names of resources that are bound to {@code resourceName}.
      *
      * @param resourceName The resource has to be located
@@ -31,7 +31,7 @@ public interface ResourceNameDiscover {
      */
     ResourceNameIterator findResourceNames(String resourceName);
 
-    /* 
+    /**
      * Locate names of resources that are bound to {@code resourceNames}.
      *
      * @param resourceNames The resources has to be located

@@ -44,14 +44,14 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Utilities for working with {@link Type}.
  *
  * @author Ben Yu
  */
 final class Types {
 
-  /*  Class#toString without the "class " and "interface " prefixes */
+  /** Class#toString without the "class " and "interface " prefixes */
   private static final Function<Type, String> TYPE_TO_STRING =
       new Function<Type, String>() {
         @Override public String apply(Type from) {
@@ -61,7 +61,7 @@ final class Types {
 
   private static final Joiner COMMA_JOINER = Joiner.on(", ").useForNull("null");
 
-  /*  Returns the array type of {@code componentType}. */
+  /** Returns the array type of {@code componentType}. */
   static Type newArrayType(Type componentType) {
     if (componentType instanceof WildcardType) {
       WildcardType wildcard = (WildcardType) componentType;
@@ -78,7 +78,7 @@ final class Types {
     return JavaVersion.CURRENT.newArrayType(componentType);
   }
 
-  /* 
+  /**
    * Returns a type where {@code rawType} is parameterized by
    * {@code arguments} and is owned by {@code ownerType}.
    */
@@ -93,7 +93,7 @@ final class Types {
     return new ParameterizedTypeImpl(ownerType, rawType, arguments);
   }
 
-  /* 
+  /**
    * Returns a type where {@code rawType} is parameterized by
    * {@code arguments}.
    */
@@ -102,7 +102,7 @@ final class Types {
           ClassOwnership.JVM_BEHAVIOR.getOwnerType(rawType), rawType, arguments);
   }
 
-  /*  Decides what owner type to use for constructing {@link ParameterizedType} from a raw class. */
+  /** Decides what owner type to use for constructing {@link ParameterizedType} from a raw class. */
   private enum ClassOwnership {
 
     OWNED_BY_ENCLOSING_CLASS {
@@ -142,7 +142,7 @@ final class Types {
     }
   }
 
-  /* 
+  /**
    * Returns a new {@link TypeVariable} that belongs to {@code declaration} with
    * {@code name} and {@code bounds}.
    */
@@ -156,17 +156,17 @@ final class Types {
             : bounds);
   }
 
-  /*  Returns a new {@link WildcardType} with {@code upperBound}. */
+  /** Returns a new {@link WildcardType} with {@code upperBound}. */
   @VisibleForTesting static WildcardType subtypeOf(Type upperBound) {
     return new WildcardTypeImpl(new Type[0], new Type[] { upperBound });
   }
 
-  /*  Returns a new {@link WildcardType} with {@code lowerBound}. */
+  /** Returns a new {@link WildcardType} with {@code lowerBound}. */
   @VisibleForTesting static WildcardType supertypeOf(Type lowerBound) {
     return new WildcardTypeImpl(new Type[] { lowerBound }, new Type[] { Object.class });
   }
 
-  /* 
+  /**
    * Returns human readable string representation of {@code type}.
    * <ul>
    * <li> For array type {@code Foo[]}, {@code "com.mypackage.Foo[]"} are
@@ -201,7 +201,7 @@ final class Types {
     return result.get();
   }
 
-  /* 
+  /**
    * Returns {@code ? extends X} if any of {@code bounds} is a subtype of {@code X[]}; or null
    * otherwise.
    */
@@ -448,7 +448,7 @@ final class Types {
     }
   }
 
-  /*  Returns the {@code Class} object of arrays with {@code componentType}. */
+  /** Returns the {@code Class} object of arrays with {@code componentType}. */
   static Class<?> getArrayClass(Class<?> componentType) {
     // TODO(user): This is not the most efficient way to handle generic
     // arrays, but is there another way to extract the array class in a

@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Abstract {@link ListeningExecutorService} implementation that creates
  * {@link ListenableFutureTask} instances for each {@link Runnable} and {@link Callable} submitted
  * to it. These tasks are run with the abstract {@link #execute execute(Runnable)} method.

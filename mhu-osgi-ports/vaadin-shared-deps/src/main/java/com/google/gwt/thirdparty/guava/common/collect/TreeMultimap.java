@@ -34,7 +34,7 @@ import java.util.TreeSet;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@code Multimap} whose keys and values are ordered by
  * their natural ordering or by supplied comparators. In all cases, this
  * implementation uses {@link Comparable#compareTo} or {@link
@@ -80,7 +80,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
   private transient Comparator<? super K> keyComparator;
   private transient Comparator<? super V> valueComparator;
 
-  /* 
+  /**
    * Creates an empty {@code TreeMultimap} ordered by the natural ordering of
    * its keys and values.
    */
@@ -89,7 +89,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return new TreeMultimap<K, V>(Ordering.natural(), Ordering.natural());
   }
 
-  /* 
+  /**
    * Creates an empty {@code TreeMultimap} instance using explicit comparators.
    * Neither comparator may be null; use {@link Ordering#natural()} to specify
    * natural order.
@@ -104,7 +104,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
         checkNotNull(valueComparator));
   }
 
-  /* 
+  /**
    * Constructs a {@code TreeMultimap}, ordered by the natural ordering of its
    * keys and values, with the same mappings as the specified multimap.
    *
@@ -130,7 +130,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     putAll(multimap);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Creates an empty {@code TreeSet} for a collection of values for one key.
@@ -150,7 +150,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return super.createCollection(key);
   }
 
-  /* 
+  /**
    * Returns the comparator that orders the multimap keys.
    */
   public Comparator<? super K> keyComparator() {
@@ -174,7 +174,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return (NavigableMap<K, Collection<V>>) super.backingMap();
   }
   
-  /* 
+  /**
    * @since 14.0 (present with return type {@code SortedSet} since 2.0)
    */
   @Override
@@ -195,7 +195,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return new WrappedNavigableSet(key, (NavigableSet<V>) collection, null);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code TreeMultimap} has unique sorted keys, this method
@@ -216,7 +216,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return new NavigableKeySet(backingMap());
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code TreeMultimap} has unique sorted keys, this method
@@ -237,7 +237,7 @@ public class TreeMultimap<K, V> extends AbstractSortedKeySortedSetMultimap<K, V>
     return new NavigableAsMap(backingMap());
   }
 
-  /* 
+  /**
    * @serialData key comparator, value comparator, number of distinct keys, and
    *     then for each distinct key: the key, number of values for that key, and
    *     key values

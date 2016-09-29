@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Properties resources discovery catalog.
  */
 package org.apache.commons.discovery.resource.names;

@@ -34,7 +34,7 @@ import java.util.SortedSet;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 
-/* 
+/**
  * {@code FluentIterable} provides a rich interface for manipulating {@code Iterable} instances in a
  * chained fashion. A {@code FluentIterable} can be created from an {@code Iterable}, or from a set
  * of elements. The following types of methods are provided on {@code FluentIterable}:
@@ -73,7 +73,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
   // checks on the _original_ iterable when FluentIterable.from is used.
   private final Iterable<E> iterable;
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected FluentIterable() {
     this.iterable = this;
   }
@@ -82,7 +82,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     this.iterable = checkNotNull(iterable);
   }
 
-  /* 
+  /**
    * Returns a fluent iterable that wraps {@code iterable}, or {@code iterable} itself if it
    * is already a {@code FluentIterable}.
    */
@@ -96,7 +96,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
         };
   }
 
-  /* 
+  /**
    * Construct a fluent iterable from another fluent iterable. This is obviously never necessary,
    * but is intended to help call out cases where one migration from {@code Iterable} to
    * {@code FluentIterable} has obviated the need to explicitly convert to a {@code FluentIterable}.
@@ -109,7 +109,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return checkNotNull(iterable);
   }
 
-  /* 
+  /**
    * Returns a string representation of this fluent iterable, with the format
    * {@code [e1, e2, ..., en]}.
    */
@@ -118,14 +118,14 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.toString(iterable);
   }
 
-  /* 
+  /**
    * Returns the number of elements in this fluent iterable.
    */
   public final int size() {
     return Iterables.size(iterable);
   }
 
-  /* 
+  /**
    * Returns {@code true} if this fluent iterable contains any object for which
    * {@code equals(element)} is true.
    */
@@ -133,7 +133,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.contains(iterable, element);
   }
 
-  /* 
+  /**
    * Returns a fluent iterable whose {@code Iterator} cycles indefinitely over the elements of
    * this fluent iterable.
    *
@@ -151,7 +151,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.cycle(iterable));
   }
 
-  /* 
+  /**
    * Returns the elements from this fluent iterable that satisfy a predicate. The
    * resulting fluent iterable's iterator does not support {@code remove()}.
    */
@@ -160,7 +160,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.filter(iterable, predicate));
   }
 
-  /* 
+  /**
    * Returns the elements from this fluent iterable that are instances of class {@code type}.
    *
    * @param type the type of elements desired
@@ -171,14 +171,14 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.filter(iterable, type));
   }
 
-  /* 
+  /**
    * Returns {@code true} if any element in this fluent iterable satisfies the predicate.
    */
   public final boolean anyMatch(Predicate<? super E> predicate) {
     return Iterables.any(iterable, predicate);
   }
 
-  /* 
+  /**
    * Returns {@code true} if every element in this fluent iterable satisfies the predicate.
    * If this fluent iterable is empty, {@code true} is returned.
    */
@@ -186,7 +186,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.all(iterable, predicate);
   }
 
-  /* 
+  /**
    * Returns an {@link Optional} containing the first element in this fluent iterable that
    * satisfies the given predicate, if such an element exists.
    *
@@ -197,7 +197,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.tryFind(iterable, predicate);
   }
 
-  /* 
+  /**
    * Returns a fluent iterable that applies {@code function} to each element of this
    * fluent iterable.
    *
@@ -209,7 +209,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.transform(iterable, function));
   }
 
-  /* 
+  /**
    * Applies {@code function} to each element of this fluent iterable and returns
    * a fluent iterable with the concatenated combination of results.  {@code function}
    * returns an Iterable of results.
@@ -225,7 +225,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.concat(transform(function)));
   }
 
-  /* 
+  /**
    * Returns an {@link Optional} containing the first element in this fluent iterable.
    * If the iterable is empty, {@code Optional.absent()} is returned.
    *
@@ -239,7 +239,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
         : Optional.<E>absent();
   }
 
-  /* 
+  /**
    * Returns an {@link Optional} containing the last element in this fluent iterable.
    * If the iterable is empty, {@code Optional.absent()} is returned.
    *
@@ -280,7 +280,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     }
   }
 
-  /* 
+  /**
    * Returns a view of this fluent iterable that skips its first {@code numberToSkip}
    * elements. If this fluent iterable contains fewer than {@code numberToSkip} elements,
    * the returned fluent iterable skips all of its elements.
@@ -302,7 +302,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.skip(iterable, numberToSkip));
   }
 
-  /* 
+  /**
    * Creates a fluent iterable with the first {@code size} elements of this
    * fluent iterable. If this fluent iterable does not contain that many elements,
    * the returned fluent iterable will have the same behavior as this fluent iterable.
@@ -317,14 +317,14 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return from(Iterables.limit(iterable, size));
   }
 
-  /* 
+  /**
    * Determines whether this fluent iterable is empty.
    */
   public final boolean isEmpty() {
     return !iterable.iterator().hasNext();
   }
 
-  /* 
+  /**
    * Returns an {@code ImmutableList} containing all of the elements from this fluent iterable in
    * proper sequence.
    *
@@ -334,7 +334,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return ImmutableList.copyOf(iterable);
   }
 
-  /* 
+  /**
    * Returns an {@code ImmutableList} containing all of the elements from this {@code
    * FluentIterable} in the order specified by {@code comparator}.  To produce an {@code
    * ImmutableList} sorted by its natural ordering, use {@code toSortedList(Ordering.natural())}.
@@ -348,7 +348,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Ordering.from(comparator).immutableSortedCopy(iterable);
   }
 
-  /* 
+  /**
    * Returns an {@code ImmutableSet} containing all of the elements from this fluent iterable with
    * duplicates removed.
    *
@@ -358,7 +358,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return ImmutableSet.copyOf(iterable);
   }
 
-  /* 
+  /**
    * Returns an {@code ImmutableSortedSet} containing all of the elements from this {@code
    * FluentIterable} in the order specified by {@code comparator}, with duplicates (determined by
    * {@code comparator.compare(x, y) == 0}) removed. To produce an {@code ImmutableSortedSet} sorted
@@ -372,7 +372,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return ImmutableSortedSet.copyOf(comparator, iterable);
   }
 
-  /* 
+  /**
    * Returns an immutable map for which the elements of this {@code FluentIterable} are the keys in
    * the same order, mapped to values by the given function. If this iterable contains duplicate
    * elements, the returned map will contain each distinct element once in the order it first
@@ -386,7 +386,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Maps.toMap(iterable, valueFunction);
   }
 
-  /* 
+  /**
    * Creates an index {@code ImmutableListMultimap} that contains the results of applying a
    * specified function to each item in this {@code FluentIterable} of values. Each element of this
    * iterable will be stored as a value in the resulting multimap, yielding a multimap with the same
@@ -408,7 +408,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Multimaps.index(iterable, keyFunction);
   }
 
-  /* 
+  /**
    * Returns an immutable map for which the {@link java.util.Map#values} are the elements of this
    * {@code FluentIterable} in the given order, and each key is the product of invoking a supplied
    * function on its corresponding value.
@@ -424,7 +424,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Maps.uniqueIndex(iterable, keyFunction);
   }
 
-  /* 
+  /**
    * Returns an array containing all of the elements from this fluent iterable in iteration order.
    *
    * @param type the type of the elements
@@ -436,7 +436,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.toArray(iterable, type);
   }
 
-  /* 
+  /**
    * Copies all the elements from this fluent iterable to {@code collection}. This is equivalent to
    * calling {@code Iterables.addAll(collection, this)}.
    *
@@ -456,7 +456,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return collection;
   }
 
-  /* 
+  /**
    * Returns the element at the specified position in this fluent iterable.
    *
    * @param position position of the element to return
@@ -468,7 +468,7 @@ public abstract class FluentIterable<E> implements Iterable<E> {
     return Iterables.get(iterable, position);
   }
 
-  /* 
+  /**
    * Function that transforms {@code Iterable<E>} into a fluent iterable.
    */
   private static class FromIterableFunction<E>

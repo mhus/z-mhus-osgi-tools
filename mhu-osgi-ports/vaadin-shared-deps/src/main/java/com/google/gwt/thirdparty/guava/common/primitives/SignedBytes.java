@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Comparator;
 
-/* 
+/**
  * Static utility methods pertaining to {@code byte} primitives that
  * interpret values as signed. The corresponding methods that treat the values
  * as unsigned are found in {@link UnsignedBytes}, and the methods for which
@@ -42,14 +42,14 @@ import java.util.Comparator;
 public final class SignedBytes {
   private SignedBytes() {}
 
-  /* 
+  /**
    * The largest power of two that can be represented as a signed {@code byte}. 
    *
    * @since 10.0
    */
   public static final byte MAX_POWER_OF_TWO = 1 << 6;
   
-  /* 
+  /**
    * Returns the {@code byte} value that is equal to {@code value}, if possible.
    *
    * @param value any value in the range of the {@code byte} type
@@ -63,7 +63,7 @@ public final class SignedBytes {
     return result;
   }
 
-  /* 
+  /**
    * Returns the {@code byte} nearest in value to {@code value}.
    *
    * @param value any {@code long} value
@@ -81,7 +81,7 @@ public final class SignedBytes {
     return (byte) value;
   }
 
-  /* 
+  /**
    * Compares the two specified {@code byte} values. The sign of the value
    * returned is the same as that of {@code ((Byte) a).compareTo(b)}.
    *
@@ -94,7 +94,7 @@ public final class SignedBytes {
     return a - b; // safe due to restricted range
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code byte} values
@@ -113,7 +113,7 @@ public final class SignedBytes {
     return min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}.
    *
    * @param array a <i>nonempty</i> array of {@code byte} values
@@ -132,7 +132,7 @@ public final class SignedBytes {
     return max;
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code byte} values separated
    * by {@code separator}. For example, {@code join(":", 0x01, 0x02, -0x01)}
    * returns the string {@code "1:2:-1"}.
@@ -156,7 +156,7 @@ public final class SignedBytes {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code byte} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(byte, byte)}), the first pair of values that follow any common

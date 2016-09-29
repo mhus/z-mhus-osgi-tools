@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/* 
+/**
  * An iterator that supports a one-element lookahead while iterating.
  * 
  * <p>See the Guava User Guide article on <a href=
@@ -33,7 +33,7 @@ import java.util.NoSuchElementException;
  */
 @GwtCompatible
 public interface PeekingIterator<E> extends Iterator<E> {
-  /* 
+  /**
    * Returns the next element in the iteration, without advancing the iteration.
    *
    * <p>Calls to {@code peek()} should not change the state of the iteration,
@@ -45,7 +45,7 @@ public interface PeekingIterator<E> extends Iterator<E> {
    */
   E peek();
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>The objects returned by consecutive calls to {@link #peek()} then {@link
@@ -54,7 +54,7 @@ public interface PeekingIterator<E> extends Iterator<E> {
   @Override
   E next();
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Implementations may or may not support removal when a call to {@link

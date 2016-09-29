@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/* 
+/**
  * Implementation of {@code Multimap} that uses an {@code ArrayList} to store
  * the values for a given key. A {@link HashMap} associates each key with an
  * {@link ArrayList} of values.
@@ -70,7 +70,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
 
   @VisibleForTesting transient int expectedValuesPerKey;
 
-  /* 
+  /**
    * Creates a new, empty {@code ArrayListMultimap} with the default initial
    * capacities.
    */
@@ -78,7 +78,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
     return new ArrayListMultimap<K, V>();
   }
 
-  /* 
+  /**
    * Constructs an empty {@code ArrayListMultimap} with enough capacity to hold
    * the specified numbers of keys and values without resizing.
    *
@@ -92,7 +92,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
     return new ArrayListMultimap<K, V>(expectedKeys, expectedValuesPerKey);
   }
 
-  /* 
+  /**
    * Constructs an {@code ArrayListMultimap} with the same mappings as the
    * specified multimap.
    *
@@ -122,7 +122,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
     putAll(multimap);
   }
 
-  /* 
+  /**
    * Creates a new, empty {@code ArrayList} to hold the collection of values for
    * an arbitrary key.
    */
@@ -130,7 +130,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
     return new ArrayList<V>(expectedValuesPerKey);
   }
 
-  /* 
+  /**
    * Reduces the memory used by this {@code ArrayListMultimap}, if feasible.
    */
   public void trimToSize() {
@@ -140,7 +140,7 @@ public final class ArrayListMultimap<K, V> extends AbstractListMultimap<K, V> {
     }
   }
 
-  /* 
+  /**
    * @serialData expectedValuesPerKey, number of distinct keys, and then for
    *     each distinct key: the key, number of values for that key, and the
    *     key's values

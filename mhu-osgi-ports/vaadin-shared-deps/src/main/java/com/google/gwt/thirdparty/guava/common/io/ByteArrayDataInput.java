@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.io;
 import java.io.DataInput;
 import java.io.IOException;
 
-/* 
+/**
  * An extension of {@code DataInput} for reading from in-memory byte arrays; its
  * methods offer identical functionality but do not throw {@link IOException}.
  *

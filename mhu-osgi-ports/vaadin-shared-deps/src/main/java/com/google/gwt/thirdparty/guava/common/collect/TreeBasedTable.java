@@ -36,7 +36,7 @@ import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@code Table} whose row keys and column keys are ordered
  * by their natural ordering or by supplied comparators. When constructing a
  * {@code TreeBasedTable}, you may provide comparators for the row keys and
@@ -92,7 +92,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates an empty {@code TreeBasedTable} that uses the natural orderings
    * of both row and column keys.
    *
@@ -107,7 +107,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
         Ordering.natural());
   }
 
-  /* 
+  /**
    * Creates an empty {@code TreeBasedTable} that is ordered by the specified
    * comparators.
    *
@@ -122,7 +122,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
     return new TreeBasedTable<R, C, V>(rowComparator, columnComparator);
   }
 
-  /* 
+  /**
    * Creates a {@code TreeBasedTable} with the same mappings and sort order
    * as the specified {@code TreeBasedTable}.
    */
@@ -144,7 +144,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
 
   // TODO(jlevy): Move to StandardRowSortedTable?
 
-  /* 
+  /**
    * Returns the comparator that orders the rows. With natural ordering,
    * {@link Ordering#natural()} is returned.
    */
@@ -152,7 +152,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
     return rowKeySet().comparator();
   }
 
-  /* 
+  /**
    * Returns the comparator that orders the columns. With natural ordering,
    * {@link Ordering#natural()} is returned.
    */
@@ -162,7 +162,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
 
   // TODO(user): make column return a SortedMap
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Because a {@code TreeBasedTable} has unique sorted values for a given
@@ -308,7 +308,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
     return super.rowMap();
   }
 
-  /* 
+  /**
    * Overridden column iterator to return columns values in globally sorted
    * order.
    */

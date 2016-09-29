@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.concurrent.GuardedBy;
 
-/* 
+/**
  * Base class for services that can implement {@link #startUp} and {@link #shutDown} but while in 
  * the "running" state need to perform a periodic task.  Subclasses can implement {@link #startUp},
  * {@link #shutDown} and also a {@link #runOneIteration} method that will be executed periodically.
@@ -56,6 +56,32 @@ import javax.annotation.concurrent.GuardedBy;
  * 
  * <h3>Usage Example</h3>
  * 
+ * <p>Here is a sketch of a service which crawls a website and uses the scheduling capabilities to 
+ * rate limit itself. <pre> {@code
+ * class CrawlingService extends AbstractScheduledService {
+ *   private Set<Uri> visited;
+ *   private Queue<Uri> toCrawl; 
+ *   protected void startUp() throws Exception {
+ *     toCrawl = readStartingUris();
+ *   }
+ * 
+ *   protected void runOneIteration() throws Exception {
+ *     Uri uri = toCrawl.remove();
+ *     Collection<Uri> newUris = crawl(uri);
+ *     visited.add(uri);
+ *     for (Uri newUri : newUris) {
+ *       if (!visited.contains(newUri)) { toCrawl.add(newUri); }
+ *     }
+ *   }
+ *   
+ *   protected void shutDown() throws Exception {
+ *     saveUris(toCrawl);
+ *   }
+ * 
+ *   protected Scheduler scheduler() {
+ *     return Scheduler.newFixedRateSchedule(0, 1, TimeUnit.SECONDS);
+ *   }
+ * }}</pre>
  * 
  * <p>This class uses the life cycle methods to read in a list of starting URIs and save the set of 
  * outstanding URIs when shutting down.  Also, it takes advantage of the scheduling functionality to
@@ -68,7 +94,7 @@ import javax.annotation.concurrent.GuardedBy;
 public abstract class AbstractScheduledService implements Service {
   private static final Logger logger = Logger.getLogger(AbstractScheduledService.class.getName());
   
-  /* 
+  /**
    * A scheduler defines the policy for how the {@link AbstractScheduledService} should run its 
    * task.
    * 
@@ -81,7 +107,7 @@ public abstract class AbstractScheduledService implements Service {
    * @since 11.0
    */
   public abstract static class Scheduler {
-    /* 
+    /**
      * Returns a {@link Scheduler} that schedules the task using the 
      * {@link ScheduledExecutorService#scheduleWithFixedDelay} method.
      * 
@@ -101,7 +127,7 @@ public abstract class AbstractScheduledService implements Service {
       };
     }
 
-    /* 
+    /**
      * Returns a {@link Scheduler} that schedules the task using the 
      * {@link ScheduledExecutorService#scheduleAtFixedRate} method.
      * 
@@ -120,7 +146,7 @@ public abstract class AbstractScheduledService implements Service {
       };
     }
     
-    /*  Schedules the task to run on the provided executor on behalf of the service.  */
+    /** Schedules the task to run on the provided executor on behalf of the service.  */
     abstract Future<?> schedule(AbstractService service, ScheduledExecutorService executor, 
         Runnable runnable);
     
@@ -210,37 +236,37 @@ public abstract class AbstractScheduledService implements Service {
     }
   };
   
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected AbstractScheduledService() {}
 
-  /*  
+  /** 
    * Run one iteration of the scheduled task. If any invocation of this method throws an exception, 
    * the service will transition to the {@link Service.State#FAILED} state and this method will no 
    * longer be called.
    */
   protected abstract void runOneIteration() throws Exception;
 
-  /*  
+  /** 
    * Start the service.
    * 
    * <p>By default this method does nothing.
    */
   protected void startUp() throws Exception {}
 
-  /* 
+  /**
    * Stop the service. This is guaranteed not to run concurrently with {@link #runOneIteration}.
    * 
    * <p>By default this method does nothing. 
    */
   protected void shutDown() throws Exception {}
 
-  /* 
+  /**
    * Returns the {@link Scheduler} object used to configure this service.  This method will only be
    * called once. 
    */
   protected abstract Scheduler scheduler();
   
-  /* 
+  /**
    * Returns the {@link ScheduledExecutorService} that will be used to execute the {@link #startUp},
    * {@link #runOneIteration} and {@link #shutDown} methods.  If this method is overridden the 
    * executor will not be {@linkplain ScheduledExecutorService#shutdown shutdown} when this 
@@ -277,7 +303,7 @@ public abstract class AbstractScheduledService implements Service {
     return executor;
   }
 
-  /* 
+  /**
    * Returns the name of this service. {@link AbstractScheduledService} may include the name in 
    * debugging output.
    *
@@ -325,21 +351,21 @@ public abstract class AbstractScheduledService implements Service {
     return delegate.stopAndWait();
   }
   
-  /* 
+  /**
    * @since 13.0
    */
   @Override public final void addListener(Listener listener, Executor executor) {
     delegate.addListener(listener, executor);
   }
   
-  /* 
+  /**
    * @since 14.0
    */
   @Override public final Throwable failureCause() {
     return delegate.failureCause();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final Service startAsync() {
@@ -347,7 +373,7 @@ public abstract class AbstractScheduledService implements Service {
     return this;
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final Service stopAsync() {
@@ -355,35 +381,35 @@ public abstract class AbstractScheduledService implements Service {
     return this;
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitRunning() {
     delegate.awaitRunning();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitRunning(long timeout, TimeUnit unit) throws TimeoutException {
     delegate.awaitRunning(timeout, unit);
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitTerminated() {
     delegate.awaitTerminated();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitTerminated(long timeout, TimeUnit unit) throws TimeoutException {
     delegate.awaitTerminated(timeout, unit);
   }
   
-  /* 
+  /**
    * A {@link Scheduler} that provides a convenient way for the {@link AbstractScheduledService} to 
    * use a dynamically changing schedule.  After every execution of the task, assuming it hasn't 
    * been cancelled, the {@link #getNextSchedule} method will be called.
@@ -394,31 +420,31 @@ public abstract class AbstractScheduledService implements Service {
   @Beta
   public abstract static class CustomScheduler extends Scheduler {
 
-    /* 
+    /**
      * A callable class that can reschedule itself using a {@link CustomScheduler}.
      */
     private class ReschedulableCallable extends ForwardingFuture<Void> implements Callable<Void> {
       
-      /*  The underlying task. */
+      /** The underlying task. */
       private final Runnable wrappedRunnable;
       
-      /*  The executor on which this Callable will be scheduled. */
+      /** The executor on which this Callable will be scheduled. */
       private final ScheduledExecutorService executor;
       
-      /*  
+      /** 
        * The service that is managing this callable.  This is used so that failure can be 
        * reported properly.
        */
       private final AbstractService service;
       
-      /* 
+      /**
        * This lock is used to ensure safe and correct cancellation, it ensures that a new task is 
        * not scheduled while a cancel is ongoing.  Also it protects the currentFuture variable to 
        * ensure that it is assigned atomically with being scheduled.
        */ 
       private final ReentrantLock lock = new ReentrantLock();
       
-      /*  The future that represents the next execution of this task.*/
+      /** The future that represents the next execution of this task.*/
       @GuardedBy("lock")
       private Future<Void> currentFuture;
       
@@ -436,7 +462,7 @@ public abstract class AbstractScheduledService implements Service {
         return null;
       }
 
-      /* 
+      /**
        * Atomically reschedules this task and assigns the new future to {@link #currentFuture}.
        */
       public void reschedule() {
@@ -489,7 +515,7 @@ public abstract class AbstractScheduledService implements Service {
       return task;
     }
     
-    /* 
+    /**
      * A value object that represents an absolute delay until a task should be invoked.
      * 
      * @author Luke Sandberg
@@ -501,7 +527,7 @@ public abstract class AbstractScheduledService implements Service {
       private final long delay;
       private final TimeUnit unit;
       
-      /* 
+      /**
        * @param delay the time from now to delay execution
        * @param unit the time unit of the delay parameter
        */
@@ -511,7 +537,7 @@ public abstract class AbstractScheduledService implements Service {
       }
     }
     
-    /* 
+    /**
      * Calculates the time at which to next invoke the task.
      * 
      * <p>This is guaranteed to be called immediately after the task has completed an iteration and

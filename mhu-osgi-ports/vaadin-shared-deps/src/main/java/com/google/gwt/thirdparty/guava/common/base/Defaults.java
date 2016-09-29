@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/* 
+/**
  * This class provides default values for all Java types, as defined by the JLS.
  *
  * @author Ben Yu
@@ -50,7 +50,7 @@ public final class Defaults {
     map.put(type, value);
   }
 
-  /* 
+  /**
    * Returns the default value of {@code type} as defined by JLS --- {@code 0} for numbers, {@code
    * false} for {@code boolean} and {@code '\0'} for {@code char}. For non-primitive types and
    * {@code void}, null is returned.

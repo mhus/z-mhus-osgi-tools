@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 
-/* 
+/**
  * JDK Hooks to extract properties/resources.
  */
 public abstract class JDKHooks {
@@ -31,12 +31,12 @@ public abstract class JDKHooks {
         jdkHooks = new JDK12Hooks();
     }
 
-    /* 
+    /**
      * Hidden constructor, this class can't be directly instantiated.
      */
     protected JDKHooks() { }
 
-    /* 
+    /**
      * Return singleton object representing JVM hooks/tools.
      *
      * TODO: add logic to detect JDK level.
@@ -47,7 +47,7 @@ public abstract class JDKHooks {
         return jdkHooks;
     }
 
-    /* 
+    /**
      * Get the system property
      *
      * @param propName name of the property
@@ -55,7 +55,7 @@ public abstract class JDKHooks {
      */
     public abstract String getSystemProperty(final String propName);
 
-    /* 
+    /**
      * The thread context class loader is available for JDK 1.2
      * or later, if certain security conditions are met.
      *
@@ -64,7 +64,7 @@ public abstract class JDKHooks {
      */
     public abstract ClassLoader getThreadContextClassLoader();
 
-    /* 
+    /**
      * The system class loader is available for JDK 1.2
      * or later, if certain security conditions are met.
      *
@@ -73,7 +73,7 @@ public abstract class JDKHooks {
      */
     public abstract ClassLoader getSystemClassLoader();
 
-    /* 
+    /**
      * Resolve resource with given names and make them available in
      * the returned iterator.
      *

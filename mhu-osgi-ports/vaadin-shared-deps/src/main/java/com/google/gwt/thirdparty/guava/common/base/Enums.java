@@ -27,7 +27,7 @@ import java.lang.reflect.Field;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Utility methods for working with {@link Enum} instances.
  *
  * @author Steve McKay
@@ -40,7 +40,7 @@ public final class Enums {
 
   private Enums() {}
 
-  /* 
+  /**
    * Returns the {@link Field} in which {@code enumValue} is defined.
    * For example, to get the {@code Description} annotation on the {@code GOLF}
    * constant of enum {@code Sport}, use
@@ -58,7 +58,7 @@ public final class Enums {
     }
   }
 
-  /* 
+  /**
    * Returns a {@link Function} that maps an {@link Enum} name to the associated
    * {@code Enum} constant. The {@code Function} will return {@code null} if the
    * {@code Enum} constant does not exist.
@@ -70,7 +70,7 @@ public final class Enums {
     return new ValueOfFunction<T>(enumClass);
   }
 
-  /* 
+  /**
    * A {@link Function} that maps an {@link Enum} name to the associated
    * constant, or {@code null} if the constant does not exist.
    */
@@ -108,7 +108,7 @@ public final class Enums {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns an optional enum constant for the given type, using {@link Enum#valueOf}. If the
    * constant does not exist, {@link Optional#absent} is returned. A common use case is for parsing
    * user input or falling back to a default enum constant. For example,

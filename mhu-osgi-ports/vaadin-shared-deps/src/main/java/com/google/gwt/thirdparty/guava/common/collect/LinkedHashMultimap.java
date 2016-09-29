@@ -39,7 +39,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@code Multimap} that does not allow duplicate key-value
  * entries and that returns collections whose iterators follow the ordering in
  * which the data was added to the multimap.
@@ -81,7 +81,7 @@ import javax.annotation.Nullable;
 @GwtCompatible(serializable = true, emulated = true)
 public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
 
-  /* 
+  /**
    * Creates a new, empty {@code LinkedHashMultimap} with the default initial
    * capacities.
    */
@@ -89,7 +89,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return new LinkedHashMultimap<K, V>(DEFAULT_KEY_CAPACITY, DEFAULT_VALUE_SET_CAPACITY);
   }
 
-  /* 
+  /**
    * Constructs an empty {@code LinkedHashMultimap} with enough capacity to hold
    * the specified numbers of keys and values without rehashing.
    *
@@ -105,7 +105,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
         Maps.capacity(expectedValuesPerKey));
   }
 
-  /* 
+  /**
    * Constructs a {@code LinkedHashMultimap} with the same mappings as the
    * specified multimap. If a key-value mapping appears multiple times in the
    * input multimap, it only appears once in the constructed multimap. The new
@@ -148,7 +148,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     succeedsInMultimap(entry.getPredecessorInMultimap(), entry.getSuccessorInMultimap());
   }
 
-  /* 
+  /**
    * LinkedHashMultimap entries are in no less than three coexisting linked lists:
    * a bucket in the hash table for a Set<V> associated with a key, the linked list
    * of insertion-ordered entries in that Set<V>, and the linked list of entries
@@ -233,7 +233,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     succeedsInMultimap(multimapHeaderEntry, multimapHeaderEntry);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Creates an empty {@code LinkedHashSet} for a collection of values for
@@ -247,7 +247,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return new LinkedHashSet<V>(valueSetCapacity);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>Creates a decorated insertion-ordered set that also keeps track of the
@@ -261,7 +261,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return new ValueSet(key, valueSetCapacity);
   }
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p>If {@code values} is not empty and the multimap already contains a
@@ -274,7 +274,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return super.replaceValues(key, values);
   }
 
-  /* 
+  /**
    * Returns a set of all key-value pairs. Changes to the returned set will
    * update the underlying multimap, and vice versa. The entries set does not
    * support the {@code add} or {@code addAll} operations.
@@ -290,7 +290,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     return super.entries();
   }
 
-  /* 
+  /**
    * Returns a collection of all values in the multimap. Changes to the returned
    * collection will update the underlying multimap, and vice versa.
    *
@@ -533,7 +533,7 @@ public final class LinkedHashMultimap<K, V> extends AbstractSetMultimap<K, V> {
     succeedsInMultimap(multimapHeaderEntry, multimapHeaderEntry);
   }
 
-  /* 
+  /**
    * @serialData the expected values per key, the number of distinct keys,
    * the number of entries, and the entries in order
    */

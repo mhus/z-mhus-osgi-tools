@@ -26,7 +26,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An empty immutable sorted set.
  *
  * @author Jared Levy

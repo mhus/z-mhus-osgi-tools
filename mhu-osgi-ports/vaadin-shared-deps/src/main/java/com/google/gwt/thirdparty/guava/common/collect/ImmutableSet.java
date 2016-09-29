@@ -34,7 +34,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A high-performance, immutable {@code Set} with reliable, user-specified
  * iteration order. Does not permit null elements.
  *
@@ -73,7 +73,7 @@ import javax.annotation.Nullable;
 @SuppressWarnings("serial") // we're overriding default serialization
 public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     implements Set<E> {
-  /* 
+  /**
    * Returns the empty immutable set. This set behaves and performs comparably
    * to {@link Collections#emptySet}, and is preferable mainly for consistency
    * and maintainability of your code.
@@ -84,7 +84,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return (ImmutableSet<E>) EmptyImmutableSet.INSTANCE;
   }
 
-  /* 
+  /**
    * Returns an immutable set containing a single element. This set behaves and
    * performs comparably to {@link Collections#singleton}, but will not accept
    * a null element. It is preferable mainly for consistency and
@@ -94,7 +94,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return new SingletonImmutableSet<E>(element);
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -105,7 +105,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return construct(2, e1, e2);
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -116,7 +116,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return construct(3, e1, e2, e3);
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -127,7 +127,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return construct(4, e1, e2, e3, e4);
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -138,7 +138,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return construct(5, e1, e2, e3, e4, e5);
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -160,7 +160,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return construct(elements.length, elements);
   }
 
-  /* 
+  /**
    * Constructs an {@code ImmutableSet} from the first {@code n} elements of the specified array.
    * If {@code k} is the size of the returned {@code ImmutableSet}, then the unique elements of
    * {@code elements} will be in the first {@code k} positions, and {@code elements[i] == null} for
@@ -236,7 +236,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
   private static final int CUTOFF =
       (int) (MAX_TABLE_SIZE * DESIRED_LOAD_FACTOR);
 
-  /* 
+  /**
    * Returns an array size suitable for the backing array of a hash table that
    * uses open addressing with linear probing in its implementation.  The
    * returned size is the smallest power of two that can hold setSize elements
@@ -260,7 +260,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return MAX_TABLE_SIZE;
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -279,7 +279,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     }
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored. This method iterates over {@code elements} at most once.
@@ -302,7 +302,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
         : copyOf(elements.iterator());
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored.
@@ -325,7 +325,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     }
   }
 
-  /* 
+  /**
    * Returns an immutable set containing the given elements, in order. Repeated
    * occurrences of an element (according to {@link Object#equals}) after the
    * first are ignored. This method iterates over {@code elements} at most
@@ -381,7 +381,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
 
   ImmutableSet() {}
 
-  /*  Returns {@code true} if the {@code hashCode()} method runs quickly. */
+  /** Returns {@code true} if the {@code hashCode()} method runs quickly. */
   boolean isHashCodeFast() {
     return false;
   }
@@ -428,7 +428,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return new SerializedForm(toArray());
   }
 
-  /* 
+  /**
    * Returns a new builder. The generated builder is equivalent to the builder
    * created by the {@link Builder} constructor.
    */
@@ -436,7 +436,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
     return new Builder<E>();
   }
 
-  /* 
+  /**
    * A builder for creating immutable set instances, especially {@code public
    * static final} sets ("constant sets"). Example: <pre>   {@code
    *
@@ -454,7 +454,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
    */
   public static class Builder<E> extends ImmutableCollection.ArrayBasedBuilder<E> {
 
-    /* 
+    /**
      * Creates a new builder. The returned builder is equivalent to the builder
      * generated by {@link ImmutableSet#builder}.
      */
@@ -466,7 +466,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
       super(capacity);
     }
 
-    /* 
+    /**
      * Adds {@code element} to the {@code ImmutableSet}.  If the {@code
      * ImmutableSet} already contains {@code element}, then {@code add} has no
      * effect (only the previously added element is retained).
@@ -480,7 +480,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -494,7 +494,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -508,7 +508,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /* 
+    /**
      * Adds each element of {@code elements} to the {@code ImmutableSet},
      * ignoring duplicate elements (only the first duplicate element is added).
      *
@@ -522,7 +522,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E>
       return this;
     }
 
-    /* 
+    /**
      * Returns a newly-created {@code ImmutableSet} based on the contents of
      * the {@code Builder}.
      */

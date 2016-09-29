@@ -16,7 +16,7 @@ package org.w3c.flute.parser.selectors;
 import org.w3c.css.sac.CombinatorCondition;
 import org.w3c.css.sac.Condition;
 
-/* 
+/**
  * @version $Revision: 1.1 $
  * @author  Philippe Le Hegaret
  */
@@ -25,7 +25,7 @@ public class AndConditionImpl implements CombinatorCondition {
     Condition firstCondition;
     Condition secondCondition;
 
-    /* 
+    /**
      * Creates a new AndConditionImpl
      */
     public AndConditionImpl(Condition firstCondition, Condition secondCondition) {
@@ -33,21 +33,21 @@ public class AndConditionImpl implements CombinatorCondition {
 	this.secondCondition = secondCondition;
     }
     
-    /* 
+    /**
      * An integer indicating the type of <code>Condition</code>.
      */    
     public short getConditionType() {
 	return Condition.SAC_AND_CONDITION;
     }
 
-    /* 
+    /**
      * Returns the first condition.
      */    
     public Condition getFirstCondition() {
 	return firstCondition;
     }
 
-    /* 
+    /**
      * Returns the second condition.
      */    
     public Condition getSecondCondition() {

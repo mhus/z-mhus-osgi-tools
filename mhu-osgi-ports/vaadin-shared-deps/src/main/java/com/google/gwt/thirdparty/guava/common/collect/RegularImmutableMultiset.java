@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link ImmutableMultiset} with zero or more elements.
  *
  * @author Jared Levy

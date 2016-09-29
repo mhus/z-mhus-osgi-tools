@@ -26,13 +26,13 @@ import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.Condition;
 import org.w3c.css.sac.CSSException;
 
-/* 
+/**
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
 public class SelectorFactoryImpl implements SelectorFactory {
 
-    /* 
+    /**
      * Creates a conditional selector.
      * 
      * @param selector a selector.
@@ -46,7 +46,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	return new ConditionalSelectorImpl(selector, condition);
     }
 
-    /* 
+    /**
      * Creates an any node selector.
      * 
      * @return the any node selector.
@@ -56,7 +56,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates an root node selector.
      * 
      * @return the root node selector.
@@ -66,7 +66,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates an negative selector.
      * 
      * @param selector a selector.
@@ -78,11 +78,14 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates an element selector.
      * 
      * @param namespaceURI the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
      *                     URI</a> of the element selector.
+     * @param tagName the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local
+     *        part</a> of the element name. <code>NULL</code> if this element
+     *        selector can match any element.</p>
      * @return the element selector
      * @exception CSSException If this selector is not supported.
      */    
@@ -95,7 +98,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	}
     }
 
-    /* 
+    /**
      * Creates a text node selector.
      * 
      * @param data the data
@@ -107,7 +110,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates a cdata section node selector.
      * 
      * @param data the data
@@ -119,7 +122,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates a processing instruction node selector.
      * 
      * @param target the target
@@ -134,7 +137,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates a comment node selector.
      * 
      * @param data the data
@@ -146,7 +149,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	throw new CSSException(CSSException.SAC_NOT_SUPPORTED_ERR);
     }
 
-    /* 
+    /**
      * Creates a pseudo element selector.
      * 
      * @param pseudoName the pseudo element name. <code>NULL</code> if this
@@ -164,7 +167,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	}
     }
 
-    /* 
+    /**
      * Creates a descendant selector.
      *
      * @param parent the parent selector
@@ -178,7 +181,7 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	return new DescendantSelectorImpl(parent, descendant);
     }
 
-    /* 
+    /**
      * Creates a child selector.
      *
      * @param parent the parent selector
@@ -192,10 +195,11 @@ public class SelectorFactoryImpl implements SelectorFactory {
 	return new ChildSelectorImpl(parent, child);
     }
 
-    /* 
+    /**
      * Creates a direct adjacent selector.
      *
      * @param child the child selector
+     * @param adjacent the direct adjacent selector
      * @return the combinator selector.
      * @exception CSSException If this selector is not supported.
      */

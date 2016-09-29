@@ -16,7 +16,7 @@
 
 package com.google.gwt.thirdparty.streamhtmlparser;
 
-/* 
+/**
  * Methods exposed for HTML parsing of text to facilitate implementation
  * of Automatic context-aware escaping. The HTML parser also embeds a
  * Javascript parser for processing Javascript fragments. In the future,
@@ -28,7 +28,7 @@ package com.google.gwt.thirdparty.streamhtmlparser;
  */
 public interface HtmlParser extends Parser {
 
-  /* 
+  /**
    * The Parser Mode requested for parsing a given template.
    * Currently we support:
    * <ul>
@@ -55,7 +55,7 @@ public interface HtmlParser extends Parser {
     HTML_IN_TAG
   }
 
-  /* 
+  /**
    * Indicates the type of HTML attribute that the parser is currently in or
    * {@code NONE} if the parser is not currently in an attribute.
    * {@code URI} is for attributes taking a URI such as "href" and "src".
@@ -73,7 +73,7 @@ public interface HtmlParser extends Parser {
     STYLE
   }
 
-  /* 
+  /**
    * All the states in which the parser can be. These are external states.
    * The parser has many more internal states that are not exposed and which
    * are instead mapped to one of these external ones.
@@ -103,7 +103,7 @@ public interface HtmlParser extends Parser {
   public final static ExternalState STATE_CSS_FILE =
       new ExternalState("STATE_CSS_FILE");
 
-  /* 
+  /**
    * Returns {@code true} if the parser is currently processing Javascript.
    * Such is the case if and only if, the parser is processing an attribute
    * that takes Javascript, a Javascript script block or the parser
@@ -114,7 +114,7 @@ public interface HtmlParser extends Parser {
    */
   public boolean inJavascript();
 
-  /* 
+  /**
    * Returns {@code true} if the parser is currently processing
    * a Javascript litteral that is quoted. The caller will typically
    * invoke this method after determining that the parser is processing
@@ -127,7 +127,7 @@ public interface HtmlParser extends Parser {
   public boolean isJavascriptQuoted();
 
 
-  /* 
+  /**
    * Returns {@code true} if and only if the parser is currently within
    * an attribute, be it within the attribute name or the attribute value.
    *
@@ -135,7 +135,7 @@ public interface HtmlParser extends Parser {
    */
   public boolean inAttribute();
 
-  /* 
+  /**
    * Returns {@code true} if and only if the parser is currently within
    * a CSS context. A CSS context is one of the below:
    * <ul>
@@ -148,7 +148,7 @@ public interface HtmlParser extends Parser {
    */
   public boolean inCss();
 
-  /* 
+  /**
    * Returns the type of the attribute that the parser is in
    * or {@code ATTR_TYPE.NONE} if we are not parsing an attribute.
    * The caller will typically invoke this method after determining
@@ -162,7 +162,7 @@ public interface HtmlParser extends Parser {
    */
   public ATTR_TYPE getAttributeType();
 
-  /* 
+  /**
    * Returns {@code true} if and only if the parser is currently within
    * an attribute value and that attribute value is quoted.
    *
@@ -171,7 +171,7 @@ public interface HtmlParser extends Parser {
   public boolean isAttributeQuoted();
 
 
-  /* 
+  /**
    * Returns the name of the HTML tag if the parser is currently within one.
    * Note that the name may be incomplete if the parser is currently still
    * parsing the name. Returns an empty {@code String} if the parser is not
@@ -182,7 +182,7 @@ public interface HtmlParser extends Parser {
    */
   public String getTag();
 
-  /* 
+  /**
    * Returns the name of the HTML attribute the parser is currently processing.
    * If the parser is still parsing the name, then the returned name
    * may be incomplete. Returns an empty {@code String} if the parser is not
@@ -193,7 +193,7 @@ public interface HtmlParser extends Parser {
    */
   public String getAttribute();
 
-  /* 
+  /**
    * Returns the value of an HTML attribute if the parser is currently
    * within one. If the parser is currently parsing the value, the returned
    * value may be incomplete. The caller will typically first determine
@@ -205,7 +205,7 @@ public interface HtmlParser extends Parser {
    */
   public String getValue();
 
-  /* 
+  /**
    * Returns the current position of the parser within the HTML attribute
    * value, zero being the position of the first character in the value.
    * The caller will typically first determine that the parser is
@@ -215,7 +215,7 @@ public interface HtmlParser extends Parser {
    */
   public int getValueIndex();
 
-  /* 
+  /**
    * Returns {@code true} if and only if the current position of the parser is
    * at the start of a URL HTML attribute value. This is the case when the
    * following three conditions are all met:
@@ -239,7 +239,7 @@ public interface HtmlParser extends Parser {
    */
   public boolean isUrlStart();
 
-  /* 
+  /**
    * Resets the state of the parser, allowing for reuse of the
    * {@code HtmlParser} object.
    *
@@ -250,7 +250,7 @@ public interface HtmlParser extends Parser {
    */
   public void resetMode(HtmlParser.Mode mode);
 
-  /* 
+  /**
    * A specialized directive to tell the parser there is some content
    * that will be inserted here but that it will not get to parse. Used
    * by the template system that may not be able to give some content
@@ -269,7 +269,7 @@ public interface HtmlParser extends Parser {
    */
   public void insertText() throws ParseException;
 
-  /* 
+  /**
    * Returns the state the Javascript parser is in.
    *
    * <p>See {@link JavascriptParser} for more information on the valid

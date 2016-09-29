@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@code double} primitives, that are not
  * already found in either {@link Double} or {@link Arrays}.
  *
@@ -54,7 +54,7 @@ import javax.annotation.Nullable;
 public final class Doubles {
   private Doubles() {}
 
-  /* 
+  /**
    * The number of bytes required to represent a primitive {@code double}
    * value.
    *
@@ -62,7 +62,7 @@ public final class Doubles {
    */
   public static final int BYTES = Double.SIZE / Byte.SIZE;
 
-  /* 
+  /**
    * Returns a hash code for {@code value}; equal to the result of invoking
    * {@code ((Double) value).hashCode()}.
    *
@@ -76,7 +76,7 @@ public final class Doubles {
     // return (int) (bits ^ (bits >>> 32));
   }
 
-  /* 
+  /**
    * Compares the two specified {@code double} values. The sign of the value
    * returned is the same as that of <code>((Double) a).{@linkplain
    * Double#compareTo compareTo}(b)</code>. As with that method, {@code NaN} is
@@ -91,7 +91,7 @@ public final class Doubles {
     return Double.compare(a, b);
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code value} represents a real number. This is
    * equivalent to, but not necessarily implemented as,
    * {@code !(Double.isInfinite(value) || Double.isNaN(value))}.
@@ -102,7 +102,7 @@ public final class Doubles {
     return NEGATIVE_INFINITY < value & value < POSITIVE_INFINITY;
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code target} is present as an element anywhere in
    * {@code array}. Note that this always returns {@code false} when {@code
    * target} is {@code NaN}.
@@ -121,7 +121,7 @@ public final class Doubles {
     return false;
   }
 
-  /* 
+  /**
    * Returns the index of the first appearance of the value {@code target} in
    * {@code array}. Note that this always returns {@code -1} when {@code target}
    * is {@code NaN}.
@@ -146,7 +146,7 @@ public final class Doubles {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the start position of the first occurrence of the specified {@code
    * target} within {@code array}, or {@code -1} if there is no such occurrence.
    *
@@ -179,7 +179,7 @@ public final class Doubles {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the index of the last appearance of the value {@code target} in
    * {@code array}. Note that this always returns {@code -1} when {@code target}
    * is {@code NaN}.
@@ -204,7 +204,7 @@ public final class Doubles {
     return -1;
   }
 
-  /* 
+  /**
    * Returns the least value present in {@code array}, using the same rules of
    * comparison as {@link Math#min(double, double)}.
    *
@@ -222,7 +222,7 @@ public final class Doubles {
     return min;
   }
 
-  /* 
+  /**
    * Returns the greatest value present in {@code array}, using the same rules
    * of comparison as {@link Math#max(double, double)}.
    *
@@ -240,6 +240,15 @@ public final class Doubles {
     return max;
   }
 
+  /**
+   * Returns the values from each provided array combined into a single array.
+   * For example, {@code concat(new double[] {a, b}, new double[] {}, new
+   * double[] {c}} returns the array {@code {a, b, c}}.
+   *
+   * @param arrays zero or more {@code double} arrays
+   * @return a single array containing all the values from the source arrays, in
+   *     order
+   */
   public static double[] concat(double[]... arrays) {
     int length = 0;
     for (double[] array : arrays) {
@@ -254,7 +263,7 @@ public final class Doubles {
     return result;
   }
 
-  /* 
+  /**
    * Returns an array containing the same values as {@code array}, but
    * guaranteed to be of a specified minimum length. If {@code array} already
    * has a length of at least {@code minLength}, it is returned directly.
@@ -286,7 +295,7 @@ public final class Doubles {
     return copy;
   }
 
-  /* 
+  /**
    * Returns a string containing the supplied {@code double} values, converted
    * to strings as specified by {@link Double#toString(double)}, and separated
    * by {@code separator}. For example, {@code join("-", 1.0, 2.0, 3.0)} returns
@@ -315,7 +324,7 @@ public final class Doubles {
     return builder.toString();
   }
 
-  /* 
+  /**
    * Returns a comparator that compares two {@code double} arrays
    * lexicographically. That is, it compares, using {@link
    * #compare(double, double)}), the first pair of values that follow any
@@ -351,7 +360,7 @@ public final class Doubles {
     }
   }
 
-  /* 
+  /**
    * Returns an array containing each value of {@code collection}, converted to
    * a {@code double} value in the manner of {@link Number#doubleValue}.
    *
@@ -381,7 +390,7 @@ public final class Doubles {
     return array;
   }
 
-  /* 
+  /**
    * Returns a fixed-size list backed by the specified array, similar to {@link
    * Arrays#asList(Object[])}. The list supports {@link List#set(int, Object)},
    * but any attempt to set a value to {@code null} will result in a {@link
@@ -528,7 +537,7 @@ public final class Doubles {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * This is adapted from the regex suggested by {@link Double#valueOf(String)}
    * for prevalidating inputs.  All valid inputs must pass this regex, but it's
    * semantically fine if not all inputs that pass this regex are valid --
@@ -547,7 +556,7 @@ public final class Doubles {
     return Pattern.compile(fpPattern);
   }
 
-  /* 
+  /**
    * Parses the specified string as a double-precision floating point value.
    * The ASCII character {@code '-'} (<code>'&#92;u002D'</code>) is recognized
    * as the minus sign.

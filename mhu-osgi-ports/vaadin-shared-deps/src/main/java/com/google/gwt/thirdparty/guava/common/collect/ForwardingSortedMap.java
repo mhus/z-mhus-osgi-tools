@@ -28,7 +28,7 @@ import java.util.SortedMap;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A sorted map which forwards all its method calls to another sorted map.
  * Subclasses should override one or more methods to modify the behavior of
  * the backing sorted map as desired per the <a
@@ -58,7 +58,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
     implements SortedMap<K, V> {
   // TODO(user): identify places where thread safety is actually lost
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingSortedMap() {}
 
   @Override protected abstract SortedMap<K, V> delegate();
@@ -93,7 +93,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
     return delegate().tailMap(fromKey);
   }
 
-  /* 
+  /**
    * A sensible implementation of {@link SortedMap#keySet} in terms of the methods of
    * {@code ForwardingSortedMap}. In many cases, you may wish to override
    * {@link ForwardingSortedMap#keySet} to forward to this implementation or a subclass thereof.
@@ -102,7 +102,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
    */
   @Beta
   protected class StandardKeySet extends Maps.SortedKeySet<K, V> {
-    /*  Constructor for use by subclasses. */
+    /** Constructor for use by subclasses. */
     public StandardKeySet() {
       super(ForwardingSortedMap.this);
     }
@@ -119,7 +119,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
     }
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #containsKey} in terms of the {@code
    * firstKey()} method of {@link #tailMap}. If you override {@link #tailMap},
    * you may wish to override {@link #containsKey} to forward to this
@@ -143,7 +143,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
     }
   }
 
-  /* 
+  /**
    * A sensible definition of {@link #remove} in terms of the {@code
    * iterator()} of the {@code entrySet()} of {@link #tailMap}. If you override
    * {@link #tailMap}, you may wish to override {@link #remove} to forward
@@ -180,7 +180,7 @@ public abstract class ForwardingSortedMap<K, V> extends ForwardingMap<K, V>
     return null;
   }
 
-  /* 
+  /**
    * A sensible default implementation of {@link #subMap(Object, Object)} in
    * terms of {@link #headMap(Object)} and {@link #tailMap(Object)}. In some
    * situations, you may wish to override {@link #subMap(Object, Object)} to

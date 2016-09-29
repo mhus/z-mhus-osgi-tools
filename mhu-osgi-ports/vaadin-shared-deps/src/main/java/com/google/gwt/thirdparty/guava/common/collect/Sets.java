@@ -47,7 +47,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@link Set} instances. Also see this
  * class's counterparts {@link Lists}, {@link Maps} and {@link Queues}.
  *
@@ -64,7 +64,7 @@ import javax.annotation.Nullable;
 public final class Sets {
   private Sets() {}
 
-  /* 
+  /**
    * {@link AbstractSet} substitute without the potentially-quadratic
    * {@code removeAll} implementation.
    */
@@ -80,7 +80,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns an immutable set instance containing the given enum elements.
    * Internally, the returned set will be backed by an {@link EnumSet}.
    *
@@ -98,7 +98,7 @@ public final class Sets {
     return ImmutableEnumSet.asImmutable(EnumSet.of(anElement, otherElements));
   }
 
-  /* 
+  /**
    * Returns an immutable set instance containing the given enum elements.
    * Internally, the returned set will be backed by an {@link EnumSet}.
    *
@@ -134,7 +134,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns a new {@code EnumSet} instance containing the given elements.
    * Unlike {@link EnumSet#copyOf(Collection)}, this method does not produce an
    * exception on an empty collection, and it may be called on any iterable, not
@@ -149,7 +149,7 @@ public final class Sets {
 
   // HashSet
 
-  /* 
+  /**
    * Creates a <i>mutable</i>, empty {@code HashSet} instance.
    *
    * <p><b>Note:</b> if mutability is not required, use {@link
@@ -164,7 +164,7 @@ public final class Sets {
     return new HashSet<E>();
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code HashSet} instance containing the given
    * elements in unspecified order.
    *
@@ -184,7 +184,7 @@ public final class Sets {
     return set;
   }
 
-  /* 
+  /**
    * Creates a {@code HashSet} instance, with a high enough "initial capacity"
    * that it <i>should</i> hold {@code expectedSize} elements without growth.
    * This behavior cannot be broadly guaranteed, but it is observed to be true
@@ -201,7 +201,7 @@ public final class Sets {
     return new HashSet<E>(Maps.capacity(expectedSize));
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code HashSet} instance containing the given
    * elements in unspecified order.
    *
@@ -220,7 +220,7 @@ public final class Sets {
         : newHashSet(elements.iterator());
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code HashSet} instance containing the given
    * elements in unspecified order.
    *
@@ -239,7 +239,7 @@ public final class Sets {
     return set;
   }
 
-  /* 
+  /**
    * Creates a thread-safe set backed by a hash map. The set is backed by a
    * {@link ConcurrentHashMap} instance, and thus carries the same concurrency
    * guarantees.
@@ -254,7 +254,7 @@ public final class Sets {
     return newSetFromMap(new ConcurrentHashMap<E, Boolean>());
   }
 
-  /* 
+  /**
    * Creates a thread-safe set backed by a hash map and containing the given
    * elements. The set is backed by a {@link ConcurrentHashMap} instance, and
    * thus carries the same concurrency guarantees.
@@ -277,7 +277,7 @@ public final class Sets {
 
   // LinkedHashSet
 
-  /* 
+  /**
    * Creates a <i>mutable</i>, empty {@code LinkedHashSet} instance.
    *
    * <p><b>Note:</b> if mutability is not required, use {@link
@@ -289,7 +289,7 @@ public final class Sets {
     return new LinkedHashSet<E>();
   }
 
-  /* 
+  /**
    * Creates a {@code LinkedHashSet} instance, with a high enough "initial
    * capacity" that it <i>should</i> hold {@code expectedSize} elements without
    * growth. This behavior cannot be broadly guaranteed, but it is observed to
@@ -308,7 +308,7 @@ public final class Sets {
     return new LinkedHashSet<E>(Maps.capacity(expectedSize));
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code LinkedHashSet} instance containing the
    * given elements in order.
    *
@@ -331,7 +331,7 @@ public final class Sets {
 
   // TreeSet
 
-  /* 
+  /**
    * Creates a <i>mutable</i>, empty {@code TreeSet} instance sorted by the
    * natural sort ordering of its elements.
    *
@@ -344,7 +344,7 @@ public final class Sets {
     return new TreeSet<E>();
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i> {@code TreeSet} instance containing the given
    * elements sorted by their natural ordering.
    *
@@ -366,7 +366,7 @@ public final class Sets {
     return set;
   }
 
-  /* 
+  /**
    * Creates a <i>mutable</i>, empty {@code TreeSet} instance with the given
    * comparator.
    *
@@ -381,7 +381,7 @@ public final class Sets {
     return new TreeSet<E>(checkNotNull(comparator));
   }
 
-  /* 
+  /**
    * Creates an empty {@code Set} that uses identity to determine equality. It
    * compares object references, instead of calling {@code equals}, to
    * determine whether a provided object matches an element in the set. For
@@ -395,7 +395,7 @@ public final class Sets {
     return Sets.newSetFromMap(Maps.<E, Boolean>newIdentityHashMap());
   }
 
-  /* 
+  /**
    * Creates an empty {@code CopyOnWriteArraySet} instance.
    *
    * <p><b>Note:</b> if you need an immutable empty {@link Set}, use
@@ -409,7 +409,7 @@ public final class Sets {
     return new CopyOnWriteArraySet<E>();
   }
 
-  /* 
+  /**
    * Creates a {@code CopyOnWriteArraySet} instance containing the given elements.
    *
    * @param elements the elements that the set should contain, in order
@@ -427,7 +427,7 @@ public final class Sets {
     return new CopyOnWriteArraySet<E>(elementsCollection);
   }
 
-  /* 
+  /**
    * Creates an {@code EnumSet} consisting of all enum values that are not in
    * the specified collection. If the collection is an {@link EnumSet}, this
    * method has the same behavior as {@link EnumSet#complementOf}. Otherwise,
@@ -453,7 +453,7 @@ public final class Sets {
     return makeComplementByHand(collection, type);
   }
 
-  /* 
+  /**
    * Creates an {@code EnumSet} consisting of all enum values that are not in
    * the specified collection. This is equivalent to
    * {@link EnumSet#complementOf}, but can act on any input collection, as long
@@ -480,7 +480,7 @@ public final class Sets {
     return result;
   }
 
-  /* 
+  /**
    * Returns a set backed by the specified map. The resulting set displays
    * the same ordering, concurrency, and performance characteristics as the
    * backing map. In essence, this factory method provides a {@link Set}
@@ -515,7 +515,7 @@ public final class Sets {
     return Platform.newSetFromMap(map);
   }
 
-  /* 
+  /**
    * An unmodifiable view of a set which may be backed by other sets; this view
    * will change as the backing sets do. Contains methods to copy the data into
    * a new set which will then remain stable. There is usually no reason to
@@ -528,7 +528,7 @@ public final class Sets {
   public abstract static class SetView<E> extends AbstractSet<E> {
     private SetView() {} // no subclasses but our own
 
-    /* 
+    /**
      * Returns an immutable copy of the current contents of this set view.
      * Does not support null elements.
      *
@@ -541,7 +541,7 @@ public final class Sets {
       return ImmutableSet.copyOf(this);
     }
 
-    /* 
+    /**
      * Copies the current contents of this set view into an existing set. This
      * method has equivalent behavior to {@code set.addAll(this)}, assuming that
      * all the sets involved are based on the same notion of equivalence.
@@ -556,7 +556,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns an unmodifiable <b>view</b> of the union of two sets. The returned
    * set contains all elements that are contained in either backing set.
    * Iterating over the returned set iterates first over all the elements of
@@ -609,7 +609,7 @@ public final class Sets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable <b>view</b> of the intersection of two sets. The
    * returned set contains all elements that are contained by both backing sets.
    * The iteration order of the returned set matches that of {@code set1}.
@@ -661,7 +661,7 @@ public final class Sets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable <b>view</b> of the difference of two sets. The
    * returned set contains all elements that are contained by {@code set1} and
    * not contained by {@code set2}. {@code set2} may also contain elements not
@@ -694,7 +694,7 @@ public final class Sets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable <b>view</b> of the symmetric difference of two
    * sets. The returned set contains all elements that are contained in either
    * {@code set1} or {@code set2} but not in both. The iteration order of the
@@ -715,7 +715,7 @@ public final class Sets {
     return difference(union(set1, set2), intersection(set1, set2));
   }
 
-  /* 
+  /**
    * Returns the elements of {@code unfiltered} that satisfy a predicate. The
    * returned set is a live view of {@code unfiltered}; changes to one affect
    * the other.
@@ -776,7 +776,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns the elements of a {@code SortedSet}, {@code unfiltered}, that
    * satisfy a predicate. The returned set is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -872,7 +872,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns the elements of a {@code NavigableSet}, {@code unfiltered}, that
    * satisfy a predicate. The returned set is a live view of {@code unfiltered};
    * changes to one affect the other.
@@ -995,7 +995,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns every possible list that can be formed by choosing one element
    * from each of the given sets in order; the "n-ary
    * <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
@@ -1018,6 +1018,15 @@ public final class Sets {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
+   * <pre>   {@code
+   *
+   *   for (B b0 : sets.get(0)) {
+   *     for (B b1 : sets.get(1)) {
+   *       ...
+   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
+   *       // operate on tuple
+   *     }
+   *   }}</pre>
    *
    * <p>Note that if any input set is empty, the Cartesian product will also be
    * empty. If no sets at all are provided (an empty list), the resulting
@@ -1046,7 +1055,7 @@ public final class Sets {
     return CartesianSet.create(sets);
   }
 
-  /* 
+  /**
    * Returns every possible list that can be formed by choosing one element
    * from each of the given sets in order; the "n-ary
    * <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
@@ -1069,6 +1078,15 @@ public final class Sets {
    *
    * <p>The result is guaranteed to be in the "traditional", lexicographical
    * order for Cartesian products that you would get from nesting for loops:
+   * <pre>   {@code
+   *
+   *   for (B b0 : sets.get(0)) {
+   *     for (B b1 : sets.get(1)) {
+   *       ...
+   *       ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
+   *       // operate on tuple
+   *     }
+   *   }}</pre>
    *
    * <p>Note that if any input set is empty, the Cartesian product will also be
    * empty. If no sets at all are provided (an empty list), the resulting
@@ -1177,8 +1195,10 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * Returns the set of all possible subsets of {@code set}. For example,
+   * {@code powerSet(ImmutableSet.of(1, 2))} returns the set {@code {{},
+   * {1}, {2}, {1, 2}}}.
    *
    * <p>Elements appear in these subsets in the same iteration order as they
    * appeared in the input set. The order in which these subsets appear in the
@@ -1313,7 +1333,7 @@ public final class Sets {
     }
   }
 
-  /* 
+  /**
    * An implementation for {@link Set#hashCode()}.
    */
   static int hashCodeImpl(Set<?> s) {
@@ -1327,7 +1347,7 @@ public final class Sets {
     return hashCode;
   }
 
-  /* 
+  /**
    * An implementation for {@link Set#equals(Object)}.
    */
   static boolean equalsImpl(Set<?> s, @Nullable Object object) {
@@ -1348,7 +1368,7 @@ public final class Sets {
     return false;
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the specified navigable set. This method
    * allows modules to provide users with "read-only" access to internal
    * navigable sets. Query operations on the returned set "read through" to the
@@ -1463,7 +1483,7 @@ public final class Sets {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a synchronized (thread-safe) navigable set backed by the specified
    * navigable set.  In order to guarantee serial access, it is critical that
    * <b>all</b> access to the backing navigable set is accomplished
@@ -1471,6 +1491,30 @@ public final class Sets {
    *
    * <p>It is imperative that the user manually synchronize on the returned
    * sorted set when iterating over it or any of its {@code descendingSet},
+   * {@code subSet}, {@code headSet}, or {@code tailSet} views. <pre>   {@code
+   *
+   *   NavigableSet<E> set = synchronizedNavigableSet(new TreeSet<E>());
+   *    ...
+   *   synchronized (set) {
+   *     // Must be in the synchronized block
+   *     Iterator<E> it = set.iterator();
+   *     while (it.hasNext()) {
+   *       foo(it.next());
+   *     }
+   *   }}</pre>
+   *
+   * <p>or: <pre>   {@code
+   *
+   *   NavigableSet<E> set = synchronizedNavigableSet(new TreeSet<E>());
+   *   NavigableSet<E> set2 = set.descendingSet().headSet(foo);
+   *    ...
+   *   synchronized (set) { // Note: set, not set2!!!
+   *     // Must be in the synchronized block
+   *     Iterator<E> it = set2.descendingIterator();
+   *     while (it.hasNext())
+   *       foo(it.next());
+   *     }
+   *   }}</pre>
    *
    * <p>Failure to follow this advice may result in non-deterministic behavior.
    *
@@ -1488,7 +1532,7 @@ public final class Sets {
     return Synchronized.navigableSet(navigableSet);
   }
 
-  /* 
+  /**
    * Remove each element in an iterable from a set.
    */
   static boolean removeAllImpl(Set<?> set, Iterator<?> iterator) {

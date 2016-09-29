@@ -24,7 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.LinkedHashMap;
 
-/* 
+/**
  * A {@code Multiset} implementation with predictable iteration order. Its
  * iterator orders elements according to when the first occurrence of the
  * element was added. When the multiset contains multiple instances of an
@@ -44,7 +44,7 @@ import java.util.LinkedHashMap;
 @SuppressWarnings("serial") // we're overriding default serialization
 public final class LinkedHashMultiset<E> extends AbstractMapBasedMultiset<E> {
 
-  /* 
+  /**
    * Creates a new, empty {@code LinkedHashMultiset} using the default initial
    * capacity.
    */
@@ -52,7 +52,7 @@ public final class LinkedHashMultiset<E> extends AbstractMapBasedMultiset<E> {
     return new LinkedHashMultiset<E>();
   }
 
-  /* 
+  /**
    * Creates a new, empty {@code LinkedHashMultiset} with the specified expected
    * number of distinct elements.
    *
@@ -63,7 +63,7 @@ public final class LinkedHashMultiset<E> extends AbstractMapBasedMultiset<E> {
     return new LinkedHashMultiset<E>(distinctElements);
   }
 
-  /* 
+  /**
    * Creates a new {@code LinkedHashMultiset} containing the specified elements.
    *
    * <p>This implementation is highly efficient when {@code elements} is itself
@@ -88,7 +88,7 @@ public final class LinkedHashMultiset<E> extends AbstractMapBasedMultiset<E> {
     super(new LinkedHashMap<E, Count>(Maps.capacity(distinctElements)));
   }
 
-  /* 
+  /**
    * @serialData the number of distinct elements, the first element, its count,
    *     the second element, its count, and so on
    */

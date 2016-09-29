@@ -31,7 +31,7 @@ import java.util.SortedSet;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Provides static utility methods for creating and working with
  * {@link SortedMultiset} instances.
  *
@@ -42,7 +42,7 @@ final class SortedMultisets {
   private SortedMultisets() {
   }
 
-  /* 
+  /**
    * A skeleton implementation for {@link SortedMultiset#elementSet}.
    */
   static class ElementSet<E> extends Multisets.ElementSet<E> implements
@@ -82,7 +82,7 @@ final class SortedMultisets {
     }
   }
 
-  /* 
+  /**
    * A skeleton navigable implementation for {@link SortedMultiset#elementSet}.
    */
   @GwtIncompatible("Navigable")

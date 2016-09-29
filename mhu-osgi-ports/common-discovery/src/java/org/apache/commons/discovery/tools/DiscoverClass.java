@@ -31,7 +31,7 @@ import org.apache.commons.discovery.resource.ClassLoaders;
 import org.apache.commons.discovery.resource.classes.DiscoverClasses;
 import org.apache.commons.discovery.resource.names.DiscoverServiceNames;
 
-/* 
+/**
  * <p>Discover class that implements a given service interface,
  * with discovery and configuration features similar to that employed
  * by standard Java APIs such as JAXP.
@@ -133,17 +133,17 @@ import org.apache.commons.discovery.resource.names.DiscoverServiceNames;
  */
 public class DiscoverClass {
 
-    /* 
+    /**
      * Readable placeholder for a null value.
      */
     public static final PropertiesHolder nullProperties = null;
 
-    /* 
+    /**
      * The class loaders holder.
      */
     private final ClassLoaders classLoaders;
 
-    /* 
+    /**
      * Create a class instance with dynamic environment
      * (thread context class loader is determined on each call).
      *
@@ -153,7 +153,7 @@ public class DiscoverClass {
         this(null);
     }
 
-    /* 
+    /**
      * Create a class instance with dynamic environment
      * (thread context class loader is determined on each call).
      *
@@ -165,7 +165,7 @@ public class DiscoverClass {
         this.classLoaders = classLoaders;
     }
 
-    /* 
+    /**
      * Return the class loaders holder for the given SPI.
      *
      * @param spiClass The SPI type
@@ -175,7 +175,7 @@ public class DiscoverClass {
         return classLoaders;
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -193,7 +193,7 @@ public class DiscoverClass {
                     (DefaultClassHolder<T>) null);
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -212,7 +212,7 @@ public class DiscoverClass {
                     (DefaultClassHolder<T>) null);
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -231,7 +231,7 @@ public class DiscoverClass {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -252,7 +252,7 @@ public class DiscoverClass {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -273,7 +273,7 @@ public class DiscoverClass {
                     new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Find class implementing SPI.
      *
      * @param <T> The SPI type
@@ -354,7 +354,7 @@ public class DiscoverClass {
         // return null;
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -381,7 +381,7 @@ public class DiscoverClass {
                            (DefaultClassHolder<T>) null);
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -410,7 +410,7 @@ public class DiscoverClass {
                            (DefaultClassHolder<T>) null);
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -437,7 +437,7 @@ public class DiscoverClass {
                            new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -467,7 +467,7 @@ public class DiscoverClass {
                            new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -498,7 +498,7 @@ public class DiscoverClass {
                            new DefaultClassHolder<T>(defaultImpl));
     }
 
-    /* 
+    /**
      * Create new instance of class implementing SPI.
      *
      * @param <T> The SPI type
@@ -529,7 +529,7 @@ public class DiscoverClass {
         return spi.newInstance(find(loaders, spi, properties, defaultImpl));
     }
 
-    /* 
+    /**
      * <p>Discover names of SPI implementation Classes from properties.
      * The names are the non-null values, in order, obtained from the following
      * resources:
@@ -591,7 +591,7 @@ public class DiscoverClass {
         return results;
     }
 
-    /* 
+    /**
      * Load the class whose name is given by the value of a (Managed)
      * System Property.
      *

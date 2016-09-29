@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.Iterator;
 
-/* 
+/**
  * An iterator that does not support {@link #remove}.
  *
  * @author Jared Levy
@@ -28,10 +28,10 @@ import java.util.Iterator;
  */
 @GwtCompatible
 public abstract class UnmodifiableIterator<E> implements Iterator<E> {
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected UnmodifiableIterator() {}
 
-  /* 
+  /**
    * Guaranteed to throw an exception and leave the underlying data unmodified.
    *
    * @throws UnsupportedOperationException always

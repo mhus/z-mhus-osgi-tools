@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An implementation of {@link ImmutableTable} holding an arbitrary number of
  * cells.
  *
@@ -141,7 +141,7 @@ abstract class RegularImmutableTable<R, C, V> extends ImmutableTable<R, C, V> {
     return forCellsInternal(cells, null, null);
   }
 
-  /* 
+  /**
    * A factory that chooses the most space-efficient representation of the
    * table.
    */

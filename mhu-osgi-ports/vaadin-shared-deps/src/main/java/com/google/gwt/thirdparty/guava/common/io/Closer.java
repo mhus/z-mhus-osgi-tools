@@ -31,7 +31,7 @@ import java.util.logging.Level;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@link Closeable} that collects {@code Closeable} resources and closes them all when it is
  * {@linkplain #close closed}. This is intended to approximately emulate the behavior of Java 7's
  * <a href="http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">
@@ -42,6 +42,19 @@ import javax.annotation.Nullable;
  *
  * <p>This class is intended to be used in the following pattern:
  *
+ * <pre>   {@code
+ *   Closer closer = Closer.create();
+ *   try {
+ *     InputStream in = closer.register(openInputStream());
+ *     OutputStream out = closer.register(openOutputStream());
+ *     // do stuff
+ *   } catch (Throwable e) {
+ *     // ensure that any checked exception types other than IOException that could be thrown are
+ *     // provided here, e.g. throw closer.rethrow(e, CheckedException.class);
+ *     throw closer.rethrow(e);
+ *   } finally {
+ *     closer.close();
+ *   }}</pre>
  *
  * <p>Note that this try-catch-finally block is not equivalent to a try-catch-finally block using
  * try-with-resources. To get the equivalent of that, you must wrap the above code in <i>another</i>
@@ -77,14 +90,14 @@ import javax.annotation.Nullable;
 @Beta
 public final class Closer implements Closeable {
 
-  /* 
+  /**
    * The suppressor implementation to use for the current Java version.
    */
   private static final Suppressor SUPPRESSOR = SuppressingSuppressor.isAvailable()
       ? SuppressingSuppressor.INSTANCE
       : LoggingSuppressor.INSTANCE;
 
-  /* 
+  /**
    * Creates a new {@link Closer}.
    */
   public static Closer create() {
@@ -101,7 +114,7 @@ public final class Closer implements Closeable {
     this.suppressor = checkNotNull(suppressor); // checkNotNull to satisfy null tests
   }
 
-  /* 
+  /**
    * Registers the given {@code closeable} to be closed when this {@code Closer} is
    * {@linkplain #close closed}.
    *
@@ -116,7 +129,7 @@ public final class Closer implements Closeable {
     return closeable;
   }
 
-  /* 
+  /**
    * Stores the given throwable and rethrows it. It will be rethrown as is if it is an
    * {@code IOException}, {@code RuntimeException} or {@code Error}. Otherwise, it will be rethrown
    * wrapped in a {@code RuntimeException}. <b>Note:</b> Be sure to declare all of the checked
@@ -136,7 +149,7 @@ public final class Closer implements Closeable {
     throw new RuntimeException(e);
   }
 
-  /* 
+  /**
    * Stores the given throwable and rethrows it. It will be rethrown as is if it is an
    * {@code IOException}, {@code RuntimeException}, {@code Error} or a checked exception of the
    * given type. Otherwise, it will be rethrown wrapped in a {@code RuntimeException}. <b>Note:</b>
@@ -159,7 +172,7 @@ public final class Closer implements Closeable {
     throw new RuntimeException(e);
   }
 
-  /* 
+  /**
    * Stores the given throwable and rethrows it. It will be rethrown as is if it is an
    * {@code IOException}, {@code RuntimeException}, {@code Error} or a checked exception of either
    * of the given types. Otherwise, it will be rethrown wrapped in a {@code RuntimeException}.
@@ -183,7 +196,7 @@ public final class Closer implements Closeable {
     throw new RuntimeException(e);
   }
 
-  /* 
+  /**
    * Closes all {@code Closeable} instances that have been added to this {@code Closer}. If an
    * exception was thrown in the try block and passed to one of the {@code exceptionThrown} methods,
    * any exceptions thrown when attempting to close a closeable will be suppressed. Otherwise, the
@@ -214,11 +227,11 @@ public final class Closer implements Closeable {
     }
   }
 
-  /* 
+  /**
    * Suppression strategy interface.
    */
   @VisibleForTesting interface Suppressor {
-    /* 
+    /**
      * Suppresses the given exception ({@code suppressed}) which was thrown when attempting to close
      * the given closeable. {@code thrown} is the exception that is actually being thrown from the
      * method. Implementations of this method should not throw under any circumstances.
@@ -226,7 +239,7 @@ public final class Closer implements Closeable {
     void suppress(Closeable closeable, Throwable thrown, Throwable suppressed);
   }
 
-  /* 
+  /**
    * Suppresses exceptions by logging them.
    */
   @VisibleForTesting static final class LoggingSuppressor implements Suppressor {
@@ -241,7 +254,7 @@ public final class Closer implements Closeable {
     }
   }
 
-  /* 
+  /**
    * Suppresses exceptions by adding them to the exception that will be thrown using JDK7's
    * addSuppressed(Throwable) mechanism.
    */

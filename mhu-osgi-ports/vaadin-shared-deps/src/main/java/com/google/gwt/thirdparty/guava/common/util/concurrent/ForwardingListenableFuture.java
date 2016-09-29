@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.base.Preconditions;
 
 import java.util.concurrent.Executor;
 
-/* 
+/**
  * A {@link ListenableFuture} which forwards all its method calls to another
  * future. Subclasses should override one or more methods to modify the behavior
  * of the backing future as desired per the <a
@@ -36,7 +36,7 @@ import java.util.concurrent.Executor;
 public abstract class ForwardingListenableFuture<V> extends ForwardingFuture<V>
     implements ListenableFuture<V> {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingListenableFuture() {}
 
   @Override
@@ -51,7 +51,7 @@ public abstract class ForwardingListenableFuture<V> extends ForwardingFuture<V>
    * TODO(cpovirk): Use standard Javadoc form for SimpleForwarding* class and
    * constructor
    */
-  /* 
+  /**
    * A simplified version of {@link ForwardingListenableFuture} where subclasses
    * can pass in an already constructed {@link ListenableFuture} 
    * as the delegate.

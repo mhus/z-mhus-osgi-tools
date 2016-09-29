@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A {@link Reader} that concatenates multiple readers.
  *
  * @author Bin Zhu
@@ -39,7 +39,7 @@ class MultiReader extends Reader {
     advance();
   }
 
-  /* 
+  /**
    * Closes the current reader and opens the next one, if any.
    */
   private void advance() throws IOException {

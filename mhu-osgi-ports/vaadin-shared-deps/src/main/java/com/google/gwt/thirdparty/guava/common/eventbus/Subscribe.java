@@ -23,7 +23,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/* 
+/**
  * Marks a method as an event handler, as used by
  * {@link AnnotatedHandlerFinder} and {@link EventBus}.
  *

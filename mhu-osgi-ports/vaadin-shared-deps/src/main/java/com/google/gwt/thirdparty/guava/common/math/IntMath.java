@@ -34,7 +34,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.VisibleForTesting;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-/* 
+/**
  * A class for arithmetic on values of type {@code int}. Where possible, methods are defined and
  * named analogously to their {@code BigInteger} counterparts.
  *
@@ -52,7 +52,7 @@ import java.math.RoundingMode;
 public final class IntMath {
   // NOTE: Whenever both tests are cheap and functional, it's faster to use &, | instead of &&, ||
 
-  /* 
+  /**
    * Returns {@code true} if {@code x} represents a power of two.
    *
    * <p>This differs from {@code Integer.bitCount(x) == 1}, because
@@ -63,7 +63,7 @@ public final class IntMath {
     return x > 0 & (x & (x - 1)) == 0;
   }
   
-  /* 
+  /**
    * Returns 1 if {@code x < y} as unsigned integers, and 0 otherwise. Assumes that x - y fits into
    * a signed int. The implementation is branch-free, and benchmarks suggest it is measurably (if
    * narrowly) faster than the straightforward ternary expression.
@@ -75,7 +75,7 @@ public final class IntMath {
     return ~~(x - y) >>> (Integer.SIZE - 1);
   }
 
-  /* 
+  /**
    * Returns the base-2 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -113,10 +113,10 @@ public final class IntMath {
     }
   }
 
-  /*  The biggest half power of two that can fit in an unsigned int. */
+  /** The biggest half power of two that can fit in an unsigned int. */
   @VisibleForTesting static final int MAX_POWER_OF_SQRT2_UNSIGNED = 0xB504F333;
 
-  /* 
+  /**
    * Returns the base-10 logarithm of {@code x}, rounded according to the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x <= 0}
@@ -176,7 +176,7 @@ public final class IntMath {
   @VisibleForTesting static final int[] halfPowersOf10 =
       {3, 31, 316, 3162, 31622, 316227, 3162277, 31622776, 316227766, Integer.MAX_VALUE};
 
-  /* 
+  /**
    * Returns {@code b} to the {@code k}th power. Even if the result overflows, it will be equal to
    * {@code BigInteger.valueOf(b).pow(k).intValue()}. This implementation runs in {@code O(log k)}
    * time.
@@ -219,7 +219,7 @@ public final class IntMath {
     }
   }
 
-  /* 
+  /**
    * Returns the square root of {@code x}, rounded with the specified rounding mode.
    *
    * @throws IllegalArgumentException if {@code x < 0}
@@ -267,7 +267,7 @@ public final class IntMath {
     return (int) Math.sqrt(x);
   }
 
-  /* 
+  /**
    * Returns the result of dividing {@code p} by {@code q}, rounding using the specified
    * {@code RoundingMode}.
    *
@@ -331,7 +331,7 @@ public final class IntMath {
     return increment ? div + signum : div;
   }
 
-  /* 
+  /**
    * Returns {@code x mod m}. This differs from {@code x % m} in that it always returns a
    * non-negative result.
    *
@@ -353,7 +353,7 @@ public final class IntMath {
     return (result >= 0) ? result : result + m;
   }
 
-  /* 
+  /**
    * Returns the greatest common divisor of {@code a, b}. Returns {@code 0} if
    * {@code a == 0 && b == 0}.
    *
@@ -404,7 +404,7 @@ public final class IntMath {
     return a << min(aTwos, bTwos);
   }
 
-  /* 
+  /**
    * Returns the sum of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a + b} overflows in signed {@code int} arithmetic
@@ -415,7 +415,7 @@ public final class IntMath {
     return (int) result;
   }
 
-  /* 
+  /**
    * Returns the difference of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a - b} overflows in signed {@code int} arithmetic
@@ -426,7 +426,7 @@ public final class IntMath {
     return (int) result;
   }
 
-  /* 
+  /**
    * Returns the product of {@code a} and {@code b}, provided it does not overflow.
    *
    * @throws ArithmeticException if {@code a * b} overflows in signed {@code int} arithmetic
@@ -437,7 +437,7 @@ public final class IntMath {
     return (int) result;
   }
 
-  /* 
+  /**
    * Returns the {@code b} to the {@code k}th power, provided it does not overflow.
    *
    * <p>{@link #pow} may be faster, but does not check for overflow.
@@ -485,7 +485,7 @@ public final class IntMath {
 
   @VisibleForTesting static final int FLOOR_SQRT_MAX_INT = 46340;
 
-  /* 
+  /**
    * Returns {@code n!}, that is, the product of the first {@code n} positive
    * integers, {@code 1} if {@code n == 0}, or {@link Integer#MAX_VALUE} if the
    * result does not fit in a {@code int}.
@@ -512,7 +512,7 @@ public final class IntMath {
       1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11,
       1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12};
 
-  /* 
+  /**
    * Returns {@code n} choose {@code k}, also known as the binomial coefficient of {@code n} and
    * {@code k}, or {@link Integer#MAX_VALUE} if the result does not fit in an {@code int}.
    *
@@ -565,7 +565,7 @@ public final class IntMath {
     33
   };
 
-  /* 
+  /**
    * Returns the arithmetic mean of {@code x} and {@code y}, rounded towards
    * negative infinity. This method is overflow resilient.
    *

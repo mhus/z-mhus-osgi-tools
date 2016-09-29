@@ -26,7 +26,7 @@ import java.util.Formatter;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@code String} or {@code CharSequence}
  * instances.
  *
@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 public final class Strings {
   private Strings() {}
 
-  /* 
+  /**
    * Returns the given string if it is non-null; the empty string otherwise.
    *
    * @param string the string to test and possibly return
@@ -47,7 +47,7 @@ public final class Strings {
     return (string == null) ? "" : string;
   }
 
-  /* 
+  /**
    * Returns the given string if it is nonempty; {@code null} otherwise.
    *
    * @param string the string to test and possibly return
@@ -58,7 +58,7 @@ public final class Strings {
     return isNullOrEmpty(string) ? null : string;
   }
 
-  /* 
+  /**
    * Returns {@code true} if the given string is null or is the empty string.
    *
    * <p>Consider normalizing your string references with {@link #nullToEmpty}.
@@ -75,7 +75,7 @@ public final class Strings {
     return string == null || string.length() == 0; // string.isEmpty() in Java 6
   }
 
-  /* 
+  /**
    * Returns a string, of length at least {@code minLength}, consisting of
    * {@code string} prepended with as many copies of {@code padChar} as are
    * necessary to reach that length. For example,
@@ -107,7 +107,7 @@ public final class Strings {
     return sb.toString();
   }
 
-  /* 
+  /**
    * Returns a string, of length at least {@code minLength}, consisting of
    * {@code string} appended with as many copies of {@code padChar} as are
    * necessary to reach that length. For example,
@@ -139,7 +139,7 @@ public final class Strings {
     return sb.toString();
   }
 
-  /* 
+  /**
    * Returns a string consisting of a specific number of concatenated copies of
    * an input string. For example, {@code repeat("hey", 3)} returns the string
    * {@code "heyheyhey"}.
@@ -177,7 +177,7 @@ public final class Strings {
     return new String(array);
   }
 
-  /* 
+  /**
    * Returns the longest string {@code prefix} such that
    * {@code a.toString().startsWith(prefix) && b.toString().startsWith(prefix)},
    * taking care not to split surrogate pairs. If {@code a} and {@code b} have
@@ -200,7 +200,7 @@ public final class Strings {
     return a.subSequence(0, p).toString();
   }
 
-  /* 
+  /**
    * Returns the longest string {@code suffix} such that
    * {@code a.toString().endsWith(suffix) && b.toString().endsWith(suffix)},
    * taking care not to split surrogate pairs. If {@code a} and {@code b} have
@@ -225,7 +225,7 @@ public final class Strings {
     return a.subSequence(a.length() - s, a.length()).toString();
   }
 
-  /* 
+  /**
    * True when a valid surrogate pair starts at the given {@code index} in the
    * given {@code string}. Out-of-range indexes return false.
    */

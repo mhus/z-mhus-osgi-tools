@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.NoSuchElementException;
 
-/* 
+/**
  * This class provides a skeletal implementation of the {@code Iterator}
  * interface, to make this interface easier to implement for certain types of
  * data sources.
@@ -37,7 +37,22 @@ import java.util.NoSuchElementException;
  * and invoke the {@link #endOfData} method when appropriate.
  *
  * <p>Another example is an iterator that skips over null elements in a backing
-
+ * iterator. This could be implemented as: <pre>   {@code
+ *
+ *   public static Iterator<String> skipNulls(final Iterator<String> in) {
+ *     return new AbstractIterator<String>() {
+ *       protected String computeNext() {
+ *         while (in.hasNext()) {
+ *           String s = in.next();
+ *           if (s != null) {
+ *             return s;
+ *           }
+ *         }
+ *         return endOfData();
+ *       }
+ *     };
+ *   }}</pre>
+ *
  * <p>This class supports iterators that include null elements.
  *
  * @author Kevin Bourrillion
@@ -49,26 +64,26 @@ import java.util.NoSuchElementException;
 public abstract class AbstractIterator<T> extends UnmodifiableIterator<T> {
   private State state = State.NOT_READY;
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected AbstractIterator() {}
 
   private enum State {
-    /*  We have computed the next element and haven't returned it yet. */
+    /** We have computed the next element and haven't returned it yet. */
     READY,
 
-    /*  We haven't yet computed or have already returned the element. */
+    /** We haven't yet computed or have already returned the element. */
     NOT_READY,
 
-    /*  We have reached the end of the data and are finished. */
+    /** We have reached the end of the data and are finished. */
     DONE,
 
-    /*  We've suffered an exception and are kaput. */
+    /** We've suffered an exception and are kaput. */
     FAILED,
   }
 
   private T next;
 
-  /* 
+  /**
    * Returns the next element. <b>Note:</b> the implementation must call {@link
    * #endOfData()} when there are no elements left in the iteration. Failure to
    * do so could result in an infinite loop.
@@ -98,7 +113,7 @@ public abstract class AbstractIterator<T> extends UnmodifiableIterator<T> {
    */
   protected abstract T computeNext();
 
-  /* 
+  /**
    * Implementations of {@link #computeNext} <b>must</b> invoke this method when
    * there are no elements left in the iteration.
    *
@@ -142,7 +157,7 @@ public abstract class AbstractIterator<T> extends UnmodifiableIterator<T> {
     return next;
   }
 
-  /* 
+  /**
    * Returns the next element in the iteration without advancing the iteration,
    * according to the contract of {@link PeekingIterator#peek()}.
    *

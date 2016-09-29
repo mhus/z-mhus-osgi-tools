@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.VisibleForTesting;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.logging.Logger;
 
-/* 
+/**
  * Factories for {@link UncaughtExceptionHandler} instances.
  *
  * @author Gregory Kick
@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 public final class UncaughtExceptionHandlers {
   private UncaughtExceptionHandlers() {}
 
-  /* 
+  /**
    * Returns an exception handler that exits the system. This is particularly useful for the main
    * thread, which may start up other, non-daemon threads, but fail to fully initialize the
    * application successfully.

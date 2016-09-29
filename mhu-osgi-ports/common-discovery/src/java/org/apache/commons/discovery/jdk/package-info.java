@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Different JDK hookers style implementation.
  */
 package org.apache.commons.discovery.jdk;

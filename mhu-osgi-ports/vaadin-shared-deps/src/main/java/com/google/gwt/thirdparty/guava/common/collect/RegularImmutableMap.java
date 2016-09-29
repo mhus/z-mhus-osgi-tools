@@ -23,7 +23,7 @@ import com.google.gwt.thirdparty.guava.common.collect.ImmutableMapEntry.Terminal
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link ImmutableMap} with two or more entries.
  *
  * @author Jesse Wilson
@@ -44,7 +44,7 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
     this(theEntries.length, theEntries);
   }
   
-  /* 
+  /**
    * Constructor for RegularImmutableMap that takes as input an array of {@code TerminalEntry}
    * entries.  Assumes that these entries have already been checked for null.
    * 
@@ -71,7 +71,7 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
     }
   }
   
-  /* 
+  /**
    * Constructor for RegularImmutableMap that makes no assumptions about the input entries.
    */
   RegularImmutableMap(Entry<?, ?>[] theEntries) {
@@ -131,14 +131,14 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
     
   }
 
-  /* 
+  /**
    * Closed addressing tends to perform well even with high load factors.
    * Being conservative here ensures that the table is still likely to be
    * relatively sparse (hence it misses fast) while saving space.
    */
   private static final double MAX_LOAD_FACTOR = 1.2;
 
-  /* 
+  /**
    * Creates an {@code ImmutableMapEntry} array to hold parameterized entries. The
    * result must never be upcast back to ImmutableMapEntry[] (or Object[], etc.), or
    * allowed to escape the class.

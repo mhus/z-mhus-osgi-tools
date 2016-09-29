@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/* 
+/**
  * Convert a web browser cookie specification to a JSONObject and back.
  * JSON and Cookies are both notations for name/value pairs.
  * @author JSON.org
@@ -32,7 +32,7 @@ SOFTWARE.
  */
 public class Cookie {
 
-    /* 
+    /**
      * Produce a copy of a string in which the characters '+', '%', '=', ';'
      * and control characters are replaced with "%hh". This is a gentle form
      * of URL encoding, attempting to cause as little distortion to the
@@ -63,7 +63,7 @@ public class Cookie {
     }
 
 
-    /* 
+    /**
      * Convert a cookie specification string into a JSONObject. The string
      * will contain a name value pair separated by '='. The name and the value
      * will be unescaped, possibly converting '+' and '%' sequences. The
@@ -105,7 +105,7 @@ public class Cookie {
     }
 
 
-    /* 
+    /**
      * Convert a JSONObject into a cookie specification string. The JSONObject
      * must contain "name" and "value" members.
      * If the JSONObject contains "expires", "domain", "path", or "secure"
@@ -139,7 +139,7 @@ public class Cookie {
         return sb.toString();
     }
 
-    /* 
+    /**
      * Convert <code>%</code><i>hh</i> sequences to single characters, and
      * convert plus to space.
      * @param s A string that may contain

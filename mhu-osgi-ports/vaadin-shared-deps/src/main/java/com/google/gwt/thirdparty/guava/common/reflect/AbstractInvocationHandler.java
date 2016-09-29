@@ -24,7 +24,7 @@ import java.lang.reflect.Proxy;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Abstract implementation of {@link InvocationHandler} that handles {@link Object#equals},
  * {@link Object#hashCode} and {@link Object#toString}. For example: <pre>
  * class Unsupported extends AbstractInvocationHandler {
@@ -45,7 +45,7 @@ public abstract class AbstractInvocationHandler implements InvocationHandler {
 
   private static final Object[] NO_ARGS = {};
 
-  /* 
+  /**
    * {@inheritDoc}
    *
    * <p><ul>
@@ -79,7 +79,7 @@ public abstract class AbstractInvocationHandler implements InvocationHandler {
     return handleInvocation(proxy, method, args);
   }
 
-  /* 
+  /**
    * {@link #invoke} delegates to this method upon any method invocation on the proxy instance,
    * except {@link Object#equals}, {@link Object#hashCode} and {@link Object#toString}. The result
    * will be returned as the proxied method's return value.
@@ -90,7 +90,7 @@ public abstract class AbstractInvocationHandler implements InvocationHandler {
   protected abstract Object handleInvocation(Object proxy, Method method, Object[] args)
       throws Throwable;
 
-  /* 
+  /**
    * By default delegates to {@link Object#equals} so instances are only equal if they are
    * identical. {@code proxy.equals(argument)} returns true if: <ul>
    * <li>{@code proxy} and {@code argument} are of the same type
@@ -102,7 +102,7 @@ public abstract class AbstractInvocationHandler implements InvocationHandler {
     return super.equals(obj);
   }
 
-  /* 
+  /**
    * By default delegates to {@link Object#hashCode}. The dynamic proxies' {@code hashCode()} will
    * delegate to this method. Subclasses can override this method to provide custom equality.
    */
@@ -110,7 +110,7 @@ public abstract class AbstractInvocationHandler implements InvocationHandler {
     return super.hashCode();
   }
 
-  /* 
+  /**
    * By default delegates to {@link Object#toString}. The dynamic proxies' {@code toString()} will
    * delegate to this method. Subclasses can override this method to provide custom string
    * representation for the proxies.

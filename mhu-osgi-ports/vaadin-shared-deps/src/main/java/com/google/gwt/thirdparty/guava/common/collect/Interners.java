@@ -24,7 +24,7 @@ import com.google.gwt.thirdparty.guava.common.collect.MapMakerInternalMap.Refere
 
 import java.util.concurrent.ConcurrentMap;
 
-/* 
+/**
  * Contains static methods pertaining to instances of {@link Interner}.
  *
  * @author Kevin Bourrillion
@@ -34,7 +34,7 @@ import java.util.concurrent.ConcurrentMap;
 public final class Interners {
   private Interners() {}
 
-  /* 
+  /**
    * Returns a new thread-safe interner which retains a strong reference to each instance it has
    * interned, thus preventing these instances from being garbage-collected. If this retention is
    * acceptable, this implementation may perform better than {@link #newWeakInterner}. Note that
@@ -51,7 +51,7 @@ public final class Interners {
     };
   }
 
-  /* 
+  /**
    * Returns a new thread-safe interner which retains a weak reference to each instance it has
    * interned, and so does not prevent these instances from being garbage-collected. This most
    * likely does not perform as well as {@link #newStrongInterner}, but is the best alternative
@@ -99,7 +99,7 @@ public final class Interners {
     private enum Dummy { VALUE }
   }
 
-  /* 
+  /**
    * Returns a function that delegates to the {@link Interner#intern} method of the given interner.
    *
    * @since 8.0

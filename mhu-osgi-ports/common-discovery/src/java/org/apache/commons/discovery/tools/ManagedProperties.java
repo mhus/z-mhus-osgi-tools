@@ -29,7 +29,7 @@ import org.apache.commons.discovery.jdk.JDKHooks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/* 
+/**
  * <p>This class may disappear in the future, or be moved to another project..
  * </p>
  *
@@ -79,7 +79,7 @@ public class ManagedProperties {
 
     private static Log log = LogFactory.getLog(ManagedProperties.class);
 
-    /* 
+    /**
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -90,7 +90,7 @@ public class ManagedProperties {
         log = _log;
     }
 
-    /* 
+    /**
      * Cache of Properties, keyed by (thread-context) class loaders.
      * Use <code>HashMap</code> because it allows 'null' keys, which
      * allows us to account for the (null) bootstrap classloader.
@@ -98,7 +98,7 @@ public class ManagedProperties {
     private static final Map<ClassLoader, Map<String, Value>> propertiesCache =
         new HashMap<ClassLoader, Map<String, Value>>();
 
-    /* 
+    /**
      * Get value for property bound to the current thread context class loader.
      *
      * @param propertyName property name.
@@ -108,7 +108,7 @@ public class ManagedProperties {
         return getProperty(getThreadContextClassLoader(), propertyName);
     }
 
-    /* 
+    /**
      * Get value for property bound to the current thread context class loader.
      * If not found, then return default.
      *
@@ -120,7 +120,7 @@ public class ManagedProperties {
         return getProperty(getThreadContextClassLoader(), propertyName, dephault);
     }
 
-    /* 
+    /**
      * Get value for property bound to the class loader.
      *
      * @param classLoader The classloader used to load resources.
@@ -141,7 +141,7 @@ public class ManagedProperties {
         return value;
     }
 
-    /* 
+    /**
      * Get value for property bound to the class loader.
      * If not found, then return default.
      *
@@ -155,7 +155,7 @@ public class ManagedProperties {
         return (value == null) ? dephault : value;
     }
 
-    /* 
+    /**
      * Set value for property bound to the current thread context class loader.
      * @param propertyName property name
      * @param value property value (non-default)  If null, remove the property.
@@ -164,7 +164,7 @@ public class ManagedProperties {
         setProperty(propertyName, value, false);
     }
 
-    /* 
+    /**
      * Set value for property bound to the current thread context class loader.
      * @param propertyName property name
      * @param value property value.  If null, remove the property.
@@ -196,7 +196,7 @@ public class ManagedProperties {
         }
     }
 
-    /* 
+    /**
      * Set property values for <code>Properties</code> bound to the
      * current thread context class loader.
      *
@@ -206,7 +206,7 @@ public class ManagedProperties {
         setProperties(newProperties, false);
     }
 
-    /* 
+    /**
      * Set property values for <code>Properties</code> bound to the
      * current thread context class loader.
      *
@@ -218,7 +218,7 @@ public class ManagedProperties {
      *        a decendent class loader.
      */
     public static void setProperties(Map<?, ?> newProperties, boolean isDefault) {
-        /* 
+        /**
          * Each entry must be mapped to a Property.
          * 'setProperty' does this for us.
          */
@@ -229,7 +229,7 @@ public class ManagedProperties {
         }
     }
 
-    /* 
+    /**
      * Return list of all property names.  This is an expensive
      * operation: ON EACH CALL it walks through all property lists 
      * associated with the current context class loader upto
@@ -242,7 +242,7 @@ public class ManagedProperties {
 
         ClassLoader classLoader = getThreadContextClassLoader();
 
-        /* 
+        /**
          * Order doesn't matter, we are only going to use
          * the set of all keys...
          */
@@ -267,7 +267,7 @@ public class ManagedProperties {
         return Collections.enumeration(allProps.keySet());
     }
 
-    /* 
+    /**
      * This is an expensive operation.
      * ON EACH CALL it walks through all property lists 
      * associated with the current context class loader upto
@@ -291,13 +291,13 @@ public class ManagedProperties {
         return p;
     }
 
-    /* *************** INTERNAL IMPLEMENTATION *****************/
+    /***************** INTERNAL IMPLEMENTATION *****************/
 
     private static class Value {
         final String value;
         final boolean isDefault;
 
-        /* 
+        /**
          * Creates a new Value instance with string value and
          * the flag to mark is default value or not.
          *
@@ -310,7 +310,7 @@ public class ManagedProperties {
         }
     }
 
-    /* 
+    /**
      * Get value for properties bound to the class loader.
      * Explore up the tree first, as higher-level class
      * loaders take precedence over lower-level class loaders.
@@ -324,7 +324,7 @@ public class ManagedProperties {
         Value value = null;
 
         if (propertyName != null) {
-            /* 
+            /**
              * If classLoader isn't bootstrap loader (==null),
              * then get up-tree value.
              */
@@ -358,7 +358,7 @@ public class ManagedProperties {
         return value;
     }
 
-    /* 
+    /**
      * Returns the thread context class loader.
      *
      * @return The thread context class loader
@@ -367,7 +367,7 @@ public class ManagedProperties {
         return JDKHooks.getJDKHooks().getThreadContextClassLoader();
     }
 
-    /* 
+    /**
      * Return the parent class loader of the given class loader.
      *
      * @param classLoader The class loader from wich the parent has to be extracted

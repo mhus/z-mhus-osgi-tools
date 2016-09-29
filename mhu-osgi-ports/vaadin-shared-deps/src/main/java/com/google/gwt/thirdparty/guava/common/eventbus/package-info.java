@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * The EventBus allows publish-subscribe-style communication between components
  * without requiring the components to explicitly register with one another
  * (and thus be aware of each other).  It is designed exclusively to replace
@@ -173,6 +173,10 @@
  * listeners.  This runs into issues with Java's use of type erasure, not to
  * mention problems in usability.
  *
+ * <p>Let's say the interface looked something like the following: <pre>   {@code
+ *   interface Handler<T> {
+ *     void handleEvent(T event);
+ *   }}</pre>
  *
  * <p>Due to erasure, no single class can implement a generic interface more than
  * once with different type parameters.  This is a giant step backwards from

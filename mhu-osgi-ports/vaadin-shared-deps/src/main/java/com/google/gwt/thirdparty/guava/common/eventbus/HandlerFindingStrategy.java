@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.eventbus;
 
 import com.google.gwt.thirdparty.guava.common.collect.Multimap;
 
-/* 
+/**
  * A method for finding event handler methods in objects, for use by
  * {@link EventBus}.
  *
@@ -26,7 +26,7 @@ import com.google.gwt.thirdparty.guava.common.collect.Multimap;
  */
 interface HandlerFindingStrategy {
 
-  /* 
+  /**
    * Finds all suitable event handler methods in {@code source}, organizes them
    * by the type of event they handle, and wraps them in {@link EventHandler} instances.
    *

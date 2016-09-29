@@ -26,7 +26,7 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-/* 
+/**
  * An implementation of {@link DataOutput} that uses little-endian byte ordering
  * for writing {@code char}, {@code short}, {@code int}, {@code float}, {@code
  * double}, and {@code long} values.
@@ -43,7 +43,7 @@ import java.io.OutputStream;
 public class LittleEndianDataOutputStream extends FilterOutputStream
     implements DataOutput {
 
-  /* 
+  /**
    * Creates a {@code LittleEndianDataOutputStream} that wraps the given stream.
    *
    * @param out the stream to delegate to
@@ -65,7 +65,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     ((DataOutputStream) out).writeByte(v);
   }
 
-  /* 
+  /**
    * @deprecated The semantics of {@code writeBytes(String s)} are considered
    *             dangerous. Please use {@link #writeUTF(String s)},
    *             {@link #writeChars(String s)} or another write method instead.
@@ -75,7 +75,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     ((DataOutputStream) out).writeBytes(s);
   }
 
-  /* 
+  /**
    * Writes a char as specified by {@link DataOutputStream#writeChar(int)},
    * except using little-endian byte order.
    *
@@ -85,7 +85,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     writeShort(v);
   }
 
-  /* 
+  /**
    * Writes a {@code String} as specified by
    * {@link DataOutputStream#writeChars(String)}, except each character is
    * written using little-endian byte order.
@@ -98,7 +98,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     }
   }
 
-  /* 
+  /**
    * Writes a {@code double} as specified by
    * {@link DataOutputStream#writeDouble(double)}, except using little-endian
    * byte order.
@@ -109,7 +109,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     writeLong(Double.doubleToLongBits(v));
   }
 
-  /* 
+  /**
    * Writes a {@code float} as specified by
    * {@link DataOutputStream#writeFloat(float)}, except using little-endian byte
    * order.
@@ -120,7 +120,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     writeInt(Float.floatToIntBits(v));
   }
 
-  /* 
+  /**
    * Writes an {@code int} as specified by
    * {@link DataOutputStream#writeInt(int)}, except using little-endian byte
    * order.
@@ -134,7 +134,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     out.write(0xFF & (v >> 24));
   }
 
-  /* 
+  /**
    * Writes a {@code long} as specified by
    * {@link DataOutputStream#writeLong(long)}, except using little-endian byte
    * order.
@@ -146,7 +146,7 @@ public class LittleEndianDataOutputStream extends FilterOutputStream
     write(bytes, 0, bytes.length);
   }
 
-  /* 
+  /**
    * Writes a {@code short} as specified by
    * {@link DataOutputStream#writeShort(int)}, except using little-endian byte
    * order.

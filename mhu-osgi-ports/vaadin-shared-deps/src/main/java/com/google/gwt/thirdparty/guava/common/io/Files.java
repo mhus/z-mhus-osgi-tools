@@ -54,7 +54,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/* 
+/**
  * Provides utility methods for working with files.
  *
  * <p>All method parameters must be non-null unless documented otherwise.
@@ -66,12 +66,12 @@ import java.util.List;
 @Beta
 public final class Files {
 
-  /*  Maximum loop count when creating temp directories. */
+  /** Maximum loop count when creating temp directories. */
   private static final int TEMP_DIR_ATTEMPTS = 10000;
 
   private Files() {}
 
-  /* 
+  /**
    * Returns a buffered reader that reads from a file using the given
    * character set.
    *
@@ -88,7 +88,7 @@ public final class Files {
         new InputStreamReader(new FileInputStream(file), charset));
   }
 
-  /* 
+  /**
    * Returns a buffered writer that writes to a file using the given
    * character set.
    *
@@ -105,7 +105,7 @@ public final class Files {
         new OutputStreamWriter(new FileOutputStream(file), charset));
   }
 
-  /* 
+  /**
    * Returns a new {@link ByteSource} for reading bytes from the given file.
    *
    * @since 14.0
@@ -203,12 +203,12 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * BAOS subclass for direct access to its internal buffer.
    */
   private static final class InternalByteArrayOutputStream
       extends ByteArrayOutputStream {
-    /* 
+    /**
      * Writes the contents of the internal buffer to the given array starting
      * at the given offset. Assumes the array has space to hold count bytes.
      */
@@ -217,7 +217,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Returns a new {@link ByteSink} for writing bytes to the given file. The
    * given {@code modes} control how the file is opened for writing. When no
    * mode is provided, the file will be truncated before writing. When the
@@ -251,7 +251,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Returns a new {@link CharSource} for reading character data from the given
    * file using the given character set.
    *
@@ -261,7 +261,7 @@ public final class Files {
     return asByteSource(file).asCharSource(charset);
   }
 
-  /* 
+  /**
    * Returns a new {@link CharSink} for writing character data to the given
    * file using the given character set. The given {@code modes} control how
    * the file is opened for writing. When no mode is provided, the file
@@ -276,7 +276,7 @@ public final class Files {
     return asByteSink(file, modes).asCharSink(charset);
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link FileInputStream}
    * that read from a file.
    *
@@ -288,7 +288,7 @@ public final class Files {
     return ByteStreams.asInputSupplier(asByteSource(file));
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link FileOutputStream}
    * that write to a file.
    *
@@ -300,7 +300,7 @@ public final class Files {
     return newOutputStreamSupplier(file, false);
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link FileOutputStream}
    * that write to or append to a file.
    *
@@ -320,7 +320,7 @@ public final class Files {
         : new FileWriteMode[0];
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of
    * {@link InputStreamReader} that read a file using the given character set.
    *
@@ -334,7 +334,7 @@ public final class Files {
     return CharStreams.asInputSupplier(asCharSource(file, charset));
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link OutputStreamWriter}
    * that write to a file using the given character set.
    *
@@ -348,7 +348,7 @@ public final class Files {
     return newWriterSupplier(file, charset, false);
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link OutputStreamWriter}
    * that write to or append to a file using the given character set.
    *
@@ -364,7 +364,7 @@ public final class Files {
     return CharStreams.asOutputSupplier(asCharSink(file, charset, modes(append)));
   }
 
-  /* 
+  /**
    * Reads all bytes from a file into a byte array.
    *
    * @param file the file to read from
@@ -377,7 +377,7 @@ public final class Files {
     return asByteSource(file).read();
   }
 
-  /* 
+  /**
    * Reads all characters from a file into a {@link String}, using the given
    * character set.
    *
@@ -391,7 +391,7 @@ public final class Files {
     return asCharSource(file, charset).read();
   }
 
-  /* 
+  /**
    * Copies to a file all bytes from an {@link InputStream} supplied by a
    * factory.
    *
@@ -404,7 +404,7 @@ public final class Files {
     ByteStreams.asByteSource(from).copyTo(asByteSink(to));
   }
 
-  /* 
+  /**
    * Overwrites a file with the contents of a byte array.
    *
    * @param from the bytes to write
@@ -415,7 +415,7 @@ public final class Files {
     asByteSink(to).write(from);
   }
 
-  /* 
+  /**
    * Copies all bytes from a file to an {@link OutputStream} supplied by
    * a factory.
    *
@@ -428,7 +428,7 @@ public final class Files {
     asByteSource(from).copyTo(ByteStreams.asByteSink(to));
   }
 
-  /* 
+  /**
    * Copies all bytes from a file to an output stream.
    *
    * @param from the source file
@@ -439,7 +439,7 @@ public final class Files {
     asByteSource(from).copyTo(to);
   }
 
-  /* 
+  /**
    * Copies all the bytes from one file to another.
    *
    * <p><b>Warning:</b> If {@code to} represents an existing file, that file
@@ -458,7 +458,7 @@ public final class Files {
     asByteSource(from).copyTo(asByteSink(to));
   }
 
-  /* 
+  /**
    * Copies to a file all characters from a {@link Readable} and
    * {@link Closeable} object supplied by a factory, using the given
    * character set.
@@ -474,7 +474,7 @@ public final class Files {
     CharStreams.asCharSource(from).copyTo(asCharSink(to, charset));
   }
 
-  /* 
+  /**
    * Writes a character sequence (such as a string) to a file using the given
    * character set.
    *
@@ -489,7 +489,7 @@ public final class Files {
     asCharSink(to, charset).write(from);
   }
 
-  /* 
+  /**
    * Appends a character sequence (such as a string) to a file using the given
    * character set.
    *
@@ -504,7 +504,7 @@ public final class Files {
     write(from, to, charset, true);
   }
 
-  /* 
+  /**
    * Private helper method. Writes a character sequence to a file,
    * optionally appending.
    *
@@ -520,7 +520,7 @@ public final class Files {
     asCharSink(to, charset, modes(append)).write(from);
   }
 
-  /* 
+  /**
    * Copies all characters from a file to a {@link Appendable} &
    * {@link Closeable} object supplied by a factory, using the given
    * character set.
@@ -536,7 +536,7 @@ public final class Files {
     asCharSource(from, charset).copyTo(CharStreams.asCharSink(to));
   }
 
-  /* 
+  /**
    * Copies all characters from a file to an appendable object,
    * using the given character set.
    *
@@ -551,7 +551,7 @@ public final class Files {
     asCharSource(from, charset).copyTo(to);
   }
 
-  /* 
+  /**
    * Returns true if the files contains the same bytes.
    *
    * @throws IOException if an I/O error occurs
@@ -576,7 +576,7 @@ public final class Files {
     return asByteSource(file1).contentEquals(asByteSource(file2));
   }
 
-  /* 
+  /**
    * Atomically creates a new directory somewhere beneath the system's
    * temporary directory (as defined by the {@code java.io.tmpdir} system
    * property), and returns its name.
@@ -610,7 +610,7 @@ public final class Files {
         + baseName + "0 to " + baseName + (TEMP_DIR_ATTEMPTS - 1) + ')');
   }
 
-  /* 
+  /**
    * Creates an empty file or updates the last updated timestamp on the
    * same as the unix command of the same name.
    *
@@ -625,7 +625,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Creates any necessary but nonexistent parent directories of the specified
    * file. Note that if this operation fails it may have succeeded in creating
    * some (but not all) of the necessary parent directories.
@@ -654,7 +654,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Moves the file from one path to another. This method can rename a file or
    * move it to a different directory, like the Unix {@code mv} command.
    *
@@ -680,7 +680,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Reads the first line from a file. The line does not include
    * line-termination characters, but does include other leading and
    * trailing whitespace.
@@ -696,7 +696,7 @@ public final class Files {
     return asCharSource(file, charset).readFirstLine();
   }
 
-  /* 
+  /**
    * Reads all of the lines from a file. The lines do not include
    * line-termination characters, but do include other leading and
    * trailing whitespace.
@@ -731,7 +731,7 @@ public final class Files {
     });
   }
 
-  /* 
+  /**
    * Streams lines from a {@link File}, stopping when our callback returns
    * false, or we have read all of the lines.
    *
@@ -747,7 +747,7 @@ public final class Files {
     return CharStreams.readLines(newReaderSupplier(file, charset), callback);
   }
 
-  /* 
+  /**
    * Process the bytes of a file.
    *
    * <p>(If this seems too complicated, maybe you're looking for
@@ -763,7 +763,7 @@ public final class Files {
     return ByteStreams.readBytes(newInputStreamSupplier(file), processor);
   }
 
-  /* 
+  /**
    * Computes the hash code of the {@code file} using {@code hashFunction}.
    *
    * @param file the file to read
@@ -777,7 +777,7 @@ public final class Files {
     return asByteSource(file).hash(hashFunction);
   }
 
-  /* 
+  /**
    * Fully maps a file read-only in to memory as per
    * {@link FileChannel#map(java.nio.channels.FileChannel.MapMode, long, long)}.
    *
@@ -798,7 +798,7 @@ public final class Files {
     return map(file, MapMode.READ_ONLY);
   }
 
-  /* 
+  /**
    * Fully maps a file in to memory as per
    * {@link FileChannel#map(java.nio.channels.FileChannel.MapMode, long, long)}
    * using the requested {@link MapMode}.
@@ -826,7 +826,7 @@ public final class Files {
     return map(file, mode, file.length());
   }
 
-  /* 
+  /**
    * Maps a file in to memory as per
    * {@link FileChannel#map(java.nio.channels.FileChannel.MapMode, long, long)}
    * using the requested {@link MapMode}.
@@ -877,7 +877,7 @@ public final class Files {
     }
   }
 
-  /* 
+  /**
    * Returns the lexically cleaned form of the path name, <i>usually</i> (but
    * not always) equivalent to the original. The following heuristics are used:
    *
@@ -942,7 +942,7 @@ public final class Files {
     return result;
   }
 
-  /* 
+  /**
    * Returns the <a href="http://en.wikipedia.org/wiki/Filename_extension">file
    * extension</a> for the given file name, or the empty string if the file has
    * no extension.  The result does not include the '{@code .}'.
@@ -956,7 +956,7 @@ public final class Files {
     return (dotIndex == -1) ? "" : fileName.substring(dotIndex + 1);
   }
 
-  /* 
+  /**
    * Returns the file name without its
    * <a href="http://en.wikipedia.org/wiki/Filename_extension">file extension</a> or path. This is
    * similar to the {@code basename} unix command. The result does not include the '{@code .}'.
@@ -973,7 +973,7 @@ public final class Files {
     return (dotIndex == -1) ? fileName : fileName.substring(0, dotIndex);
   }
 
-  /* 
+  /**
    * Returns a {@link TreeTraverser} instance for {@link File} trees.
    *
    * <p><b>Warning:</b> {@code File} provides no support for symbolic links, and as such there is no
@@ -1007,7 +1007,7 @@ public final class Files {
     }
   };
 
-  /* 
+  /**
    * Returns a predicate that returns the result of {@link File#isDirectory} on input files.
    *
    * @since 15.0
@@ -1016,7 +1016,7 @@ public final class Files {
     return FilePredicate.IS_DIRECTORY;
   }
 
-  /* 
+  /**
    * Returns a predicate that returns the result of {@link File#isFile} on input files.
    *
    * @since 15.0

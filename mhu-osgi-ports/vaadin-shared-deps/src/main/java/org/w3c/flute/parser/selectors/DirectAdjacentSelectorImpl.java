@@ -17,7 +17,7 @@ import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
 
-/* 
+/**
  * @version $Revision: 1.2 $
  * @author  Philippe Le Hegaret
  */
@@ -26,14 +26,14 @@ public class DirectAdjacentSelectorImpl implements SiblingSelector {
     Selector       child;
     SimpleSelector directAdjacent;
 
-    /* 
+    /**
      * An integer indicating the type of <code>Selector</code>
      */
     public short getSelectorType() {
 	return Selector.SAC_DIRECT_ADJACENT_SELECTOR;
     }
 
-    /* 
+    /**
      * Creates a new DescendantSelectorImpl
      */
     public DirectAdjacentSelectorImpl(Selector child, 
@@ -46,7 +46,7 @@ public class DirectAdjacentSelectorImpl implements SiblingSelector {
 	return 1;
     }
         
-    /* 
+    /**
      * Returns the parent selector.
      */    
     public Selector getSelector() {

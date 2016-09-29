@@ -27,7 +27,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/* 
+/**
  * Utilities necessary for working with libraries that supply plain {@link
  * Future} instances. Note that, whenver possible, it is strongly preferred to
  * modify those libraries to return {@code ListenableFuture} directly.
@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @Beta
 public final class JdkFutureAdapters {
-  /* 
+  /**
    * Assigns a thread to the given {@link Future} to provide {@link
    * ListenableFuture} functionality.
    *
@@ -63,7 +63,7 @@ public final class JdkFutureAdapters {
     return new ListenableFutureAdapter<V>(future);
   }
 
-  /* 
+  /**
    * Submits a blocking task for the given {@link Future} to provide {@link
    * ListenableFuture} functionality.
    *
@@ -96,7 +96,7 @@ public final class JdkFutureAdapters {
     return new ListenableFutureAdapter<V>(future, executor);
   }
 
-  /* 
+  /**
    * An adapter to turn a {@link Future} into a {@link ListenableFuture}.  This
    * will wait on the future to finish, and when it completes, run the
    * listeners.  This implementation will wait on the source future

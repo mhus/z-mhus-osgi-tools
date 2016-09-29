@@ -26,14 +26,14 @@ SOFTWARE.
 
 import java.util.Iterator;
 
-/* 
+/**
  * Convert a web browser cookie list string to a JSONObject and back.
  * @author JSON.org
  * @version 3
  */
 public class CookieList {
 
-    /* 
+    /**
      * Convert a cookie list into a JSONObject. A cookie list is a sequence
      * of name/value pairs. The names are separated from the values by '='.
      * The pairs are separated by ';'. The names and the values
@@ -59,7 +59,7 @@ public class CookieList {
     }
 
 
-    /* 
+    /**
      * Convert a JSONObject into a cookie list. A cookie list is a sequence
      * of name/value pairs. The names are separated from the values by '='.
      * The pairs are separated by ';'. The characters '%', '+', '=', and ';'

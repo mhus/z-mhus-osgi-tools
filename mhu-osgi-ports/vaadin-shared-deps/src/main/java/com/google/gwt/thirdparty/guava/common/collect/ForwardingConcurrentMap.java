@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import java.util.concurrent.ConcurrentMap;
 
-/* 
+/**
  * A concurrent map which forwards all its method calls to another concurrent
  * map. Subclasses should override one or more methods to modify the behavior of
  * the backing map as desired per the <a
@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class ForwardingConcurrentMap<K, V> extends ForwardingMap<K, V>
     implements ConcurrentMap<K, V> {
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingConcurrentMap() {}
 
   @Override protected abstract ConcurrentMap<K, V> delegate();

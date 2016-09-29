@@ -18,7 +18,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 
 import java.io.Serializable;
 
-/* 
+/**
  * Static factories for creating {@link HashCode} instances; most users should never have to use
  * this. All returned instances are {@link Serializable}.
  *
@@ -32,7 +32,7 @@ import java.io.Serializable;
 public final class HashCodes {
   private HashCodes() {}
 
-  /* 
+  /**
    * Creates a 32-bit {@code HashCode}, of which the bytes will form the passed int, interpreted
    * in little endian order.
    *
@@ -44,7 +44,7 @@ public final class HashCodes {
     return HashCode.fromInt(hash);
   }
 
-  /* 
+  /**
    * Creates a 64-bit {@code HashCode}, of which the bytes will form the passed long, interpreted
    * in little endian order.
    *
@@ -56,7 +56,7 @@ public final class HashCodes {
     return HashCode.fromLong(hash);
   }
 
-  /* 
+  /**
    * Creates a {@code HashCode} from a byte array. The array is defensively copied to preserve
    * the immutability contract of {@code HashCode}. The array cannot be empty.
    *

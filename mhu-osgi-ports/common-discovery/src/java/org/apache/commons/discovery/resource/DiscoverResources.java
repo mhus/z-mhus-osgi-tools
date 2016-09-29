@@ -26,14 +26,14 @@ import org.apache.commons.discovery.ResourceIterator;
 import org.apache.commons.discovery.jdk.JDKHooks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-/* 
+/**
  * 
  */
 public class DiscoverResources extends ResourceDiscoverImpl implements ResourceDiscover {
 
     private static Log log = LogFactory.getLog(DiscoverResources.class);
 
-    /* 
+    /**
      * Sets the {@code Log} for this class.
      *
      * @param _log This class {@code Log}
@@ -44,14 +44,14 @@ public class DiscoverResources extends ResourceDiscoverImpl implements ResourceD
         log = _log;
     }
 
-    /* 
+    /**
      * Construct a new resource discoverer.
      */
     public DiscoverResources() {
         super();
     }
 
-    /* 
+    /**
      * Construct a new resource discoverer.
      *
      * @param classLoaders The class loaders holder
@@ -60,7 +60,7 @@ public class DiscoverResources extends ResourceDiscoverImpl implements ResourceD
         super(classLoaders);
     }
 
-    /* 
+    /**
      * {@inheritDoc}
      */
     @Override

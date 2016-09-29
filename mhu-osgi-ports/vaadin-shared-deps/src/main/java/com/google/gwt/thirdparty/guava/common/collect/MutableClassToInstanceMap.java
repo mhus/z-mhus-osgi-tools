@@ -22,7 +22,7 @@ import com.google.gwt.thirdparty.guava.common.primitives.Primitives;
 import java.util.HashMap;
 import java.util.Map;
 
-/* 
+/**
  * A mutable class-to-instance map backed by an arbitrary user-provided map.
  * See also {@link ImmutableClassToInstanceMap}.
  * 
@@ -37,7 +37,7 @@ public final class MutableClassToInstanceMap<B>
     extends ConstrainedMap<Class<? extends B>, B>
     implements ClassToInstanceMap<B> {
 
-  /* 
+  /**
    * Returns a new {@code MutableClassToInstanceMap} instance backed by a {@link
    * HashMap} using the default initial capacity and load factor.
    */
@@ -46,7 +46,7 @@ public final class MutableClassToInstanceMap<B>
         new HashMap<Class<? extends B>, B>());
   }
 
-  /* 
+  /**
    * Returns a new {@code MutableClassToInstanceMap} instance backed by a given
    * empty {@code backingMap}. The caller surrenders control of the backing map,
    * and thus should not allow any direct references to it to remain accessible.

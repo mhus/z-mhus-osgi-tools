@@ -24,7 +24,7 @@ import java.text.ParseException;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * A syntactically valid host specifier, suitable for use in a URI.
  * This may be either a numeric IP address in IPv4 or IPv6 notation, or a
  * domain name.
@@ -57,7 +57,7 @@ public final class HostSpecifier {
     this.canonicalForm = canonicalForm;
   }
 
-  /* 
+  /**
    * Returns a {@code HostSpecifier} built from the provided {@code specifier},
    * which is already known to be valid.  If the {@code specifier} might be
    * invalid, use {@link #from(String)} instead.
@@ -107,7 +107,7 @@ public final class HostSpecifier {
         "Domain name does not have a recognized public suffix: " + host);
   }
 
-  /* 
+  /**
    * Attempts to return a {@code HostSpecifier} for the given string, throwing
    * an exception if parsing fails. Always use this method in preference to
    * {@link #fromValid(String)} for a specifier that is not already known to be
@@ -131,7 +131,7 @@ public final class HostSpecifier {
     }
   }
 
-  /* 
+  /**
    * Determines whether {@code specifier} represents a valid
    * {@link HostSpecifier} as described in the documentation for
    * {@link #fromValid(String)}.
@@ -164,7 +164,7 @@ public final class HostSpecifier {
     return canonicalForm.hashCode();
   }
 
-  /* 
+  /**
    * Returns a string representation of the host specifier suitable for
    * inclusion in a URI.  If the host specifier is a domain name, the
    * string will be normalized to all lower case.  If the specifier was

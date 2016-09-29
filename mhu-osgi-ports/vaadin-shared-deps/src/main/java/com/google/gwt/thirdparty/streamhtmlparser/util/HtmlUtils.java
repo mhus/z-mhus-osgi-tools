@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-/* 
+/**
  * Utility functions for HTML and Javascript that are most likely
  * not interesting to users outside this package.
  *
@@ -39,13 +39,13 @@ import java.util.regex.Matcher;
  */
 public final class HtmlUtils {
 
-  /* 
+  /**
    * static utility class
    */
   private HtmlUtils() {
   }  // COV_NF_LINE
 
-  /* 
+  /**
    * Indicates the type of content contained in the {@code content} HTML
    * attribute of the {@code meta} HTML tag. Used by
    * {@link HtmlUtils#parseContentAttributeForUrl(String)}.
@@ -64,7 +64,7 @@ public final class HtmlUtils {
     URL
   }
 
-  /* 
+  /**
    * A regular expression matching the format of a {@code content} attribute
    * that contains a URL. Used by {@link #parseContentAttributeForUrl}.
    */
@@ -75,7 +75,7 @@ public final class HtmlUtils {
   private static final Pattern META_REDIRECT_PATTERN =
       Pattern.compile(META_REDIRECT_REGEX, Pattern.CASE_INSENSITIVE);
 
-  /* 
+  /**
    * Set of keywords that can precede a regular expression literal. Taken from:
    * <a href="http://www.mozilla.org/js/language/js20-2000-07/rationale/syntax.html">
    * Language Syntax</a>
@@ -134,7 +134,7 @@ public final class HtmlUtils {
           "while",
           "with");
 
-  /* 
+  /**
    * Set of all HTML attributes which expect a URI (as the value).
    * <a href="http://www.w3.org/TR/html4/index/attributes.html">Index of Attributes</a>
    */
@@ -153,7 +153,7 @@ public final class HtmlUtils {
           "src",
           "usemap");
 
-  /* 
+  /**
    * Set of {@code Character}s considered whitespace in Javascript.
    * See {@link #isJavascriptWhitespace(char)}
    */
@@ -169,7 +169,7 @@ public final class HtmlUtils {
             '\u2028',         /* Line separator */
             '\u2029');        /* Paragraph separator */
 
-  /* 
+  /**
   * Set of {@code Character}s considered whitespace in HTML.
   * See {@link #isHtmlSpace(char)}
   */
@@ -182,7 +182,7 @@ public final class HtmlUtils {
           '\u200B');
 
 
-  /* 
+  /**
    * Determines if the HTML attribute specified expects javascript
    * for its value. Such is the case for example with the {@code onclick}
    * attribute.
@@ -199,7 +199,7 @@ public final class HtmlUtils {
     return ((attribute != null) && attribute.startsWith("on"));
   }
 
-  /* 
+  /**
    * Determines if the HTML attribute specified expects a {@code style}
    * for its value. Currently this is only true for the {@code style}
    * HTML attribute.
@@ -212,7 +212,7 @@ public final class HtmlUtils {
     return "style".equals(attribute);
   }
 
-  /* 
+  /**
    * Determines if the HTML attribute specified expects a {@code URI}
    * for its value. For example, both {@code href} and {@code src}
    * expect a {@code URI} but {@code style} does not. Returns
@@ -228,7 +228,7 @@ public final class HtmlUtils {
     return ATTRIBUTE_EXPECTS_URI.contains(attribute);
   }
 
-  /* 
+  /**
    * Determines if the specified character is an HTML whitespace character.
    * A character is an HTML whitespace character if and only if it is one
    * of the characters below.
@@ -252,7 +252,7 @@ public final class HtmlUtils {
     return HTML_WHITESPACE.contains(chr);
   }
 
-  /* 
+  /**
    * Determines if the specified character is an ECMAScript whitespace or line
    * terminator character. A character is a whitespace or line terminator if
    * and only if it is one of the characters below:
@@ -279,7 +279,7 @@ public final class HtmlUtils {
     return JAVASCRIPT_WHITESPACE.contains(chr);
   }
 
-  /* 
+  /**
    * Determines if the specified character is a valid character in an
    * ECMAScript identifier. This determination is currently not exact,
    * in particular:
@@ -306,7 +306,7 @@ public final class HtmlUtils {
         || chr == '_' || chr == '$');
   }
 
-  /* 
+  /**
    * Determines if the input token provided is a valid token prefix to a
    * javascript regular expression.  The token argument is compared against
    * a {@code Set} of identifiers that can precede a regular expression in the
@@ -320,7 +320,7 @@ public final class HtmlUtils {
     return REGEXP_TOKEN_PREFIXS.contains(input);
   }
 
-  /* 
+  /**
    * Encodes the specified character using Ascii for convenient insertion into
    * a single-quote enclosed {@code String}. Printable characters
    * are returned as-is. Carriage Return, Line Feed, Horizontal Tab,
@@ -350,7 +350,7 @@ public final class HtmlUtils {
     }
   }
 
-  /* 
+  /**
    * Parses the given {@code String} to determine if it contains a URL in the
    * format followed by the {@code content} attribute of the {@code meta}
    * HTML tag.

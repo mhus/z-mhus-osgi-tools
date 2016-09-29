@@ -24,7 +24,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-/* 
+/**
  * A destination to which characters can be written, such as a text file. Unlike a {@link Writer}, a
  * {@code CharSink} is not an open, stateful stream that can be written to and closed. Instead, it
  * is an immutable <i>supplier</i> of {@code Writer} instances.
@@ -48,7 +48,7 @@ import java.nio.charset.Charset;
  */
 public abstract class CharSink implements OutputSupplier<Writer> {
 
-  /* 
+  /**
    * Opens a new {@link Writer} for writing to this sink. This method should return a new,
    * independent writer each time it is called.
    *
@@ -58,7 +58,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
    */
   public abstract Writer openStream() throws IOException;
 
-  /* 
+  /**
    * This method is a temporary method provided for easing migration from suppliers to sources and
    * sinks.
    *
@@ -73,7 +73,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
     return openStream();
   }
 
-  /* 
+  /**
    * Opens a new buffered {@link Writer} for writing to this sink. The returned stream is not
    * required to be a {@link BufferedWriter} in order to allow implementations to simply delegate
    * to {@link #openStream()} when the stream returned by that method does not benefit from
@@ -92,7 +92,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
         : new BufferedWriter(writer);
   }
 
-  /* 
+  /**
    * Writes the given character sequence to this sink.
    *
    * @throws IOException if an I/O error in the process of writing to this sink
@@ -112,7 +112,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
     }
   }
 
-  /* 
+  /**
    * Writes the given lines of text to this sink with each line (including the last) terminated with
    * the operating system's default line separator. This method is equivalent to
    * {@code writeLines(lines, System.getProperty("line.separator"))}.
@@ -123,7 +123,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
     writeLines(lines, System.getProperty("line.separator"));
   }
 
-  /* 
+  /**
    * Writes the given lines of text to this sink with each line (including the last) terminated with
    * the given line separator.
    *
@@ -148,7 +148,7 @@ public abstract class CharSink implements OutputSupplier<Writer> {
     }
   }
 
-  /* 
+  /**
    * Writes all the text from the given {@link Readable} (such as a {@link Reader}) to this sink.
    * Does not close {@code readable} if it is {@code Closeable}.
    *

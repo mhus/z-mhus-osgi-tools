@@ -39,7 +39,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Provides static utility methods for creating and working with {@link
  * Multiset} instances.
  *
@@ -56,7 +56,7 @@ import javax.annotation.Nullable;
 public final class Multisets {
   private Multisets() {}
 
-  /* 
+  /**
    * Returns an unmodifiable view of the specified multiset. Query operations on
    * the returned multiset "read through" to the specified multiset, and
    * attempts to modify the returned multiset result in an
@@ -81,7 +81,7 @@ public final class Multisets {
     return new UnmodifiableMultiset<E>(checkNotNull(multiset));
   }
 
-  /* 
+  /**
    * Simply returns its argument.
    *
    * @deprecated no need to use this
@@ -179,7 +179,7 @@ public final class Multisets {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the specified sorted multiset. Query
    * operations on the returned multiset "read through" to the specified
    * multiset, and attempts to modify the returned multiset result in an {@link
@@ -200,7 +200,7 @@ public final class Multisets {
     return new UnmodifiableSortedMultiset<E>(checkNotNull(sortedMultiset));
   }
 
-  /* 
+  /**
    * Returns an immutable multiset entry with the specified element and count.
    * The entry will be serializable if {@code e} is.
    *
@@ -236,7 +236,7 @@ public final class Multisets {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Returns a view of the elements of {@code unfiltered} that satisfy a predicate. The returned
    * multiset is a live view of {@code unfiltered}; changes to one affect the other.
    *
@@ -348,7 +348,7 @@ public final class Multisets {
     }
   }
 
-  /* 
+  /**
    * Returns the expected number of distinct elements given the specified
    * elements. The number of distinct elements is only computed if {@code
    * elements} is an instance of {@code Multiset}; otherwise the default value
@@ -361,7 +361,7 @@ public final class Multisets {
     return 11; // initial capacity will be rounded up to 16
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the union of two multisets.
    * In the returned multiset, the count of each element is the <i>maximum</i>
    * of its counts in the two backing multisets. The iteration order of the
@@ -438,7 +438,7 @@ public final class Multisets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the intersection of two multisets.
    * In the returned multiset, the count of each element is the <i>minimum</i>
    * of its counts in the two backing multisets, with elements that would have
@@ -497,7 +497,7 @@ public final class Multisets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the sum of two multisets.
    * In the returned multiset, the count of each element is the <i>sum</i> of
    * its counts in the two backing multisets. The iteration order of the
@@ -579,7 +579,7 @@ public final class Multisets {
     };
   }
 
-  /* 
+  /**
    * Returns an unmodifiable view of the difference of two multisets.
    * In the returned multiset, the count of each element is the result of the
    * <i>zero-truncated subtraction</i> of its count in the second multiset from
@@ -635,7 +635,7 @@ public final class Multisets {
     };
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code subMultiset.count(o) <=
    * superMultiset.count(o)} for all {@code o}.
    *
@@ -654,7 +654,7 @@ public final class Multisets {
     return true;
   }
 
-  /* 
+  /**
    * Modifies {@code multisetToModify} so that its count for an element
    * {@code e} is at most {@code multisetToRetain.count(e)}.
    *
@@ -678,7 +678,7 @@ public final class Multisets {
     return retainOccurrencesImpl(multisetToModify, multisetToRetain);
   }
 
-  /* 
+  /**
    * Delegate implementation which cares about the element type.
    */
   private static <E> boolean retainOccurrencesImpl(
@@ -702,7 +702,7 @@ public final class Multisets {
     return changed;
   }
 
-  /* 
+  /**
    * For each occurrence of an element {@code e} in {@code occurrencesToRemove},
    * removes one occurrence of {@code e} in {@code multisetToModify}.
    *
@@ -715,6 +715,11 @@ public final class Multisets {
    * {@link Multiset#removeAll removeAll}{@code (occurrencesToRemove)}, which
    * removes all occurrences of elements that appear in
    * {@code occurrencesToRemove}. However, this operation <i>is</i> equivalent
+   * to, albeit more efficient than, the following: <pre>   {@code
+   *
+   *   for (E e : occurrencesToRemove) {
+   *     multisetToModify.remove(e);
+   *   }}</pre>
    *
    * @return {@code true} if {@code multisetToModify} was changed as a result of
    *         this operation
@@ -725,7 +730,7 @@ public final class Multisets {
     return removeOccurrencesImpl(multisetToModify, occurrencesToRemove);
   }
 
-  /* 
+  /**
    * Delegate that cares about the element types in occurrencesToRemove.
    */
   private static <E> boolean removeOccurrencesImpl(
@@ -750,12 +755,12 @@ public final class Multisets {
     return changed;
   }
 
-  /* 
+  /**
    * Implementation of the {@code equals}, {@code hashCode}, and
    * {@code toString} methods of {@link Multiset.Entry}.
    */
   abstract static class AbstractEntry<E> implements Multiset.Entry<E> {
-    /* 
+    /**
      * Indicates whether an object equals this entry, following the behavior
      * specified in {@link Multiset.Entry#equals}.
      */
@@ -768,7 +773,7 @@ public final class Multisets {
       return false;
     }
 
-    /* 
+    /**
      * Return this entry's hash code, following the behavior specified in
      * {@link Multiset.Entry#hashCode}.
      */
@@ -777,7 +782,7 @@ public final class Multisets {
       return ((e == null) ? 0 : e.hashCode()) ^ getCount();
     }
 
-    /* 
+    /**
      * Returns a string representation of this multiset entry. The string
      * representation consists of the associated element if the associated count
      * is one, and otherwise the associated element followed by the characters
@@ -791,7 +796,7 @@ public final class Multisets {
     }
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#equals}.
    */
   static boolean equalsImpl(Multiset<?> multiset, @Nullable Object object) {
@@ -820,7 +825,7 @@ public final class Multisets {
     return false;
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#addAll}.
    */
   static <E> boolean addAllImpl(
@@ -839,7 +844,7 @@ public final class Multisets {
     return true;
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#removeAll}.
    */
   static boolean removeAllImpl(
@@ -850,7 +855,7 @@ public final class Multisets {
     return self.elementSet().removeAll(collection);
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#retainAll}.
    */
   static boolean retainAllImpl(
@@ -862,7 +867,7 @@ public final class Multisets {
     return self.elementSet().retainAll(collection);
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#setCount(Object, int)}.
    */
   static <E> int setCountImpl(Multiset<E> self, E element, int count) {
@@ -880,7 +885,7 @@ public final class Multisets {
     return oldCount;
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#setCount(Object, int, int)}.
    */
   static <E> boolean setCountImpl(
@@ -981,7 +986,7 @@ public final class Multisets {
     }
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#iterator}.
    */
   static <E> Iterator<E> iteratorImpl(Multiset<E> multiset) {
@@ -993,9 +998,9 @@ public final class Multisets {
     private final Multiset<E> multiset;
     private final Iterator<Entry<E>> entryIterator;
     private Entry<E> currentEntry;
-    /*  Count of subsequent elements equal to current element */
+    /** Count of subsequent elements equal to current element */
     private int laterCount;
-    /*  Count of all elements equal to current element */
+    /** Count of all elements equal to current element */
     private int totalCount;
     private boolean canRemove;
 
@@ -1037,7 +1042,7 @@ public final class Multisets {
     }
   }
 
-  /* 
+  /**
    * An implementation of {@link Multiset#size}.
    */
   static int sizeImpl(Multiset<?> multiset) {
@@ -1048,7 +1053,7 @@ public final class Multisets {
     return Ints.saturatedCast(size);
   }
 
-  /* 
+  /**
    * Used to avoid http://bugs.sun.com/view_bug.do?bug_id=6558557
    */
   static <T> Multiset<T> cast(Iterable<T> iterable) {
@@ -1062,7 +1067,7 @@ public final class Multisets {
     }
   };
 
-  /* 
+  /**
    * Returns a copy of {@code multiset} as an {@link ImmutableMultiset} whose iteration order is
    * highest count first, with ties broken by the iteration order of the original multiset.
    *

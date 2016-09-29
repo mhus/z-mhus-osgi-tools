@@ -21,14 +21,14 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkArg
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-/* 
+/**
  * Captures the actual type of {@code T}.
  *
  * @author Ben Yu
  */
 abstract class TypeCapture<T> {
 
-  /*  Returns the captured type. */
+  /** Returns the captured type. */
   final Type capture() {
     Type superclass = getClass().getGenericSuperclass();
     checkArgument(superclass instanceof ParameterizedType,

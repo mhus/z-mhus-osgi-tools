@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 import java.util.Comparator;
 import java.util.SortedSet;
 
-/* 
+/**
  * Utilities for dealing with sorted collections of all types.
  *
  * @author Louis Wasserman
@@ -30,7 +30,7 @@ import java.util.SortedSet;
 final class SortedIterables {
   private SortedIterables() {}
 
-  /* 
+  /**
    * Returns {@code true} if {@code elements} is a sorted collection using an ordering equivalent
    * to {@code comparator}.
    */

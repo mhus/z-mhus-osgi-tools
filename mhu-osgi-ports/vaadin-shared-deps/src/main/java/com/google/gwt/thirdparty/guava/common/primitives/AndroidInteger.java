@@ -22,11 +22,11 @@ import static com.google.gwt.thirdparty.guava.common.base.Preconditions.checkNot
 
 import javax.annotation.CheckForNull;
 
-/* 
+/**
  * Static utility methods derived from Android's {@code Integer.java}.
  */
 final class AndroidInteger {
-  /* 
+  /**
    * See {@link Ints#tryParse(String)} for the public interface.
    */
   @CheckForNull
@@ -34,7 +34,7 @@ final class AndroidInteger {
     return tryParse(string, 10);
   }
 
-  /* 
+  /**
    * See {@link Ints#tryParse(String, int)} for the public interface.
    */
   @CheckForNull

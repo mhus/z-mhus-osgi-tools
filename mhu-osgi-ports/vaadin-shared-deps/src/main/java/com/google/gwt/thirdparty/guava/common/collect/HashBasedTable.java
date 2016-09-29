@@ -27,7 +27,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of {@link Table} using hash tables.
  *
  * <p>The views returned by {@link #column}, {@link #columnKeySet()}, and {@link
@@ -67,7 +67,7 @@ public class HashBasedTable<R, C, V> extends StandardTable<R, C, V> {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * Creates an empty {@code HashBasedTable}.
    */
   public static <R, C, V> HashBasedTable<R, C, V> create() {
@@ -75,7 +75,7 @@ public class HashBasedTable<R, C, V> extends StandardTable<R, C, V> {
         new HashMap<R, Map<C, V>>(), new Factory<C, V>(0));
   }
 
-  /* 
+  /**
    * Creates an empty {@code HashBasedTable} with the specified map sizes.
    *
    * @param expectedRows the expected number of distinct row keys
@@ -93,7 +93,7 @@ public class HashBasedTable<R, C, V> extends StandardTable<R, C, V> {
         backingMap, new Factory<C, V>(expectedCellsPerRow));
   }
 
-  /* 
+  /**
    * Creates a {@code HashBasedTable} with the same mappings as the specified
    * table.
    *

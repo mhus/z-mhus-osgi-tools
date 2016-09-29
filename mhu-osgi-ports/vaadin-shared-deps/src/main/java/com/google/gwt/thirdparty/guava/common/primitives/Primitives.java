@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/* 
+/**
  * Contains static utility methods pertaining to primitive types and their
  * corresponding wrapper types.
  *
@@ -33,10 +33,10 @@ import java.util.Set;
 public final class Primitives {
   private Primitives() {}
 
-  /*  A map from primitive types to their corresponding wrapper types. */
+  /** A map from primitive types to their corresponding wrapper types. */
   private static final Map<Class<?>, Class<?>> PRIMITIVE_TO_WRAPPER_TYPE;
 
-  /*  A map from wrapper types to their corresponding primitive types. */
+  /** A map from wrapper types to their corresponding primitive types. */
   private static final Map<Class<?>, Class<?>> WRAPPER_TO_PRIMITIVE_TYPE;
 
   // Sad that we can't use a BiMap. :(
@@ -65,7 +65,7 @@ public final class Primitives {
     backward.put(value, key);
   }
 
-  /* 
+  /**
    * Returns an immutable set of all nine primitive types (including {@code
    * void}). Note that a simpler way to test whether a {@code Class} instance
    * is a member of this set is to call {@link Class#isPrimitive}.
@@ -76,7 +76,7 @@ public final class Primitives {
     return PRIMITIVE_TO_WRAPPER_TYPE.keySet();
   }
 
-  /* 
+  /**
    * Returns an immutable set of all nine primitive-wrapper types (including
    * {@link Void}).
    *
@@ -86,7 +86,7 @@ public final class Primitives {
     return WRAPPER_TO_PRIMITIVE_TYPE.keySet();
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code type} is one of the nine
    * primitive-wrapper types, such as {@link Integer}.
    *
@@ -96,7 +96,7 @@ public final class Primitives {
     return WRAPPER_TO_PRIMITIVE_TYPE.containsKey(checkNotNull(type));
   }
 
-  /* 
+  /**
    * Returns the corresponding wrapper type of {@code type} if it is a primitive
    * type; otherwise returns {@code type} itself. Idempotent.
    * <pre>
@@ -114,7 +114,7 @@ public final class Primitives {
     return (wrapped == null) ? type : wrapped;
   }
 
-  /* 
+  /**
    * Returns the corresponding primitive type of {@code type} if it is a
    * wrapper type; otherwise returns {@code type} itself. Idempotent.
    * <pre>

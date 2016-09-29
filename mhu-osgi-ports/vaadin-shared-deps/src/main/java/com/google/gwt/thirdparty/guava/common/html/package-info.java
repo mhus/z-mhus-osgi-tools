@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Escapers
  * for
  * HTML.

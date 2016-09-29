@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.io;
 import java.io.DataOutput;
 import java.io.IOException;
 
-/* 
+/**
  * An extension of {@code DataOutput} for writing to in-memory byte arrays; its
  * methods offer identical functionality but do not throw {@link IOException}.
  *
@@ -41,13 +41,13 @@ public interface ByteArrayDataOutput extends DataOutput {
   @Override void writeChars(String s);
   @Override void writeUTF(String s);
 
-  /* 
+  /**
    * @deprecated This method is dangerous as it discards the high byte of
    * every character. For UTF-8, use {@code write(s.getBytes(Charsets.UTF_8))}.
    */
   @Deprecated @Override void writeBytes(String s);
 
-  /* 
+  /**
    * Returns the contents that have been written to this instance,
    * as a byte array.
    */

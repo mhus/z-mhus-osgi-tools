@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Static utility methods pertaining to {@code Predicate} instances.
  *
  * <p>All methods returns serializable predicates as long as they're given
@@ -51,7 +51,7 @@ public final class Predicates {
   // TODO(kevinb): considering having these implement a VisitablePredicate
   // interface which specifies an accept(PredicateVisitor) method.
 
-  /* 
+  /**
    * Returns a predicate that always evaluates to {@code true}.
    */
   @GwtCompatible(serializable = true)
@@ -59,7 +59,7 @@ public final class Predicates {
     return ObjectPredicate.ALWAYS_TRUE.withNarrowedType();
   }
 
-  /* 
+  /**
    * Returns a predicate that always evaluates to {@code false}.
    */
   @GwtCompatible(serializable = true)
@@ -67,7 +67,7 @@ public final class Predicates {
     return ObjectPredicate.ALWAYS_FALSE.withNarrowedType();
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the object reference
    * being tested is null.
    */
@@ -76,7 +76,7 @@ public final class Predicates {
     return ObjectPredicate.IS_NULL.withNarrowedType();
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the object reference
    * being tested is not null.
    */
@@ -85,7 +85,7 @@ public final class Predicates {
     return ObjectPredicate.NOT_NULL.withNarrowedType();
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the given predicate
    * evaluates to {@code false}.
    */
@@ -93,7 +93,7 @@ public final class Predicates {
     return new NotPredicate<T>(predicate);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if each of its
    * components evaluates to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a false
@@ -107,7 +107,7 @@ public final class Predicates {
     return new AndPredicate<T>(defensiveCopy(components));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if each of its
    * components evaluates to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a false
@@ -120,7 +120,7 @@ public final class Predicates {
     return new AndPredicate<T>(defensiveCopy(components));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if both of its
    * components evaluate to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a false
@@ -132,7 +132,7 @@ public final class Predicates {
         checkNotNull(first), checkNotNull(second)));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if any one of its
    * components evaluates to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a
@@ -146,7 +146,7 @@ public final class Predicates {
     return new OrPredicate<T>(defensiveCopy(components));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if any one of its
    * components evaluates to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a
@@ -159,7 +159,7 @@ public final class Predicates {
     return new OrPredicate<T>(defensiveCopy(components));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if either of its
    * components evaluates to {@code true}. The components are evaluated in
    * order, and evaluation will be "short-circuited" as soon as a
@@ -171,7 +171,7 @@ public final class Predicates {
         checkNotNull(first), checkNotNull(second)));
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the object being
    * tested {@code equals()} the given target or both are null.
    */
@@ -181,7 +181,7 @@ public final class Predicates {
         : new IsEqualToPredicate<T>(target);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the object being
    * tested is an instance of the given class. If the object being tested
    * is {@code null} this predicate evaluates to {@code false}.
@@ -201,7 +201,7 @@ public final class Predicates {
     return new InstanceOfPredicate(clazz);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the class being
    * tested is assignable from the given class.  The returned predicate
    * does not allow null inputs.
@@ -214,7 +214,7 @@ public final class Predicates {
     return new AssignableFromPredicate(clazz);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the object reference
    * being tested is a member of the given collection. It does not defensively
    * copy the collection passed in, so future changes to it will alter the
@@ -231,7 +231,7 @@ public final class Predicates {
     return new InPredicate<T>(target);
   }
 
-  /* 
+  /**
    * Returns the composition of a function and a predicate. For every {@code x},
    * the generated predicate returns {@code predicate(function(x))}.
    *
@@ -242,7 +242,7 @@ public final class Predicates {
     return new CompositionPredicate<A, B>(predicate, function);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the
    * {@code CharSequence} being tested contains any match for the given
    * regular expression pattern. The test used is equivalent to
@@ -256,7 +256,7 @@ public final class Predicates {
     return new ContainsPatternPredicate(pattern);
   }
 
-  /* 
+  /**
    * Returns a predicate that evaluates to {@code true} if the
    * {@code CharSequence} being tested contains any match for the given
    * regular expression pattern. The test used is equivalent to
@@ -300,7 +300,7 @@ public final class Predicates {
     }
   }
 
-  /*  @see Predicates#not(Predicate) */
+  /** @see Predicates#not(Predicate) */
   private static class NotPredicate<T> implements Predicate<T>, Serializable {
     final Predicate<T> predicate;
 
@@ -329,7 +329,7 @@ public final class Predicates {
 
   private static final Joiner COMMA_JOINER = Joiner.on(",");
 
-  /*  @see Predicates#and(Iterable) */
+  /** @see Predicates#and(Iterable) */
   private static class AndPredicate<T> implements Predicate<T>, Serializable {
     private final List<? extends Predicate<? super T>> components;
 
@@ -363,7 +363,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#or(Iterable) */
+  /** @see Predicates#or(Iterable) */
   private static class OrPredicate<T> implements Predicate<T>, Serializable {
     private final List<? extends Predicate<? super T>> components;
 
@@ -397,7 +397,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#equalTo(Object) */
+  /** @see Predicates#equalTo(Object) */
   private static class IsEqualToPredicate<T>
       implements Predicate<T>, Serializable {
     private final T target;
@@ -425,7 +425,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#instanceOf(Class) */
+  /** @see Predicates#instanceOf(Class) */
   @GwtIncompatible("Class.isInstance")
   private static class InstanceOfPredicate
       implements Predicate<Object>, Serializable {
@@ -454,7 +454,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#assignableFrom(Class) */
+  /** @see Predicates#assignableFrom(Class) */
   @GwtIncompatible("Class.isAssignableFrom")
   private static class AssignableFromPredicate
       implements Predicate<Class<?>>, Serializable {
@@ -483,7 +483,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#in(Collection) */
+  /** @see Predicates#in(Collection) */
   private static class InPredicate<T> implements Predicate<T>, Serializable {
     private final Collection<?> target;
 
@@ -520,7 +520,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /*  @see Predicates#compose(Predicate, Function) */
+  /** @see Predicates#compose(Predicate, Function) */
   private static class CompositionPredicate<A, B>
       implements Predicate<A>, Serializable {
     final Predicate<B> p;
@@ -555,7 +555,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /* 
+  /**
    * @see Predicates#contains(Pattern)
    * @see Predicates#containsPattern(String)
    */

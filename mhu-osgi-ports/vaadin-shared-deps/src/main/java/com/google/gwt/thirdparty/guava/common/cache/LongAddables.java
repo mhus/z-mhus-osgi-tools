@@ -21,7 +21,7 @@ import com.google.gwt.thirdparty.guava.common.base.Supplier;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-/* 
+/**
  * Source of {@link LongAddable} objects that deals with GWT, Unsafe, and all
  * that.
  * 

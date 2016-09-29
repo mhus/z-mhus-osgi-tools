@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An ordering which sorts iterables by comparing corresponding elements
  * pairwise.
  */

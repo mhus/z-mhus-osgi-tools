@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.CheckReturnValue;
 
-/* 
+/**
  * Extracts non-overlapping substrings from an input string, typically by
  * recognizing appearances of a <i>separator</i> sequence. This separator can be
  * specified as a single {@linkplain #on(char) character}, fixed {@linkplain
@@ -118,7 +118,7 @@ public final class Splitter {
     this.limit = limit;
   }
 
-  /* 
+  /**
    * Returns a splitter that uses the given single-character separator. For
    * example, {@code Splitter.on(',').split("foo,,bar")} returns an iterable
    * containing {@code ["foo", "", "bar"]}.
@@ -130,7 +130,7 @@ public final class Splitter {
     return on(CharMatcher.is(separator));
   }
 
-  /* 
+  /**
    * Returns a splitter that considers any single character matched by the
    * given {@code CharMatcher} to be a separator. For example, {@code
    * Splitter.on(CharMatcher.anyOf(";,")).split("foo,;bar,quux")} returns an
@@ -159,7 +159,7 @@ public final class Splitter {
     });
   }
 
-  /* 
+  /**
    * Returns a splitter that uses the given fixed string as a separator. For
    * example, {@code Splitter.on(", ").split("foo, bar,baz")} returns an
    * iterable containing {@code ["foo", "bar,baz"]}.
@@ -199,7 +199,7 @@ public final class Splitter {
     });
   }
 
-  /* 
+  /**
    * Returns a splitter that considers any subsequence matching {@code
    * pattern} to be a separator. For example, {@code
    * Splitter.on(Pattern.compile("\r?\n")).split(entireFile)} splits a string
@@ -234,7 +234,7 @@ public final class Splitter {
     });
   }
 
-  /* 
+  /**
    * Returns a splitter that considers any subsequence matching a given
    * pattern (regular expression) to be a separator. For example, {@code
    * Splitter.onPattern("\r?\n").split(entireFile)} splits a string into lines
@@ -254,7 +254,7 @@ public final class Splitter {
     return on(Pattern.compile(separatorPattern));
   }
 
-  /* 
+  /**
    * Returns a splitter that divides strings into pieces of the given length.
    * For example, {@code Splitter.fixedLength(2).split("abcde")} returns an
    * iterable containing {@code ["ab", "cd", "e"]}. The last piece can be
@@ -293,7 +293,7 @@ public final class Splitter {
     });
   }
 
-  /* 
+  /**
    * Returns a splitter that behaves equivalently to {@code this} splitter, but
    * automatically omits empty strings from the results. For example, {@code
    * Splitter.on(',').omitEmptyStrings().split(",a,,,b,c,,")} returns an
@@ -316,7 +316,7 @@ public final class Splitter {
     return new Splitter(strategy, true, trimmer, limit);
   }
 
-  /* 
+  /**
    * Returns a splitter that behaves equivalently to {@code this} splitter but
    * stops splitting after it reaches the limit.
    * The limit defines the maximum number of items returned by the iterator.
@@ -341,7 +341,7 @@ public final class Splitter {
     return new Splitter(strategy, omitEmptyStrings, trimmer, limit);
   }
 
-  /* 
+  /**
    * Returns a splitter that behaves equivalently to {@code this} splitter, but
    * automatically removes leading and trailing {@linkplain
    * CharMatcher#WHITESPACE whitespace} from each returned substring; equivalent
@@ -356,7 +356,7 @@ public final class Splitter {
     return trimResults(CharMatcher.WHITESPACE);
   }
 
-  /* 
+  /**
    * Returns a splitter that behaves equivalently to {@code this} splitter, but
    * removes all leading or trailing characters matching the given {@code
    * CharMatcher} from each returned substring. For example, {@code
@@ -374,7 +374,7 @@ public final class Splitter {
     return new Splitter(strategy, omitEmptyStrings, trimmer, limit);
   }
 
-  /* 
+  /**
    * Splits {@code sequence} into string components and makes them available
    * through an {@link Iterator}, which may be lazily evaluated. If you want
    * an eagerly computed {@link List}, use {@link #splitToList(CharSequence)}.
@@ -402,7 +402,7 @@ public final class Splitter {
     return strategy.iterator(this, sequence);
   }
 
-  /* 
+  /**
    * Splits {@code sequence} into string components and returns them as
    * an immutable list. If you want an {@link Iterable} which may be lazily
    * evaluated, use {@link #split(CharSequence)}.
@@ -425,7 +425,7 @@ public final class Splitter {
     return Collections.unmodifiableList(result);
   }
 
-  /* 
+  /**
    * Returns a {@code MapSplitter} which splits entries based on this splitter,
    * and splits entries into keys and values using the specified separator.
    *
@@ -437,7 +437,7 @@ public final class Splitter {
     return withKeyValueSeparator(on(separator));
   }
 
-  /* 
+  /**
    * Returns a {@code MapSplitter} which splits entries based on this splitter,
    * and splits entries into keys and values using the specified separator.
    *
@@ -449,7 +449,7 @@ public final class Splitter {
     return withKeyValueSeparator(on(separator));
   }
 
-  /* 
+  /**
    * Returns a {@code MapSplitter} which splits entries based on this splitter,
    * and splits entries into keys and values using the specified key-value
    * splitter.
@@ -462,7 +462,7 @@ public final class Splitter {
     return new MapSplitter(this, keyValueSplitter);
   }
 
-  /* 
+  /**
    * An object that splits strings into maps as {@code Splitter} splits
    * iterables and lists. Like {@code Splitter}, it is thread-safe and
    * immutable.
@@ -481,7 +481,7 @@ public final class Splitter {
       this.entrySplitter = checkNotNull(entrySplitter);
     }
 
-    /* 
+    /**
      * Splits {@code sequence} into substrings, splits each substring into
      * an entry, and returns an unmodifiable map with each of the entries. For
      * example, <code>
@@ -524,13 +524,13 @@ public final class Splitter {
     final CharMatcher trimmer;
     final boolean omitEmptyStrings;
 
-    /* 
+    /**
      * Returns the first index in {@code toSplit} at or after {@code start}
      * that contains the separator.
      */
     abstract int separatorStart(int start);
 
-    /* 
+    /**
      * Returns the first index in {@code toSplit} after {@code
      * separatorPosition} that does not contain a separator. This method is only
      * invoked after a call to {@code separatorStart}.

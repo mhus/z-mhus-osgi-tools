@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-/* 
+/**
  * A rate limiter. Conceptually, a rate limiter distributes permits at a
  * configurable rate. Each {@link #acquire()} blocks if necessary until a permit is
  * available, and then takes it. Once acquired, permits need not be released.
@@ -48,10 +48,26 @@ import javax.annotation.concurrent.ThreadSafe;
  *
  * <p>As an example, imagine that we have a list of tasks to execute, but we don't want to
  * submit more than 2 per second:
+ *<pre>  {@code
+ *  final RateLimiter rateLimiter = RateLimiter.create(2.0); // rate is "2 permits per second"
+ *  void submitTasks(List<Runnable> tasks, Executor executor) {
+ *    for (Runnable task : tasks) {
+ *      rateLimiter.acquire(); // may wait
+ *      executor.execute(task);
+ *    }
+ *  }
+ *}</pre>
  *
  * <p>As another example, imagine that we produce a stream of data, and we want to cap it
  * at 5kb per second. This could be accomplished by requiring a permit per byte, and specifying
  * a rate of 5000 permits per second:
+ *<pre>  {@code
+ *  final RateLimiter rateLimiter = RateLimiter.create(5000.0); // rate = 5000 permits per second
+ *  void submitPacket(byte[] packet) {
+ *    rateLimiter.acquire(packet.length);
+ *    networkService.send(packet);
+ *  }
+ *}</pre>
  *
  * <p>It is important to note that the number of permits requested <i>never</i>
  * affect the throttling of the request itself (an invocation to {@code acquire(1)}
@@ -192,7 +208,7 @@ public abstract class RateLimiter {
    * increase it for arrivals _later_ than the expected one second.
    */
 
-  /* 
+  /**
    * Creates a {@code RateLimiter} with the specified stable throughput, given as
    * "permits per second" (commonly referred to as <i>QPS</i>, queries per second).
    *
@@ -233,7 +249,7 @@ public abstract class RateLimiter {
     return rateLimiter;
   }
 
-  /* 
+  /**
    * Creates a {@code RateLimiter} with the specified stable throughput, given as
    * "permits per second" (commonly referred to as <i>QPS</i>, queries per second), and a
    * <i>warmup period</i>, during which the {@code RateLimiter} smoothly ramps up its rate,
@@ -276,29 +292,29 @@ public abstract class RateLimiter {
     return rateLimiter;
   }
 
-  /* 
+  /**
    * The underlying timer; used both to measure elapsed time and sleep as necessary. A separate
    * object to facilitate testing.
    */
   private final SleepingTicker ticker;
 
-  /* 
+  /**
    * The timestamp when the RateLimiter was created; used to avoid possible overflow/time-wrapping
    * errors.
    */
   private final long offsetNanos;
 
-  /* 
+  /**
    * The currently stored permits.
    */
   double storedPermits;
 
-  /* 
+  /**
    * The maximum number of stored permits.
    */
   double maxPermits;
 
-  /* 
+  /**
    * The interval between two unit requests, at our stable rate. E.g., a stable rate of 5 permits
    * per second has a stable interval of 200ms.
    */
@@ -306,7 +322,7 @@ public abstract class RateLimiter {
 
   private final Object mutex = new Object();
 
-  /* 
+  /**
    * The time when the next request (no matter its size) will be granted. After granting a request,
    * this is pushed further in the future. Large requests push this further than small requests.
    */
@@ -317,7 +333,7 @@ public abstract class RateLimiter {
     this.offsetNanos = ticker.read();
   }
 
-  /* 
+  /**
    * Updates the stable rate of this {@code RateLimiter}, that is, the
    * {@code permitsPerSecond} argument provided in the factory method that
    * constructed the {@code RateLimiter}. Currently throttled threads will <b>not</b>
@@ -348,7 +364,7 @@ public abstract class RateLimiter {
 
   abstract void doSetRate(double permitsPerSecond, double stableIntervalMicros);
 
-  /* 
+  /**
    * Returns the stable rate (as {@code permits per seconds}) with which this
    * {@code RateLimiter} is configured with. The initial value of this is the same as
    * the {@code permitsPerSecond} argument passed in the factory method that produced
@@ -359,7 +375,7 @@ public abstract class RateLimiter {
     return TimeUnit.SECONDS.toMicros(1L) / stableIntervalMicros;
   }
 
-  /* 
+  /**
    * Acquires a permit from this {@code RateLimiter}, blocking until the request can be granted.
    *
    * <p>This method is equivalent to {@code acquire(1)}.
@@ -368,7 +384,7 @@ public abstract class RateLimiter {
     acquire(1);
   }
 
-  /* 
+  /**
    * Acquires the given number of permits from this {@code RateLimiter}, blocking until the
    * request be granted.
    *
@@ -383,7 +399,7 @@ public abstract class RateLimiter {
     ticker.sleepMicrosUninterruptibly(microsToWait);
   }
 
-  /* 
+  /**
    * Acquires a permit from this {@code RateLimiter} if it can be obtained
    * without exceeding the specified {@code timeout}, or returns {@code false}
    * immediately (without waiting) if the permit would not have been granted
@@ -399,7 +415,7 @@ public abstract class RateLimiter {
     return tryAcquire(1, timeout, unit);
   }
 
-  /* 
+  /**
    * Acquires permits from this {@link RateLimiter} if it can be acquired immediately without delay.
    *
    * <p>
@@ -413,7 +429,7 @@ public abstract class RateLimiter {
     return tryAcquire(permits, 0, TimeUnit.MICROSECONDS);
   }
 
-  /* 
+  /**
    * Acquires a permit from this {@link RateLimiter} if it can be acquired immediately without
    * delay.
    *
@@ -427,7 +443,7 @@ public abstract class RateLimiter {
     return tryAcquire(1, 0, TimeUnit.MICROSECONDS);
   }
 
-  /* 
+  /**
    * Acquires the given number of permits from this {@code RateLimiter} if it can be obtained
    * without exceeding the specified {@code timeout}, or returns {@code false}
    * immediately (without waiting) if the permits would not have been granted
@@ -458,7 +474,7 @@ public abstract class RateLimiter {
     Preconditions.checkArgument(permits > 0, "Requested permits must be positive");
   }
 
-  /* 
+  /**
    * Reserves next ticket and returns the wait time that the caller must wait for.
    */
   private long reserveNextTicket(double requiredPermits, long nowMicros) {
@@ -475,7 +491,7 @@ public abstract class RateLimiter {
     return microsToNextFreeTicket;
   }
 
-  /* 
+  /**
    * Translates a specified portion of our currently stored permits which we want to
    * spend/acquire, into a throttling time. Conceptually, this evaluates the integral
    * of the underlying function we use, for the range of
@@ -503,7 +519,7 @@ public abstract class RateLimiter {
     return String.format("RateLimiter[stableRate=%3.1fqps]", 1000000.0 / stableIntervalMicros);
   }
 
-  /* 
+  /**
    * This implements the following function:
    *
    *          ^ throttling
@@ -581,7 +597,7 @@ public abstract class RateLimiter {
   private static class WarmingUp extends RateLimiter {
 
     final long warmupPeriodMicros;
-    /* 
+    /**
      * The slope of the line from the stable interval (when permits == 0), to the cold interval
      * (when permits == maxPermits)
      */
@@ -632,14 +648,14 @@ public abstract class RateLimiter {
     }
   }
 
-  /* 
+  /**
    * This implements a "bursty" RateLimiter, where storedPermits are translated to
    * zero throttling. The maximum number of permits that can be saved (when the RateLimiter is
    * unused) is defined in terms of time, in this sense: if a RateLimiter is 2qps, and this
    * time is specified as 10 seconds, we can save up to 2 * 10 = 20 permits.
    */
   private static class Bursty extends RateLimiter {
-    /*  The work (permits) of how many seconds can be saved up if this RateLimiter is unused? */
+    /** The work (permits) of how many seconds can be saved up if this RateLimiter is unused? */
     final double maxBurstSeconds;
 
     Bursty(SleepingTicker ticker, double maxBurstSeconds) {

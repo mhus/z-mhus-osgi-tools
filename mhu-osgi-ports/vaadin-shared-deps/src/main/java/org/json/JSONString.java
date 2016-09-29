@@ -1,5 +1,5 @@
 package org.json;
-/* 
+/**
  * The <code>JSONString</code> interface allows a <code>toJSONString()</code> 
  * method so that a class can change the behavior of 
  * <code>JSONObject.toString()</code>, <code>JSONArray.toString()</code>,
@@ -8,7 +8,7 @@ package org.json;
  * of using the Object's <code>toString()</code> method and quoting the result.
  */
 public interface JSONString {
-	/* 
+	/**
 	 * The <code>toJSONString</code> method allows a class to produce its own JSON 
 	 * serialization. 
 	 * 

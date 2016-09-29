@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* 
+/**
  * Concurrency utilities.
  *
  * <p>Commonly used types include {@link

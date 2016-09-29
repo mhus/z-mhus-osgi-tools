@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.collect;
 
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * "Overrides" the {@link ImmutableSet} static methods that lack
  * {@link ImmutableSortedSet} equivalents with deprecated, exception-throwing
  * versions. This prevents accidents like the following: <pre>   {@code
@@ -36,7 +36,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
  */
 @GwtCompatible
 abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
-  /* 
+  /**
    * Not supported. Use {@link ImmutableSortedSet#naturalOrder}, which offers
    * better type-safety, instead. This method exists only to hide
    * {@link ImmutableSet#builder} from consumers of {@code ImmutableSortedSet}.
@@ -49,7 +49,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -62,7 +62,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -75,7 +75,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -88,7 +88,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -103,7 +103,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -118,7 +118,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain a
    * non-{@code Comparable} element.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.
@@ -133,7 +133,7 @@ abstract class ImmutableSortedSetFauxverideShim<E> extends ImmutableSet<E> {
     throw new UnsupportedOperationException();
   }
 
-  /* 
+  /**
    * Not supported. <b>You are attempting to create a set that may contain
    * non-{@code Comparable} elements.</b> Proper calls will resolve to the
    * version in {@code ImmutableSortedSet}, not this dummy version.

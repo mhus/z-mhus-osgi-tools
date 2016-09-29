@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/* 
+/**
  * Provides utility methods for working with character streams.
  *
  * <p>All method parameters must be non-null unless documented otherwise.
@@ -61,7 +61,7 @@ public final class CharStreams {
 
   private CharStreams() {}
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link StringReader} that
    * read a string value.
    *
@@ -73,7 +73,7 @@ public final class CharStreams {
     return asInputSupplier(CharSource.wrap(value));
   }
 
-  /* 
+  /**
    * Returns a {@link CharSource} that reads the given string value.
    *
    * @since 14.0
@@ -85,7 +85,7 @@ public final class CharStreams {
     return CharSource.wrap(string);
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link InputStreamReader},
    * using the given {@link InputStream} factory and character set.
    *
@@ -100,7 +100,7 @@ public final class CharStreams {
         ByteStreams.asByteSource(in).asCharSource(charset));
   }
 
-  /* 
+  /**
    * Returns a factory that will supply instances of {@link OutputStreamWriter},
    * using the given {@link OutputStream} factory and character set.
    *
@@ -115,7 +115,7 @@ public final class CharStreams {
         ByteStreams.asByteSink(out).asCharSink(charset));
   }
 
-  /* 
+  /**
    * Writes a character sequence (such as a string) to an appendable
    * object from the given supplier.
    *
@@ -128,7 +128,7 @@ public final class CharStreams {
     asCharSink(to).write(from);
   }
 
-  /* 
+  /**
    * Opens {@link Readable} and {@link Appendable} objects from the
    * given factories, copies all characters between the two, and closes
    * them.
@@ -144,7 +144,7 @@ public final class CharStreams {
     return asCharSource(from).copyTo(asCharSink(to));
   }
 
-  /* 
+  /**
    * Opens a {@link Readable} object from the supplier, copies all characters
    * to the {@link Appendable} object, and closes the input. Does not close
    * or flush the output.
@@ -159,7 +159,7 @@ public final class CharStreams {
     return asCharSource(from).copyTo(to);
   }
 
-  /* 
+  /**
    * Copies all characters between the {@link Readable} and {@link Appendable}
    * objects. Does not close or flush either object.
    *
@@ -182,7 +182,7 @@ public final class CharStreams {
     return total;
   }
 
-  /* 
+  /**
    * Reads all characters from a {@link Readable} object into a {@link String}.
    * Does not close the {@code Readable}.
    *
@@ -194,7 +194,7 @@ public final class CharStreams {
     return toStringBuilder(r).toString();
   }
 
-  /* 
+  /**
    * Returns the characters from a {@link Readable} & {@link Closeable} object
    * supplied by a factory as a {@link String}.
    *
@@ -207,7 +207,7 @@ public final class CharStreams {
     return asCharSource(supplier).read();
   }
 
-  /* 
+  /**
    * Reads all characters from a {@link Readable} object into a new
    * {@link StringBuilder} instance. Does not close the {@code Readable}.
    *
@@ -221,7 +221,7 @@ public final class CharStreams {
     return sb;
   }
 
-  /* 
+  /**
    * Reads the first line from a {@link Readable} & {@link Closeable} object
    * supplied by a factory. The line does not include line-termination
    * characters, but does include other leading and trailing whitespace.
@@ -235,7 +235,7 @@ public final class CharStreams {
     return asCharSource(supplier).readFirstLine();
   }
 
-  /* 
+  /**
    * Reads all of the lines from a {@link Readable} & {@link Closeable} object
    * supplied by a factory. The lines do not include line-termination
    * characters, but do include other leading and trailing whitespace.
@@ -257,7 +257,7 @@ public final class CharStreams {
     }
   }
 
-  /* 
+  /**
    * Reads all of the lines from a {@link Readable} object. The lines do
    * not include line-termination characters, but do include other
    * leading and trailing whitespace.
@@ -280,7 +280,7 @@ public final class CharStreams {
     return result;
   }
 
-  /* 
+  /**
    * Streams lines from a {@link Readable} object, stopping when the processor
    * returns {@code false} or all lines have been read and returning the result
    * produced by the processor. Does not close {@code readable}. Note that this
@@ -305,7 +305,7 @@ public final class CharStreams {
     return processor.getResult();
   }
 
-  /* 
+  /**
    * Streams lines from a {@link Readable} and {@link Closeable} object
    * supplied by a factory, stopping when our callback returns false, or we
    * have read all of the lines.
@@ -331,7 +331,7 @@ public final class CharStreams {
     }
   }
 
-  /* 
+  /**
    * Joins multiple {@link Reader} suppliers into a single supplier.
    * Reader returned from the supplier will contain the concatenated data
    * from the readers of the underlying suppliers.
@@ -359,14 +359,14 @@ public final class CharStreams {
     return asInputSupplier(CharSource.concat(sources));
   }
 
-  /*  Varargs form of {@link #join(Iterable)}. */
+  /** Varargs form of {@link #join(Iterable)}. */
   @SuppressWarnings("unchecked") // suppress "possible heap pollution" warning in JDK7
   public static InputSupplier<Reader> join(
       InputSupplier<? extends Reader>... suppliers) {
     return join(Arrays.asList(suppliers));
   }
 
-  /* 
+  /**
    * Discards {@code n} characters of data from the reader. This method
    * will block until the full amount has been skipped. Does not close the
    * reader.
@@ -393,7 +393,7 @@ public final class CharStreams {
     }
   }
 
-  /* 
+  /**
    * Returns a {@link Writer} that simply discards written chars.
    *
    * @since 15.0
@@ -461,7 +461,7 @@ public final class CharStreams {
     }
   }
 
-  /* 
+  /**
    * Returns a Writer that sends all output to the given {@link Appendable}
    * target. Closing the writer will close the target if it is {@link
    * Closeable}, and flushing the writer will flush the target if it is {@link
@@ -505,7 +505,7 @@ public final class CharStreams {
     };
   }
 
-  /* 
+  /**
    * Returns a view of the given {@code Readable} supplier as a
    * {@code CharSource}.
    *
@@ -530,7 +530,7 @@ public final class CharStreams {
     };
   }
 
-  /* 
+  /**
    * Returns a view of the given {@code Appendable} supplier as a
    * {@code CharSink}.
    *

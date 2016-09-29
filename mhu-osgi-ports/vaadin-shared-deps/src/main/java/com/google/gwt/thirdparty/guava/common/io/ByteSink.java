@@ -26,7 +26,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-/* 
+/**
  * A destination to which bytes can be written, such as a file. Unlike an {@link OutputStream}, a
  * {@code ByteSink} is not an open, stateful stream that can be written to and closed. Instead, it
  * is an immutable <i>supplier</i> of {@code OutputStream} instances.
@@ -46,7 +46,7 @@ import java.nio.charset.Charset;
  */
 public abstract class ByteSink implements OutputSupplier<OutputStream> {
 
-  /* 
+  /**
    * Returns a {@link CharSink} view of this {@code ByteSink} that writes characters to this sink
    * as bytes encoded with the given {@link Charset charset}.
    */
@@ -54,7 +54,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
     return new AsCharSink(charset);
   }
 
-  /* 
+  /**
    * Opens a new {@link OutputStream} for writing to this sink. This method should return a new,
    * independent stream each time it is called.
    *
@@ -64,7 +64,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
    */
   public abstract OutputStream openStream() throws IOException;
 
-  /* 
+  /**
    * This method is a temporary method provided for easing migration from suppliers to sources and
    * sinks.
    *
@@ -79,7 +79,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
     return openStream();
   }
 
-  /* 
+  /**
    * Opens a new buffered {@link OutputStream} for writing to this sink. The returned stream is
    * not required to be a {@link BufferedOutputStream} in order to allow implementations to simply
    * delegate to {@link #openStream()} when the stream returned by that method does not benefit
@@ -98,7 +98,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
         : new BufferedOutputStream(out);
   }
 
-  /* 
+  /**
    * Writes all the given bytes to this sink.
    *
    * @throws IOException if an I/O occurs in the process of writing to this sink
@@ -118,7 +118,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
     }
   }
 
-  /* 
+  /**
    * Writes all the bytes from the given {@code InputStream} to this sink. Does not close
    * {@code input}.
    *
@@ -141,7 +141,7 @@ public abstract class ByteSink implements OutputSupplier<OutputStream> {
     }
   }
 
-  /* 
+  /**
    * A char sink that encodes written characters with a charset and writes resulting bytes to this
    * byte sink.
    */

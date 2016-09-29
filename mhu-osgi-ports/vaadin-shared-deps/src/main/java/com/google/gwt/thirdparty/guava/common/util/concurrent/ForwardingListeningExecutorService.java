@@ -18,7 +18,7 @@ package com.google.gwt.thirdparty.guava.common.util.concurrent;
 
 import java.util.concurrent.Callable;
 
-/* 
+/**
  * A listening executor service which forwards all its method calls to another
  * listening executor service. Subclasses should override one or more methods to
  * modify the behavior of the backing executor service as desired per the <a
@@ -29,7 +29,7 @@ import java.util.concurrent.Callable;
  */
 public abstract class ForwardingListeningExecutorService
     extends ForwardingExecutorService implements ListeningExecutorService {
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected ForwardingListeningExecutorService() {}
 
   @Override

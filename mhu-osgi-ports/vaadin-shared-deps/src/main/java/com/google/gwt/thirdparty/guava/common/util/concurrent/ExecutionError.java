@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * {@link Error} variant of {@link java.util.concurrent.ExecutionException}. As
  * with {@code ExecutionException}, the error's {@linkplain #getCause() cause}
  * comes from a failed task, possibly run in another thread. That cause should
@@ -34,26 +34,26 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible
 public class ExecutionError extends Error {
-  /* 
+  /**
    * Creates a new instance with {@code null} as its detail message.
    */
   protected ExecutionError() {}
 
-  /* 
+  /**
    * Creates a new instance with the given detail message.
    */
   protected ExecutionError(@Nullable String message) {
     super(message);
   }
 
-  /* 
+  /**
    * Creates a new instance with the given detail message and cause.
    */
   public ExecutionError(@Nullable String message, @Nullable Error cause) {
     super(message, cause);
   }
 
-  /* 
+  /**
    * Creates a new instance with the given cause.
    */
   public ExecutionError(@Nullable Error cause) {

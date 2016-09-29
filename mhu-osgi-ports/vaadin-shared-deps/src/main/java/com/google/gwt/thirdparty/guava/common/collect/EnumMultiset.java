@@ -25,7 +25,7 @@ import java.io.ObjectOutputStream;
 import java.util.EnumMap;
 import java.util.Iterator;
 
-/* 
+/**
  * Multiset implementation backed by an {@link EnumMap}.
  * 
  * <p>See the Guava User Guide article on <a href=
@@ -37,12 +37,12 @@ import java.util.Iterator;
  */
 @GwtCompatible(emulated = true)
 public final class EnumMultiset<E extends Enum<E>> extends AbstractMapBasedMultiset<E> {
-  /*  Creates an empty {@code EnumMultiset}. */
+  /** Creates an empty {@code EnumMultiset}. */
   public static <E extends Enum<E>> EnumMultiset<E> create(Class<E> type) {
     return new EnumMultiset<E>(type);
   }
 
-  /* 
+  /**
    * Creates a new {@code EnumMultiset} containing the specified elements.
    *
    * <p>This implementation is highly efficient when {@code elements} is itself a {@link
@@ -59,7 +59,7 @@ public final class EnumMultiset<E extends Enum<E>> extends AbstractMapBasedMulti
     return multiset;
   }
   
-  /* 
+  /**
    * Returns a new {@code EnumMultiset} instance containing the given elements.  Unlike
    * {@link EnumMultiset#create(Iterable)}, this method does not produce an exception on an empty
    * iterable.
@@ -74,7 +74,7 @@ public final class EnumMultiset<E extends Enum<E>> extends AbstractMapBasedMulti
 
   private transient Class<E> type;
 
-  /*  Creates an empty {@code EnumMultiset}. */
+  /** Creates an empty {@code EnumMultiset}. */
   private EnumMultiset(Class<E> type) {
     super(WellBehavedMap.wrap(new EnumMap<E, Count>(type)));
     this.type = type;
@@ -87,7 +87,7 @@ public final class EnumMultiset<E extends Enum<E>> extends AbstractMapBasedMulti
     Serialization.writeMultiset(this, stream);
   }
 
-  /* 
+  /**
    * @serialData the {@code Class<E>} for the enum type, the number of distinct
    *             elements, the first element, its count, the second element, its
    *             count, and so on

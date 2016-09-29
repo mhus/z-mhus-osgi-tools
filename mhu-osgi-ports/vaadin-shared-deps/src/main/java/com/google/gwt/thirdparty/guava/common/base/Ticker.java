@@ -19,7 +19,7 @@ package com.google.gwt.thirdparty.guava.common.base;
 import com.google.gwt.thirdparty.guava.common.annotations.Beta;
 import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 
-/* 
+/**
  * A time source; returns a time value representing the number of nanoseconds elapsed since some
  * fixed but arbitrary point in time. Note that most users should use {@link Stopwatch} instead of
  * interacting with this class directly.
@@ -34,18 +34,18 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtCompatible;
 @Beta
 @GwtCompatible
 public abstract class Ticker {
-  /* 
+  /**
    * Constructor for use by subclasses.
    */
   protected Ticker() {}
 
-  /* 
+  /**
    * Returns the number of nanoseconds elapsed since this ticker's fixed
    * point of reference.
    */
   public abstract long read();
 
-  /* 
+  /**
    * A ticker that reads the current time using {@link System#nanoTime}.
    *
    * @since 10.0

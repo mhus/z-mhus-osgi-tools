@@ -24,7 +24,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * An {@link InputStream} that concatenates multiple substreams. At most
  * one stream will be open at a time.
  *
@@ -36,7 +36,7 @@ final class MultiInputStream extends InputStream {
   private Iterator<? extends ByteSource> it;
   private InputStream in;
 
-  /* 
+  /**
    * Creates a new instance.
    *
    * @param it an iterator of I/O suppliers that will provide each substream
@@ -57,7 +57,7 @@ final class MultiInputStream extends InputStream {
     }
   }
 
-  /* 
+  /**
    * Closes the current input stream and opens the next one, if any.
    */
   private void advance() throws IOException {

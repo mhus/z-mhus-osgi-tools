@@ -24,7 +24,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-/* 
+/**
  * Base class for services that do not need a thread while "running"
  * but may need one during startup and shutdown. Subclasses can
  * implement {@link #startUp} and {@link #shutDown} methods, each
@@ -77,16 +77,16 @@ public abstract class AbstractIdleService implements Service {
     }
   };
 
-  /*  Constructor for use by subclasses. */
+  /** Constructor for use by subclasses. */
   protected AbstractIdleService() {}
 
-  /*  Start the service. */
+  /** Start the service. */
   protected abstract void startUp() throws Exception;
 
-  /*  Stop the service. */
+  /** Stop the service. */
   protected abstract void shutDown() throws Exception;
 
-  /* 
+  /**
    * Returns the {@link Executor} that will be used to run this service.
    * Subclasses may override this method to use a custom {@link Executor}, which
    * may configure its worker thread with a specific name, thread group or
@@ -140,21 +140,21 @@ public abstract class AbstractIdleService implements Service {
     return delegate.stopAndWait();
   }
   
-  /* 
+  /**
    * @since 13.0
    */
   @Override public final void addListener(Listener listener, Executor executor) {
     delegate.addListener(listener, executor);
   }
   
-  /* 
+  /**
    * @since 14.0
    */
   @Override public final Throwable failureCause() {
     return delegate.failureCause();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final Service startAsync() {
@@ -162,7 +162,7 @@ public abstract class AbstractIdleService implements Service {
     return this;
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final Service stopAsync() {
@@ -170,35 +170,35 @@ public abstract class AbstractIdleService implements Service {
     return this;
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitRunning() {
     delegate.awaitRunning();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitRunning(long timeout, TimeUnit unit) throws TimeoutException {
     delegate.awaitRunning(timeout, unit);
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitTerminated() {
     delegate.awaitTerminated();
   }
   
-  /* 
+  /**
    * @since 15.0
    */
   @Override public final void awaitTerminated(long timeout, TimeUnit unit) throws TimeoutException {
     delegate.awaitTerminated(timeout, unit);
   }
   
-  /* 
+  /**
    * Returns the name of this service. {@link AbstractIdleService} may include the name in debugging
    * output.
    *

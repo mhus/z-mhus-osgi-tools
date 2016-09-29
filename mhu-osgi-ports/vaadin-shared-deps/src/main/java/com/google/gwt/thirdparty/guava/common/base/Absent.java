@@ -25,7 +25,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Implementation of an {@link Optional} not containing a reference.
  */
 @GwtCompatible

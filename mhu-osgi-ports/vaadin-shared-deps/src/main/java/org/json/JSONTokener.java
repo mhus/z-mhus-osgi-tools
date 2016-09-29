@@ -29,7 +29,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/* 
+/**
  * A JSONTokener takes a source string and extracts characters and tokens from
  * it. It is used by the JSONObject and JSONArray constructors to parse
  * JSON source strings.
@@ -44,7 +44,7 @@ public class JSONTokener {
     private boolean useLastChar;
 
 
-    /* 
+    /**
      * Construct a JSONTokener from a string.
      *
      * @param reader     A reader.
@@ -57,7 +57,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Construct a JSONTokener from a string.
      *
      * @param s     A source string.
@@ -67,7 +67,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Back up one character. This provides a sort of lookahead capability,
      * so that you can test for a digit or letter before attempting to parse
      * the next number or identifier.
@@ -82,7 +82,7 @@ public class JSONTokener {
 
 
 
-    /* 
+    /**
      * Get the hex value of a character (base16).
      * @param c A character between '0' and '9' or between 'A' and 'F' or
      * between 'a' and 'f'.
@@ -102,7 +102,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Determine if the source string still contains characters that next()
      * can consume.
      * @return true if not yet at the end of the source.
@@ -117,7 +117,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the next character in the source string.
      *
      * @return The next character, or 0 if past the end of the source string.
@@ -147,7 +147,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Consume the next character, and check that it matches a specified
      * character.
      * @param c The character to match.
@@ -164,7 +164,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the next n characters.
      *
      * @param n     The number of characters to take.
@@ -206,7 +206,7 @@ public class JSONTokener {
      }
 
 
-    /* 
+    /**
      * Get the next char in the string, skipping whitespace
      * and comments (slashslash, slashstar, and hash).
      * @throws JSONException
@@ -251,7 +251,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Return the characters up to the next close quote character.
      * Backslash processing is done. The formal JSON format does not
      * allow strings in single quotes, but an implementation is allowed to
@@ -310,7 +310,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the text up but not including the specified character or the
      * end of line, whichever comes first.
      * @param  d A delimiter character.
@@ -331,7 +331,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the text up but not including one of the specified delimiter
      * characters or the end of line, whichever comes first.
      * @param delimiters A set of delimiter characters.
@@ -354,7 +354,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Get the next value. The value can be a Boolean, Double, Integer,
      * JSONArray, JSONObject, Long, or String, or the JSONObject.NULL object.
      * @throws JSONException If syntax error.
@@ -457,7 +457,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Skip characters until the next character is the requested character.
      * If the requested character is not found, no characters are skipped.
      * @param to A character to skip to.
@@ -486,7 +486,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Make a JSONException to signal a syntax error.
      *
      * @param message The error message.
@@ -497,7 +497,7 @@ public class JSONTokener {
     }
 
 
-    /* 
+    /**
      * Make a printable string of this JSONTokener.
      *
      * @return " at character [this.index]"

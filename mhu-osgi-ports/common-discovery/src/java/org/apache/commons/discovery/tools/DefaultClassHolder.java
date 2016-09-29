@@ -21,7 +21,7 @@ import org.apache.commons.discovery.ResourceClassIterator;
 import org.apache.commons.discovery.resource.classes.DiscoverClasses;
 import org.apache.commons.discovery.resource.ClassLoaders;
 
-/* 
+/**
  * Holder for a default class.
  *
  * Class may be specified by name (String) or class (Class).
@@ -33,7 +33,7 @@ public class DefaultClassHolder<T> {
 
     private final String defaultName;
 
-    /* 
+    /**
      * Creates a new holder implementation given
      * the input SPI implementation/extension class.
      *
@@ -45,7 +45,7 @@ public class DefaultClassHolder<T> {
         this.defaultName = defaultClass.getName();
     }
 
-    /* 
+    /**
      * Creates a new holder implementation given
      * the input SPI implementation/extension class name.
      *
@@ -56,7 +56,7 @@ public class DefaultClassHolder<T> {
         this.defaultName = defaultName;
     }
 
-    /* 
+    /**
      * Returns the default class, loading it if necessary
      * and verifying that it implements the SPI
      * (this forces the check, no way out..).
@@ -89,7 +89,7 @@ public class DefaultClassHolder<T> {
         return returned;
     }
 
-    /* 
+    /**
      * Returns the hold class name.
      *
      * @return The hold class name

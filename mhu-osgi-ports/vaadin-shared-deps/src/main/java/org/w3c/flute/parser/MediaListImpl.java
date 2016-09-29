@@ -10,7 +10,7 @@ package org.w3c.flute.parser;
 
 import org.w3c.css.sac.SACMediaList;
 
-/* 
+/**
  * @version $Revision: 1.4 $
  * @author  Philippe Le Hegaret
  */
@@ -49,7 +49,7 @@ public class MediaListImpl implements SACMediaList {
 	array[current++] = medium;
     }
 
-    /* 
+    /**
      * Returns a string representation of this object.
      */
     public String toString() {

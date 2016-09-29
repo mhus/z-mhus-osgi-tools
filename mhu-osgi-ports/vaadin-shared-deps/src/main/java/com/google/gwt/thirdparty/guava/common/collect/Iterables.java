@@ -39,7 +39,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * This class contains static utility methods that operate on or return objects
  * of type {@code Iterable}. Except as noted, each method has a corresponding
  * {@link Iterator}-based method in the {@link Iterators} class.
@@ -60,7 +60,7 @@ import javax.annotation.Nullable;
 public final class Iterables {
   private Iterables() {}
 
-  /*  Returns an unmodifiable view of {@code iterable}. */
+  /** Returns an unmodifiable view of {@code iterable}. */
   public static <T> Iterable<T> unmodifiableIterable(
       final Iterable<T> iterable) {
     checkNotNull(iterable);
@@ -71,7 +71,7 @@ public final class Iterables {
     return new UnmodifiableIterable<T>(iterable);
   }
 
-  /* 
+  /**
    * Simply returns its argument.
    *
    * @deprecated no need to use this
@@ -101,7 +101,7 @@ public final class Iterables {
     // no equals and hashCode; it would break the contract!
   }
 
-  /* 
+  /**
    * Returns the number of elements in {@code iterable}.
    */
   public static int size(Iterable<?> iterable) {
@@ -110,7 +110,7 @@ public final class Iterables {
         : Iterators.size(iterable.iterator());
   }
 
-  /* 
+  /**
    * Returns {@code true} if {@code iterable} contains any object for which {@code equals(element)}
    * is true.
    */
@@ -123,7 +123,7 @@ public final class Iterables {
     return Iterators.contains(iterable.iterator(), element);
   }
 
-  /* 
+  /**
    * Removes, from an iterable, every element that belongs to the provided
    * collection.
    *
@@ -141,7 +141,7 @@ public final class Iterables {
         : Iterators.removeAll(removeFrom.iterator(), elementsToRemove);
   }
 
-  /* 
+  /**
    * Removes, from an iterable, every element that does not belong to the
    * provided collection.
    *
@@ -159,7 +159,7 @@ public final class Iterables {
         : Iterators.retainAll(removeFrom.iterator(), elementsToRetain);
   }
 
-  /* 
+  /**
    * Removes, from an iterable, every element that satisfies the provided
    * predicate.
    *
@@ -231,7 +231,7 @@ public final class Iterables {
     }
   }
 
-  /* 
+  /**
    * Removes and returns the first matching element, or returns {@code null} if there is none.
    */
   @Nullable
@@ -248,7 +248,7 @@ public final class Iterables {
     return null;
   }
 
-  /* 
+  /**
    * Determines whether two iterables contain equal elements in the same order.
    * More specifically, this method returns {@code true} if {@code iterable1}
    * and {@code iterable2} contain the same number of elements and every element
@@ -267,7 +267,7 @@ public final class Iterables {
     return Iterators.elementsEqual(iterable1.iterator(), iterable2.iterator());
   }
 
-  /* 
+  /**
    * Returns a string representation of {@code iterable}, with the format
    * {@code [e1, e2, ..., en]}.
    */
@@ -275,7 +275,7 @@ public final class Iterables {
     return Iterators.toString(iterable.iterator());
   }
 
-  /* 
+  /**
    * Returns the single element contained in {@code iterable}.
    *
    * @throws NoSuchElementException if the iterable is empty
@@ -286,7 +286,7 @@ public final class Iterables {
     return Iterators.getOnlyElement(iterable.iterator());
   }
 
-  /* 
+  /**
    * Returns the single element contained in {@code iterable}, or {@code
    * defaultValue} if the iterable is empty.
    *
@@ -299,7 +299,7 @@ public final class Iterables {
     return Iterators.getOnlyElement(iterable.iterator(), defaultValue);
   }
 
-  /* 
+  /**
    * Copies an iterable's elements into an array.
    *
    * @param iterable the iterable to copy
@@ -314,7 +314,7 @@ public final class Iterables {
     return collection.toArray(array);
   }
 
-  /* 
+  /**
    * Copies an iterable's elements into an array.
    *
    * @param iterable the iterable to copy
@@ -325,7 +325,7 @@ public final class Iterables {
     return toCollection(iterable).toArray();
   }
 
-  /* 
+  /**
    * Converts an iterable into a collection. If the iterable is already a
    * collection, it is returned. Otherwise, an {@link java.util.ArrayList} is
    * created with the contents of the iterable in the same iteration order.
@@ -336,7 +336,7 @@ public final class Iterables {
         : Lists.newArrayList(iterable.iterator());
   }
 
-  /* 
+  /**
    * Adds all elements in {@code iterable} to {@code collection}.
    *
    * @return {@code true} if {@code collection} was modified as a result of this
@@ -351,7 +351,7 @@ public final class Iterables {
     return Iterators.addAll(addTo, checkNotNull(elementsToAdd).iterator());
   }
 
-  /* 
+  /**
    * Returns the number of elements in the specified iterable that equal the
    * specified object. This implementation avoids a full iteration when the
    * iterable is a {@link Multiset} or {@link Set}.
@@ -367,7 +367,7 @@ public final class Iterables {
     return Iterators.frequency(iterable.iterator(), element);
   }
 
-  /* 
+  /**
    * Returns an iterable whose iterators cycle indefinitely over the elements of
    * {@code iterable}.
    *
@@ -397,7 +397,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns an iterable whose iterators cycle indefinitely over the provided
    * elements.
    *
@@ -419,7 +419,7 @@ public final class Iterables {
     return cycle(Lists.newArrayList(elements));
   }
 
-  /* 
+  /**
    * Combines two iterables into a single iterable. The returned iterable has an
    * iterator that traverses the elements in {@code a}, followed by the elements
    * in {@code b}. The source iterators are not polled until necessary.
@@ -432,7 +432,7 @@ public final class Iterables {
     return concat(ImmutableList.of(a, b));
   }
 
-  /* 
+  /**
    * Combines three iterables into a single iterable. The returned iterable has
    * an iterator that traverses the elements in {@code a}, followed by the
    * elements in {@code b}, followed by the elements in {@code c}. The source
@@ -446,7 +446,7 @@ public final class Iterables {
     return concat(ImmutableList.of(a, b, c));
   }
 
-  /* 
+  /**
    * Combines four iterables into a single iterable. The returned iterable has
    * an iterator that traverses the elements in {@code a}, followed by the
    * elements in {@code b}, followed by the elements in {@code c}, followed by
@@ -462,7 +462,7 @@ public final class Iterables {
     return concat(ImmutableList.of(a, b, c, d));
   }
 
-  /* 
+  /**
    * Combines multiple iterables into a single iterable. The returned iterable
    * has an iterator that traverses the elements of each iterable in
    * {@code inputs}. The input iterators are not polled until necessary.
@@ -476,7 +476,7 @@ public final class Iterables {
     return concat(ImmutableList.copyOf(inputs));
   }
 
-  /* 
+  /**
    * Combines multiple iterables into a single iterable. The returned iterable
    * has an iterator that traverses the elements of each iterable in
    * {@code inputs}. The input iterators are not polled until necessary.
@@ -497,7 +497,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns an iterator over the iterators of the given iterables.
    */
   private static <T> Iterator<Iterator<? extends T>> iterators(
@@ -511,7 +511,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Divides an iterable into unmodifiable sublists of the given size (the final
    * iterable may be smaller). For example, partitioning an iterable containing
    * {@code [a, b, c, d, e]} with a partition size of 3 yields {@code
@@ -543,7 +543,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Divides an iterable into unmodifiable sublists of the given size, padding
    * the final iterable with null values if necessary. For example, partitioning
    * an iterable containing {@code [a, b, c, d, e]} with a partition size of 3
@@ -572,7 +572,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns the elements of {@code unfiltered} that satisfy a predicate. The
    * resulting iterable's iterator does not support {@code remove()}.
    */
@@ -588,7 +588,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns all instances of class {@code type} in {@code unfiltered}. The
    * returned iterable has elements whose class is {@code type} or a subclass of
    * {@code type}. The returned iterable's iterator does not support
@@ -612,7 +612,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns {@code true} if any element in {@code iterable} satisfies the predicate.
    */
   public static <T> boolean any(
@@ -620,7 +620,7 @@ public final class Iterables {
     return Iterators.any(iterable.iterator(), predicate);
   }
 
-  /* 
+  /**
    * Returns {@code true} if every element in {@code iterable} satisfies the
    * predicate. If {@code iterable} is empty, {@code true} is returned.
    */
@@ -629,7 +629,7 @@ public final class Iterables {
     return Iterators.all(iterable.iterator(), predicate);
   }
 
-  /* 
+  /**
    * Returns the first element in {@code iterable} that satisfies the given
    * predicate; use this method only when such an element is known to exist. If
    * it is possible that <i>no</i> element will match, use {@link #tryFind} or
@@ -643,7 +643,7 @@ public final class Iterables {
     return Iterators.find(iterable.iterator(), predicate);
   }
 
-  /* 
+  /**
    * Returns the first element in {@code iterable} that satisfies the given
    * predicate, or {@code defaultValue} if none found. Note that this can
    * usually be handled more naturally using {@code
@@ -657,7 +657,7 @@ public final class Iterables {
     return Iterators.find(iterable.iterator(), predicate, defaultValue);
   }
 
-  /* 
+  /**
    * Returns an {@link Optional} containing the first element in {@code
    * iterable} that satisfies the given predicate, if such an element exists.
    *
@@ -672,7 +672,7 @@ public final class Iterables {
     return Iterators.tryFind(iterable.iterator(), predicate);
   }
 
-  /* 
+  /**
    * Returns the index in {@code iterable} of the first element that satisfies
    * the provided {@code predicate}, or {@code -1} if the Iterable has no such
    * elements.
@@ -688,7 +688,7 @@ public final class Iterables {
     return Iterators.indexOf(iterable.iterator(), predicate);
   }
 
-  /* 
+  /**
    * Returns an iterable that applies {@code function} to each element of {@code
    * fromIterable}.
    *
@@ -712,7 +712,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns the element at the specified position in an iterable.
    *
    * @param position position of the element to return
@@ -727,7 +727,7 @@ public final class Iterables {
         : Iterators.get(iterable.iterator(), position);
   }
 
-  /* 
+  /**
    * Returns the element at the specified position in an iterable or a default
    * value otherwise.
    *
@@ -754,7 +754,7 @@ public final class Iterables {
     }
   }
 
-  /* 
+  /**
    * Returns the first element in {@code iterable} or {@code defaultValue} if
    * the iterable is empty.  The {@link Iterators} analog to this method is
    * {@link Iterators#getNext}.
@@ -772,7 +772,7 @@ public final class Iterables {
     return Iterators.getNext(iterable.iterator(), defaultValue);
   }
 
-  /* 
+  /**
    * Returns the last element of {@code iterable}.
    *
    * @return the last element of {@code iterable}
@@ -791,7 +791,7 @@ public final class Iterables {
     return Iterators.getLast(iterable.iterator());
   }
 
-  /* 
+  /**
    * Returns the last element of {@code iterable} or {@code defaultValue} if
    * the iterable is empty.
    *
@@ -817,7 +817,7 @@ public final class Iterables {
     return list.get(list.size() - 1);
   }
 
-  /* 
+  /**
    * Returns a view of {@code iterable} that skips its first
    * {@code numberToSkip} elements. If {@code iterable} contains fewer than
    * {@code numberToSkip} elements, the returned iterable skips all of its
@@ -891,7 +891,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Creates an iterable with the first {@code limitSize} elements of the given
    * iterable. If the original iterable does not contain that many elements, the
    * returned iterator will have the same behavior as the original iterable. The
@@ -915,7 +915,7 @@ public final class Iterables {
     };
   }
 
-  /* 
+  /**
    * Returns a view of the supplied iterable that wraps each generated
    * {@link Iterator} through {@link Iterators#consumingIterator(Iterator)}.
    *
@@ -972,7 +972,7 @@ public final class Iterables {
 
   // Methods only in Iterables, not in Iterators
 
-  /* 
+  /**
    * Determines if the given iterable contains no elements.
    *
    * <p>There is no precise {@link Iterator} equivalent to this method, since
@@ -988,7 +988,7 @@ public final class Iterables {
     return !iterable.iterator().hasNext();
   }
 
-  /* 
+  /**
    * Returns an iterable over the merged contents of all given
    * {@code iterables}. Equivalent entries will not be de-duplicated.
    *

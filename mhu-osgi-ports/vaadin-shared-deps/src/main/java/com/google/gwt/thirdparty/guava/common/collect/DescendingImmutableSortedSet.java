@@ -20,7 +20,7 @@ import com.google.gwt.thirdparty.guava.common.annotations.GwtIncompatible;
 
 import javax.annotation.Nullable;
 
-/* 
+/**
  * Skeletal implementation of {@link ImmutableSortedSet#descendingSet()}.
  *
  * @author Louis Wasserman
