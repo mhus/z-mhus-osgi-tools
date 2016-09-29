@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.mhus.osgi.tutorial</groupId>
     <artifactId>tutorials</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
   <name>vaadin-sample</name>
   <artifactId>vaadin-sample</artifactId>
@@ -161,7 +161,7 @@
         </dependency>
         <dependency>
         	<groupId>de.mhus.osgi</groupId>
-        	<artifactId>vaadinosgibridge</artifactId>
+        	<artifactId>mhu-osgi-vaadinosgibridge</artifactId>
         	<version>${project.version}</version>
         	<type>bundle</type>
         </dependency>
