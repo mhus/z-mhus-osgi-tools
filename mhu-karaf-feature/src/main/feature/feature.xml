@@ -39,12 +39,12 @@
 		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-karaf/${mhulib.version}</bundle>
 
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailosgi/${osgitools.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailosgi/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${project.version}</bundle>
 
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${osgitools.version}
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${project.version}
 		</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${project.version}</bundle>
 
 		<bundle>mvn:javax.xml.rpc/javax.xml.rpc-api/1.1.1</bundle>
 
@@ -53,15 +53,15 @@
 	<feature name='mhu-osgi-vaadin' description='mhu-osgi-vaadin' version='${project.version}'>
 		<feature>mhu-osgi-full</feature>
 		
-		<bundle>mvn:de.mhus.osgi.ports/vaadin-shared-deps/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi.ports/vaadin-shared-deps/${project.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-themes/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-server/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-client-compiled/${vaadin.version}</bundle>
 
 		<bundle>mvn:de.mhus.lib/mhu-lib-vaadin/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinosgibridge/${osgitools.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinkarafbridge/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinosgibridge/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinkarafbridge/${project.version}</bundle>
 
 	</feature>
 	
