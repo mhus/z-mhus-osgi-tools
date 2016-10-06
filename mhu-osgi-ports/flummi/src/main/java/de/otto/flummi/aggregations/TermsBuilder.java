@@ -8,9 +8,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import de.mhus.lib.core.util.Pair;
 import de.otto.flummi.SortOrder;
 import de.otto.flummi.response.AggregationResult;
-import javafx.util.Pair;
 
 public class TermsBuilder extends AggregationBuilder<TermsBuilder> {
     private String fieldName;
