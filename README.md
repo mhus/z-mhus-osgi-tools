@@ -23,7 +23,7 @@ Build from source
 Use with maven
 -------------
 
-**Maybe change version**
+**Change version**
 
 Append a version property
 
@@ -33,6 +33,16 @@ Append a version property
 
 Follow the instructions in the sections jwsbridge and vaadinbridge.
 
+Install Into Karaf
+------
+
+Use Feature
+
+feature:repo-add activemq 5.12.1
+feature:repo-add cxf 3.1.5
+feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.3.0-SNAPSHOT/xml/features
+
+feature:install mhu-osgi-full
 
 
 Basis:

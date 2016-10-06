@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to 
+	You under the Apache License, Version 2.0 (the "License"); you may not use 
+	this file except in compliance with the License. You may obtain a copy of 
+	the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required 
+	by applicable law or agreed to in writing, software distributed under the 
+	License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific 
+	language governing permissions and limitations under the License. -->
+<features name="${project.artifactId}-${project.version}"
+	xmlns="http://karaf.apache.org/xmlns/features/v1.2.1">
+
+	<feature name='mhu-osgi-full' description='mhu-osgi-full' version='${project.version}'>
+		<details>${project.description}</details>
+		<!-- <config>foo=bar</config> -->
+		<feature>scr</feature>
+		<feature>jdbc</feature>
+		<feature>openjpa</feature>
+		<feature>jndi</feature>
+		<feature>activemq-client</feature>
+		<feature>http</feature>
+		<feature>http-whiteboard</feature>
+
+		<bundle>mvn:org.jsoup/jsoup/1.8.1</bundle>
+		
+		<bundle>mvn:mysql/mysql-connector-java/5.1.18</bundle>
+		<bundle>mvn:org.apache.commons/commons-jexl/2.1.1</bundle>
+		<bundle><![CDATA[wrap:mvn:org.w3c.css/sac/1.3/$Bundle-SymbolicName=sac&Bundle-Version=1.3&Export-Package=org.w3c.css.sac;version="1.3",!*]]></bundle>
+
+		<bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.5</bundle>
+		<bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.5</bundle>
+		<bundle><![CDATA[wrap:mvn:org.apache.commons/commons-io/1.3.2/$Bundle-SymbolicName=commons-io&Bundle-Version=1.3.2&Export-Package=org.apache.commons.io;version="1.3.2",!*]]></bundle>
+
+		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-karaf/${mhulib.version}</bundle>
+
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailosgi/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${osgitools.version}</bundle>
+
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${osgitools.version}
+		</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${osgitools.version}</bundle>
+
+		<bundle>mvn:javax.xml.rpc/javax.xml.rpc-api/1.1.1</bundle>
+
+	</feature>
+
+	<feature name='mhu-osgi-vaadin' description='mhu-osgi-vaadin' version='${project.version}'>
+		<feature>mhu-osgi-full</feature>
+		
+		<bundle>mvn:de.mhus.osgi.ports/vaadin-shared-deps/${osgitools.version}</bundle>
+		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
+		<bundle>mvn:com.vaadin/vaadin-themes/${vaadin.version}</bundle>
+		<bundle>mvn:com.vaadin/vaadin-server/${vaadin.version}</bundle>
+		<bundle>mvn:com.vaadin/vaadin-client-compiled/${vaadin.version}</bundle>
+
+		<bundle>mvn:de.mhus.lib/mhu-lib-vaadin/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinosgibridge/${osgitools.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinkarafbridge/${osgitools.version}</bundle>
+
+	</feature>
+	
+</features>
