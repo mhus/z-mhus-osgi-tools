@@ -10,7 +10,7 @@
 	OF ANY KIND, either express or implied. See the License for the specific 
 	language governing permissions and limitations under the License. -->
 <features name="${project.artifactId}-${project.version}"
-	xmlns="http://karaf.apache.org/xmlns/features/v1.2.1">
+	xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
 	<feature name='mhu-osgi-full' description='mhu-osgi-full' version='${project.version}'>
 		<details>${project.description}</details>
