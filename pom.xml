@@ -35,14 +35,14 @@
     </license>
   </licenses>
   <scm>
-    <url>https://mhu-lib.googlecode.com/svn/trunk/mhu-lib</url>
+    <url>https://github.com/mhus/mhus-osgi-tools</url>
     <connection>scm:git:https://github.com/mhus/mhus-osgi-tools/</connection>
   </scm>
   <developers>
     <developer>
       <id>mhu</id>
       <name>Mike Hummel</name>
-      <email>mh@mikehummel.de</email>
+      <email>mh@mhus.de</email>
       <url>http://www.mhus.de</url>
     </developer>
   </developers>
@@ -68,10 +68,8 @@
         <felix.version>4.2.4</felix.version>
         <felix.plugin.version>3.0.1</felix.plugin.version>
         <maven.version>2.0.9</maven.version>
-		
 		<dependency.jetty.version>8.1.14.v20131031</dependency.jetty.version>
-		 <pax.version>3.1.0</pax.version>
-		
+		<pax.version>3.1.0</pax.version>
 		<servlet.version>3.1.0</servlet.version>
       </properties>
 
