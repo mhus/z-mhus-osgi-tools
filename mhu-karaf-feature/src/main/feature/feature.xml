@@ -12,18 +12,17 @@
 <features name="${project.artifactId}-${project.version}"
 	xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
-	<feature name='mhu-osgi-full' description='mhu-osgi-full' version='${project.version}'>
+	<feature name='mhu-osgi-base' description='mhu-osgi-base' version='${project.version}'>
 		<details>${project.description}</details>
 		<!-- <config>foo=bar</config> -->
 		<feature>scr</feature>
 		<feature>jdbc</feature>
 		<feature>openjpa</feature>
 		<feature>jndi</feature>
-		<feature>activemq-client</feature>
 		<feature>http</feature>
 		<feature>http-whiteboard</feature>
 
-		<bundle>mvn:org.jsoup/jsoup/1.8.1</bundle>
+		<bundle>mvn:org.jsoup/jsoup/1.8.3</bundle>
 		
 		<bundle>mvn:mysql/mysql-connector-java/5.1.18</bundle>
 		<bundle>mvn:org.apache.commons/commons-jexl/2.1.1</bundle>
@@ -36,22 +35,35 @@
 		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-karaf/${mhulib.version}</bundle>
 
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailosgi/${project.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${project.version}</bundle>
-
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${project.version}
-		</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${project.version}</bundle>
 
 		<bundle>mvn:javax.xml.rpc/javax.xml.rpc-api/1.1.1</bundle>
 
 	</feature>
 
+	<feature name='mhu-osgi-mailer' description='mhu-osgi-mailer' version='${project.version}'>
+		<feature>mhu-osgi-base</feature>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailosgi/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${project.version}</bundle>
+	</feature>
+
+	<feature name='mhu-osgi-sop' description='mhu-osgi-sop' version='${project.version}'>
+		<feature>mhu-osgi-base</feature>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-sop-api/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-sop-impl/${project.version}</bundle>
+	</feature>
+	
+	<feature name='mhu-osgi-jms' description='mhu-osgi-vaadin' version='${project.version}'>
+		<feature>activemq-client</feature>
+		<feature>mhu-osgi-base</feature>
+		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${project.version}</bundle>
+	</feature>
+	
 	<feature name='mhu-osgi-vaadin' description='mhu-osgi-vaadin' version='${project.version}'>
-		<feature>mhu-osgi-full</feature>
+		<feature>mhu-osgi-base</feature>
 		
 		<bundle>mvn:de.mhus.osgi.ports/vaadin-shared-deps/${project.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
@@ -65,4 +77,11 @@
 
 	</feature>
 	
+	<feature name='mhu-osgi-full' description='mhu-osgi-full' version='${project.version}'>
+		<feature>mhu-osgi-base</feature>
+		<feature>mhu-osgi-mailer</feature>
+		<feature>mhu-osgi-jms</feature>
+		<feature>mhu-osgi-vaadin</feature>
+		<feature>mhu-osgi-sop</feature>
+	</feature>
 </features>
