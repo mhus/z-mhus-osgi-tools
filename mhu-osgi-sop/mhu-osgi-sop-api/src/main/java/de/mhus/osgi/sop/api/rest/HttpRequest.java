@@ -6,11 +6,15 @@ import java.util.Set;
 
 public class HttpRequest {
 
-	private Map<String, Object> parameters;
+	private Map<String, String[]> parameters;
 
-	public HttpRequest(Map<String,Object> parameters) {
+	public HttpRequest(Map<String,String[]> parameters) {
 		this.parameters =parameters;
 	}
+	
+//	public HttpRequest(Map<String,Object> parameters) {
+//		this.parameters =parameters;
+//	}
 
 	public String getParameter(String key) {
 		Object out = parameters.get(key);
