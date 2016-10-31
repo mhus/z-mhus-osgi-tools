@@ -55,6 +55,7 @@ public class SopDbManagerService extends DbManagerServiceImpl {
 		setDataSourceName("db_sop");
 	}
 
+	@Override
 	protected DbPool doCreateDataPool() {
 		return new PseudoDbPool(new DataSourceProvider(getDataSource(), doCreateDialect(), doCreateConfig(), doCreateActivator() ));
 	}
