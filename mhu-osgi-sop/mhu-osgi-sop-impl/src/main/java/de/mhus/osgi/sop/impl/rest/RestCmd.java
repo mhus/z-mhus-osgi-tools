@@ -10,7 +10,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.rest.RestNodeService;
-import de.mhus.osgi.sop.api.rest.RestService;
+import de.mhus.osgi.sop.api.rest.RestApi;
 
 @Command(scope = "sop", name = "rest", description = "REST Call")
 @Service
@@ -19,7 +19,7 @@ public class RestCmd implements Action {
 	@Override
 	public Object execute() throws Exception {
 
-        RestService restService = Sop.getApi(RestService.class);
+        RestApi restService = Sop.getApi(RestApi.class);
 
         ConsoleTable table = new ConsoleTable();
         table.setHeaderValues("Registered","Node Id","Parents","Class");

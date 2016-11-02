@@ -15,6 +15,8 @@ import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
+import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 
 @Command(scope = "sop", name = "access", description = "Access actions")
@@ -41,7 +43,8 @@ public class AccessCmd implements Action {
 	@Override
 	public Object execute() throws Exception {
 
-		SopApi api = Sop.getApi(SopApi.class);
+		AccessApi api = Sop.getApi(AccessApi.class);
+		AdbApi adb = Sop.getApi(AdbApi.class);
 		if (api == null) {
 			System.out.println("SOP API not found");
 			return null;
@@ -91,7 +94,7 @@ public class AccessCmd implements Action {
 		if(cmd.equals("controllers")) {
 			ConsoleTable table = new ConsoleTable();
 			table.setHeaderValues("Type","Controller","Bundle");
-			for (Entry<String, DbSchemaService> entry : api.getController()) {
+			for (Entry<String, DbSchemaService> entry : adb.getController()) {
 				Bundle bundle = FrameworkUtil.getBundle(entry.getValue().getClass());
 				table.addRowValues(entry.getKey(), entry.getValue().getClass(), bundle.getSymbolicName() );
 			}

@@ -13,6 +13,8 @@ import de.mhus.lib.core.pojo.PojoModel;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
+import de.mhus.osgi.sop.api.action.ActionApi;
+import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.operation.OperationBpmDefinition;
 import de.mhus.osgi.sop.api.operation.OperationService;
@@ -22,7 +24,7 @@ public class RestUtil {
 	private static Log log = Log.getLog(RestUtil.class);
 
 	public static void updateObject(CallContext callContext, Object obj, boolean publicOnly) throws IOException {
-		DbManager manager = Sop.getApi(SopApi.class).getDbManager();
+		DbManager manager = Sop.getApi(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 
 		PojoModel model = schema.createPojoModel(obj.getClass());
@@ -40,7 +42,7 @@ public class RestUtil {
 	}
 
 	public static void updateObject(IProperties props, Object obj, boolean publicOnly) throws IOException {
-		DbManager manager = Sop.getApi(SopApi.class).getDbManager();
+		DbManager manager = Sop.getApi(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 
 		PojoModel model = schema.createPojoModel(obj.getClass());
@@ -70,11 +72,11 @@ public class RestUtil {
 	}
 
 	public static RestResult doExecuteBpm(Class<? extends OperationService> oper, CallContext callContext, String source) throws MException {
-		return Sop.getApi(SopApi.class).doExecuteRestAction(callContext, getOperationName(oper), source );
+		return Sop.getApi(ActionApi.class).doExecuteRestAction(callContext, getOperationName(oper), source );
 	}
 	
 	public static RestResult doExecuteBpm(String name, CallContext callContext, String source) throws MException {
-		return Sop.getApi(SopApi.class).doExecuteRestAction(callContext, name, source );
+		return Sop.getApi(ActionApi.class).doExecuteRestAction(callContext, name, source );
 	}
 
 	public static String getOperationName(Class<? extends OperationService> oper) throws MException {

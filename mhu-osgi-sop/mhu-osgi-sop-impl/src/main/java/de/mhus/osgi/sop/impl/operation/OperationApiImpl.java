@@ -39,6 +39,7 @@ import de.mhus.lib.karaf.jms.JmsUtil;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.operation.OperationApi;
 import de.mhus.osgi.sop.api.operation.OperationBpmDefinition;
 import de.mhus.osgi.sop.api.operation.OperationException;
@@ -173,7 +174,7 @@ public class OperationApiImpl extends MLog implements OperationApi {
 		if (p >= 0) {
 			String queue = path.substring(0,p);
 			path = path.substring(p+1);
-			SopApi access = Sop.getApi(SopApi.class);
+			AccessApi access = Sop.getApi(AccessApi.class);
 			try {
 				OperationResult answer = doExecuteOperation(Sop.getDefaultJmsConnection(), queue, path, properties, access.getCurrent(), true);
 				return answer;
@@ -200,7 +201,7 @@ public class OperationApiImpl extends MLog implements OperationApi {
 	}
 
 	public OperationResult doExecuteOperation(JmsConnection con, String queueName, String operationName, IProperties parameters, AaaContext user, boolean needAnswer ) throws Exception {
-		SopApi api = Sop.getApi(SopApi.class);
+		AccessApi api = Sop.getApi(AccessApi.class);
 		String ticket = api.createTrustTicket(user);
 		return doExecuteOperation(con, queueName, operationName, parameters, ticket, MTimeInterval.MINUTE_IN_MILLISECOUNDS / 2, needAnswer);
 	}

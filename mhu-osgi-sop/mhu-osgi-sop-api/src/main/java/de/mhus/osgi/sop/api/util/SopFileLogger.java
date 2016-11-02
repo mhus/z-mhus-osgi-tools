@@ -7,6 +7,7 @@ import de.mhus.lib.logging.FileLogger;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 
 // TODO implement asynchrony logging
 public class SopFileLogger extends FileLogger {
@@ -31,7 +32,7 @@ public class SopFileLogger extends FileLogger {
 		out.append(Thread.currentThread().getId()).append(',');
 		out.append(Thread.currentThread().getName()).append(',');
 		
-		AaaContext context = Sop.getApi(SopApi.class).getCurrent();
+		AaaContext context = Sop.getApi(AccessApi.class).getCurrent();
 		out.append(context.getAccountId());
 		
 		return out.toString();

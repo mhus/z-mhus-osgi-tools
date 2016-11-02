@@ -9,6 +9,7 @@ import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
 import de.mhus.osgi.sop.api.aaa.Trust;
 
@@ -27,7 +28,7 @@ public class AaaContextImpl implements AaaContext {
 		this.account = account;
 		this.trust = trust;
 		if (admin) {
-			SopApi aa = Sop.getApi(SopApi.class);
+			AccessApi aa = Sop.getApi(AccessApi.class);
 			if (aa.hasResourceAccess(account, Account.MAP_ADMIN, null, null))
 				adminMode = true;
 		}

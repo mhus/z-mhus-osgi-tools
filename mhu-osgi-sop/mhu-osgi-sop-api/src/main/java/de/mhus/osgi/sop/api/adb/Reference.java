@@ -1,4 +1,4 @@
-package de.mhus.osgi.sop.api.aaa;
+package de.mhus.osgi.sop.api.adb;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.MException;
@@ -25,10 +25,4 @@ public class Reference<T extends DbMetadata> extends MLog {
 		return type;
 	}
 	
-	public void doDelete() throws MException {
-		log().d("start delete",object,type);
-		Sop.getApi(SopApi.class).onDelete(object);
-		log().d("delete",object,type);
-		object.delete();
-	}
 }

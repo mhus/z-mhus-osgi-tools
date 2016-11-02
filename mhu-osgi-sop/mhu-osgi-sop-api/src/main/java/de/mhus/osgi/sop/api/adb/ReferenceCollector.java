@@ -1,4 +1,4 @@
-package de.mhus.osgi.sop.api.aaa;
+package de.mhus.osgi.sop.api.adb;
 
 public interface ReferenceCollector {
 

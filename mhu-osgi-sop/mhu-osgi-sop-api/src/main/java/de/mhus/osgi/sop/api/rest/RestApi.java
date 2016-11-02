@@ -6,7 +6,7 @@ import java.util.Map;
 import de.mhus.osgi.sop.api.SApi;
 
 
-public interface RestService extends SApi {
+public interface RestApi extends SApi {
 
 	Node lookup(List<String> parts, String lastNodeId, CallContext context)
 			throws Exception;

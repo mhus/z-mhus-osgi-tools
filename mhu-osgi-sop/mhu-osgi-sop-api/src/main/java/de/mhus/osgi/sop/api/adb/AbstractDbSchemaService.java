@@ -7,6 +7,7 @@ import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public abstract class AbstractDbSchemaService implements DbSchemaService {
@@ -14,25 +15,25 @@ public abstract class AbstractDbSchemaService implements DbSchemaService {
 	@Override
 	public boolean canRead(AaaContext account, DbMetadata obj)
 			throws MException {
-		return Sop.getApi(SopApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_READ);
+		return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_READ);
 	}
 
 	@Override
 	public boolean canUpdate(AaaContext account, DbMetadata obj)
 			throws MException {
-		return Sop.getApi(SopApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_UPDATE);
+		return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_UPDATE);
 	}
 
 	@Override
 	public boolean canDelete(AaaContext account, DbMetadata obj)
 			throws MException {
-		return Sop.getApi(SopApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_DELETE);
+		return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_DELETE);
 	}
 
 	@Override
 	public boolean canCreate(AaaContext account, DbMetadata obj)
 			throws MException {
-		return Sop.getApi(SopApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_CREATE);
+		return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(), String.valueOf(obj.getId()), Account.ACT_CREATE);
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public abstract class AbstractDbSchemaService implements DbSchemaService {
 		try {
 			Class<?> clazz = Class.forName(type, true, this.getClass().getClassLoader());
 			if (clazz != null) {
-				return (DbMetadata)Sop.getApi(SopApi.class).getDbManager().getObject(clazz, id);
+				return (DbMetadata)Sop.getApi(AdbApi.class).getManager().getObject(clazz, id);
 			}
 		} catch (Throwable t) {
 			throw new MException("type error",type,t);

@@ -68,7 +68,7 @@ public class CallContext {
 
 	public Node lookup(List<String> parts, String lastNodeId)
 			throws Exception {
-        RestService restService = Sop.getApi(RestService.class);
+        RestApi restService = Sop.getApi(RestApi.class);
         return restService.lookup(parts, lastNodeId, this);
 	}
 

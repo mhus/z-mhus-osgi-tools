@@ -19,6 +19,7 @@ import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 
 public class AccountFile extends MLog implements Account {
 	
@@ -87,7 +88,7 @@ public class AccountFile extends MLog implements Account {
 						return true;
 					}
 				}
-				isPasswordValidated = Sop.getApi(SopApi.class).validatePassword(this, password);
+				isPasswordValidated = Sop.getApi(AccessApi.class).validatePassword(this, password);
 			} catch (Throwable t) {
 				log().w("validatePassword",account,t);
 			}

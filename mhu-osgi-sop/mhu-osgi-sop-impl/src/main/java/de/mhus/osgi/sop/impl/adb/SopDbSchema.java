@@ -14,6 +14,7 @@ import de.mhus.lib.sql.DbResult;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.adb.AbstractDbSchema;
+import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 import de.mhus.osgi.sop.api.model.DbMetadata;
 
@@ -64,22 +65,22 @@ public class SopDbSchema extends AbstractDbSchema {
 			if (object instanceof DbMetadata) {
 				DbMetadata obj = (DbMetadata)object;
 				try {
-					SopApi aa = Sop.getApi(SopApi.class);
+					AdbApi adb = Sop.getApi(AdbApi.class);
 					switch(right) {
 					case CREATE:
-						if (!aa.canCreate(obj))
+						if (!adb.canCreate(obj))
 							throw new AccessDeniedException(c.getName(),right);
 						break;
 					case DELETE:
-						if (!aa.canDelete(obj))
+						if (!adb.canDelete(obj))
 							throw new AccessDeniedException(c.getName(),right);
 						break;
 					case READ:
-						if (!aa.canRead(obj))
+						if (!adb.canRead(obj))
 							throw new AccessDeniedException(c.getName(),right);
 						break;
 					case UPDATE:
-						if (!aa.canUpdate(obj))
+						if (!adb.canUpdate(obj))
 							throw new AccessDeniedException(c.getName(),right);
 						break;
 					default:

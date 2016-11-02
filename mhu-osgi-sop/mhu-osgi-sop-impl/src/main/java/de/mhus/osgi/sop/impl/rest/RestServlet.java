@@ -29,15 +29,16 @@ import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.rest.CallContext;
 import de.mhus.osgi.sop.api.rest.HttpRequest;
 import de.mhus.osgi.sop.api.rest.Node;
 import de.mhus.osgi.sop.api.rest.RestResult;
-import de.mhus.osgi.sop.api.rest.RestService;
+import de.mhus.osgi.sop.api.rest.RestApi;
 import de.mhus.osgi.sop.api.util.SopFileLogger;
 import de.mhus.osgi.sop.api.util.TicketUtil;
 
-@Component(immediate=true,name="RestServlet",provide=Servlet.class,properties="alias=/rest/*")
+//@Component(immediate=true,name="RestServlet",provide=Servlet.class,properties="alias=/rest/*")
 public class RestServlet extends HttpServlet {
 
 	static Log trace = new SopFileLogger("rest", "rest_trace");
@@ -121,11 +122,11 @@ public class RestServlet extends HttpServlet {
 	        @SuppressWarnings("unchecked")
 			CallContext callContext = new CallContext(new HttpRequest(req.getParameterMap()), method, context);
 	        
-	        RestService restService = Sop.getApi(RestService.class);
+	        RestApi restService = Sop.getApi(RestApi.class);
 	        
 	        RestResult res = null;
 	        
-	        SopApi access = Sop.getApi(SopApi.class);
+	        AccessApi access = Sop.getApi(AccessApi.class);
 	        AaaContext user = null;
 	        try {
 	        	user = access.process(ticket);

@@ -91,12 +91,12 @@ public class BpmUtil {
 
 		{
 			String caseId = context.getParameters().getString("_mfw_caseId",null);
-			caze = Sop.getApi(BpmApi.class).getCase(caseId);
+			caze = Sop.getApi(ActionApi.class).getCase(caseId);
 		}
 		
 		if (caze == null) {
 			String caseId = context.getParameters().getString("_bpm_caseId",null);
-			caze = Sop.getApi(BpmApi.class).getCase(caseId);
+			caze = Sop.getApi(ActionApi.class).getCase(caseId);
 		}
 		
 		if (caze == null)

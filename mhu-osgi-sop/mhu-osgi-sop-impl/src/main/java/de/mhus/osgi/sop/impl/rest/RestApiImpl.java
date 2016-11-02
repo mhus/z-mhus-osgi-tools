@@ -17,10 +17,10 @@ import de.mhus.lib.core.MLog;
 import de.mhus.osgi.sop.api.rest.CallContext;
 import de.mhus.osgi.sop.api.rest.Node;
 import de.mhus.osgi.sop.api.rest.RestNodeService;
-import de.mhus.osgi.sop.api.rest.RestService;
+import de.mhus.osgi.sop.api.rest.RestApi;
 
-@Component(immediate=true,name="RestService")
-public class RestServiceImpl extends MLog implements RestService {
+//@Component(immediate=true,name="RestService")
+public class RestApiImpl extends MLog implements RestApi {
 
 	private BundleContext context;
 	private ServiceTracker<RestNodeService,RestNodeService> nodeTracker;

@@ -13,6 +13,7 @@ import de.mhus.lib.core.strategy.OperationResult;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
+import de.mhus.osgi.sop.api.adb.AdbApi;
 
 public abstract class AbstractObjectListNode<T> extends JsonNode<T> {
 
@@ -42,7 +43,7 @@ public abstract class AbstractObjectListNode<T> extends JsonNode<T> {
 	}
 
 	protected PojoModelFactory getPojoModelFactory() {
-		DbManager manager = Sop.getApi(SopApi.class).getDbManager();
+		DbManager manager = Sop.getApi(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 		return schema;
 //		return MPojo.getDefaultModelFactory();

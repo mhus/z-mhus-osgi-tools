@@ -21,6 +21,7 @@ import de.mhus.lib.karaf.jms.JmsUtil;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.operation.OperationApi;
 import de.mhus.osgi.sop.api.operation.OperationBpmDefinition;
 
@@ -50,7 +51,7 @@ public class OperationCmd implements Action {
 		if (conName != null)
 			con = JmsUtil.getConnection(conName);
 		
-		AaaContext acc = Sop.getApi(SopApi.class).getCurrent();
+		AaaContext acc = Sop.getApi(AccessApi.class).getCurrent();
 		
 		OperationApi api = Sop.getApi(OperationApi.class);
 		if (cmd.equals("list")) {
