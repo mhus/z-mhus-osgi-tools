@@ -40,7 +40,7 @@ public class JsonResult implements RestResult {
     		((ObjectNode)json).put("_timestamp", System.currentTimeMillis());
     		((ObjectNode)json).put("_sequence", id);
 
-    		AaaContext user = Sop.getApi(AccessApi.class).getCurrent();
+    		AaaContext user = Sop.getApi(AccessApi.class).getCurrentOrGuest();
     		((ObjectNode)json).put("_user", user.getAccountId());
     		if (user.isAdminMode())
         		((ObjectNode)json).put("_admin", true);

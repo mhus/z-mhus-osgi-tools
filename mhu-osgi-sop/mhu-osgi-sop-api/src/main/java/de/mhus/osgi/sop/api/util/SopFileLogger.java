@@ -32,7 +32,7 @@ public class SopFileLogger extends FileLogger {
 		out.append(Thread.currentThread().getId()).append(',');
 		out.append(Thread.currentThread().getName()).append(',');
 		
-		AaaContext context = Sop.getApi(AccessApi.class).getCurrent();
+		AaaContext context = Sop.getApi(AccessApi.class).getCurrentOrGuest();
 		out.append(context.getAccountId());
 		
 		return out.toString();

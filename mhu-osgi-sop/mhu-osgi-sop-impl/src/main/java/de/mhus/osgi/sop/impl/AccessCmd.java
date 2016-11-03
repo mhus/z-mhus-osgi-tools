@@ -60,17 +60,22 @@ public class AccessCmd implements Action {
 			System.out.println(cur);
 		} else
 		if (cmd.equals("logout")) {
-			AaaContext cur = api.getCurrent();
+			AaaContext cur = api.getCurrentOrGuest();
 			cur = api.release(cur.getAccount());
 			System.out.println(cur);
 		} else
 		if (cmd.equals("id")) {
-			AaaContext cur = api.getCurrent();
+			AaaContext cur = api.getCurrentOrGuest();
 			System.out.println(cur);
 		} else
 		if (cmd.equals("root")) {
 			api.resetContext();
-			AaaContext cur = api.getCurrent();
+			AaaContext cur = api.getCurrentOrGuest();
+			System.out.println(cur);
+		} else
+		if (cmd.equals("root")) {
+			api.resetContext();
+			AaaContext cur = api.processAdminSession();
 			System.out.println(cur);
 		} else
 		if (cmd.equals("group")) {
@@ -79,13 +84,10 @@ public class AccessCmd implements Action {
 		} else
 		if (cmd.equals("access")) {
 			Account ac = api.getAccount(parameters[0]);
-			if (parameters.length > 3)
-				return api.hasResourceAccess(ac, parameters[1], parameters[2], parameters[3]);
-			else
 			if (parameters.length > 2)
-				return api.hasResourceAccess(ac, parameters[1], null, parameters[2]);
+				return api.hasGroupAccess(ac, parameters[1], parameters[2]);
 			else
-				return api.hasResourceAccess(ac, parameters[1], null, null);
+				return api.hasGroupAccess(ac, parameters[1], null);
 		} else
 		if (cmd.equals("info")) {
 			Account ac = api.getAccount(parameters[0]);
@@ -101,17 +103,17 @@ public class AccessCmd implements Action {
 			table.print(System.out);
 		} else
 		if (cmd.equals("cache")) {
-			AaaContextImpl context = (AaaContextImpl) api.getCurrent();
+			AaaContextImpl context = (AaaContextImpl) api.getCurrentOrGuest();
 			System.out.println("Cache Size: " + context.cacheSize());
 		} else
 		if (cmd.equals("local.cache.clear")) {
-			AaaContextImpl context = (AaaContextImpl) api.getCurrent();
+			AaaContextImpl context = (AaaContextImpl) api.getCurrentOrGuest();
 			System.out.println("Cache Size: " + context.cacheSize());
 			context.clearCache();
 			System.out.println("Cache Size: " + context.cacheSize());
 		} else
 		if (cmd.equals("local.cache.cleanup")) {
-			AaaContextImpl context = (AaaContextImpl) api.getCurrent();
+			AaaContextImpl context = (AaaContextImpl) api.getCurrentOrGuest();
 			System.out.println("Cache Size: " + context.cacheSize());
 			context.cleanupCache();
 			System.out.println("Cache Size: " + context.cacheSize());

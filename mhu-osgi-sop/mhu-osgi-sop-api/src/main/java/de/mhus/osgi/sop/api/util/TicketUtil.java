@@ -8,6 +8,7 @@ public class TicketUtil {
 	public static final String TRUST = "tru";
 	
 	public static final String SEP = ",";
+	public static final char SEP_CHAR = ',';
 	public static final String ADMIN = "admin";
 
 	/**

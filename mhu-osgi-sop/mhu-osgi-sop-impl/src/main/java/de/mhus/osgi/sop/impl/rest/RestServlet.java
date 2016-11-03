@@ -18,6 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
 import aQute.bnd.annotation.component.Component;
+import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MSingleton;
 import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
@@ -30,6 +31,7 @@ import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
+import de.mhus.osgi.sop.api.aaa.Trust;
 import de.mhus.osgi.sop.api.rest.CallContext;
 import de.mhus.osgi.sop.api.rest.HttpRequest;
 import de.mhus.osgi.sop.api.rest.Node;
@@ -64,7 +66,8 @@ public class RestServlet extends HttpServlet {
 	
 	private int nextId = 0;
 
-    protected void service(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
     	
     	resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -143,6 +146,33 @@ public class RestServlet extends HttpServlet {
 	            resp.setHeader("WWW-Authenticate", "BASIC realm=\"rest\"");  
 	            sendError(errorResultType, id, resp, HttpServletResponse.SC_UNAUTHORIZED,"?", null, null);
 	            return;
+	        }
+	        
+	        if (user != null) {
+	        	Trust trust = user.getTrust();
+	        	if (trust != null) {
+	        		IProperties trustProp = trust.getProperties();
+	        		if (user.isAdminMode() && !trustProp.getBoolean("allowAdmin", true)) {
+	    	            sendError(errorResultType, id, resp, HttpServletResponse.SC_UNAUTHORIZED,"admin", null, null);
+	    	            return;
+	        		}
+	        		String hostsStr = trustProp.getString("allowedHosts",null);
+	        		if (hostsStr != null) {
+	        			String[] hosts = hostsStr.split(",");
+	        			String remote = req.getRemoteHost();
+	        			boolean allowed = false;
+	        			for (String pattern : hosts) {
+	        				if (pattern.matches(remote)) {
+	        					allowed = true;
+	        					break;
+	        				}
+	        			}
+	        			if (!allowed) {
+	        	            sendError(errorResultType, id, resp, HttpServletResponse.SC_UNAUTHORIZED,"Host " + remote, null, null);
+	        	            return;
+	        			}
+	        		}
+	        	}
 	        }
 	        
 	        try {

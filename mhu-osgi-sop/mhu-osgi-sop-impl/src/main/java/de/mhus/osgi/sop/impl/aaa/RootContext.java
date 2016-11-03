@@ -1,4 +1,6 @@
-package de.mhus.osgi.sop.impl;
+package de.mhus.osgi.sop.impl.aaa;
+
+import de.mhus.osgi.sop.impl.AaaContextImpl;
 
 public class RootContext extends AaaContextImpl {
 

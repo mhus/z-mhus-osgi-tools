@@ -29,7 +29,7 @@ public class AaaContextImpl implements AaaContext {
 		this.trust = trust;
 		if (admin) {
 			AccessApi aa = Sop.getApi(AccessApi.class);
-			if (aa.hasResourceAccess(account, Account.MAP_ADMIN, null, null))
+			if (aa.hasGroupAccess(account, Account.MAP_ADMIN, null))
 				adminMode = true;
 		}
 	}
@@ -56,7 +56,7 @@ public class AaaContextImpl implements AaaContext {
 	@Override
 	public String getAccountId() {
 		try {
-			return getAccount().getAccount();
+			return getAccount().getName();
 		} catch (MException e) {
 		}
 		return null;

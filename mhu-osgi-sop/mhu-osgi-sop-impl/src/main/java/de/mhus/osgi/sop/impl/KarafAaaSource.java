@@ -109,12 +109,12 @@ public class KarafAaaSource implements AccountSource {
 		}
 
 		@Override
-		public String getAccount() {
+		public String getName() {
 			return user.getName();
 		}
 
 		@Override
-		public boolean isValide() {
+		public boolean isValid() {
 			return true;
 		}
 
@@ -138,11 +138,11 @@ public class KarafAaaSource implements AccountSource {
 
 		@Override
 		public String getDisplayName() {
-			return getAccount();
+			return getName();
 		}
 		
 		public String toString() {
-			return getAccount() + "@" + realm;
+			return getName() + "@" + realm;
 		}
 
 		@Override

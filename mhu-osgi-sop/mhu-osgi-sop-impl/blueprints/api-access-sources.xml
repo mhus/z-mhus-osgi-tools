@@ -17,17 +17,22 @@
     -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 
-	<reference id="accountRef" interface="de.mhus.lib.core.security.AccountSource"/>
-	<reference id="trustRef" interface="de.mhus.osgi.sop.api.aaa.TrustSource"/>
-	<reference id="authRef" interface="de.mhus.lib.core.security.AuthorizationSource"/>
-	
-    <bean id="impl" class="de.mhus.osgi.sop.impl.aaa.AccessApiImpl">
-    	<property name="accountSource" ref="accountRef"/>
-    	<property name="trustSource" ref="trustRef"/>
-    	<property name="authorizationSource" ref="authRef"/>
+    <bean id="account" class="de.mhus.osgi.sop.impl.aaa.util.AccountFromFile">
     </bean>
 
-    <service interface="de.mhus.osgi.sop.api.aaa.AccessApi" ref="impl">
+    <bean id="auth" class="de.mhus.osgi.sop.impl.aaa.util.AuthFromFile">
+    </bean>
+
+    <bean id="trust" class="de.mhus.osgi.sop.impl.aaa.util.TrustFromFile">
+    </bean>
+
+    <service interface="de.mhus.lib.core.security.AccountSource" ref="account">
+    </service>
+    
+    <service interface="de.mhus.lib.core.security.AuthorizationSource" ref="auth">
+    </service>
+    
+    <service interface="de.mhus.osgi.sop.api.aaa.TrustSource" ref="trust">
     </service>
 
 </blueprint>

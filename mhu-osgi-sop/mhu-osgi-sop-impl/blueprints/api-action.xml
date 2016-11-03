@@ -17,9 +17,9 @@
     -->
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 
-    <bean id="impl" class="de.mhus.osgi.sop.impl.aaa.AccessApiImpl">
+    <bean id="impl" class="de.mhus.osgi.sop.impl.action.ActionApiImpl">
     </bean>
 
-    <service interface="de.mhus.osgi.sop.api.aaa.AccessApi" ref="impl">
+    <service interface="de.mhus.osgi.sop.api.action.ActionApi" ref="impl">
     </service>
 </blueprint>

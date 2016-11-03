@@ -3,6 +3,8 @@ package de.mhus.osgi.sop.impl.aaa;
 import java.util.List;
 import java.util.WeakHashMap;
 
+import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Reference;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPassword;
@@ -14,17 +16,19 @@ import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
+import de.mhus.osgi.sop.api.aaa.AccountGuest;
 import de.mhus.osgi.sop.api.aaa.Trust;
 import de.mhus.osgi.sop.api.aaa.TrustSource;
 import de.mhus.osgi.sop.api.util.TicketUtil;
 import de.mhus.osgi.sop.impl.AaaContextImpl;
-import de.mhus.osgi.sop.impl.AccountFile;
 import de.mhus.osgi.sop.impl.ContextPool;
-import de.mhus.osgi.sop.impl.RootContext;
+import de.mhus.osgi.sop.impl.aaa.util.AccountFile;
 
+//@Component
 public class AccessApiImpl extends MLog implements AccessApi {
 
 	private static AaaContextImpl ROOT_CONTEXT = new RootContext();
+	private static AaaContextImpl GUEST_CONTEXT = new GuestContext();
 	private WeakHashMap<String, Account> accountCache = new WeakHashMap<String, Account>();
 	private WeakHashMap<String, Trust> trustCache = new WeakHashMap<String, Trust>();
 
@@ -32,6 +36,12 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	private TrustSource trustSource;
 	private AuthorizationSource authorizationSource;
 
+	@Override
+	public void process(AaaContext context) {
+		if (context == null) return;
+		ContextPool.getInstance().set((AaaContextImpl) context);
+	}
+	
 	@Override
 	public AaaContext process(String ticket) {
 		
@@ -69,7 +79,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 				throw new AccessDeniedException("null",account);
 			if (!info.validatePassword(MPassword.decode(pass)))
 				throw new AccessDeniedException("password",account);
-			if (!info.isValide())
+			if (!info.isValid())
 				throw new AccessDeniedException("invalid",account);
 			
 		} else
@@ -92,7 +102,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 				throw new AccessDeniedException("null",account);
 			if (!trustInfo.validatePassword(MPassword.decode(secret)))
 				throw new AccessDeniedException("password",account);
-			if (!trustInfo.isValide())
+			if (!trustInfo.isValid())
 				throw new AccessDeniedException("invalid",account);
 			try {
 				info = getAccountUnsecure(account);
@@ -102,7 +112,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 			}
 			if (info == null)
 				throw new AccessDeniedException("null",account);
-			if (!info.isValide())
+			if (!info.isValid())
 				throw new AccessDeniedException("invalid",account);
 			
 		} else
@@ -112,7 +122,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	}
 	
 	@Override
-	public AaaContextImpl process(Account info, Trust trust, boolean admin) {
+	public AaaContext process(Account info, Trust trust, boolean admin) {
 		AaaContextImpl c = null;
 		try {
 			c = new AaaContextImpl(info,trust,admin);
@@ -131,7 +141,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 		if (trust == null)
 			throw new AccessDeniedException("null");
 
-		AaaContext c = getCurrent();
+		AaaContext c = getCurrentOrGuest();
 		if (!c.isAdminMode())
 			throw new AccessDeniedException("admin only");
 
@@ -162,7 +172,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 			throw new AccessDeniedException("null");
 
 		AaaContext c = getCurrent();
-		if (!c.isAdminMode() && !c.getAccountId().equals(account))
+		if (c != null && !c.isAdminMode() && !c.getAccountId().equals(account))
 			throw new AccessDeniedException("admin only");
 		
 		return getAccountUnsecure(account);
@@ -193,7 +203,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 
 	@Override
 	public AaaContext release(String ticket) {
-		AaaContextImpl current = (AaaContextImpl) getCurrent();
+		AaaContextImpl current = (AaaContextImpl) getCurrentOrGuest();
 		if (MString.isEmpty(ticket)) return current;
 		String account = null;
 		
@@ -224,13 +234,13 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	
 	@Override
 	public AaaContext release(Account info) {
-		AaaContextImpl current = (AaaContextImpl) getCurrent();
-		String account = info.getAccount();
+		AaaContextImpl current = (AaaContextImpl) getCurrentOrGuest();
+		String account = info.getName();
 		ContextPool pool = ContextPool.getInstance();
 		synchronized (pool) {
 			current = pool.getCurrent();
 			try {
-				if (MString.isEmpty(account) || current == null || !account.equals(current.getAccount().getAccount()) ) return current;
+				if (MString.isEmpty(account) || current == null || !account.equals(current.getAccount().getName()) ) return current;
 			} catch (MException e) {
 				e.printStackTrace();
 				return current;
@@ -243,15 +253,13 @@ public class AccessApiImpl extends MLog implements AccessApi {
 
 	@Override
 	public AaaContext release(AaaContext context) {
+		if (context == null) return null;
 		ContextPool pool = ContextPool.getInstance();
 		synchronized (pool) {
-			if (context != null) {
-				AaaContextImpl parent = ((AaaContextImpl)context).getParent();
-				pool.set(parent);
-				return parent;
-			}
+			AaaContextImpl parent = ((AaaContextImpl)context).getParent();
+			pool.set(parent);
+			return parent;
 		}
-		return null;
 	}
 	
 	@Override
@@ -265,22 +273,21 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	@Override
 	public AaaContext getCurrent() {
 		AaaContextImpl out = ContextPool.getInstance().getCurrent();
-		if (out == null) out = ROOT_CONTEXT;
 		return out;
 	}
 
 	@Override
 	public Account getCurrenAccount() throws MException {
-		return getCurrent().getAccount();
+		return getCurrentOrGuest().getAccount();
 	}
 	
 	@Override
-	public String processAdminSession() {
+	public AaaContext processAdminSession() {
 		
-		String ticket = TicketUtil.ACCOUNT + TicketUtil.SEP + ROOT_CONTEXT.getAccountId() + TicketUtil.SEP + TicketUtil.SEP + TicketUtil.ADMIN;
+//		String ticket = TicketUtil.ACCOUNT + TicketUtil.SEP + ROOT_CONTEXT.getAccountId() + TicketUtil.SEP + TicketUtil.SEP + TicketUtil.ADMIN;
 		ContextPool.getInstance().set(ROOT_CONTEXT);
 		
-		return ticket;
+		return ROOT_CONTEXT;
 	}
 
 	@Override
@@ -295,7 +302,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 		return trustSource.createTrustTicket(user);
 	}
 
-	@aQute.bnd.annotation.component.Reference(optional=true,dynamic=true)
+	@Reference(optional=true,dynamic=true)
 	public void setAccountSource(AccountSource source) {
 		this.accountSource = source;
 	}
@@ -303,7 +310,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 		this.accountSource = null;
 	}
 	
-	@aQute.bnd.annotation.component.Reference(optional=true,dynamic=true)
+	@Reference(optional=true,dynamic=true)
 	public void setTrustSource(TrustSource source) {
 		this.trustSource = source;
 	}
@@ -312,7 +319,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 		this.trustSource = null;
 	}
 
-	@aQute.bnd.annotation.component.Reference(optional=true,dynamic=true)
+	@Reference(optional=true,dynamic=true)
 	public void setAuthorizationSource(AuthorizationSource source) {
 		this.authorizationSource = source;
 	}
@@ -322,16 +329,16 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	}
 
 	@Override
-	public boolean hasResourceAccess(Account account, String mappingName, String id, String action) {
-		if (account == null || authorizationSource == null || mappingName == null ) return false;
+	public boolean hasGroupAccess(Account account, String acl, String action) {
+		if (account == null || authorizationSource == null || acl == null ) return false;
 		
-		Boolean res = authorizationSource.hasResourceAccess(account,mappingName, id, action);
+		Boolean res = authorizationSource.hasResourceAccess(account,acl + (action == null ? "" : "_" + action));
 		if (res != null) return res;
 		
 		// action mapping
 		if (action == null) return false;
 		if (action.equals(Account.ACT_READ)) {
-			res = authorizationSource.hasResourceAccess(account,mappingName, id, Account.ACT_MODIFY);
+			res = authorizationSource.hasResourceAccess(account,acl + "_" + Account.ACT_MODIFY);
 			if (res != null) return res;
 		}
 		
@@ -339,23 +346,36 @@ public class AccessApiImpl extends MLog implements AccessApi {
 	}
 	
 	@Override
-	public boolean hasGroupAccess(Account account, String mapDef) {
-		return hasGroupAccess(account, MCollection.toList( mapDef.split(",") ) );
+	public boolean hasResourceAccess(Account account, String resourceName, String id, String action) {
+		// TODO Maybe another way ...
+		return hasGroupAccess(account, "res_" + resourceName + "_" + id, action);
+	}
+
+	@Override
+	public String createUserTicket(String username, String password) {
+		return TicketUtil.ACCOUNT + TicketUtil.SEP + username.replace(TicketUtil.SEP_CHAR, '_') + TicketUtil.SEP + password.replace(TicketUtil.SEP_CHAR, '_') ;
+	}
+
+	@Override
+	public AaaContext getCurrentOrGuest() {
+		AaaContextImpl current = ContextPool.getInstance().getCurrent();
+		if (current == null)
+			current = GUEST_CONTEXT;
+		return current;
 	}
 	
 	@Override
-	public boolean hasGroupAccess(Account account, List<String> mapDef) {
-		for (String def : mapDef) {
-			if (MString.isSet(def)) {
-				def = def.trim().toLowerCase();
-				if (def.equals("*")) return true;
-				if (def.startsWith("user:") && def.substring(5).equals(account.getAccount().toLowerCase())) return true;
-				if (def.startsWith("notuser:") && def.substring(8).equals(account.getAccount().toLowerCase())) return false;
-				if (def.startsWith("not:") && account.hasGroup(def.substring(4))) return false;
-				if (account.hasGroup(def)) return true;
-			}
+	public AaaContext getGuestContext() {
+		return GUEST_CONTEXT;
+	}
+
+	@Override
+	public AccountGuest getGuestAccount() {
+		try {
+			return (AccountGuest) GUEST_CONTEXT.getAccount();
+		} catch (MException e) {
+			return null;
 		}
-		return false;
 	}
 	
 }

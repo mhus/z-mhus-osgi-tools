@@ -26,14 +26,14 @@ public abstract class AbstractDbSchema extends DbSchema {
 	
 	@Override
 	public void authorizeSaveForceAllowed(DbConnection con, Table table, Object object, boolean raw) throws AccessDeniedException {
-		if (!Sop.getApi(AccessApi.class).getCurrent().isAdminMode())
+		if (!Sop.getApi(AccessApi.class).getCurrentOrGuest().isAdminMode())
 			throw new AccessDeniedException();
 	}
 
 	@Override
 	public void authorizeUpdateAttributes(DbConnection con, Table table,
 			Object object, boolean raw, String ... attributeNames) throws AccessDeniedException {
-		if (!Sop.getApi(AccessApi.class).getCurrent().isAdminMode())
+		if (!Sop.getApi(AccessApi.class).getCurrentOrGuest().isAdminMode())
 			throw new AccessDeniedException();
 	}
 

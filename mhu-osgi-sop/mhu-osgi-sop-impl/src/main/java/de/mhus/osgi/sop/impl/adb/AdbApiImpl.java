@@ -450,7 +450,7 @@ public class AdbApiImpl extends MLog implements AdbApi {
 	}
 
 	private AaaContext getCurrent() {
-		return Sop.getApi(AccessApi.class).getCurrent();
+		return Sop.getApi(AccessApi.class).getCurrentOrGuest();
 	}
 
 	@Override

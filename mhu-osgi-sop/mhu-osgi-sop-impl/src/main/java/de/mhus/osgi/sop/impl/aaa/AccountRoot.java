@@ -1,16 +1,16 @@
-package de.mhus.osgi.sop.impl;
+package de.mhus.osgi.sop.impl.aaa;
 
 import de.mhus.lib.core.security.Account;
 
 public class AccountRoot implements Account {
 
 	@Override
-	public String getAccount() {
+	public String getName() {
 		return "root";
 	}
 
 	@Override
-	public boolean isValide() {
+	public boolean isValid() {
 		return true;
 	}
 

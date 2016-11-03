@@ -51,7 +51,7 @@ public class OperationCmd implements Action {
 		if (conName != null)
 			con = JmsUtil.getConnection(conName);
 		
-		AaaContext acc = Sop.getApi(AccessApi.class).getCurrent();
+		AaaContext acc = Sop.getApi(AccessApi.class).getCurrentOrGuest();
 		
 		OperationApi api = Sop.getApi(OperationApi.class);
 		if (cmd.equals("list")) {

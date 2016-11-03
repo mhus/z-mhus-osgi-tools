@@ -176,7 +176,7 @@ public class OperationApiImpl extends MLog implements OperationApi {
 			path = path.substring(p+1);
 			AccessApi access = Sop.getApi(AccessApi.class);
 			try {
-				OperationResult answer = doExecuteOperation(Sop.getDefaultJmsConnection(), queue, path, properties, access.getCurrent(), true);
+				OperationResult answer = doExecuteOperation(Sop.getDefaultJmsConnection(), queue, path, properties, access.getCurrentOrGuest(), true);
 				return answer;
 			} catch (Exception e) {
 				log().w(path,e);

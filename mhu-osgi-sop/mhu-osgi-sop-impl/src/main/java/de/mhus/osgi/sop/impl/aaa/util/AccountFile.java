@@ -1,4 +1,4 @@
-package de.mhus.osgi.sop.impl;
+package de.mhus.osgi.sop.impl.aaa.util;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,12 +68,12 @@ public class AccountFile extends MLog implements Account {
 	}
 
 	@Override
-	public String getAccount() {
+	public String getName() {
 		return account;
 	}
 
 	@Override
-	public boolean isValide() {
+	public boolean isValid() {
 		return valide;
 	}
 
