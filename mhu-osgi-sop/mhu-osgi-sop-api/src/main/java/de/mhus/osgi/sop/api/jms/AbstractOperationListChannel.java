@@ -27,7 +27,7 @@ public abstract class AbstractOperationListChannel extends AbstractOperationExec
 	protected OperationResult doExecute(String path, IProperties properties) {
 		Operation oper = getOperation(path);
 		if (oper == null) return new NotSuccessful(path,"not found",OperationResult.NOT_FOUND);
-		DefaultTaskContext context = new DefaultTaskContext();
+		DefaultTaskContext context = new DefaultTaskContext(getClass());
 		context.setParameters(properties);
 		try {
 			return oper.doExecute(context);

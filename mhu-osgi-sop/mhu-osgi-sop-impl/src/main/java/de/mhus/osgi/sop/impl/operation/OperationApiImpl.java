@@ -187,7 +187,7 @@ public class OperationApiImpl extends MLog implements OperationApi {
 		Operation operation = getOperation(path);
 		if (operation == null) return new NotSuccessful(path, "operation not found", OperationResult.NOT_FOUND);
 		
-		DefaultTaskContext taskContext = new DefaultTaskContext();
+		DefaultTaskContext taskContext = new DefaultTaskContext(getClass());
 		taskContext.setParameters(properties);
 		try {
 			return operation.doExecute(taskContext);
