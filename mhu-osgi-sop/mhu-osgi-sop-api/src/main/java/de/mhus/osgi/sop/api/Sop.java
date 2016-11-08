@@ -9,7 +9,9 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.MThread;
 import de.mhus.lib.errors.NotFoundException;
+import de.mhus.lib.errors.TimeoutRuntimeException;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.karaf.jms.JmsUtil;
 
@@ -127,6 +129,19 @@ public class Sop {
 
 	public static String getDefaultJmsConnectionName() {
 		return "mhus"; //TODO configurable
+	}
+
+	public static <T extends SApi> void waitForApi(Class<? extends T> ifc, long timeout) {
+		long start = System.currentTimeMillis();
+		while (true) {
+			try {
+				getApi(ifc);
+				return;
+			} catch (Throwable t) {}
+			if (System.currentTimeMillis() - start > timeout)
+				throw new TimeoutRuntimeException("timeout getting API",ifc);
+			MThread.sleep(500);
+		}
 	}
 
 }
