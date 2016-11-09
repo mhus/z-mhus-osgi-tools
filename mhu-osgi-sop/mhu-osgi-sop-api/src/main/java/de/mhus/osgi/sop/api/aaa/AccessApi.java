@@ -58,6 +58,8 @@ public interface AccessApi extends SApi {
 	 */
 	boolean hasGroupAccess(Account account, String acl, String action);
 	
+	boolean hasGroupAccess(Account account, Class<?> who, String acl, String action);
+	
 	boolean hasResourceAccess(Account account, String resourceName, String id, String action);
 	String createUserTicket(String username, String password);
 	AaaContext getGuestContext();

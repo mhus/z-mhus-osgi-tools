@@ -10,6 +10,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.lib.core.MPassword;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.Sop;
@@ -31,7 +32,8 @@ public class AccessCmd implements Action {
 			+ " validate <account> <password>,"
 			+ " synchronizer <type>,"
 			+ " access <account> <name> [<action>]"
-			+ " reloadconfig", multiValued=false)
+			+ " reloadconfig,"
+			+ " md5 <password>", multiValued=false)
 	String cmd;
 	
 	@Argument(index=1, name="parameters", required=false, description="More Parameters", multiValued=true)
@@ -44,7 +46,6 @@ public class AccessCmd implements Action {
 	public Object execute() throws Exception {
 
 		AccessApi api = Sop.getApi(AccessApi.class);
-		AdbApi adb = Sop.getApi(AdbApi.class);
 		if (api == null) {
 			System.out.println("SOP API not found");
 			return null;
@@ -96,6 +97,7 @@ public class AccessCmd implements Action {
 		if(cmd.equals("controllers")) {
 			ConsoleTable table = new ConsoleTable();
 			table.setHeaderValues("Type","Controller","Bundle");
+			AdbApi adb = Sop.getApi(AdbApi.class);
 			for (Entry<String, DbSchemaService> entry : adb.getController()) {
 				Bundle bundle = FrameworkUtil.getBundle(entry.getValue().getClass());
 				table.addRowValues(entry.getKey(), entry.getValue().getClass(), bundle.getSymbolicName() );
@@ -117,6 +119,9 @@ public class AccessCmd implements Action {
 			System.out.println("Cache Size: " + context.cacheSize());
 			context.cleanupCache();
 			System.out.println("Cache Size: " + context.cacheSize());
+		} else
+		if (cmd.equals("md5")) {
+			System.out.println( MPassword.encodePasswordMD5(parameters[0]) );
 		} else
 			System.out.println("Command not found: " + cmd);
 			

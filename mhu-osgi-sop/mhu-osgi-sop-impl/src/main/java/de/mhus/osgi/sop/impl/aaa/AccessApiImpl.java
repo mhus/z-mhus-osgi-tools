@@ -377,5 +377,10 @@ public class AccessApiImpl extends MLog implements AccessApi {
 			return null;
 		}
 	}
+
+	@Override
+	public boolean hasGroupAccess(Account account, Class<?> who, String acl, String action) {
+		return hasGroupAccess(account, who.getCanonicalName() + "_" + acl, action);
+	}
 	
 }
