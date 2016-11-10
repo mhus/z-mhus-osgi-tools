@@ -47,6 +47,8 @@
     </developer>
   </developers>
     <properties>
+		<mhulib.version>3.3.1-SNAPSHOT</mhulib.version>
+		<ports.version>3.3.1-SNAPSHOT</ports.version>
         <scr.packages>*</scr.packages>
         <felix.scr.version>1.6.0</felix.scr.version>
         <karaf.version>4.0.4</karaf.version>
@@ -62,7 +64,6 @@
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
 		<osgi.version>5.0.0</osgi.version>	
 		<jaxws.version>1.0-MR1</jaxws.version>
-		<mhulib.version>3.3.1-SNAPSHOT</mhulib.version>
 		<javax.mail.version>1.4.1</javax.mail.version>
 		<javax.activation.version>1.1.1</javax.activation.version>
         <felix.version>4.2.4</felix.version>
@@ -138,7 +139,6 @@
       <module>mhu-osgi-jwsbridge</module>
       <module>mhu-osgi-vaadinbridge</module>
       <module>mhu-osgi-mail</module>
-      <module>mhu-osgi-ports</module>
       <module>mhu-osgi-jms</module>
       <module>mhu-osgi-commands</module>
       <module>mhu-osgi-web</module>
