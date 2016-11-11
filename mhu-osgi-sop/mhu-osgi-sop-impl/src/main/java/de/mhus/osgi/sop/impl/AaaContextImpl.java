@@ -37,14 +37,17 @@ public class AaaContextImpl implements AaaContext {
 		return parent;
 	}
 
+	@Override
 	public String toString() {
 		return account + (adminMode ? "(admin)" : "" ) + "@AaaContext";
 	}
 
-	public Account getAccount() throws MException {
+	@Override
+	public Account getAccount() {
 		return account;
 	}
 
+	@Override
 	public boolean isAdminMode() {
 		return adminMode;
 	}
@@ -57,11 +60,12 @@ public class AaaContextImpl implements AaaContext {
 	public String getAccountId() {
 		try {
 			return getAccount().getName();
-		} catch (MException e) {
+		} catch (NullPointerException e) {
 		}
 		return null;
 	}
 	
+	@Override
 	public ContextCachedItem getCached(String key) {
 		if (key == null) return null;
 		synchronized (cache) {
@@ -75,6 +79,8 @@ public class AaaContextImpl implements AaaContext {
 			return null;
 		}
 	}
+	
+	@Override
 	public void setCached(String key, ContextCachedItem item) {
 		if (key == null || item == null) return;
 		synchronized (cache) {

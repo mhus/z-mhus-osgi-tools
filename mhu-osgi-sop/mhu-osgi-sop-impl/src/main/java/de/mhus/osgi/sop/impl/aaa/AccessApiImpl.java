@@ -241,7 +241,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 			current = pool.getCurrent();
 			try {
 				if (MString.isEmpty(account) || current == null || !account.equals(current.getAccount().getName()) ) return current;
-			} catch (MException e) {
+			} catch (NullPointerException e) {
 				e.printStackTrace();
 				return current;
 			}
@@ -371,11 +371,7 @@ public class AccessApiImpl extends MLog implements AccessApi {
 
 	@Override
 	public AccountGuest getGuestAccount() {
-		try {
-			return (AccountGuest) GUEST_CONTEXT.getAccount();
-		} catch (MException e) {
-			return null;
-		}
+		return (AccountGuest) GUEST_CONTEXT.getAccount();
 	}
 
 	@Override

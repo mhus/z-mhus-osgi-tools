@@ -5,7 +5,7 @@ import de.mhus.lib.errors.MException;
 
 public interface AaaContext {
 
-	Account getAccount() throws MException;
+	Account getAccount();
 	Trust getTrust();
 	boolean isAdminMode();
 	String getAccountId();
