@@ -131,12 +131,13 @@ public class Sop {
 		return "mhus"; //TODO configurable
 	}
 
-	public static <T extends SApi> void waitForApi(Class<? extends T> ifc, long timeout) {
+	public static <T extends SApi> T waitForApi(Class<? extends T> ifc, long timeout) {
 		long start = System.currentTimeMillis();
 		while (true) {
 			try {
-				getApi(ifc);
-				return;
+				T api = getApi(ifc);
+				if (api != null) // should not happen
+					return api;
 			} catch (Throwable t) {}
 			if (System.currentTimeMillis() - start > timeout)
 				throw new TimeoutRuntimeException("timeout getting API",ifc);
