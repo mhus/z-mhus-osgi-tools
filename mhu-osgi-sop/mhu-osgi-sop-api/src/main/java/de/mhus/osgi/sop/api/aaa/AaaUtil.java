@@ -6,6 +6,7 @@ import java.util.List;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.security.AccessControl;
+import de.mhus.lib.core.security.Account;
 import de.mhus.lib.core.security.Rightful;
 
 public class AaaUtil {
@@ -64,6 +65,11 @@ public class AaaUtil {
 		}
 		return false;
 		
+	}
+
+	public static boolean hasAccess(Account account, String acl) {
+		String[] parts = acl.split(",");
+		return hasAccess(account, parts);
 	}
 
 }
