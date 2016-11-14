@@ -69,6 +69,11 @@
 		<bundle>mvn:de.mhus.ports/vaadin-shared-deps/${ports.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-themes/${vaadin.version}</bundle>
+		
+		<bundle>mvn:com.vaadin.external.slf4j/vaadin-slf4j-jdk14/1.6.1}</bundle>
+		<bundle>mvn:com.vaadin.external.atmosphere/atmosphere-runtime/2.2.9.vaadin2</bundle>
+		<bundle>mvn:com.vaadin/vaadin-push/${vaadin.version}</bundle>
+		
 		<bundle>mvn:com.vaadin/vaadin-server/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-client-compiled/${vaadin.version}</bundle>
 

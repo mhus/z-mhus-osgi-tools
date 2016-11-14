@@ -2,6 +2,7 @@ package de.mhus.osgi.vaadinkarafbridge.impl;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.osgi.vaadinbridge.BundleWatch;
@@ -10,6 +11,7 @@ import de.mhus.osgi.vaadinbridge.BundleWatch;
 @Service
 public class CmdWatchRefresh implements Action {
 
+	@Reference
 	private BundleWatch watch;
 
 	public Object execute() throws Exception {
@@ -17,10 +19,6 @@ public class CmdWatchRefresh implements Action {
 		watch.refreshAll();
 		
 		return null;
-	}
-
-	public void setBundleWatch(BundleWatch watch) {
-		this.watch = watch;
 	}
 
 }

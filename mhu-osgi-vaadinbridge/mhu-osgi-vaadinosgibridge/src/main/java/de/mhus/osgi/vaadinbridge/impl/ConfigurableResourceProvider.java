@@ -30,6 +30,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 //		addResource("com.vaadin.client-compiled", "/widgetsets/com.vaadin.DefaultWidgetSet");
 //		addResource("com.vaadin.server", "/vaadinBootstrap.js");
 //		addResource("com.vaadin.themes", new String[] {"/themes/reindeer","/themes/runo","/themes/liferay","/themes/chameleon","/themes/base"});
+//		addResource("com.vaadin.push", "/vaadinPush.js");
 	}
 	
 	public boolean canHandle(String name) {

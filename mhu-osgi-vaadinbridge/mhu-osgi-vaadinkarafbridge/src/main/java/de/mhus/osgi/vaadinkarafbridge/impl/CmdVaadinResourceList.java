@@ -4,6 +4,7 @@ import java.io.PrintStream;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
@@ -13,8 +14,10 @@ import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderAdmin;
 @Service
 public class CmdVaadinResourceList implements Action {
 
+	@Reference
 	private VaadinConfigurableResourceProviderAdmin provider;
 
+	@Override
 	public Object execute() throws Exception {
 		PrintStream out = System.out;
 		//session.getConsole();
@@ -34,10 +37,6 @@ public class CmdVaadinResourceList implements Action {
 		table.print(out);
 		out.flush();
 		return null;
-	}
-
-	public void setResourceProvider(VaadinConfigurableResourceProviderAdmin provider) {
-		this.provider = provider;
 	}
 
 }

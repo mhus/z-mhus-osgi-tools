@@ -101,6 +101,13 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 			{
 				resources.add(path);
 			} else
+			if (path != null && 
+				bundle.getSymbolicName() != null &&
+				bundle.getSymbolicName().equals("com.vaadin.push") && 
+				path.equals("/vaadinPush.js"))
+			{
+				resources.add(path);
+			} else
 			if (path != null && path.indexOf("gwt-unitCache") > -1) {
 				// ignore
 			} else {

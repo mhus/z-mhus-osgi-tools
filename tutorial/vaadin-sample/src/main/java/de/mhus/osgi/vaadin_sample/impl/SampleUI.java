@@ -1,11 +1,14 @@
 package de.mhus.osgi.vaadin_sample.impl;
 
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
@@ -16,12 +19,15 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
+@Push
 @Theme("vaadinsample")
 @Widgetset("de.mhus.test.vaadin.VaadinExampleApplication.MyAppWidgetset")
 public class SampleUI extends UI {
 
 	private static final long serialVersionUID = 1L;
 	private VerticalLayout panelContnent;
+	private Timer timer;
+	private Label timerLabel;
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -59,14 +65,37 @@ public class SampleUI extends UI {
         content.addComponent(panel);
         content.setExpandRatio(panel, 1);
 
+		timerLabel = new Label();
         panelContnent = new VerticalLayout();
         // panelContnent.setWidth("100%");
         panelContnent.setSizeUndefined();
         panel.setContent(panelContnent);
+        panelContnent.addComponent(timerLabel);
         
-		
+		timer = new Timer(true);
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				access(new Runnable() {
+					
+					@Override
+					public void run() {
+						timerLabel.setCaption( new Date().toGMTString() );
+					}
+				});
+			}
+		}, 1000, 1000);
+
 	}
 
+	@Override
+	public void detach() {
+		if (timer != null) 
+			timer.cancel();
+		timer = null;
+	}
+	
 	protected void doExecute() {
 		// load an service out of OSGi
 		/*
@@ -76,6 +105,7 @@ public class SampleUI extends UI {
 		MyService service = (MyService) context.getService(ref);
 		*/
 		panelContnent.removeAllComponents();
+        panelContnent.addComponent(timerLabel);
 
 		{
 			// Use the service
