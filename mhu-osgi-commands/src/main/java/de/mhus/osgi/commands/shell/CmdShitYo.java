@@ -19,7 +19,7 @@ import de.mhus.lib.core.console.ConsoleTable;
 @Service
 public class CmdShitYo implements Action {
 
-	@Argument(index=0, name="cmd", required=true, description="memkill", multiValued=false)
+	@Argument(index=0, name="cmd", required=true, description="memkill,stackkill", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -34,9 +34,16 @@ public class CmdShitYo implements Action {
 				kill = kill + kill;
 				System.out.println(kill.length() + " " + Runtime.getRuntime().freeMemory() );
 			}
+		} else
+		if (cmd.equals("stackkill")) {
+			doInfinity();
 		}
 		
 		return null;
+	}
+
+	private void doInfinity() {
+		doInfinity();
 	}
 
 }
