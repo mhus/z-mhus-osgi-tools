@@ -24,6 +24,8 @@ public class CmdShitYo implements Action {
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
+
+	private int cnt;
     
 	@Override
 	public Object execute() throws Exception {
@@ -36,13 +38,18 @@ public class CmdShitYo implements Action {
 			}
 		} else
 		if (cmd.equals("stackkill")) {
-			doInfinity();
+			cnt = 0;
+			try {
+				doInfinity();
+			} catch (Throwable t) {}
+			System.out.println("Depth: " + cnt);
 		}
 		
 		return null;
 	}
 
 	private void doInfinity() {
+		cnt++;
 		doInfinity();
 	}
 
