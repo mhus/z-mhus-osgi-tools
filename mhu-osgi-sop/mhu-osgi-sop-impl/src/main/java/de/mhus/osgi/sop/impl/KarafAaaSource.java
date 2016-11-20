@@ -15,7 +15,9 @@ import org.apache.karaf.jaas.modules.BackingEngine;
 import org.apache.karaf.jaas.modules.BackingEngineFactory;
 
 import de.mhus.lib.core.security.LoginCallbackHandler;
+import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.karaf.MOsgi;
+import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.security.Account;
 import de.mhus.lib.core.security.AccountSource;
 
@@ -148,6 +150,16 @@ public class KarafAaaSource implements AccountSource {
 		@Override
 		public boolean hasGroup(String group) {
 			return groups.contains(group);
+		}
+
+		@Override
+		public IReadProperties getAttributes() {
+			return null;
+		}
+
+		@Override
+		public void putAttributes(IReadProperties properties) throws NotSupportedException {
+			throw new NotSupportedException();
 		}
 		
 	}

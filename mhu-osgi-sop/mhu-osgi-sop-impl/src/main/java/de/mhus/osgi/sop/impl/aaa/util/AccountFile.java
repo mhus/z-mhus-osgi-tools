@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -12,11 +13,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.security.Account;
+import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
@@ -34,6 +38,7 @@ public class AccountFile extends MLog implements Account {
 	private long timeout;
 	private Boolean isPasswordValidated = null;
 	private HashSet<String> groups = new HashSet<>();
+	private MProperties attributes = new MProperties();
 	
 	public AccountFile(File f, String account) throws ParserConfigurationException, SAXException, IOException {
 		FileInputStream is = new FileInputStream(f);
@@ -52,10 +57,17 @@ public class AccountFile extends MLog implements Account {
 		
 		timeout = MCast.tolong( doc.getDocumentElement().getAttribute("timeout"), 0);
 		
-		
-		Element xmlAcl = MXml.getElementByPath(doc.getDocumentElement(), "groups");
-		for (Element xmlAce : MXml.getLocalElementIterator(xmlAcl,"group")) {
-			groups.add(xmlAce.getAttribute("name").trim().toLowerCase());
+		{
+			Element xmlAcl = MXml.getElementByPath(doc.getDocumentElement(), "groups");
+			for (Element xmlAce : MXml.getLocalElementIterator(xmlAcl,"group")) {
+				groups.add(xmlAce.getAttribute("name").trim().toLowerCase());
+			}
+		}
+		{
+			Element xmlAcl = MXml.getElementByPath(doc.getDocumentElement(), "attributes");
+			for (Element xmlAce : MXml.getLocalElementIterator(xmlAcl,"attribute")) {
+				attributes.setString(xmlAce.getAttribute("name"), xmlAce.getAttribute("value"));
+			}
 		}
 	}
 
@@ -126,6 +138,36 @@ public class AccountFile extends MLog implements Account {
 	@Override
 	public boolean hasGroup(String group) {
 		return groups.contains(group);
+	}
+
+	@Override
+	public IReadProperties getAttributes() {
+		return attributes;
+	}
+
+	@Override
+	public void putAttributes(IReadProperties properties) throws NotSupportedException {
+		attributes.putReadProperties(properties);
+		// save back ...
+		doSave();
+	}
+
+	protected void doSave() {
+		Element xml = MXml.getElementByPath(doc.getDocumentElement(), "attributes");
+		for (Element elem : MXml.getLocalElementIterator(xml))
+			xml.removeChild(elem);
+		for (Entry<String, Object> item : attributes.entrySet()) {
+			Element attr = doc.createElement("attribute");
+			attr.setAttribute("name", item.getKey());
+			attr.setAttribute("value", String.valueOf(item.getValue()));
+			xml.appendChild(attr);
+		}
+		try {
+			MXml.saveXml(doc, file);
+		} catch (Exception e) {
+			log().w(file,e.toString());
+			throw new NotSupportedException(e);
+		}
 	}
 
 }

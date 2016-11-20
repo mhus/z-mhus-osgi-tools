@@ -1,8 +1,16 @@
 package de.mhus.osgi.sop.impl.aaa;
 
+import java.util.Map.Entry;
+
+import de.mhus.lib.basics.IsNull;
+import de.mhus.lib.core.IReadProperties;
+import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.security.Account;
+import de.mhus.lib.errors.NotSupportedException;
 
 public class AccountRoot implements Account {
+
+	private MProperties attributes = new MProperties();
 
 	@Override
 	public String getName() {
@@ -36,6 +44,16 @@ public class AccountRoot implements Account {
 	@Override
 	public boolean hasGroup(String group) {
 		return true;
+	}
+
+	@Override
+	public IReadProperties getAttributes() {
+		return attributes ;
+	}
+
+	@Override
+	public void putAttributes(IReadProperties properties) throws NotSupportedException {
+		attributes.putReadProperties(properties);
 	}
 
 }
