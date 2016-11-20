@@ -3,7 +3,11 @@ package de.mhus.osgi.sop.impl.aaa;
 import java.util.List;
 import java.util.WeakHashMap;
 
+import org.osgi.service.component.ComponentContext;
+
+import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
@@ -29,12 +33,23 @@ public class AccessApiImpl extends MLog implements AccessApi {
 
 	private static AaaContextImpl ROOT_CONTEXT = new RootContext();
 	private static AaaContextImpl GUEST_CONTEXT = new GuestContext();
-	private WeakHashMap<String, Account> accountCache = new WeakHashMap<String, Account>();
-	private WeakHashMap<String, Trust> trustCache = new WeakHashMap<String, Trust>();
+	protected WeakHashMap<String, Account> accountCache = new WeakHashMap<String, Account>();
+	protected WeakHashMap<String, Trust> trustCache = new WeakHashMap<String, Trust>();
 
 	private AccountSource accountSource;
 	private TrustSource trustSource;
 	private AuthorizationSource authorizationSource;
+	protected static AccessApiImpl instance;
+
+    @Activate
+    public void activate(ComponentContext ctx) {
+    	instance = this;
+    }
+    
+    @Deactivate
+    public void deactivate(ComponentContext ctx) {
+    	instance = null;
+    }
 
 	@Override
 	public void process(AaaContext context) {
