@@ -38,8 +38,12 @@ public class Sop {
 	
 	private static HashMap<String, Container> apiCache = new HashMap<>();
 
-	@SuppressWarnings("unchecked")
 	public synchronized static <T extends SApi> T getApi(Class<? extends T> ifc) {
+		return getApi(ifc, true);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public synchronized static <T extends SApi> T getApi(Class<? extends T> ifc, boolean throwException) {
 		Container cached = apiCache.get(ifc.getCanonicalName());
 		if (cached != null) {
 			if (cached.bundle.getState() != Bundle.ACTIVE || cached.modified != cached.bundle.getLastModified()) {
@@ -51,9 +55,19 @@ public class Sop {
 		if (cached == null) {
 			BundleContext context = FrameworkUtil.getBundle(Sop.class).getBundleContext();
 			ServiceReference<? extends T> ref = context.getServiceReference(ifc);
-			if (ref == null) throw new NotFoundException("api reference not found",ifc);
+			if (ref == null) {
+				if (throwException)
+					throw new NotFoundException("api reference not found",ifc);
+				else
+					return null;
+			}
 			T obj = context.getService(ref);
-			if (obj == null) throw new NotFoundException("api service not found",ifc);
+			if (obj == null) {
+				if (throwException)
+					throw new NotFoundException("api service not found",ifc);
+				else
+					return null;
+			}
 			cached = new Container();
 			cached.bundle = ref.getBundle();
 			cached.api = obj;
