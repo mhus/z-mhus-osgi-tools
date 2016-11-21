@@ -2,7 +2,7 @@ package de.mhus.osgi.sop.api.rest;
 
 import javax.transaction.NotSupportedException;
 
-import de.mhus.osgi.sop.api.operation.OperationService;
+import de.mhus.osgi.sop.api.action.ActionDescriptor;
 
 public abstract class JsonNode<T> extends AbstractNode<T>{
 
@@ -17,7 +17,7 @@ public abstract class JsonNode<T> extends AbstractNode<T>{
 
 	@Override
 	public RestResult doCreate(CallContext callContext) throws Exception {
-		Class<? extends OperationService> oper = getCreateBpmOperation();
+		ActionDescriptor oper = getCreateBpmOperation();
 		if (oper != null)
 			return super.doCreate(callContext);
 		JsonResult result = new JsonResult();
@@ -27,7 +27,7 @@ public abstract class JsonNode<T> extends AbstractNode<T>{
 
 	@Override
 	public RestResult doUpdate(CallContext callContext) throws Exception {
-		Class<? extends OperationService> oper = getUpdateBpmOperation();
+		ActionDescriptor oper = getUpdateBpmOperation();
 		if (oper != null)
 			return super.doUpdate(callContext);
 		JsonResult result = new JsonResult();
@@ -37,7 +37,7 @@ public abstract class JsonNode<T> extends AbstractNode<T>{
 
 	@Override
 	public RestResult doDelete(CallContext callContext) throws Exception {
-		Class<? extends OperationService> oper = getDeleteBpmOperation();
+		ActionDescriptor oper = getDeleteBpmOperation();
 		if (oper != null)
 			return super.doDelete(callContext);
 		JsonResult result = new JsonResult();

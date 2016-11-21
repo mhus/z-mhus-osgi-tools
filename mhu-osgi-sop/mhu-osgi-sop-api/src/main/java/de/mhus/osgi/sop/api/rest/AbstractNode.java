@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.transaction.NotSupportedException;
 
-import de.mhus.osgi.sop.api.operation.OperationService;
+import de.mhus.osgi.sop.api.action.ActionDescriptor;
 
 public abstract class AbstractNode<T> implements RestNodeService {
 
@@ -59,11 +59,11 @@ public abstract class AbstractNode<T> implements RestNodeService {
 	
 	protected abstract T getObjectForId(String id) throws Exception;
 
-	protected abstract Class<? extends OperationService> getCreateBpmOperation();
+	protected abstract ActionDescriptor getCreateBpmOperation();
 
-	protected abstract Class<? extends OperationService> getUpdateBpmOperation();
+	protected abstract ActionDescriptor getUpdateBpmOperation();
 	
-	protected abstract Class<? extends OperationService> getDeleteBpmOperation();
+	protected abstract ActionDescriptor getDeleteBpmOperation();
 
 	@Override
 	public RestResult doAction(CallContext callContext) throws Exception {
@@ -80,7 +80,7 @@ public abstract class AbstractNode<T> implements RestNodeService {
 //		JsonResult result = new JsonResult();
 //		doCreate(result, callContext);
 //		return result;
-		Class<? extends OperationService> oper = getCreateBpmOperation();
+		ActionDescriptor oper = getCreateBpmOperation();
 		if (oper == null)
 			throw new NotSupportedException();
 		return RestUtil.doExecuteBpm( oper, callContext, getNodeId());
@@ -91,7 +91,7 @@ public abstract class AbstractNode<T> implements RestNodeService {
 //		JsonResult result = new JsonResult();
 //		doUpdate(result, callContext);
 //		return result;
-		Class<? extends OperationService> oper = getUpdateBpmOperation();
+		ActionDescriptor oper = getUpdateBpmOperation();
 		if (oper == null)
 			throw new NotSupportedException();
 		return RestUtil.doExecuteBpm( oper, callContext, getNodeId());
@@ -103,7 +103,7 @@ public abstract class AbstractNode<T> implements RestNodeService {
 //		JsonResult result = new JsonResult();
 //		doDelete(result, callContext);
 //		return result;
-		Class<? extends OperationService> oper = getDeleteBpmOperation();
+		ActionDescriptor oper = getDeleteBpmOperation();
 		if (oper == null)
 			throw new NotSupportedException();
 		return RestUtil.doExecuteBpm( oper, callContext, getNodeId());

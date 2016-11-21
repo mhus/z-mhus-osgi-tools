@@ -23,17 +23,18 @@ import de.mhus.osgi.sop.api.jms.AbstractOperationExecuteChannel;
 import de.mhus.osgi.sop.api.jms.TicketAccessInterceptor;
 import de.mhus.osgi.sop.api.operation.OperationApi;
 
-@Component(provide=JmsDataChannel.class,immediate=true)
-public class OperationExecuteChannel extends AbstractOperationExecuteChannel {
+// Needs to activate by blueprint
+//@Component(provide=JmsDataChannel.class,immediate=true)
+public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel {
 
-	public static CfgString queueName = new CfgString(OperationExecuteChannel.class, "queue", "mhus.operation." + MSingleton.baseLookup(null, ServerIdent.class));
-	public static CfgString connectionName = new CfgString(OperationExecuteChannel.class, "connection", "mhus");
-	static OperationExecuteChannel instance;
+	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "queue", "mhus.operation." + MSingleton.baseLookup(null, ServerIdent.class));
+	public static CfgString connectionName = new CfgString(JmsOperationExecuteChannel.class, "connection", "mhus");
+	static JmsOperationExecuteChannel instance;
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
 		super.doActivate(ctx);
-		if (MSingleton.getCfg(OperationExecuteChannel.class).getBoolean("accessControl", true))
+		if (MSingleton.getCfg(JmsOperationExecuteChannel.class).getBoolean("accessControl", true))
 			getServer().setInterceptorIn(new TicketAccessInterceptor());
 		instance = this;
 	}	
@@ -83,7 +84,7 @@ public class OperationExecuteChannel extends AbstractOperationExecuteChannel {
 		LinkedList<String> out = new LinkedList<String>();
 		for (String path : admin.getOperations()) {
 			try {
-				Operation oper = admin.getOperation(path);
+				Operation oper = admin.getOperation(path).getOperation();
 				if (oper.hasAccess())
 					out.add(path);
 			} catch (Throwable t) {
@@ -97,7 +98,7 @@ public class OperationExecuteChannel extends AbstractOperationExecuteChannel {
 	@Override
 	protected OperationDescription getOperationDescription(String path) {
 		OperationApi admin = Sop.getApi(OperationApi.class);
-		Operation oper = admin.getOperation(path);
+		Operation oper = admin.getOperation(path).getOperation();
 		if (!oper.hasAccess()) return null;
 		return oper.getDescription();
 	}

@@ -14,10 +14,9 @@ import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.action.ActionApi;
+import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.model.DbMetadata;
-import de.mhus.osgi.sop.api.operation.OperationBpmDefinition;
-import de.mhus.osgi.sop.api.operation.OperationService;
 
 public class RestUtil {
 	
@@ -71,22 +70,17 @@ public class RestUtil {
 		return callContext.getParameter(getObjectIdParameterName(clazz));
 	}
 
-	public static RestResult doExecuteBpm(Class<? extends OperationService> oper, CallContext callContext, String source) throws MException {
-		return Sop.getApi(ActionApi.class).doExecuteRestAction(callContext, getOperationName(oper), source );
+	public static RestResult doExecuteBpm(ActionDescriptor oper, CallContext callContext, String source) throws MException {
+		return doExecuteRestAction(callContext, oper, source );
 	}
 	
 	public static RestResult doExecuteBpm(String name, CallContext callContext, String source) throws MException {
-		return Sop.getApi(ActionApi.class).doExecuteRestAction(callContext, name, source );
+		return doExecuteRestAction(callContext, Sop.getApi(ActionApi.class).getAction(name), source );
 	}
 
-	public static String getOperationName(Class<? extends OperationService> oper) throws MException {
-		try {
-			OperationBpmDefinition def = oper.newInstance().getBpmDefinition();
-			return def.getName();
-		} catch (InstantiationException | IllegalAccessException e) {
-			log.e(oper,e);
-			throw new MException(e);
-		}
+	private static RestResult doExecuteRestAction(CallContext callContext, ActionDescriptor descriptor, String source) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

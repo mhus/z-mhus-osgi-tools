@@ -47,7 +47,6 @@ import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
 import de.mhus.osgi.sop.api.aaa.Trust;
 import de.mhus.osgi.sop.api.aaa.TrustSource;
 import de.mhus.osgi.sop.api.action.ActionApi;
-import de.mhus.osgi.sop.api.action.BpmCase;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 import de.mhus.osgi.sop.api.adb.Reference;
 import de.mhus.osgi.sop.api.adb.ReferenceCollector;
