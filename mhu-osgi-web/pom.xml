@@ -32,7 +32,9 @@
 
     <modules>
       <module>mhu-osgi-web-console</module>
+      <!-- 
       <module>mhu-osgi-groovy-console</module>
+       -->
       <module>mhu-osgi-root-servlet</module>
       <module>mhu-osgi-rewrite-servlet</module>
    </modules>
