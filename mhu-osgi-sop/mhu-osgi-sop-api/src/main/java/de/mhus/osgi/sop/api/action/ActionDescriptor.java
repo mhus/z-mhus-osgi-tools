@@ -46,7 +46,7 @@ public class ActionDescriptor {
 		return tags;
 	}
 
-	public String getPath() {
+	public String getName() {
 		return path;
 	}
 	

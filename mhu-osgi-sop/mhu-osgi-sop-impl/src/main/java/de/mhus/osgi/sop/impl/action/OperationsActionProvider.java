@@ -31,7 +31,12 @@ public class OperationsActionProvider implements ActionProvider {
 			OperationDescriptor oper = OperationApiImpl.instance.getOperation(name);
 			out.add(oper);
 		}
-		return null;
+		return out;
+	}
+
+	@Override
+	public ActionDescriptor getAction(String name) {
+		return OperationApiImpl.instance.getOperation(name);
 	}
 
 }

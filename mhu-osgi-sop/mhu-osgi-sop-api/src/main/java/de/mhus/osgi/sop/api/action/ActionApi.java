@@ -2,6 +2,7 @@ package de.mhus.osgi.sop.api.action;
 
 import java.util.Collection;
 
+import de.mhus.lib.core.IProperties;
 import de.mhus.osgi.sop.api.SApi;
 
 public interface ActionApi extends SApi {
@@ -28,14 +29,8 @@ public interface ActionApi extends SApi {
 	 * @param tags
 	 * @return never null
 	 */
-	Collection<ActionDescriptor> getActions(Collection<String> tags);
+	Collection<ActionDescriptor> getActions(Collection<String> tags, IProperties properties);
 
-	/**
-	 * Returns the source or null if not exists.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	ActionProvider getSource(String name);
+	Collection<String> getActionPathes();
 	
 }
