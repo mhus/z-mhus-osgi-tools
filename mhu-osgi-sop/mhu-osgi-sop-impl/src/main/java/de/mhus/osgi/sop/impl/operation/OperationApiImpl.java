@@ -31,6 +31,7 @@ import de.mhus.lib.core.strategy.NotSuccessful;
 import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationDescription;
 import de.mhus.lib.core.strategy.OperationResult;
+import de.mhus.lib.core.util.ParameterDefinitions;
 import de.mhus.lib.core.util.VectorMap;
 import de.mhus.lib.jms.ClientJms;
 import de.mhus.lib.jms.JmsConnection;
@@ -101,7 +102,14 @@ public class OperationApiImpl extends MLog implements OperationApi {
 				for (String item : ((String)tagsStr).split(","))
 					tags.add(item);
 			}
-			return new OperationDescriptor(service, tags, source);
+			service.getDescription().getForm();
+			return new OperationDescriptor(
+					service, 
+					tags, 
+					source, 
+					service.getDescription() != null ? service.getDescription().getParameterDefinitions() : null,
+					service.getDescription() != null ? service.getDescription().getForm() : null
+					);
 		}
 
 		@Override

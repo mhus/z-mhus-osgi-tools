@@ -1,4 +1,4 @@
-package de.mhus.osgi.sop.impl;
+package de.mhus.osgi.sop.impl.aaa;
 
 import java.util.Map.Entry;
 
@@ -19,6 +19,7 @@ import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
+import de.mhus.osgi.sop.impl.AaaContextImpl;
 
 @Command(scope = "sop", name = "access", description = "Access actions")
 @Service
@@ -33,7 +34,9 @@ public class AccessCmd implements Action {
 			+ " synchronizer <type>,"
 			+ " access <account> <name> [<action>]"
 			+ " reloadconfig,"
-			+ " md5 <password>", multiValued=false)
+			+ " md5 <password>,"
+			+ " admin,"
+			+ " idtree", multiValued=false)
 	String cmd;
 	
 	@Argument(index=1, name="parameters", required=false, description="More Parameters", multiValued=true)
@@ -60,6 +63,12 @@ public class AccessCmd implements Action {
 			AaaContext cur = api.process(ac, null, admin);
 			System.out.println(cur);
 		} else
+		if (cmd.equals("admin")) {
+			RootContext context = new RootContext();
+			context.setAdminMode(admin);
+			api.process(context);
+			System.out.println(context);
+		} else
 		if (cmd.equals("logout")) {
 			AaaContext cur = api.getCurrentOrGuest();
 			cur = api.release(cur.getAccount());
@@ -69,9 +78,12 @@ public class AccessCmd implements Action {
 			AaaContext cur = api.getCurrentOrGuest();
 			System.out.println(cur);
 		} else
-		if (cmd.equals("root")) {
-			api.resetContext();
-			AaaContext cur = api.getCurrentOrGuest();
+		if (cmd.equals("idtree")) {
+			AaaContextImpl cur = (AaaContextImpl) api.getCurrentOrGuest();
+			while (cur != null) {
+				System.out.println(cur);
+				cur = cur.getParent();
+			}
 			System.out.println(cur);
 		} else
 		if (cmd.equals("root")) {

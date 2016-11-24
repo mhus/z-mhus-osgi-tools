@@ -18,6 +18,7 @@ import de.mhus.lib.core.strategy.Monitor;
 import de.mhus.lib.core.strategy.OperationResult;
 import de.mhus.lib.core.strategy.Successful;
 import de.mhus.lib.core.util.ParameterDefinition;
+import de.mhus.lib.core.util.ParameterDefinitions;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.action.Action;
@@ -55,7 +56,9 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 					for (String t : tagsStr.split(","))
 						tags.add(t);
 				}
-				out.add(new ActionDescriptor(new BpmAction(def), tags, getName(), def.getProcess() ));
+
+				ParameterDefinitions pDefs = ParameterDefinitions.create(def.getParameters());
+				out.add(new ActionDescriptor(new BpmAction(def), tags, getName(), def.getProcess(), pDefs, null ));
 			}
 		} catch (Throwable t) {
 			log().e(t);
@@ -101,7 +104,7 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 			BpmCase caze = manager.inject(new BpmCase(null, BpmActionProvider.this.getName(), process, mapped, customId, parameters));
 			caze.save();
 
-			Map<String, ParameterDefinition> pDefs = ParameterDefinition.createDefinitions(def.getParameters());
+			ParameterDefinitions pDefs = ParameterDefinitions.create(def.getParameters());
 			
 			for (Entry<String, ParameterDefinition> pDefEntry : pDefs.entrySet()) {
 				String fromName = pDefEntry.getKey();

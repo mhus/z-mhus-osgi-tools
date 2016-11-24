@@ -17,6 +17,9 @@ import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.karaf.MServiceList;
 import de.mhus.lib.karaf.MServiceMap;
 import de.mhus.lib.karaf.MServiceTracker;
+import de.mhus.osgi.sop.api.Sop;
+import de.mhus.osgi.sop.api.aaa.AaaContext;
+import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.action.ActionApi;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.action.ActionProvider;
@@ -54,7 +57,10 @@ public class ActionApiImpl extends MLog implements ActionApi {
 			name = MString.afterIndex(name, ':');
 			ActionProvider p = getProvider(providerName);
 			if (p == null) return null;
-			return p.getAction(name);
+			ActionDescriptor a = p.getAction(name);
+			if (a == null) return null;
+			if (!hasAccess(a)) return null;
+			return a;
 		}
 		
 		for (ActionProvider p : getProviders()) {
@@ -62,6 +68,15 @@ public class ActionApiImpl extends MLog implements ActionApi {
 			if (a != null) return a;
 		}
 		return null;
+	}
+
+	private boolean hasAccess(ActionDescriptor a) {
+		AccessApi api = Sop.getApi(AccessApi.class);
+		if (api == null) return true; // no access api support
+		AaaContext context = api.getCurrentOrGuest();
+		if (context.isAdminMode()) return true;
+		boolean access = api.hasGroupAccess(context.getAccount(), ActionApi.class, a.getSource() + "_" + a.getName(), "execute");
+		return access;
 	}
 
 	private ActionProvider[] getProviders() {
@@ -79,7 +94,8 @@ public class ActionApiImpl extends MLog implements ActionApi {
 			try {
 				for (ActionDescriptor a : p.getActions())
 					try {
-						out.add(a);
+						if (hasAccess(a))
+							out.add(a);
 					} catch (Throwable t) {
 						log().d("can't load action", p, a, t);
 					}
@@ -96,7 +112,8 @@ public class ActionApiImpl extends MLog implements ActionApi {
 		for (ActionProvider p : getProviders()) {
 			String providerName = p.getName();
 			for (ActionDescriptor a : p.getActions())
-				out.add(providerName + ':' + a.getName());
+				if (hasAccess(a))
+					out.add(providerName + ':' + a.getName());
 		}
 		return out;
 	}
@@ -106,8 +123,9 @@ public class ActionApiImpl extends MLog implements ActionApi {
 		LinkedList<ActionDescriptor> out = new LinkedList<>(); 
 		for (ActionProvider p : getProviders()) {
 			for (ActionDescriptor a : p.getActions())
-				if (a.canExecute(tags, properties))
-					out.add(a);
+				if (hasAccess(a))
+					if (a.canExecute(tags, properties))
+						out.add(a);
 		}
 		return out;
 	}

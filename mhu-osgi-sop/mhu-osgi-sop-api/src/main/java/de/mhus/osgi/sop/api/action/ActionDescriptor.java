@@ -3,19 +3,25 @@ package de.mhus.osgi.sop.api.action;
 import java.util.Collection;
 
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.definition.DefRoot;
+import de.mhus.lib.core.util.ParameterDefinitions;
 
 public class ActionDescriptor {
 	private Action action;
 	private Collection<String> tags;
 	private String path;
 	private String source;
+	private ParameterDefinitions definitions;
+	private String form;
 
-	public ActionDescriptor(Action action, Collection<String> tags, String source, String path) {
+	public ActionDescriptor(Action action, Collection<String> tags, String source, String path, ParameterDefinitions definitions, String form) {
 		super();
 		this.action = action;
 		this.tags = tags;
 		this.source = source;
 		this.path = path;
+		this.definitions = definitions;
+		this.form = form;
 	}
 	
 	public boolean canExecute(Collection<String> providedTags, IProperties properties) {
@@ -52,6 +58,24 @@ public class ActionDescriptor {
 	
 	public String getSource() {
 		return source;
+	}
+
+	/**
+	 * Every action should have a parameter definition. If
+	 * parameter definitions are not supported, the method will return null;
+	 * @return
+	 */
+	public ParameterDefinitions getParameterDefinitions() {
+		return definitions;
+	}
+	
+	/**
+	 * An action can provide a form component but it's not necessary. If
+	 * parameter definitions are not supported, the method will return null;
+	 * @return
+	 */
+	public String getForm() {
+		return form;
 	}
 	
 }

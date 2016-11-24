@@ -8,5 +8,9 @@ public class RootContext extends AaaContextImpl {
 		super(new AccountRoot());
 		adminMode = true;
 	}
+	
+	public void setAdminMode(boolean admin) {
+		adminMode = admin;
+	}
 
 }
