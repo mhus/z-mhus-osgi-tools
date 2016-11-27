@@ -103,7 +103,7 @@ public abstract class AbstractOperationExecuteChannel extends JmsDataChannelImpl
 							"group",des.getGroup(),
 							"id",des.getId(),
 							"form",des.getForm(),
-							"title",des.getTitle()
+							"title",des.getCaption()
 							);
 				}
 			}

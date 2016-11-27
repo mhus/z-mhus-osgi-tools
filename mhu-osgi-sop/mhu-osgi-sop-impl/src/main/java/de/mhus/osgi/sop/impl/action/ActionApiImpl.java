@@ -119,7 +119,7 @@ public class ActionApiImpl extends MLog implements ActionApi {
 	}
 	
 	@Override
-	public Collection<ActionDescriptor> getActions(Collection<String> tags, IProperties properties) {
+	public List<ActionDescriptor> getActions(Collection<String> tags, IProperties properties) {
 		LinkedList<ActionDescriptor> out = new LinkedList<>(); 
 		for (ActionProvider p : getProviders()) {
 			for (ActionDescriptor a : p.getActions())
