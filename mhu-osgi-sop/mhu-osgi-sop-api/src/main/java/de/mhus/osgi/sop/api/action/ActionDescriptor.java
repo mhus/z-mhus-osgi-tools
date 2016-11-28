@@ -20,8 +20,18 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 	private String form;
 	private MNls nls;
 	private MNlsProvider nlsProvider;
+	private String title;
 
-	public ActionDescriptor(Action action, Collection<String> tags, String source, String path, ParameterDefinitions definitions, String form, MNlsProvider nlsProvider) {
+	public ActionDescriptor(
+			Action action, 
+			Collection<String> tags, 
+			String source, 
+			String path, 
+			ParameterDefinitions definitions, 
+			String form, 
+			MNlsProvider nlsProvider, 
+			String title
+		) {
 		super();
 		this.action = action;
 		this.tags = tags;
@@ -64,6 +74,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 		return tags;
 	}
 
+	@Override
 	public String getName() {
 		return path;
 	}
@@ -103,7 +114,11 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 	}
 
 	public String getCaption() {
-		return nls("caption=" + getName());
+		return nls("caption=" + getTitle());
+	}
+
+	public String getTitle() {
+		return title;
 	}
 	
 }

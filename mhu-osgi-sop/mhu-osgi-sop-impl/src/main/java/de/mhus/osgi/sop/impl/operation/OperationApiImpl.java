@@ -103,13 +103,15 @@ public class OperationApiImpl extends MLog implements OperationApi {
 					tags.add(item);
 			}
 			service.getDescription().getForm();
+			OperationDescription desc = service.getDescription();
 			return new OperationDescriptor(
 					service, 
 					tags, 
 					source, 
-					service.getDescription() != null ? service.getDescription().getParameterDefinitions() : null,
-					service.getDescription() != null ? service.getDescription().getForm() : null,
-					service
+					desc != null ? desc.getParameterDefinitions() : null,
+					desc != null ? desc.getForm() : null,
+					service,
+					desc != null ? desc.getTitle() : source
 					);
 		}
 

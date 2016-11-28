@@ -58,7 +58,15 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 				}
 
 				ParameterDefinitions pDefs = ParameterDefinitions.create(def.getParameters());
-				out.add(new ActionDescriptor(new BpmAction(def), tags, getName(), def.getProcess(), pDefs, null, def ));
+				out.add(new ActionDescriptor(
+						new BpmAction(def), 
+						tags, getName(), 
+						def.getProcess(), 
+						pDefs, 
+						null, 
+						def, 
+						getName() 
+					));
 			}
 		} catch (Throwable t) {
 			log().e(t);
