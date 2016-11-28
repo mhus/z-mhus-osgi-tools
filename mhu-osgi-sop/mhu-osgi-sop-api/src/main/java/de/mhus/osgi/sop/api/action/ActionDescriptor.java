@@ -40,6 +40,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 		this.definitions = definitions;
 		this.form = form;
 		this.nlsProvider = nlsProvider;
+		this.title = title;
 	}
 	
 	public boolean canExecute(Collection<String> providedTags, IProperties properties) {
