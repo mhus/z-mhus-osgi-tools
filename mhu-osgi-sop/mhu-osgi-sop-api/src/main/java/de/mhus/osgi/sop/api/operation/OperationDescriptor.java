@@ -16,7 +16,7 @@ public class OperationDescriptor extends ActionDescriptor {
 			Collection<String> tags, 
 			String source, 
 			ParameterDefinitions pDef, 
-			String form, 
+			DefRoot form, 
 			MNlsProvider nls, 
 			String title
 		) {

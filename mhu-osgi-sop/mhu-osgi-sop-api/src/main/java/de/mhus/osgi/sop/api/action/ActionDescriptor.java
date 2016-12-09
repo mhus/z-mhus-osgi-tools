@@ -17,7 +17,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 	private String path;
 	private String source;
 	private ParameterDefinitions definitions;
-	private String form;
+	private DefRoot form;
 	private MNls nls;
 	private MNlsProvider nlsProvider;
 	private String title;
@@ -28,7 +28,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 			String source, 
 			String path, 
 			ParameterDefinitions definitions, 
-			String form, 
+			DefRoot form, 
 			MNlsProvider nlsProvider, 
 			String title
 		) {
@@ -98,7 +98,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 	 * parameter definitions are not supported, the method will return null;
 	 * @return
 	 */
-	public String getForm() {
+	public DefRoot getForm() {
 		return form;
 	}
 

@@ -102,7 +102,7 @@ public abstract class AbstractOperationExecuteChannel extends JmsDataChannelImpl
 					res = new Successful(Sop.OPERATION_INFO, "list",OperationResult.OK,
 							"group",des.getGroup(),
 							"id",des.getId(),
-							"form",des.getForm(),
+							"form",des.getForm().toString(),
 							"title",des.getCaption()
 							);
 				}
