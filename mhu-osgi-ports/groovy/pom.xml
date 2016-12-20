@@ -60,6 +60,7 @@
                         <Import-Package>*;resolution:=optional</Import-Package>
 						<Embed-Dependency>groovy-all</Embed-Dependency>
                     	<Embed-Transitive>true</Embed-Transitive>
+						<DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>
             </plugin>
