@@ -259,9 +259,12 @@ public class VaadinResourcesServlet extends HttpServlet {
 			if (p < 1) return identifier;
 			if (identifier.charAt(p-1) != '/') return identifier;
 			int p2 = identifier.substring(0, p-1).lastIndexOf('/');
-			if (p2 < 0) 
-				identifier = identifier.substring(p+3);
-			else
+			if (p2 < 0) {
+				if (identifier.startsWith("/../VAADIN/"))
+					identifier = identifier.substring(p+3 + 6);
+				else
+					identifier = identifier.substring(p+3);
+			} else
 				identifier = identifier.substring(0, p2) + identifier.substring(p+2);
 		}
     }
