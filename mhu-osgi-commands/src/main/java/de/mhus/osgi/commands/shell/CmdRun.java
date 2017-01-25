@@ -26,8 +26,8 @@ import de.mhus.lib.core.util.ArrayIterator;
 @Service
 public class CmdRun extends MLog implements Action {
 
-	@Argument(index = 0, name = "command", description = "File or command", required = true, multiValued = false)
-    private String fileName;
+	@Argument(index = 0, name = "command", description = "File or command", required = true, multiValued = true)
+    private String[] cmd;
 
     @Option(name = "-d", aliases = { "--debug" }, description = "Print debug information", required = false, multiValued = false)
     boolean debug;
@@ -51,6 +51,7 @@ public class CmdRun extends MLog implements Action {
 	public Object execute() throws Exception {
 
 		List<String> lines = null;
+		String fileName = MString.join(cmd, ' ');
 		if (command) {
 			lines = new LinkedList<>();
 			if (!sensitive)
