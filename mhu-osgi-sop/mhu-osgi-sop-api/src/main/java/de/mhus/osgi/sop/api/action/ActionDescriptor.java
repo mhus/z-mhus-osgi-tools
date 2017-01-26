@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import de.mhus.lib.basics.Named;
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.definition.DefRoot;
 import de.mhus.lib.core.util.MNls;
 import de.mhus.lib.core.util.MNlsProvider;
@@ -120,6 +121,11 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 
 	public String getTitle() {
 		return title;
+	}
+	
+	@Override
+	public String toString() {
+		return MSystem.toString(this, path, tags);
 	}
 	
 }
