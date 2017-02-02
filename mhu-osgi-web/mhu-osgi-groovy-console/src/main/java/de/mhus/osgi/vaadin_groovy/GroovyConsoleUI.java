@@ -18,7 +18,7 @@ import de.mhus.lib.core.security.LoginCallbackHandler;
 import de.mhus.lib.core.security.MSecurity;
 import de.mhus.lib.core.util.MNls;
 import de.mhus.lib.core.util.MNlsFactory;
-import de.mhus.lib.vaadin.aqua.LoginPanel;
+import de.mhus.lib.vaadin.login.LoginPanel;
 
 @Theme(Reindeer.THEME_NAME)
 public class GroovyConsoleUI extends UI {
