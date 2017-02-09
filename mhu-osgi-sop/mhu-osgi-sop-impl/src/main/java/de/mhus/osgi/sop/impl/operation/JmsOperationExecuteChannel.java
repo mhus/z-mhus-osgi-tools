@@ -27,7 +27,7 @@ import de.mhus.osgi.sop.api.operation.OperationApi;
 //@Component(provide=JmsDataChannel.class,immediate=true)
 public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel {
 
-	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "queue", "mhus.operation." + MSingleton.baseLookup(null, ServerIdent.class));
+	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "queue", "mhus.operation." + MSingleton.lookup(ServerIdent.class));
 	public static CfgString connectionName = new CfgString(JmsOperationExecuteChannel.class, "connection", "mhus");
 	static JmsOperationExecuteChannel instance;
 	
