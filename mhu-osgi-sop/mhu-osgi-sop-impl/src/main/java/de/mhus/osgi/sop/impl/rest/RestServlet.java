@@ -25,7 +25,7 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.TrailLevelMapper;
 import de.mhus.lib.core.util.Base64;
 import de.mhus.lib.core.util.MNls;
-import de.mhus.lib.core.util.Rfc1738;
+import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.SopApi;
@@ -334,8 +334,8 @@ public class RestServlet extends HttpServlet {
         
         String account = null;
         String pass = null;
-        if (parts.length > 0) account = Rfc1738.decode(parts[0]);
-        if (parts.length > 1) pass = Rfc1738.decode(parts[1]);
+        if (parts.length > 0) account = MUri.decode(parts[0]);
+        if (parts.length > 1) pass = MUri.decode(parts[1]);
         	
         return TicketUtil.createTicket(account, pass);
         
