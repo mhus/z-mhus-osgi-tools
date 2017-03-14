@@ -1,10 +1,4 @@
-*/target/**
-target/*
-*.jar
-*.war
-*.ear
-*.class
-*.log
-
-tutorial/bridgetws-client-liferay/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
-/target
+.classpath
+.project
+.settings/
+target/
