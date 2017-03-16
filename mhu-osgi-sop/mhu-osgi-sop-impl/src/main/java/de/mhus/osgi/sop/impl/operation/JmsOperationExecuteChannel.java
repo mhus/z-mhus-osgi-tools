@@ -10,7 +10,7 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import de.mhus.lib.core.IProperties;
-import de.mhus.lib.core.MSingleton;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.cfg.CfgString;
 import de.mhus.lib.core.service.ServerIdent;
 import de.mhus.lib.core.strategy.Operation;
@@ -27,14 +27,14 @@ import de.mhus.osgi.sop.api.operation.OperationApi;
 //@Component(provide=JmsDataChannel.class,immediate=true)
 public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel {
 
-	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "queue", "mhus.operation." + MSingleton.lookup(ServerIdent.class));
+	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "queue", "mhus.operation." + MApi.lookup(ServerIdent.class));
 	public static CfgString connectionName = new CfgString(JmsOperationExecuteChannel.class, "connection", "mhus");
 	static JmsOperationExecuteChannel instance;
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
 		super.doActivate(ctx);
-		if (MSingleton.getCfg(JmsOperationExecuteChannel.class).getBoolean("accessControl", true))
+		if (MApi.getCfg(JmsOperationExecuteChannel.class).getBoolean("accessControl", true))
 			getServer().setInterceptorIn(new TicketAccessInterceptor());
 		instance = this;
 	}	

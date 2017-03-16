@@ -8,7 +8,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 
-import de.mhus.lib.core.MSingleton;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.TrailLevelMapper;
@@ -45,7 +45,7 @@ public class JsonResult implements RestResult {
     		if (user.isAdminMode())
         		((ObjectNode)json).put("_admin", true);
     			 
-    		LevelMapper lm = MSingleton.get().getLogFactory().getLevelMapper();
+    		LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
     		if (lm != null && lm instanceof TrailLevelMapper && ((TrailLevelMapper)lm).isLocalTrail() )
     			((ObjectNode)json).put("_trail",((TrailLevelMapper)lm).getTrailId());
     	}

@@ -19,7 +19,7 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.IProperties;
-import de.mhus.lib.core.MSingleton;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.TrailLevelMapper;
@@ -76,7 +76,7 @@ public class RestServlet extends HttpServlet {
     	try {
 	    	String trail = req.getParameter("_trace");
 	    	if (trail != null) {
-	    		LevelMapper lm = MSingleton.get().getLogFactory().getLevelMapper();
+	    		LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
 	    		if (lm != null && lm instanceof TrailLevelMapper) {
 	    			isTrailEnabled = true;
 	    			((TrailLevelMapper)lm).doConfigureTrail(trail);
@@ -231,7 +231,7 @@ public class RestServlet extends HttpServlet {
 	        
     	} finally {
     		if (isTrailEnabled) {
-	    		LevelMapper lm = MSingleton.get().getLogFactory().getLevelMapper();
+	    		LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
 	    		if (lm != null && lm instanceof TrailLevelMapper)
 	    			((TrailLevelMapper)lm).doResetTrail();
     		}
@@ -307,7 +307,7 @@ public class RestServlet extends HttpServlet {
         	json.put("_sequence", id);
         	if (user != null)
         		json.put("_user",  user);
-    		LevelMapper lm = MSingleton.get().getLogFactory().getLevelMapper();
+    		LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
     		if (lm != null && lm instanceof TrailLevelMapper)
     			json.put("_trail",((TrailLevelMapper)lm).getTrailId());
         	json.put("_error", errNr);
