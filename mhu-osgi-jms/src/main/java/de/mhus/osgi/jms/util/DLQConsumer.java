@@ -1,4 +1,4 @@
-package de.mhus.osgi.jms;
+package de.mhus.osgi.jms.util;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

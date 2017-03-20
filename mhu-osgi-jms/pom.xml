@@ -45,7 +45,11 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>de.mhus.osgi.jms*;version=${project.version}</Export-Package>
-                        <Import-Package>*</Import-Package>
+                        <Import-Package>
+                        *,
+                        org.apache.axis.*;version=1.4;resolution:=optional,
+                        org.apache.commons.*;resolution:=optional
+                        </Import-Package>
                         <Service-Component>*</Service-Component>
                     </instructions>
                 </configuration>
@@ -129,5 +133,15 @@
 			<version>${mhulib.version}</version>
 			<type>bundle</type>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.axis/axis -->
+		<dependency>
+		    <groupId>org.apache.axis</groupId>
+		    <artifactId>axis</artifactId>
+		    <version>1.4</version>
+		</dependency>
+
+				
+		
 	</dependencies>  
 </project>
