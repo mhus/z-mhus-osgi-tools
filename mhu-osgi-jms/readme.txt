@@ -27,3 +27,39 @@ install -s mvn:de.mhus.lib/mhu-lib-j2ee/3.3.0-SNAPSHOT
 
 jms:send tcp://localhost:61613 event hello 100
 jms:sendfile tcp://localhost:61613 event /path/to/file/or/dir  
+
+
+
+---
+
+
+Sample client-config.wsdd file
+
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment name="defaultClientConfig"
+   xmlns="http://xml.apache.org/axis/wsdd/"
+   xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+   <handler name="log"
+      type="java:de.mhus.osgi.jms.util.AxisLog2LogHandler">
+      <parameter name="LogHandler.logLevel" value="info" />
+   </handler>
+
+   <globalConfiguration>
+      <parameter name="disablePrettyXML" value="false" />
+      <requestFlow>
+         <handler type="log" />
+      </requestFlow>
+      <responseFlow>
+         <handler type="log" />
+      </responseFlow>
+   </globalConfiguration>
+
+   <transport name="http"
+      pivot="java:org.apache.axis.transport.http.HTTPSender" />
+   <transport name="local"
+      pivot="java:org.apache.axis.transport.local.LocalSender" />
+   <transport name="java"
+      pivot="java:org.apache.axis.transport.java.JavaSender" />
+</deployment>
+
