@@ -33,6 +33,7 @@ public class RootServlet extends HttpServlet {
 		props = new Properties();
 		File f = new File ("etc/rootservlet.properties");
 		if (f.exists()) {
+			log.info("Load config file " + f);
 			try {
 				FileInputStream is = new FileInputStream(f);
 				props.load(is);
@@ -40,6 +41,8 @@ public class RootServlet extends HttpServlet {
 			} catch (IOException e) {
 				log.warning(e.toString());
 			}
+		} else {
+			log.warning("Config file not found");
 		}
 	}
 	
