@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.ComponentContext;
+
+import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Deactivate;
 
 /*
 
@@ -29,7 +33,8 @@ public class RootServlet extends HttpServlet {
 	private Properties props;
 	private static Logger log = Logger.getLogger(RootServlet.class.getCanonicalName());
 
-	public RootServlet() {
+    @Activate
+    public void activate(ComponentContext ctx) {
 		props = new Properties();
 		File f = new File ("etc/rootservlet.properties");
 		if (f.exists()) {
@@ -44,6 +49,13 @@ public class RootServlet extends HttpServlet {
 		} else {
 			log.warning("Config file not found");
 		}
+    }
+    
+    @Deactivate
+    public void deactivate(ComponentContext ctx) {
+    }
+	
+	public RootServlet() {
 	}
 	
 	@Override
