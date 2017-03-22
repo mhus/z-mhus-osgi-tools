@@ -13,6 +13,10 @@ public class DLQConsumer extends ServerJms {
 
 	Log log = Log.getLog(DLQConsumer.class);
 	
+	public DLQConsumer() throws JMSException {
+		this((JmsConnection)null);
+	}
+	
 	public DLQConsumer(JmsDataSource con) throws JMSException {
 		this(con.getConnection());
 	}
