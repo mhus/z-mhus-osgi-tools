@@ -7,10 +7,15 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.JmsDestination;
 import de.mhus.lib.jms.ServerJms;
+import de.mhus.lib.karaf.jms.JmsDataSource;
 
 public class DLQConsumer extends ServerJms {
 
 	Log log = Log.getLog(DLQConsumer.class);
+	
+	public DLQConsumer(JmsDataSource con) throws JMSException {
+		this(con.getConnection());
+	}
 	
 	public DLQConsumer(JmsConnection con) {
 		super(new JmsDestination("ActiveMQ.DLQ", false).setConnection(con));
