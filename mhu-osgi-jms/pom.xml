@@ -46,10 +46,10 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>de.mhus.osgi.jms*;version=${project.version}</Export-Package>
                         <Import-Package>
-                        *,
                         org.apache.axis.*;version=1.4;resolution:=optional,
                         org.apache.commons.*;resolution:=optional,
-                        javax.xml.rpc.*;resolution:=optional
+                        javax.xml.rpc.*;resolution:=optional,
+                        *
                         </Import-Package>
                         <Service-Component>*</Service-Component>
                     </instructions>
