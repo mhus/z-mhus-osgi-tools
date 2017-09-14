@@ -10,11 +10,10 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MPassword;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.security.Account;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.adb.AdbApi;
@@ -48,7 +47,7 @@ public class AccessCmd implements Action {
 	@Override
 	public Object execute() throws Exception {
 
-		AccessApi api = Sop.getApi(AccessApi.class);
+		AccessApi api = MApi.lookup(AccessApi.class);
 		if (api == null) {
 			System.out.println("SOP API not found");
 			return null;
@@ -109,7 +108,7 @@ public class AccessCmd implements Action {
 		if(cmd.equals("controllers")) {
 			ConsoleTable table = new ConsoleTable();
 			table.setHeaderValues("Type","Controller","Bundle");
-			AdbApi adb = Sop.getApi(AdbApi.class);
+			AdbApi adb = MApi.lookup(AdbApi.class);
 			for (Entry<String, DbSchemaService> entry : adb.getController()) {
 				Bundle bundle = FrameworkUtil.getBundle(entry.getValue().getClass());
 				table.addRowValues(entry.getKey(), entry.getValue().getClass(), bundle.getSymbolicName() );

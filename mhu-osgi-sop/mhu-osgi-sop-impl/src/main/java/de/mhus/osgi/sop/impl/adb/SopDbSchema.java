@@ -8,11 +8,10 @@ import de.mhus.lib.adb.DbObject;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.adb.transaction.DbLockObject;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.lib.sql.DbConnection;
 import de.mhus.lib.sql.DbResult;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.adb.AbstractDbSchema;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
@@ -65,7 +64,7 @@ public class SopDbSchema extends AbstractDbSchema {
 			if (object instanceof DbMetadata) {
 				DbMetadata obj = (DbMetadata)object;
 				try {
-					AdbApi adb = Sop.getApi(AdbApi.class);
+					AdbApi adb = MApi.lookup(AdbApi.class);
 					switch(right) {
 					case CREATE:
 						if (!adb.canCreate(obj))

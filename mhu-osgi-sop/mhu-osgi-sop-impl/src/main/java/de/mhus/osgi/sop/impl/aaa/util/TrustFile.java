@@ -3,10 +3,6 @@ package de.mhus.osgi.sop.impl.aaa.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -16,7 +12,6 @@ import org.xml.sax.SAXException;
 
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MProperties;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
 import de.mhus.osgi.sop.api.aaa.Trust;
 

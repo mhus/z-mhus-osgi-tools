@@ -1,17 +1,7 @@
 package de.mhus.osgi.sop.api;
 
-import java.util.HashMap;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.MThread;
-import de.mhus.lib.errors.NotFoundException;
-import de.mhus.lib.errors.TimeoutRuntimeException;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.karaf.jms.JmsUtil;
 
@@ -36,6 +26,8 @@ public class Sop {
 
 	public static final String PARAM_RC = "rc";
 	
+/* use MApi.lookup() instead
+
 	private static HashMap<String, Container> apiCache = new HashMap<>();
 
 	public synchronized static <T extends SApi> T getApi(Class<? extends T> ifc) {
@@ -86,7 +78,7 @@ public class Sop {
 		public Bundle bundle;
 		
 	}
-	
+*/	
 	public static String decodePassword(String password) {
 		if (password == null) return null;
 		if (password.length() < 2 || !password.startsWith("`")) return password;
@@ -145,11 +137,13 @@ public class Sop {
 		return "mhus"; //TODO configurable
 	}
 
-	public static <T extends SApi> T waitForApi(Class<? extends T> ifc, long timeout) {
+/* use MApi.waitFor() instead
+
+	public static <T extends Object> T waitForApi(Class<? extends T> ifc, long timeout) {
 		long start = System.currentTimeMillis();
 		while (true) {
 			try {
-				T api = getApi(ifc);
+				T api = MApi.lookup(ifc);
 				if (api != null) // should not happen
 					return api;
 			} catch (Throwable t) {}
@@ -158,5 +152,5 @@ public class Sop {
 			MThread.sleep(500);
 		}
 	}
-
+*/
 }

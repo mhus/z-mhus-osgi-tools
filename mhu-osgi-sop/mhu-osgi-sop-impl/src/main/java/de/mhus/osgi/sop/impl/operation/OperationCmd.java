@@ -10,16 +10,15 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationDescription;
 import de.mhus.lib.core.strategy.OperationResult;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.karaf.jms.JmsUtil;
 import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.operation.JmsOperationApi;
@@ -51,10 +50,10 @@ public class OperationCmd implements Action {
 		if (conName != null)
 			con = JmsUtil.getConnection(conName);
 		
-		AaaContext acc = Sop.getApi(AccessApi.class).getCurrentOrGuest();
+		AaaContext acc = MApi.lookup(AccessApi.class).getCurrentOrGuest();
 		
-		OperationApi api = Sop.getApi(OperationApi.class);
-		JmsOperationApi jms = Sop.getApi(JmsOperationApi.class);
+		OperationApi api = MApi.lookup(OperationApi.class);
+		JmsOperationApi jms = MApi.lookup(JmsOperationApi.class);
 		
 		if (cmd.equals("list")) {
 			if (MString.isEmpty(path) && MString.isEmpty(queueName)) {

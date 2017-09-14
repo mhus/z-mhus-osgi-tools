@@ -1,17 +1,7 @@
 package de.mhus.osgi.sop.impl.operation;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.jms.BytesMessage;
-import javax.jms.JMSException;
-import javax.jms.MapMessage;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
-import javax.jms.TextMessage;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -24,21 +14,12 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.MProperties;
-import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.strategy.DefaultTaskContext;
 import de.mhus.lib.core.strategy.NotSuccessful;
 import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationDescription;
 import de.mhus.lib.core.strategy.OperationResult;
-import de.mhus.lib.core.util.ParameterDefinitions;
 import de.mhus.lib.core.util.VectorMap;
-import de.mhus.lib.jms.ClientJms;
-import de.mhus.lib.jms.JmsConnection;
-import de.mhus.lib.jms.MJms;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.aaa.AaaContext;
-import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.operation.OperationApi;
 import de.mhus.osgi.sop.api.operation.OperationDescriptor;
 import de.mhus.osgi.sop.api.operation.OperationException;

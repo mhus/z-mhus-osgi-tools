@@ -11,13 +11,10 @@ import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.MServiceList;
 import de.mhus.lib.karaf.MServiceMap;
-import de.mhus.lib.karaf.MServiceTracker;
-import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.action.ActionApi;
@@ -71,7 +68,7 @@ public class ActionApiImpl extends MLog implements ActionApi {
 	}
 
 	private boolean hasAccess(ActionDescriptor a) {
-		AccessApi api = Sop.getApi(AccessApi.class);
+		AccessApi api = MApi.lookup(AccessApi.class);
 		if (api == null) return true; // no access api support
 		AaaContext context = api.getCurrentOrGuest();
 		if (context.isAdminMode()) return true;

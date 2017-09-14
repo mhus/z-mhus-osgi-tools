@@ -2,9 +2,9 @@ package de.mhus.osgi.sop.api.adb;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Map.Entry;
 
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.query.AQuery;

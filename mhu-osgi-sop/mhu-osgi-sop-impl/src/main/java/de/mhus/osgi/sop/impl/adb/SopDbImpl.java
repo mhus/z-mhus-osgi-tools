@@ -6,19 +6,18 @@ import java.util.UUID;
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.Persistable;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.security.Account;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.karaf.adb.DbManagerService;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
-import de.mhus.lib.core.security.Account;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 import de.mhus.osgi.sop.api.adb.Reference;
-import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.adb.Reference.TYPE;
+import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.model.ActionTask;
 import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
@@ -74,7 +73,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 //			if (ace == null) return false;
 //			return ace.canRead();
 			
-			return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_READ);
+			return MApi.lookup(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_READ);
 		}
 		
 		return false;
@@ -94,7 +93,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 //			Ace ace = Sop.getApi(SopApi.class).findAce(account.getAccountId(), type, o.getObjectId() );
 //			if (ace == null) return false;
 //			return ace.canUpdate();
-			return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_UPDATE);
+			return MApi.lookup(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_UPDATE);
 
 		}
 		return false;
@@ -114,7 +113,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 //			Ace ace = Sop.getApi(SopApi.class).findAce(account.getAccountId(), type, o.getObjectId() );
 //			if (ace == null) return false;
 //			return ace.canDelete();
-			return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_DELETE);
+			return MApi.lookup(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_DELETE);
 		}
 		return false;
 	}
@@ -137,7 +136,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 //			Ace ace = Sop.getApi(SopApi.class).findAce(account.getAccountId(), type, o.getObjectId() );
 //			if (ace == null) return false;
 //			return ace.canCreate();
-			return Sop.getApi(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_CREATE);
+			return MApi.lookup(AccessApi.class).hasResourceAccess(account.getAccount(), type, String.valueOf(o.getObjectId()), Account.ACT_CREATE);
 		}
 		
 		return false;
@@ -162,7 +161,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 			ReferenceCollector collector) {
 		if (object == null) return;
 		try {
-			for (ObjectParameter p : Sop.getApi(AdbApi.class).getParameters(object.getClass(), object.getId())) {
+			for (ObjectParameter p : MApi.lookup(AdbApi.class).getParameters(object.getClass(), object.getId())) {
 				collector.foundReference(new Reference<DbMetadata>(p,TYPE.CHILD));
 			}
 		} catch (MException e) {

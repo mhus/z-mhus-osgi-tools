@@ -5,7 +5,6 @@ import de.mhus.lib.core.strategy.DefaultTaskContext;
 import de.mhus.lib.core.strategy.Monitor;
 import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationResult;
-import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.action.Action;
 
 public class OperationAction implements Action {

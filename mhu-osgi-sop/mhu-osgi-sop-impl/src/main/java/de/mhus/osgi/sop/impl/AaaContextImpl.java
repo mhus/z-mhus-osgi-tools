@@ -3,11 +3,10 @@ package de.mhus.osgi.sop.impl;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.security.Account;
 import de.mhus.lib.core.util.SoftHashMap;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
@@ -28,7 +27,7 @@ public class AaaContextImpl implements AaaContext {
 		this.account = account;
 		this.trust = trust;
 		if (admin) {
-			AccessApi aa = Sop.getApi(AccessApi.class);
+			AccessApi aa = MApi.lookup(AccessApi.class);
 			if (aa.hasGroupAccess(account, Account.MAP_ADMIN, null))
 				adminMode = true;
 		}

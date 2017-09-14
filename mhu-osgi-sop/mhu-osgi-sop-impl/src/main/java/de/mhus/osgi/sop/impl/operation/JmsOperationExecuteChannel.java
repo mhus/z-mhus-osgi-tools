@@ -6,7 +6,6 @@ import java.util.List;
 import org.osgi.service.component.ComponentContext;
 
 import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import de.mhus.lib.core.IProperties;
@@ -16,9 +15,7 @@ import de.mhus.lib.core.service.ServerIdent;
 import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationDescription;
 import de.mhus.lib.core.strategy.OperationResult;
-import de.mhus.lib.karaf.jms.JmsDataChannel;
 import de.mhus.lib.karaf.jms.JmsManagerService;
-import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.jms.AbstractOperationExecuteChannel;
 import de.mhus.osgi.sop.api.jms.TicketAccessInterceptor;
 import de.mhus.osgi.sop.api.operation.OperationApi;
@@ -71,7 +68,7 @@ public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel 
 
 		log().d("execute operation",path,properties);
 		
-		OperationApi admin = Sop.getApi(OperationApi.class);
+		OperationApi admin = MApi.lookup(OperationApi.class);
 		OperationResult res = admin.doExecute(path, properties);
 		
 		log().d("operation result",path,res, res == null ? "" : res.getResult());
@@ -80,7 +77,7 @@ public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel 
 
 	@Override
 	protected List<String> getPublicOperations() {
-		OperationApi admin = Sop.getApi(OperationApi.class);
+		OperationApi admin = MApi.lookup(OperationApi.class);
 		LinkedList<String> out = new LinkedList<String>();
 		for (String path : admin.getOperations()) {
 			try {
@@ -97,7 +94,7 @@ public class JmsOperationExecuteChannel extends AbstractOperationExecuteChannel 
 
 	@Override
 	protected OperationDescription getOperationDescription(String path) {
-		OperationApi admin = Sop.getApi(OperationApi.class);
+		OperationApi admin = MApi.lookup(OperationApi.class);
 		Operation oper = admin.getOperation(path).getOperation();
 		if (!oper.hasAccess()) return null;
 		return oper.getDescription();

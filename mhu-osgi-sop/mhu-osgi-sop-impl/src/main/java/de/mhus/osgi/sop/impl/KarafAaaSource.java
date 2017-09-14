@@ -14,12 +14,12 @@ import org.apache.karaf.jaas.config.JaasRealm;
 import org.apache.karaf.jaas.modules.BackingEngine;
 import org.apache.karaf.jaas.modules.BackingEngineFactory;
 
-import de.mhus.lib.core.security.LoginCallbackHandler;
-import de.mhus.lib.errors.NotSupportedException;
-import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.security.Account;
 import de.mhus.lib.core.security.AccountSource;
+import de.mhus.lib.core.security.LoginCallbackHandler;
+import de.mhus.lib.errors.NotSupportedException;
+import de.mhus.lib.karaf.MOsgi;
 
 public class KarafAaaSource implements AccountSource {
 

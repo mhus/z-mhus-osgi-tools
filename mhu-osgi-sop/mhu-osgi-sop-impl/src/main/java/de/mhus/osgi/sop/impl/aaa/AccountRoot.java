@@ -1,8 +1,5 @@
 package de.mhus.osgi.sop.impl.aaa;
 
-import java.util.Map.Entry;
-
-import de.mhus.lib.basics.IsNull;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.security.Account;

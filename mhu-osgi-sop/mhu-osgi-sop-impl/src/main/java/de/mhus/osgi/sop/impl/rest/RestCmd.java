@@ -7,10 +7,10 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.rest.RestNodeService;
 import de.mhus.osgi.sop.api.rest.RestApi;
+import de.mhus.osgi.sop.api.rest.RestNodeService;
 
 @Command(scope = "sop", name = "rest", description = "REST Call")
 @Service
@@ -19,7 +19,7 @@ public class RestCmd implements Action {
 	@Override
 	public Object execute() throws Exception {
 
-        RestApi restService = Sop.getApi(RestApi.class);
+        RestApi restService = MApi.lookup(RestApi.class);
 
         ConsoleTable table = new ConsoleTable();
         table.setHeaderValues("Registered","Node Id","Parents","Class");

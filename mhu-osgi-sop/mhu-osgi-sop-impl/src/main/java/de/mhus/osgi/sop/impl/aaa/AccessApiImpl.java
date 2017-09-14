@@ -1,15 +1,12 @@
 package de.mhus.osgi.sop.impl.aaa;
 
-import java.util.List;
 import java.util.WeakHashMap;
 
 import org.osgi.service.component.ComponentContext;
 
 import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
-import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPassword;
 import de.mhus.lib.core.MString;

@@ -7,12 +7,11 @@ import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.DbSchema;
 import de.mhus.lib.annotations.generic.Public;
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.pojo.PojoAttribute;
 import de.mhus.lib.core.pojo.PojoModel;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.action.ActionApi;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.adb.AdbApi;
@@ -23,7 +22,7 @@ public class RestUtil {
 	private static Log log = Log.getLog(RestUtil.class);
 
 	public static void updateObject(CallContext callContext, Object obj, boolean publicOnly) throws IOException {
-		DbManager manager = Sop.getApi(AdbApi.class).getManager();
+		DbManager manager = MApi.lookup(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 
 		PojoModel model = schema.createPojoModel(obj.getClass());
@@ -41,7 +40,7 @@ public class RestUtil {
 	}
 
 	public static void updateObject(IProperties props, Object obj, boolean publicOnly) throws IOException {
-		DbManager manager = Sop.getApi(AdbApi.class).getManager();
+		DbManager manager = MApi.lookup(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 
 		PojoModel model = schema.createPojoModel(obj.getClass());
@@ -75,7 +74,7 @@ public class RestUtil {
 	}
 	
 	public static RestResult doExecuteBpm(String name, CallContext callContext, String source) throws MException {
-		return doExecuteRestAction(callContext, Sop.getApi(ActionApi.class).getAction(name), source );
+		return doExecuteRestAction(callContext, MApi.lookup(ActionApi.class).getAction(name), source );
 	}
 
 	private static RestResult doExecuteRestAction(CallContext callContext, ActionDescriptor descriptor, String source) {

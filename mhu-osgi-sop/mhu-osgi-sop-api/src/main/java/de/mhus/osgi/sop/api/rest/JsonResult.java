@@ -12,8 +12,6 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.TrailLevelMapper;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 
@@ -40,7 +38,7 @@ public class JsonResult implements RestResult {
     		((ObjectNode)json).put("_timestamp", System.currentTimeMillis());
     		((ObjectNode)json).put("_sequence", id);
 
-    		AaaContext user = Sop.getApi(AccessApi.class).getCurrentOrGuest();
+    		AaaContext user = MApi.lookup(AccessApi.class).getCurrentOrGuest();
     		((ObjectNode)json).put("_user", user.getAccountId());
     		if (user.isAdminMode())
         		((ObjectNode)json).put("_admin", true);

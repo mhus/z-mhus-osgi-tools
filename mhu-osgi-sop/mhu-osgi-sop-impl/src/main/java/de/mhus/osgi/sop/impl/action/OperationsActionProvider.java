@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 
 import aQute.bnd.annotation.component.Component;
-import de.mhus.lib.core.strategy.Operation;
-import de.mhus.osgi.sop.api.action.Action;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.action.ActionProvider;
 import de.mhus.osgi.sop.api.operation.OperationDescriptor;

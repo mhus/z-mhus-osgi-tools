@@ -2,7 +2,6 @@ package de.mhus.osgi.sop.api.model;
 
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public class BpmCase extends DbMetadata {
 

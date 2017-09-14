@@ -3,12 +3,12 @@ package de.mhus.osgi.sop.impl.action;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.query.Db;
 import de.mhus.lib.core.IProperties;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MTimeInterval;
@@ -20,7 +20,6 @@ import de.mhus.lib.core.strategy.Successful;
 import de.mhus.lib.core.util.ParameterDefinition;
 import de.mhus.lib.core.util.ParameterDefinitions;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.action.Action;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.action.ActionProvider;
@@ -49,7 +48,7 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 
 		LinkedList<ActionDescriptor> out = new LinkedList<ActionDescriptor>();
 		try {
-			for (BpmDefinition def : Sop.getApi(AdbApi.class).getManager().getByQualification( Db.query(BpmDefinition.class).eq(BpmDefinition::getProcessor, getName()) )) {
+			for (BpmDefinition def : MApi.lookup(AdbApi.class).getManager().getByQualification( Db.query(BpmDefinition.class).eq(BpmDefinition::getProcessor, getName()) )) {
 				LinkedList<String> tags = new LinkedList<>();
 				String tagsStr = def.getOptions().getString("tags",null);
 				if (tagsStr != null) {
@@ -108,7 +107,7 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 			MProperties parameters = new MProperties();
 			String customId = properties.getString("_customId", "");
 			
-			DbManager manager = Sop.getApi(AdbApi.class).getManager();
+			DbManager manager = MApi.lookup(AdbApi.class).getManager();
 			BpmCase caze = manager.inject(new BpmCase(null, BpmActionProvider.this.getName(), process, mapped, customId, parameters));
 			caze.save();
 
@@ -176,7 +175,7 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 	protected abstract boolean syncCase(BpmCase caze);
 
 	public BpmCase getCase(String id) throws MException {
-		DbManager manager = Sop.getApi(AdbApi.class).getManager();
+		DbManager manager = MApi.lookup(AdbApi.class).getManager();
 		if (MValidator.isUUID(id))
 			return manager.getObject(BpmCase.class, id);
 		else

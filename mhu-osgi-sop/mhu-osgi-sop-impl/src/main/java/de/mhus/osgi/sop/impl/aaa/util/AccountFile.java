@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
 import de.mhus.lib.core.IReadProperties;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
@@ -21,8 +22,6 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.security.Account;
 import de.mhus.lib.errors.NotSupportedException;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 
 public class AccountFile extends MLog implements Account {
@@ -100,7 +99,7 @@ public class AccountFile extends MLog implements Account {
 						return true;
 					}
 				}
-				isPasswordValidated = Sop.getApi(AccessApi.class).validatePassword(this, password);
+				isPasswordValidated = MApi.lookup(AccessApi.class).validatePassword(this, password);
 			} catch (Throwable t) {
 				log().w("validatePassword",account,t);
 			}

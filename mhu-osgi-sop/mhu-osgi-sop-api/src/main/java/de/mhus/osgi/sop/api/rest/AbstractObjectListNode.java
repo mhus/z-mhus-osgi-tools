@@ -7,12 +7,11 @@ import org.codehaus.jackson.node.ObjectNode;
 
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.DbSchema;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.pojo.MPojo;
 import de.mhus.lib.core.pojo.PojoModelFactory;
 import de.mhus.lib.core.strategy.OperationResult;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 
 public abstract class AbstractObjectListNode<T> extends JsonNode<T> {
@@ -43,7 +42,7 @@ public abstract class AbstractObjectListNode<T> extends JsonNode<T> {
 	}
 
 	protected PojoModelFactory getPojoModelFactory() {
-		DbManager manager = Sop.getApi(AdbApi.class).getManager();
+		DbManager manager = MApi.lookup(AdbApi.class).getManager();
 		DbSchema schema = manager.getSchema();
 		return schema;
 //		return MPojo.getDefaultModelFactory();

@@ -1,7 +1,5 @@
 package de.mhus.osgi.sop.api.aaa;
 
-import java.util.List;
-
 import de.mhus.lib.core.security.Account;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.SApi;

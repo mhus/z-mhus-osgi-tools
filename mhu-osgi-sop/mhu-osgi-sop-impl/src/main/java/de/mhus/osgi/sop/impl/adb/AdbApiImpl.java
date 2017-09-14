@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.UUID;
-import java.util.Map.Entry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -15,25 +15,24 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.adb.query.Db;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.aaa.ContextCachedItem;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
 import de.mhus.osgi.sop.api.adb.Reference;
-import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.adb.Reference.TYPE;
+import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.model.ActionTask;
 import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
@@ -450,7 +449,7 @@ public class AdbApiImpl extends MLog implements AdbApi {
 	}
 
 	private AaaContext getCurrent() {
-		return Sop.getApi(AccessApi.class).getCurrentOrGuest();
+		return MApi.lookup(AccessApi.class).getCurrentOrGuest();
 	}
 
 	@Override

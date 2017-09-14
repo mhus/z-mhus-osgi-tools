@@ -11,13 +11,12 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MLog;
 import de.mhus.osgi.sop.api.rest.CallContext;
 import de.mhus.osgi.sop.api.rest.Node;
-import de.mhus.osgi.sop.api.rest.RestNodeService;
 import de.mhus.osgi.sop.api.rest.RestApi;
+import de.mhus.osgi.sop.api.rest.RestNodeService;
 
 //@Component(immediate=true,name="RestService")
 public class RestApiImpl extends MLog implements RestApi {

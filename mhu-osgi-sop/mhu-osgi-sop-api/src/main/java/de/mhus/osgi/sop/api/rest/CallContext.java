@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import de.mhus.osgi.sop.api.Sop;
+import de.mhus.lib.core.MApi;
 
 public class CallContext {
 
@@ -68,7 +68,7 @@ public class CallContext {
 
 	public Node lookup(List<String> parts, String lastNodeId)
 			throws Exception {
-        RestApi restService = Sop.getApi(RestApi.class);
+        RestApi restService = MApi.lookup(RestApi.class);
         return restService.lookup(parts, lastNodeId, this);
 	}
 

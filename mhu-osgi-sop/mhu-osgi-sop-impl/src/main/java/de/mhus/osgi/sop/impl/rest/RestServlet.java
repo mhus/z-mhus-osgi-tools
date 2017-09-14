@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ObjectNode;
 
-import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.logging.LevelMapper;
@@ -27,16 +25,14 @@ import de.mhus.lib.core.util.Base64;
 import de.mhus.lib.core.util.MNls;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.AccessDeniedException;
-import de.mhus.osgi.sop.api.Sop;
-import de.mhus.osgi.sop.api.SopApi;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.aaa.Trust;
 import de.mhus.osgi.sop.api.rest.CallContext;
 import de.mhus.osgi.sop.api.rest.HttpRequest;
 import de.mhus.osgi.sop.api.rest.Node;
-import de.mhus.osgi.sop.api.rest.RestResult;
 import de.mhus.osgi.sop.api.rest.RestApi;
+import de.mhus.osgi.sop.api.rest.RestResult;
 import de.mhus.osgi.sop.api.util.SopFileLogger;
 import de.mhus.osgi.sop.api.util.TicketUtil;
 
@@ -125,11 +121,11 @@ public class RestServlet extends HttpServlet {
 	        @SuppressWarnings("unchecked")
 			CallContext callContext = new CallContext(new HttpRequest(req.getParameterMap()), method, context);
 	        
-	        RestApi restService = Sop.getApi(RestApi.class);
+	        RestApi restService = MApi.lookup(RestApi.class);
 	        
 	        RestResult res = null;
 	        
-	        AccessApi access = Sop.getApi(AccessApi.class);
+	        AccessApi access = MApi.lookup(AccessApi.class);
 	        AaaContext user = null;
 	        try {
 	        	user = access.process(ticket);

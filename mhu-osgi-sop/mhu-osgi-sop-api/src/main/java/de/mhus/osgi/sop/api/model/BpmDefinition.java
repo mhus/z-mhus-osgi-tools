@@ -1,14 +1,11 @@
 package de.mhus.osgi.sop.api.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import de.mhus.lib.annotations.adb.DbIndex;
 import de.mhus.lib.annotations.adb.DbPersistent;
 import de.mhus.lib.core.MProperties;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public class BpmDefinition extends DbMetadata {
 
