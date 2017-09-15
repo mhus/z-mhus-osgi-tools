@@ -52,6 +52,9 @@
 
 	<feature name='mhu-osgi-sop' description='mhu-osgi-sop' version='${project.version}'>
 		<feature>mhu-osgi-base</feature>
+		<feature>activemq-client</feature>
+		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
+		
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-sop-api/${project.version}</bundle>
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-sop-impl/${project.version}</bundle>
 	</feature>
