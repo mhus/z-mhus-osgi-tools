@@ -21,6 +21,7 @@ import de.mhus.osgi.sop.api.adb.Reference.TYPE;
 import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.model.ActionTask;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
+import de.mhus.osgi.sop.api.model.Register;
 
 @Component(provide=DbSchemaService.class,immediate=true)
 public class SopDbImpl extends MLog implements DbSchemaService {
@@ -36,6 +37,7 @@ public class SopDbImpl extends MLog implements DbSchemaService {
 	public void registerObjectTypes(List<Class<? extends Persistable>> list) {
 		list.add(ObjectParameter.class);
 		list.add(ActionTask.class);
+		list.add(Register.class);
 	}
 
 	@Override
