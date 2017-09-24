@@ -53,7 +53,7 @@ public class SopDbManagerService extends DbManagerServiceImpl {
 
 	@Override
 	public void doInitialize() throws Exception {
-		setDataSourceName(MApi.getCfg(this).getExtracted("dataSourceName", "db_sop") );
+		setDataSourceName(MApi.getCfg(DbManagerService.class).getExtracted("dataSourceName", "db_sop") );
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class SopDbManagerService extends DbManagerServiceImpl {
 
 	@Override
 	public String getServiceName() {
-		return "mhu";
+		return MApi.getCfg(DbManagerService.class).getString("serviceName", "sop");
 	}
 
 }

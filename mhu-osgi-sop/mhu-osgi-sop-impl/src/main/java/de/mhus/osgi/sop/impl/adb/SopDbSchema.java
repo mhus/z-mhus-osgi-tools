@@ -11,6 +11,7 @@ import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.adb.transaction.DbLockObject;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.errors.AccessDeniedException;
+import de.mhus.lib.karaf.adb.DbManagerService;
 import de.mhus.lib.sql.DbConnection;
 import de.mhus.lib.sql.DbResult;
 import de.mhus.osgi.sop.api.adb.AbstractDbSchema;
@@ -23,12 +24,18 @@ public class SopDbSchema extends AbstractDbSchema {
 	private DbAccessManager accessManager;
 	
 	public SopDbSchema() {
+		init();
 	}
 	
 	public SopDbSchema(SopDbManagerService admin) {
 		this.admin = admin;
+		init();
 	}
 	
+	private void init() {
+		tablePrefix = MApi.getCfg(DbManagerService.class).getExtracted("tablePrefix", "sop_");
+	}
+
 	@Override
 	public void findObjectTypes(List<Class<? extends Persistable>> list) {
 		
@@ -41,6 +48,7 @@ public class SopDbSchema extends AbstractDbSchema {
 	}
 
 
+	@Override
 	public Object createObject(Class<?> clazz, String registryName, DbResult ret, DbManager manager, boolean isPersistent) throws Exception {
 		Object object = clazz.newInstance();
 		if (object instanceof DbObject) {
@@ -49,6 +57,7 @@ public class SopDbSchema extends AbstractDbSchema {
 		return object;
 	}
 
+	@Override
 	public synchronized DbAccessManager getAccessManager(Table c) {
 		if (accessManager == null)
 			accessManager = new MyAccessManager();
