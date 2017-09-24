@@ -8,13 +8,13 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.query.Db;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.sop.api.adb.AdbApi;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
 import de.mhus.osgi.sop.api.util.ObjectUtil;
 

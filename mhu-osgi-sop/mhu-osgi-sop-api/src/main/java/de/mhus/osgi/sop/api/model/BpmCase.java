@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.annotations.adb.DbPersistent;
 import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.MCast;

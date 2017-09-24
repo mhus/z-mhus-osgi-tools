@@ -1,7 +1,7 @@
 package de.mhus.osgi.sop.api.adb;
 
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.core.MLog;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public class Reference<T extends DbMetadata> extends MLog {
 

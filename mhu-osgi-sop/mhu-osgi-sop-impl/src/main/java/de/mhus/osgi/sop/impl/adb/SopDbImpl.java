@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
@@ -19,7 +20,6 @@ import de.mhus.osgi.sop.api.adb.Reference;
 import de.mhus.osgi.sop.api.adb.Reference.TYPE;
 import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.model.ActionTask;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
 
 @Component(provide=DbSchemaService.class,immediate=true)

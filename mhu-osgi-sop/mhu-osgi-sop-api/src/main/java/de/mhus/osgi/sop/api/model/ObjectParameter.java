@@ -2,6 +2,7 @@ package de.mhus.osgi.sop.api.model;
 
 import java.util.UUID;
 
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.annotations.adb.DbIndex;
 import de.mhus.lib.annotations.adb.DbPersistent;
 import de.mhus.lib.core.MSystem;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.DbSchema;
 import de.mhus.lib.annotations.generic.Public;
 import de.mhus.lib.core.IProperties;
@@ -15,7 +16,6 @@ import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.action.ActionApi;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.adb.AdbApi;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public class RestUtil {
 	

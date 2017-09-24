@@ -7,11 +7,11 @@ import java.util.Set;
 import java.util.UUID;
 
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.SApi;
 import de.mhus.osgi.sop.api.model.ActionTask;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
 
 public interface AdbApi extends SApi {

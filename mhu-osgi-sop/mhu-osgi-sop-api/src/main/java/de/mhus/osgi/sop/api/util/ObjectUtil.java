@@ -3,10 +3,10 @@ package de.mhus.osgi.sop.api.util;
 import java.util.List;
 import java.util.UUID;
 
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.sop.api.adb.AdbApi;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
 
 public class ObjectUtil {

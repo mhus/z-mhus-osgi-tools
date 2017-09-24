@@ -3,11 +3,11 @@ package de.mhus.osgi.sop.api.adb;
 import java.util.List;
 import java.util.UUID;
 
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.karaf.adb.DbManagerService;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public interface DbSchemaService {
 

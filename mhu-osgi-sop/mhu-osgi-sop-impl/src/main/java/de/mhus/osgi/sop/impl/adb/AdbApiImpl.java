@@ -18,6 +18,7 @@ import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.adb.query.Db;
@@ -34,7 +35,6 @@ import de.mhus.osgi.sop.api.adb.Reference;
 import de.mhus.osgi.sop.api.adb.Reference.TYPE;
 import de.mhus.osgi.sop.api.adb.ReferenceCollector;
 import de.mhus.osgi.sop.api.model.ActionTask;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 import de.mhus.osgi.sop.api.model.ObjectParameter;
 import de.mhus.osgi.sop.impl.AaaContextImpl;
 

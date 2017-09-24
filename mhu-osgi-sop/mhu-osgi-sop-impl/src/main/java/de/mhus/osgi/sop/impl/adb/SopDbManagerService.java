@@ -13,6 +13,7 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.DbSchema;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.karaf.adb.DbManagerService;
 import de.mhus.lib.karaf.adb.DbManagerServiceImpl;
 import de.mhus.lib.sql.DataSourceProvider;
@@ -52,7 +53,7 @@ public class SopDbManagerService extends DbManagerServiceImpl {
 
 	@Override
 	public void doInitialize() throws Exception {
-		setDataSourceName("db_sop");
+		setDataSourceName(MApi.getCfg(this).getExtracted("dataSourceName", "db_sop") );
 	}
 
 	@Override

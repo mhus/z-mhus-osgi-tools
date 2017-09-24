@@ -4,6 +4,7 @@ import java.util.List;
 
 import de.mhus.lib.adb.DbAccessManager;
 import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.DbObject;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.model.Table;
@@ -15,7 +16,6 @@ import de.mhus.lib.sql.DbResult;
 import de.mhus.osgi.sop.api.adb.AbstractDbSchema;
 import de.mhus.osgi.sop.api.adb.AdbApi;
 import de.mhus.osgi.sop.api.adb.DbSchemaService;
-import de.mhus.osgi.sop.api.model.DbMetadata;
 
 public class SopDbSchema extends AbstractDbSchema {
 
