@@ -20,18 +20,19 @@ import de.mhus.lib.core.strategy.Operation;
 import de.mhus.lib.core.strategy.OperationDescription;
 import de.mhus.lib.core.strategy.OperationResult;
 import de.mhus.lib.core.util.VectorMap;
-import de.mhus.osgi.sop.api.operation.OperationApi;
+import de.mhus.osgi.sop.api.operation.LocalOperationApi;
 import de.mhus.osgi.sop.api.operation.OperationDescriptor;
 import de.mhus.osgi.sop.api.operation.OperationException;
+import de.mhus.osgi.sop.api.operation.OperationsProvider;
 
-@Component(immediate=true)
-public class OperationApiImpl extends MLog implements OperationApi {
+@Component(immediate=true,provide={LocalOperationApi.class, OperationsProvider.class})
+public class LocalOperationApiImpl extends MLog implements LocalOperationApi, OperationsProvider {
 
 	private BundleContext context;
 	private ServiceTracker<Operation,Operation> nodeTracker;
 	private HashMap<String, OperationDescriptor> register = new HashMap<>();
 	private VectorMap<String, String, OperationDescriptor> groups = new VectorMap<>();
-	public static OperationApiImpl instance;
+	public static LocalOperationApiImpl instance;
 
 	@Activate
 	public void doActivate(ComponentContext ctx) {

@@ -38,7 +38,7 @@ import de.mhus.osgi.sop.api.Sop;
  * @author mikehummel
  *
  */
-public abstract class AbstractOperationExecuteChannel extends JmsDataChannelImpl {
+public abstract class AbstractJmsOperationExecuteChannel extends JmsDataChannelImpl {
 
 
 	public void doActivate(ComponentContext ctx) {

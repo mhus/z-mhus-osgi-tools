@@ -22,7 +22,7 @@ import de.mhus.osgi.sop.api.Sop;
 import de.mhus.osgi.sop.api.aaa.AaaContext;
 import de.mhus.osgi.sop.api.aaa.AccessApi;
 import de.mhus.osgi.sop.api.operation.JmsOperationApi;
-import de.mhus.osgi.sop.api.operation.OperationApi;
+import de.mhus.osgi.sop.api.operation.LocalOperationApi;
 
 @Command(scope = "sop", name = "operation", description = "Operation commands")
 @Service
@@ -52,7 +52,7 @@ public class OperationCmd implements Action {
 		
 		AaaContext acc = MApi.lookup(AccessApi.class).getCurrentOrGuest();
 		
-		OperationApi api = MApi.lookup(OperationApi.class);
+		LocalOperationApi api = MApi.lookup(LocalOperationApi.class);
 		JmsOperationApi jms = MApi.lookup(JmsOperationApi.class);
 		
 		if (cmd.equals("list")) {
@@ -95,7 +95,7 @@ public class OperationCmd implements Action {
 			} else {
 				IProperties pa = new MProperties();
 				pa.setString("id", path);
-				OperationResult ret = jms.doExecuteOperation(con, queueName, "_get", pa, acc, true);
+				OperationResult ret = jms.doExecuteOperation(con, queueName, "_get", pa, acc, JmsOperationApi.OPT_NEED_ANSWER);
 				if (ret.isSuccessful()) {
 					Object res = ret.getResult();
 					if (res != null && res instanceof Map<?,?>) {

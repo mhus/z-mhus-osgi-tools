@@ -7,7 +7,7 @@ import aQute.bnd.annotation.component.Component;
 import de.mhus.osgi.sop.api.action.ActionDescriptor;
 import de.mhus.osgi.sop.api.action.ActionProvider;
 import de.mhus.osgi.sop.api.operation.OperationDescriptor;
-import de.mhus.osgi.sop.impl.operation.OperationApiImpl;
+import de.mhus.osgi.sop.impl.operation.LocalOperationApiImpl;
 
 @Component // enabled by default
 public class OperationsActionProvider implements ActionProvider {
@@ -25,8 +25,8 @@ public class OperationsActionProvider implements ActionProvider {
 	@Override
 	public Collection<ActionDescriptor> getActions() {
 		LinkedList<ActionDescriptor> out = new LinkedList<>();
-		for (String name : OperationApiImpl.instance.getOperations()) {
-			OperationDescriptor oper = OperationApiImpl.instance.getOperation(name);
+		for (String name : LocalOperationApiImpl.instance.getOperations()) {
+			OperationDescriptor oper = LocalOperationApiImpl.instance.getOperation(name);
 			out.add(oper);
 		}
 		return out;
@@ -34,7 +34,7 @@ public class OperationsActionProvider implements ActionProvider {
 
 	@Override
 	public ActionDescriptor getAction(String name) {
-		return OperationApiImpl.instance.getOperation(name);
+		return LocalOperationApiImpl.instance.getOperation(name);
 	}
 
 }

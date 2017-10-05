@@ -24,6 +24,7 @@ public class OperationDescriptor extends ActionDescriptor {
 				tags, 
 				source, 
 				operation.getDescription().getPath(), 
+				operation.getDescription().getVersion(),
 				pDef, 
 				form, 
 				nls, 

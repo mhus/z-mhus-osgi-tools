@@ -29,5 +29,7 @@
   <modules>
   	<module>mhu-osgi-sop-api</module>
   	<module>mhu-osgi-sop-impl</module>
+  	<module>mhu-osgi-sop-jms</module>
+  	<module>mhu-osgi-bpm-bonita</module>
   </modules>
 </project>

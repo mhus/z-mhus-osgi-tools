@@ -1,4 +1,4 @@
-package de.mhus.osgi.sop.impl.operation;
+package de.mhus.osgi.sop.jms.operation;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -17,8 +17,8 @@ import de.mhus.lib.karaf.jms.JmsDataChannelImpl;
 @Component(provide=JmsDataChannel.class,immediate=true)
 public class OperationBroadcast extends JmsDataChannelImpl {
 
-	public static CfgString queueName = new CfgString(JmsOperationExecuteChannel.class, "broadcast", "mhus.operation.broadcast");
-	public static CfgString connectionName = new CfgString(JmsOperationExecuteChannel.class, "connection", "mhus");
+	public static CfgString queueName = new CfgString(Jms2LocalOperationExecuteChannel.class, "broadcast", "mhus.operation.broadcast");
+	public static CfgString connectionName = new CfgString(Jms2LocalOperationExecuteChannel.class, "connection", "sop");
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
@@ -49,7 +49,7 @@ public class OperationBroadcast extends JmsDataChannelImpl {
 	@Override
 	public Message received(Message msg) throws JMSException {
 		TextMessage ret = getServer().getSession().createTextMessage();
-		ret.setStringProperty("queue", JmsOperationExecuteChannel.instance.getQueueName());
+		ret.setStringProperty("queue", Jms2LocalOperationExecuteChannel.instance.getQueueName());
 		return ret;
 	}
 

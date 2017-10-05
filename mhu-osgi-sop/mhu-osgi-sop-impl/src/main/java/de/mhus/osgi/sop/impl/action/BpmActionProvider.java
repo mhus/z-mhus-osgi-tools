@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.query.Db;
+import de.mhus.lib.basics.Versioned;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
@@ -61,6 +62,7 @@ public abstract class BpmActionProvider extends MLog implements ActionProvider {
 						new BpmAction(def), 
 						tags, getName(), 
 						def.getProcess(), 
+						Versioned.DEFAULT_VERSION,
 						pDefs, 
 						null, 
 						def, 

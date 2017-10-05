@@ -15,11 +15,11 @@ import de.mhus.lib.core.strategy.OperationResult;
  * Abstract operation execution but this one can handle a list of operations.
  * add/put and remove operations dynamically to the list or in doActivate()
  * 
- * @see AbstractOperationExecuteChannel
+ * @see AbstractJmsOperationExecuteChannel
  * @author mikehummel
  *
  */
-public abstract class AbstractOperationListChannel extends AbstractOperationExecuteChannel {
+public abstract class AbstractOperationListChannel extends AbstractJmsOperationExecuteChannel {
 
 	private HashMap<String, Operation> operations = new HashMap<String, Operation>();
 	

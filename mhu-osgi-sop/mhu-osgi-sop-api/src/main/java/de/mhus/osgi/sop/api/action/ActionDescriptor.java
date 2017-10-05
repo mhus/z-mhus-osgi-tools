@@ -3,6 +3,7 @@ package de.mhus.osgi.sop.api.action;
 import java.util.Collection;
 
 import de.mhus.lib.basics.Named;
+import de.mhus.lib.basics.Versioned;
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.definition.DefRoot;
@@ -11,11 +12,12 @@ import de.mhus.lib.core.util.MNlsProvider;
 import de.mhus.lib.core.util.Nls;
 import de.mhus.lib.core.util.ParameterDefinitions;
 
-public class ActionDescriptor implements MNlsProvider, Nls, Named {
+public class ActionDescriptor implements MNlsProvider, Nls, Named, Versioned {
 	
 	private Action action;
 	private Collection<String> tags;
 	private String path;
+	private String version;
 	private String source;
 	private ParameterDefinitions definitions;
 	private DefRoot form;
@@ -27,7 +29,8 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 			Action action, 
 			Collection<String> tags, 
 			String source, 
-			String path, 
+			String path,
+			String version,
 			ParameterDefinitions definitions, 
 			DefRoot form, 
 			MNlsProvider nlsProvider, 
@@ -38,6 +41,7 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 		this.tags = tags;
 		this.source = source;
 		this.path = path;
+		this.version = version;
 		this.definitions = definitions;
 		this.form = form;
 		this.nlsProvider = nlsProvider;
@@ -79,6 +83,11 @@ public class ActionDescriptor implements MNlsProvider, Nls, Named {
 	@Override
 	public String getName() {
 		return path;
+	}
+	
+	@Override
+	public String getVersion() {
+		return version;
 	}
 	
 	public String getSource() {
