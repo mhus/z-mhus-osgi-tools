@@ -11,7 +11,7 @@
   </parent>
   
   <properties>
-  	<bonita.engine.version>7.5.4</bonita.engine.version>
+  	<bonita.engine.version>7.2.2</bonita.engine.version>
 	<h2.version>1.3.170</h2.version>
 	<btm.version>2.1.3</btm.version>
 	<bonecp.version>0.7.1.RELEASE</bonecp.version>

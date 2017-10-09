@@ -7,4 +7,4 @@ install -s mvn:de.mhus.ports/bonita-client/1.3.1-SNAPSHOT
 install -s mvn:de.mhus.osgi/mhu-osgi-bpm-bonita/1.3.1-SNAPSHOT
 
 
-bundle:persistentwatch add mhu-osgi-sop-bonita
+bundle:persistentwatch add mhu-osgi-bpm-bonita
