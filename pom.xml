@@ -143,7 +143,6 @@
       <module>mhu-osgi-jms</module>
       <module>mhu-osgi-commands</module>
       <module>mhu-osgi-web</module>
-      <module>mhu-osgi-sop</module>
       <module>mhu-karaf-feature</module>
     </modules>
 
