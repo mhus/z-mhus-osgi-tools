@@ -2,6 +2,8 @@ package de.mhus.osgi.commands.watch;
 
 import java.io.IOException;
 
+import de.mhus.lib.errors.NotFoundException;
+
 public interface PersistentWatch {
 	
 	void add(String line) throws IOException;
@@ -9,6 +11,6 @@ public interface PersistentWatch {
 	String[] list() throws IOException;
 	void watch();
 	void clear() throws IOException;
-	void remember() throws IOException;
+	void remember() throws IOException, NotFoundException;
 	
 }

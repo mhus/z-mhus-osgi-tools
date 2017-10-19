@@ -16,6 +16,7 @@ import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.base.service.TimerIfc;
+import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 
 @Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",provide=PersistentWatch.class)
@@ -143,7 +144,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
 
 	@Override
-	public void remember() throws IOException {
+	public void remember() throws IOException, NotFoundException {
 		synchronized (this) {
 			BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
 			List<String> watched = bundleWatcher.getWatchURLs();

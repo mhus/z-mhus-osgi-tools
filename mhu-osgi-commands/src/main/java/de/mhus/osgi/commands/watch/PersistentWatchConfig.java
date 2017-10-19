@@ -15,6 +15,7 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 
 import de.mhus.lib.core.MString;
+import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 
 public class PersistentWatchConfig implements ManagedService {
@@ -45,7 +46,7 @@ public class PersistentWatchConfig implements ManagedService {
 		return out;
 	}
 
-	public void writeFile(List<String> content) throws IOException {
+	public void writeFile(List<String> content) throws IOException, NotFoundException {
 		ConfigurationAdmin configurationAdmin = MOsgi.getService(ConfigurationAdmin.class);
 		Configuration config = configurationAdmin.getConfiguration(pwcName, null);
 		Dictionary<String,Object> props = config.getProperties();		
