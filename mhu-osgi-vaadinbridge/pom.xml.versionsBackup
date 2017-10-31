@@ -20,23 +20,19 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mhu-osgi-web</artifactId>
+    <artifactId>mhu-osgi-vaadinbridge</artifactId>
     <packaging>pom</packaging>
-  <name>mhu-osgi-web</name>
-  <description>Web tools</description>
+  <name>mhu-osgi-vaadinbridge</name>
+  <description>Provide in OSGi the servlet /VAADIN to map vaadin resources (like widgetsets and themes) out in the world. The bridge will watch bundles and automatically publish/destroy VAADIN resources.</description>
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <version>1.3.1</version>
+    <version>1.3.1-SNAPSHOT</version>
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
 
     <modules>
-      <module>mhu-osgi-web-console</module>
-      <!-- 
-      <module>mhu-osgi-groovy-console</module>
-       -->
-      <module>mhu-osgi-root-servlet</module>
-      <module>mhu-osgi-rewrite-servlet</module>
+      <module>mhu-osgi-vaadinosgibridge</module>
+      <module>mhu-osgi-vaadinkarafbridge</module>
    </modules>
 
 </project>
