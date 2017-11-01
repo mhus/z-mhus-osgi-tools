@@ -83,6 +83,9 @@
         <plugin>
             <groupId>org.apache.karaf.tooling</groupId>
             <artifactId>karaf-services-maven-plugin</artifactId>
+           <configuration>
+             <artifactInclude>.*mhu.*</artifactInclude>
+           </configuration>
         </plugin>
     
 		<plugin>
@@ -163,6 +166,9 @@
                             <goals>
                                 <goal>service-metadata-generate</goal>
                             </goals>
+                            <configuration>
+                            	<artifactInclude>x</artifactInclude>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
