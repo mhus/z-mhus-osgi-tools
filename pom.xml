@@ -47,8 +47,9 @@
     </developer>
   </developers>
     <properties>
-		<mhulib.version>3.3.1</mhulib.version>
-		<ports.version>3.3.1</ports.version>
+		<mhulib.version>3.3.2-SNAPSHOT</mhulib.version>
+		<ports.version>3.3.2-SNAPSHOT</ports.version>
+		
         <scr.packages>*</scr.packages>
         <felix.scr.version>1.6.0</felix.scr.version>
         <karaf.version>4.0.10</karaf.version>
@@ -81,7 +82,7 @@
 	
     <plugins>
         <plugin>
-            <groupId>org.apache.karaf.tooling</groupId>
+            <groupId>de.mhus.ports.karaf.tooling</groupId>
             <artifactId>karaf-services-maven-plugin</artifactId>
            <configuration>
              <artifactInclude>.*mhu.*</artifactInclude>
@@ -151,6 +152,29 @@
 		  </configuration>
 		</plugin>
 		
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>enforce-maven</id>
+                    <goals>
+                        <goal>enforce</goal>
+                    </goals>
+                    <configuration>
+                        <rules>
+                            <requireMavenVersion>
+                                <version>[3,4)</version>
+                            </requireMavenVersion>
+                            <requireJavaVersion>
+                                <version>[1.8,1.9)</version>
+                            </requireJavaVersion>
+                        </rules>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+		
     </plugins>
  
 	   	<pluginManagement>
@@ -167,7 +191,7 @@
                                 <goal>service-metadata-generate</goal>
                             </goals>
                             <configuration>
-                            	<artifactInclude>x</artifactInclude>
+                            	<artifactInclude>.*mhu.*</artifactInclude>
                             </configuration>
                         </execution>
                     </executions>
