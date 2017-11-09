@@ -43,8 +43,13 @@ install -s mvn:de.mhus.ports/mhus-cglib/1.3.1-SNAPSHOT
 
 feature:repo-add activemq 5.12.1
 feature:repo-add cxf 3.1.5
-feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.3.1-SNAPSHOT/xml/features
+feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.3.2-SNAPSHOT/xml/features
 
+
+feature:install mhu-osgi-base
+or
+feature:install mhu-osgi-jms
+or
 feature:install mhu-osgi-full
 
 
@@ -68,20 +73,20 @@ install -s mvn:mysql/mysql-connector-java/5.1.18
 install -s mvn:org.codehaus.jackson/jackson-core-asl/1.9.5
 install -s mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.5
 
-install -s mvn:de.mhus.lib/mhu-lib-annotations/3.3.1-SNAPSHOT
-install -s mvn:de.mhus.lib/mhu-lib-core/3.3.1-SNAPSHOT
-install -s mvn:de.mhus.lib/mhu-lib-jms/3.3.1-SNAPSHOT
-install -s mvn:de.mhus.lib/mhu-lib-persistence/3.3.1-SNAPSHOT
-install -s mvn:de.mhus.lib/mhu-lib-karaf/3.3.1-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-annotations/3.3.2-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-core/3.3.2-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-jms/3.3.2-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-persistence/3.3.2-SNAPSHOT
+install -s mvn:de.mhus.lib/mhu-lib-karaf/3.3.2-SNAPSHOT
 
-install -s mvn:de.mhus.osgi/mhu-osgi-jms/1.3.1-SNAPSHOT
-install -s mvn:de.mhus.osgi/mhu-osgi-commands/1.3.1-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-jms/1.3.2-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-commands/1.3.2-SNAPSHOT
 
 install -s mvn:org.apache.httpcomponents/httpcore-osgi/4.2.1
 install -s mvn:org.apache.httpcomponents/httpclient-osgi/4.2.1
 
-install -s mvn:de.mhus.osgi/mhu-osgi-mailosgi/1.3.1-SNAPSHOT
-install -s mvn:de.mhus.osgi/mhu-osgi-mailkaraf/1.3.1-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-mailosgi/1.3.2-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-osgi-mailkaraf/1.3.2-SNAPSHOT
 
 ---
 
