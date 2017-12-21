@@ -75,6 +75,8 @@
 		<dependency.jetty.version>8.1.14.v20131031</dependency.jetty.version>
 		<pax.version>3.1.0</pax.version>
 		<servlet.version>3.1.0</servlet.version>
+		<mongo.version>3.6.0</mongo.version>
+		<mongo.morphia.version>1.3.2</mongo.morphia.version>
       </properties>
 
    <build>
@@ -209,6 +211,7 @@
       <module>mhu-osgi-jms</module>
       <module>mhu-osgi-commands</module>
       <module>mhu-osgi-web</module>
+      <module>mhu-karaf-mongo</module>
       <module>mhu-karaf-feature</module>
     </modules>
 

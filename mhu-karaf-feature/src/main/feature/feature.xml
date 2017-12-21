@@ -84,4 +84,13 @@
 		<feature>mhu-osgi-vaadin</feature>
 		<feature>mhu-osgi-sop</feature>
 	</feature>
+	
+
+	<feature name='mhus-osgi-morphia' description='mongo morphia' version='${project.version}'>
+		<bundle>mvn:org.mongodb/mongo-java-driver/${mongo.version}</bundle>
+    	<bundle>wrap:mvn:com.thoughtworks.proxytoys/proxytoys/1.0</bundle>
+    	<bundle>mvn:org.mongodb.morphia/morphia/${mongo.morphia.version}</bundle>	
+		<bundle>mvn:de.mhus.osgi/mhu-karaf-mongo/${project.version}</bundle>
+	</feature>
+		
 </features>
