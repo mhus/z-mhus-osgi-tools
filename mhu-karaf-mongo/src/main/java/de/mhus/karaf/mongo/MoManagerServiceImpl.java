@@ -2,6 +2,12 @@ package de.mhus.karaf.mongo;
 
 import java.util.List;
 
+import org.mongodb.morphia.mapping.DefaultCreator;
+import org.mongodb.morphia.mapping.Mapper;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleWiring;
+
 import com.mongodb.MongoClient;
 
 import de.mhus.lib.adb.Persistable;
@@ -37,6 +43,11 @@ public abstract class MoManagerServiceImpl extends MJmx implements MoManagerServ
 	}
 
 	@Override
+	public boolean isConnected() {
+		return manager != null;
+	}
+	
+	@Override
 	public MoManager getManager() {
 		try {
 			doOpen();
@@ -51,8 +62,17 @@ public abstract class MoManagerServiceImpl extends MJmx implements MoManagerServ
 		 MongoClient client = ds.getConnection();
 		 MoSchema schema = doCreateSchema();
 		 
-		 MoManager manager = new MoManager(client,schema);
-		 
+		 BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		 MoManager manager = new MoManager(client,schema) {
+				@Override
+				protected Mapper getMapper() {
+					Mapper m = super.getMapper();
+					m.getOptions().setObjectFactory(new BundleObjectFactory(bundleContext));
+					return m;
+				}
+
+		 };
+
 		return manager;
 	}
 
@@ -88,4 +108,21 @@ public abstract class MoManagerServiceImpl extends MJmx implements MoManagerServ
     	return getServiceName().compareTo(o.getServiceName());
     }
 
+    private static class BundleObjectFactory extends DefaultCreator {
+        private BundleContext bundleContext;
+         
+        @Override
+        protected ClassLoader getClassLoaderForClass() {
+            ClassLoader cl = ((BundleWiring)bundleContext.getBundle().adapt(
+                BundleWiring.class)).getClassLoader();
+             
+            return cl;
+        }
+     
+        public BundleObjectFactory(BundleContext bundleContext) {
+            super();
+            this.bundleContext = bundleContext;
+        }
+    }
+    
 }

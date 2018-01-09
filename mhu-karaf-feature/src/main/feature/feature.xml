@@ -39,6 +39,7 @@
 		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhulib.version}</bundle>
 
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-commands/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-karaf-xdb/${project.version}</bundle>
 
 		<bundle>mvn:javax.xml.rpc/javax.xml.rpc-api/1.1.1</bundle>
 

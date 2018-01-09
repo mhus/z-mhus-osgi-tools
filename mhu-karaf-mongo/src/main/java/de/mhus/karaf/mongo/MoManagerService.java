@@ -18,4 +18,6 @@ public interface MoManagerService {
 
 	String getMongoDataSourceName();
 	
+	boolean isConnected();
+	
 }

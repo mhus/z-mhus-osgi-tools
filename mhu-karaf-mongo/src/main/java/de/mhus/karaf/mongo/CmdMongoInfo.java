@@ -7,7 +7,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import com.mongodb.MongoClient;
 
-@Command(scope = "mongo", name = "info", description = "List Mongo Datasources")
+@Command(scope = "mongo", name = "ds-info", description = "List Mongo Datasources")
 @Service
 public class CmdMongoInfo implements Action {
 
