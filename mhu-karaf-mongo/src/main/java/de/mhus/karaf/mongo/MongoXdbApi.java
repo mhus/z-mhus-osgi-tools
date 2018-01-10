@@ -127,10 +127,10 @@ public class MongoXdbApi implements XdbApi {
 		private Class<?> type;
 		private PojoModel model;
 
-		public Type(MoManagerService service, Class<?> type) {
+		public Type(MoManagerService service, Class<?> type) throws NotFoundException {
 			this.service = service;
 			this.type = type;
-			model = MongoUtil.getPojoModel(type);
+			model = service.getManager().getModelFor(type);
 		}
 
 		@Override
@@ -231,6 +231,12 @@ public class MongoXdbApi implements XdbApi {
 			if (!type.isInstance(object))
 				throw new NotSupportedException("Object wrong type",object.getClass(),type);
 			service.getManager().save(object);
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public T getObject(String... keys) throws Exception {
+			return (T) service.getManager().getObject(type, keys);
 		}
 		
 	}

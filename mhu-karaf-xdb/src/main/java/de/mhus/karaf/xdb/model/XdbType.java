@@ -152,6 +152,15 @@ public interface XdbType<T> {
 	 * @param object
 	 * @throws Exception
 	 */
-	void saveObject(Object object) throws Exception;	
+	void saveObject(Object object) throws Exception;
+
+	/**
+	 * Return the requested object by primary key.
+	 * 
+	 * @param key Primary key
+	 * @return The corresponding object or null
+	 * @throws Exception 
+	 */
+	T getObject(String ... keys) throws Exception;
 
 }

@@ -93,45 +93,6 @@ public class MongoUtil {
 		return null;
 	}
 
-	public static PojoModel getPojoModel(Class<?> type) {
-		PojoModel model = new PojoParser().parse(type, new AttributesStrategy()).filter(new MongoFilter()).getModel();
-		return model;
-	}
-
-	private static class MongoFilter implements PojoFilter {
-
-		@Override
-		public void filter(PojoModelImpl model) {
-			for (String name : model.getAttributeNames()) {
-				PojoAttribute<?> attr = model.getAttribute(name);
-				if (
-						
-						attr.getAnnotation(NotSaved.class) != null 
-						||
-						( !attr.getType().isPrimitive() || attr.getType() == String.class || attr.getType() == Date.class  )
-						&&
-						attr.getAnnotation(Property.class) == null 
-						&& 
-						attr.getAnnotation(Id.class) == null
-						&&
-						attr.getAnnotation(Serialized.class) == null
-						&&
-						attr.getAnnotation(Reference.class) == null
-						&&
-						attr.getAnnotation(Embedded.class) == null
-						
-						) {
-					model.removeAttribute(name);
-				}
-			}
-			
-			for (String name : model.getActionNames()) {
-				model.removeAction(name);
-			}
-			
-		}
-		
-	}
 
 	public static <T> Query<T> createQuery(MoManager manager, Class<T> type, String search) {
 		Query<T> q = manager.createQuery(type);

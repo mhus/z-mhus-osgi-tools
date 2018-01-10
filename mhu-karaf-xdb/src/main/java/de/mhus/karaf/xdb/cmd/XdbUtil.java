@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.mhus.karaf.xdb.model.XdbApi;
+import de.mhus.karaf.xdb.model.XdbType;
+import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.karaf.MOsgi.Service;
@@ -21,6 +23,15 @@ public class XdbUtil {
 		for (Service<XdbApi> s : MOsgi.getServiceRefs(XdbApi.class, null))
 			out.add(String.valueOf(s.getReference().getProperty("xdb.type")));
 		return out;
+	}
+
+	public static <T> DbCollection<T> createObjectList(XdbType<T> type, String search) throws Exception {
+		
+		if (search.startsWith("(") && search.endsWith(")"))
+			return type.getObjects(search.substring(1, search.length()-1));
+		
+		return new IdArrayCollection<T>(type, search.split(","));
+		
 	}
 
 }

@@ -68,7 +68,7 @@ public class CmdView implements Action {
 		XdbApi api = XdbUtil.getApi(apiName);
 		XdbType<?> type = api.getType(serviceName, typeName);
 		
-		for (Object object : type.getObjects(search)) {
+		for (Object object : XdbUtil.createObjectList(type, search)) {
 			
 			System.out.println(">>> VIEW " + type.getIdAsString(object));
 

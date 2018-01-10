@@ -241,6 +241,12 @@ public class AdbXdbApi implements XdbApi {
 
 			return out;
 		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public T getObject(String... keys) throws Exception {
+			return (T) service.getManager().getObject(table.getClazz(), keys);
+		}
 		
 	}
 }

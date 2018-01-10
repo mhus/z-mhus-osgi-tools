@@ -41,9 +41,9 @@ public class CmdDelete implements Action {
 		
 		XdbApi api = XdbUtil.getApi(apiName);
 		
-		XdbType type = api.getType(serviceName, typeName);
+		XdbType<?> type = api.getType(serviceName, typeName);
 		
-		for (Object object : type.getObjects(search)) {
+		for (Object object : XdbUtil.createObjectList(type, search)) {
 			System.out.println("*** REMOVE " + object);
 			type.deleteObject(object);
 			output = object;
