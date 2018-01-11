@@ -1,6 +1,7 @@
 package de.mhus.karaf.xdb.cmd;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -65,13 +66,20 @@ public class CmdClone implements Action {
 				}
 			}
 			
-			for (String name : type.getAttributeNames()) {
-				if (attrObj.containsKey(name)) {
-					Object v = type.prepareValue(name, attrObj.get(name) );
-					System.out.println("--- SET " + name + "  = " + v );
-					type.set(object, name, v);
-				}
+			for (Entry<String, Object> entry : attrObj.entrySet()) {
+				String name = entry.getKey();
+				Object v = XdbUtil.prepareValue(type, name, entry.getValue());
+				System.out.println("--- SET " + name + "  = " + v );
+				XdbUtil.setValue(type,object,name,v);
 			}
+			
+//			for (String name : type.getAttributeNames()) {
+//				if (attrObj.containsKey(name)) {
+//					Object v = type.prepareValue(name, attrObj.get(name) );
+//					System.out.println("--- SET " + name + "  = " + v );
+//					XdbUtil.setValue(type, object, name, v);
+//				}
+//			}
 			
 			System.out.print("*** CREATE ");
 			type.createObject(object);
