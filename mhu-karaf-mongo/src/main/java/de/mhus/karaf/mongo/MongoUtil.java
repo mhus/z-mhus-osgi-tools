@@ -1,30 +1,21 @@
 package de.mhus.karaf.mongo;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.mongodb.morphia.annotations.Embedded;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.NotSaved;
-import org.mongodb.morphia.annotations.Property;
-import org.mongodb.morphia.annotations.Reference;
-import org.mongodb.morphia.annotations.Serialized;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.mongodb.morphia.query.Query;
 
-import de.mhus.lib.annotations.pojo.Action;
-import de.mhus.lib.annotations.pojo.Hidden;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.pojo.AttributesStrategy;
-import de.mhus.lib.core.pojo.DefaultFilter;
-import de.mhus.lib.core.pojo.FunctionsStrategy;
-import de.mhus.lib.core.pojo.PojoAction;
-import de.mhus.lib.core.pojo.PojoAttribute;
-import de.mhus.lib.core.pojo.PojoFilter;
-import de.mhus.lib.core.pojo.PojoModel;
-import de.mhus.lib.core.pojo.PojoModelImpl;
-import de.mhus.lib.core.pojo.PojoParser;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
@@ -94,11 +85,22 @@ public class MongoUtil {
 	}
 
 
-	public static <T> Query<T> createQuery(MoManager manager, Class<T> type, String search) {
+	public static <T> Query<T> createQuery(MoManager manager, Class<T> type, String search) throws JsonProcessingException, IOException {
 		Query<T> q = manager.createQuery(type);
 		if (MString.isSet(search)) {
-			q.where(search);
+			new MoQueryBuilder(search).create(q);
 		}
 		return q;
 	}
+	
+	
+	static ObjectMapper jsonMapper = new ObjectMapper();
+
+	public static DBObject jsonMarshall(Object obj) throws Exception {
+	    Writer writer = new StringWriter();
+	    jsonMapper.writer().writeValue(writer, obj);
+	    return (DBObject) BasicDBObject.parse(writer.toString());
+	}
+	
+	
 }

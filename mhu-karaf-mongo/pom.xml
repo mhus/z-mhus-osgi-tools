@@ -132,5 +132,14 @@
               <artifactId>morphia</artifactId>
               <version>${mongo.morphia.version}</version>
           </dependency>		
+          
+	    <dependency>
+	    	<groupId>org.codehaus.jackson</groupId>
+	    	<artifactId>jackson-mapper-asl</artifactId>
+	    	<version>${jackson.version}</version>
+	    	<type>jar</type>
+	    	<scope>compile</scope>
+	    </dependency>
+          
 	</dependencies>  
 </project>

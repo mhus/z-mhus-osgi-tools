@@ -21,7 +21,7 @@ import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.errors.NotSupportedException;
 
 @Component(properties="xdb.type=mo")
-public class MongoXdbApi implements XdbApi {
+public class MoXdbApi implements XdbApi {
 
 	@Override
 	public XdbService getService(String serviceName) throws NotFoundException {
