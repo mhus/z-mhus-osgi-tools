@@ -12,6 +12,9 @@ xdb:select test TestPerson
 xdb:select test TestPerson '"$or":[{"name":"Max"},{"name":"Donald"}],"$order":"name"'
 
 
+xdb:create test TestBook name=A meta.isbn=1234567
+mongo:find local test TestBook
+mongo:find local test TestBook "{'meta.isbn':'1234567'}"
 
 
 mongo-ds.xml:
@@ -36,6 +39,9 @@ mongo-ds.xml:
 </blueprint>
 
 
+install -s mvn:org.mongodb/mongo-java-driver/3.6.0
+install -s wrap:mvn:com.thoughtworks.proxytoys/proxytoys/1.0
+install -s mvn:org.mongodb.morphia/morphia/1.3.2
 
 install -s mvn:de.mhus.osgi./mhu-karaf-xdb/1.3.2-SNAPSHOT
 install -s mvn:de.mhus.osgi.examples/mongo-manager/1.3.1-SNAPSHOT

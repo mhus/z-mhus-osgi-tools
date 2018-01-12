@@ -65,8 +65,8 @@ public abstract class MoManagerServiceImpl extends MJmx implements MoManagerServ
 		 BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
 		 MoManager manager = new MoManager(client,schema) {
 				@Override
-				protected Mapper getMapper() {
-					Mapper m = super.getMapper();
+				protected Mapper createMapper() {
+					Mapper m = super.createMapper();
 					m.getOptions().setObjectFactory(new BundleObjectFactory(bundleContext));
 					return m;
 				}

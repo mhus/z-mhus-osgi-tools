@@ -13,6 +13,7 @@ import org.mongodb.morphia.query.Query;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
@@ -96,10 +97,11 @@ public class MongoUtil {
 	
 	static ObjectMapper jsonMapper = new ObjectMapper();
 
-	public static DBObject jsonMarshall(Object obj) throws Exception {
-	    Writer writer = new StringWriter();
-	    jsonMapper.writer().writeValue(writer, obj);
-	    return (DBObject) BasicDBObject.parse(writer.toString());
+	public static BasicDBObject jsonMarshall(String jsonString) throws Exception {
+//	    Writer writer = new StringWriter();
+//	    jsonMapper.writer().writeValue(writer, obj);
+//	    return (BasicDBObject) BasicDBObject.parse(writer.toString());
+		return (BasicDBObject) JSON.parse(jsonString);
 	}
 	
 	

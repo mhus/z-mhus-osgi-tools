@@ -48,7 +48,7 @@ public class XdbUtil {
 			String p1 = name.substring(0, p);
 			String p2 = name.substring(p+1);
 			Class<?> t = type.getAttributeType(p1);
-			if (t.isAssignableFrom(Map.class)) {
+			if (Map.class.isAssignableFrom(t)) {
 				Map map = type.get(object, p1);
 				if (map == null) {
 					if (t.isInterface())
@@ -59,7 +59,7 @@ public class XdbUtil {
 				}
 				map.put(p2, v);
 			} else
-			if (t.isAssignableFrom(Collection.class)) {
+			if (Collection.class.isAssignableFrom(t)) {
 				Collection col = type.get(object, name);
 				if (col == null) {
 					if (t.isInterface())
