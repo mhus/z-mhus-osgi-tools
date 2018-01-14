@@ -30,13 +30,10 @@ import de.mhus.lib.core.console.ConsoleTable;
 @Service
 public class CmdView implements Action {
 
-	@Argument(index=0, name="service", required=true, description="Service Class", multiValued=false)
-    String serviceName;
-
-	@Argument(index=1, name="type", required=true, description="Type to select", multiValued=false)
+	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
 	
-	@Argument(index=2, name="search", required=false, description="Id of the object or query in brakets e.g '($db.table.field$ = 1)'", multiValued=false)
+	@Argument(index=1, name="search", required=false, description="Id of the object or query in brakets e.g '($db.table.field$ = 1)'", multiValued=false)
     String search;
 	
 	@Option(name="-o", aliases="--out", description="Comma separated list of fields to print",required=false)
@@ -55,7 +52,10 @@ public class CmdView implements Action {
 	String outputParam = null;
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdXdbApi.api;
+	String apiName = CmdUse.api;
+
+	@Option(name="-s", description="Service Name",required=false)
+	String serviceName = CmdUse.service;
 
     @Reference
     private Session session;

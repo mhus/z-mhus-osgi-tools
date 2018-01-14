@@ -30,13 +30,10 @@ import de.mhus.lib.core.console.ConsoleTable;
 @Service
 public class CmdSelect implements Action {
 
-	@Argument(index=0, name="service", required=true, description="Service Class", multiValued=false)
-    String serviceName;
-
-	@Argument(index=1, name="type", required=true, description="Type to select", multiValued=false)
+	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
 	
-	@Argument(index=2, name="qualification", required=false, description="Select qualification", multiValued=false)
+	@Argument(index=1, name="qualification", required=false, description="Select qualification", multiValued=false)
     String qualification;
 
 	@Option(name="-f", aliases="--full", description="Print the full value content also if it's very long",required=false)
@@ -52,7 +49,10 @@ public class CmdSelect implements Action {
 	String outputParam = null;
 	
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdXdbApi.api;
+	String apiName = CmdUse.api;
+
+	@Option(name="-s", description="Service Name",required=false)
+	String serviceName = CmdUse.service;
 
     @Reference
     private Session session;
@@ -98,7 +98,7 @@ public class CmdSelect implements Action {
 			out.getHeader().add(name);
 		}
 
-		for (Object object : type.getObjects(qualification)) {
+		for (Object object : type.getByQualification(qualification)) {
 			
 			List<String> row = out.addRow();
 			for (String name : fieldNames) {

@@ -17,7 +17,7 @@ import de.mhus.lib.core.console.ConsoleTable;
 public class CmdList implements Action {
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdXdbApi.api;
+	String apiName = CmdUse.api;
 
 	@Override
 	public Object execute() throws Exception {

@@ -35,7 +35,7 @@ public class XdbUtil {
 	public static <T> DbCollection<T> createObjectList(XdbType<T> type, String search) throws Exception {
 		
 		if (search.startsWith("(") && search.endsWith(")"))
-			return type.getObjects(search.substring(1, search.length()-1));
+			return type.getByQualification(search.substring(1, search.length()-1));
 		
 		return new IdArrayCollection<T>(type, search.split(","));
 		
@@ -94,7 +94,7 @@ public class XdbUtil {
 	public static Object prepareValue(XdbType<?> type, String name, Object value) {
 		int p = name.indexOf('.');
 		if (p > 0) return value;
-		Object v = type.prepareValue(name, value);
+		Object v = type.prepareManualValue(name, value);
 		return v;
 	}
 

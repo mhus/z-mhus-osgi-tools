@@ -134,7 +134,7 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public DbCollection<T> getObjects(String search) throws Exception {
+		public DbCollection<T> getByQualification(String search) throws Exception {
 			
 			return new Result<T>( MongoUtil.createQuery(service.getManager(), type, search).iterator() );
 		}
@@ -149,7 +149,7 @@ public class MoXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <F> F prepareValue(String name, Object value) {
+		public <F> F prepareManualValue(String name, Object value) {
 			return (F) MongoUtil.prepareAttribute(getAttributeType(name), value);
 		}
 

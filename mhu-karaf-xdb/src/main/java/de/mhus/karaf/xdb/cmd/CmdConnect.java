@@ -24,7 +24,7 @@ public class CmdConnect implements Action {
 	boolean cleanup = false;
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdXdbApi.api;
+	String apiName = CmdUse.api;
 
 	@Override
 	public Object execute() throws Exception {

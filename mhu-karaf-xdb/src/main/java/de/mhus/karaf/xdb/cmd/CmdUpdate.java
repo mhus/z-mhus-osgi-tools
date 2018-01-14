@@ -22,16 +22,13 @@ import de.mhus.lib.core.MString;
 @Service
 public class CmdUpdate implements Action {
 	
-	@Argument(index=0, name="service", required=true, description="Service Class", multiValued=false)
-    String serviceName;
-
-	@Argument(index=1, name="type", required=true, description="Type to select", multiValued=false)
+	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
 	
-	@Argument(index=2, name="search", required=true, description="Id of the object or query", multiValued=false)
+	@Argument(index=1, name="search", required=true, description="Id of the object or query", multiValued=false)
     String search;
 
-	@Argument(index=3, name="attributes", required=false, description="Attributes to update, e.g user=alfons", multiValued=true)
+	@Argument(index=2, name="attributes", required=false, description="Attributes to update, e.g user=alfons", multiValued=true)
     String[] attributes;
 	
 	@Option(name="-x", description="Output parameter",required=false)
@@ -44,7 +41,10 @@ public class CmdUpdate implements Action {
 	boolean raw = false;
 	
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdXdbApi.api;
+	String apiName = CmdUse.api;
+
+	@Option(name="-s", description="Service Name",required=false)
+	String serviceName = CmdUse.service;
 
     @Reference
     private Session session;

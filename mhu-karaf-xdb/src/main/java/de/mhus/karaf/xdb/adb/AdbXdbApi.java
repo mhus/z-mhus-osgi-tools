@@ -131,7 +131,7 @@ public class AdbXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public DbCollection<T> getObjects(String search) throws MException {
+		public DbCollection<T> getByQualification(String search) throws MException {
 			return (DbCollection<T>) service.getManager().getByQualification(table.getClazz(),search, null);
 		}
 
@@ -145,7 +145,7 @@ public class AdbXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <F> F prepareValue(String name, Object value) {
+		public <F> F prepareManualValue(String name, Object value) {
 			return (F) AdbUtil.createAttribute(table.getField(name).getType(), value);
 		}
 

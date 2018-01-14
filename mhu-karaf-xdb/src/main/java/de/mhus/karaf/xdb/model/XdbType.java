@@ -10,39 +10,40 @@ public interface XdbType<T> {
 	/**
 	 * Search and return objects from db
 	 * 
-	 * @param search
-	 * @return
+	 * @param query
+	 * @return a result stream. You need to close the result or iterate it until the end (automatic close)
 	 * @throws Exception
 	 */
-	DbCollection<T> getObjects(String search) throws Exception;
+	DbCollection<T> getByQualification(String query) throws Exception;
 
 	/**
 	 * List all known attribute names
-	 * @return
+	 * @return All known attribute names.
 	 */
 	List<String> getAttributeNames();
 
 	/**
-	 * Prepare a value to be stored in a object attribute
+	 * Prepare a value to be stored in a object attribute. Use case is a manually inserted
+	 * value by the user.
 	 * 
-	 * @param name
-	 * @param value
-	 * @return
+	 * @param attributeName The name of the attribute
+	 * @param value The initial value or null (null or '[null]' will return null)
+	 * @return A prepared value of this attribute using the initial value
 	 */
-	<F> F prepareValue(String name, Object value);
+	<F> F prepareManualValue(String attributeName, Object value);
 
 	/**
-	 * Set the value of an attribute.
+	 * Set the value of an attribute to the object.
 	 * 
 	 * @param object
 	 * @param name
-	 * @param v
+	 * @param value
 	 * @throws Exception
 	 */
-	void set(Object object, String name, Object v) throws Exception;
+	void set(Object object, String name, Object value) throws Exception;
 	
 	/**
-	 * Load/get the value of an attribute.
+	 * Load/get the value of an attribute of the object.
 	 * 
 	 * @param object
 	 * @param name
@@ -63,7 +64,7 @@ public interface XdbType<T> {
 	 * Returns the id of the object as string representation.
 	 * 
 	 * @param object
-	 * @return
+	 * @return A string representation of the primary key or id
 	 * @throws Exception 
 	 */
 	String getIdAsString(Object object) throws Exception;
@@ -73,7 +74,7 @@ public interface XdbType<T> {
 	 * primary key is used.
 	 * 
 	 * @param object
-	 * @return
+	 * @return The primary key or id. If it's a combined primary key a object array will be returned.
 	 * @throws Exception 
 	 */
 	Object getId(Object object) throws Exception;
@@ -81,11 +82,11 @@ public interface XdbType<T> {
 	/**
 	 * Return the amount of objects in the database.
 	 * 
-	 * @param search
-	 * @return
+	 * @param query
+	 * @return count the objects by query
 	 * @throws Exception
 	 */
-	long count(String search) throws Exception;
+	long count(String query) throws Exception;
 
 	/**
 	 * Create a new instance of the type.
