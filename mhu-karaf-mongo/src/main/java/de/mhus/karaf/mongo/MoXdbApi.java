@@ -3,6 +3,7 @@ package de.mhus.karaf.mongo;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 import org.mongodb.morphia.annotations.Id;
@@ -13,6 +14,7 @@ import de.mhus.karaf.xdb.model.XdbService;
 import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.Persistable;
+import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.pojo.PojoAttribute;
 import de.mhus.lib.core.pojo.PojoModel;
 import de.mhus.lib.core.util.Table;
@@ -134,9 +136,13 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public DbCollection<T> getByQualification(String search) throws Exception {
-			
-			return new Result<T>( MongoUtil.createQuery(service.getManager(), type, search).iterator() );
+		public DbCollection<T> getByQualification(String search, Map<String,Object> parameterValues) throws Exception {
+			return new Result<T>( MongoUtil.createQuery(service.getManager(), type, search, parameterValues).iterator() );
+		}
+
+		@Override
+		public DbCollection<T> getByQualification(AQuery<T> query) throws Exception {
+			return new Result<T>( MongoUtil.createQuery(service.getManager(), query).iterator() );
 		}
 
 		@Override
@@ -183,8 +189,8 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public long count(String search) throws Exception {
-			return service.getManager().getCount(MongoUtil.createQuery(service.getManager(), type, search));
+		public long count(String search, Map<String,Object> parameterValues) throws Exception {
+			return service.getManager().getCount(MongoUtil.createQuery(service.getManager(), type, search, parameterValues));
 		}
 
 		@SuppressWarnings("unchecked")

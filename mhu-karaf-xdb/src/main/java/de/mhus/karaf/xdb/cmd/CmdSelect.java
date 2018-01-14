@@ -98,7 +98,7 @@ public class CmdSelect implements Action {
 			out.getHeader().add(name);
 		}
 
-		for (Object object : type.getByQualification(qualification)) {
+		for (Object object : type.getByQualification(qualification, null)) {
 			
 			List<String> row = out.addRow();
 			for (String name : fieldNames) {

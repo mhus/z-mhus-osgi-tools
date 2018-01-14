@@ -53,7 +53,7 @@ public class CmdClone implements Action {
 		
 		XdbType<?> type = api.getType(serviceName, typeName);
 		
-		for (Object object : XdbUtil.createObjectList(type, search)) {
+		for (Object object : XdbUtil.createObjectList(type, search, null)) {
 			
 			System.out.println(">>> CLONE " + object);
 			HashMap<String, Object> attrObj = null;

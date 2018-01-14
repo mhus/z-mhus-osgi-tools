@@ -1,8 +1,10 @@
 package de.mhus.karaf.xdb.model;
 
 import java.util.List;
+import java.util.Map;
 
 import de.mhus.lib.adb.DbCollection;
+import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.errors.MException;
 
 public interface XdbType<T> {
@@ -11,11 +13,21 @@ public interface XdbType<T> {
 	 * Search and return objects from db
 	 * 
 	 * @param query
+	 * @param parameterValues A list of parameter values or null if not needed
 	 * @return a result stream. You need to close the result or iterate it until the end (automatic close)
 	 * @throws Exception
 	 */
-	DbCollection<T> getByQualification(String query) throws Exception;
+	DbCollection<T> getByQualification(String query, Map<String,Object> parameterValues) throws Exception;
 
+	/**
+	 * Search and return objects from db
+	 * 
+	 * @param query Adb.query()....
+	 * @return a result stream. You need to close the result or iterate it until the end (automatic close)
+	 * @throws Exception
+	 */
+	DbCollection<T> getByQualification(AQuery<T> query) throws Exception;
+	
 	/**
 	 * List all known attribute names
 	 * @return All known attribute names.
@@ -83,10 +95,11 @@ public interface XdbType<T> {
 	 * Return the amount of objects in the database.
 	 * 
 	 * @param query
+	 * @param parameterValues 
 	 * @return count the objects by query
 	 * @throws Exception
 	 */
-	long count(String query) throws Exception;
+	long count(String query, Map<String,Object> parameterValues) throws Exception;
 
 	/**
 	 * Create a new instance of the type.

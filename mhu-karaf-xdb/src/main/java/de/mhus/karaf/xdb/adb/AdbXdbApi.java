@@ -3,6 +3,7 @@ package de.mhus.karaf.xdb.adb;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.InvalidSyntaxException;
 
@@ -14,6 +15,7 @@ import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.model.Field;
 import de.mhus.lib.adb.model.Table;
+import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotFoundException;
@@ -131,8 +133,13 @@ public class AdbXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public DbCollection<T> getByQualification(String search) throws MException {
-			return (DbCollection<T>) service.getManager().getByQualification(table.getClazz(),search, null);
+		public DbCollection<T> getByQualification(String search, Map<String,Object> parameterValues) throws MException {
+			return (DbCollection<T>) service.getManager().getByQualification(table.getClazz(),search, parameterValues);
+		}
+
+		@Override
+		public DbCollection<T> getByQualification(AQuery<T> query) throws Exception {
+			return (DbCollection<T>) service.getManager().getByQualification(query);
 		}
 
 		@Override
@@ -177,8 +184,8 @@ public class AdbXdbApi implements XdbApi {
 		}
 
 		@Override
-		public long count(String search) throws MException {
-			return service.getManager().getCountByQualification(table.getClazz(), search, null);
+		public long count(String search, Map<String,Object> parameterValues) throws MException {
+			return service.getManager().getCountByQualification(table.getClazz(), search, parameterValues);
 		}
 
 		@Override

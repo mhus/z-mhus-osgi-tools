@@ -67,7 +67,7 @@ public class CmdUpdate implements Action {
 		XdbApi api = XdbUtil.getApi(apiName);
 		XdbType<?> type = api.getType(serviceName, typeName);
 		
-		for (Object object : XdbUtil.createObjectList(type, search)) {
+		for (Object object : XdbUtil.createObjectList(type, search, null)) {
 			System.out.println(">>> UPDATE " + object);
 			
 			for (Entry<String, Object> entry : attrObj.entrySet()) {

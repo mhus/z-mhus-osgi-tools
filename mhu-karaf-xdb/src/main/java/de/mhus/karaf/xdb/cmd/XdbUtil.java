@@ -32,10 +32,10 @@ public class XdbUtil {
 		return out;
 	}
 
-	public static <T> DbCollection<T> createObjectList(XdbType<T> type, String search) throws Exception {
+	public static <T> DbCollection<T> createObjectList(XdbType<T> type, String search, Map<String,Object> parameterValues) throws Exception {
 		
 		if (search.startsWith("(") && search.endsWith(")"))
-			return type.getByQualification(search.substring(1, search.length()-1));
+			return type.getByQualification(search.substring(1, search.length()-1), parameterValues);
 		
 		return new IdArrayCollection<T>(type, search.split(","));
 		

@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.codehaus.jackson.JsonProcessingException;
@@ -15,8 +16,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
+import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.pojo.PojoAttribute;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
@@ -86,10 +89,10 @@ public class MongoUtil {
 	}
 
 
-	public static <T> Query<T> createQuery(MoManager manager, Class<T> type, String search) throws JsonProcessingException, IOException {
+	public static <T> Query<T> createQuery(MoManager manager, Class<T> type, String search, Map<String,Object> parameterValues) throws JsonProcessingException, IOException {
 		Query<T> q = manager.createQuery(type);
 		if (MString.isSet(search)) {
-			new MoQueryBuilder(search).create(q);
+			new MoQueryBuilder(search).create(q, parameterValues);
 		}
 		return q;
 	}
@@ -103,6 +106,12 @@ public class MongoUtil {
 //	    return (BasicDBObject) BasicDBObject.parse(writer.toString());
 		return (BasicDBObject) JSON.parse(jsonString);
 	}
-	
+
+	public static <T> Query<T> createQuery(MoManager manager, AQuery<T> query) throws IOException {
+		@SuppressWarnings("unchecked")
+		Query<T> q = (Query<T>) manager.createQuery(query.getType());
+		new MoQueryBuilder(query).create(q,null);
+		return q;
+	}
 	
 }

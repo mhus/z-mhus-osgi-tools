@@ -48,7 +48,7 @@ public class CmdCount implements Action {
 		
 		XdbType type = api.getType(serviceName, typeName);
 
-		long count = type.count(search);
+		long count = type.count(search, null);
 /*		
 		DbManagerService service = AdbUtil.getService(serviceName);
 		Class<?> type = AdbUtil.getType(service, typeName);

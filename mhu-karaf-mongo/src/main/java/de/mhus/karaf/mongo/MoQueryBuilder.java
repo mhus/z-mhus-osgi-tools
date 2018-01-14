@@ -2,18 +2,47 @@ package de.mhus.karaf.mongo;
 
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
+import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.adb.query.AAnd;
+import de.mhus.lib.adb.query.AAttribute;
+import de.mhus.lib.adb.query.ACompare;
+import de.mhus.lib.adb.query.AConcat;
+import de.mhus.lib.adb.query.ADbAttribute;
+import de.mhus.lib.adb.query.ADynValue;
+import de.mhus.lib.adb.query.AEnumFix;
+import de.mhus.lib.adb.query.AFix;
+import de.mhus.lib.adb.query.ALimit;
+import de.mhus.lib.adb.query.AList;
+import de.mhus.lib.adb.query.ALiteral;
+import de.mhus.lib.adb.query.ALiteralList;
+import de.mhus.lib.adb.query.ANot;
+import de.mhus.lib.adb.query.ANull;
+import de.mhus.lib.adb.query.AOperation;
+import de.mhus.lib.adb.query.AOr;
+import de.mhus.lib.adb.query.AOrder;
+import de.mhus.lib.adb.query.APart;
+import de.mhus.lib.adb.query.APrint;
+import de.mhus.lib.adb.query.AQuery;
+import de.mhus.lib.adb.query.ASubQuery;
 import de.mhus.lib.core.MJson;
+import de.mhus.lib.core.lang.MObject;
+import de.mhus.lib.core.parser.StringCompiler;
+import de.mhus.lib.errors.MException;
+import de.mhus.lib.errors.NotSupportedException;
+import de.mhus.lib.sql.SqlDialectCreateContext;
 
-public class MoQueryBuilder {
+public class MoQueryBuilder extends MObject {
 
 
 	private ObjectNode json;
@@ -24,11 +53,189 @@ public class MoQueryBuilder {
 		json = (ObjectNode) MJson.load(search);
 	}
 
-	public <T> void create(Query<T> q) throws IOException {
-		add(q, json);
+	public MoQueryBuilder(AQuery<?> query) throws IOException {
+		StringBuffer s = new StringBuffer();
+		createQuery(query, s);
+		json = (ObjectNode) MJson.load(s.toString());
 	}
 
-	private <T> void add(Query<T> q, ObjectNode j) throws IOException {
+	private void createQuery(APrint p, StringBuffer s) {
+		if (p instanceof AQuery) {
+			//		buffer.append('(');
+			boolean first = true;
+			{
+				s.append("{");
+				for (AOperation operation : ((AQuery<?>)p).getOperations() ) {
+					if (operation instanceof APart) {
+						if (first)
+							first = false;
+						else
+							s.append(",");
+						createQuery(operation, s);
+					}
+				}
+			}
+			//		buffer.append(')');
+
+			{
+				AOperation limit = null;
+				for (AOperation operation : ((AQuery<?>)p).getOperations() ) {
+					if (operation instanceof AOrder) {
+						if (first)
+							first = false;
+						else
+							s.append(",");
+						createQuery(operation, s);
+					} else
+						if (operation instanceof ALimit)
+							limit = operation;
+				}
+
+				if (limit != null) {
+					if (first)
+						first = false;
+					else
+						s.append(",");
+					createQuery(limit, s);
+				}
+				s.append("}");
+			}
+		} else
+		if (p instanceof AAnd) {
+			s.append(",\"$and\":[");
+			boolean first = true;
+			for (APart part : ((AAnd)p).getOperations()) {
+				if (first)
+					first = false;
+				else
+					s.append(",");
+				createQuery(part, s);
+			}
+			s.append(']');
+		} else
+		if (p instanceof ACompare) {
+			createQuery( ((ACompare)p).getLeft(), s);
+			s.append(":{");
+			switch (((ACompare)p).getEq()) {
+			case EG:
+				s.append("\"$eg\":");
+				break;
+			case EL:
+				s.append("\"$le\":");
+				break;
+			case EQ:
+				s.append("\"$eq\":");
+				break;
+			case GT:
+				s.append("\"$gt\":");
+				break;
+			case GE:
+				s.append("\"$ge\":");
+				break;
+			case LIKE:
+				s.append("\"$contains\":");
+				break;
+			case LT:
+				s.append("\"$lt\":");
+				break;
+			case LE:
+				s.append("\"$le\":");
+				break;
+			case NE:
+				s.append("\"$ne\":");
+				break;
+//			case IN:
+//				buffer.append(" in ");
+//				break;
+			}
+			createQuery( ((ACompare)p).getRight(), s);
+			s.append("}");
+		} else
+		if (p instanceof ADbAttribute) {
+			s.append("\"").append(((ADbAttribute)p).getAttribute()).append("\"");
+		} else
+//		if (p instanceof ADynValue) {
+//			buffer.append('$').append(((ADynValue)p).getName()).append('$');
+//		} else
+		if (p instanceof AEnumFix) {
+			s.append("\"").append(((AEnumFix)p).getValue().ordinal()).append("\"");
+		} else
+		if (p instanceof AFix) {
+			s.append("\"").append(((AFix)p).getValue()).append("\"");
+		} else
+		if (p instanceof ALimit) {
+			s.append(",\"$offset\":\"").append(((ALimit)p).getOffset()).append("\",\"$limit\":\"").append(((ALimit)p).getLimit()).append("\""); //mysql specific !!
+		} else
+//		if (p instanceof AList) {
+//			buffer.append('(');
+//			boolean first = true;
+//			for (AAttribute part : ((AList)p).getOperations()) {
+//				if (first)
+//					first = false;
+//				else
+//					buffer.append(",");
+//				createQuery(part, query);
+//			}
+//			buffer.append(')');
+//		} else
+		if (p instanceof ALiteral) {
+			s.append("\"").append(((ALiteral)p).getLiteral()).append("\"");
+		} else
+		if (p instanceof ALiteralList) {
+			for (APart part : ((ALiteralList)p).getOperations()) {
+				createQuery(part, s);
+			}
+		} else
+//		if (p instanceof ANot) {
+//			buffer.append("not ");
+//			createQuery( ((ANot)p).getOperation(), query);
+//		} else
+//		if (p instanceof ANull) {
+//			createQuery( ((ANull)p).getAttr(), query );
+//			buffer.append(" is ");
+//			if (!((ANull)p).isIs()) buffer.append("not ");
+//			buffer.append("null");
+//		} else
+		if (p instanceof AOr) {
+			s.append(",\"$or\":[");
+			boolean first = true;
+			for (APart part : ((AOr)p).getOperations()) {
+				if (first)
+					first = false;
+				else
+					s.append(",");
+				createQuery(part, s);
+			}
+			s.append(']');
+		} else
+		if (p instanceof AOrder) {
+			s.append(",\"$order\":\"").append(((AOrder)p).getAttribute()).append("\"");
+		} else
+//		if (p instanceof ASubQuery) {
+//			DbManager manager = ((SqlDialectCreateContext)query.getContext()).getManager();
+//			String qualification = manager.toQualification(((ASubQuery)p).getSubQuery()).trim();
+//			
+//			createQuery( ((ASubQuery)p).getLeft(), query);
+//			buffer.append(" IN (");
+//			
+//			StringBuffer buffer2 = new StringBuffer().append("DISTINCT ");
+//			
+//			AQuery<?> subQuery = ((ASubQuery)p).getSubQuery();
+//			subQuery.setContext(new SqlDialectCreateContext(manager, buffer2 ) );
+//			createQuery( ((ASubQuery)p).getProjection(), subQuery );
+//			
+//			buffer.append( manager.createSqlSelect(((ASubQuery)p).getSubQuery().getType(), buffer2.toString() , qualification));
+//
+//			buffer.append(")");
+//		} else
+			throw new NotSupportedException(p.getClass());
+	}
+
+	public <T> void create(Query<T> q, Map<String,Object> parameterValues) throws IOException {
+		add(q, json, parameterValues);
+	}
+
+	private <T> void add(Query<T> q, ObjectNode j, Map<String,Object> parameterValues) throws IOException {
 		for (Iterator<Entry<String, JsonNode>> ki = j.getFields(); ki.hasNext(); ) {
 			Entry<String, JsonNode> ke = ki.next();
 			String k = ke.getKey();
@@ -40,7 +247,7 @@ public class MoQueryBuilder {
 					ObjectNode obj = (ObjectNode) a.get(i); // {"name":"Max"}
 					Entry<String, JsonNode> objf = obj.getFields().next(); // "name":"Max"
 					FieldEnd<?> c = q.criteria(objf.getKey());
-					criteria[i] = (Criteria) setValue(c,objf.getKey(),objf.getValue());
+					criteria[i] = (Criteria) setValue(c,objf.getKey(),objf.getValue(), parameterValues);
 				}
 				q.or(criteria);
 			} else
@@ -51,7 +258,7 @@ public class MoQueryBuilder {
 					ObjectNode obj = (ObjectNode) a.get(i); // {"name":"Max"}
 					Entry<String, JsonNode> objf = obj.getFields().next(); // "name":"Max"
 					FieldEnd<?> c = q.criteria(objf.getKey());
-					criteria[i] = (Criteria) setValue(c,objf.getKey(),objf.getValue());
+					criteria[i] = (Criteria) setValue(c,objf.getKey(),objf.getValue(), parameterValues);
 				}
 				q.and(criteria);
 			} else
@@ -64,16 +271,22 @@ public class MoQueryBuilder {
 			if (k.equals("$limit")) {
 				q.limit(v.asInt());
 			} else
-				setValue(q.field(k), k, v);
+				setValue(q.field(k), k, v, parameterValues);
 		}
 	}
 
-	private <T> Object setValue(FieldEnd<?> f, String k, JsonNode v) throws IOException {
+	private <T> Object setValue(FieldEnd<?> f, String k, JsonNode v, Map<String,Object> parameterValues) throws IOException {
 		if (v.isObject()) {
 			ObjectNode exp = (ObjectNode)v;
 			Entry<String, JsonNode> e = exp.getFields().next();
 			String c = e.getKey();
 			String vv = e.getValue().asText();
+			if (parameterValues != null)
+				try {
+					vv = new StringCompiler().compileString(vv).execute(parameterValues);
+				} catch (MException e1) {
+					log().d(e1);
+				}
 			switch (c) {
 			case "$lt": return f.lessThan(vv);
 			case "$le": return f.lessThanOrEq(vv);
