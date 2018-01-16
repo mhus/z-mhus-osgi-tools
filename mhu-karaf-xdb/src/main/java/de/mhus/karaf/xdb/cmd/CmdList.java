@@ -5,11 +5,8 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbService;
-import de.mhus.lib.adb.DbManager;
-import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "xdb", name = "list", description = "List all DB Services")

@@ -9,7 +9,6 @@ import org.bson.Document;
 import org.bson.json.JsonWriterSettings;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;

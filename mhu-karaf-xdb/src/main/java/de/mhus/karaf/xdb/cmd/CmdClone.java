@@ -11,12 +11,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbService;
 import de.mhus.karaf.xdb.model.XdbType;
-import de.mhus.lib.adb.model.Field;
-import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.core.MString;
 
 @Command(scope = "xdb", name = "clone", description = "Load a object out of the database and store it as a clone.")

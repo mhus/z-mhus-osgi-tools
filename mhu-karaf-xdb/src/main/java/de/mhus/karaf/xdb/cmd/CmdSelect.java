@@ -1,10 +1,7 @@
 package de.mhus.karaf.xdb.cmd;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,13 +13,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
-import de.mhus.lib.adb.DbCollection;
-import de.mhus.lib.adb.model.Field;
-import de.mhus.lib.adb.model.Table;
-import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 

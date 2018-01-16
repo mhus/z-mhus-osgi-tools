@@ -13,7 +13,6 @@ import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MServiceTracker;
-import de.mhus.lib.karaf.adb.DbManagerService;
 
 @Component(immediate=true)
 public class MoManagerAdminImpl extends MLog implements MoManagerAdmin {

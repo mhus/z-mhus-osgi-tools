@@ -1,9 +1,5 @@
 package de.mhus.karaf.xdb.cmd;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -12,12 +8,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
-import de.mhus.lib.adb.model.Field;
-import de.mhus.lib.adb.model.Table;
-import de.mhus.lib.core.MString;
 
 @Command(scope = "xdb", name = "count", description = "Select data from DB DataSource ant print the count of found objects")
 @Service

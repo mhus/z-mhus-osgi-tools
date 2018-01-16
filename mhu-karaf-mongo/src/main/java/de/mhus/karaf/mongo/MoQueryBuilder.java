@@ -6,41 +6,31 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.FieldEnd;
 import org.mongodb.morphia.query.Query;
 
-import de.mhus.lib.adb.DbManager;
 import de.mhus.lib.adb.query.AAnd;
-import de.mhus.lib.adb.query.AAttribute;
 import de.mhus.lib.adb.query.ACompare;
-import de.mhus.lib.adb.query.AConcat;
 import de.mhus.lib.adb.query.ADbAttribute;
-import de.mhus.lib.adb.query.ADynValue;
 import de.mhus.lib.adb.query.AEnumFix;
 import de.mhus.lib.adb.query.AFix;
 import de.mhus.lib.adb.query.ALimit;
-import de.mhus.lib.adb.query.AList;
 import de.mhus.lib.adb.query.ALiteral;
 import de.mhus.lib.adb.query.ALiteralList;
-import de.mhus.lib.adb.query.ANot;
-import de.mhus.lib.adb.query.ANull;
 import de.mhus.lib.adb.query.AOperation;
 import de.mhus.lib.adb.query.AOr;
 import de.mhus.lib.adb.query.AOrder;
 import de.mhus.lib.adb.query.APart;
 import de.mhus.lib.adb.query.APrint;
 import de.mhus.lib.adb.query.AQuery;
-import de.mhus.lib.adb.query.ASubQuery;
 import de.mhus.lib.core.MJson;
 import de.mhus.lib.core.lang.MObject;
 import de.mhus.lib.core.parser.StringCompiler;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotSupportedException;
-import de.mhus.lib.sql.SqlDialectCreateContext;
 
 public class MoQueryBuilder extends MObject {
 

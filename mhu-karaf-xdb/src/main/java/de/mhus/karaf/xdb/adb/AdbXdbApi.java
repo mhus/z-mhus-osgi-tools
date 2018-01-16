@@ -16,7 +16,6 @@ import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.model.Field;
 import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.adb.query.AQuery;
-import de.mhus.lib.core.MCollection;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.adb.AdbUtil;

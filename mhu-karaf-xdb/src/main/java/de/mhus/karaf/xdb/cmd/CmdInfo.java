@@ -1,7 +1,6 @@
 package de.mhus.karaf.xdb.cmd;
 
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -10,11 +9,8 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
-import de.mhus.lib.adb.model.Field;
-import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "xdb", name = "info", description = "Show information of a type")

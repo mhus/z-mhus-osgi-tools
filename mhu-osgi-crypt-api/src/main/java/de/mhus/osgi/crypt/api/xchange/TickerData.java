@@ -3,8 +3,6 @@ package de.mhus.osgi.crypt.api.xchange;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import de.mhus.osgi.crypt.api.CryptaApi;
-
 public interface TickerData {
 
 	BigDecimal getLast();

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.query.AQuery;
-import de.mhus.lib.errors.MException;
 
 public interface XdbType<T> {
 

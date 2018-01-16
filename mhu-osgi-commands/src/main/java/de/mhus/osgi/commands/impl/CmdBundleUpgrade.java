@@ -1,8 +1,5 @@
 package de.mhus.osgi.commands.impl;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -14,9 +11,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-
-import de.mhus.lib.core.MFile;
-import de.mhus.lib.core.MString;
 
 @Command(scope = "bundle", name = "upgrade", description = "Upgrade bundle version")
 @Service

@@ -11,7 +11,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.MFile;
-import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.MException;

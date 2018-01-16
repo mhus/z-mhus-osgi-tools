@@ -12,7 +12,6 @@ import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.core.MCast;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.karaf.MOsgi.Service;

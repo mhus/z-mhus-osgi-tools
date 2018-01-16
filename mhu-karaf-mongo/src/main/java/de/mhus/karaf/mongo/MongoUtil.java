@@ -1,8 +1,6 @@
 package de.mhus.karaf.mongo;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,13 +11,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.mongodb.morphia.query.Query;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.pojo.PojoAttribute;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
