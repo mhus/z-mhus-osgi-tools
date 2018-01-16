@@ -27,7 +27,24 @@ public interface XdbType<T> {
 	 * @throws Exception
 	 */
 	DbCollection<T> getByQualification(AQuery<T> query) throws Exception;
-	
+
+	/**
+	 * Search and return objects from db
+	 * 
+	 * @param query Adb.query()....
+	 * @return a the first found object by the query or null if no object was found.
+	 * @throws Exception
+	 */
+	default T getObjectByQualification(AQuery<T> query) throws Exception {
+		DbCollection<T> col = getByQualification(query);
+		try {
+			if (!col.hasNext()) return null;
+			return col.next();
+		} finally {
+			col.close();
+		}
+	}
+
 	/**
 	 * List all known attribute names
 	 * @return All known attribute names.

@@ -265,6 +265,9 @@ public class MoQueryBuilder extends MObject {
 			if (k.equals("$order")) {
 				q.order(v.asText());
 			} else
+			if (k.equals("$where")) {
+				q.where(v.asText());
+			} else
 			if (k.equals("$offset")) {
 				q.offset(v.asInt());
 			} else

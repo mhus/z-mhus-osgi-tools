@@ -85,6 +85,19 @@ public class AdbXdbApi implements XdbApi {
 		}
 
 		@Override
+		public <T> XdbType<T> getType(Class<?> type) throws NotFoundException {
+			String tableName;
+			try {
+				tableName = AdbUtil.getTableName(service,type);
+			} catch (IOException e) {
+				throw new NotFoundException("Table not found",type,service.getServiceName());
+			}
+			Table table = service.getManager().getTable(tableName);
+			if (table == null) throw new NotFoundException("Table not found",type,service.getServiceName());
+			return new Type<T>(service,table);
+		}
+		
+		@Override
 		public <T> XdbType<T> getType(String name) throws NotFoundException {
 			String tableName;
 			try {

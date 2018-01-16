@@ -28,7 +28,7 @@ public class CmdUse implements Action {
 		try {
 			File f = getFile();
 			if (f.exists()) {
-				MUri uri = MUri.toUri(MFile.readFile(f));
+				MUri uri = MUri.toUri(MFile.readFile(f).trim());
 				if ("xdb".equals(uri.getScheme())) {
 					if (uri.getPathParts().length > 0)
 						api = uri.getPathParts()[0];

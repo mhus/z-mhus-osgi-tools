@@ -100,6 +100,20 @@ public class MoXdbApi implements XdbApi {
 			
 			return new Type<T>(service,type);
 		}
+		
+		@Override
+		public <T> XdbType<T> getType(Class<?> type) throws NotFoundException {
+			Class<?> out = null;
+			for (Class<? extends Persistable> s : service.getManager().getManagedTypes())
+				if (s.getName().equals(type.getName())) {
+					out = s;
+					break;
+				}
+			if (out == null) throw new NotFoundException("Type not found",type,service.getServiceName());
+			
+			return new Type<T>(service,out);
+		}
+
 
 		@Override
 		public String getSchemaName() {
