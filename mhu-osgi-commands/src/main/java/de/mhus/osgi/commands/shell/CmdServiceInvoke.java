@@ -10,8 +10,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.lib.karaf.MOsgi;
-
 @Command(scope = "service", name = "invoke", description = "Invoke a service method")
 @Service
 public class CmdServiceInvoke implements Action {
@@ -45,7 +43,7 @@ public class CmdServiceInvoke implements Action {
 		}
 		
 		if (res.length > 1 && (index < 0 || index >= res.length)) {
-			System.out.println("Index out of bounds. Define -x option:");
+			System.out.println("More then one services found. \nUse -x option to select one of them or -f to filter the results:");
 			int cnt = 0;
 			for (ServiceReference<?> r : res) {
 				System.out.println( " " + cnt + ": ");

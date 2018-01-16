@@ -18,37 +18,18 @@ public class CmdServiceInspect implements Action {
 
 	@Argument(index=0, name="service", required=true, description="Service name", multiValued=false)
     String serviceName;
-
-    @Option(name = "-f", aliases = { "--filter" }, description = "Osgi filter", required = false, multiValued = false)
-    String filter;
-
-    @Option(name = "-x", aliases = { "--index" }, description = "Index for more", required = false, multiValued = false)
-    int index = -1;
     
 	@Override
 	public Object execute() throws Exception {
 
-		ServiceReference<?>[] res = FrameworkUtil.getBundle(CmdServiceInspect.class).getBundleContext().getAllServiceReferences(serviceName, filter);
+		ServiceReference<?>[] res = FrameworkUtil.getBundle(CmdServiceInspect.class).getBundleContext().getAllServiceReferences(serviceName, null);
 		
 		if (res == null || res.length == 0) {
 			System.out.println("Service not found");
 			return null;
 		}
-		
-		if (res.length > 1 && (index < 0 || index >= res.length)) {
-			System.out.println("Index out of bounds. Define -x option:");
-			int cnt = 0;
-			for (ServiceReference<?> r : res) {
-				System.out.println( " " + cnt + ": ");
-				for (String n : r.getPropertyKeys())
-					System.out.println("   " + n + "=" + r.getProperty(n));
-				cnt++;
-			}
-			index = 0;
-			System.out.println();
-		}
-		
-		ServiceReference<?> ref = res.length == 1 ? res[0] : res[index];
+				
+		ServiceReference<?> ref = res[0];
 		
 		Object service = FrameworkUtil.getBundle(CmdServiceInspect.class).getBundleContext().getService(ref);
 		
