@@ -111,7 +111,7 @@ public class MoQueryBuilder extends MObject {
 				s.append("\"$eg\":");
 				break;
 			case EL:
-				s.append("\"$le\":");
+				s.append("\"$lte\":");
 				break;
 			case EQ:
 				s.append("\"$eq\":");
@@ -120,7 +120,7 @@ public class MoQueryBuilder extends MObject {
 				s.append("\"$gt\":");
 				break;
 			case GE:
-				s.append("\"$ge\":");
+				s.append("\"$gte\":");
 				break;
 			case LIKE:
 				s.append("\"$contains\":");
@@ -282,10 +282,10 @@ public class MoQueryBuilder extends MObject {
 				}
 			switch (c) {
 			case "$lt": return f.lessThan(vv);
-			case "$le": return f.lessThanOrEq(vv);
+			case "$lte": return f.lessThanOrEq(vv);
 			case "$eq": return f.equal(vv);
 			case "$gt": return f.greaterThan(vv);
-			case "$ge": return f.greaterThanOrEq(vv);
+			case "$gte": return f.greaterThanOrEq(vv);
 			case "$ne": return f.notEqual(vv);
 			case "$contains": return f.contains(vv);
 			case "$containsIgnoreCase":
