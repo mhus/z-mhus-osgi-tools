@@ -11,6 +11,8 @@ import de.mhus.osgi.crypt.api.signer.SignerProvider;
 
 public interface CryptaApi {
 
+	String CIPHER_PGP = "PGP";
+
 	/**
 	 * Creates and splits an address into pieces.
 	 * 

@@ -59,7 +59,7 @@ public class XdbUtil {
 				map.put(p2, v);
 			} else
 			if (Collection.class.isAssignableFrom(t)) {
-				Collection col = type.get(object, name);
+				Collection col = type.get(object, p1);
 				if (col == null) {
 					if (t.isInterface())
 						col = new LinkedList<>();
