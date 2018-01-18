@@ -214,6 +214,9 @@
       <module>mhu-osgi-web</module>
       <module>mhu-karaf-xdb</module>
       <module>mhu-karaf-mongo</module>
+      <module>mhu-osgi-crypt-api</module>
+      <module>mhu-osgi-crypt-bc</module>
+      <module>mhu-karaf-crypt</module>
       <module>mhu-karaf-feature</module>
     </modules>
 
