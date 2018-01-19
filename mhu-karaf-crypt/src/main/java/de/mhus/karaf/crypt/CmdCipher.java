@@ -110,7 +110,9 @@ public class CmdCipher extends MLog implements Action {
 					if (vaultSource instanceof MutableVaultSource) {
 						
 						DefaultEntry pubEntry = new DefaultEntry((UUID)pub.get(PemBlock.IDENT), MVault.TYPE_RSA_PUBLIC_KEY, desc, pub.toString() );
-						DefaultEntry privEntry = new DefaultEntry((UUID)priv.get(PemBlock.IDENT), MVault.TYPE_RSA_PRIVATE_KEY, desc, priv.toString() );
+						DefaultEntry privEntry = new DefaultEntry((UUID)priv.get(PemBlock.IDENT), MVault.TYPE_RSA_PRIVATE_KEY, desc, 
+								new PemKey(priv.getName(), priv.getBlock(), false).toString() 
+								);
 						
 						MutableVaultSource mvs = (MutableVaultSource)vaultSource;
 						mvs.addEntry(pubEntry);
