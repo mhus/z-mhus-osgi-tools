@@ -81,7 +81,7 @@ public class CmdSigner extends MLog implements Action {
 				((PemKey)pub).setDate(PemBlock.CREATED, now);
 			}
 			
-			System.out.println(new PemKey(priv.getName(), priv.getBlock(), false));
+			System.out.println(new PemKey((PemKey)priv, false));
 			System.out.println(pub);
 			System.out.println("Private: " + PemUtil.toLine(priv));
 			System.out.println();
@@ -97,7 +97,7 @@ public class CmdSigner extends MLog implements Action {
 						
 						DefaultEntry pubEntry = new DefaultEntry((UUID)pub.get(PemBlock.IDENT), MVault.TYPE_RSA_PUBLIC_KEY, desc, pub.toString() );
 						DefaultEntry privEntry = new DefaultEntry((UUID)priv.get(PemBlock.IDENT), MVault.TYPE_RSA_PRIVATE_KEY, desc, 
-								new PemKey(priv.getName(), priv.getBlock(), false).toString() 
+								new PemKey((PemKey)priv, false).toString() 
 								);
 						
 						MutableVaultSource mvs = (MutableVaultSource)vaultSource;

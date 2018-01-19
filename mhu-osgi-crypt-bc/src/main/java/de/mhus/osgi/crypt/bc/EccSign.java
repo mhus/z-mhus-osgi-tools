@@ -10,6 +10,7 @@ import java.security.Signature;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Date;
 import java.util.UUID;
 
 import org.osgi.service.component.ComponentContext;
@@ -57,10 +58,12 @@ public class EccSign extends MLog implements SignerProvider {
 			
 			byte[] realSig = dsa.sign();
 			
-			PemBlockModel ret = new PemBlockModel(PemBlock.BLOCK_SIGN, realSig).set(PemBlock.METHOD,getName());
+			PemBlockModel out = new PemBlockModel(PemBlock.BLOCK_SIGN, realSig).set(PemBlock.METHOD,getName());
 			if (key.isProperty(PemBlock.IDENT))
-				ret.set(PemBlock.KEY_IDENT, key.getProperty(PemBlock.IDENT));
-			return ret;
+				out.set(PemBlock.KEY_IDENT, key.getProperty(PemBlock.IDENT));
+			out.set(PemBlock.CREATED, new Date());
+			
+			return out;
 		} catch (Exception e) {
 			throw new MException(e);
 		}
