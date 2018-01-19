@@ -31,6 +31,9 @@ public class CmdSelect implements Action {
 	@Option(name="-f", aliases="--full", description="Print the full value content also if it's very long",required=false)
 	boolean full = false;
 
+	@Option(name="-l", aliases="--oneline", description="Disable one line",required=false)
+	boolean oneLine = false;
+	
 	@Option(name="-m", aliases="--max", description="Maximum amount of chars for a value (if not full)",required=false)
 	int max = 40;
 
@@ -85,6 +88,10 @@ public class CmdSelect implements Action {
 		}
 		
 		ConsoleTable out = new ConsoleTable();
+		if (oneLine)
+			out.setMultiLine(false);
+		if (!full)
+			out.setMaxColSize(max);
 		for (String name : fieldNames) {
 			if (type.isPrimaryKey(name)) name = name + "*";
 			out.getHeader().add(name);
@@ -92,10 +99,9 @@ public class CmdSelect implements Action {
 
 		for (Object object : type.getByQualification(qualification, null)) {
 			
-			List<String> row = out.addRow();
+			ConsoleTable.Row row = out.addRow();
 			for (String name : fieldNames) {
 				String value = toString( type.get(object, name) );
-				if (!full && value.length() > max) value = MString.truncateNice(value, max);
 				row.add(value);
 			}
 			output = object;
