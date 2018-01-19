@@ -93,16 +93,6 @@ public class MongoUtil {
 		return q;
 	}
 	
-	
-	static ObjectMapper jsonMapper = new ObjectMapper();
-
-	public static BasicDBObject jsonMarshall(String jsonString) throws Exception {
-//	    Writer writer = new StringWriter();
-//	    jsonMapper.writer().writeValue(writer, obj);
-//	    return (BasicDBObject) BasicDBObject.parse(writer.toString());
-		return (BasicDBObject) JSON.parse(jsonString);
-	}
-
 	public static <T> Query<T> createQuery(MoManager manager, AQuery<T> query) throws IOException {
 		@SuppressWarnings("unchecked")
 		Query<T> q = (Query<T>) manager.createQuery(query.getType());

@@ -15,6 +15,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import de.mhus.karaf.xdb.cmd.CmdUse;
+import de.mhus.lib.mongo.MoUtil;
 
 @Command(scope = "mongo", name = "find", description = "Execute mongo find query")
 @Service
@@ -47,7 +48,7 @@ public class CmdMongoFind implements Action {
 		if (query == null) {
 			res = collection.find();
 		} else {
-			BasicDBObject find = MongoUtil.jsonMarshall(query);
+			BasicDBObject find = MoUtil.jsonMarshall(query);
 			res = collection.find(find);
 		}
 		JsonWriterSettings writerSettings = new JsonWriterSettings(true);

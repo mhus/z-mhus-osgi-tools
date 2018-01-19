@@ -85,7 +85,7 @@ public class CmdUse implements Action {
 		}
 		
 		if (serviceName != null) {
-			XdbApi a = XdbUtil.getApi(apiName);
+			XdbApi a = XdbUtil.getApi(api);
 			a.getService(serviceName);
 			service = serviceName;
 		}

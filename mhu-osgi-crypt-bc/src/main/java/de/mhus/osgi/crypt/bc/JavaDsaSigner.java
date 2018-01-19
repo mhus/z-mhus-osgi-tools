@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.UUID;
 
 import org.osgi.service.component.ComponentContext;
 
@@ -101,14 +102,22 @@ public class JavaDsaSigner extends MLog implements SignerProvider {
 			PrivateKey priv = pair.getPrivate();
 			PublicKey  pub  = pair.getPublic();
 			
+			UUID privId = UUID.randomUUID();
+			UUID pubId = UUID.randomUUID();
+			
 			PemKey xpub  = new PemKey(PemBlock.BLOCK_PUB , pub.getEncoded(), false  )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
-					.set(PemBlock.FORMAT, pub.getFormat());
+					.set(PemBlock.FORMAT, pub.getFormat())
+					.set(PemBlock.IDENT, pubId)
+					.set(PemBlock.PRIV_ID, privId);
+
 			PemKey xpriv = new PemKey(PemBlock.BLOCK_PRIV, priv.getEncoded(), true )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
-					.set(PemBlock.FORMAT, priv.getFormat());
+					.set(PemBlock.FORMAT, priv.getFormat())
+					.set(PemBlock.IDENT, privId)
+					.set(PemBlock.PUB_ID, pubId);
 			
 			return new PemKeyPair(xpriv, xpub);
 			
