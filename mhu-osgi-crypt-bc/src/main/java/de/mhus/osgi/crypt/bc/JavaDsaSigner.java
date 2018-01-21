@@ -21,6 +21,7 @@ import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.crypt.Blowfish;
 import de.mhus.lib.core.crypt.MRandom;
 import de.mhus.lib.core.crypt.pem.PemBlock;
 import de.mhus.lib.core.crypt.pem.PemBlockModel;
@@ -40,9 +41,11 @@ public class JavaDsaSigner extends MLog implements SignerProvider {
 	private static String NAME = "DSA-1";
 		
 	@Override
-	public PemBlock sign(PemPriv key, String text) throws MException {
+	public PemBlock sign(PemPriv key, String text, String passphrase) throws MException {
 		try {
 			byte[] encKey = key.getBytesBlock();
+			if (passphrase != null)
+				encKey = Blowfish.decrypt(encKey, passphrase);
 			PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(encKey);
 			KeyFactory keyFactory = KeyFactory.getInstance("DSA", "SUN");
 			PrivateKey privKey = keyFactory.generatePrivate(privKeySpec);
@@ -108,6 +111,11 @@ public class JavaDsaSigner extends MLog implements SignerProvider {
 			UUID privId = UUID.randomUUID();
 			UUID pubId = UUID.randomUUID();
 			
+			byte[] privBytes = priv.getEncoded();
+			String passphrase = properties.getString("passphrase", null);
+			if (passphrase != null)
+				privBytes = Blowfish.encrypt(privBytes, passphrase);
+
 			PemKey xpub  = new PemKey(PemBlock.BLOCK_PUB , pub.getEncoded(), false  )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
@@ -115,13 +123,16 @@ public class JavaDsaSigner extends MLog implements SignerProvider {
 					.set(PemBlock.IDENT, pubId)
 					.set(PemBlock.PRIV_ID, privId);
 
-			PemKey xpriv = new PemKey(PemBlock.BLOCK_PRIV, priv.getEncoded(), true )
+			PemKey xpriv = new PemKey(PemBlock.BLOCK_PRIV, privBytes, true )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
 					.set(PemBlock.FORMAT, priv.getFormat())
 					.set(PemBlock.IDENT, privId)
 					.set(PemBlock.PUB_ID, pubId);
 			
+			if (passphrase != null)
+				xpriv.set(PemBlock.ENCRYPTED, PemBlock.ENC_BLOWFISH);
+			privBytes = null;
 			return new PemKeyPair(xpriv, xpub);
 			
 		} catch (Exception e) {

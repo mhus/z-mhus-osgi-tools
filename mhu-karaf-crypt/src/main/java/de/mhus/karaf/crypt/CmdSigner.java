@@ -51,6 +51,9 @@ public class CmdSigner extends MLog implements Action {
     @Option(name = "-d", aliases = { "--description" }, description = "Descritpion of the key", required = false, multiValued = false)
     String desc = "";
     
+    @Option(name = "-p", aliases = { "--passphrase" }, description = "Define a passphrase if required", required = false, multiValued = false)
+    String passphrase = null;
+
 	@Override
 	public Object execute() throws Exception {
 		
@@ -65,7 +68,10 @@ public class CmdSigner extends MLog implements Action {
 
 		switch (cmd) {
 		case "create": {
-			PemPair keys = prov.createKeys(MProperties.explodeToMProperties(parameters));
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			if (passphrase != null)
+				p.setString("passphrase", passphrase);
+			PemPair keys = prov.createKeys(p);
 			PemPriv priv = keys.getPrivate();
 			PemPub pub = keys.getPublic();
 
@@ -116,7 +122,7 @@ public class CmdSigner extends MLog implements Action {
 		case "sign": {
 			String text = parameters[1];
 			PemPriv key = PemUtil.signPrivFromString(parameters[0]);
-			PemBlock res = prov.sign(key, text);
+			PemBlock res = prov.sign(key, text, passphrase);
 			System.out.println(res);
 			return res;
 		}
@@ -130,12 +136,15 @@ public class CmdSigner extends MLog implements Action {
 			return res;
 		}
 		case "test": {
-			String text = parameters == null || parameters.length < 1 ? Lorem.create() : parameters[0];
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			if (passphrase != null)
+				p.setString("passphrase", passphrase);
+			String text = Lorem.create(p.getInt("lorem", 1));
 			
-			PemPair keys = prov.createKeys(null);
+			PemPair keys = prov.createKeys(p);
 			System.out.println(keys);
 			
-			PemBlock sign = prov.sign(keys.getPrivate(), text);
+			PemBlock sign = prov.sign(keys.getPrivate(), text, passphrase);
 			System.out.println(sign);
 			
 			boolean valide = prov.validate(keys.getPublic(), text, sign);

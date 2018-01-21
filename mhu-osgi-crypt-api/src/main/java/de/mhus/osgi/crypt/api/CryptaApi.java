@@ -12,7 +12,7 @@ import de.mhus.osgi.crypt.api.signer.SignerProvider;
 
 public interface CryptaApi {
 
-	PemBlock sign(PemPriv key, String text) throws MException;
+	PemBlock sign(PemPriv key, String text, String passphrase) throws MException;
 
 	CurrencyProvider getCurrency(String currency) throws MException;
 

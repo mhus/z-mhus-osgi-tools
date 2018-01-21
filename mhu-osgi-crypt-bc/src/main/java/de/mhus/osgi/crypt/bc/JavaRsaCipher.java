@@ -25,6 +25,7 @@ import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.crypt.Blowfish;
 import de.mhus.lib.core.crypt.MRandom;
 import de.mhus.lib.core.crypt.pem.PemBlock;
 import de.mhus.lib.core.crypt.pem.PemBlockModel;
@@ -56,9 +57,12 @@ public class JavaRsaCipher extends MLog implements CipherProvider {
 			byte[] b = content.getBytes(stringEncoding);
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			
+			int length = key.getInt(PemBlock.LENGTH, 1024);
+			int blockSize = length == 512 ? 53 : 117;
+
 			int off = 0;
 			while (off < b.length) {
-				int len = Math.min(117, b.length - off);
+				int len = Math.min(blockSize, b.length - off);
 				byte[] cipherData = cipher.doFinal(b, off, len);
 				os.write(cipherData);
 				off = off + len;
@@ -79,9 +83,11 @@ public class JavaRsaCipher extends MLog implements CipherProvider {
 	}
 
 	@Override
-	public String decode(PemPriv key, PemBlock encoded) throws MException {
+	public String decode(PemPriv key, PemBlock encoded, String passphrase) throws MException {
 		try {
 			byte[] encKey = key.getBytesBlock();
+			if (passphrase != null)
+				encKey = Blowfish.decrypt(encKey, passphrase);
 			PKCS8EncodedKeySpec privKeySpec = new PKCS8EncodedKeySpec(encKey);
 			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 			PrivateKey privKey = keyFactory.generatePrivate(privKeySpec);
@@ -89,12 +95,15 @@ public class JavaRsaCipher extends MLog implements CipherProvider {
 			Cipher cipher = Cipher.getInstance("RSA");
 			cipher.init(Cipher.DECRYPT_MODE, privKey);
 			
+			int length = key.getInt(PemBlock.LENGTH, 1024);
+			int blockSize = Math.max(length / 1024 * 128, 64);
+			
 			byte[] b = encoded.getBytesBlock();
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			
 			int off = 0;
 			while (off < b.length) {
-				int len = Math.min(128, b.length - off);
+				int len = Math.min(blockSize, b.length - off);
 				byte[] realData = cipher.doFinal(b, off, len);
 				os.write(realData);
 				off = off + len;
@@ -117,7 +126,7 @@ public class JavaRsaCipher extends MLog implements CipherProvider {
 	public PemPair createKeys(IProperties properties) throws MException {
 		try {
 			if (properties == null) properties = new MProperties();
-			int len = properties.getInt("length", 1024);
+			int len = properties.getInt("length", 1024); // 8192
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 			MRandom random = MApi.lookup(MRandom.class);
 			keyGen.initialize(len, random.getSecureRandom());
@@ -129,19 +138,27 @@ public class JavaRsaCipher extends MLog implements CipherProvider {
 			UUID privId = UUID.randomUUID();
 			UUID pubId = UUID.randomUUID();
 
+			byte[] privBytes = priv.getEncoded();
+			String passphrase = properties.getString("passphrase", null);
+			if (passphrase != null)
+				privBytes = Blowfish.encrypt(privBytes, passphrase);
+			
 			PemKey xpub  = new PemKey(PemBlock.BLOCK_PUB , pub.getEncoded(), false  )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
 					.set(PemBlock.FORMAT, pub.getFormat())
 					.set(PemBlock.IDENT, pubId)
 					.set(PemBlock.PRIV_ID, privId);
-			PemKey xpriv = new PemKey(PemBlock.BLOCK_PRIV, priv.getEncoded(), true )
+			PemKey xpriv = new PemKey(PemBlock.BLOCK_PRIV, privBytes, true )
 					.set(PemBlock.METHOD, getName())
 					.set(PemBlock.LENGTH, len)
 					.set(PemBlock.FORMAT, priv.getFormat())
 					.set(PemBlock.IDENT, privId)
 					.set(PemBlock.PUB_ID, pubId);
-			
+			if (passphrase != null)
+				xpriv.set(PemBlock.ENCRYPTED, PemBlock.ENC_BLOWFISH);
+
+			privBytes = null;
 			return new PemKeyPair(xpriv, xpub);
 			
 		} catch (Exception e) {

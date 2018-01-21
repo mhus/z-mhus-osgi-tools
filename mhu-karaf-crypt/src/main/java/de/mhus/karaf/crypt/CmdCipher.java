@@ -51,6 +51,9 @@ public class CmdCipher extends MLog implements Action {
     @Option(name = "-d", aliases = { "--description" }, description = "Descritpion of the key", required = false, multiValued = false)
     String desc = "";
 
+    @Option(name = "-p", aliases = { "--passphrase" }, description = "Define a passphrase if required", required = false, multiValued = false)
+    String passphrase = null;
+    
 	@Override
 	public Object execute() throws Exception {
 
@@ -74,12 +77,15 @@ public class CmdCipher extends MLog implements Action {
 		case "decode": { 
 			PemBlock text = findEncodedBlock(parameters[1]);
 			PemPriv key = PemUtil.cipherPrivFromString(parameters[0]);
-			String res = prov.decode(key, text);
+			String res = prov.decode(key, text, passphrase);
 			System.out.println(res);
 			return res;
 		}
 		case "create": {
-			PemPair keys = prov.createKeys(MProperties.explodeToMProperties(parameters));
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			if (passphrase != null)
+				p.setString("passphrase", passphrase);
+			PemPair keys = prov.createKeys(p);
 			PemPriv priv = keys.getPrivate();
 			PemPub pub = keys.getPublic();
 			
@@ -128,13 +134,16 @@ public class CmdCipher extends MLog implements Action {
 			return new Object[] {priv,pub};
 		}
 		case "test": {
-			String text = parameters == null || parameters.length < 1 ? Lorem.create() : parameters[0];
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			if (passphrase != null)
+				p.setString("passphrase", passphrase);
+			String text = Lorem.create(p.getInt("lorem", 1));
 			System.out.println(text);
-			PemPair keys = prov.createKeys(null);
+			PemPair keys = prov.createKeys(p);
 			System.out.println(keys);
 			PemBlock encoded = prov.encode(keys.getPublic(), text);
 			System.out.println(encoded);
-			String decoded = prov.decode(keys.getPrivate(), encoded);
+			String decoded = prov.decode(keys.getPrivate(), encoded, passphrase);
 			System.out.println(decoded);
 			boolean valid = text.equals(decoded);
 			System.out.println("Valide: " + valid);

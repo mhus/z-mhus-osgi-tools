@@ -36,9 +36,9 @@ public class CryptaApiImpl extends MLog implements CryptaApi {
 	}
 
 	@Override
-	public PemBlock sign(PemPriv key, String text) throws MException {
+	public PemBlock sign(PemPriv key, String text, String passphrase) throws MException {
 		SignerProvider sign = getSigner(key.getMethod());
-		return sign.sign(key, text);
+		return sign.sign(key, text, passphrase);
 	}
 	
 	@Override

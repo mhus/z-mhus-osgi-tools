@@ -16,7 +16,7 @@ public interface SignerProvider {
 	 * @param text
 	 * @return
 	 */
-	PemBlock sign(PemPriv key, String text) throws MException;
+	PemBlock sign(PemPriv key, String text, String passphrase) throws MException;
 
 	boolean validate(PemPub key, String text, PemBlock sign) throws MException;
 

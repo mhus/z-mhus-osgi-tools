@@ -19,7 +19,7 @@ public interface CipherProvider {
 	 */
 	PemBlock encode(PemPub key, String content) throws MException;
 
-	String decode(PemPriv key, PemBlock encoded) throws MException;
+	String decode(PemPriv key, PemBlock encoded, String passphrase) throws MException;
 	
 	String getName();
 
