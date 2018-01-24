@@ -49,6 +49,9 @@ public class CmdSelect implements Action {
 	@Option(name="-s", description="Service Name",required=false)
 	String serviceName = CmdUse.service;
 
+	@Option(name="-v", aliases="--csv", description="CSV Style",required=false)
+	boolean csv = false;
+
     @Reference
     private Session session;
 
@@ -88,6 +91,10 @@ public class CmdSelect implements Action {
 		}
 		
 		ConsoleTable out = new ConsoleTable();
+		if (csv) {
+			out.setColSeparator(";");
+			out.setCellSpacer(false);
+		}
 		if (oneLine)
 			out.setMultiLine(false);
 		if (!full)
@@ -101,7 +108,7 @@ public class CmdSelect implements Action {
 			
 			ConsoleTable.Row row = out.addRow();
 			for (String name : fieldNames) {
-				String value = toString( type.get(object, name) );
+				Object value = toValue( type.get(object, name) );
 				row.add(value);
 			}
 			output = object;
@@ -188,11 +195,9 @@ public class CmdSelect implements Action {
 		return null;
 	}
 
-	private String toString(Object object) {
+	private Object toValue(Object object) {
 		if (object == null) return "[null]";
-		if (object.getClass().isArray())
-			return Arrays.deepToString((Object[]) object);
-		return String.valueOf(object);
+		return object;
 	}
 	
 
