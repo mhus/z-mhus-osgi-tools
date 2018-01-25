@@ -158,6 +158,7 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
+            <version>1.4.1</version>
             <executions>
                 <execution>
                     <id>enforce-maven</id>
@@ -206,12 +207,18 @@
   </build>
 
     <modules>
-      <module>mhu-osgi-jwsbridge</module>
-      <module>mhu-osgi-vaadinbridge</module>
-      <module>mhu-osgi-mail</module>
+      <module>mhu-osgi-jwsosgibridge</module>
+      <module>mhu-osgi-jwskarafbridge</module>
+      <module>mhu-osgi-jwsclient</module>
+      <module>mhu-osgi-vaadinosgibridge</module>
+      <module>mhu-osgi-vaadinkarafbridge</module>
+      <module>mhu-osgi-mailosgi</module>
+      <module>mhu-osgi-mailkaraf</module>
       <module>mhu-osgi-jms</module>
       <module>mhu-osgi-commands</module>
-      <module>mhu-osgi-web</module>
+      <module>mhu-osgi-web-console</module>
+      <module>mhu-osgi-root-servlet</module>
+      <module>mhu-osgi-rewrite-servlet</module>
       <module>mhu-karaf-xdb</module>
       <module>mhu-karaf-mongo</module>
       <module>mhu-osgi-crypt-api</module>
