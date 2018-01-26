@@ -371,7 +371,7 @@
 		<plugin>
 		    <groupId>com.mycila</groupId>
 		    <artifactId>license-maven-plugin</artifactId>
-		    <version>2.3</version>
+		    <version>3.0</version>
 		    <configuration>
 		        <header>LICENSE.txt</header>
 		        <properties>
@@ -385,6 +385,7 @@
 		            <exclude>src/main/resources/**</exclude>
 		            <exclude>src/main/webapp/**</exclude>
 		            <exclude>docs/**</exclude>
+		            <exclude>src/main/history/**</exclude>
 		        </excludes>
 		    </configuration>
 		    <executions>
