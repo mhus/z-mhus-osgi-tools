@@ -293,12 +293,12 @@ public class XdbUtil {
 			} else
 			if (t.isArray()) {
 				Object array = type.get(object, p1);
-				List<Object> col = MCollection.toList((Object[]) array);
+				LinkedList<Object> col = (LinkedList<Object>) MCollection.toList((Object[]) array);
 				if (p2.equals("add") || p2.equals("last")) {
 					col.add(v);
 				} else
-				if (p2.equals("first") && col instanceof Deque) {
-					((Deque)col).addFirst(v);
+				if (p2.equals("first")) {
+					col.addFirst(v);
 				} else
 				if (p2.equals("clear")) {
 					col.clear();
