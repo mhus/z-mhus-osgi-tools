@@ -203,6 +203,7 @@
  */
 package de.mhus.karaf.xdb.cmd;
 
+import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.Deque;
@@ -215,6 +216,7 @@ import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.karaf.MOsgi.Service;
@@ -288,6 +290,31 @@ public class XdbUtil {
 					}
 				}
 				
+			} else
+			if (t.isArray()) {
+				Object array = type.get(object, p1);
+				List<Object> col = MCollection.toList((Object[]) array);
+				if (p2.equals("add") || p2.equals("last")) {
+					col.add(v);
+				} else
+				if (p2.equals("first") && col instanceof Deque) {
+					((Deque)col).addFirst(v);
+				} else
+				if (p2.equals("clear")) {
+					col.clear();
+				} else
+				if (p2.equals("remove")) {
+					col.remove(v);
+				} else {
+					int i = MCast.toint(p2, -1);
+					if (i > -1) {
+						col.set(i, v);
+					}
+				}
+				array = Array.newInstance(t.getComponentType(), col.size());
+				for (int i = 0; i < col.size(); i++)
+					Array.set(array, i, col.get(i));
+				type.set(object, p1, array);
 			}
 		} else
 			type.set(object, name, v);
