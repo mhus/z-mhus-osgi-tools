@@ -208,6 +208,7 @@ import java.lang.reflect.Method;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -219,6 +220,9 @@ public class CmdServiceInspect implements Action {
 	@Argument(index=0, name="service", required=true, description="Service name", multiValued=false)
     String serviceName;
     
+    @Option(name = "-x", aliases = { "--index" }, description = "Index of the inspected service", required = false, multiValued = false)
+    int index = 0;
+
 	@Override
 	public Object execute() throws Exception {
 
@@ -229,7 +233,7 @@ public class CmdServiceInspect implements Action {
 			return null;
 		}
 				
-		ServiceReference<?> ref = res[0];
+		ServiceReference<?> ref = res[index];
 		
 		Object service = FrameworkUtil.getBundle(CmdServiceInspect.class).getBundleContext().getService(ref);
 		
@@ -240,10 +244,20 @@ public class CmdServiceInspect implements Action {
 		for (Method method : clazz.getMethods()) {
 			if ( !method.getDeclaringClass().getName().equals("java.lang.Object")) {
 				System.out.println(" " + method.getName() + "          (declared in " + method.getDeclaringClass().getName() + ")");
-				for (Class<?> t : method.getParameterTypes())
-					System.out.println(" -> " + t.getCanonicalName());
-				if (method.getReturnType() != void.class)
+				boolean first = true;
+				for (Class<?> t : method.getParameterTypes()) {
+					if (first)
+						System.out.print(" -> ");
+					else
+						System.out.print(",");
+					System.out.print(t.getCanonicalName());
+					first = false;
+				}
+				if (!first)
+					System.out.println();
+				if (method.getReturnType() != void.class) {
 					System.out.println(" <- " + method.getReturnType().getName());
+				}
 				System.out.println();
 			}
 		}

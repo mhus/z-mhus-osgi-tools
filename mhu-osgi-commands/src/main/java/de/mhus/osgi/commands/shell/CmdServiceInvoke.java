@@ -213,6 +213,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MSystem;
+
 @Command(scope = "service", name = "invoke", description = "Invoke a service method")
 @Service
 public class CmdServiceInvoke implements Action {
@@ -229,7 +232,7 @@ public class CmdServiceInvoke implements Action {
     @Option(name = "-f", aliases = { "--filter" }, description = "Osgi filter", required = false, multiValued = false)
     String filter;
 
-    @Option(name = "-x", aliases = { "--index" }, description = "Index for more", required = false, multiValued = false)
+    @Option(name = "-x", aliases = { "--index" }, description = "Index of the invoked service", required = false, multiValued = false)
     int index = -1;
     
     @Option(name = "-t", aliases = { "--parameterTypes" }, description = "Parameter Types", required = false, multiValued = false)
@@ -266,13 +269,16 @@ public class CmdServiceInvoke implements Action {
 		Class<?>[] parameterTypes = null;
 		
 		if (pt != null) {
+			ClassLoader cl = this.getClass().getClassLoader();
 			String[] p = pt.split(",");
 			parameterTypes = new Class[p.length];
 			for (int i = 0; i < p.length; i++) {
 				if (p[i].equals("?"))
 					parameterTypes[i] = parameters[i].getClass();
-				else
-					parameterTypes[i] = Class.forName(p[i]);
+				else {
+					parameterTypes[i] = MSystem.loadClass(p[i], cl);
+					parameters[i] = MCast.toType(parameters[i], parameterTypes[i], MCast.getDefaultPrimitive(parameterTypes[i]));
+				}
 			}
 		} else
 		if (parameters != null) {
@@ -287,7 +293,7 @@ public class CmdServiceInvoke implements Action {
 		Method method = clazz.getMethod(methodName, parameterTypes);
 
 		Object methodRes = method.invoke(service, parameters);
-		
+		System.out.println("OK");
 		return methodRes;
 	}
 
