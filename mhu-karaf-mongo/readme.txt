@@ -247,6 +247,7 @@ install -s mvn:org.mongodb/mongo-java-driver/3.6.0
 install -s wrap:mvn:com.thoughtworks.proxytoys/proxytoys/1.0
 install -s mvn:org.mongodb.morphia/morphia/1.3.2
 
-install -s mvn:de.mhus.osgi./mhu-karaf-xdb/1.3.2-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-karaf-mongo/1.3.2-SNAPSHOT
+install -s mvn:de.mhus.osgi/mhu-karaf-xdb/1.3.2-SNAPSHOT
 install -s mvn:de.mhus.osgi.examples/mongo-manager/1.3.1-SNAPSHOT
 

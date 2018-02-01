@@ -205,6 +205,7 @@ package de.mhus.karaf.xdb.cmd;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -218,6 +219,8 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
+import de.mhus.lib.adb.DbCollection;
+import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 
@@ -255,6 +258,9 @@ public class CmdSelect implements Action {
 	@Option(name="-v", aliases="--csv", description="CSV Style",required=false)
 	boolean csv = false;
 
+	@Option(name="-p", aliases="--page", description="Paging f<lines> (first n lines) or l<lines> (last n lines) or p[<page size>,]<page>",required=false)
+	String page = null;
+	
     @Reference
     private Session session;
 
@@ -307,14 +313,81 @@ public class CmdSelect implements Action {
 			out.getHeader().add(name);
 		}
 
-		for (Object object : type.getByQualification(qualification, null)) {
-			
-			ConsoleTable.Row row = out.addRow();
-			for (String name : fieldNames) {
-				Object value = toValue( type.get(object, name) );
-				row.add(value);
+		if (page == null) {
+			for (Object object : type.getByQualification(qualification, null)) {
+				
+				ConsoleTable.Row row = out.addRow();
+				for (String name : fieldNames) {
+					Object value = toValue( type.get(object, name) );
+					row.add(value);
+				}
+				output = object;
 			}
-			output = object;
+		} else
+		if (page.startsWith("f")) {
+			int lines = MCast.toint(page.substring(1), 100);
+			DbCollection<?> res = type.getByQualification(qualification, null);
+			for (Object object : res) {
+				ConsoleTable.Row row = out.addRow();
+				for (String name : fieldNames) {
+					Object value = toValue( type.get(object, name) );
+					row.add(value);
+				}
+				output = object;
+				lines--;
+				if (lines <= 0) {
+					res.close();
+					break;
+				}
+			}
+		} else
+		if (page.startsWith("l")) {
+			int lines = MCast.toint(page.substring(1), 100);
+			for (Object object : type.getByQualification(qualification, null)) {
+				
+				ConsoleTable.Row row = out.addRow();
+				for (String name : fieldNames) {
+					Object value = toValue( type.get(object, name) );
+					row.add(value);
+				}
+				output = object;
+				if (out.size() > lines) out.removeFirstRow();
+			}
+		} else
+		if (page.startsWith("p")) {
+			int lines = 100;
+			int p = 0;
+			if (MString.isIndex(page, ',')) {
+				lines = MCast.toint(MString.beforeIndex(page, ','), lines);
+				p = MCast.toint(MString.afterIndex(page, ','), p);
+			} else {
+				p = MCast.toint(page, p);
+			}
+			System.out.println("Page size: " + lines + ", Page: " + p);
+			
+			DbCollection<?> res = type.getByQualification(qualification, null);
+			int cnt = 0;
+			Iterator<?> iter = res.iterator();
+			while (iter.hasNext()) {
+				iter.next();
+				cnt++;
+				if (cnt >= p*lines) break;
+			}
+			while (iter.hasNext()) {
+				Object object = iter.next();
+				ConsoleTable.Row row = out.addRow();
+				for (String name : fieldNames) {
+					Object value = toValue( type.get(object, name) );
+					row.add(value);
+				}
+				output = object;
+				lines--;
+				if (lines <= 0) {
+					res.close();
+					break;
+				}
+			}
+
 		}
 
 /*		
