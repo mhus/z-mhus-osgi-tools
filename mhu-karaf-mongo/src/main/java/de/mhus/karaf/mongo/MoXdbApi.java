@@ -425,13 +425,16 @@ public class MoXdbApi implements XdbApi {
 
 		@Override
 		public Class<?> getAttributeType(String name) {
-			return model.getAttribute(name).getType();
+			PojoAttribute<?> a = model.getAttribute(name);
+			if (a == null) return null;
+			return a.getType();
 		}
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public boolean isPrimaryKey(String name) {
-			return model.getAttribute(name).getAnnotation(Id.class) != null;
+			PojoAttribute<?> a = model.getAttribute(name);
+			if (a == null) return false;
+			return a.getAnnotation(Id.class) != null;
 		}
 
 		@Override

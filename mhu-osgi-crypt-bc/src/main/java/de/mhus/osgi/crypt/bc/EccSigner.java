@@ -240,7 +240,7 @@ import de.mhus.osgi.crypt.api.signer.SignerProvider;
 // http://bouncycastle.org/wiki/display/JA1/Elliptic+Curve+Key+Pair+Generation+and+Key+Factories
 
 @Component(properties="signer=ECC-1")
-public class EccSign extends MLog implements SignerProvider {
+public class EccSigner extends MLog implements SignerProvider {
 
 	@Activate
 	public void doActivate(ComponentContext ctx) {
