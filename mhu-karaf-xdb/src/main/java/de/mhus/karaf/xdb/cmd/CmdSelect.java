@@ -205,6 +205,7 @@ package de.mhus.karaf.xdb.cmd;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -213,6 +214,7 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.Parsing;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
@@ -225,6 +227,7 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "xdb", name = "select", description = "Select data from DB DataSource ant print the results")
+//@Parsing(XdbParser.class) see https://github.com/apache/karaf/tree/master/jdbc/src/main/java/org/apache/karaf/jdbc/command/parsing
 @Service
 public class CmdSelect implements Action {
 
@@ -237,7 +240,7 @@ public class CmdSelect implements Action {
 	@Option(name="-f", aliases="--full", description="Print the full value content also if it's very long",required=false)
 	boolean full = false;
 
-	@Option(name="-l", aliases="--oneline", description="Disable one line",required=false)
+	@Option(name="-l", aliases="--oneline", description="Disable multi line output in table cells",required=false)
 	boolean oneLine = false;
 	
 	@Option(name="-m", aliases="--max", description="Maximum amount of chars for a value (if not full)",required=false)
@@ -258,8 +261,11 @@ public class CmdSelect implements Action {
 	@Option(name="-v", aliases="--csv", description="CSV Style",required=false)
 	boolean csv = false;
 
-	@Option(name="-p", aliases="--page", description="Paging f<lines> (first n lines) or l<lines> (last n lines) or p[<page size>,]<page>",required=false)
+	@Option(name="-n", aliases="--lines", description="Number of lines f<n> (first n lines) or l<n> (last n lines) or p[<page size>,]<page>",required=false)
 	String page = null;
+	
+	@Option(name="-p", aliases="--parameter", description="Define a parameter key=value",required=false,multiValued=true)
+	String[] parameters = null;
 	
     @Reference
     private Session session;
@@ -313,8 +319,18 @@ public class CmdSelect implements Action {
 			out.getHeader().add(name);
 		}
 
+		HashMap<String, Object> queryParam = null;
+		if (parameters != null) {
+			queryParam = new HashMap<>();
+			for (String p : parameters) {
+				String k = MString.beforeIndex(p, '=');
+				String v = MString.afterIndex(p, '=');
+				queryParam.put(k, v);
+			}
+		}
+		
 		if (page == null) {
-			for (Object object : type.getByQualification(qualification, null)) {
+			for (Object object : type.getByQualification(qualification, queryParam)) {
 				
 				ConsoleTable.Row row = out.addRow();
 				for (String name : fieldNames) {
@@ -390,80 +406,6 @@ public class CmdSelect implements Action {
 
 		}
 
-/*		
-		DbManagerService service = AdbUtil.getService(serviceName);
-		Class<?> type = AdbUtil.getType(service, typeName);
-		
-		HashMap<String, Object> attrObj = null;
-		if (attributes != null) {
-			attrObj = new HashMap<>();
-			for (String item : attributes) {
-				String key = MString.beforeIndex(item, '=').trim();
-				String value = MString.afterIndex(item, '=').trim();
-				attrObj.put(key, value);
-			}
-		}
-		
-		
-		String regName = service.getManager().getRegistryName(type);
-		Table tableInfo = service.getManager().getTable(regName);
-
-		List<Field> pkeys = tableInfo.getPrimaryKeys();
-		final HashSet<String> pkNames = new HashSet<>();
-		for (Field f : pkeys)
-			pkNames.add(f.getName());
-		
-		String[] fields = null;
-		if (fieldsComma != null) fields = fieldsComma.split(",");
-		
-		LinkedList<Field> fieldList = new LinkedList<>();
-		for (Field f : tableInfo.getFields())
-			if (fields == null)
-				fieldList.add(f);
-			else {
-				String fn = f.getName();
-				for (String fn2 : fields) {
-					if (fn2.equals(fn)) {
-						fieldList.add(f);
-						break;
-					}
-				}
-			}
-		
-		Collections.sort(fieldList,new Comparator<Field>() {
-
-			@Override
-			public int compare(Field o1, Field o2) {
-				boolean pk1 = pkNames.contains(o1.getName());
-				boolean pk2 = pkNames.contains(o2.getName());
-				if (pk1 == pk2)
-					return o1.getName().compareTo(o2.getName());
-				if (pk1) return -1;
-				//if (pk2) return 1;
-				return 1;
-			}
-		});
-		
-		
-		ConsoleTable out = new ConsoleTable();
-		for (Field f : fieldList) {
-			String name = f.getName();
-			if (pkNames.contains(name)) name = name + "*";
-			out.getHeader().add(name);
-		}
-		DbCollection<?> res = service.getManager().getByQualification(type, qualification, attrObj);
-		
-		for (Object item : res) {
-			List<String> row = out.addRow();
-			for (Field f : fieldList) {
-				String value = toString(f.get(item));
-				if (!full && value.length() > max) value = MString.truncateNice(value, max);
-				row.add(value);
-			}
-			output = item;
-		}
-		res.close();
-*/		
 		out.print(System.out);
 		
 		if (outputParam != null)
