@@ -228,7 +228,7 @@ import de.mhus.lib.core.console.ConsoleTable;
 @Service
 public class CmdTop implements Action {
 
-    @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces", required = false, multiValued = false)
+    @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces extract", required = false, multiValued = false)
     boolean stackAlso;
 	
     @Option(name = "--orderid", description = "order by id", required = false, multiValued = false)
@@ -252,6 +252,9 @@ public class CmdTop implements Action {
     @Option(name = "-t", aliases = { "--time" }, description = "order by time", required = false, multiValued = false)
     boolean orderTime = false;
     
+    @Option(name = "-a", aliases = { "--absolut" }, description = "print absolut values", required = false, multiValued = false)
+    boolean absolut = false;
+    
     DecimalFormat twoDForm = new DecimalFormat("#.00");
     
 	@Override
@@ -264,7 +267,7 @@ public class CmdTop implements Action {
 			if (running)
 				threads.removeIf(i -> { return i.getThread().getState() != State.RUNNABLE; });
 			
-			if (orderId)
+			if (orderId) {
 				Collections.sort(threads, new Comparator<TopThreadInfo>() {
 
 					@Override
@@ -273,7 +276,7 @@ public class CmdTop implements Action {
 					}
 					
 				});
-			
+			} else
 			if (orderName) {
 				Collections.sort(threads, new Comparator<TopThreadInfo>() {
 
@@ -282,19 +285,8 @@ public class CmdTop implements Action {
 						return o1.getThread().getName().compareTo(o2.getThread().getName());
 					}
 				});
-			}
-			
-			if (orderCpuTime)
-				Collections.sort(threads, new Comparator<TopThreadInfo>() {
-
-					@Override
-					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
-						return Long.compare(o2.getCpuTime(), o1.getCpuTime());
-					}
-					
-				});
-			
-			if (orderTime)
+			} else
+			if (orderTime) {
 				Collections.sort(threads, new Comparator<TopThreadInfo>() {
 
 					@Override
@@ -303,7 +295,18 @@ public class CmdTop implements Action {
 					}
 					
 				});
-			
+			} else
+			if (orderCpuTime) {
+				Collections.sort(threads, new Comparator<TopThreadInfo>() {
+
+					@Override
+					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
+						return Long.compare(o2.getCpuTime(), o1.getCpuTime());
+					}
+					
+				});
+			}
+
 			ConsoleTable table = new ConsoleTable();
 			int height = console.getHeight();
 			int width = console.getWidth();
@@ -311,14 +314,25 @@ public class CmdTop implements Action {
 			table.setMaxColSize(90);
 			for (TopThreadInfo t : threads) {
 				if (table.size() + 3 >= height) break;
-				table.addRowValues(
-						t.getThread().getId(), 
-						t.getThread().getName(), 
-						t.getThread().getState(), 
-						twoDForm.format(t.getCpuPercentage()), 
-						twoDForm.format(t.getUserPercentage()), 
-						MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
-						stackAlso ? toString( t.getStacktrace(), width ) : "" );
+				if (absolut) {
+					table.addRowValues(
+							t.getThread().getId(), 
+							t.getThread().getName(), 
+							t.getThread().getState(), 
+							t.getCpuTime(), 
+							t.getUserTime(), 
+							t.getCpuTotal(),
+							stackAlso ? toString( t.getStacktrace(), width ) : "" );
+				} else {
+					table.addRowValues(
+							t.getThread().getId(), 
+							t.getThread().getName(), 
+							t.getThread().getState(), 
+							twoDForm.format(t.getCpuPercentage()), 
+							twoDForm.format(t.getUserPercentage()), 
+							MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
+							stackAlso ? toString( t.getStacktrace(), width ) : "" );
+				}
 			}
 
 			console.cleanup();
@@ -355,7 +369,7 @@ public class CmdTop implements Action {
 			) {
 				if (sb.length() > 0) sb.append("/");
 				sb.append(cName).append('.')
-						.append(trace[i].getMethodName()).append('(').append(trace[i].getLineNumber()).append(")");
+						.append(trace[i].getMethodName());
 			}
 		}
 		String str = sb.toString();
