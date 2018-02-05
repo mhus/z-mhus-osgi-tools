@@ -220,6 +220,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MSystem.TopThreadInfo;
+import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
 
@@ -247,6 +248,9 @@ public class CmdTop implements Action {
     
     @Option(name = "-o", aliases = { "--once" }, description = "Only once", required = false, multiValued = false)
     boolean once = false;
+    
+    @Option(name = "-t", aliases = { "--time" }, description = "order by time", required = false, multiValued = false)
+    boolean orderTime = false;
     
     DecimalFormat twoDForm = new DecimalFormat("#.00");
     
@@ -290,10 +294,21 @@ public class CmdTop implements Action {
 					
 				});
 			
+			if (orderTime)
+				Collections.sort(threads, new Comparator<TopThreadInfo>() {
+
+					@Override
+					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
+						return Long.compare(o2.getCpuTotal(), o1.getCpuTotal());
+					}
+					
+				});
+			
 			ConsoleTable table = new ConsoleTable();
 			int height = console.getHeight();
 			int width = console.getWidth();
-			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Stacktrace");
+			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");
+			table.setMaxColSize(90);
 			for (TopThreadInfo t : threads) {
 				if (table.size() + 3 >= height) break;
 				table.addRowValues(
@@ -302,6 +317,7 @@ public class CmdTop implements Action {
 						t.getThread().getState(), 
 						twoDForm.format(t.getCpuPercentage()), 
 						twoDForm.format(t.getUserPercentage()), 
+						MTimeInterval.getIntervalAsStringSec(t.getCpuTotal()),
 						stackAlso ? toString( t.getStacktrace(), width ) : "" );
 			}
 
@@ -320,9 +336,26 @@ public class CmdTop implements Action {
 		if (trace == null)
 			return sb.toString();
 
-		for (int i = 0; i < trace.length; i++)
-			sb.append(trace[i].getClassName()).append('.')
-					.append(trace[i].getMethodName()).append('(').append(trace[i].getLineNumber()).append(")/");
+		for (int i = 0; i < trace.length; i++) {
+			String cName = trace[i].getClassName();
+			if (
+				!cName.startsWith("sun.")
+				&&
+				trace[i].getLineNumber() >= 0
+				&&
+				!cName.startsWith("java.util.")
+				&&
+				!cName.startsWith("com.google.common.")
+				&&
+				!cName.startsWith("org.apache.common.")
+				&&
+				!cName.startsWith("java.lang.")
+			) {
+				if (sb.length() > 0) sb.append("/");
+				sb.append(cName).append('.')
+						.append(trace[i].getMethodName()).append('(').append(trace[i].getLineNumber()).append(")");
+			}
+		}
 		String str = sb.toString();
 		width = Math.max(width - 150, 50);
 		if (str.length() > width) str = str.substring(0, width);
