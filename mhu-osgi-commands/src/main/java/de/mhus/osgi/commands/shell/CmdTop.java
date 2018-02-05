@@ -345,6 +345,8 @@ public class CmdTop implements Action {
 				&&
 				!cName.startsWith("java.util.")
 				&&
+				!cName.startsWith("java.net.")
+				&&
 				!cName.startsWith("com.google.common.")
 				&&
 				!cName.startsWith("org.apache.common.")
