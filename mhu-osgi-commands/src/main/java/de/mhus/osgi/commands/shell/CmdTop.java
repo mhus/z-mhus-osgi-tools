@@ -204,6 +204,7 @@
 package de.mhus.osgi.commands.shell;
 
 import java.lang.Thread.State;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -216,107 +217,116 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.MSystem.TopThreadInfo;
+import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
 
-@Command(scope = "java", name = "thread", description = "Print thread information")
+@Command(scope = "java", name = "top", description = "Print thread status information")
 @Service
-public class CmdThreads implements Action {
-
-	@Argument(index=0, name="thread", required=false, description="Thread Id", multiValued=false)
-    String threadId;
+public class CmdTop implements Action {
 
     @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces", required = false, multiValued = false)
     boolean stackAlso;
 	
-    @Option(name = "-i", aliases = { "--orderid" }, description = "order by id", required = false, multiValued = false)
+    @Option(name = "--orderid", description = "order by id", required = false, multiValued = false)
     boolean orderId;
     
     @Option(name = "-n", aliases = { "--ordername" }, description = "order by name", required = false, multiValued = false)
     boolean orderName;
     
-    @Option(name = "-g", aliases = { "--ordergroup" }, description = "order by group", required = false, multiValued = false)
-    boolean orderGroup;
+    @Option(name = "-c", aliases = { "--ordercputime" }, description = "order by cputime", required = false, multiValued = false)
+    boolean orderCpuTime = true;
     
     @Option(name = "-r", aliases = { "--running" }, description = "Running only", required = false, multiValued = false)
     boolean running;
     
+    @Option(name = "-i", aliases = { "--interval" }, description = "Interval", required = false, multiValued = false)
+    long sleep = 2000;
+    
+    @Option(name = "-o", aliases = { "--once" }, description = "Only once", required = false, multiValued = false)
+    boolean once = false;
+    
+    DecimalFormat twoDForm = new DecimalFormat("#.00");
+    
 	@Override
 	public Object execute() throws Exception {
 
-		Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
+		Console console = Console.create();
 		
-		List<Thread> threadList = new LinkedList<>(traces.keySet());
-		
-		if (running)
-			threadList.removeIf(i -> { return i.getState() != State.RUNNABLE; });
-		
-		if (orderId) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return Long.compare(o1.getId(), o2.getId());
-				}
-			});
-		}
-		
-		if (orderName) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return o1.getName().compareTo(o2.getName());
-				}
-			});
-		}
-		
-		if (orderGroup) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return o1.getThreadGroup().getName().compareTo(o2.getThreadGroup().getName());
-				}
-			});
-		}
-
-		ConsoleTable table = new ConsoleTable();
-		table.setHeaderValues("Id", "Name", "Group", "Prio","Alive","Daemon","Status");
-		
-		if (threadId == null) {
+		while (true) {
+			List<TopThreadInfo> threads = MSystem.threadTop(sleep);
+			if (running)
+				threads.removeIf(i -> { return i.getThread().getState() != State.RUNNABLE; });
 			
-			for (Thread thread : threadList) {
-				printThread(thread, table);
-				if (stackAlso) {
-					StackTraceElement[] stack = traces.get(thread);
-					printStack(stack, table);
-				}
+			if (orderId)
+				Collections.sort(threads, new Comparator<TopThreadInfo>() {
+
+					@Override
+					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
+						return Long.compare(o1.getThread().getId(), o2.getThread().getId());
+					}
+					
+				});
+			
+			if (orderName) {
+				Collections.sort(threads, new Comparator<TopThreadInfo>() {
+
+					@Override
+					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
+						return o1.getThread().getName().compareTo(o2.getThread().getName());
+					}
+				});
 			}
 			
-		} else {
+			if (orderCpuTime)
+				Collections.sort(threads, new Comparator<TopThreadInfo>() {
+
+					@Override
+					public int compare(TopThreadInfo o1, TopThreadInfo o2) {
+						return Long.compare(o2.getCpuTime(), o1.getCpuTime());
+					}
+					
+				});
 			
-			for (Thread thread : traces.keySet()) {
-				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
-					printThread(thread, table);
-	
-					StackTraceElement[] stack = traces.get(thread);
-					printStack(stack,table);
-				}
+			ConsoleTable table = new ConsoleTable();
+			int height = console.getHeight();
+			int width = console.getWidth();
+			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Stacktrace");
+			for (TopThreadInfo t : threads) {
+				if (table.size() + 3 >= height) break;
+				table.addRowValues(
+						t.getThread().getId(), 
+						t.getThread().getName(), 
+						t.getThread().getState(), 
+						twoDForm.format(t.getCpuPercentage()), 
+						twoDForm.format(t.getUserPercentage()), 
+						stackAlso ? toString( t.getStacktrace(), width ) : "" );
 			}
+
+			console.cleanup();
+			console.setCursor(0, 0);
+			table.print(System.out);
 			
+			if (once) break;
 		}
-		table.print(System.out);
+
 		return null;
 	}
 
-	private void printStack(StackTraceElement[] stack, ConsoleTable table) {
-		for (StackTraceElement line : stack)
-			table.addRowValues("","  at " + line,"","","","");
-	}
+	public static String toString(StackTraceElement[] trace, int width) {
+		StringBuffer sb = new StringBuffer();
+		if (trace == null)
+			return sb.toString();
 
-	private void printThread(Thread thread, ConsoleTable table) {
-		ThreadGroup g = thread.getThreadGroup();
-		table.addRowValues(thread.getId(), thread.getName(), g == null ? "" : g.getName(), thread.getPriority(), thread.isAlive(), thread.isDaemon(), thread.getState());
+		for (int i = 0; i < trace.length; i++)
+			sb.append(trace[i].getClassName()).append('.')
+					.append(trace[i].getMethodName()).append('(').append(trace[i].getLineNumber()).append(")/");
+		String str = sb.toString();
+		width = Math.max(width - 150, 50);
+		if (str.length() > width) str = str.substring(0, width);
+		return str;
 	}
 
 }

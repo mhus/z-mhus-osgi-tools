@@ -278,7 +278,6 @@
 		<feature>mhu-osgi-mailer</feature>
 		<feature>mhu-osgi-jms</feature>
 		<feature>mhu-osgi-vaadin</feature>
-		<feature>mhu-osgi-sop</feature>
 	</feature>
 	
 
