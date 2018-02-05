@@ -317,7 +317,7 @@ public class CmdTop implements Action {
 						t.getThread().getState(), 
 						twoDForm.format(t.getCpuPercentage()), 
 						twoDForm.format(t.getUserPercentage()), 
-						MTimeInterval.getIntervalAsStringSec(t.getCpuTotal()),
+						MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
 						stackAlso ? toString( t.getStacktrace(), width ) : "" );
 			}
 
