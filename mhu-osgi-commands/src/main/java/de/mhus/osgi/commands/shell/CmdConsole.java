@@ -203,199 +203,83 @@
  */
 package de.mhus.osgi.commands.shell;
 
-import java.lang.Thread.State;
-import java.lang.management.LockInfo;
-import java.lang.management.ManagementFactory;
-import java.lang.management.MonitorInfo;
-import java.lang.management.ThreadInfo;
-import java.lang.management.ThreadMXBean;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.Arrays;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
-import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.console.Console;
 
-@Command(scope = "java", name = "thread", description = "Print thread information")
+@Command(scope = "java", name = "console", description = "Manipulate and control the console")
 @Service
-public class CmdThreads implements Action {
+public class CmdConsole implements Action {
 
-	@Argument(index=0, name="thread", required=false, description="Thread Id", multiValued=false)
-    String threadId;
-
-	@Argument(index=1, name="action", required=false, description="suspend, resume, stop, destroy, interrupt, priority <int>", multiValued=false)
-    String action;
+	@Argument(index=0, name="cmd", required=false, description="info, create [<type>], size <cols/width> <rows/height>, reset, cleanup, color <fg> <bg>", multiValued=false)
+    String cmd;
 	
-	@Argument(index=2, name="arguments", required=false, description="arguments", multiValued=true)
+	@Argument(index=1, name="arguments", required=false, description="arguments", multiValued=true)
     String arguments[];
-	
-    @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces", required = false, multiValued = false)
-    boolean stackAlso;
-	
-    @Option(name = "-i", aliases = { "--orderid" }, description = "order by id", required = false, multiValued = false)
-    boolean orderId;
-    
-    @Option(name = "-n", aliases = { "--ordername" }, description = "order by name", required = false, multiValued = false)
-    boolean orderName;
-    
-    @Option(name = "-g", aliases = { "--ordergroup" }, description = "order by group", required = false, multiValued = false)
-    boolean orderGroup;
-    
-    @Option(name = "-r", aliases = { "--running" }, description = "Running only", required = false, multiValued = false)
-    boolean running;
-    
-	ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 
 	@Override
 	public Object execute() throws Exception {
 
-		Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
 		
-		List<Thread> threadList = new LinkedList<>(traces.keySet());
-		
-		if (running)
-			threadList.removeIf(i -> { return i.getState() != State.RUNNABLE; });
-		
-		if (orderId) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return Long.compare(o1.getId(), o2.getId());
-				}
-			});
-		}
-		
-		if (orderName) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return o1.getName().compareTo(o2.getName());
-				}
-			});
-		}
-		
-		if (orderGroup) {
-			Collections.sort(threadList, new Comparator<Thread>() {
-
-				@Override
-				public int compare(Thread o1, Thread o2) {
-					return o1.getThreadGroup().getName().compareTo(o2.getThreadGroup().getName());
-				}
-			});
-		}
-
-		ConsoleTable table = new ConsoleTable();
-		table.setHeaderValues("Id", "Name", "Group","Status", "Prio","Alive","Daemon");
-		
-		if (threadId == null) {
-			
-			for (Thread thread : threadList) {
-				printThread(thread, table);
-				if (stackAlso) {
-					StackTraceElement[] stack = traces.get(thread);
-					printStack(stack, table);
-				}
+		switch (cmd) {
+		case "info": {
+			System.out.println("Default Width :" + Console.DEFAULT_WIDTH);
+			System.out.println("Defualt Height: " + Console.DEFAULT_HEIGHT);
+			System.out.println("Current Type  : " + Console.getConsoleType() );
+			Console console = Console.get();
+			if (console != null) {
+				System.out.println();
+				System.out.println("Current:");
+				System.out.println("Type      : " + console.getClass().getCanonicalName());
+				System.out.println("CursorX   : " + console.getCursorX());
+				System.out.println("CursorY   : " + console.getCursorY());
+				System.out.println("Width     : " + console.getWidth());
+				System.out.println("Heigth    : " + console.getHeight());
+				System.out.println("Foreground: " + console.getForegroundColor());
+				System.out.println("Background: "+console.getBackgroundColor());
+				System.out.println("Support   : " + (console.isSupportBlink() ? "blink " : "") + (console.isSupportBold() ? "bold " : "") + (console.isSupportColor() ? "color " : "") + (console.isSupportCursor() ? "cursor " : "") + (console.isSupportSize() ? "size ": "") );
+				System.out.println("Attributes: " + (console.isBlink() ? "blink " : "") + (console.isBold() ? "bold " : "") );
 			}
-			
-		} else
-		if (action != null) {
-			for (Thread thread : traces.keySet()) {
-				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
-					switch (action) {
-					case "suspend": {
-						System.out.println("SUSPEND " + thread.getId() + " " + thread.getName());
-						thread.suspend();
-					} break;
-					case "resume": {
-						System.out.println("RESUME " + thread.getId() + " " + thread.getName());
-						thread.resume();
-					} break;
-					case "stop": {
-						System.out.println("STOP " + thread.getId() + " " + thread.getName());
-						thread.stop();
-					} break;
-					case "interrupt": {
-						System.out.println("INTERRUPT " + thread.getId() + " " + thread.getName());
-						thread.interrupt();
-					} break;
-					case "kill": {
-						String message = arguments[0];
-						Throwable exception = new Throwable(message);
-						if (arguments.length > 1) {
-							exception = (Throwable) Class.forName(arguments[1]).getConstructor(String.class).newInstance(message);
-						}
-						System.out.println("STOP " + thread.getId() + " " + thread.getName() + " by " + exception);
-						thread.stop(exception);
-					} break;
-					case "destroy": {
-						System.out.println("DESTROY " + thread.getId() + " " + thread.getName());
-						thread.destroy();
-					} break;
-					case "priority": {
-						System.out.println("PRIORITY " + thread.getId() + " " + thread.getName() + " = " + arguments[0]);
-						thread.setPriority(MCast.toint(arguments[0], thread.getPriority()));
-					} break;
-					}
-				}
+			System.out.println();
+			System.out.println("Supported types : " + Arrays.toString(Console.CONSOLE_TYPE.values()));
+			System.out.println("Supported colors: " + Arrays.toString(Console.COLOR.values()));
+		} break;
+		case "create": {
+			Console.resetConsole();
+			Console.setConsoleType(null);
+			if (arguments != null && arguments.length > 0) {
+				Console.setConsoleType(Console.CONSOLE_TYPE.valueOf(arguments[0].toUpperCase()));
 			}
-		} else {
-			for (Thread thread : traces.keySet()) {
-				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
-					printThread(thread, table);
-					StackTraceElement[] stack = traces.get(thread);
-					printStack(stack,table);
-					
-					ThreadInfo info = tmxb.getThreadInfo(thread.getId());
-					table.addRowValues("LockOwnerName","" + info.getLockOwnerName() ,"","","","");
-					table.addRowValues("LockOwnerId","" + info.getLockOwnerId() ,"","","","");
-					table.addRowValues("LockName","" + info.getLockName() ,"","","","");
-					table.addRowValues("BlockedCount","" + info.getBlockedCount() ,"","","","");
-					table.addRowValues("BlockedTime","" + info.getBlockedTime() ,"","","","");
-					table.addRowValues("WaitedCount","" + info.getWaitedCount() ,"","","","");
-					table.addRowValues("WaitedTime","" + info.getWaitedTime() ,"","","","");
-					table.addRowValues("LockInfo","" + info.getLockInfo() ,"","","","");
-					for (MonitorInfo lock : info.getLockedMonitors()) {
-						table.addRowValues("Monitor","" + lock.getClassName() ,"" + lock.getIdentityHashCode(),"" + lock.getLockedStackDepth(),"","");
-						table.addRowValues("","  at " + lock.getLockedStackFrame(),"","","","");
-					}
-					for (LockInfo lock : info.getLockedSynchronizers()) {
-						table.addRowValues("Synchronizers","" + lock.getClassName(), "" + lock.getIdentityHashCode(), "", "", "");
-					}
-				}
-			}
-			
+			System.out.println( Console.create() );
+		} break;
+		case "size": {
+			Console.DEFAULT_WIDTH = MCast.toint(arguments[0], Console.DEFAULT_WIDTH);
+			Console.DEFAULT_HEIGHT = MCast.toint(arguments[1], Console.DEFAULT_HEIGHT);
+			System.out.println(Console.DEFAULT_WIDTH + "x" + Console.DEFAULT_HEIGHT );
+		} break;
+		case "reset": {
+			Console console = Console.create();
+			console.resetTerminal();
+		} break;
+		case "cleanup": {
+			Console console = Console.create();
+			console.cleanup();
+		} break;
+		case "color": {
+			Console console = Console.create();
+			console.setColor(Console.COLOR.valueOf(arguments[0].toUpperCase()), Console.COLOR.valueOf(arguments[1].toUpperCase()));
+			System.out.println(console.getForegroundColor() + " " + console.getBackgroundColor());
+		} break;
 		}
-		table.print(System.out);
+		
+		
 		return null;
-	}
-
-	private void printStack(StackTraceElement[] stack, ConsoleTable table) {
-		for (StackTraceElement line : stack)
-			table.addRowValues("","  at " + line,"","","","");
-	}
-
-	private void printThread(Thread thread, ConsoleTable table) {
-		ThreadGroup g = thread.getThreadGroup();
-
-		table.addRowValues(
-				thread.getId(), 
-				thread.getName(), 
-				g == null ? "" : g.getName(), 
-				thread.getState(),
-				thread.getPriority(), 
-				thread.isAlive(), 
-				thread.isDaemon()
-				);
 	}
 
 }
