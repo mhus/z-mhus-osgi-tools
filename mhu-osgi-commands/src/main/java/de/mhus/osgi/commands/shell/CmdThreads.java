@@ -204,6 +204,11 @@
 package de.mhus.osgi.commands.shell;
 
 import java.lang.Thread.State;
+import java.lang.management.LockInfo;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MonitorInfo;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -216,6 +221,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.console.ConsoleTable;
 
 @Command(scope = "java", name = "thread", description = "Print thread information")
@@ -225,6 +231,12 @@ public class CmdThreads implements Action {
 	@Argument(index=0, name="thread", required=false, description="Thread Id", multiValued=false)
     String threadId;
 
+	@Argument(index=1, name="action", required=false, description="suspend, resume, stop, destroy, interrupt, priority <int>", multiValued=false)
+    String action;
+	
+	@Argument(index=2, name="action", required=false, description="arguments", multiValued=true)
+    String arguments[];
+	
     @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces", required = false, multiValued = false)
     boolean stackAlso;
 	
@@ -240,6 +252,8 @@ public class CmdThreads implements Action {
     @Option(name = "-r", aliases = { "--running" }, description = "Running only", required = false, multiValued = false)
     boolean running;
     
+	ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
+
 	@Override
 	public Object execute() throws Exception {
 
@@ -281,7 +295,7 @@ public class CmdThreads implements Action {
 		}
 
 		ConsoleTable table = new ConsoleTable();
-		table.setHeaderValues("Id", "Name", "Group", "Prio","Alive","Daemon","Status");
+		table.setHeaderValues("Id", "Name", "Group","Status", "Prio","Alive","Daemon");
 		
 		if (threadId == null) {
 			
@@ -293,14 +307,70 @@ public class CmdThreads implements Action {
 				}
 			}
 			
+		} else
+		if (action != null) {
+			for (Thread thread : traces.keySet()) {
+				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
+					switch (action) {
+					case "suspend": {
+						System.out.println("SUSPEND " + thread.getId() + " " + thread.getName());
+						thread.suspend();
+					} break;
+					case "resume": {
+						System.out.println("RESUME " + thread.getId() + " " + thread.getName());
+						thread.resume();
+					} break;
+					case "stop": {
+						System.out.println("STOP " + thread.getId() + " " + thread.getName());
+						thread.stop();
+					} break;
+					case "interrupt": {
+						System.out.println("INTERRUPT " + thread.getId() + " " + thread.getName());
+						thread.interrupt();
+					} break;
+					case "kill": {
+						String message = arguments[0];
+						Throwable exception = new Throwable(message);
+						if (arguments.length > 1) {
+							exception = (Throwable) Class.forName(arguments[1]).getConstructor(String.class).newInstance(message);
+						}
+						System.out.println("STOP " + thread.getId() + " " + thread.getName() + " by " + exception);
+						thread.stop(exception);
+					} break;
+					case "destroy": {
+						System.out.println("DESTROY " + thread.getId() + " " + thread.getName());
+						thread.destroy();
+					} break;
+					case "priority": {
+						System.out.println("PRIORITY " + thread.getId() + " " + thread.getName() + " = " + arguments[0]);
+						thread.setPriority(MCast.toint(arguments[0], thread.getPriority()));
+					} break;
+					}
+				}
+			}
 		} else {
-			
 			for (Thread thread : traces.keySet()) {
 				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
 					printThread(thread, table);
-	
 					StackTraceElement[] stack = traces.get(thread);
 					printStack(stack,table);
+					
+					ThreadInfo info = tmxb.getThreadInfo(thread.getId());
+					table.addRowValues("LockOwnerName","" + info.getLockOwnerName() ,"","","","");
+					table.addRowValues("LockOwnerId","" + info.getLockOwnerId() ,"","","","");
+					table.addRowValues("LockName","" + info.getLockName() ,"","","","");
+					table.addRowValues("BlockedCount","" + info.getBlockedCount() ,"","","","");
+					table.addRowValues("BlockedTime","" + info.getBlockedTime() ,"","","","");
+					table.addRowValues("WaitedCount","" + info.getWaitedCount() ,"","","","");
+					table.addRowValues("WaitedTime","" + info.getWaitedTime() ,"","","","");
+					table.addRowValues("LockInfo","" + info.getLockInfo() ,"","","","");
+					for (MonitorInfo lock : info.getLockedMonitors()) {
+						table.addRowValues("Monitor","" + lock.getClassName() ,"" + lock.getIdentityHashCode(),"" + lock.getLockedStackDepth(),"","");
+						table.addRowValues("","  at " + lock.getLockedStackFrame(),"","","","");
+					}
+					for (LockInfo lock : info.getLockedSynchronizers()) {
+						table.addRowValues("Synchronizers","" + lock.getClassName(), "" + lock.getIdentityHashCode(), "", "", "");
+					}
 				}
 			}
 			
@@ -316,7 +386,16 @@ public class CmdThreads implements Action {
 
 	private void printThread(Thread thread, ConsoleTable table) {
 		ThreadGroup g = thread.getThreadGroup();
-		table.addRowValues(thread.getId(), thread.getName(), g == null ? "" : g.getName(), thread.getPriority(), thread.isAlive(), thread.isDaemon(), thread.getState());
+
+		table.addRowValues(
+				thread.getId(), 
+				thread.getName(), 
+				g == null ? "" : g.getName(), 
+				thread.getState(),
+				thread.getPriority(), 
+				thread.isAlive(), 
+				thread.isDaemon()
+				);
 	}
 
 }
