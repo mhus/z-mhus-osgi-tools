@@ -311,7 +311,7 @@ public class CmdTop implements Action {
 			int height = console.getHeight();
 			int width = console.getWidth();
 			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");
-			table.setMaxColSize(90);
+			table.setMaxColSize(Math.max( (width - 60) / 2, 30) );
 			for (TopThreadInfo t : threads) {
 				if (table.size() + 3 >= height) break;
 				if (absolut) {
@@ -322,7 +322,7 @@ public class CmdTop implements Action {
 							t.getCpuTime(), 
 							t.getUserTime(), 
 							t.getCpuTotal(),
-							stackAlso ? toString( t.getStacktrace(), width ) : "" );
+							stackAlso ? toString( t.getStacktrace() ) : "" );
 				} else {
 					table.addRowValues(
 							t.getThread().getId(), 
@@ -331,7 +331,7 @@ public class CmdTop implements Action {
 							twoDForm.format(t.getCpuPercentage()), 
 							twoDForm.format(t.getUserPercentage()), 
 							MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
-							stackAlso ? toString( t.getStacktrace(), width ) : "" );
+							stackAlso ? toString( t.getStacktrace() ) : "" );
 				}
 			}
 
@@ -345,7 +345,7 @@ public class CmdTop implements Action {
 		return null;
 	}
 
-	public static String toString(StackTraceElement[] trace, int width) {
+	public static String toString(StackTraceElement[] trace) {
 		StringBuffer sb = new StringBuffer();
 		if (trace == null)
 			return sb.toString();
@@ -373,8 +373,6 @@ public class CmdTop implements Action {
 			}
 		}
 		String str = sb.toString();
-		width = Math.max(width - 150, 50);
-		if (str.length() > width) str = str.substring(0, width);
 		return str;
 	}
 
