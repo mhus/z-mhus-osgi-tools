@@ -228,10 +228,10 @@ public class CmdDelete implements Action {
 	String outputParam = null;
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdUse.api;
+	String apiName;
 
 	@Option(name="-s", description="Service Name",required=false)
-	String serviceName = CmdUse.service;
+	String serviceName;
 
     @Reference
     private Session session;
@@ -239,6 +239,9 @@ public class CmdDelete implements Action {
 	@Override
 	public Object execute() throws Exception {
 		
+		apiName = XdbUtil.getApiName(session, apiName);
+		serviceName = XdbUtil.getServiceName(session, serviceName);
+
 		Object output = null;
 		
 		XdbApi api = XdbUtil.getApi(apiName);

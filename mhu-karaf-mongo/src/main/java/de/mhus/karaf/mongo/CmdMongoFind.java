@@ -207,7 +207,9 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 import org.bson.Document;
 import org.bson.json.JsonWriterSettings;
 
@@ -218,6 +220,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import de.mhus.karaf.xdb.cmd.CmdUse;
+import de.mhus.karaf.xdb.cmd.XdbUtil;
 import de.mhus.lib.mongo.MoUtil;
 
 @Command(scope = "mongo", name = "find", description = "Execute mongo find query")
@@ -231,14 +234,19 @@ public class CmdMongoFind implements Action {
     String query;
 
 	@Option(name="-s", description="Service Name",required=false)
-    String dbName = CmdUse.service;
+    String dbName;
 	
 	@Option(name="-d", description="Datasource Name",required=false)
-	String dsName = CmdUse.datasource;
+	String dsName;
 
+    @Reference
+    private Session session;
 	
 	@Override
 	public Object execute() throws Exception {
+
+		dsName = XdbUtil.getDatasourceName(session, dsName);
+		dbName = XdbUtil.getServiceName(session, dbName);
 
 		MongoDataSource ds = MongoUtil.getDatasource(dsName);
 		MongoClient con = ds.getConnection();

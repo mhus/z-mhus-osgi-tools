@@ -206,7 +206,9 @@ package de.mhus.karaf.xdb.cmd;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbService;
@@ -217,11 +219,16 @@ import de.mhus.lib.core.console.ConsoleTable;
 public class CmdList implements Action {
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdUse.api;
+	String apiName;
+
+    @Reference
+    private Session session;
 
 	@Override
 	public Object execute() throws Exception {
 		
+		apiName = XdbUtil.getApiName(session, apiName);
+
 		XdbApi api = XdbUtil.getApi(apiName);
 
 		ConsoleTable table = new ConsoleTable();

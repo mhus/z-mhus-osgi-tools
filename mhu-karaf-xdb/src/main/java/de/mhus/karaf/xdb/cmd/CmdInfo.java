@@ -210,7 +210,9 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
@@ -224,14 +226,20 @@ public class CmdInfo implements Action {
     String typeName;
 
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdUse.api;
+	String apiName;
 
 	@Option(name="-s", description="Service Name",required=false)
-	String serviceName = CmdUse.service;
+	String serviceName;
+
+    @Reference
+    private Session session;
 
 	@Override
 	public Object execute() throws Exception {
 		
+		apiName = XdbUtil.getApiName(session, apiName);
+		serviceName = XdbUtil.getServiceName(session, serviceName);
+
 		XdbApi api = XdbUtil.getApi(apiName);
 		XdbType<?> type = api.getType(serviceName, typeName);
 		
