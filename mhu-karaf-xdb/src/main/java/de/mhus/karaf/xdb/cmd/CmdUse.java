@@ -288,9 +288,7 @@ public class CmdUse implements Action {
 				serviceName = uri.getPathParts()[1];
 			if (uri.getPathParts().length > 2)
 				dsName = uri.getPathParts()[2];
-			
-			XdbUtil.setSessionUse(session, apiName, serviceName, dsName);
-			
+						
 		}
 		
 		if (global) {
@@ -309,7 +307,10 @@ public class CmdUse implements Action {
 				datasource = dsName; //check?
 			}
 		}
-		
+
+		if (apiName != null || serviceName != null || dsName != null)
+			XdbUtil.setSessionUse(session, XdbUtil.getApiName(session, apiName), XdbUtil.getServiceName(session, serviceName), XdbUtil.getDatasourceName(session, dsName));
+
 		System.out.println("Global : xdb:" + api + "/" + service + (datasource != null ? "/" + datasource : ""));
 
 		System.out.println("Session: xdb:" + XdbUtil.getApiName(session, null) + "/" + XdbUtil.getServiceName(session, null) + (XdbUtil.getDatasourceName(session, null) != null ? "/" + XdbUtil.getDatasourceName(session, null) : ""));
