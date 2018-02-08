@@ -209,7 +209,9 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.adb.AdbXdbApi;
 import de.mhus.karaf.xdb.model.XdbApi;
@@ -243,7 +245,7 @@ public class CmdUse implements Action {
 			}
 		} catch (Throwable t) {}
 	}
-	@Argument(index=0, name="cmd", required=false, description="Command: save, load, set <uri>,apis,services", multiValued=false)
+	@Argument(index=0, name="cmd", required=false, description="Command: save - save global settings, load - load global settings, set <uri>,apis,services", multiValued=false)
     String cmd = null;
 
 	@Argument(index=1, name="uri", required=false, description="Uri to the current used service, e.g. xdb:api/service[/datasource]", multiValued=false)
@@ -258,6 +260,12 @@ public class CmdUse implements Action {
 	@Option(name="-d", description="Datasource Name",required=false)
 	String dsName = null;
 	
+	@Option(name="-g", description="Set Global",required=false)
+	boolean global = false;
+	
+    @Reference
+    private Session session;
+
 	@Override
 	public Object execute() throws Exception {
 
@@ -280,32 +288,40 @@ public class CmdUse implements Action {
 				serviceName = uri.getPathParts()[1];
 			if (uri.getPathParts().length > 2)
 				dsName = uri.getPathParts()[2];
-		}
-				
-		if (apiName != null) {
-			XdbUtil.getApi(apiName);
-			api = apiName;
+			
+			XdbUtil.setSessionUse(session, apiName, serviceName, dsName);
+			
 		}
 		
-		if (serviceName != null) {
-			XdbApi a = XdbUtil.getApi(api);
-			a.getService(serviceName);
-			service = serviceName;
+		if (global) {
+			if (apiName != null) {
+				XdbUtil.getApi(apiName);
+				api = apiName;
+			}
+			
+			if (serviceName != null) {
+				XdbApi a = XdbUtil.getApi(api);
+				a.getService(serviceName);
+				service = serviceName;
+			}
+	
+			if (dsName != null) {
+				datasource = dsName; //check?
+			}
 		}
+		
+		System.out.println("Global : xdb:" + api + "/" + service + (datasource != null ? "/" + datasource : ""));
 
-		if (dsName != null) {
-			datasource = dsName; //check?
-		}
-		
-		System.out.println("Current Service: xdb:" + api + "/" + service + (datasource != null ? "/" + datasource : ""));
+		System.out.println("Session: xdb:" + XdbUtil.getApiName(session, null) + "/" + XdbUtil.getServiceName(session, null) + (XdbUtil.getDatasourceName(session, null) != null ? "/" + XdbUtil.getDatasourceName(session, null) : ""));
 
 		if ("apis".equals(cmd))
 			for (String n : XdbUtil.getApis())
 				System.out.println("Available Api: " + n);
 
 		if ("services".equals(cmd)) {
-			XdbApi a = XdbUtil.getApi(apiName);
-			System.out.println("Services in " + api + ":");
+			String an = XdbUtil.getApiName(session, null);
+			XdbApi a = XdbUtil.getApi(an);
+			System.out.println("Services in " + an + ":");
 			for (String n : a.getServiceNames())
 				System.out.println("  " + n);
 		}
@@ -314,7 +330,7 @@ public class CmdUse implements Action {
 			File f = getFile();
 			String content = "xdb:" + MUri.encode(api) + "/" + MUri.encode(service) + "/" + MUri.encode(datasource);
 			MFile.writeFile(f, content);
-			System.out.println("Written!");
+			System.out.println("Written global settings! " + content);
 		}
 			
 		return null;

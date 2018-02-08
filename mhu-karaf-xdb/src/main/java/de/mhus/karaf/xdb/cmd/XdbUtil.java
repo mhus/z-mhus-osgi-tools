@@ -212,11 +212,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.karaf.shell.api.console.Session;
+
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MCollection;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.karaf.MOsgi.Service;
@@ -325,6 +328,36 @@ public class XdbUtil {
 		if (p > 0) return value;
 		Object v = type.prepareManualValue(name, value);
 		return v;
+	}
+
+	public static String getApiName(Session session, String apiName) {
+		if (MString.isSet(apiName)) return apiName;
+		apiName = (String)session.get("xdb_use_api");
+		if (MString.isSet(apiName)) return apiName;
+		return CmdUse.api;
+	}
+
+	public static String getServiceName(Session session, String serviceName) {
+		if (MString.isSet(serviceName)) return serviceName;
+		serviceName = (String)session.get("xdb_use_service");
+		if (MString.isSet(serviceName)) return serviceName;
+		return CmdUse.service;
+	}
+	
+	public static String getDatasourceName(Session session, String dsName) {
+		if (MString.isSet(dsName)) return dsName;
+		dsName = (String)session.get("xdb_use_datasource");
+		if (MString.isSet(dsName)) return dsName;
+		return CmdUse.datasource;
+	}
+	
+	public static void setSessionUse(Session session, String apiName, String serviceName, String dsName) {
+		if (apiName != null)
+			session.put("xdb_use_api", apiName);
+		if (serviceName != null)
+			session.put("xdb_use_service", serviceName);
+		if (dsName != null)
+			session.put("xdb_use_datasource", dsName);
 	}
 
 }

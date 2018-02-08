@@ -253,10 +253,10 @@ public class CmdSelect implements Action {
 	String outputParam = null;
 	
 	@Option(name="-a", description="Api Name",required=false)
-	String apiName = CmdUse.api;
+	String apiName = null;
 
 	@Option(name="-s", description="Service Name",required=false)
-	String serviceName = CmdUse.service;
+	String serviceName = null;
 
 	@Option(name="-v", aliases="--csv", description="CSV Style",required=false)
 	boolean csv = false;
@@ -274,6 +274,9 @@ public class CmdSelect implements Action {
 	public Object execute() throws Exception {
 		
 		Object output = null;
+		
+		apiName = XdbUtil.getApiName(session, apiName);
+		serviceName = XdbUtil.getServiceName(session, serviceName);
 		
 		XdbApi api = XdbUtil.getApi(apiName);
 		XdbType<?> type = api.getType(serviceName, typeName);
