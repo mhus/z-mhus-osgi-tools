@@ -203,31 +203,83 @@
  */
 package de.mhus.osgi.crypt.api.currency;
 
-public interface CAddress {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class CAddress implements Externalizable {
+
+	protected String address;
+	protected String privKey;
+
+	public CAddress() {
+	}
+	
+	public CAddress(String addr) {
+		this.address = addr;
+	}
+	
+	public CAddress(String addr, String privKey) {
+		this.address = addr;
+		this.privKey = privKey;
+	}
 
 	/**
 	 * Return private address or null if unknown.
 	 * 
 	 * @return
 	 */
-	String getPrivate();
+	public final String getPrivate() {
+		return privKey;
+	}
 
 	/**
 	 * Return the public address in the format it is used in the wallets (e.g. compressed).
 	 * 
 	 * @return
 	 */
-	String getAddress();
+	public final String getAddress() {
+		return address;
+	}
 
 	/**
 	 * Remove all private informations inside of the object. You can call the 
 	 * method multiple times without error even if the address is already secure.
 	 */
-	void doSecure();
+	public final void doSecure() {
+		privKey = null;
+	}
 	
 	/**
 	 * Return true if it's secure to give the object away to non secure areas.
 	 * @return
 	 */
-	boolean isSecure();
+	public final boolean isSecure() {
+		return privKey == null;
+	}
+	
+	@Override
+	public String toString() {
+		return address;
+	}
+	
+	@Override
+	public boolean equals(Object in) {
+		if (address == null || in == null || !(in instanceof CAddress)) return false;
+		return address.equals( ((CAddress)in).getAddress() ); // did not check currency type
+	}
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeObject(address);
+		out.writeObject(privKey);
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+		address = (String) in.readObject();
+		privKey = (String) in.readObject();
+	}
+
 }
