@@ -319,7 +319,7 @@ public class CmdSelect implements Action {
 			out.setMaxColSize(max);
 		for (String name : fieldNames) {
 			if (type.isPrimaryKey(name)) name = name + "*";
-			out.getHeader().add(name);
+			out.addHeader(name);
 		}
 
 		HashMap<String, Object> queryParam = null;

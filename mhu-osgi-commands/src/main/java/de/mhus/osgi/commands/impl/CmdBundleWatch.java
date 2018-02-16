@@ -261,7 +261,7 @@ public class CmdBundleWatch implements Action  {
 	
 	private void print(PersistentWatch service) throws IOException {
 		ConsoleTable table = new ConsoleTable();
-		table.getHeader().add("Bundle");
+		table.addHeader("Bundle");
 		for (String line : service.list())
 			table.addRowValues(line);
 		

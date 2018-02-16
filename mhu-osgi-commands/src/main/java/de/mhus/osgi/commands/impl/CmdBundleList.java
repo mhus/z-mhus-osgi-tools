@@ -242,14 +242,14 @@ public class CmdBundleList implements Action  {
 	@Override
 	public Object execute() throws Exception {
 		ConsoleTable table = new ConsoleTable();
-		table.getHeader().add("id");
-		table.getHeader().add("Bundle");
-		table.getHeader().add("Version");
-		table.getHeader().add("State");
-		table.getHeader().add("Modified");
+		table.addHeader("id");
+		table.addHeader("Bundle");
+		table.addHeader("Version");
+		table.addHeader("State");
+		table.addHeader("Modified");
 		if (pLocation)
-			table.getHeader().add("Location");
-		table.getHeader().add("Valid");
+			table.addHeader("Location");
+		table.addHeader("Valid");
 
 		LinkedList<Object[]> list = new LinkedList<>();
 		for (Bundle b : context.getBundles()) {

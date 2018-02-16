@@ -311,7 +311,11 @@ public class CmdTop implements Action {
 			int height = console.getHeight();
 			int width = console.getWidth();
 			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");
-			table.setMaxColSize(Math.max( (width - 60) / 2, 30) );
+			table.getHeader().get(1).weight = 1;
+			if (stackAlso)
+				table.getHeader().get(6).weight = 1;
+			table.setMaxTableWidth(width);
+//			table.setMaxColSize(Math.max( (width - 60) / 2, 30) );
 			for (TopThreadInfo t : threads) {
 				if (table.size() + 3 >= height) break;
 				if (absolut) {
