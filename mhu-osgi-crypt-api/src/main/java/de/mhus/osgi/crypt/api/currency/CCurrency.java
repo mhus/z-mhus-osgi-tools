@@ -7,10 +7,24 @@ import java.io.ObjectOutput;
 
 public class CCurrency implements Externalizable {
 
-	public static final String BTC = "BTC";
-	public static final String EUR = "EUR";
-	public static final String USD = "USD";
-	public static final String LTC = "LTC";
+	enum CRYPTO_CURRENCY {
+		BTC,LTC;
+		
+		private final CCurrency currency = new CCurrency(this.name());
+		public CCurrency toCurrency() {
+			return currency;
+		}
+	};
+	
+	enum FIAT_CURRENCY {
+		USD, EUR;
+		
+		private final CCurrency currency = new CCurrency(this.name());
+		public CCurrency toCurrency() {
+			return currency;
+		}
+	};
+	
 	private String name;
 
 	public CCurrency(String in) {

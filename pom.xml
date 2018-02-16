@@ -236,7 +236,7 @@
     </developer>
   </developers>
     <properties>
-		<mhulib.version>3.3.2</mhulib.version>
+		<mhulib.version>3.3.3-SNAPSHOT</mhulib.version>
 		<ports.version>1.3.2</ports.version>
 		
         <scr.packages>*</scr.packages>

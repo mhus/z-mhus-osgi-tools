@@ -210,19 +210,22 @@ import java.io.ObjectOutput;
 
 public class CAddress implements Externalizable {
 
+	protected String currency;
 	protected String address;
 	protected String privKey;
 
 	public CAddress() {
 	}
 	
-	public CAddress(String addr) {
+	public CAddress(CCurrency currency, String addr) {
 		this.address = addr;
+		this.currency = currency.toString();
 	}
 	
-	public CAddress(String addr, String privKey) {
+	public CAddress(CCurrency currency, String addr, String privKey) {
 		this.address = addr;
 		this.privKey = privKey;
+		this.currency = currency.toString();
 	}
 
 	/**
@@ -261,7 +264,7 @@ public class CAddress implements Externalizable {
 	
 	@Override
 	public String toString() {
-		return address;
+		return currency + ":" + address;
 	}
 	
 	@Override

@@ -203,6 +203,7 @@
  */
 package de.mhus.osgi.commands.impl;
 
+import java.io.File;
 import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -215,6 +216,10 @@ import org.apache.karaf.shell.api.console.Session;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
+import de.mhus.lib.core.MFile;
+import de.mhus.lib.core.MString;
+import de.mhus.lib.core.MSystem;
+
 @Command(scope = "bundle", name = "upgrade", description = "Upgrade bundle version")
 @Service
 public class CmdBundleUpgrade implements Action {
@@ -225,20 +230,17 @@ public class CmdBundleUpgrade implements Action {
 	@Argument(index=0, name="bundle", required=true, description="bundle filter (regex)", multiValued=false)
     String bundleFilter;
 
-	@Argument(index=1, name="version", required=false, description="bundle version to install", multiValued=false)
+	@Argument(index=1, name="version", required=true, description="bundle version to install", multiValued=false)
     String bundleVersion;
 
-    @Option(name = "-y", aliases = { "--yes" }, description = "Say yes", required = false, multiValued = false)
-    boolean useYes;
-
-    @Option(name = "-n", aliases = { "--no" }, description = "Say no", required = false, multiValued = false)
-    boolean useNo;
-    
-    @Option(name = "-i", aliases = { "--install" }, description = "Install only", required = false, multiValued = false)
+    @Option(name = "-i", aliases = { "--install" }, description = "Install only, do not start", required = false, multiValued = false)
     boolean installOnly;
     
     @Option(name = "-u", aliases = { "--notuninstall" }, description = "Do not uninstall bundles", required = false, multiValued = false)
     boolean notuninstall;
+    
+    @Option(name = "-d", aliases = { "--delete" }, description = "Delete in local maven repository before install", required = false, multiValued = false)
+    boolean delete;
     
     @Reference
     private Session session;
@@ -252,6 +254,56 @@ public class CmdBundleUpgrade implements Action {
 				list.add(new Cont(b));
 			}
 
+		// stop
+		for (Cont c : list) {
+			session.execute("bundle:stop " + c.bundle.getSymbolicName());
+		}
+		
+		// uninstall
+		if (!notuninstall) {
+			for (Cont c : list) {
+				session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
+			}
+		}
+		
+		// delete
+		if (delete) {
+			// this is not save ....
+			File home = MSystem.getUserHome();
+			File repoHome = new File(home,".m2/repository");
+			if (!repoHome.exists() && repoHome.isDirectory()) {
+				System.out.println("Maven local repository not found: " + repoHome);
+			} else {
+				for (Cont c : list) {
+					String loc = c.bundle.getLocation();
+					if (loc != null && loc.startsWith("mvn:")) {
+						String[] parts = loc.substring(4).split("/");
+						if (parts.length >= 3) {
+							String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
+							File bundleHome = new File(loc,path);
+							if (bundleHome.exists()) {
+								System.out.println("Delete " + bundleHome);
+								MFile.deleteDir(bundleHome);
+							}
+						}
+					}
+				}
+				
+			}
+		}
+		
+		// install and start
+		for (Cont c : list) {
+			String url = c.getNewUrl();
+			if (url == null)
+				System.out.println("*** Can't install " + c.bundle.getSymbolicName());
+			else {
+				String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
+				System.out.println(cmd);
+				session.execute(cmd);
+			}
+		}
+		
 		
 		return null;
 	}
@@ -262,6 +314,15 @@ public class CmdBundleUpgrade implements Action {
 
 		public Cont(Bundle b) {
 			this.bundle = b;
+		}
+
+		public String getNewUrl() {
+			String loc = bundle.getLocation();
+			if (loc == null || !loc.startsWith("mvn:")) return null;
+			String[] parts = loc.split("/");
+			if (parts.length < 3) return null;
+			parts[2] = bundleVersion;
+			return MString.join(parts, '/');
 		}
 		
 	}

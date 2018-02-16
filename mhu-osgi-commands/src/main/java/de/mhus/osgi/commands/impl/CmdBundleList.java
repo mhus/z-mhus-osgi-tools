@@ -220,7 +220,7 @@ import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 
-@Command(scope = "bundle", name = "rawlist", description = "Return the raw list of bundle names")
+@Command(scope = "bundle", name = "ll", description = "Return the raw list of bundle names")
 @Service
 public class CmdBundleList implements Action  {
 
