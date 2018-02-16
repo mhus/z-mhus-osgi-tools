@@ -225,7 +225,7 @@
   <artifactId>mhu-karaf-mongo</artifactId>
   <parent>
     <groupId>de.mhus.osgi</groupId>
-    <version>1.3.2-SNAPSHOT</version>
+    <version>1.3.2</version>
     <artifactId>mhus-osgi-tools</artifactId>
   </parent>
   
