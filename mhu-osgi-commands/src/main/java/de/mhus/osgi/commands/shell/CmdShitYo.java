@@ -205,6 +205,8 @@ package de.mhus.osgi.commands.shell;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
+import java.util.LinkedList;
+import java.util.Random;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -218,7 +220,7 @@ import de.mhus.lib.core.MProperties;
 @Service
 public class CmdShitYo implements Action {
 
-	@Argument(index=0, name="cmd", required=true, description="memkill,stackkill,cpuload [seconds=10]", multiValued=false)
+	@Argument(index=0, name="cmd", required=true, description=" memkill\n stackkill\n stress [seconds=3] [threads=2] [iterations=0]", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -243,34 +245,40 @@ public class CmdShitYo implements Action {
 			} catch (Throwable t) {}
 			System.out.println("Depth: " + cnt);
 		} else
-		if (cmd.equals("cpuload")) {
+		if (cmd.equals("stress")) {
 			MProperties p = MProperties.explodeToMProperties(parameters);
-			int sec = p.getInt("seconds", 10);
+			int sec  = p.getInt("seconds", 3);
+			int iter = p.getInt("iterations", 0);
+			int thr  = p.getInt("threads", 2);
+			
 			sec = sec * 1000; // to milliseconds
 			
-			long a = 0;
-			double d = 0;
-			double l = 0;
-			
-			long threadId = Thread.currentThread().getId();
-			System.out.println("Thread  : " + threadId);
-			System.out.println("Time    : " + sec + " millisec");
-			// do something stupid
-			ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
-			long startCpuTime = tmxb.getThreadCpuTime(threadId);
-			long start = System.currentTimeMillis();
-			while (System.currentTimeMillis() - start <= sec) {
-				a = (a + 1) % 1000;
-				d = Math.sqrt(a);
-				d = d + 2;
-				l = Math.log(d);
-				a = Math.round(d + l);
+			int cnt = iter;
+			while (true) {
+				
+				LinkedList<CalculationThread> list = new LinkedList<>();
+				for (int i = 0; i < thr; i++)
+					list.add(new CalculationThread(sec));
+				
+				list.forEach(t -> {t.thread = new Thread(t);t.thread.start();});
+				
+				for (CalculationThread t : list) t.thread.join();
+				
+				long all = 0;
+				for (CalculationThread t : list) {
+					t.print();
+					all+= t.cpuTimePerSecond;
+				}
+				
+				System.out.println("= " + toUnit( all ));
+				
+				if (cnt > 0) {
+					cnt--;
+					if (cnt <= 0) break;
+				}
 			}
-			long deltaCpuTime = tmxb.getThreadCpuTime(threadId) - startCpuTime;
 			
-			System.out.println("Cpu Time: " + deltaCpuTime);
-			System.out.println("Cpu Time per second: " + (deltaCpuTime / (sec / 1000)));
-			
+						
 		}
 		
 		return null;
@@ -281,4 +289,51 @@ public class CmdShitYo implements Action {
 		doInfinity();
 	}
 
+	enum UNIT {Z,E,P,T,G,M,K}
+	
+	public static class CalculationThread implements Runnable
+    {
+        public Thread thread;
+		private final Random rng;
+		private long sec;
+		private long deltaCpuTime;
+		private long rounds = 0;
+		private long cpuTimePerSecond;
+
+        public CalculationThread(long sec) {
+            this.rng = new Random();
+            this.sec = sec;
+        }
+
+        public void print() {
+        	cpuTimePerSecond = deltaCpuTime / (sec / 1000);
+			System.out.print(toUnit(cpuTimePerSecond) + " ");
+		}
+
+		@Override
+        public void run() {
+        	rounds = 0;
+        	double store = 1;
+			long threadId = Thread.currentThread().getId();
+			ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
+			long startCpuTime = tmxb.getThreadCpuTime(threadId);
+			long start = System.currentTimeMillis();
+			while (System.currentTimeMillis() - start <= sec) {
+                double r = this.rng.nextFloat();
+                double v = Math.sin(Math.cos(Math.sin(Math.cos(r))));
+                store *= v;
+                rounds++;
+			}
+			deltaCpuTime = tmxb.getThreadCpuTime(threadId) - startCpuTime;
+        }
+    }
+
+	public static String toUnit(long p) {
+    	int unitId = UNIT.values().length-1;
+    	while ( p > 100000 && unitId > 0) {
+    		p = p / 1000;
+    		unitId--;
+    	}
+		return   "" + p + UNIT.values()[unitId];
+	}
 }

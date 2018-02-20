@@ -219,6 +219,7 @@ import org.osgi.framework.BundleContext;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.MThread;
 
 @Command(scope = "bundle", name = "upgrade", description = "Upgrade bundle version")
 @Service
@@ -248,39 +249,36 @@ public class CmdBundleUpgrade implements Action {
 	@Override
 	public Object execute() throws Exception {
 		
-		LinkedList<Cont> list = new LinkedList<>();
-		for (Bundle b : context.getBundles())
-			if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:")) {
-				list.add(new Cont(b));
-			}
-
-		// stop
-		for (Cont c : list) {
-			session.execute("bundle:stop " + c.bundle.getSymbolicName());
-		}
-		
-		// uninstall
-		if (!notuninstall) {
-			for (Cont c : list) {
-				session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
-			}
-		}
-		
-		// delete
+		File repoHome = null;
+		File home;
 		if (delete) {
 			// this is not save ....
-			File home = MSystem.getUserHome();
-			File repoHome = new File(home,".m2/repository");
+			home = MSystem.getUserHome();
+			repoHome = new File(home,".m2/repository");
 			if (!repoHome.exists() && repoHome.isDirectory()) {
 				System.out.println("Maven local repository not found: " + repoHome);
-			} else {
-				for (Cont c : list) {
+				return null;
+			}
+		}
+		
+		for (Bundle b : context.getBundles()) {
+			if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:")) {
+				System.out.println(">>> " + b.getLocation());
+				Cont c = new Cont(b);
+				// stop
+				session.execute("bundle:stop " + c.bundle.getSymbolicName());
+				// uninstall
+				session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
+				MThread.sleep(1000);
+
+				// delete
+				if (repoHome != null) {
 					String loc = c.bundle.getLocation();
 					if (loc != null && loc.startsWith("mvn:")) {
 						String[] parts = loc.substring(4).split("/");
 						if (parts.length >= 3) {
 							String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
-							File bundleHome = new File(loc,path);
+							File bundleHome = new File(repoHome,path);
 							if (bundleHome.exists()) {
 								System.out.println("Delete " + bundleHome);
 								MFile.deleteDir(bundleHome);
@@ -289,21 +287,37 @@ public class CmdBundleUpgrade implements Action {
 					}
 				}
 				
+				// install
+				String url = c.getNewUrl();
+				if (url == null)
+					System.out.println("*** Can't install " + c.bundle.getSymbolicName());
+				else {
+					String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
+					System.out.println(cmd);
+					try {
+						session.execute(cmd);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					MThread.sleep(1000);
+				}
+				
 			}
 		}
 		
-		// install and start
-		for (Cont c : list) {
-			String url = c.getNewUrl();
-			if (url == null)
-				System.out.println("*** Can't install " + c.bundle.getSymbolicName());
-			else {
-				String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
-				System.out.println(cmd);
-				session.execute(cmd);
+		if (!installOnly) {
+			for (Bundle b : context.getBundles()) {
+				if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:") && b.getState() != Bundle.ACTIVE) {
+					System.out.println("Start >>> " + b.getLocation());
+					String cmd = "bundle:start " + b.getBundleId();
+					try {
+						session.execute(cmd);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
-		
 		
 		return null;
 	}
