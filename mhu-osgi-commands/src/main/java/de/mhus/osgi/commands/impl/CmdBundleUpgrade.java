@@ -230,7 +230,7 @@ public class CmdBundleUpgrade implements Action {
 	@Argument(index=0, name="bundle", required=true, description="bundle filter (regex)", multiValued=false)
     String bundleFilter;
 
-	@Argument(index=1, name="version", required=true, description="bundle version to install", multiValued=false)
+	@Argument(index=1, name="version", required=false, description="bundle version to install or empty to reinstall", multiValued=false)
     String bundleVersion;
 
     @Option(name = "-i", aliases = { "--install" }, description = "Install only, do not start", required = false, multiValued = false)
@@ -250,7 +250,7 @@ public class CmdBundleUpgrade implements Action {
 		
 		LinkedList<Cont> list = new LinkedList<>();
 		for (Bundle b : context.getBundles())
-			if (b.getSymbolicName().matches(bundleFilter)) {
+			if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:")) {
 				list.add(new Cont(b));
 			}
 
@@ -321,7 +321,8 @@ public class CmdBundleUpgrade implements Action {
 			if (loc == null || !loc.startsWith("mvn:")) return null;
 			String[] parts = loc.split("/");
 			if (parts.length < 3) return null;
-			parts[2] = bundleVersion;
+			if (bundleVersion != null)
+				parts[2] = bundleVersion;
 			return MString.join(parts, '/');
 		}
 		

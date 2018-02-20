@@ -203,16 +203,22 @@
  */
 package de.mhus.osgi.commands.shell;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
+
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MProperties;
+
 @Command(scope = "mhus", name = "shityo", description = "Command to do some shit")
 @Service
 public class CmdShitYo implements Action {
 
-	@Argument(index=0, name="cmd", required=true, description="memkill,stackkill", multiValued=false)
+	@Argument(index=0, name="cmd", required=true, description="memkill,stackkill,cpuload [seconds=10]", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -236,6 +242,35 @@ public class CmdShitYo implements Action {
 				doInfinity();
 			} catch (Throwable t) {}
 			System.out.println("Depth: " + cnt);
+		} else
+		if (cmd.equals("cpuload")) {
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			int sec = p.getInt("seconds", 10);
+			sec = sec * 1000; // to milliseconds
+			
+			long a = 0;
+			double d = 0;
+			double l = 0;
+			
+			long threadId = Thread.currentThread().getId();
+			System.out.println("Thread  : " + threadId);
+			System.out.println("Time    : " + sec + " millisec");
+			// do something stupid
+			ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
+			long startCpuTime = tmxb.getThreadCpuTime(threadId);
+			long start = System.currentTimeMillis();
+			while (System.currentTimeMillis() - start <= sec) {
+				a = (a + 1) % 1000;
+				d = Math.sqrt(a);
+				d = d + 2;
+				l = Math.log(d);
+				a = Math.round(d + l);
+			}
+			long deltaCpuTime = tmxb.getThreadCpuTime(threadId) - startCpuTime;
+			
+			System.out.println("Cpu Time: " + deltaCpuTime);
+			System.out.println("Cpu Time per second: " + (deltaCpuTime / (sec / 1000)));
+			
 		}
 		
 		return null;
