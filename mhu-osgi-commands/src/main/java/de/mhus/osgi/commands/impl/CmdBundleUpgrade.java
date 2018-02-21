@@ -243,6 +243,12 @@ public class CmdBundleUpgrade implements Action {
     @Option(name = "-d", aliases = { "--delete" }, description = "Delete in local maven repository before install", required = false, multiValued = false)
     boolean delete;
     
+    @Option(name = "-s", aliases = { "--start" }, description = "Stop and Start only", required = false, multiValued = false)
+    boolean startOnly;
+    
+    @Option(name = "-r", aliases = { "--repo" }, description = "Change maven repository location", required = false, multiValued = false)
+    String mavenRepoLocation;
+    
     @Reference
     private Session session;
 
@@ -250,11 +256,14 @@ public class CmdBundleUpgrade implements Action {
 	public Object execute() throws Exception {
 		
 		File repoHome = null;
-		File home;
 		if (delete) {
 			// this is not save ....
-			home = MSystem.getUserHome();
-			repoHome = new File(home,".m2/repository");
+			if (mavenRepoLocation != null)
+				repoHome = new File(mavenRepoLocation);
+			else {
+				File home = MSystem.getUserHome();
+				repoHome = new File(home,".m2/repository");
+			}
 			if (!repoHome.exists() && repoHome.isDirectory()) {
 				System.out.println("Maven local repository not found: " + repoHome);
 				return null;
@@ -267,41 +276,43 @@ public class CmdBundleUpgrade implements Action {
 				Cont c = new Cont(b);
 				// stop
 				session.execute("bundle:stop " + c.bundle.getSymbolicName());
-				// uninstall
-				session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
-				MThread.sleep(1000);
-
-				// delete
-				if (repoHome != null) {
-					String loc = c.bundle.getLocation();
-					if (loc != null && loc.startsWith("mvn:")) {
-						String[] parts = loc.substring(4).split("/");
-						if (parts.length >= 3) {
-							String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
-							File bundleHome = new File(repoHome,path);
-							if (bundleHome.exists()) {
-								System.out.println("Delete " + bundleHome);
-								MFile.deleteDir(bundleHome);
+				if (!startOnly) {
+					// uninstall
+					session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
+					MThread.sleep(1000);
+	
+					// delete
+					if (repoHome != null) {
+						String loc = c.bundle.getLocation();
+						if (loc != null && loc.startsWith("mvn:")) {
+							String[] parts = loc.substring(4).split("/");
+							if (parts.length >= 3) {
+								String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
+								File bundleHome = new File(repoHome,path);
+								if (bundleHome.exists()) {
+									System.out.println("Delete " + bundleHome);
+									MFile.deleteDir(bundleHome);
+								}
 							}
 						}
 					}
-				}
-				
-				// install
-				String url = c.getNewUrl();
-				if (url == null)
-					System.out.println("*** Can't install " + c.bundle.getSymbolicName());
-				else {
-					String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
-					System.out.println(cmd);
-					try {
-						session.execute(cmd);
-					} catch (Exception e) {
-						e.printStackTrace();
+					
+					// install
+					String url = c.getNewUrl();
+					if (url == null)
+						System.out.println("*** Can't install " + c.bundle.getSymbolicName());
+					else {
+						String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
+						System.out.println(cmd);
+						try {
+							session.execute(cmd);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						MThread.sleep(1000);
 					}
-					MThread.sleep(1000);
+					
 				}
-				
 			}
 		}
 		

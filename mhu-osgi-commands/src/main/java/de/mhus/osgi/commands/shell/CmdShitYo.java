@@ -215,12 +215,13 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.MThread;
 
 @Command(scope = "mhus", name = "shityo", description = "Command to do some shit")
 @Service
 public class CmdShitYo implements Action {
 
-	@Argument(index=0, name="cmd", required=true, description=" memkill\n stackkill\n stress [seconds=3] [threads=2] [iterations=0]", multiValued=false)
+	@Argument(index=0, name="cmd", required=true, description=" memkill\n stackkill\n stress [seconds=1] [threads=2] [iterations=0] [sleep=2]", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -247,13 +248,14 @@ public class CmdShitYo implements Action {
 		} else
 		if (cmd.equals("stress")) {
 			MProperties p = MProperties.explodeToMProperties(parameters);
-			int sec  = p.getInt("seconds", 3);
+			int sec  = (int)(p.getDouble("seconds", 1d) * 1000d); // to milliseconds
 			int iter = p.getInt("iterations", 0);
 			int thr  = p.getInt("threads", 2);
+			int sleep = (int)(p.getDouble("sleep", 3d) * 1000d);
 			
-			sec = sec * 1000; // to milliseconds
-			
+			System.out.println("Used cpu nanoseconds per second ...");
 			int cnt = iter;
+			int cnt2 = 0;
 			while (true) {
 				
 				LinkedList<CalculationThread> list = new LinkedList<>();
@@ -264,6 +266,8 @@ public class CmdShitYo implements Action {
 				
 				for (CalculationThread t : list) t.thread.join();
 				
+				cnt2++;
+				System.out.print(cnt2 + ": ");
 				long all = 0;
 				for (CalculationThread t : list) {
 					t.print();
@@ -276,6 +280,9 @@ public class CmdShitYo implements Action {
 					cnt--;
 					if (cnt <= 0) break;
 				}
+				
+				Thread.sleep(sleep);
+				
 			}
 			
 						
@@ -333,6 +340,11 @@ public class CmdShitYo implements Action {
     	while ( p > 100000 && unitId > 0) {
     		p = p / 1000;
     		unitId--;
+    	}
+    	if (unitId > 0 && p > 1000) {
+    		unitId--;
+    		double d = p / 1000d;
+    		return   "" + d + UNIT.values()[unitId];
     	}
 		return   "" + p + UNIT.values()[unitId];
 	}
