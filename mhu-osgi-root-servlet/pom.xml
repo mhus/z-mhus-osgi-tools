@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Apache License
@@ -203,100 +204,95 @@
        limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>de.mhus.osgi</groupId>
-    <version>1.3.3-SNAPSHOT</version>
-    <artifactId>mhus-osgi-tools</artifactId>
-  </parent>
-  <artifactId>mhu-osgi-root-servlet</artifactId>
-    <packaging>bundle</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mhu-osgi-root-servlet</artifactId>
+	<packaging>bundle</packaging>
+	<description>Root servlet to delegate requests</description>
+	<parent>
+		<groupId>de.mhus.osgi</groupId>
+		<version>1.3.3-SNAPSHOT</version>
+		<artifactId>mhus-osgi-tools</artifactId>
+	</parent>
 
-    <name>mhu-osgi-root-servlet</name>
-    <description>Root servlet to delegate requests</description>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>${bundle.plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Bundle-Version>${project.version}</Bundle-Version>
-                        <Export-Package>de.mhus.osgi.rootservlet*;version=${project.version}</Export-Package>
-                        <Import-Package>*</Import-Package>
-                        <Service-Component>*</Service-Component>
-                    </instructions>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${bundle.plugin.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Version>${project.version}</Bundle-Version>
+						<Export-Package>de.mhus.osgi.rootservlet*;version=${project.version}</Export-Package>
+						<Import-Package>*</Import-Package>
+						<Service-Component>*</Service-Component>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-            <version>${osgi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
-            <version>${osgi.version}</version>
-        </dependency>
 		<dependency>
-            <groupId>biz.aQute</groupId>
-            <artifactId>bndlib</artifactId>
-            <version>${bndlib.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.karaf.shell</groupId>
-            <artifactId>org.apache.karaf.shell.console</artifactId>
-            <version>${karaf.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.apache.felix</groupId>
-        	<artifactId>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>${osgi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>${osgi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>biz.aQute</groupId>
+			<artifactId>bndlib</artifactId>
+			<version>${bndlib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.karaf.shell</groupId>
+			<artifactId>org.apache.karaf.shell.console</artifactId>
+			<version>${karaf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>
         		org.apache.felix.servicediagnostics.plugin
         	</artifactId>
-        	<version>0.1.3</version>
-        	<type>bundle</type>
-        	<exclusions>
-        		<exclusion>
-        			<artifactId>javax.servlet</artifactId>
-        			<groupId>org.apache.felix</groupId>
-        		</exclusion>
-        	</exclusions>
-        </dependency>
-        <dependency>
-        	<groupId>commons-dbcp</groupId>
-        	<artifactId>commons-dbcp</artifactId>
-        	<version>1.4</version>
-        </dependency>
-        <dependency>
-        	<groupId>commons-pool</groupId>
-        	<artifactId>commons-pool</artifactId>
-        	<version>1.6</version>
-        </dependency>
+			<version>0.1.3</version>
+			<type>bundle</type>
+			<exclusions>
+				<exclusion>
+					<artifactId>javax.servlet</artifactId>
+					<groupId>org.apache.felix</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.6</version>
+		</dependency>
 
-        <dependency>
-        	<groupId>org.apache.felix</groupId>
-        	<artifactId>org.apache.felix.webconsole</artifactId>
-        	<version>${felix.version}</version>
-        	<type>bundle</type>
-        </dependency>
-        
-        
-<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>${servlet.version}</version>
-</dependency>
-
-        
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.webconsole</artifactId>
+			<version>${felix.version}</version>
+			<type>bundle</type>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet.version}</version>
+		</dependency>
 	</dependencies>
 </project>
