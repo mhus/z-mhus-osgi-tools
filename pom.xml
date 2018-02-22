@@ -213,7 +213,7 @@
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Tools</name>
 	<description>A set of tools to improve OSGi frameworks and karaf</description>
-	<url>http://www.mhus.org</url>
+	<url>http://www.mhus.de</url>
 
 	<licenses>
 		<license>
@@ -330,18 +330,6 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.7</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
 			</plugin>
 
 			<plugin>

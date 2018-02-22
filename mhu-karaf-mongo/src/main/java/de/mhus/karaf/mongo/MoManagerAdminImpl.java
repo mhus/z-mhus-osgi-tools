@@ -242,6 +242,7 @@ public class MoManagerAdminImpl extends MLog implements MoManagerAdmin {
 				}
 			}
 		};
+		tracker.setBundleContext(ctx.getBundleContext());
 		tracker.start();
 	}
 

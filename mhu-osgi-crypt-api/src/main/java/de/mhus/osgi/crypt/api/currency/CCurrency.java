@@ -210,20 +210,22 @@ import java.io.ObjectOutput;
 
 public class CCurrency implements Externalizable {
 
-	enum CRYPTO_CURRENCY {
-		BTC,LTC;
+	public enum CRYPTO_CURRENCY {
+		UNKNOWN,BTC,LTC;
 		
 		private final CCurrency currency = new CCurrency(this.name());
 		public CCurrency toCurrency() {
+			if (this == UNKNOWN) return null;
 			return currency;
 		}
 	};
 	
-	enum FIAT_CURRENCY {
-		USD, EUR;
+	public enum FIAT_CURRENCY {
+		UNKNOWN,USD, EUR;
 		
 		private final CCurrency currency = new CCurrency(this.name());
 		public CCurrency toCurrency() {
+			if (this == UNKNOWN) return null;
 			return currency;
 		}
 	};
@@ -231,6 +233,7 @@ public class CCurrency implements Externalizable {
 	private String name;
 
 	public CCurrency(String in) {
+		if (in == null) throw new NullPointerException("Currency name can't be null");
 		name = in.trim().toUpperCase();
 	}
 	
@@ -255,4 +258,19 @@ public class CCurrency implements Externalizable {
 		name = in.readUTF();
 	}
 	
+	public CRYPTO_CURRENCY toCryptoCurrency() {
+		try {
+			return CRYPTO_CURRENCY.valueOf(name);
+		} catch (IllegalArgumentException e) {
+			return CRYPTO_CURRENCY.UNKNOWN;
+		}
+	}
+	
+	public FIAT_CURRENCY toFiatCurrency() {
+		try {
+			return FIAT_CURRENCY.valueOf(name);
+		} catch (IllegalArgumentException e) {
+			return FIAT_CURRENCY.UNKNOWN;
+		}
+	}
 }
