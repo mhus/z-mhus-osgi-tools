@@ -243,31 +243,37 @@
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.metatype</artifactId>
 			<version>${felix.metatype.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>biz.aQute</groupId>
 			<artifactId>bndlib</artifactId>
 			<version>${bndlib.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<version>4.3.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.compendium</artifactId>
 			<version>4.3.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.6</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
 			<version>${karaf.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -275,18 +281,21 @@
 			<artifactId>mhu-lib-annotations</artifactId>
 			<version>${mhulib.version}</version>
 			<type>bundle</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-core</artifactId>
 			<version>${mhulib.version}</version>
 			<type>bundle</type>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-karaf</artifactId>
 			<version>${mhulib.version}</version>
 			<type>bundle</type>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -294,17 +303,20 @@
 			<artifactId>mhu-karaf-xdb</artifactId>
 			<version>${project.version}</version>
 			<type>bundle</type>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 			<version>${mongo.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb.morphia</groupId>
 			<artifactId>morphia</artifactId>
 			<version>${mongo.morphia.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -312,7 +324,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson.version}</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>
