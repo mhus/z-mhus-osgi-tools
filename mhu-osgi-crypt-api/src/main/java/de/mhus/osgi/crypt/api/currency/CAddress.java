@@ -228,6 +228,11 @@ public class CAddress implements Externalizable {
 		this.currency = currency.toString();
 	}
 
+	public CAddress(String currency, String addr) {
+		this.address = addr;
+		this.currency = currency.toUpperCase();
+	}
+
 	/**
 	 * Return private address or null if unknown.
 	 * 
