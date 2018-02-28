@@ -220,11 +220,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "select", description = "Select data from DB DataSource ant print the results")
 //@Parsing(XdbParser.class) see https://github.com/apache/karaf/tree/master/jdbc/src/main/java/org/apache/karaf/jdbc/command/parsing

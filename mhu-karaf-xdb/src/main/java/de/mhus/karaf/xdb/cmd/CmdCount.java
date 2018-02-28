@@ -212,7 +212,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbType;
+import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "count", description = "Select data from DB DataSource ant print the count of found objects")
 @Service

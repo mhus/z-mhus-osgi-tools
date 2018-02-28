@@ -206,6 +206,8 @@ package de.mhus.karaf.xdb.model;
 import java.util.List;
 
 import de.mhus.lib.errors.NotFoundException;
+import de.mhus.lib.xdb.XdbService;
+import de.mhus.lib.xdb.XdbType;
 
 public interface XdbApi {
 

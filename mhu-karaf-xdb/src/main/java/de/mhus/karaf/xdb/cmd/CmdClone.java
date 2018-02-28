@@ -215,8 +215,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "clone", description = "Load a object out of the database and store it as a clone.")
 @Service

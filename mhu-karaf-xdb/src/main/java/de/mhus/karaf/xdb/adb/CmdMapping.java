@@ -212,7 +212,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.adb.AdbUtil;
+import de.mhus.lib.karaf.adb.AdbUtilKaraf;
 import de.mhus.lib.karaf.adb.DbManagerService;
 
 @Command(scope = "adb", name = "mapping", description = "Print the mapping table of a ADB DataSource")
@@ -225,7 +225,7 @@ public class CmdMapping implements Action {
 	@Override
 	public Object execute() throws Exception {
 		
-		DbManagerService service = AdbUtil.getService(serviceName);
+		DbManagerService service = AdbUtilKaraf.getService(serviceName);
 		
 		ConsoleTable table = new ConsoleTable();
 		table.setHeaderValues("Key","Mapping");

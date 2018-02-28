@@ -203,6 +203,7 @@
  */
 package de.mhus.karaf.mongo;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -213,17 +214,20 @@ import org.mongodb.morphia.annotations.Id;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbService;
-import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
+import de.mhus.lib.adb.DbComfortableObject;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.pojo.PojoAttribute;
 import de.mhus.lib.core.pojo.PojoModel;
+import de.mhus.lib.core.pojo.PojoModelFactory;
 import de.mhus.lib.core.util.Table;
 import de.mhus.lib.errors.MException;
+import de.mhus.lib.errors.MRuntimeException;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.errors.NotSupportedException;
+import de.mhus.lib.xdb.XdbService;
+import de.mhus.lib.xdb.XdbType;
 
 @Component(properties="xdb.type=mo")
 public class MoXdbApi implements XdbApi {
@@ -329,13 +333,41 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public void updateSchema(boolean cleanup) throws Exception {
+		public void updateSchema(boolean cleanup) throws MException {
 			// not supported, ignore
 		}
 
 		@Override
 		public void connect() throws Exception {
 			service.doOpen();
+		}
+
+		@Override
+		public <T extends Persistable> T inject(T object) {
+			if (object == null) return null;
+			if (object instanceof DbComfortableObject)
+				((DbComfortableObject)object).doInit(service.getManager(), null, false);
+			return object;
+		}
+
+		@Override
+		public <T> T getObject(Class<T> clazz, Object... keys) throws MException {
+			return service.getManager().getObject(clazz, keys);
+		}
+
+		@Override
+		public PojoModelFactory getPojoModelFactory() {
+			return new PojoModelFactory() {
+				
+				@Override
+				public PojoModel createPojoModel(Class<?> pojoClass) {
+					try {
+						return service.getManager().getModelFor(pojoClass);
+					} catch (NotFoundException e) {
+						throw new MRuntimeException(e);
+					}
+				}
+			};
 		}
 		
 	}
@@ -353,13 +385,21 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public DbCollection<T> getByQualification(String search, Map<String,Object> parameterValues) throws Exception {
-			return new Result<T>( MongoUtil.createQuery(service.getManager(), type, search, parameterValues).iterator() );
+		public DbCollection<T> getByQualification(String search, Map<String,Object> parameterValues) throws MException {
+			try {
+				return new Result<T>( MongoUtil.createQuery(service.getManager(), type, search, parameterValues).iterator() );
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 
 		@Override
-		public DbCollection<T> getByQualification(AQuery<T> query) throws Exception {
-			return new Result<T>( MongoUtil.createQuery(service.getManager(), query).iterator() );
+		public DbCollection<T> getByQualification(AQuery<T> query) throws MException {
+			try {
+				return new Result<T>( MongoUtil.createQuery(service.getManager(), query).iterator() );
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 
 		@Override
@@ -378,14 +418,22 @@ public class MoXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public void set(Object object, String name, Object v) throws Exception {
-			model.getAttribute(name).set(object, v);
+		public void set(Object object, String name, Object v) throws MException {
+			try {
+				model.getAttribute(name).set(object, v);
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public <F> F get(Object object, String name) throws Exception {
-			return (F) model.getAttribute(name).get(object);
+		public <F> F get(Object object, String name) throws MException {
+			try {
+				return (F) model.getAttribute(name).get(object);
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 
 		@Override
@@ -401,13 +449,21 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public Object getId(Object object) throws Exception {
-			return service.getManager().getId(object);
+		public Object getId(Object object) throws MException {
+			try {
+				return service.getManager().getId(object);
+			} catch (Exception e) {
+				throw new MException(e);
+			}
 		}
 
 		@Override
-		public long count(String search, Map<String,Object> parameterValues) throws Exception {
-			return service.getManager().getCount(MongoUtil.createQuery(service.getManager(), type, search, parameterValues));
+		public long count(String search, Map<String,Object> parameterValues) throws MException {
+			try {
+				return service.getManager().getCount(MongoUtil.createQuery(service.getManager(), type, search, parameterValues));
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 
 		@SuppressWarnings("unchecked")
@@ -417,7 +473,7 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public void deleteObject(Object object) throws Exception {
+		public void deleteObject(Object object) throws MException {
 			if (!type.isInstance(object))
 				throw new NotSupportedException("Object wrong type",object.getClass(),type);
 			service.getManager().delete(object);
@@ -448,12 +504,12 @@ public class MoXdbApi implements XdbApi {
 		}
 
 		@Override
-		public void saveObjectForce(Object object, boolean raw) throws Exception {
+		public void saveObjectForce(Object object, boolean raw) throws MException {
 			saveObject(object);
 		}
 
 		@Override
-		public void saveObject(Object object) throws Exception {
+		public void saveObject(Object object) throws MException {
 			if (!type.isInstance(object))
 				throw new NotSupportedException("Object wrong type",object.getClass(),type);
 			service.getManager().save(object);
@@ -461,7 +517,7 @@ public class MoXdbApi implements XdbApi {
 
 		@SuppressWarnings("unchecked")
 		@Override
-		public T getObject(String... keys) throws Exception {
+		public T getObject(String... keys) throws MException {
 			return (T) service.getManager().getObject(type, keys);
 		}
 		

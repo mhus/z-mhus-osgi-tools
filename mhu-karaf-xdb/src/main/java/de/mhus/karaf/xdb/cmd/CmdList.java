@@ -211,8 +211,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.karaf.xdb.model.XdbService;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.xdb.XdbService;
 
 @Command(scope = "xdb", name = "list", description = "List all DB Services")
 @Service

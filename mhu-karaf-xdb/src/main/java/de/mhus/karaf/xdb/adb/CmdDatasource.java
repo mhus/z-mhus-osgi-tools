@@ -208,7 +208,7 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.karaf.adb.AdbUtil;
+import de.mhus.lib.karaf.adb.AdbUtilKaraf;
 import de.mhus.lib.karaf.adb.DbManagerService;
 
 @Command(scope = "adb", name = "datasource", description = "Update ADB DataSource")
@@ -226,7 +226,7 @@ public class CmdDatasource implements Action {
 
 		int cnt = 0;
 		
-		for ( DbManagerService service : AdbUtil.getAdmin().getServices()) {
+		for ( DbManagerService service : AdbUtilKaraf.getAdmin().getServices()) {
 //			if (service.isConnected()) {
 				if (service.getClass().getCanonicalName().equals(serviceName)) {
 					if (sourceName == null)

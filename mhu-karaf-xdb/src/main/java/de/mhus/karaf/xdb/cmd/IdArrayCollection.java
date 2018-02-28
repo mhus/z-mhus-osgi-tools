@@ -205,11 +205,11 @@ package de.mhus.karaf.xdb.cmd;
 
 import java.util.Iterator;
 
-import de.mhus.karaf.xdb.model.XdbType;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.util.Table;
 import de.mhus.lib.errors.MException;
+import de.mhus.lib.xdb.XdbType;
 
 public class IdArrayCollection<T> implements DbCollection<T> {
 
