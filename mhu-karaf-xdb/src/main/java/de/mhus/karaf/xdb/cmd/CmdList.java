@@ -235,6 +235,10 @@ public class CmdList implements Action {
 		table.setHeaderValues("Service","Schema","DataSource","Managed Types");
 		for (String serviceName : api.getServiceNames()) {
 			XdbService service = api.getService(serviceName);
+			if (service == null) {
+				System.out.println("*** Service is null: " + serviceName);
+				continue;
+			}
 			if (service.isConnected()) {
 				
 				int c = 0;

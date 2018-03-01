@@ -206,6 +206,8 @@ package de.mhus.osgi.commands.shell;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
@@ -238,6 +240,9 @@ public class CmdCut implements Action {
     @Option(name = "-x", description = "Do not ignore empty lines", required = false, multiValued = false)
     boolean empty = false;
     
+    @Option(name = "-m", aliases = { "--mode" }, description = "How to handle the value, text, array -f , list -p", required = false, multiValued = false)
+    String mode;
+
 	private StringBuilder out;
 
 	@Override
@@ -250,21 +255,69 @@ public class CmdCut implements Action {
 	    while ((line = br.readLine()) != null) {
 	    	out.setLength(0);
 	    	
-	    	if (MString.isSet(regex) && MString.isSet(replace))
-	    		line = line.replaceAll(regex, replace);
-	    	
-	    	if (MString.isSet(delim))
-	    		processDelim(line);
-	    	else
-	    	if (MString.isSet(positions))
-	    		processPos(line);
-	    	else {
-	    		out.append(line);
-	    		if (!n) out.append("\n");
+	    	if (mode == null || mode.equals("text")) {
+		    	if (MString.isSet(regex) && MString.isSet(replace))
+		    		line = line.replaceAll(regex, replace);
+		    	
+		    	if (MString.isSet(delim))
+		    		processDelim(line);
+		    	else
+		    	if (MString.isSet(positions))
+		    		processPos(line);
+		    	else {
+		    		out.append(line);
+		    		if (!n) out.append("\n");
+		    	}
+		    	
+	    	} else
+	    	if (mode.equals("array")) {
+	    		line = line.trim();
+	    		if (line.startsWith("[") && line.endsWith("]")) {
+	    			line = line.substring(1, line.length()-1);
+	    			String[] parts = line.split(",");
+	    			HashMap<String, String> map = new HashMap<>();
+	    			for (int i = 0; i < parts.length; i++) {
+	    				int p = parts[i].indexOf('=');
+	    				if (p >= 0 ) {
+	    					String v = parts[i].substring(p+1);
+	    					if (trim) v = v.trim();
+	    					map.put(parts[i].substring(0, p).trim(), v);
+	    				}
+	    			}
+	    			if (fields != null) {
+	    				for (String f : fields.split(",")) {
+	    					if (out.length() > 0)
+	    						out.append(join);
+	    					if (map.containsKey(f))
+	    						out.append(map.get(f));
+	    				}
+	    			}
+		    		if (!n) out.append("\n");
+	    		}
+	    	} else
+	    	if (mode.equals("list")) {
+	    		line = line.trim();
+	    		if (line.startsWith("[") && line.endsWith("]")) {
+	    			line = line.substring(1, line.length()-1);
+	    			String[] parts = line.split(",");
+	    			for (int i = 1; i < parts.length; i++) parts[i] = parts[1].substring(1);
+	    			if (positions != null) {
+	    				for (String p : positions.split(",")) {
+	    					int pos = MCast.toint(p, -1);
+	    					if (pos >=0 && pos < parts.length) {
+		    					if (out.length() > 0)
+		    						out.append(join);
+		    					out.append(parts[pos]);
+	    					}
+	    				}
+	    			}
+		    		if (!n) out.append("\n");
+	    		}
 	    	}
 	    	
 	    	if (empty || out.length() > 0)
 	    		System.out.print(out);
+
 	    }
 //		return out.toString();
 	    return null;
