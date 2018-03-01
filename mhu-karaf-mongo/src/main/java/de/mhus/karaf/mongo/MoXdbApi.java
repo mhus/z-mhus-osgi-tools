@@ -369,6 +369,16 @@ public class MoXdbApi implements XdbApi {
 				}
 			};
 		}
+
+		@Override
+		public void delete(Persistable object) throws MException {
+			service.getManager().delete(object);
+		}
+
+		@Override
+		public void save(Persistable object) throws MException {
+			service.getManager().save(object);
+		}
 		
 	}
 
