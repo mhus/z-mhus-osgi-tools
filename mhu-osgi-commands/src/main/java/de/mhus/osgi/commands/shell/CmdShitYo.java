@@ -221,13 +221,20 @@ import de.mhus.lib.core.MThread;
 @Service
 public class CmdShitYo implements Action {
 
-	@Argument(index=0, name="cmd", required=true, description=" memkill\n stackkill\n stress [seconds=1] [threads=2] [iterations=0] [sleep=2]", multiValued=false)
+	@Argument(index=0, name="cmd", required=true, description=
+			  " memkill\n"
+			+ " stackkill\n"
+			+ " stress [seconds=1] [threads=2] [iterations=0] [sleep=2]\n"
+			+ " parallel [interval=1] [lifetime=10] [silent=true]"
+			, multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
 	private int cnt;
+
+	private int parallelCnt;
     
 	@Override
 	public Object execute() throws Exception {
@@ -286,6 +293,33 @@ public class CmdShitYo implements Action {
 			}
 			
 						
+		} else
+		if (cmd.equals("parallel")) {
+			MProperties p = MProperties.explodeToMProperties(parameters);
+			int lifetime  = p.getInt("lifetime", 10);
+			int interval  = (int)(p.getDouble("interval", 1d) * 1000d); // to milliseconds
+			boolean silent = p.getBoolean("silent", true);
+			
+			parallelCnt = 0;
+			int cnt = 0;
+			try {
+				while (true) {
+					new Thread(new ParallelThread(lifetime, silent)).start();
+					Thread.sleep(interval);
+					cnt++;
+					System.out.println(cnt + " Current Threads: " + parallelCnt);
+				}
+			} catch (InterruptedException e) {
+				System.out.println("Stopping ...");
+				MThread.sleep(1000); // will not interrupt
+				while (parallelCnt > 0) {
+					Thread.sleep(1000);
+					cnt++;
+					System.out.println(cnt + " Stopping ... Threads left: " + parallelCnt);
+				}
+				
+			}
+
 		}
 		
 		return null;
@@ -298,6 +332,34 @@ public class CmdShitYo implements Action {
 
 	enum UNIT {Z,E,P,T,G,M,K}
 	
+	public class ParallelThread implements Runnable {
+
+		private int lifetime;
+		private boolean silent;
+
+		public ParallelThread(int lifetime, boolean silent) {
+			this.lifetime = lifetime;
+			this.silent = silent;
+		}
+
+		@Override
+		public void run() {
+			if (!silent) System.out.println(">>> " + Thread.currentThread().getId());
+			parallelCnt++;
+			while(lifetime > 0) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				lifetime--;
+				if (!silent) System.out.println("--- " + Thread.currentThread().getId());
+			}
+			parallelCnt--;
+			if (!silent) System.out.println("<<< " + Thread.currentThread().getId());
+		}
+		
+	}
 	public static class CalculationThread implements Runnable
     {
         public Thread thread;
@@ -320,7 +382,8 @@ public class CmdShitYo implements Action {
 		@Override
         public void run() {
         	rounds = 0;
-        	double store = 1;
+        	@SuppressWarnings("unused")
+			double store = 1;
 			long threadId = Thread.currentThread().getId();
 			ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 			long startCpuTime = tmxb.getThreadCpuTime(threadId);

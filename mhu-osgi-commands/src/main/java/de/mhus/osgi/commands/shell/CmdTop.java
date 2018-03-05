@@ -254,7 +254,10 @@ public class CmdTop implements Action {
     
     @Option(name = "-a", aliases = { "--absolut" }, description = "print absolut values", required = false, multiValued = false)
     boolean absolut = false;
-    
+
+    @Option(name = "-x", aliases = { "--raw" }, description = "Simple output format, set lines to output", required = false, multiValued = false)
+    int raw = 0;
+
     DecimalFormat twoDForm = new DecimalFormat("#.00");
     
 	@Override
@@ -307,41 +310,72 @@ public class CmdTop implements Action {
 				});
 			}
 
-			ConsoleTable table = new ConsoleTable();
-			int height = console.getHeight();
-			int width = console.getWidth();
-			table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");
-			table.getHeader().get(1).weight = 1;
-			if (stackAlso)
-				table.getHeader().get(6).weight = 1;
-			table.setMaxTableWidth(width);
-//			table.setMaxColSize(Math.max( (width - 60) / 2, 30) );
-			for (TopThreadInfo t : threads) {
-				if (table.size() + 3 >= height) break;
-				if (absolut) {
-					table.addRowValues(
-							t.getThread().getId(), 
-							t.getThread().getName(), 
-							t.getThread().getState(), 
-							t.getCpuTime(), 
-							t.getUserTime(), 
-							t.getCpuTotal(),
-							stackAlso ? toString( t.getStacktrace() ) : "" );
-				} else {
-					table.addRowValues(
-							t.getThread().getId(), 
-							t.getThread().getName(), 
-							t.getThread().getState(), 
-							twoDForm.format(t.getCpuPercentage()), 
-							twoDForm.format(t.getUserPercentage()), 
-							MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
-							stackAlso ? toString( t.getStacktrace() ) : "" );
+			if (raw > 0) {
+				System.out.println("Id;Name;Status;Cpu;User;Time;Stacktrace");
+				int cnt = 0;
+				for (TopThreadInfo t : threads) {
+					if (absolut) {
+						System.out.println(
+							t.getThread().getId() + ";"+ 
+							t.getThread().getName() + ";"+ 
+							t.getThread().getState() + ";"+ 
+							t.getCpuTime() + ";"+ 
+							t.getUserTime() + ";"+ 
+							t.getCpuTotal() + ";" +
+							(stackAlso ? toString( t.getStacktrace() ) : "") 
+						);
+					} else {
+						System.out.println(
+							t.getThread().getId() + ";"+ 
+							t.getThread().getName() + ";"+ 
+							t.getThread().getState() + ";"+ 
+							twoDForm.format(t.getCpuPercentage()) + ";"+
+							twoDForm.format(t.getUserPercentage()) + ";"+ 
+							MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ) + ";"+
+							(stackAlso ? toString( t.getStacktrace() ) : "") 
+						);
+					}
+					cnt++;
+					if (cnt >= raw) break;
 				}
+				System.out.println();
+			} else {
+				ConsoleTable table = new ConsoleTable();
+				int height = console.getHeight();
+				int width = console.getWidth();
+				table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");
+				table.getHeader().get(1).weight = 1;
+				if (stackAlso)
+					table.getHeader().get(6).weight = 1;
+				table.setMaxTableWidth(width);
+	//			table.setMaxColSize(Math.max( (width - 60) / 2, 30) );
+				for (TopThreadInfo t : threads) {
+					if (table.size() + 3 >= height) break;
+					if (absolut) {
+						table.addRowValues(
+								t.getThread().getId(), 
+								t.getThread().getName(), 
+								t.getThread().getState(), 
+								t.getCpuTime(), 
+								t.getUserTime(), 
+								t.getCpuTotal(),
+								stackAlso ? toString( t.getStacktrace() ) : "" );
+					} else {
+						table.addRowValues(
+								t.getThread().getId(), 
+								t.getThread().getName(), 
+								t.getThread().getState(), 
+								twoDForm.format(t.getCpuPercentage()), 
+								twoDForm.format(t.getUserPercentage()), 
+								MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
+								stackAlso ? toString( t.getStacktrace() ) : "" );
+					}
+				}
+	
+				console.cleanup();
+				console.setCursor(0, 0);
+				table.print(System.out);
 			}
-
-			console.cleanup();
-			console.setCursor(0, 0);
-			table.print(System.out);
 			
 			if (once) break;
 		}
