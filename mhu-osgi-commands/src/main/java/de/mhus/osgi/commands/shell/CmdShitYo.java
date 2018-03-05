@@ -254,7 +254,7 @@ public class CmdShitYo implements Action {
 				}
 			} catch (OutOfMemoryError e) {
 				kill = "";
-				System.out.println("Buffer     : " + MCast.toByteUnit(len*2) + "B" );
+				System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters" );
 				System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
 				System.gc();
 			}
