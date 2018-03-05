@@ -241,9 +241,22 @@ public class CmdShitYo implements Action {
 
 		if (cmd.equals("memkill")) {
 			String kill = "killkill";
-			while (true) {
-				kill = kill + kill;
-				System.out.println(kill.length() + " " + Runtime.getRuntime().freeMemory() );
+			int len = kill.length();
+			long freeStart = Runtime.getRuntime().freeMemory();
+			long free = 0;
+			System.gc();
+			try {
+				while (true) {
+					kill = kill + kill;
+					len = kill.length();
+					free = Runtime.getRuntime().freeMemory();
+					System.out.println(len + " " + free );
+				}
+			} catch (OutOfMemoryError e) {
+				kill = "";
+				System.out.println("Buffer     : " + MCast.toByteUnit(len*2) + "B" );
+				System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
+				System.gc();
 			}
 		} else
 		if (cmd.equals("stackkill")) {
@@ -315,7 +328,7 @@ public class CmdShitYo implements Action {
 				autoThrAllLast = autoThrAll;
 				autoThrAll = all;
 				
-				System.out.println("= " + toUnit( all ));
+				System.out.println("= " + MCast.toUnit(all) );
 				
 				if (cnt > 0) {
 					cnt--;
@@ -364,8 +377,6 @@ public class CmdShitYo implements Action {
 		doInfinity();
 	}
 
-	enum UNIT {Z,E,P,T,G,M,K}
-	
 	public class ParallelThread implements Runnable {
 
 		private int lifetime;
@@ -410,7 +421,7 @@ public class CmdShitYo implements Action {
 
         public void print() {
         	cpuTimePerSecond = deltaCpuTime / (sec / 1000);
-			System.out.print(toUnit(cpuTimePerSecond) + " ");
+			System.out.print(MCast.toUnit(cpuTimePerSecond) + " ");
 		}
 
 		@Override
@@ -432,17 +443,4 @@ public class CmdShitYo implements Action {
         }
     }
 
-	public static String toUnit(long p) {
-    	int unitId = UNIT.values().length-1;
-    	while ( p > 100000 && unitId > 0) {
-    		p = p / 1000;
-    		unitId--;
-    	}
-    	if (unitId > 0 && p > 1000) {
-    		unitId--;
-    		double d = p / 1000d;
-    		return   "" + d + UNIT.values()[unitId];
-    	}
-		return   "" + p + UNIT.values()[unitId];
-	}
 }
