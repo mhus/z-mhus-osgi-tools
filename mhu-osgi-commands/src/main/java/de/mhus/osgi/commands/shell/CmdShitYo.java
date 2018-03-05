@@ -224,7 +224,7 @@ public class CmdShitYo implements Action {
 	@Argument(index=0, name="cmd", required=true, description=
 			  " memkill\n"
 			+ " stackkill\n"
-			+ " stress [seconds=1] [threads=2] [iterations=0] [sleep=2]\n"
+			+ " stress [seconds=1] [threads=auto] [iterations=0] [sleep=1] [tolerance=5]\n"
 			+ " parallel [interval=1] [lifetime=10] [silent=true]"
 			, multiValued=false)
     String cmd;
@@ -257,16 +257,47 @@ public class CmdShitYo implements Action {
 			MProperties p = MProperties.explodeToMProperties(parameters);
 			int sec  = (int)(p.getDouble("seconds", 1d) * 1000d); // to milliseconds
 			int iter = p.getInt("iterations", 0);
-			int thr  = p.getInt("threads", 2);
-			int sleep = (int)(p.getDouble("sleep", 3d) * 1000d);
+			int thr  = p.getInt("threads", -1);
+			int sleep = (int)(p.getDouble("sleep", 1d) * 1000d);
+			long tolerance = p.getInt("tolerance", 5);
+			boolean autoInfo = p.getBoolean("autoInfo", false);
 			
 			System.out.println("Used cpu nanoseconds per second ...");
 			int cnt = iter;
 			int cnt2 = 0;
+			int autoThr = 1;
+			long autoThrAll = 0;
+			long autoThrAllLast = 0;
+			boolean autoIgnoreNext = false;
 			while (true) {
 				
 				LinkedList<CalculationThread> list = new LinkedList<>();
-				for (int i = 0; i < thr; i++)
+				int thrx = thr;
+				if (thr == -1) {
+					if (autoInfo) {
+						long d = autoThrAll / 100;
+						System.out.println("CPU Time: " + autoThrAllLast + " -> " + autoThrAll + " = " + (d > 0 ? ( (autoThrAll-autoThrAllLast) / d ) : "0") +"%, Threads: " + autoThr);
+					}
+					// auto mode
+					if (autoIgnoreNext) {
+						// ignore
+						autoIgnoreNext = false;
+					}else
+					if (autoThrAllLast == 0 || autoThrAll > (autoThrAllLast * (100+tolerance) / 100) ) {
+						if (autoInfo)
+							System.out.println("Auto up");
+						autoThr++;
+					} else
+					if ((autoThrAll * (100+tolerance) / 100) < autoThrAllLast) {
+						if (autoInfo)
+							System.out.println("Auto down");
+						autoThr--;
+						if (autoThr < 1) autoThr = 1;
+						autoIgnoreNext = true;
+					}
+					thrx = autoThr;
+				}
+				for (int i = 0; i < thrx; i++)
 					list.add(new CalculationThread(sec));
 				
 				list.forEach(t -> {t.thread = new Thread(t);t.thread.start();});
@@ -274,12 +305,15 @@ public class CmdShitYo implements Action {
 				for (CalculationThread t : list) t.thread.join();
 				
 				cnt2++;
-				System.out.print(cnt2 + ": ");
+				System.out.print(cnt2 + ": [" + list.size() + "] " );
 				long all = 0;
 				for (CalculationThread t : list) {
 					t.print();
 					all+= t.cpuTimePerSecond;
 				}
+				// rotate last cpu time counters
+				autoThrAllLast = autoThrAll;
+				autoThrAll = all;
 				
 				System.out.println("= " + toUnit( all ));
 				
