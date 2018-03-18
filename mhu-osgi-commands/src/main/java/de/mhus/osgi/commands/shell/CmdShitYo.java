@@ -208,14 +208,18 @@ import java.lang.management.ThreadMXBean;
 import java.util.LinkedList;
 import java.util.Random;
 
+import javax.sql.DataSource;
+
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MThread;
+import de.mhus.lib.karaf.DataSourceUtil;
 
 @Command(scope = "mhus", name = "shityo", description = "Command to do some shit")
 @Service
@@ -367,6 +371,21 @@ public class CmdShitYo implements Action {
 				
 			}
 
+		} else
+		if (cmd.equals("datasource")) {
+			DataSource ds = new DataSourceUtil().getDataSource(parameters[0]);
+			if (ds == null) {
+				System.out.println("Data source not found");
+			} else {
+				System.out.println("Data source: " + ds);
+			}
+		} else
+		if (cmd.equals("datasources")) {
+			for (ServiceReference<DataSource> dsRef : new DataSourceUtil().getDataSources()) {
+				System.out.println(dsRef);
+				for (String key : dsRef.getPropertyKeys())
+					System.out.println(" " + key + "=" + dsRef.getProperty(key));
+			}
 		}
 		
 		return null;
