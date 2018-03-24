@@ -398,7 +398,7 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 		return instance.getLocale();
 	}
 
-	public StringBuilder getRequestURL() {
+	public StringBuffer getRequestURL() {
 		return instance.getRequestURL();
 	}
 
