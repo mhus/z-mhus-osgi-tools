@@ -228,11 +228,11 @@ public class JwsTarget extends Target {
 			wrongNs = url.substring(pos1+1,pos2);
 			String[] wrongParts = wrongNs.split("\\.");
 			String lastPart = wrongParts[wrongParts.length-1];
-			StringBuffer correctNs = null;
+			StringBuilder correctNs = null;
 			for (String p : wrongParts) {
 				if (!p.equals(lastPart)) {
 					if (correctNs == null)
-						correctNs = new StringBuffer();
+						correctNs = new StringBuilder();
 					else
 						correctNs.insert(0, '.');
 					correctNs.insert(0, p);

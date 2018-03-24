@@ -246,7 +246,7 @@ public class AxisLog2LogHandler extends BasicHandler {
 			
 			Message inMsg = msgContext.getRequestMessage();
 			Message outMsg = msgContext.getResponseMessage();
-			StringBuffer msg = new StringBuffer();
+			StringBuilder msg = new StringBuilder();
 			if (start != -1) {
 				msg.append("= " + Messages.getMessage("elapsed00", "" + (System.currentTimeMillis() - start))).append('\n');
 			}

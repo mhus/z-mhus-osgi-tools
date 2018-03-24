@@ -296,7 +296,7 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 
 	private String turnArround(String name) {
 		String[] parts = name.split("\\.");
-		StringBuffer out = new StringBuffer();
+		StringBuilder out = new StringBuilder();
 		for (String part : parts) {
 			if (out.length() != 0)
 				out.insert(0, ".");

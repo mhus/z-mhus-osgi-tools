@@ -384,7 +384,7 @@ public class CmdTop implements Action {
 	}
 
 	public static String toString(StackTraceElement[] trace) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		if (trace == null)
 			return sb.toString();
 

@@ -228,7 +228,7 @@ public class CmdVaadinResourceList implements Action {
 		table.setHeaderValues("Bundle","Resources");
 		for (String s : provider.getResourceBundles()) {
 			
-			StringBuffer res = new StringBuffer();
+			StringBuilder res = new StringBuilder();
 			boolean first = true;
 			for (String p : provider.getResourcePathes(s)) {
 				if (!first) res.append(',');

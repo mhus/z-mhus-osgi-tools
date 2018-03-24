@@ -247,12 +247,12 @@ public class MoQueryBuilder extends MObject {
 	}
 
 	public MoQueryBuilder(AQuery<?> query) throws IOException {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		createQuery(query, s);
 		json = (ObjectNode) MJson.load(s.toString());
 	}
 
-	private void createQuery(APrint p, StringBuffer s) {
+	private void createQuery(APrint p, StringBuilder s) {
 		if (p instanceof AQuery) {
 			//		buffer.append('(');
 			boolean first = true;
@@ -411,7 +411,7 @@ public class MoQueryBuilder extends MObject {
 //			createQuery( ((ASubQuery)p).getLeft(), query);
 //			buffer.append(" IN (");
 //			
-//			StringBuffer buffer2 = new StringBuffer().append("DISTINCT ");
+//			StringBuilder buffer2 = new StringBuilder().append("DISTINCT ");
 //			
 //			AQuery<?> subQuery = ((ASubQuery)p).getSubQuery();
 //			subQuery.setContext(new SqlDialectCreateContext(manager, buffer2 ) );
