@@ -204,15 +204,12 @@
 package de.mhus.osgi.commands.shell;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;

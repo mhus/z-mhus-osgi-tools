@@ -204,7 +204,6 @@
 package de.mhus.osgi.commands.impl;
 
 import java.io.File;
-import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;

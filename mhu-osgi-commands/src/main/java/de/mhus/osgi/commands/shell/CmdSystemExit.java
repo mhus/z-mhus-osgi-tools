@@ -203,47 +203,26 @@
  */
 package de.mhus.osgi.commands.shell;
 
-import java.lang.reflect.Method;
-
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-@Command(scope = "shell", name = "inspectObject", description = "Inspect a object")
+@Command(scope = "shell", name = "systemexit", description = "Call a hard system exit")
 @Service
-public class CmdObjectInspect implements Action {
+public class CmdSystemExit implements Action {
 
-	@Argument(index=0, name="classname", required=true, description="Class name", multiValued=false)
-    Object object;
+	@Argument(index=0, name="exit code", required=true, description="Exit code", multiValued=false)
+	int exitCode;
 
 	@Override
 	public Object execute() throws Exception {
-		
-		Class<? extends Object> clazz = object.getClass();
-		System.out.println("Class " + clazz.getCanonicalName() + ":");
+		System.out.print("Really exit (y/N):");
+		System.out.flush();
+		int in = System.in.read();
+		if (in == 'y')
+			System.exit(exitCode);
 		System.out.println();
-		for (Method method : clazz.getMethods()) {
-			if ( !method.getDeclaringClass().getName().equals("java.lang.Object")) {
-				System.out.println(" " + method.getName() + "          (declared in " + method.getDeclaringClass().getName() + ")");
-				boolean first = true;
-				for (Class<?> t : method.getParameterTypes()) {
-					if (first)
-						System.out.print(" -> ");
-					else
-						System.out.print(",");
-					System.out.print(t.getCanonicalName());
-					first = false;
-				}
-				if (!first)
-					System.out.println();
-				if (method.getReturnType() != void.class) {
-					System.out.println(" <- " + method.getReturnType().getName());
-				}
-				System.out.println();
-			}
-		}
-		
 		return null;
 	}
 
