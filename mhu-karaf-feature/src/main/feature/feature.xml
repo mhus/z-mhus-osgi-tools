@@ -246,7 +246,7 @@
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-mailkaraf/${project.version}</bundle>
 	</feature>
 
-	<feature name='mhu-osgi-jms' description='mhu-osgi-vaadin' version='${project.version}'>
+	<feature name='mhu-osgi-jms' description='mhu-osgi-jms' version='${project.version}'>
 		<feature>activemq-client</feature>
 		<feature>mhu-osgi-base</feature>
 		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
@@ -260,7 +260,7 @@
 		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-themes/${vaadin.version}</bundle>
 		
-		<bundle>mvn:com.vaadin.external.slf4j/vaadin-slf4j-jdk14/1.6.1}</bundle>
+		<bundle>mvn:com.vaadin.external.slf4j/vaadin-slf4j-jdk14/1.6.1</bundle>
 		<bundle>mvn:com.vaadin.external.atmosphere/atmosphere-runtime/2.2.9.vaadin2</bundle>
 		<bundle>mvn:com.vaadin/vaadin-push/${vaadin.version}</bundle>
 		
