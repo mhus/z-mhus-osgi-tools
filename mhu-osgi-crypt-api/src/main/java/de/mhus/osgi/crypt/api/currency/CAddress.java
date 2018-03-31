@@ -48,7 +48,7 @@ public class CAddress implements Externalizable {
 	/**
 	 * Return private address or null if unknown.
 	 * 
-	 * @return
+	 * @return the private key
 	 */
 	public final String getPrivate() {
 		return privKey;
@@ -57,7 +57,7 @@ public class CAddress implements Externalizable {
 	/**
 	 * Return the public address in the format it is used in the wallets (e.g. compressed).
 	 * 
-	 * @return
+	 * @return the address
 	 */
 	public final String getAddress() {
 		return address;
@@ -73,7 +73,7 @@ public class CAddress implements Externalizable {
 	
 	/**
 	 * Return true if it's secure to give the object away to non secure areas.
-	 * @return
+	 * @return true if the private key is a secret
 	 */
 	public final boolean isSecure() {
 		return privKey == null;

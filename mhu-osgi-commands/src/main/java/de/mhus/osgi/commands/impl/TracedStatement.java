@@ -36,11 +36,11 @@ public class TracedStatement implements Statement {
 		ds = (TraceDataSource) con.getDataSource();
 	}
 
-	public <T> T unwrap(Class<T> iface) throws SQLException {
+	@Override public <T> T unwrap(Class<T> iface) throws SQLException {
 		return instance.unwrap(iface);
 	}
 
-	public ResultSet executeQuery(String sql) throws SQLException {
+	@Override public ResultSet executeQuery(String sql) throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
 			return instance.executeQuery(sql);
@@ -49,11 +49,11 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
+	@Override public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		return instance.isWrapperFor(iface);
 	}
 
-	public int executeUpdate(String sql) throws SQLException {
+	@Override public int executeUpdate(String sql) throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
 			return instance.executeUpdate(sql);
@@ -62,55 +62,55 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public void close() throws SQLException {
+	@Override public void close() throws SQLException {
 		instance.close();
 	}
 
-	public int getMaxFieldSize() throws SQLException {
+	@Override public int getMaxFieldSize() throws SQLException {
 		return instance.getMaxFieldSize();
 	}
 
-	public void setMaxFieldSize(int max) throws SQLException {
+	@Override public void setMaxFieldSize(int max) throws SQLException {
 		instance.setMaxFieldSize(max);
 	}
 
-	public int getMaxRows() throws SQLException {
+	@Override public int getMaxRows() throws SQLException {
 		return instance.getMaxRows();
 	}
 
-	public void setMaxRows(int max) throws SQLException {
+	@Override public void setMaxRows(int max) throws SQLException {
 		instance.setMaxRows(max);
 	}
 
-	public void setEscapeProcessing(boolean enable) throws SQLException {
+	@Override public void setEscapeProcessing(boolean enable) throws SQLException {
 		instance.setEscapeProcessing(enable);
 	}
 
-	public int getQueryTimeout() throws SQLException {
+	@Override public int getQueryTimeout() throws SQLException {
 		return instance.getQueryTimeout();
 	}
 
-	public void setQueryTimeout(int seconds) throws SQLException {
+	@Override public void setQueryTimeout(int seconds) throws SQLException {
 		instance.setQueryTimeout(seconds);
 	}
 
-	public void cancel() throws SQLException {
+	@Override public void cancel() throws SQLException {
 		instance.cancel();
 	}
 
-	public SQLWarning getWarnings() throws SQLException {
+	@Override public SQLWarning getWarnings() throws SQLException {
 		return instance.getWarnings();
 	}
 
-	public void clearWarnings() throws SQLException {
+	@Override public void clearWarnings() throws SQLException {
 		instance.clearWarnings();
 	}
 
-	public void setCursorName(String name) throws SQLException {
+	@Override public void setCursorName(String name) throws SQLException {
 		instance.setCursorName(name);
 	}
 
-	public boolean execute(String sql) throws SQLException {
+	@Override public boolean execute(String sql) throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
 			return instance.execute(sql);
@@ -119,51 +119,51 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public ResultSet getResultSet() throws SQLException {
+	@Override public ResultSet getResultSet() throws SQLException {
 		return instance.getResultSet();
 	}
 
-	public int getUpdateCount() throws SQLException {
+	@Override public int getUpdateCount() throws SQLException {
 		return instance.getUpdateCount();
 	}
 
-	public boolean getMoreResults() throws SQLException {
+	@Override public boolean getMoreResults() throws SQLException {
 		return instance.getMoreResults();
 	}
 
-	public void setFetchDirection(int direction) throws SQLException {
+	@Override public void setFetchDirection(int direction) throws SQLException {
 		instance.setFetchDirection(direction);
 	}
 
-	public int getFetchDirection() throws SQLException {
+	@Override public int getFetchDirection() throws SQLException {
 		return instance.getFetchDirection();
 	}
 
-	public void setFetchSize(int rows) throws SQLException {
+	@Override public void setFetchSize(int rows) throws SQLException {
 		instance.setFetchSize(rows);
 	}
 
-	public int getFetchSize() throws SQLException {
+	@Override public int getFetchSize() throws SQLException {
 		return instance.getFetchSize();
 	}
 
-	public int getResultSetConcurrency() throws SQLException {
+	@Override public int getResultSetConcurrency() throws SQLException {
 		return instance.getResultSetConcurrency();
 	}
 
-	public int getResultSetType() throws SQLException {
+	@Override public int getResultSetType() throws SQLException {
 		return instance.getResultSetType();
 	}
 
-	public void addBatch(String sql) throws SQLException {
+	@Override public void addBatch(String sql) throws SQLException {
 		instance.addBatch(sql);
 	}
 
-	public void clearBatch() throws SQLException {
+	@Override public void clearBatch() throws SQLException {
 		instance.clearBatch();
 	}
 
-	public int[] executeBatch() throws SQLException {
+	@Override public int[] executeBatch() throws SQLException {
 		long time = ds.startTrace("");
 		try {
 			return instance.executeBatch();
@@ -172,19 +172,19 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public Connection getConnection() throws SQLException {
+	@Override public Connection getConnection() throws SQLException {
 		return con;
 	}
 
-	public boolean getMoreResults(int current) throws SQLException {
+	@Override public boolean getMoreResults(int current) throws SQLException {
 		return instance.getMoreResults(current);
 	}
 
-	public ResultSet getGeneratedKeys() throws SQLException {
+	@Override public ResultSet getGeneratedKeys() throws SQLException {
 		return instance.getGeneratedKeys();
 	}
 
-	public int executeUpdate(String sql, int autoGeneratedKeys)
+	@Override public int executeUpdate(String sql, int autoGeneratedKeys)
 			throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
@@ -194,7 +194,7 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public int executeUpdate(String sql, int[] columnIndexes)
+	@Override public int executeUpdate(String sql, int[] columnIndexes)
 			throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
@@ -204,7 +204,7 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public int executeUpdate(String sql, String[] columnNames)
+	@Override public int executeUpdate(String sql, String[] columnNames)
 			throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
@@ -214,7 +214,7 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public boolean execute(String sql, int autoGeneratedKeys)
+	@Override public boolean execute(String sql, int autoGeneratedKeys)
 			throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
@@ -224,7 +224,7 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public boolean execute(String sql, int[] columnIndexes) throws SQLException {
+	@Override public boolean execute(String sql, int[] columnIndexes) throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
 			return instance.execute(sql, columnIndexes);
@@ -233,7 +233,7 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public boolean execute(String sql, String[] columnNames)
+	@Override public boolean execute(String sql, String[] columnNames)
 			throws SQLException {
 		long time = ds.startTrace(sql);
 		try {
@@ -243,27 +243,27 @@ public class TracedStatement implements Statement {
 		}
 	}
 
-	public int getResultSetHoldability() throws SQLException {
+	@Override public int getResultSetHoldability() throws SQLException {
 		return instance.getResultSetHoldability();
 	}
 
-	public boolean isClosed() throws SQLException {
+	@Override public boolean isClosed() throws SQLException {
 		return instance.isClosed();
 	}
 
-	public void setPoolable(boolean poolable) throws SQLException {
+	@Override public void setPoolable(boolean poolable) throws SQLException {
 		instance.setPoolable(poolable);
 	}
 
-	public boolean isPoolable() throws SQLException {
+	@Override public boolean isPoolable() throws SQLException {
 		return instance.isPoolable();
 	}
 
-	public void closeOnCompletion() throws SQLException {
+	@Override public void closeOnCompletion() throws SQLException {
 		instance.closeOnCompletion();
 	}
 
-	public boolean isCloseOnCompletion() throws SQLException {
+	@Override public boolean isCloseOnCompletion() throws SQLException {
 		return instance.isCloseOnCompletion();
 	}
 }

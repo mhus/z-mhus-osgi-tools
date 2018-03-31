@@ -329,6 +329,7 @@ public class CmdRun extends MLog implements Action {
 		private String varName;
 		private Iterator<?> iterator;
 
+		@SuppressWarnings("rawtypes")
 		public ForLoop(Session session, String condition, int pos) throws Exception {
 			super(session, condition, pos);
 			varName = MString.beforeIndex(condition, ' ');
@@ -361,15 +362,18 @@ public class CmdRun extends MLog implements Action {
 			}
 		}
 
+		@Override
 		public int getStartPos() {
 			return startPos;
 		}
 
+		@Override
 		public void next() {
 			Object next = iterator.next();
 			session.put(varName, next);
 		}
 
+		@Override
 		public boolean hasNext() {
 			return iterator != null && iterator.hasNext();
 		}

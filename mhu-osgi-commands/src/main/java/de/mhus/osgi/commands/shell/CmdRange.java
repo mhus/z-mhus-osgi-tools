@@ -53,6 +53,7 @@ public class CmdRange implements Action {
 	public Object execute() throws Exception {
 
 		StringWriter sw = toOut ? null : new StringWriter();
+		@SuppressWarnings("resource")
 		PrintWriter out = toOut ? new PrintWriter(System.out) : new PrintWriter(sw);
 		
 		if (MValidator.isInteger(from) && MValidator.isInteger(to)) {

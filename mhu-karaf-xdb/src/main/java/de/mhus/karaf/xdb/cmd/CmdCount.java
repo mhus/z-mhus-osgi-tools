@@ -56,7 +56,7 @@ public class CmdCount implements Action {
 
 		XdbApi api = XdbUtil.getApi(apiName);
 		
-		XdbType type = api.getType(serviceName, typeName);
+		XdbType<?> type = api.getType(serviceName, typeName);
 
 		long count = type.count(search, null);
 /*		

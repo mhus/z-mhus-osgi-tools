@@ -36,38 +36,47 @@ public class DataSourceFailOver implements DataSource, DelegatedDataSource {
 		return list.get(0); // implement fallback 
 	}
 	
+	@Override
 	public PrintWriter getLogWriter() throws SQLException {
 		return getCurrentDataSource().getLogWriter();
 	}
 
+	@Override
 	public void setLogWriter(PrintWriter out) throws SQLException {
 		getCurrentDataSource().setLogWriter(out);
 	}
 
+	@Override
 	public void setLoginTimeout(int seconds) throws SQLException {
 		getCurrentDataSource().setLoginTimeout(seconds);
 	}
 
+	@Override
 	public int getLoginTimeout() throws SQLException {
 		return getCurrentDataSource().getLoginTimeout();
 	}
 
+	@Override
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
 		return getCurrentDataSource().getParentLogger();
 	}
 
+	@Override
 	public <T> T unwrap(Class<T> iface) throws SQLException {
 		return getCurrentDataSource().unwrap(iface);
 	}
 
+	@Override
 	public boolean isWrapperFor(Class<?> iface) throws SQLException {
 		return getCurrentDataSource().isWrapperFor(iface);
 	}
 
+	@Override
 	public Connection getConnection() throws SQLException {
 		return getCurrentDataSource().getConnection();
 	}
 
+	@Override
 	public Connection getConnection(String username, String password)
 			throws SQLException {
 		SQLException lastException = null;
@@ -90,6 +99,7 @@ public class DataSourceFailOver implements DataSource, DelegatedDataSource {
 		this.list = list;
 	}
 
+	@Override
 	public String getDelegateURL() {
 		try {
 			return "failover:" + getCurrentDataSource().getConnection().getMetaData().getURL();

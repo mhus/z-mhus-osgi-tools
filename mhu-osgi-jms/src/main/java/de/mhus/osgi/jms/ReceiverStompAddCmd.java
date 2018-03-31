@@ -43,6 +43,7 @@ public class ReceiverStompAddCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
+	@Override
 	public Object execute() throws Exception {
 		
 		JmsReceiver receiver = new JmsReceiverStomp(user, password, url, topic, queue);

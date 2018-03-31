@@ -53,8 +53,6 @@ hello queue a^@
 @Service
 public class SendCmd implements Action {
 
-    private static final Boolean NON_TRANSACTED = false;
-    private static final long DELAY = 100;
     private static Log log = Log.getLog(SendCmd.class);
 
     @Reference
@@ -98,6 +96,7 @@ public class SendCmd implements Action {
 	
 	boolean ownConnection = false;
 	
+	@Override
 	public Object execute() throws Exception {
 
         JmsConnection connection = null;

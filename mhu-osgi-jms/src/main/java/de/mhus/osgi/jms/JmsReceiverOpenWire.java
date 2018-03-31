@@ -40,9 +40,11 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 	private String user;
 	private String password;
 	private String url;
+	@SuppressWarnings("unused")
 	private Session session;
 	private boolean topic;
 	private String queue;
+	@SuppressWarnings("unused")
 	private JmsReceiverAdmin admin;
 	private JmsConnection con;
 	private ServerJms server;
@@ -62,6 +64,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 		this.queue = queue;
 	}
 
+	@Override
 	public void init(JmsReceiverAdmin admin) {
 		this.admin = admin;
 		try {
@@ -133,6 +136,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 		}
 	}
 
+	@Override
 	public void close() {
 		try {
 			if (ownConnection)
@@ -148,6 +152,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 		log().e(arg0);
 	}
 
+	@Override
 	public String getName() {
 		return (topic ? "jms:/topic/" : "queue/") + queue;
 	}

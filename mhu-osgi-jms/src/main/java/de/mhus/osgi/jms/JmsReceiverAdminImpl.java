@@ -41,11 +41,13 @@ public class JmsReceiverAdminImpl implements JmsReceiverAdmin {
 			remove(r.getName());
 	}
 	
+	@Override
 	public void add(JmsReceiver receiver) {
 		receiver.init(this);
 		receivers.add(receiver);
 	}
 
+	@Override
 	public void remove(String queue) {
 		for (JmsReceiver r : receivers) {
 			if (r.getName().equals(queue)) {
@@ -56,6 +58,7 @@ public class JmsReceiverAdminImpl implements JmsReceiverAdmin {
 		}
 	}
 
+	@Override
 	public JmsReceiver[] list() {
 		return receivers.toArray(new JmsReceiver[receivers.size()]);
 	}

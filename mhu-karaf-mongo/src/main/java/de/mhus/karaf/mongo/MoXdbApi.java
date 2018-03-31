@@ -340,7 +340,7 @@ public class MoXdbApi implements XdbApi {
 		@SuppressWarnings("unchecked")
 		@Override
 		public T getObject(String... keys) throws MException {
-			return (T) service.getManager().getObject(type, keys);
+			return (T)service.getManager().getObject(type, (Object[])keys);
 		}
 		
 	}
@@ -350,6 +350,7 @@ public class MoXdbApi implements XdbApi {
 		private Iterator<O> iterator;
 		private O current;
 
+		@SuppressWarnings("unchecked")
 		public Result(Iterator<?> iterator) {
 			this.iterator = (Iterator<O>) iterator;
 		}

@@ -28,8 +28,9 @@ public interface CipherProvider {
 	 * Encode content, return a string block.
 	 * 
 	 * @param key
+	 * @param content 
 	 * @param string
-	 * @return
+	 * @return block with encoded content
 	 * @throws MException 
 	 */
 	PemBlock encode(PemPub key, String content) throws MException;

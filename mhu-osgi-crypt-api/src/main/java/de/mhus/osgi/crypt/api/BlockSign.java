@@ -22,24 +22,27 @@ public interface BlockSign {
 
 	/**
 	 * Check Signature.
+	 * @param key 
 	 * 
 	 * @param text
-	 * @return
+	 * @param sign 
+	 * @return true if valid
 	 */
 	boolean validate(PemPub key, String text, String sign);
 
 	/**
 	 * Create a signature. Return the result as string block
+	 * @param key 
 	 * 
 	 * @param text
-	 * @return
+	 * @return signed string
 	 */
 	String sign(PemPriv key, String text);
 
 	/**
 	 * Returns the identifier of the sign method
 	 * 
-	 * @return
+	 * @return the name
 	 */
 	String getName();
 

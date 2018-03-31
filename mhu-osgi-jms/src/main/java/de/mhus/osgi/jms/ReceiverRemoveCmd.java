@@ -27,6 +27,7 @@ public class ReceiverRemoveCmd implements Action {
 	@Argument(index=0, name="name", required=true, description="...", multiValued=false)
     String name;
 	
+	@Override
 	public Object execute() throws Exception {
 		
 		JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();

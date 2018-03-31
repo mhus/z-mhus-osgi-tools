@@ -31,6 +31,7 @@ public class JmsReceiverStomp implements JmsReceiver {
 	private String url;
 	private boolean topic;
 	private String queue;
+	@SuppressWarnings("unused")
 	private JmsReceiverAdmin admin;
 	private StompConnection connection;
 	private Timer timer;
@@ -43,6 +44,7 @@ public class JmsReceiverStomp implements JmsReceiver {
 		this.queue = queue;
 	}
 
+	@Override
 	public void init(JmsReceiverAdmin admin) {
 		this.admin = admin;
 
@@ -85,6 +87,7 @@ public class JmsReceiverStomp implements JmsReceiver {
 		}
 	}
 
+	@Override
 	public void close() {
 
 		try {
@@ -97,6 +100,7 @@ public class JmsReceiverStomp implements JmsReceiver {
 		
 	}
 
+	@Override
 	public String getName() {
 		return "stomp:/" + (topic ? "topic/" : "queue/") + queue;
 	}

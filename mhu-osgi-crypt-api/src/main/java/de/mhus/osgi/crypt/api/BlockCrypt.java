@@ -22,24 +22,26 @@ public interface BlockCrypt {
 
 	/**
 	 * Encodes a string block. Returns the result as string block.
+	 * @param key 
 	 * 
 	 * @param text
-	 * @return
+	 * @return encoded string
 	 */
 	String encode(PemPub key, String text);
 
 	/**
 	 * Decodes a string block.
+	 * @param key 
 	 * 
 	 * @param text
-	 * @return
+	 * @return decoded string
 	 */
 	String decode(PemPriv key, String text);
 
 	/**
 	 * Returns the identifier of the crypt method
 	 * 
-	 * @return
+	 * @return the name
 	 */
 	String getName();
 

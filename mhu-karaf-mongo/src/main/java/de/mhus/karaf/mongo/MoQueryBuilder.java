@@ -64,6 +64,7 @@ public class MoQueryBuilder extends MObject {
 		json = (ObjectNode) MJson.load(s.toString());
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	private void createQuery(APrint p, StringBuilder s) {
 		if (p instanceof AQuery) {
 			//		buffer.append('(');
@@ -240,6 +241,7 @@ public class MoQueryBuilder extends MObject {
 		add(q, json, parameterValues);
 	}
 
+	@SuppressWarnings("deprecation")
 	private <T> void add(Query<T> q, ObjectNode j, Map<String,Object> parameterValues) throws IOException {
 		for (Iterator<Entry<String, JsonNode>> ki = j.getFields(); ki.hasNext(); ) {
 			Entry<String, JsonNode> ke = ki.next();

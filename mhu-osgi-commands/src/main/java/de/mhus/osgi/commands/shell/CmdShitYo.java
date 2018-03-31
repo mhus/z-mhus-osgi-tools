@@ -242,6 +242,7 @@ public class CmdShitYo implements Action {
 		private final Random rng;
 		private long sec;
 		private long deltaCpuTime;
+		@SuppressWarnings("unused")
 		private long rounds = 0;
 		private long cpuTimePerSecond;
 

@@ -66,6 +66,7 @@ public class CmdThreads implements Action {
     
 	ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object execute() throws Exception {
 

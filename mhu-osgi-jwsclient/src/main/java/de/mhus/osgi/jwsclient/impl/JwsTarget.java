@@ -67,6 +67,7 @@ public class JwsTarget extends Target {
 		return new JwsConnection(this);
 	}
 
+	@Override
 	public String getUrl() {
 		return url;
 	}

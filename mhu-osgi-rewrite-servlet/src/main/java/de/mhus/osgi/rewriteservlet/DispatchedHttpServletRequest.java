@@ -47,52 +47,54 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 	private HttpServletRequest instance;
 	private byte[] inputBytes;
 
-	public Object getAttribute(String name) {
+	@Override public Object getAttribute(String name) {
 		return instance.getAttribute(name);
 	}
 
-	public String getAuthType() {
+	@Override public String getAuthType() {
 		return instance.getAuthType();
 	}
 
-	public Cookie[] getCookies() {
+	@Override public Cookie[] getCookies() {
 		return instance.getCookies();
 	}
 
-	public Enumeration getAttributeNames() {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override public Enumeration getAttributeNames() {
 		return instance.getAttributeNames();
 	}
 
-	public long getDateHeader(String name) {
+	@Override public long getDateHeader(String name) {
 		return instance.getDateHeader(name);
 	}
 
-	public String getCharacterEncoding() {
+	@Override public String getCharacterEncoding() {
 		return instance.getCharacterEncoding();
 	}
 
-	public void setCharacterEncoding(String env)
+	@Override public void setCharacterEncoding(String env)
 			throws UnsupportedEncodingException {
 		instance.setCharacterEncoding(env);
 	}
 
-	public String getHeader(String name) {
+	@Override public String getHeader(String name) {
 		return instance.getHeader(name);
 	}
 
-	public int getContentLength() {
+	@Override public int getContentLength() {
 		return instance.getContentLength();
 	}
 
-	public String getContentType() {
+	@Override public String getContentType() {
 		return instance.getContentType();
 	}
 
-	public Enumeration getHeaders(String name) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override public Enumeration getHeaders(String name) {
 		return instance.getHeaders(name);
 	}
 
-	public ServletInputStream getInputStream() throws IOException {
+	@Override public ServletInputStream getInputStream() throws IOException {
 		ByteArrayOutputStream bs = new ByteArrayOutputStream();
 		ServletInputStream is = instance.getInputStream();
 		while(true) {
@@ -105,172 +107,178 @@ public class DispatchedHttpServletRequest implements HttpServletRequest {
 		return new MyServletInputStream();
 	}
 
-	public String getParameter(String name) {
+	@Override public String getParameter(String name) {
 		return instance.getParameter(name);
 	}
 
-	public Enumeration getHeaderNames() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override public Enumeration getHeaderNames() {
 		return instance.getHeaderNames();
 	}
 
-	public int getIntHeader(String name) {
+	@Override public int getIntHeader(String name) {
 		return instance.getIntHeader(name);
 	}
 
-	public Enumeration getParameterNames() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override public Enumeration getParameterNames() {
 		return instance.getParameterNames();
 	}
 
-	public String getMethod() {
+	@Override public String getMethod() {
 		return instance.getMethod();
 	}
 
-	public String[] getParameterValues(String name) {
+	@Override public String[] getParameterValues(String name) {
 		return instance.getParameterValues(name);
 	}
 
-	public String getPathInfo() {
+	@Override public String getPathInfo() {
 //		return instance.getPathInfo();
 		return path;
 	}
 
-	public Map getParameterMap() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override public Map getParameterMap() {
 		return instance.getParameterMap();
 	}
 
-	public String getPathTranslated() {
+	@Override public String getPathTranslated() {
 		return instance.getPathTranslated();
 	}
 
-	public String getProtocol() {
+	@Override public String getProtocol() {
 		return instance.getProtocol();
 	}
 
-	public String getScheme() {
+	@Override public String getScheme() {
 		return instance.getScheme();
 	}
 
-	public String getContextPath() {
+	@Override public String getContextPath() {
 		return instance.getContextPath();
 	}
 
-	public String getServerName() {
+	@Override public String getServerName() {
 		return instance.getServerName();
 	}
 
-	public String getQueryString() {
+	@Override public String getQueryString() {
 		return instance.getQueryString();
 	}
 
-	public int getServerPort() {
+	@Override public int getServerPort() {
 		return instance.getServerPort();
 	}
 
-	public BufferedReader getReader() throws IOException {
+	@Override public BufferedReader getReader() throws IOException {
 		return instance.getReader();
 	}
 
-	public String getRemoteUser() {
+	@Override public String getRemoteUser() {
 		return instance.getRemoteUser();
 	}
 
-	public boolean isUserInRole(String role) {
+	@Override public boolean isUserInRole(String role) {
 		return instance.isUserInRole(role);
 	}
 
-	public String getRemoteAddr() {
+	@Override public String getRemoteAddr() {
 		return instance.getRemoteAddr();
 	}
 
-	public String getRemoteHost() {
+	@Override public String getRemoteHost() {
 		return instance.getRemoteHost();
 	}
 
-	public Principal getUserPrincipal() {
+	@Override public Principal getUserPrincipal() {
 		return instance.getUserPrincipal();
 	}
 
-	public String getRequestedSessionId() {
+	@Override public String getRequestedSessionId() {
 		return instance.getRequestedSessionId();
 	}
 
-	public void setAttribute(String name, Object o) {
+	@Override public void setAttribute(String name, Object o) {
 		instance.setAttribute(name, o);
 	}
 
-	public String getRequestURI() {
+	@Override public String getRequestURI() {
 		return instance.getRequestURI();
 	}
 
-	public void removeAttribute(String name) {
+	@Override public void removeAttribute(String name) {
 		instance.removeAttribute(name);
 	}
 
-	public Locale getLocale() {
+	@Override public Locale getLocale() {
 		return instance.getLocale();
 	}
 
-	public StringBuffer getRequestURL() {
+	@Override public StringBuffer getRequestURL() {
 		return instance.getRequestURL();
 	}
 
-	public Enumeration getLocales() {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override public Enumeration getLocales() {
 		return instance.getLocales();
 	}
 
-	public String getServletPath() {
+	@Override public String getServletPath() {
 		return instance.getServletPath();
 	}
 
-	public boolean isSecure() {
+	@Override public boolean isSecure() {
 		return instance.isSecure();
 	}
 
-	public RequestDispatcher getRequestDispatcher(String path) {
+	@Override public RequestDispatcher getRequestDispatcher(String path) {
 		return instance.getRequestDispatcher(path);
 	}
 
-	public HttpSession getSession(boolean create) {
+	@Override public HttpSession getSession(boolean create) {
 		return instance.getSession(create);
 	}
 
-	public HttpSession getSession() {
+	@Override public HttpSession getSession() {
 		return instance.getSession();
 	}
 
-	public String getRealPath(String path) {
+	@SuppressWarnings("deprecation")
+	@Override public String getRealPath(String path) {
 		return instance.getRealPath(path);
 	}
 
-	public int getRemotePort() {
+	@Override public int getRemotePort() {
 		return instance.getRemotePort();
 	}
 
-	public boolean isRequestedSessionIdValid() {
+	@Override public boolean isRequestedSessionIdValid() {
 		return instance.isRequestedSessionIdValid();
 	}
 
-	public String getLocalName() {
+	@Override public String getLocalName() {
 		return instance.getLocalName();
 	}
 
-	public boolean isRequestedSessionIdFromCookie() {
+	@Override public boolean isRequestedSessionIdFromCookie() {
 		return instance.isRequestedSessionIdFromCookie();
 	}
 
-	public String getLocalAddr() {
+	@Override public String getLocalAddr() {
 		return instance.getLocalAddr();
 	}
 
-	public boolean isRequestedSessionIdFromURL() {
+	@Override public boolean isRequestedSessionIdFromURL() {
 		return instance.isRequestedSessionIdFromURL();
 	}
 
-	public int getLocalPort() {
+	@Override public int getLocalPort() {
 		return instance.getLocalPort();
 	}
 
-	public boolean isRequestedSessionIdFromUrl() {
+	@SuppressWarnings("deprecation")
+	@Override public boolean isRequestedSessionIdFromUrl() {
 		return instance.isRequestedSessionIdFromUrl();
 	}
 

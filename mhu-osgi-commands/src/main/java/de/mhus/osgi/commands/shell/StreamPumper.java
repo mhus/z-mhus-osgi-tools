@@ -103,7 +103,8 @@ public class StreamPumper implements Runnable
      *
      * Terminates as soon as the input stream is closed or an error occurs.
      */
-    public void run() {
+    @Override
+	public void run() {
         synchronized (this) {
             started = true;
             finished = false;
@@ -181,6 +182,7 @@ public class StreamPumper implements Runnable
 
     /**
      * This method blocks until the stream pumper finishes.
+     * @throws InterruptedException 
      *
      * @see #isFinished()
      */

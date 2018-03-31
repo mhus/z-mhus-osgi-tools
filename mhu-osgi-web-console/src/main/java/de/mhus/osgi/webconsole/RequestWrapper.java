@@ -32,157 +32,162 @@ public class RequestWrapper implements HttpServletRequest {
 		this.request = request;
 	}
 
-	public Object getAttribute(String arg0) {
+	@Override public Object getAttribute(String arg0) {
 		return request.getAttribute(arg0);
 	}
 
-	public Enumeration getAttributeNames() {
+	@SuppressWarnings("rawtypes")
+	@Override public Enumeration getAttributeNames() {
 		return request.getAttributeNames();
 	}
 
-	public String getAuthType() {
+	@Override public String getAuthType() {
 		return request.getAuthType();
 	}
 
-	public String getCharacterEncoding() {
+	@Override public String getCharacterEncoding() {
 		return request.getCharacterEncoding();
 	}
 
-	public int getContentLength() {
+	@Override public int getContentLength() {
 		return request.getContentLength();
 	}
 
-	public String getContentType() {
+	@Override public String getContentType() {
 		return request.getContentType();
 	}
 
-	public Cookie[] getCookies() {
+	@Override public Cookie[] getCookies() {
 		return request.getCookies();
 	}
 
-	public long getDateHeader(String arg0) {
+	@Override public long getDateHeader(String arg0) {
 		return request.getDateHeader(arg0);
 	}
 
-	public String getHeader(String arg0) {
+	@Override public String getHeader(String arg0) {
 		return request.getHeader(arg0);
 	}
 
-	public Enumeration getHeaderNames() {
+	@SuppressWarnings("rawtypes")
+	@Override public Enumeration getHeaderNames() {
 		return request.getHeaderNames();
 	}
 
-	public ServletInputStream getInputStream() throws IOException {
+	@Override public ServletInputStream getInputStream() throws IOException {
 		return request.getInputStream();
 	}
 
-	public int getIntHeader(String arg0) {
+	@Override public int getIntHeader(String arg0) {
 		return request.getIntHeader(arg0);
 	}
 
-	public String getMethod() {
+	@Override public String getMethod() {
 		return request.getMethod();
 	}
 
-	public String getParameter(String arg0) {
+	@Override public String getParameter(String arg0) {
 		return request.getParameter(arg0);
 	}
 
-	public Enumeration getParameterNames() {
+	@SuppressWarnings("rawtypes")
+	@Override public Enumeration getParameterNames() {
 		return request.getParameterNames();
 	}
 
-	public String[] getParameterValues(String arg0) {
+	@Override public String[] getParameterValues(String arg0) {
 		return request.getParameterValues(arg0);
 	}
 
-	public String getPathInfo() {
+	@Override public String getPathInfo() {
 		String out = request.getPathInfo();
 		if (out == null) return "";
 		return out;
 	}
 
-	public String getPathTranslated() {
+	@Override public String getPathTranslated() {
 		return request.getPathTranslated();
 	}
 
-	public String getProtocol() {
+	@Override public String getProtocol() {
 		return request.getProtocol();
 	}
 
-	public String getQueryString() {
+	@Override public String getQueryString() {
 		return request.getQueryString();
 	}
 
-	public BufferedReader getReader() throws IOException {
+	@Override public BufferedReader getReader() throws IOException {
 		return request.getReader();
 	}
 
-	public String getRealPath(String arg0) {
+	@SuppressWarnings("deprecation")
+	@Override public String getRealPath(String arg0) {
 		return request.getRealPath(arg0);
 	}
 
-	public String getRemoteAddr() {
+	@Override public String getRemoteAddr() {
 		return request.getRemoteAddr();
 	}
 
-	public String getRemoteHost() {
+	@Override public String getRemoteHost() {
 		return request.getRemoteHost();
 	}
 
-	public String getRemoteUser() {
+	@Override public String getRemoteUser() {
 		return request.getRemoteUser();
 	}
 
-	public String getRequestURI() {
+	@Override public String getRequestURI() {
 		return request.getRequestURI();
 	}
 
-	public String getRequestedSessionId() {
+	@Override public String getRequestedSessionId() {
 		return request.getRequestedSessionId();
 	}
 
-	public String getScheme() {
+	@Override public String getScheme() {
 		return request.getScheme();
 	}
 
-	public String getServerName() {
+	@Override public String getServerName() {
 		return request.getServerName();
 	}
 
-	public int getServerPort() {
+	@Override public int getServerPort() {
 		return request.getServerPort();
 	}
 
-	public String getServletPath() {
+	@Override public String getServletPath() {
 		return request.getServletPath();
 	}
 
-	public HttpSession getSession() {
+	@Override public HttpSession getSession() {
 		return request.getSession();
 	}
 
-	public HttpSession getSession(boolean arg0) {
+	@Override public HttpSession getSession(boolean arg0) {
 		return request.getSession(arg0);
 	}
 
-	public boolean isRequestedSessionIdFromCookie() {
+	@Override public boolean isRequestedSessionIdFromCookie() {
 		return request.isRequestedSessionIdFromCookie();
 	}
 
-	public boolean isRequestedSessionIdFromURL() {
+	@Override public boolean isRequestedSessionIdFromURL() {
 		return request.isRequestedSessionIdFromURL();
 	}
 
-	public boolean isRequestedSessionIdFromUrl() {
+	@SuppressWarnings("deprecation")
+	@Override public boolean isRequestedSessionIdFromUrl() {
 		return request.isRequestedSessionIdFromUrl();
 	}
 
-	public boolean isRequestedSessionIdValid() {
+	@Override public boolean isRequestedSessionIdValid() {
 		return request.isRequestedSessionIdValid();
 	}
 
-	public void setAttribute(String arg0, Object arg1) {
+	@Override public void setAttribute(String arg0, Object arg1) {
 		request.setAttribute(arg0, arg1);
 	}
 	

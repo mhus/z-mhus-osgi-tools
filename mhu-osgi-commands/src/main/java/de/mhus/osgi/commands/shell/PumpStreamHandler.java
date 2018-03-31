@@ -68,6 +68,7 @@ public class PumpStreamHandler
 
     /**
      * Set the input stream from which to read the standard output of the child.
+     * @param in 
      */
     public void setChildOutputStream(final InputStream in) {
         assert in != null;
@@ -77,6 +78,7 @@ public class PumpStreamHandler
 
     /**
      * Set the input stream from which to read the standard error of the child.
+     * @param in 
      */
     public void setChildErrorStream(final InputStream in) {
         assert in != null;
@@ -88,6 +90,7 @@ public class PumpStreamHandler
 
     /**
      * Set the output stream by means of which input can be sent to the child.
+     * @param out 
      */
     public void setChildInputStream(final OutputStream out) {
         assert out != null;

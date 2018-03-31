@@ -29,7 +29,9 @@ public interface SignerProvider {
 	 * 
 	 * @param key
 	 * @param text
-	 * @return
+	 * @param passphrase 
+	 * @return a block with the sign content
+	 * @throws MException 
 	 */
 	PemBlock sign(PemPriv key, String text, String passphrase) throws MException;
 

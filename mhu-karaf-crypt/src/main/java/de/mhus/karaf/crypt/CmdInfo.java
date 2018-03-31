@@ -23,11 +23,8 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.MOsgi;
 
 @Command(scope = "crypta", name = "info", description = "Security Informations")
 @Service

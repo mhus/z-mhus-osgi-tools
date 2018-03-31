@@ -18,19 +18,11 @@ package de.mhus.karaf.xdb.adb;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.framework.InvalidSyntaxException;
 
 import aQute.bnd.annotation.component.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
-import de.mhus.lib.adb.DbCollection;
-import de.mhus.lib.adb.Persistable;
-import de.mhus.lib.adb.model.Field;
-import de.mhus.lib.adb.model.Table;
-import de.mhus.lib.adb.query.AQuery;
-import de.mhus.lib.core.pojo.PojoModelFactory;
-import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.karaf.adb.AdbUtilKaraf;
 import de.mhus.lib.karaf.adb.DbManagerService;

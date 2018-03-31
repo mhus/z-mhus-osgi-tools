@@ -30,55 +30,55 @@ import javax.servlet.http.HttpServletResponse;
 public class DispatchedHttpServletResponse implements HttpServletResponse {
 
 	private HttpServletResponse instace;
-	public String getContentType() {
+	@Override public String getContentType() {
 		return instace.getContentType();
 	}
 
-	public void setCharacterEncoding(String charset) {
+	@Override public void setCharacterEncoding(String charset) {
 		instace.setCharacterEncoding(charset);
 	}
 
-	public void addDateHeader(String name, long date) {
+	@Override public void addDateHeader(String name, long date) {
 		instace.addDateHeader(name, date);
 	}
 
-	public void addHeader(String name, String value) {
+	@Override public void addHeader(String name, String value) {
 		instace.addHeader(name, value);
 	}
 
-	public void setBufferSize(int size) {
+	@Override public void setBufferSize(int size) {
 		instace.setBufferSize(size);
 	}
 
-	public void addIntHeader(String name, int value) {
+	@Override public void addIntHeader(String name, int value) {
 		instace.addIntHeader(name, value);
 	}
 
-	public int getBufferSize() {
+	@Override public int getBufferSize() {
 		return instace.getBufferSize();
 	}
 
-	public void flushBuffer() throws IOException {
+	@Override public void flushBuffer() throws IOException {
 		instace.flushBuffer();
 	}
 
-	public void resetBuffer() {
+	@Override public void resetBuffer() {
 		instace.resetBuffer();
 	}
 
-	public boolean isCommitted() {
+	@Override public boolean isCommitted() {
 		return instace.isCommitted();
 	}
 
-	public void reset() {
+	@Override public void reset() {
 		instace.reset();
 	}
 
-	public void setLocale(Locale loc) {
+	@Override public void setLocale(Locale loc) {
 		instace.setLocale(loc);
 	}
 
-	public Locale getLocale() {
+	@Override public Locale getLocale() {
 		return instace.getLocale();
 	}
 
@@ -104,35 +104,37 @@ public class DispatchedHttpServletResponse implements HttpServletResponse {
 		return null;
 	}
 	
-	public void addCookie(Cookie arg0) {
+	@Override public void addCookie(Cookie arg0) {
 		instace.addCookie(arg0);
 	}
 
-	public boolean containsHeader(String arg0) {
+	@Override public boolean containsHeader(String arg0) {
 		return instace.containsHeader(arg0);
 	}
 
-	public String encodeRedirectURL(String arg0) {
+	@Override public String encodeRedirectURL(String arg0) {
 		return instace.encodeRedirectURL(arg0);
 	}
 
-	public String encodeRedirectUrl(String arg0) {
+	@SuppressWarnings("deprecation")
+	@Override public String encodeRedirectUrl(String arg0) {
 		return instace.encodeRedirectUrl(arg0);
 	}
 
-	public String encodeURL(String arg0) {
+	@Override public String encodeURL(String arg0) {
 		return instace.encodeURL(arg0);
 	}
 
-	public String encodeUrl(String arg0) {
+	@SuppressWarnings("deprecation")
+	@Override public String encodeUrl(String arg0) {
 		return instace.encodeUrl(arg0);
 	}
 
-	public String getCharacterEncoding() {
+	@Override public String getCharacterEncoding() {
 		return instace.getCharacterEncoding();
 	}
 
-	public ServletOutputStream getOutputStream() throws IOException {
+	@Override public ServletOutputStream getOutputStream() throws IOException {
 //		return instace.getOutputStream();
 		if (os == null) {
 			os = new ByteArrayOutputStream();
@@ -156,7 +158,7 @@ public class DispatchedHttpServletResponse implements HttpServletResponse {
 		return sos;
 	}
 
-	public PrintWriter getWriter() throws IOException {
+	@Override public PrintWriter getWriter() throws IOException {
 //		return instace.getWriter();
 		if (writer == null) {
 			sw = new StringWriter();
@@ -165,43 +167,44 @@ public class DispatchedHttpServletResponse implements HttpServletResponse {
 		return writer;
 	}
 
-	public void sendError(int arg0, String arg1) throws IOException {
+	@Override public void sendError(int arg0, String arg1) throws IOException {
 		instace.sendError(arg0, arg1);
 	}
 
-	public void sendError(int arg0) throws IOException {
+	@Override public void sendError(int arg0) throws IOException {
 		instace.sendError(arg0);
 	}
 
-	public void sendRedirect(String arg0) throws IOException {
+	@Override public void sendRedirect(String arg0) throws IOException {
 		instace.sendRedirect(arg0);
 	}
 
-	public void setContentLength(int arg0) {
+	@Override public void setContentLength(int arg0) {
 		instace.setContentLength(arg0);
 	}
 
-	public void setContentType(String arg0) {
+	@Override public void setContentType(String arg0) {
 		instace.setContentType(arg0);
 	}
 
-	public void setDateHeader(String arg0, long arg1) {
+	@Override public void setDateHeader(String arg0, long arg1) {
 		instace.setDateHeader(arg0, arg1);
 	}
 
-	public void setHeader(String arg0, String arg1) {
+	@Override public void setHeader(String arg0, String arg1) {
 		instace.setHeader(arg0, arg1);
 	}
 
-	public void setIntHeader(String arg0, int arg1) {
+	@Override public void setIntHeader(String arg0, int arg1) {
 		instace.setIntHeader(arg0, arg1);
 	}
 
-	public void setStatus(int arg0, String arg1) {
+	@SuppressWarnings("deprecation")
+	@Override public void setStatus(int arg0, String arg1) {
 		instace.setStatus(arg0, arg1);
 	}
 
-	public void setStatus(int arg0) {
+	@Override public void setStatus(int arg0) {
 		instace.setStatus(arg0);
 	}
 

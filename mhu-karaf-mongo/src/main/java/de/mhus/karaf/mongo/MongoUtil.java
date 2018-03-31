@@ -22,11 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.codehaus.jackson.JsonProcessingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.mongodb.morphia.query.Query;
-
-import com.mongodb.BasicDBObject;
-import com.mongodb.util.JSON;
 
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.core.MCast;

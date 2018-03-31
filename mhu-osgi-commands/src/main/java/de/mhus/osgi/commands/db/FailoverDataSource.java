@@ -69,6 +69,7 @@ public class FailoverDataSource extends AbstractDataSource {
 		return list.get(current); 
 	}
 
+	@Override
 	public Connection getConnection(String username, String password)
 			throws SQLException {
 		SQLException lastException = null;

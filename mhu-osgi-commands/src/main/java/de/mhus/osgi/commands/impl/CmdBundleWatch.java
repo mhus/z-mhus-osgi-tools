@@ -36,6 +36,7 @@ public class CmdBundleWatch implements Action  {
 	@Argument(index=1, name="lines", required=false, description="lines to add or remove", multiValued=true)
     String[] lines;
 	
+	@Override
 	public Object execute() throws Exception {
 		
 		PersistentWatch service = MOsgi.getService(PersistentWatch.class);

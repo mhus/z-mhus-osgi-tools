@@ -31,7 +31,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import de.mhus.karaf.xdb.cmd.CmdUse;
 import de.mhus.karaf.xdb.cmd.XdbUtil;
 import de.mhus.lib.mongo.MoUtil;
 
@@ -74,6 +73,7 @@ public class CmdMongoFind implements Action {
 			BasicDBObject find = MoUtil.jsonMarshall(query);
 			res = collection.find(find);
 		}
+		@SuppressWarnings("deprecation")
 		JsonWriterSettings writerSettings = new JsonWriterSettings(true);
 		for (Document r : res) {
 			System.out.println(r.toJson(writerSettings));

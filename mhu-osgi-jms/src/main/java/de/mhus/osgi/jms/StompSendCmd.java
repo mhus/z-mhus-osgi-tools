@@ -53,6 +53,7 @@ public class StompSendCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
+	@Override
 	public Object execute() throws Exception {
 
 		StompConnection connection = new StompConnection();

@@ -85,6 +85,7 @@ public class TraceDataSource extends AbstractDataSource {
 		this.context = context;
 	}
 
+	@Override
 	public Connection getConnection() throws SQLException {
 		return new TracedConnection(getDataSource().getConnection(), this);
 	}

@@ -23,6 +23,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 @Service
 public class ReceiverListCmd implements Action {
 
+	@Override
 	public Object execute() throws Exception {
 		
 		JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();

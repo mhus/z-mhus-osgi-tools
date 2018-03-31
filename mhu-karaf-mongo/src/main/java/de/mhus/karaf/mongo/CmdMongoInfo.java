@@ -29,6 +29,7 @@ public class CmdMongoInfo implements Action {
 	@Argument(index=0, name="datasource", required=true, description="Data Source Name", multiValued=false)
     String name;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object execute() throws Exception {
 		

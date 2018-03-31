@@ -29,10 +29,12 @@ public class TracedConnection extends DelegateConnection {
 		super(connection, dataSource);
 	}
 
+	@Override
 	public Statement createStatement() throws SQLException {
 		return new TracedStatement(instance.createStatement(),this);
 	}
 
+	@Override
 	public PreparedStatement prepareStatement(String sql) throws SQLException {
 		return new TracedPreparedStatement(instance.prepareStatement(sql), sql, this);
 	}
