@@ -19,10 +19,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.mhus.osgi</groupId>
-	<artifactId>mhu-osgi-jwsosgibridge</artifactId>
-	<description>jwsbridge OSGi bundle project.</description>
+	<artifactId>mhu-karaf-vaadinbridge</artifactId>
 	<packaging>bundle</packaging>
+	<description>vaadinkarafbridge OSGi bundle.</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
 		<version>1.3.3-SNAPSHOT</version>
@@ -41,15 +40,13 @@
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>
-							de.mhus.osgi.jwsbridge*;version=${project.version}
+							de.mhus.osgi.vaadinkarafbridge*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
 							*
 						</Import-Package>
-						<Private-Package>
-							de.mhus.osgi.jwsbridge.impl
-						</Private-Package>
 						<Service-Component>*</Service-Component>
+
 					</instructions>
 				</configuration>
 			</plugin>
@@ -58,25 +55,20 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
-			<version>${osgi.version}</version>
-			<scope>provided</scope>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-osgi-vaadinbridge</artifactId>
+			<version>${project.version}</version>
+			<type>bundle</type>
 		</dependency>
 		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.compendium</artifactId>
-			<version>${osgi.version}</version>
+			<groupId>org.apache.karaf.shell</groupId>
+			<artifactId>org.apache.karaf.shell.console</artifactId>
+			<version>${karaf.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>biz.aQute</groupId>
-			<artifactId>bndlib</artifactId>
-			<version>${bndlib.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>${cxf.version}</version>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>mhu-lib-core</artifactId>
+			<version>${mhulib.version}</version>
 		</dependency>
 	</dependencies>
 </project>

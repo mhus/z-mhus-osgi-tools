@@ -223,13 +223,13 @@
 	</build>
 
 	<modules>
-		<module>mhu-osgi-jwsosgibridge</module>
-		<module>mhu-osgi-jwskarafbridge</module>
+		<module>mhu-osgi-jwsbridge</module>
+		<module>mhu-karaf-jwsbridge</module>
 		<module>mhu-osgi-jwsclient</module>
-		<module>mhu-osgi-vaadinosgibridge</module>
-		<module>mhu-osgi-vaadinkarafbridge</module>
-		<module>mhu-osgi-mailosgi</module>
-		<module>mhu-osgi-mailkaraf</module>
+		<module>mhu-osgi-vaadinbridge</module>
+		<module>mhu-karaf-vaadinbridge</module>
+		<module>mhu-osgi-mail</module>
+		<module>mhu-karaf-mail</module>
 		<module>mhu-osgi-jms</module>
 		<module>mhu-osgi-commands</module>
 		<module>mhu-osgi-web-console</module>
