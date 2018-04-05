@@ -38,6 +38,7 @@ public interface SendQueue {
 	/**
 	 * Set connection and behavior properties.
 	 * @param properties
+	 * @throws Exception 
 	 */
 	void setProperties(Properties properties) throws Exception;
 	
@@ -63,6 +64,7 @@ public interface SendQueue {
 	 * 
 	 * @param message
 	 * @param addresses
+	 * @throws Exception 
 	 */
 	void sendMessage(Message message, Address[] addresses) throws Exception;
 	

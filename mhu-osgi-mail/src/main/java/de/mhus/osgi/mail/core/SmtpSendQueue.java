@@ -95,7 +95,8 @@ public class SmtpSendQueue extends AbstractSendQueue {
 			Authenticator auth = null;
 			if (properties.containsKey("mail.user")) {
 		        auth = new Authenticator() {
-		            public PasswordAuthentication getPasswordAuthentication() {
+		            @Override
+					public PasswordAuthentication getPasswordAuthentication() {
 		                return new PasswordAuthentication(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
 		            }
 		        };

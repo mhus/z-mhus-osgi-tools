@@ -37,6 +37,7 @@ public interface SendQueueManager {
 	 * 
 	 * @param queue
 	 * @param message
+	 * @param addresses 
 	 * @param adresses
 	 * @throws Exception 
 	 */

@@ -169,6 +169,7 @@ public class VaadinResourcesServlet extends HttpServlet {
 
 
 
+	@SuppressWarnings("deprecation")
 	private Resource handleScss(Resource res, String scssFilename, String filename) throws IOException {
 		
         synchronized (SCSS_MUTEX) {

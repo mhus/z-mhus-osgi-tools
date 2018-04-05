@@ -17,6 +17,8 @@ package de.mhus.osgi.mail.core;
 
 public class QueueNotFoundException extends Exception {
 
+	private static final long serialVersionUID = 1L;
+
 	public QueueNotFoundException() {
 		super();
 	}

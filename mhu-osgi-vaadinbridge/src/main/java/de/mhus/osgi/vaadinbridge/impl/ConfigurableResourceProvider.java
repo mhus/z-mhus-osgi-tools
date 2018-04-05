@@ -48,12 +48,14 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 //		addResource("com.vaadin.push", "/vaadinPush.js");
 	}
 	
+	@Override
 	public boolean canHandle(String name) {
 		ResourceBundle resource = getResourceInfo(name);
 		if (resource == null) return false;
 		return true;
 	}
 
+	@Override
 	public Resource getResource(String name) {
 		ResourceBundle resource = getResourceInfo(name);
 		if (resource == null) return null;
@@ -65,10 +67,12 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 		return new Resource( bundle, bundle.getResource(name));
 	}
 
+	@Override
 	public String getName() {
 		return NAME;
 	}
 
+	@Override
 	public long getLastModified(String name) {
 		ResourceBundle resource = getResourceInfo(name);
 		if (resource == null) return -1;
@@ -100,6 +104,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 	 * @param bundle
 	 * @param pathes
 	 */
+	@Override
 	public void addResource(String bundle, String... pathes) {
 		if (bundle == null || pathes == null)
 			throw new NullPointerException();
@@ -121,6 +126,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 		
 	}
 
+	@Override
 	public void removeResource(String bundle) {
 		if (bundle == null) return;
 		synchronized (list) {
@@ -133,6 +139,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 		}
 	}
 	
+	@Override
 	public String[] getResourceBundles() {
 		String[] out = new String[list.size()];
 		synchronized (list) {
@@ -147,6 +154,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 		return out;
 	}
 	
+	@Override
 	public String[] getResourcePathes(String bundle) {
 		if (bundle == null) return null;
 		synchronized (list) {
@@ -181,7 +189,7 @@ public class ConfigurableResourceProvider implements VaadinResourceProvider, Vaa
 
 	@Override
 	public void setDebug(boolean debug) {
-		this.debug = debug;
+		ConfigurableResourceProvider.debug = debug;
 	}
 	
 	public void cleanupCache() {

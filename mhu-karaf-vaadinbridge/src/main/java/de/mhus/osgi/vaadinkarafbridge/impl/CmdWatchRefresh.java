@@ -29,6 +29,7 @@ public class CmdWatchRefresh implements Action {
 	@Reference
 	private BundleWatch watch;
 
+	@Override
 	public Object execute() throws Exception {
 		
 		watch.refreshAll();

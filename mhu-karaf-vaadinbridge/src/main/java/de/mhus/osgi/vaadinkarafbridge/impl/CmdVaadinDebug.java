@@ -33,6 +33,7 @@ public class CmdVaadinDebug implements Action {
 	@Reference
 	private VaadinConfigurableResourceProviderAdmin provider;
 
+	@Override
 	public Object execute() throws Exception {
 		
 		provider.setDebug(debug);

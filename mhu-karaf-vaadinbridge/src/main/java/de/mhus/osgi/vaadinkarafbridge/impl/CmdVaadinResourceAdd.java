@@ -36,6 +36,7 @@ public class CmdVaadinResourceAdd implements Action {
 	@Reference
 	private VaadinConfigurableResourceProviderAdmin provider;
 
+	@Override
 	public Object execute() throws Exception {
 		
 //		System.out.println("ADD: " + bundle + ":" + pathes);

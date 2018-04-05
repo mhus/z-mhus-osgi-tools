@@ -31,8 +31,9 @@ public class CmdVaadinResourceRemove implements Action {
     String bundle;
 
 	@Reference
-private VaadinConfigurableResourceProviderAdmin provider;
+	private VaadinConfigurableResourceProviderAdmin provider;
 
+	@Override
 	public Object execute() throws Exception {
 		
 		provider.removeResource(bundle);

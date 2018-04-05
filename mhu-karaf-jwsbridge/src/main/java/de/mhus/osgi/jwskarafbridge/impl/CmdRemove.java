@@ -30,6 +30,7 @@ public class CmdRemove implements Action {
 	@Argument(index=0, name="service", required=true, description="Service Name", multiValued=false)
     String serviceName;
 
+	@Override
 	public Object execute() throws Exception {
 		admin.closeWebService(serviceName);
 		return null;

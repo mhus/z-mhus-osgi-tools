@@ -97,6 +97,7 @@ public class BundleWatchImpl implements BundleWatch, BundleListener, ServiceList
 		Enumeration<String> list = bundle.getEntryPaths("/VAADIN");
 		if (list == null) return;
 		
+		@SuppressWarnings("unchecked")
 		ServiceReference<VaadinConfigurableResourceProviderAdmin> sr = (ServiceReference<VaadinConfigurableResourceProviderAdmin>) context.getServiceReference(VaadinConfigurableResourceProviderAdmin.class.getName());
 		if (sr == null) return;
 		VaadinConfigurableResourceProviderAdmin admin = context.getService(sr);

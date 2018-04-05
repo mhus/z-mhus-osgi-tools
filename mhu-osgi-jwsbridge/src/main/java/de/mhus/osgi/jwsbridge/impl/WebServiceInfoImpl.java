@@ -78,11 +78,13 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 			service.published(this);
 	}
 	
+	@Override
 	public boolean isConnected() {
 		return endpoint != null;
 	}
 	
 	
+	@Override
 	public String getStatus() {
 		if (error != null)
 			return "Error: " + error;
@@ -94,6 +96,7 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		
 	}
 	
+	@Override
 	public String getBindingInfo() {
 		if (!isConnected()) return "";
 		
@@ -106,17 +109,6 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		return "/" + getName();
 	}
 
-	private String turnArround(String name) {
-		String[] parts = name.split("\\.");
-		StringBuilder out = new StringBuilder();
-		for (String part : parts) {
-			if (out.length() != 0)
-				out.insert(0, ".");
-			out.insert(0, part);
-		}
-		return out.toString();
-	}
-
 	public boolean is(JavaWebService service2) {
 		return service2.equals(service);
 	}
@@ -126,6 +118,7 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		return name.equals(getName());
 	}
 
+	@Override
 	public long getId() {
 		return id;
 	}
@@ -135,10 +128,12 @@ public class WebServiceInfoImpl extends WebServiceInfo {
 		return reference.getBundle().getSymbolicName();
 	}
 	
+	@Override
 	public Endpoint getEndpoint() {
 		return endpoint;
 	}
 	
+	@Override
 	public void setName(String name) {
 		if (name == null || name.length() == 0 || name.equals(getName())) return;
 		boolean connected = isConnected();

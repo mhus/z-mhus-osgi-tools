@@ -33,6 +33,7 @@ public class CmdWatchEnabled implements Action {
 	@Reference
 	private BundleWatch watch;
 
+	@Override
 	public Object execute() throws Exception {
 		
 		if (enabled == null) {
