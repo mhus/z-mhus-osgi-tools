@@ -47,7 +47,7 @@
 		</developer>
 	</developers>
 	<properties>
-		<mhulib.version>3.3.3</mhulib.version>
+		<mhulib.version>3.3.4-SNAPSHOT</mhulib.version>
 		<ports.version>1.3.4</ports.version>
 
 		<scr.packages>*</scr.packages>
@@ -231,7 +231,8 @@
 		<module>mhu-osgi-mail</module>
 		<module>mhu-karaf-mail</module>
 		<module>mhu-osgi-jms</module>
-		<module>mhu-osgi-commands</module>
+		<module>mhu-osgi-services</module>
+		<module>mhu-karaf-commands</module>
 		<module>mhu-osgi-web-console</module>
 		<module>mhu-osgi-root-servlet</module>
 		<module>mhu-osgi-rewrite-servlet</module>
