@@ -45,7 +45,14 @@
 						</Export-Package>
 						<Import-Package>
 							org.apache.karaf.bundle.core;resolution:=optional,
-							*
+                        	de.mhus.lib.adb*;resolution:=optional,
+                        	de.mhus.lib.jpa*;resolution:=optional,
+                        	de.mhus.lib.cao*;resolution:=optional,
+                        	de.mhus.lib.sql*;resolution:=optional,
+                        	de.mhus.lib.jms*;resolution:=optional,
+                        	org.apache.activemq.*;resolution:=optional,
+                        	javax.jms.*;resolution:=optional,
+                            *
 						</Import-Package>
 						<Private-Package>
 							de.mhus.osgi.commands.impl*
