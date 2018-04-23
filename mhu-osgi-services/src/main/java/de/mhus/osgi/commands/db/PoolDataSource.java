@@ -48,7 +48,6 @@ public class PoolDataSource extends AbstractDataSource {
 
 				DataSource ds = new DataSourceUtil(context).getDataSource(source);
 				
-				@SuppressWarnings({ "rawtypes", "unchecked" })
 				ObjectPool connectionPool = new GenericObjectPool(null);
 				ConnectionFactory connectionFactory = new DataSourceConnectionFactory(ds);
 		        @SuppressWarnings("unused")
