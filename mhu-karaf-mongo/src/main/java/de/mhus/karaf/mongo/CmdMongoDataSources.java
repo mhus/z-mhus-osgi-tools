@@ -17,6 +17,7 @@ package de.mhus.karaf.mongo;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
@@ -26,10 +27,13 @@ import de.mhus.lib.karaf.MOsgi;
 @Service
 public class CmdMongoDataSources implements Action {
 
+	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	boolean full = false;
+
 	@Override
 	public Object execute() throws Exception {
 		
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(full);
 		
 		table.setHeaderValues("Ref","Name","Connected","Host","Port");
 		for (de.mhus.lib.karaf.MOsgi.Service<MongoDataSource> ref : MOsgi.getServiceRefs(MongoDataSource.class, null)) {

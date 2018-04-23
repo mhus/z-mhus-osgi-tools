@@ -33,6 +33,9 @@ public class CmdList implements Action {
 	@Option(name="-a", description="Api Name",required=false)
 	String apiName;
 
+	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	boolean full = false;
+
     @Reference
     private Session session;
 
@@ -43,7 +46,7 @@ public class CmdList implements Action {
 
 		XdbApi api = XdbUtil.getApi(apiName);
 
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(full);
 		table.setHeaderValues("Service","Schema","DataSource","Managed Types");
 		for (String serviceName : api.getServiceNames()) {
 			XdbService service = api.getService(serviceName);

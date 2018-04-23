@@ -48,12 +48,15 @@ public class CmdBundleList implements Action  {
     @Option(name = "-s", aliases = { "--symbolic" }, description = "Order by symbolic name", required = false, multiValued = false)
     boolean orderSymbolic;
     
+	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	boolean full = false;
+
     @Reference
 	private BundleContext context;
 
 	@Override
 	public Object execute() throws Exception {
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(full);
 		table.addHeader("id");
 		table.addHeader("Bundle");
 		table.addHeader("Version");

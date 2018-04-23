@@ -19,6 +19,7 @@ import java.io.PrintStream;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
@@ -29,6 +30,9 @@ import de.mhus.osgi.vaadinbridge.VaadinConfigurableResourceProviderAdmin;
 @Service
 public class CmdVaadinResourceList implements Action {
 
+	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	boolean full = false;
+
 	@Reference
 	private VaadinConfigurableResourceProviderAdmin provider;
 
@@ -36,7 +40,7 @@ public class CmdVaadinResourceList implements Action {
 	public Object execute() throws Exception {
 		PrintStream out = System.out;
 		//session.getConsole();
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(full);
 		table.setHeaderValues("Bundle","Resources");
 		for (String s : provider.getResourceBundles()) {
 			

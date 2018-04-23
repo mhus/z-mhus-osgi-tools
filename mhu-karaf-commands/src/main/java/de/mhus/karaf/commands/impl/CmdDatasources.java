@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
@@ -33,12 +34,15 @@ import de.mhus.lib.karaf.DataSourceUtil;
 @Service
 public class CmdDatasources implements Action {
 
+	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	boolean full = false;
+
 	@Reference
 	private BundleContext context;
 	
 	@Override
 	public Object execute() throws Exception {
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(full);
 		table.setHeaderValues("Name","Url","Status");
 		
         DataSourceUtil util = new DataSourceUtil(context);

@@ -79,7 +79,7 @@ public class CmdView implements Action {
 			
 			System.out.println(">>> VIEW " + type.getIdAsString(object));
 
-			ConsoleTable out = new ConsoleTable();
+			ConsoleTable out = new ConsoleTable(full);
 			out.setHeaderValues("Field","Value","Type");
 
 			List<String> fieldNames = type.getAttributeNames();
@@ -106,108 +106,7 @@ public class CmdView implements Action {
 			output = object;
 			
 		}
-/*		
-		DbManagerService service = AdbUtil.getService(serviceName);
-		Class<?> type = AdbUtil.getType(service, typeName);
-		
-		String regName = service.getManager().getRegistryName(type);
-		Table tableInfo = service.getManager().getTable(regName);
-		
-		ConsoleTable out = new ConsoleTable();
-		out.setHeaderValues("Field","Value","Type");
-		
-		List<Field> pkeys = tableInfo.getPrimaryKeys();
-		final HashSet<String> pkNames = new HashSet<>();
-		for (Field f : pkeys)
-			pkNames.add(f.getName());
 
-		String[] fields = null;
-		if (fieldsComma != null) fields = fieldsComma.split(",");
-
-		LinkedList<Field> fieldList = new LinkedList<>();
-		for (Field f : tableInfo.getFields())
-			if (fields == null)
-				fieldList.add(f);
-			else {
-				String fn = f.getName();
-				for (String fn2 : fields) {
-					if (fn2.equals(fn)) {
-						fieldList.add(f);
-						break;
-					}
-				}
-			}
-		
-		Collections.sort(fieldList,new Comparator<Field>() {
-
-			@Override
-			public int compare(Field o1, Field o2) {
-				boolean pk1 = pkNames.contains(o1.getName());
-				boolean pk2 = pkNames.contains(o2.getName());
-				if (pk1 == pk2)
-					return o1.getName().compareTo(o2.getName());
-				if (pk1) return -1;
-				//if (pk2) return 1;
-				return 1;
-			}
-		});
-		
-		for (Object object : AdbUtil.getObjects(service, type, id)) {
-
-			System.out.println(">>> VIEW " + object);
-			
-			
-			for (Field f : fieldList) {
-				String name = f.getName();
-				if (pkNames.contains(name)) name = name + "*";
-				Object o = f.get(object);
-				String value = null;
-				if (verbose) {
-					if (o == null) {
-						value = "[null]";
-					} else
-					if (o instanceof Map) {
-						// header
-						out.addRowValues(">>> " + name,  "", f.getType().getSimpleName() );
-						// data
-						for (Entry<Object,Object> item : new TreeMap<Object,Object>( (Map<?,?>)o ).entrySet()) {
-							String k = String.valueOf(item.getKey());
-							String v = String.valueOf(item.getValue());
-							if (!full && v.length() > max) v = MString.truncateNice(v, max);
-							out.addRowValues(name + "." + k,  v, item.getValue() == null ? "null" : item.getValue().getClass().getSimpleName() );
-						}
-						// footer
-						out.addRowValues("<<< " + name,  "", f.getType().getSimpleName() );
-					} else
-					if (o instanceof Collection) {
-						// header
-						out.addRowValues(">>> " + name,  "", f.getType().getSimpleName() );
-						// data
-						int cnt = 0;
-						for (Object item : ((Collection<?>)object)) {
-							String v = String.valueOf(item);
-							if (!full && v.length() > max) v = MString.truncateNice(v, max);
-							out.addRowValues(name + "[" + cnt + "]",  v, item == null ? "null" : item.getClass().getSimpleName() );
-							cnt++;
-						}
-						// footer
-						out.addRowValues("<<< " + name,  "", f.getType().getSimpleName() );
-						
-					} else {
-						value = String.valueOf(o);
-					}
-				} else {
-					value = String.valueOf(o);
-				}
-				if (value != null) {
-					if (!full && value.length() > max) value = MString.truncateNice(value, max);
-					out.addRowValues(name,  value, f.getType().getSimpleName() );
-				}
-			}
-			out.print(System.out);
-			output = object;
-		}
-		*/
 		if (outputParam != null)
 			session.put(outputParam, output);
 		return null;

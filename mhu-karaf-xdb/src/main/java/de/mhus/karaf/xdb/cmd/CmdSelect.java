@@ -117,15 +117,15 @@ public class CmdSelect implements Action {
 				fieldNames.add(name);
 		}
 		
-		ConsoleTable out = new ConsoleTable();
+		ConsoleTable out = new ConsoleTable(full);
 		if (csv) {
 			out.setColSeparator(";");
 			out.setCellSpacer(false);
 		}
 		if (oneLine)
 			out.setMultiLine(false);
-		if (!full)
-			out.setMaxColSize(max);
+//		if (!full)
+//			out.setMaxColSize(max);
 		for (String name : fieldNames) {
 			if (type.isPrimaryKey(name)) name = name + "*";
 			out.addHeader(name);
