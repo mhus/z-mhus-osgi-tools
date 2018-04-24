@@ -41,7 +41,9 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>
 							de.mhus.osgi.commands.*;version=${project.version},
-							de.mhus.osgi.services.*;version=${project.version}
+							de.mhus.osgi.services.*;version=${project.version},
+                            de.mhus.lib.karaf*;version=${project.version},
+                            de.mhus.lib.mutable*;version=${project.version}
 						</Export-Package>
 						<Import-Package>
 							org.apache.karaf.bundle.core;resolution:=optional,
@@ -58,6 +60,7 @@
 							de.mhus.osgi.commands.impl*
 						</Private-Package>
 						<Service-Component>*</Service-Component>
+                        <DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -127,8 +130,20 @@
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-karaf</artifactId>
+			<artifactId>mhu-lib-jms</artifactId>
 			<version>${mhulib.version}</version>
 		</dependency>
+		
+        <dependency>
+        	<groupId>commons-dbcp</groupId>
+        	<artifactId>commons-dbcp</artifactId>
+        	<version>1.4</version>
+        </dependency>
+        <dependency>
+        	<groupId>commons-pool</groupId>
+        	<artifactId>commons-pool</artifactId>
+        	<version>1.6</version>
+        </dependency>
+		
 	</dependencies>
 </project>

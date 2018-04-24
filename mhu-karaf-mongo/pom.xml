@@ -102,11 +102,10 @@
 			<type>bundle</type>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-karaf</artifactId>
-			<version>${mhulib.version}</version>
-			<type>bundle</type>
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-osgi-services</artifactId>
+			<version>${project.version}</version>
 			<scope>provided</scope>
 		</dependency>
 

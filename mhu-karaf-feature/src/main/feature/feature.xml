@@ -42,7 +42,6 @@
 		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-karaf/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhulib.version}</bundle>
 
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-services/${project.version}</bundle>

@@ -93,10 +93,11 @@
 			<artifactId>mhu-lib-persistence</artifactId>
 			<version>${mhulib.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-karaf</artifactId>
-			<version>${mhulib.version}</version>
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-osgi-services</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

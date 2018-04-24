@@ -41,10 +41,23 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>de.mhus.karaf.commands.*;version=${project.version}</Export-Package>
 						<Import-Package>
+                        	de.mhus.lib.adb*;resolution:=optional,
+                        	de.mhus.lib.jpa*;resolution:=optional,
+                        	de.mhus.lib.cao*;resolution:=optional,
+                        	de.mhus.lib.sql*;resolution:=optional,
+                        	de.mhus.lib.jms*;resolution:=optional,
+                        	de.mhus.lib.vaadin*;resolution:=optional,
+                        	com.vaadin*;resolution:=optional,
+                        	org.apache.activemq.*;resolution:=optional,
+                        	javax.jms.*;resolution:=optional,
+				            com.mongodb.*;resolution:=optional,
+				            org.mongodb.*;resolution:=optional,
+				            org.apache.karaf.*;resolution:=optional,
 							org.apache.karaf.bundle.core;resolution:=optional,
 							*
 						</Import-Package>
 						<Service-Component>*</Service-Component>
+                        <DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -110,11 +123,6 @@
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-persistence</artifactId>
-			<version>${mhulib.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-karaf</artifactId>
 			<version>${mhulib.version}</version>
 		</dependency>
 		

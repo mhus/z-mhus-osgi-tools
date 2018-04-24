@@ -125,11 +125,10 @@
 			<version>${mhulib.version}</version>
 			<type>bundle</type>
 		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-karaf</artifactId>
-			<version>${mhulib.version}</version>
-			<type>bundle</type>
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-osgi-services</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.axis/axis -->
