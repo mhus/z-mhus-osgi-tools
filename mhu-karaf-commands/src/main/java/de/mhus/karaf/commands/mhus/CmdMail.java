@@ -58,14 +58,17 @@ public class CmdMail implements Action {
 		
 		MSendMail sendMail = MApi.lookup(MSendMail.class);
 		
-		MailAttachment[] attachFiles = new MailAttachment[ attachments == null ? 0 : attachments.length ];
-		for (int i = 0; i < attachFiles.length; i++)
-			attachFiles[i] = new MailAttachment(attachments[i], false);
-
+		MailAttachment[] attachFiles = null;
+		if (attachments != null) {
+			attachFiles = new MailAttachment[ attachments == null ? 0 : attachments.length ];
+			for (int i = 0; i < attachFiles.length; i++)
+				attachFiles[i] = new MailAttachment(attachments[i], false);
+		}
+		
 		if (plain)
 			sendMail.sendPlainMail(from, to.split(";"), cc.split(";"), bcc.split(";"), subject, message);
 		else
-			sendMail.sendHtmlMail(from, to.split(";"), cc.split(";"), bcc.split(";"), subject, message, attachFiles);
+			sendMail.sendHtmlMail(from, to.split(";"), cc == null ? null : cc.split(";"), bcc == null ? null : bcc.split(";"), subject, message, attachFiles);
 		
 		System.out.println("Send");
 		
