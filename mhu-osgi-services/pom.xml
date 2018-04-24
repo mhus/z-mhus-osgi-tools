@@ -132,6 +132,12 @@
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-jms</artifactId>
 			<version>${mhulib.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>activemq-core</artifactId>
+					<groupId>org.apache.activemq</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		
         <dependency>
@@ -144,6 +150,6 @@
         	<artifactId>commons-pool</artifactId>
         	<version>1.6</version>
         </dependency>
-		
+				
 	</dependencies>
 </project>
