@@ -24,7 +24,7 @@
 	<description>commands OSGi blueprint bundle project.</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.4.0</version>
+		<version>1.4.1-SNAPSHOT</version>
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
