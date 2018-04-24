@@ -52,12 +52,6 @@
 
 	</feature>
 
-	<feature name='mhu-osgi-mailer' description='mhu-osgi-mailer' version='${project.version}'>
-		<feature>mhu-osgi-base</feature>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-mail/${project.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-karaf-mail/${project.version}</bundle>
-	</feature>
-
 	<feature name='mhu-osgi-jms' description='mhu-osgi-jms' version='${project.version}'>
 		<feature>activemq-client</feature>
 		<feature>mhu-osgi-base</feature>
@@ -68,7 +62,7 @@
 	<feature name='mhu-osgi-vaadin' description='mhu-osgi-vaadin' version='${project.version}'>
 		<feature>mhu-osgi-base</feature>
 		
-		<bundle>mvn:de.mhus.ports/vaadin-shared-deps/${ports.version}</bundle>
+		<bundle>mvn:de.mhus.ports/vaadin-shared-deps/${ports.vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
 		<bundle>mvn:com.vaadin/vaadin-themes/${vaadin.version}</bundle>
 		
@@ -87,7 +81,6 @@
 	
 	<feature name='mhu-osgi-full' description='mhu-osgi-full' version='${project.version}'>
 		<feature>mhu-osgi-base</feature>
-		<feature>mhu-osgi-mailer</feature>
 		<feature>mhu-osgi-jms</feature>
 		<feature>mhu-osgi-vaadin</feature>
 	</feature>

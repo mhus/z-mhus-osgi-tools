@@ -24,7 +24,7 @@
 	<description>vaadinkarafbridge OSGi bundle.</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.3.5-SNAPSHOT</version>
+		<version>1.4.0</version>
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
