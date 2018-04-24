@@ -229,7 +229,6 @@
 		<module>mhu-osgi-vaadinbridge</module>
 		<module>mhu-karaf-vaadinbridge</module>
 		<module>mhu-osgi-mail</module>
-		<module>mhu-karaf-mail</module>
 		<module>mhu-osgi-jms</module>
 		<module>mhu-osgi-services</module>
 		<module>mhu-karaf-commands</module>
