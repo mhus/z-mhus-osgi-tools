@@ -76,12 +76,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.karaf.bundle</groupId>
-			<artifactId>org.apache.karaf.bundle.core</artifactId>
-			<version>${karaf.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>
         		org.apache.felix.servicediagnostics.plugin

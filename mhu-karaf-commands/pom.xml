@@ -53,7 +53,7 @@
 				            com.mongodb.*;resolution:=optional,
 				            org.mongodb.*;resolution:=optional,
 				            org.apache.karaf.*;resolution:=optional,
-							org.apache.karaf.bundle.core;resolution:=optional,
+							org.apache.karaf.bundle.core.*;resolution:=optional,
 							*
 						</Import-Package>
 						<Service-Component>*</Service-Component>

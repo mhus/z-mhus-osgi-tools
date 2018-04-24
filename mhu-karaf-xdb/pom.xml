@@ -41,7 +41,6 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>de.mhus.karaf.xdb*;version=${project.version}</Export-Package>
 						<Import-Package>
-							org.apache.karaf.bundle.core;resolution:=optional,
 							*
 						</Import-Package>
 						<Service-Component>*</Service-Component>
