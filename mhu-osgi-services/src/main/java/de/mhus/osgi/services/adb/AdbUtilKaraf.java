@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.adb;
+package de.mhus.osgi.services.adb;
 
 import java.io.IOException;
 import java.util.Date;

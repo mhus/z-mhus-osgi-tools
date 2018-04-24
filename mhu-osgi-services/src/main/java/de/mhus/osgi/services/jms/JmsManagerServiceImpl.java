@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.jms;
+package de.mhus.osgi.services.jms;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -38,8 +38,8 @@ import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.MOsgi.Service;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.services.MOsgi.Service;
 
 /**
  * Note: because of a 'new behavior' or bug in Felix we need to delay the start of the

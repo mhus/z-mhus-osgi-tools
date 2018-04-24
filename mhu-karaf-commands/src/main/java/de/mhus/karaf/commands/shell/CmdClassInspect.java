@@ -22,7 +22,7 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.karaf.util.OsgiBundleClassLoader;
+import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
 @Command(scope = "shell", name = "inspectClass", description = "Inspect a class")
 @Service

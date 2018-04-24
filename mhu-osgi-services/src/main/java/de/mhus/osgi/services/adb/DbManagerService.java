@@ -13,18 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.jms;
+package de.mhus.osgi.services.adb;
 
-import javax.jms.JMSException;
+import de.mhus.lib.adb.DbManager;
+import de.mhus.lib.errors.MException;
 
-import de.mhus.lib.jms.JmsConnection;
+public interface DbManagerService {
 
-public interface JmsDataSource {
+	void updateManager(boolean clean) throws MException;
 
-	String getName();
-
-	JmsConnection getConnection() throws JMSException;
-	void resetConnection() throws JMSException;
-	JmsConnection createConnection() throws JMSException;
+	DbManager getManager();
 	
+	boolean isConnected();
+	
+	String getDataSourceName();
+	
+	void setDataSourceName(String dataSourceName);
+
+	String getServiceName();
+
+	void doInitialize() throws MException;
+
+	void doClose();
+
 }

@@ -29,9 +29,9 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.system.IApi;
-import de.mhus.lib.karaf.util.OsgiBundleClassLoader;
 import de.mhus.lib.mutable.KarafBase;
 import de.mhus.lib.mutable.KarafMApiImpl;
+import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "base", description = "Base Manipulation")
 @Service

@@ -38,8 +38,8 @@ import de.mhus.lib.core.schedule.MutableSchedulerJob;
 import de.mhus.lib.core.schedule.OnceJob;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.services.TimerFactoryImpl;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.services.scheduler.TimerFactoryImpl;
 
 @Command(scope = "mhus", name = "timer", description = "Default Timer Handling")
 @Service

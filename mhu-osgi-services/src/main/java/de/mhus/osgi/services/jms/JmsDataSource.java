@@ -13,10 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf;
+package de.mhus.osgi.services.jms;
 
-import org.osgi.framework.ServiceReference;
+import javax.jms.JMSException;
 
-public interface ReferenceInject {
-	void setReference(ServiceReference<?> reference);
+import de.mhus.lib.jms.JmsConnection;
+
+public interface JmsDataSource {
+
+	String getName();
+
+	JmsConnection getConnection() throws JMSException;
+	void resetConnection() throws JMSException;
+	JmsConnection createConnection() throws JMSException;
+	
 }

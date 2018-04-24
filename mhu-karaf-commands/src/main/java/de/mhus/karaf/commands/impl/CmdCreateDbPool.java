@@ -27,9 +27,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
-import de.mhus.lib.karaf.DataSourceUtil;
-import de.mhus.lib.karaf.TemplateUtils;
 import de.mhus.osgi.commands.db.PoolDataSource;
+import de.mhus.osgi.services.util.DataSourceUtil;
+import de.mhus.osgi.services.util.TemplateUtils;
 
 @Command(scope = "jdbc", name = "createdbpool", description = "Create DB Pool")
 @Service

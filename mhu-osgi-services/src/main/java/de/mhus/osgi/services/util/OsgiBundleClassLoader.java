@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.util;
+package de.mhus.osgi.services.util;
 
 import java.util.HashMap;
 import java.util.Map;

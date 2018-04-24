@@ -15,8 +15,6 @@
  */
 package de.mhus.osgi.services;
 
-import de.mhus.lib.karaf.MOsgi;
-
 public class CacheControlUtil {
 
 	public static void clear(String name) {

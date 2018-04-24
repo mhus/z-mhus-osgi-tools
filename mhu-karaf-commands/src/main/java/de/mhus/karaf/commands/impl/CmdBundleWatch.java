@@ -24,7 +24,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.karaf.commands.watch.PersistentWatch;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.MOsgi;
+import de.mhus.osgi.services.MOsgi;
 
 @Command(scope = "bundle", name = "persistentwatch", description = "Work with persistence watch list")
 @Service

@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.jms;
+package de.mhus.osgi.services.jms;
 
 import java.util.List;
 
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.lib.karaf.MOsgi.Service;
+import de.mhus.osgi.services.MOsgi.Service;
 
 public interface JmsManagerService {
 	
@@ -36,7 +36,7 @@ public interface JmsManagerService {
 	List<JmsDataChannel> getChannels();
 	List<JmsConnection> getConnections();
 	List<Service<JmsDataSource>> getDataSources();
-	String getServiceName(de.mhus.lib.karaf.MOsgi.Service<JmsDataSource> ref);
+	String getServiceName(de.mhus.osgi.services.MOsgi.Service<JmsDataSource> ref);
 	void doBeat();
 	
 	/**

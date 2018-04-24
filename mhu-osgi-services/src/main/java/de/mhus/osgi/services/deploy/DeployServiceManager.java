@@ -7,12 +7,12 @@ import org.osgi.framework.ServiceReference;
 import aQute.bnd.annotation.component.Component;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.MOsgi.Service;
-import de.mhus.lib.karaf.MServiceTracker;
 import de.mhus.osgi.services.DeployService;
+import de.mhus.osgi.services.MOsgi;
 import de.mhus.osgi.services.SimpleServiceIfc;
+import de.mhus.osgi.services.MOsgi.Service;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
+import de.mhus.osgi.services.util.MServiceTracker;
 
 @Component
 public class DeployServiceManager extends MLog implements SimpleServiceIfc {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.jms;
+package de.mhus.osgi.services.jms;
 
 import de.mhus.lib.errors.NotFoundRuntimeException;
 import de.mhus.lib.jms.JmsConnection;

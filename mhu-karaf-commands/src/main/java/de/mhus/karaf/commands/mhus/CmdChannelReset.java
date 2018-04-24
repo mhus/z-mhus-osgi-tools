@@ -20,9 +20,9 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.karaf.jms.JmsDataChannel;
-import de.mhus.lib.karaf.jms.JmsManagerService;
-import de.mhus.lib.karaf.jms.JmsUtil;
+import de.mhus.osgi.services.jms.JmsDataChannel;
+import de.mhus.osgi.services.jms.JmsManagerService;
+import de.mhus.osgi.services.jms.JmsUtil;
 
 @Command(scope = "jms", name = "channel-reset", description = "Reset channels")
 @Service

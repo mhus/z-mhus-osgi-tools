@@ -42,7 +42,6 @@
 						<Export-Package>
 							de.mhus.osgi.commands.*;version=${project.version},
 							de.mhus.osgi.services.*;version=${project.version},
-                            de.mhus.lib.karaf*;version=${project.version},
                             de.mhus.lib.mutable*;version=${project.version}
 						</Export-Package>
 						<Import-Package>

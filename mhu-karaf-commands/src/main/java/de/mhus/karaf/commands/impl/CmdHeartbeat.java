@@ -23,9 +23,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.lib.karaf.jms.JmsUtil;
 import de.mhus.osgi.services.heartbeat.HeartbeatAdmin;
 import de.mhus.osgi.services.heartbeat.HeartbeatService;
+import de.mhus.osgi.services.jms.JmsUtil;
 
 @Command(scope = "jms", name = "heartbeat", description = "Send heardbeat")
 @Service

@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.karaf.adb.AdbUtilKaraf;
-import de.mhus.lib.karaf.adb.DbManagerService;
+import de.mhus.osgi.services.adb.AdbUtilKaraf;
+import de.mhus.osgi.services.adb.DbManagerService;
 
 @Command(scope = "adb", name = "datasource", description = "Update ADB DataSource")
 @Service

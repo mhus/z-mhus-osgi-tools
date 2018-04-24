@@ -22,7 +22,7 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.JmsDestination;
 import de.mhus.lib.jms.ServerJms;
-import de.mhus.lib.karaf.jms.JmsDataSource;
+import de.mhus.osgi.services.jms.JmsDataSource;
 
 public class DLQConsumer extends ServerJms {
 

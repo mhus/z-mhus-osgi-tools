@@ -13,27 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.adb;
+package de.mhus.osgi.services.jms;
 
-import de.mhus.lib.adb.DbManager;
-import de.mhus.lib.errors.MException;
+import de.mhus.lib.jms.JmsChannel;
 
-public interface DbManagerService {
+public interface JmsDataChannel {
 
-	void updateManager(boolean clean) throws MException;
-
-	DbManager getManager();
+	JmsChannel getChannel();
+	String getName();
+	String getConnectionName();
 	
-	boolean isConnected();
+	/**
+	 * Call to reconnect the channel.
+	 */
+	void reset();
 	
-	String getDataSourceName();
+	/**
+	 * Called if connection is available
+	 */
+	void onConnect();
 	
-	void setDataSourceName(String dataSourceName);
-
-	String getServiceName();
-
-	void doInitialize() throws MException;
-
-	void doClose();
-
+	/**
+	 * Called if connection disappears
+	 */
+	void onDisconnect();
+	void doBeat();
+	
 }

@@ -24,7 +24,7 @@ import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.VaultSource;
-import de.mhus.lib.karaf.MServiceTracker;
+import de.mhus.osgi.services.util.MServiceTracker;
 
 @Component(provide=SimpleServiceIfc.class,immediate=true)
 public class VaultManagerImpl extends SimpleService {

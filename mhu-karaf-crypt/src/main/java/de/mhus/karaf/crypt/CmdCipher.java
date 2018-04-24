@@ -41,9 +41,9 @@ import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.MVaultUtil;
 import de.mhus.lib.core.vault.MutableVaultSource;
 import de.mhus.lib.core.vault.VaultSource;
-import de.mhus.lib.karaf.MOsgi;
 import de.mhus.osgi.crypt.api.CryptaApi;
 import de.mhus.osgi.crypt.api.cipher.CipherProvider;
+import de.mhus.osgi.services.MOsgi;
 
 @Command(scope = "crypta", name = "cipher", description = "Cipher Handling")
 @Service
@@ -73,7 +73,7 @@ public class CmdCipher extends MLog implements Action {
 	public Object execute() throws Exception {
 
 		if (cmd.equals("list")) {
-			for (de.mhus.lib.karaf.MOsgi.Service<CipherProvider> ref : MOsgi.getServiceRefs(CipherProvider.class, null)) {
+			for (de.mhus.osgi.services.MOsgi.Service<CipherProvider> ref : MOsgi.getServiceRefs(CipherProvider.class, null)) {
 				System.out.println(ref.getReference().getProperty("cipher"));
 			}
 			return null;

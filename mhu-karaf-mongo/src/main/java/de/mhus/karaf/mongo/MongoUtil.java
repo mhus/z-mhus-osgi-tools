@@ -29,8 +29,8 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.util.MUri;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.lib.karaf.MOsgi;
 import de.mhus.lib.mongo.MoManager;
+import de.mhus.osgi.services.MOsgi;
 
 public class MongoUtil {
 

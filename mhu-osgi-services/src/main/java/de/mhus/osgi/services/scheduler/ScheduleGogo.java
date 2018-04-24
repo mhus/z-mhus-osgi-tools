@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.osgi.services;
+package de.mhus.osgi.services.scheduler;
 
 import java.io.ByteArrayInputStream;
 
@@ -27,7 +27,8 @@ import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.logging.Log.LEVEL;
 import de.mhus.lib.core.logging.StreamToLogAdapter;
 import de.mhus.lib.core.schedule.CronJob;
-import de.mhus.lib.karaf.MOsgi;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.services.SimpleServiceIfc;
 
 public class ScheduleGogo extends MLog implements SimpleServiceIfc {
 		

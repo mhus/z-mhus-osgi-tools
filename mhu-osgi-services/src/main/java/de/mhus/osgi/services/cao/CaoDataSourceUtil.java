@@ -13,30 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.jms;
+package de.mhus.osgi.services.cao;
 
-import de.mhus.lib.jms.JmsChannel;
+import de.mhus.lib.cao.CaoDataSource;
+import de.mhus.osgi.services.MOsgi;
 
-public interface JmsDataChannel {
+public class CaoDataSourceUtil {
 
-	JmsChannel getChannel();
-	String getName();
-	String getConnectionName();
-	
-	/**
-	 * Call to reconnect the channel.
-	 */
-	void reset();
-	
-	/**
-	 * Called if connection is available
-	 */
-	void onConnect();
-	
-	/**
-	 * Called if connection disappears
-	 */
-	void onDisconnect();
-	void doBeat();
-	
+	public static CaoDataSource lookup(String name) {
+		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {
+			if (ds.getName().equals(name)) return ds;
+		}
+		return null;
+	}
 }

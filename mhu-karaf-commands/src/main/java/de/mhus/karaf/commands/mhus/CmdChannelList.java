@@ -27,9 +27,9 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.jms.JmsChannel;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.ServerJms;
-import de.mhus.lib.karaf.jms.JmsDataChannel;
-import de.mhus.lib.karaf.jms.JmsManagerService;
-import de.mhus.lib.karaf.jms.JmsUtil;
+import de.mhus.osgi.services.jms.JmsDataChannel;
+import de.mhus.osgi.services.jms.JmsManagerService;
+import de.mhus.osgi.services.jms.JmsUtil;
 
 @Command(scope = "jms", name = "channel-list", description = "List Channels")
 @Service

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.adb;
+package de.mhus.osgi.services.adb;
 
 import javax.sql.DataSource;
 
@@ -29,11 +29,11 @@ import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.activator.DefaultActivator;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.errors.MException;
-import de.mhus.lib.karaf.DataSourceUtil;
 import de.mhus.lib.sql.DataSourceProvider;
 import de.mhus.lib.sql.DbPool;
 import de.mhus.lib.sql.DefaultDbPool;
 import de.mhus.lib.sql.Dialect;
+import de.mhus.osgi.services.util.DataSourceUtil;
 //@Component(provide=DbManagerService.class,name="...",immediate=true)
 public abstract class DbManagerServiceImpl extends MLog implements DbManagerService {
 

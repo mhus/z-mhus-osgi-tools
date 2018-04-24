@@ -32,9 +32,9 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.MOsgi.Service;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.services.MOsgi.Service;
 
 public class XdbUtil {
 

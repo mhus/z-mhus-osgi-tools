@@ -13,17 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.cao;
+package de.mhus.osgi.services.util;
 
-import de.mhus.lib.cao.CaoDataSource;
-import de.mhus.lib.karaf.MOsgi;
+import org.osgi.framework.ServiceReference;
 
-public class CaoDataSourceUtil {
-
-	public static CaoDataSource lookup(String name) {
-		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {
-			if (ds.getName().equals(name)) return ds;
-		}
-		return null;
-	}
+public interface ReferenceInject {
+	void setReference(ServiceReference<?> reference);
 }

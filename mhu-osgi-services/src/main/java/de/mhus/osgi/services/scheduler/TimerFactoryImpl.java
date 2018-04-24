@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.lib.karaf.services;
+package de.mhus.osgi.services.scheduler;
 
 
 import java.util.Date;
@@ -49,9 +49,9 @@ import de.mhus.lib.core.schedule.OnceJob;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
 import de.mhus.lib.core.schedule.TimerTaskIntercepter;
-import de.mhus.lib.karaf.MOsgi;
-import de.mhus.lib.karaf.MOsgi.Service;
-import de.mhus.lib.karaf.MServiceTracker;
+import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.services.MOsgi.Service;
+import de.mhus.osgi.services.util.MServiceTracker;
 
 @Component(provide = TimerFactory.class, immediate=true,name="de.mhus.lib.karaf.services.TimerFactoryImpl")
 public class TimerFactoryImpl extends MLog implements TimerFactory {

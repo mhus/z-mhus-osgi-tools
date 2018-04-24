@@ -22,11 +22,11 @@ import de.mhus.lib.core.crypt.pem.PemPriv;
 import de.mhus.lib.core.crypt.pem.PemPub;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.lib.karaf.MOsgi;
 import de.mhus.osgi.crypt.api.CryptaApi;
 import de.mhus.osgi.crypt.api.cipher.CipherProvider;
 import de.mhus.osgi.crypt.api.currency.CurrencyProvider;
 import de.mhus.osgi.crypt.api.signer.SignerProvider;
+import de.mhus.osgi.services.MOsgi;
 
 @Component
 public class CryptaApiImpl extends MLog implements CryptaApi {

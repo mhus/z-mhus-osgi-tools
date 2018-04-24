@@ -22,7 +22,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.cao.CaoDataSource;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.MOsgi;
+import de.mhus.osgi.services.MOsgi;
 
 @Command(scope = "cao", name = "ds-list", description = "List All CAO Datasources")
 @Service

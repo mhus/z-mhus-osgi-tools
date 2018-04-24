@@ -41,9 +41,9 @@ import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.MVaultUtil;
 import de.mhus.lib.core.vault.MutableVaultSource;
 import de.mhus.lib.core.vault.VaultSource;
-import de.mhus.lib.karaf.MOsgi;
 import de.mhus.osgi.crypt.api.CryptaApi;
 import de.mhus.osgi.crypt.api.signer.SignerProvider;
+import de.mhus.osgi.services.MOsgi;
 
 @Command(scope = "crypta", name = "signer", description = "Signer Handling")
 @Service
@@ -73,7 +73,7 @@ public class CmdSigner extends MLog implements Action {
 	public Object execute() throws Exception {
 		
 		if (cmd.equals("list")) {
-			for (de.mhus.lib.karaf.MOsgi.Service<SignerProvider> ref : MOsgi.getServiceRefs(SignerProvider.class, null)) {
+			for (de.mhus.osgi.services.MOsgi.Service<SignerProvider> ref : MOsgi.getServiceRefs(SignerProvider.class, null)) {
 				System.out.println(ref.getReference().getProperty("signer"));
 			}
 			return null;

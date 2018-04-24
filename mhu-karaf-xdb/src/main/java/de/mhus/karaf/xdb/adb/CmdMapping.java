@@ -24,8 +24,8 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.adb.AdbUtilKaraf;
-import de.mhus.lib.karaf.adb.DbManagerService;
+import de.mhus.osgi.services.adb.AdbUtilKaraf;
+import de.mhus.osgi.services.adb.DbManagerService;
 
 @Command(scope = "adb", name = "mapping", description = "Print the mapping table of a ADB DataSource")
 @Service

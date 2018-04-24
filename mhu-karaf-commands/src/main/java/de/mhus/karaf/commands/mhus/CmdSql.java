@@ -29,12 +29,12 @@ import org.apache.karaf.shell.api.console.Session;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.karaf.util.OsgiBundleClassLoader;
 import de.mhus.lib.sql.analytics.SqlAnalytics;
 import de.mhus.lib.sql.analytics.SqlAnalyzer;
 import de.mhus.lib.sql.analytics.SqlReporter;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer.Container;
+import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 import de.mhus.lib.sql.analytics.SqlRuntimeWarning;
 import de.mhus.lib.sql.analytics.SqlRuntimeWriter;
 

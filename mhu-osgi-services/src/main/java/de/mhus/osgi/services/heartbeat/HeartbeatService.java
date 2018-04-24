@@ -19,7 +19,7 @@ import javax.jms.JMSException;
 
 import de.mhus.lib.jms.JmsChannel;
 import de.mhus.lib.jms.heartbeat.Heartbeat;
-import de.mhus.lib.karaf.jms.AbstractJmsDataChannel;
+import de.mhus.osgi.services.jms.AbstractJmsDataChannel;
 
 public class HeartbeatService extends AbstractJmsDataChannel {
 

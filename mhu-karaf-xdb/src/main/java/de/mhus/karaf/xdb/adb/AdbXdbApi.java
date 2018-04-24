@@ -24,10 +24,10 @@ import org.osgi.framework.InvalidSyntaxException;
 import aQute.bnd.annotation.component.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.lib.karaf.adb.AdbUtilKaraf;
-import de.mhus.lib.karaf.adb.DbManagerService;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.services.adb.AdbUtilKaraf;
+import de.mhus.osgi.services.adb.DbManagerService;
 
 @Component(properties="xdb.type=adb")
 public class AdbXdbApi implements XdbApi {

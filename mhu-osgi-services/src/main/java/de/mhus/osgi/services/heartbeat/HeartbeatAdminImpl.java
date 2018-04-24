@@ -30,10 +30,10 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
-import de.mhus.lib.karaf.MOsgi.Service;
-import de.mhus.lib.karaf.jms.JmsDataSource;
-import de.mhus.lib.karaf.jms.JmsManagerService;
-import de.mhus.lib.karaf.jms.JmsUtil;
+import de.mhus.osgi.services.MOsgi.Service;
+import de.mhus.osgi.services.jms.JmsDataSource;
+import de.mhus.osgi.services.jms.JmsManagerService;
+import de.mhus.osgi.services.jms.JmsUtil;
 
 @Component(provide=HeartbeatAdmin.class,immediate=true,name="de.mhus.lib.karaf.jms.heartbeat.HeartbeatAdmin")
 public class HeartbeatAdminImpl extends MLog implements HeartbeatAdmin {
