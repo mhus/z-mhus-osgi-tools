@@ -234,22 +234,10 @@
 	</build>
 
 	<modules>
-		<module>mhu-osgi-jwsbridge</module>
-		<module>mhu-karaf-jwsbridge</module>
-		<module>mhu-osgi-jwsclient</module>
-		<module>mhu-osgi-vaadinbridge</module>
-		<module>mhu-karaf-vaadinbridge</module>
-		<module>mhu-osgi-mail</module>
 		<module>mhu-osgi-services</module>
 		<module>mhu-osgi-jms</module>
-		<module>mhu-osgi-web-console</module>
-		<module>mhu-osgi-root-servlet</module>
-		<module>mhu-osgi-rewrite-servlet</module>
 		<module>mhu-karaf-xdb</module>
 		<module>mhu-karaf-mongo</module>
-		<module>mhu-osgi-crypt-api</module>
-		<module>mhu-osgi-crypt-bc</module>
-		<module>mhu-karaf-crypt</module>
 		<module>mhu-karaf-commands</module>
 		<module>mhu-karaf-feature</module>
 	</modules>

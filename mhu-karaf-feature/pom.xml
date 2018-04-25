@@ -27,6 +27,11 @@
 		<version>1.4.1-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+		<servlettools.version>1.4.1-SNAPSHOT</servlettools.version>
+		<crypttools.version>1.4.1-SNAPSHOT</crypttools.version>
+	</properties>
+
 	<build>
 		<pluginManagement>
 			<plugins>
