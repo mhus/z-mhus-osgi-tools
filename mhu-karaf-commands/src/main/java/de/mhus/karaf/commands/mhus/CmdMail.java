@@ -15,6 +15,9 @@
  */
 package de.mhus.karaf.commands.mhus;
 
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -22,6 +25,7 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.mail.MSendMail;
 import de.mhus.lib.core.mail.MailAttachment;
 
@@ -63,6 +67,11 @@ public class CmdMail implements Action {
 			attachFiles = new MailAttachment[ attachments == null ? 0 : attachments.length ];
 			for (int i = 0; i < attachFiles.length; i++)
 				attachFiles[i] = new MailAttachment(attachments[i], false);
+		}
+		
+		if (message.equals("*")) {
+			InputStreamReader isr = new InputStreamReader(System.in, Charset.forName("UTF-8"));
+			message = MFile.readFile(isr);
 		}
 		
 		if (plain)

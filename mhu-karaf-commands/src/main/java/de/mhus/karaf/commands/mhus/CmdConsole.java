@@ -15,6 +15,7 @@
  */
 package de.mhus.karaf.commands.mhus;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -23,6 +24,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
 
@@ -30,7 +32,14 @@ import de.mhus.lib.core.console.XTermConsole;
 @Service
 public class CmdConsole implements Action {
 
-	@Argument(index=0, name="cmd", required=false, description="info, create [<type>], size <cols/width> <rows/height>, reset, cleanup, color <fg> <bg>", multiValued=false)
+	@Argument(index=0, name="cmd", required=false, description="Command: \n"
+			+ " info            - Print current console instance information\n"
+			+ " create [<type>] - create new console of type: SIMPLE,ANSI,ANSI_COLOR,XTERM,XTERM_COLOR,CMD\n"
+			+ " size <cols/width> <rows/height> - set static cols and rows\n"
+			+ " reset           - recreate console instance\n"
+			+ " cleanup         - cleanup console\n"
+			+ " color <fg> <bg> - set colors\n"
+			+ " debug           - print console debug information", multiValued=false)
     String cmd;
 	
 	@Argument(index=1, name="arguments", required=false, description="arguments", multiValued=true)
@@ -89,12 +98,28 @@ public class CmdConsole implements Action {
 			console.setColor(Console.COLOR.valueOf(arguments[0].toUpperCase()), Console.COLOR.valueOf(arguments[1].toUpperCase()));
 			System.out.println(console.getForegroundColor() + " " + console.getBackgroundColor());
 		} break;
-		case "stty": {
-			System.out.println( Arrays.deepToString( new XTermConsole().getRawSettings() ));
-		}
+		case "debug": {
+			System.out.println("Java        : " + MSystem.getJavaVersion());
+			System.out.println("Term        : " + System.getenv("TERM"));
+			if (MSystem.isWindows())
+				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
+			else
+				System.out.println("XTermConsole: " + Arrays.deepToString( new XTermConsole().getRawSettings() ));
+			System.out.println("stty        : " + Arrays.deepToString( getRawSettings() ));
+		} break;
 		}
 		
 		return null;
+	}
+
+	public String[] getRawSettings() {
+		try {
+			String[] ret;
+			ret = MSystem.execute("/bin/sh","-c","stty -a < /dev/tty");
+			return ret;
+		} catch (IOException e) {
+			return new String[] {e.toString()};
+		}
 	}
 
 }
