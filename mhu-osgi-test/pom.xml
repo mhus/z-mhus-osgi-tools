@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <!-- 
+ Using example from
+ https://github.com/cschneider/osgi-testing-example
+  -->
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>mhu-osgi-test</artifactId>
+	<parent>
+		<artifactId>mhus-osgi-tools</artifactId>
+		<groupId>de.mhus.osgi</groupId>
+		<version>1.4.1-SNAPSHOT</version>
+	</parent>
+
+	<packaging>jar</packaging>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<osgi.version>6.0.0</osgi.version>
+		<pax.exam.version>4.11.0</pax.exam.version>
+		<pax.url.version>2.5.4</pax.url.version>
+		<logback.version>1.2.3</logback.version>
+		<slf4j.version>1.7.25</slf4j.version>
+		<karaf.version>4.0.10</karaf.version>
+		<junit.version>4.11</junit.version>
+		<inject.version>1.0</inject.version>
+		<dependencymanager.version>3.2.0</dependencymanager.version>
+		<metrics.version>3.1.0</metrics.version>
+		<netty.version>4.0.27.Final</netty.version>
+		<guava.version>18.0</guava.version>
+		<sigar.version>1.6.4</sigar.version>
+		<jna.version>4.0.0</jna.version>
+		<snakeyaml.version>1.17</snakeyaml.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.ops4j.pax.exam</groupId>
+			<artifactId>pax-exam-junit4</artifactId>
+			<scope>test</scope>
+				<version>${pax.exam.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ops4j.pax.exam</groupId>
+			<artifactId>pax-exam-link-mvn</artifactId>
+			<scope>test</scope>
+			<version>${pax.exam.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>test</scope>
+				<version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>test</scope>
+				<version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-atinject_1.0_spec</artifactId>
+			<scope>provided</scope>
+<version>${inject.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.core</artifactId>
+			<scope>provided</scope>
+				<version>${osgi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>osgi.cmpn</artifactId>
+			<scope>provided</scope>
+				<version>${osgi.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.ops4j.pax.exam</groupId>
+			<artifactId>pax-exam-container-karaf</artifactId>
+			<scope>test</scope>
+				<version>${pax.exam.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.karaf</groupId>
+			<artifactId>apache-karaf</artifactId>
+			<type>zip</type>
+			<scope>test</scope>
+				<version>${karaf.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.karaf.shell</groupId>
+			<artifactId>org.apache.karaf.shell.ssh</artifactId>
+			<scope>test</scope>
+				<version>${karaf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.karaf.package</groupId>
+			<artifactId>org.apache.karaf.package.core</artifactId>
+			<scope>test</scope>
+				<version>${karaf.version}</version>
+		</dependency>
+
+		<!-- mhus-* -->
+		
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-karaf-feature</artifactId>
+			<version>${project.version}</version>
+			<type>xml</type>
+			<classifier>features</classifier>
+		</dependency>
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-osgi-services</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- 
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-karaf-commands</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		 -->
+       	<dependency>
+			<groupId>de.mhus.osgi</groupId>
+			<artifactId>mhu-karaf-xdb</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>mhu-lib-annotations</artifactId>
+			<version>${mhulib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>mhu-lib-core</artifactId>
+			<version>${mhulib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>mhu-lib-persistence</artifactId>
+			<version>${mhulib.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>mhu-lib-j2ee</artifactId>
+			<version>${mhulib.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.servicemix.tooling</groupId>
+				<artifactId>depends-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<id>generate-depends-file</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>generate-depends-file</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.servicemix.tooling
+										</groupId>
+										<artifactId>
+											depends-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.2,)
+										</versionRange>
+										<goals>
+											<goal>
+												generate-depends-file
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

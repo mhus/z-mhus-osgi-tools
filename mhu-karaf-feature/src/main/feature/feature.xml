@@ -19,6 +19,12 @@
 <features name="${project.artifactId}-${project.version}"
 	xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
+
+	<feature name='mhu-osgi-test' description='For testing purpose' version='${project.version}'>
+		<feature prerequisite="true">wrap</feature>
+		<feature>mhu-osgi-base</feature>
+	</feature>
+	
 	<feature name='mhu-osgi-base' description='mhu-osgi-base' version='${project.version}'>
 		<details>${project.description}</details>
 		<!-- <config>foo=bar</config> -->
@@ -42,6 +48,7 @@
 		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
 		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhulib.version}</bundle>
 
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-services/${project.version}</bundle>
