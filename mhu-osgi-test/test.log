@@ -479,3 +479,295 @@
 13:19:46.434 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
 13:19:46.435 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 6faacc8d-aaf5-4430-9b89-548ec0846c47 timout: [ RelativeTimeout value = 180000 ]
 13:19:53.474 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:22:03.785 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:22:03.815 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:22:03.842 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:22:03.852 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:22:04.914 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:22:04.938 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:22:04.938 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: ec3242c6-5339-4038-a1ae-86c5ce9f558c timout: [ RelativeTimeout value = 180000 ]
+13:22:11.822 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:22:54.095 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:22:54.131 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:22:54.160 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:22:54.171 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:22:55.095 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:22:55.122 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:22:55.123 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: eb34005c-031f-4871-802e-11deff2d2057 timout: [ RelativeTimeout value = 180000 ]
+13:23:02.049 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:24:33.537 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:24:33.569 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:24:33.599 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:24:33.609 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:24:34.612 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:24:34.636 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:24:34.637 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: e78be316-2a85-466b-8e15-df22d8848fc9 timout: [ RelativeTimeout value = 180000 ]
+13:24:38.465 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:25:46.670 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:25:46.698 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:25:46.723 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:25:46.734 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:25:47.688 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:25:47.714 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:25:47.715 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 2a1e824b-a7d7-493f-a43f-f74cc18bd6b0 timout: [ RelativeTimeout value = 180000 ]
+13:25:57.924 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:26:28.548 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:26:28.582 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:26:28.613 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:26:28.624 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:26:29.605 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:26:29.627 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:26:29.628 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 9dfd58da-d014-4bd4-aa8d-77028a02b59c timout: [ RelativeTimeout value = 180000 ]
+13:26:36.675 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:29:28.311 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:29:28.344 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:29:28.367 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:29:28.380 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:29:29.329 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:29:29.353 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:29:29.353 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: fa67fc94-09d0-474a-b70c-d7c4993a8506 timout: [ RelativeTimeout value = 180000 ]
+13:29:36.305 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:32:28.952 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:32:28.984 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:32:29.008 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:32:29.021 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:32:29.922 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:32:29.951 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:32:29.951 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 8efb38a6-25a2-4f0c-9a74-c683d15a44da timout: [ RelativeTimeout value = 180000 ]
+13:32:34.182 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:32:56.968 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:32:57.004 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:32:57.030 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:32:57.044 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:32:57.918 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:32:57.941 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:32:57.941 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: ef77b211-4189-4a4d-98e5-08bbebb50393 timout: [ RelativeTimeout value = 180000 ]
+13:33:05.189 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:33:31.479 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:33:31.514 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:33:31.542 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:33:31.555 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:33:32.436 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:33:32.458 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:33:32.459 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 02e0dfbf-6db9-4094-8aa3-3e50ea155287 timout: [ RelativeTimeout value = 180000 ]
+13:33:39.307 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:34:41.072 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:34:41.106 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:34:41.130 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:34:41.143 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:34:42.093 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:34:42.117 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:34:42.118 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: ba3fecf0-c70f-4408-be5f-6bb5faddaea3 timout: [ RelativeTimeout value = 180000 ]
+13:34:48.759 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:39:53.624 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:39:53.656 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:39:53.687 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:39:53.701 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:39:54.598 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:39:54.626 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:39:54.626 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 4a85f335-0ac3-42b8-a5cc-7958b77eeaab timout: [ RelativeTimeout value = 180000 ]
+13:40:01.893 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:44:16.578 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:44:16.609 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:44:16.636 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:44:16.649 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:44:17.612 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:44:17.641 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:44:17.641 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 4ca07e19-7564-4d89-adf2-2bac4fb22876 timout: [ RelativeTimeout value = 180000 ]
+13:44:25.096 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:45:56.826 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:45:56.857 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:45:56.885 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:45:56.900 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:45:57.851 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:45:57.875 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:45:57.876 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 67315983-5cbd-4265-9a31-e26ca347df6a timout: [ RelativeTimeout value = 180000 ]
+13:46:05.370 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:52:32.735 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:52:32.772 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:52:32.799 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:52:32.812 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:52:33.781 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:52:33.814 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:52:33.815 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 32a42108-fb24-4176-8603-b8c6f60515b8 timout: [ RelativeTimeout value = 180000 ]
+13:56:52.132 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:56:52.161 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:56:52.188 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:56:52.200 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:56:53.133 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:56:53.157 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:56:53.158 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 36ddce64-0d17-488d-94db-8641afc5eae3 timout: [ RelativeTimeout value = 180000 ]
+13:57:00.528 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+13:59:17.099 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+13:59:17.137 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+13:59:17.168 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+13:59:17.183 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+13:59:18.144 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+13:59:18.170 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+13:59:18.171 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 71bcb3c1-9b34-4f21-9f35-5ab393c8ccc7 timout: [ RelativeTimeout value = 180000 ]
+13:59:28.053 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:01:44.506 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:01:44.540 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:01:44.565 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:01:44.579 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:01:45.530 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:01:45.553 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:01:45.553 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 296f9cff-fcd6-432c-a1e0-33bbff4f68bb timout: [ RelativeTimeout value = 180000 ]
+14:01:52.900 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:02:36.338 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:02:36.378 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:02:36.406 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:02:36.421 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:02:37.363 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:02:37.390 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:02:37.390 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 9a94cb8e-0b99-408f-81d2-d11e73e15f49 timout: [ RelativeTimeout value = 180000 ]
+14:02:44.821 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:03:30.917 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:03:30.949 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:03:30.978 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:03:30.992 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:03:31.986 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:03:32.011 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:03:32.011 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 156ae988-b1e2-47f2-87dd-48083e4b93c6 timout: [ RelativeTimeout value = 180000 ]
+14:03:38.831 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:04:42.255 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:04:42.288 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:04:42.313 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:04:42.326 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:04:43.292 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:04:43.320 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:04:43.320 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: ab22a350-307d-4828-8a5d-fe1f0a07f646 timout: [ RelativeTimeout value = 180000 ]
+14:04:47.294 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:05:47.320 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:05:47.352 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:05:47.379 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:05:47.391 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:05:48.331 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:05:48.359 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:05:48.359 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 385a8cae-c82f-4dd4-bdb3-3d2ba1c0f098 timout: [ RelativeTimeout value = 180000 ]
+14:05:55.292 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:06:37.550 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:06:37.583 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:06:37.612 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:06:37.625 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:06:38.561 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:06:38.584 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:06:38.585 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 175731cf-c181-462c-8523-b5437fe6be01 timout: [ RelativeTimeout value = 180000 ]
+14:06:45.571 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:13:08.388 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:13:08.416 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:13:08.444 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:13:08.455 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:13:09.487 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:13:09.513 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:13:09.514 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: a4dcff2e-11ba-4c82-926d-13a4293cdc21 timout: [ RelativeTimeout value = 180000 ]
+14:13:16.796 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:23:00.920 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:23:00.950 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:23:00.977 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:23:00.987 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:23:02.023 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:23:02.051 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:23:02.051 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 9b83ae48-18df-4da9-963d-d1dce79f28c1 timout: [ RelativeTimeout value = 180000 ]
+14:23:09.880 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:25:42.230 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:25:42.261 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:25:42.289 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:25:42.300 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:25:43.350 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:25:43.372 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:25:43.373 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: d9dcbdc9-fe53-4ca6-be97-e806cf0bbfbb timout: [ RelativeTimeout value = 180000 ]
+14:25:50.963 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:27:33.895 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:27:33.926 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:27:33.955 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:27:33.966 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:27:34.976 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:27:35.000 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:27:35.000 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 5816660d-a42b-4ca1-8ee5-277c37c58422 timout: [ RelativeTimeout value = 180000 ]
+14:27:42.343 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:28:13.366 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:28:13.398 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:28:13.427 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:28:13.438 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:28:14.384 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:28:14.407 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:28:14.407 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 0e59f3f5-7379-44ec-9b42-f857be16ee3b timout: [ RelativeTimeout value = 180000 ]
+14:28:21.770 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:33:08.746 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:33:08.776 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:33:08.802 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:33:08.814 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:33:09.800 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:33:09.826 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:33:09.827 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: bb0b0ded-a40b-4cf3-a5b2-06c8bf5853f4 timout: [ RelativeTimeout value = 180000 ]
+14:33:17.760 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:33:38.680 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:33:38.711 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:33:38.741 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:33:38.752 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:33:39.713 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:33:39.737 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:33:39.737 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: becd2d2b-57c9-4080-a0ff-328df4195699 timout: [ RelativeTimeout value = 180000 ]
+14:33:47.416 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:34:05.138 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:34:05.171 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:34:05.199 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:34:05.212 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:34:06.169 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:34:06.191 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:34:06.191 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: f85f8031-45c3-4462-b079-6fa5fdddc5d7 timout: [ RelativeTimeout value = 180000 ]
+14:34:13.893 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:34:38.893 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:34:38.922 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:34:38.951 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:34:38.961 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:34:39.949 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:34:39.973 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:34:39.973 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: e2933dd3-90b1-44de-9fbf-5c9822668492 timout: [ RelativeTimeout value = 180000 ]
+14:34:49.235 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:36:21.758 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:36:21.789 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:36:21.818 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:36:21.828 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:36:22.826 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:36:22.848 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:36:22.849 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: ed8a62f6-5997-4a2c-b08a-649a219fb3c5 timout: [ RelativeTimeout value = 180000 ]
+14:36:29.788 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:41:05.182 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:41:05.211 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:41:05.239 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:41:05.250 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:41:06.249 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:41:06.272 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:41:06.272 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 7f7ef539-475f-42b4-bd0a-0ffce0751465 timout: [ RelativeTimeout value = 180000 ]
+14:41:20.973 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished
+14:41:56.707 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:41:56.743 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:41:56.774 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:41:56.786 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:41:57.822 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:41:57.848 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:41:57.848 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 11d65310-f8c4-4c99-9eee-b5c30c4a4ac2 timout: [ RelativeTimeout value = 180000 ]
+14:46:03.492 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:46:03.523 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:46:03.549 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:46:03.560 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:46:04.534 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:46:04.564 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:46:04.564 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 19c4c5ae-1918-4915-8e81-0280a49307a9 timout: [ RelativeTimeout value = 180000 ]
+14:46:56.736 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:46:56.765 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:46:56.794 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:46:56.805 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:46:57.768 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:46:57.792 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:46:57.792 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 61f201e6-76f0-41ff-8ae5-93feb506e0c5 timout: [ RelativeTimeout value = 180000 ]
+14:48:23.115 [main] INFO  o.o.pax.exam.spi.DefaultExamSystem - Pax Exam System (Version: 4.11.0) created.
+14:48:23.148 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - creating PaxExam runner for class de.mhus.osgi.test.OsgiToolsClientTest
+14:48:23.176 [main] INFO  o.o.pax.exam.junit.impl.ProbeRunner - running test class de.mhus.osgi.test.OsgiToolsClientTest
+14:48:23.186 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Creating RMI registry server on 127.0.0.1:21000
+14:48:24.148 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Found 0 options when requesting OverrideJUnitBundlesOption.class
+14:48:24.175 [main] INFO  o.o.p.e.k.c.i.KarafTestContainer - Wait for test container to finish its initialization [ RelativeTimeout value = 180000 ]
+14:48:24.175 [main] INFO  o.o.p.e.r.c.RemoteBundleContextClient - Waiting for remote bundle context.. on 21000 name: 0d9021cb-ec41-4232-8626-9116a367550b timout: [ RelativeTimeout value = 180000 ]
+14:48:30.819 [main] INFO  o.o.p.e.spi.reactors.ReactorManager - suite finished

@@ -28,8 +28,12 @@ import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.logLevel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +42,6 @@ import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -71,13 +74,12 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestBase {
+public class TestBase extends org.junit.Assert {
 
-	protected LinkedList<TaskResult> results = new LinkedList<>();
+	protected LinkedList<HashMap<String,Object>> results = new LinkedList<>();
 	
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Inject
     protected BundleContext bc;
 
     @Inject
@@ -130,19 +132,26 @@ public class TestBase {
                 
     }
 
-    protected void installCustomFeatures() throws IOException, InterruptedException, ExecutionException, TimeoutException {
+    protected void startKarafTests(final String features, int timeoutSec) throws IOException, InterruptedException, ExecutionException, TimeoutException {
     	
-
         FutureTask<String> commandFuture = new FutureTask<String>(new Callable<String>() {
             @Override
 			public String call() {
 				try {
-					System.out.println("************** install Custom Feature");
-					featuresService.installFeature("mhu-osgi-test");
+					System.out.println("************** install Custom Features");
+					if (features != null) {
+						for (String f : features.split(","))
+							featuresService.installFeature(f);
+					}
+					bc = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+					System.out.println("Bundle: " + bc.getBundle().getSymbolicName() + " " + bc.getBundle().getVersion());
+//					bc.installBundle("file:" + new File( getTargetDirectory(), "mhu-osgi-test-1.4.1-SNAPSHOT.jar").getAbsolutePath() );
 					
 					for (Method method : TestBase.this.getClass().getMethods()) {
 						if (method.getName().startsWith("karaf")) {
-							TaskResult result = new TaskResult(method.getName());
+							HashMap<String,Object> result = new HashMap<>();
+							result.put("name", method.getName().substring(5));
+							
 							results.add(result);
 							byteArrayOutputStream.flush();
 							byteArrayOutputStream.reset();
@@ -153,31 +162,85 @@ public class TestBase {
 								method.invoke(TestBase.this);
 							} catch (Throwable t) {
 								t.printStackTrace();
-								result.setError(t);
+								result.put("error", toStr(t));
 							}
 			                printStream.flush();
 			                errStream.flush();
 			                String out = byteArrayOutputStream.toString();
-			                result.setOutput(out);
+			                result.put("output",out);
 			                System.out.println(out);
 						}
 					}
 
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 printStream.flush();
                 errStream.flush();
-                return byteArrayOutputStream.toString();
+                
+                return resultsToString();
             }
         });
 
 		executor.submit(commandFuture);
-        String response = commandFuture.get(10000L, TimeUnit.MILLISECONDS);
+        String response = commandFuture.get(timeoutSec, TimeUnit.SECONDS);
         System.out.println(">>>");
         System.out.println(response);
         System.out.println("<<<");
+        
+        System.out.println(new File(".").getAbsolutePath());
+        
+        String errors = "";
+        System.out.println();
+        System.out.println(" Test                                    | Status");
+        System.out.println("----------------------------------------------------");
+        for (String part : response.split(" ")) {
+        	int pos = part.indexOf('=');
+        	String name = part.substring(0, pos);
+        	String state = part.substring(pos+1);
+        	
+        	System.out.print(name);
+        	for (int i = name.length(); i < 40; i++) System.out.print(" ");
+        	System.out.println(" | " + state);
+        	if (state.equals("error")) {
+        		if (errors.length() > 0) errors+=",";
+        		errors+=name;
+        	}
+        }
+        System.out.println();
+        if (errors.length() > 0)
+    		throw new IOException("Test in error: " + errors);
+
+	}
+
+	protected String resultsToString() {
+		StringBuilder out = new StringBuilder();
+		File dir = new File(getTargetDirectory(), "results");
+		dir.mkdirs();
+		
+		for (HashMap<String, Object> result : results) {
+			String name = (String)result.get("name");
+			name = normalize(name);
+			{
+				File file = new File(dir, name + ".out");
+				if (result.containsKey("output"))
+					writeFile(file, (String)result.get("output"));
+				else
+				if (file.exists())
+					file.delete();
+			}
+			{
+				File file = new File(dir, name + ".err");
+				if (result.containsKey("error"))
+					writeFile(file, (String)result.get("error"));
+				else
+				if (file.exists())
+					file.delete();
+			}
+			if (out.length() > 0) out.append(" ");
+			out.append(name).append("=").append(result.containsKey("error") ? "error" : "ok");
+		}
+		return out.toString();
 	}
 
 	@After
@@ -293,5 +356,57 @@ public class TestBase {
     private static Collection<ServiceReference> asCollection(ServiceReference[] references) {
         return references != null ? Arrays.asList(references) : Collections.<ServiceReference> emptyList();
     }
+
+    public String currentOutput() {
+        printStream.flush();
+        errStream.flush();
+        String out = byteArrayOutputStream.toString();
+        return out;
+    }
+    
+    public File getTargetDirectory() {
+    	return new File("../../..");
+    }
+    
+	public static String normalize(String name) {
+		if (name == null) return null;
+		
+		if (name.indexOf('\\') >= 0) name = name.replaceAll("\\\\", "_");
+		if (name.indexOf('/') >= 0) name = name.replaceAll("/", "_");
+		if (name.indexOf('*') >= 0) name = name.replaceAll("\\*", "_");
+		if (name.indexOf('?') >= 0) name = name.replaceAll("\\?", "_");
+		if (name.indexOf(':') >= 0) name = name.replaceAll(":", "_");
+		if (name.indexOf(' ') >= 0) name = name.replaceAll(" ", "_");
+		if (name.indexOf("..") >= 0) name = name.replaceAll("..", "_");
+		if (name.indexOf('~') >= 0) name = name.replace('~', '_');
+
+		return name;
+	}
+
+	public static String toStr(Throwable t) {
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		t.printStackTrace(pw);
+		pw.flush();
+		return sw.toString();
+	}
+
+	public static boolean writeFile(File _f, String _content) {
+		if (_f == null) return false;
+		try {
+			OutputStream fos = new FileOutputStream(_f);
+			if (_content != null) {
+				char[] c = _content.toCharArray();
+				for (int i = 0; i < c.length; i++)
+					fos.write(c[i]);
+			}
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
 
 }
