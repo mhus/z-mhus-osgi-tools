@@ -26,7 +26,6 @@ import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.logging.Log.LEVEL;
 import de.mhus.lib.core.logging.StreamToLogAdapter;
-import de.mhus.lib.core.schedule.CronJob;
 import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.osgi.services.MOsgi;
 import de.mhus.osgi.services.SimpleServiceIfc;
