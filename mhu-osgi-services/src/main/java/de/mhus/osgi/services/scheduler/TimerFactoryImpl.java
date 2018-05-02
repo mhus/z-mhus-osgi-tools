@@ -35,17 +35,12 @@ import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
-import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.logging.Log;
-import de.mhus.lib.core.schedule.CronJob;
-import de.mhus.lib.core.schedule.IntervalJob;
-import de.mhus.lib.core.schedule.IntervalWithStartTimeJob;
-import de.mhus.lib.core.schedule.OnceJob;
+import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
 import de.mhus.lib.core.schedule.TimerTaskIntercepter;
@@ -126,27 +121,8 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			// parse configuration and create job
 			String i = String.valueOf(interval);
 			
-			if (i.startsWith("once:")) {
-				i = i.substring(5);
-				long s = 0;
-				if (i.indexOf('-') > 0 || i.indexOf('.') > 0 || i.indexOf('/') > 0 )
-					s = MDate.toDate(i, new Date()).getTime();
-				else
-					s = System.currentTimeMillis() + MTimeInterval.toTime(i, -1);
-				job = new OnceJob(s, service);
-			} else
-			if (i.startsWith("cron:")) {
-				job = new CronJob(i.substring(5), service);
-			} else
-			if (i.startsWith("interval:")) {
-				i = i.substring(9);
-				job = toIntervalJob(service, i);
-			} else
-			if (i.indexOf(' ') > 0 ) {
-				job = new CronJob(i, service);
-			} else {
-				job = toIntervalJob(service, i);
-			}
+			job = Scheduler.createSchedulerJob(i,service);
+			
 		}
 		
 		if (job != null) {
@@ -163,28 +139,6 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			log().i("interval configuration syntax error for SchedulerService",service,reference,interval);
 		}
 		
-	}
-
-	private SchedulerJob toIntervalJob(SchedulerService service, String i) {
-		if (i.indexOf(',') > 0) {
-			long s = 0;
-			String sStr = MString.beforeIndex(i,',');
-			if (sStr.indexOf('-') > 0 || sStr.indexOf('.') > 0 || sStr.indexOf('/') > 0 )
-				// it's a date string
-				s = MDate.toDate(sStr, new Date()).getTime();
-			else
-				// it should be a time interval
-				s = System.currentTimeMillis() + MTimeInterval.toTime(sStr, -1);
-			// delay is in every case a time interval
-			long l = MTimeInterval.toTime(MString.afterIndex(i,','), -1);
-			if (s > 0 && l > 0)
-				return new IntervalWithStartTimeJob(s,l, service);
-		} else {
-			long l = MTimeInterval.toTime(i, -1);
-			if (l > 0)
-				return new IntervalJob(l, service);
-		}
-		return null;
 	}
 
 	protected void removeSchedulerService(SchedulerService service) {

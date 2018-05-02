@@ -74,6 +74,8 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// https://ops4j1.jira.com/wiki/spaces/PAXEXAM4/pages/54263875/Karaf+Test+Container+Reference
+
 public class TestBase extends org.junit.Assert {
 
 	protected LinkedList<HashMap<String,Object>> results = new LinkedList<>();

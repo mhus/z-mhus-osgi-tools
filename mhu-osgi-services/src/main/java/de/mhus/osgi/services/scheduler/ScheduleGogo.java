@@ -27,6 +27,7 @@ import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.logging.Log.LEVEL;
 import de.mhus.lib.core.logging.StreamToLogAdapter;
 import de.mhus.lib.core.schedule.CronJob;
+import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.osgi.services.MOsgi;
 import de.mhus.osgi.services.SimpleServiceIfc;
 
@@ -64,7 +65,7 @@ public class ScheduleGogo extends MLog implements SimpleServiceIfc {
 		if (job != null) return;
 		log().d(name,"start",interval);
 		job = new MyJob();
-		timer.schedule(new CronJob(interval, job));
+		timer.schedule(Scheduler.createSchedulerJob(interval, job));
 	}
 
 	protected void doExecute() {
