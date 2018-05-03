@@ -22,6 +22,7 @@ import java.util.Set;
 import de.mhus.lib.core.MActivator;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MConstants;
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.activator.DefaultActivator;
 import de.mhus.lib.core.lang.Base;
@@ -53,11 +54,11 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
 	private KarafHousekeeper housekeeper;
 	
-	private File baseDir = new File("data/mhus");
+	private File baseDir = new File(".");
 	private MLogFactory mlogFactory;
-	{
-		baseDir.mkdirs();
-	}
+//	{
+//		baseDir.mkdirs();
+//	}
 	
 	@Override
 	public synchronized BaseControl getBaseControl() {
@@ -157,8 +158,23 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 	}
 
 	@Override
-	public File getFile(String dir) {
-		return new File(baseDir, dir);
+	public File getFile(SCOPE scope, String dir) {
+		dir = MFile.normalizePath(dir);
+		switch (scope) {
+		case DATA:
+			return new File(baseDir, "data/" + dir);
+		case DEPLOY:
+			return new File(baseDir, "deploy/" + dir);
+		case ETC:
+			return new File(baseDir, "etc/" + dir);
+		case LOG:
+			return new File(baseDir, "data/log/" + dir);
+		case TMP:
+			return new File(baseDir, "data/tmp" + dir);
+		default:
+			break;
+		}
+		return new File(baseDir, "data" + File.separator + "mhus" + File.separator + dir);
 	}
 
 	@Override

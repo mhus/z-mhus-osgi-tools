@@ -28,6 +28,8 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MProperties;
+import de.mhus.lib.core.config.PropertiesConfig;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.sql.analytics.SqlAnalytics;
 import de.mhus.lib.sql.analytics.SqlAnalyzer;
@@ -79,6 +81,9 @@ public class CmdSql extends MLog implements Action {
 				OsgiBundleClassLoader loader = new OsgiBundleClassLoader();
 				analyzer = (SqlAnalyzer) loader.loadClass(parameters[0]).newInstance();
 			}
+			
+			if (parameters != null)
+				analyzer.doConfigure(new PropertiesConfig(MProperties.explodeToProperties(parameters)));
 			
 			SqlAnalytics.setAnalyzer(analyzer);
 			System.out.println(analyzer);

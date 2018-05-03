@@ -27,26 +27,28 @@ import de.mhus.lib.core.schedule.IntervalJob;
 
 public class KarafHousekeeper extends MObject implements MHousekeeper {
 
+
 	@Override
-	public void register(MHousekeeperTask task, long sleep, boolean weak) {
-		log().d("register",task,sleep,weak);
+	public void register(MHousekeeperTask task, long sleep) {
+		String name = task.getName();
+		log().d("register",name,task,sleep);
 		TimerIfc timer = MApi.lookup(TimerIfc.class);
-		if (weak) {
-			WeakObserver t = new WeakObserver(task);
-			IntervalJob job = new IntervalJob(sleep, t);
-			t.setJob(job);
-			timer.schedule(job);
-		} else
-			timer.schedule(new IntervalJob(sleep, task));
+
+		WeakObserver t = new WeakObserver(task, "housekeeper:" + name);
+		IntervalJob job = new IntervalJob(sleep, t);
+		t.setJob(job);
+		timer.schedule(job);
 	}
 
 	private static class WeakObserver implements ITimerTask {
 
 		private WeakReference<MHousekeeperTask> task;
 		private IntervalJob job;
+		private String name;
 
-		public WeakObserver(MHousekeeperTask task) {
+		public WeakObserver(MHousekeeperTask task, String name) {
 			this.task = new WeakReference<MHousekeeperTask>(task);
+			this.name = name;
 		}
 
 		public void setJob(IntervalJob job) {
@@ -66,7 +68,7 @@ public class KarafHousekeeper extends MObject implements MHousekeeper {
 		public String toString() {
 			MHousekeeperTask t = task.get();
 			if (t == null)
-				return super.toString();
+				return name + "[removed]";
 			return t.toString();
 		}
 
@@ -74,8 +76,8 @@ public class KarafHousekeeper extends MObject implements MHousekeeper {
 		public String getName() {
 			MHousekeeperTask t = task.get();
 			if (t == null)
-				return "[removed]";
-			return t.getName();
+				return name + "[removed]";
+			return name;
 		}
 
 		@Override
