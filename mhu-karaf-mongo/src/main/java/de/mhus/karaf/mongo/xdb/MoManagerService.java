@@ -13,14 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.mongo;
+package de.mhus.karaf.mongo.xdb;
 
-import de.mhus.lib.basics.Named;
+import de.mhus.lib.errors.MException;
+import de.mhus.lib.mongo.MoManager;
 
-public interface MongoSchema extends Named {
+public interface MoManagerService {
 
-	String getDataSourceName();
+	void doOpen() throws MException;
 	
+	void doInitialize();
+
+	void doClose();
+
+	String getServiceName();
+
+	MoManager getManager();
+
+	String getMongoDataSourceName();
 	
+	boolean isConnected();
 	
 }

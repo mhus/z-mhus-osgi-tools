@@ -31,6 +31,8 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import de.mhus.karaf.mongo.xdb.MongoDataSource;
+import de.mhus.karaf.mongo.xdb.MongoUtil;
 import de.mhus.karaf.xdb.cmd.XdbUtil;
 import de.mhus.lib.mongo.MoUtil;
 

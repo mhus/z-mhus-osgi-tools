@@ -20,6 +20,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.karaf.mongo.xdb.MongoDataSource;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.services.MOsgi;
 
