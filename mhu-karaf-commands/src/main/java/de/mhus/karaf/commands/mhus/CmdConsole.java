@@ -52,7 +52,7 @@ public class CmdConsole implements Action {
 		switch (cmd) {
 		case "info": {
 			System.out.println("Default Width :" + Console.DEFAULT_WIDTH);
-			System.out.println("Defualt Height: " + Console.DEFAULT_HEIGHT);
+			System.out.println("Default Height: " + Console.DEFAULT_HEIGHT);
 			System.out.println("Current Type  : " + Console.getConsoleType() );
 			Console console = Console.get();
 			if (console != null) {
@@ -101,8 +101,8 @@ public class CmdConsole implements Action {
 		case "debug": {
 			System.out.println("Java        : " + MSystem.getJavaVersion());
 			System.out.println("Term        : " + System.getenv("TERM"));
-			System.out.println("COLUMNS: " + System.getenv("COLUMNS"));
-			System.out.println("LINES  : " + System.getenv("LINES"));
+			System.out.println("COLUMNS: " + MSystem.execute("tput","cols")[0] );
+			System.out.println("LINES  : " + MSystem.execute("tput","lines")[0]);
 			if (MSystem.isWindows())
 				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
 			else {
