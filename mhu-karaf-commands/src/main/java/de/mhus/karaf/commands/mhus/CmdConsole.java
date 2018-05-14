@@ -108,25 +108,15 @@ public class CmdConsole implements Action {
 			if (MSystem.isWindows())
 				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
 			else {
-				System.out.println("XTermConsole: " + Arrays.deepToString( new XTermConsole().getRawSettings() ));
+				System.out.println("XTermConsole: " + new XTermConsole().getRawSettings() );
 			}
-			System.out.println("stty        : " + Arrays.deepToString( getRawSettings() ));
+			System.out.println("stty        : " + XTermConsole.getRawTTYSettings() );
 		} break;
 		default:
 			System.out.println("Command not found");
 		}
 		
 		return null;
-	}
-
-	public String[] getRawSettings() {
-		try {
-			String[] ret;
-			ret = MSystem.execute("/bin/sh","-c","stty -a < /dev/tty");
-			return ret;
-		} catch (IOException e) {
-			return new String[] {e.toString()};
-		}
 	}
 
 }
