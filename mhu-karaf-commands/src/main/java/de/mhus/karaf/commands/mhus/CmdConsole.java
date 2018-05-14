@@ -101,8 +101,8 @@ public class CmdConsole implements Action {
 		case "debug": {
 			System.out.println("Java        : " + MSystem.getJavaVersion());
 			System.out.println("Term        : " + System.getenv("TERM"));
-			System.out.println("COLUMNS     : " + MSystem.execute("tput","cols")[0] );
-			System.out.println("LINES       : " + MSystem.execute("tput","lines")[0]);
+			System.out.println("COLUMNS     : " + MSystem.execute("/bin/sh","-c","echo $COLUMNS")[0] );
+			System.out.println("LINES       : " + MSystem.execute("/bin/sh","-c","echo $LINES")[0]);
 			if (MSystem.isWindows())
 				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
 			else {
