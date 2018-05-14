@@ -101,12 +101,17 @@ public class CmdConsole implements Action {
 		case "debug": {
 			System.out.println("Java        : " + MSystem.getJavaVersion());
 			System.out.println("Term        : " + System.getenv("TERM"));
+			System.out.println("COLUMNS: " + System.getenv("COLUMNS"));
+			System.out.println("LINES  : " + System.getenv("LINES"));
 			if (MSystem.isWindows())
 				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
-			else
+			else {
 				System.out.println("XTermConsole: " + Arrays.deepToString( new XTermConsole().getRawSettings() ));
+			}
 			System.out.println("stty        : " + Arrays.deepToString( getRawSettings() ));
 		} break;
+		default:
+			System.out.println("Command not found");
 		}
 		
 		return null;

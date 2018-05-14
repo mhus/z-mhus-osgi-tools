@@ -26,7 +26,9 @@ import org.apache.karaf.shell.api.console.Session;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.cfg.CfgValue;
+import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.system.CfgManager;
 import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 
@@ -83,7 +85,17 @@ public class CmdConfig extends MLog implements Action {
 				}
 			}
 
-		}
+		} break;
+		case "dump": {
+			CfgManager api = MApi.get().getCfgManager();
+			for (String owner : api.getOwners()) {
+				System.out.println(">>> Owner: " + owner);
+				IConfig cfg = api.getCfg(owner);
+				System.out.println(cfg);
+			}
+		} break;
+		default:
+			System.out.println("Command not found");
 		}
 		
 		
