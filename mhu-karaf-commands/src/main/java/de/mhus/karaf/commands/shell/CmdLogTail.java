@@ -21,6 +21,8 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import de.mhus.lib.core.logging.MLogUtil;
+
 // From https://github.com/apache/karaf/blob/678177241a3b03181490ba4a942e99b7745ba055/log/src/main/java/org/apache/karaf/log/command/LogTail.java
 
 @Command(scope = "mhus", name = "logtail", description = "Continuously display log entries. Use ctrl-c to quit this command")
@@ -145,6 +147,7 @@ public class CmdLogTail implements Action {
 		private int entries;
 		private boolean noColor;
 		private Thread threadFilter;
+		private boolean closed;
     	
 		public LogTailContainer(Session session, int entries, int minLevel, BundleContext context, String logger, LogService logService, LogEventFormatter formatter, String overridenPattern, boolean noColor, Thread threadFilter) {
 			this.logService = logService;
@@ -167,6 +170,8 @@ public class CmdLogTail implements Action {
 		}
 
 		public void close() {
+			if (closed) return;
+			closed = true;
             tracker.close();
 		}
 
@@ -178,6 +183,7 @@ public class CmdLogTail implements Action {
 	    }
 	    
 	    protected void printEvent(final PrintStream out, PaxLoggingEvent event) {
+	    	if (closed) return;
 	    	try {
 	    		
 	    		if (threadFilter != null && threadFilter != Thread.currentThread())
@@ -193,8 +199,7 @@ public class CmdLogTail implements Action {
 	    	} catch (Throwable t) {
 	    		// close
 	    		close();
-	    		System.out.println("Close by exception");
-	    		t.printStackTrace();
+	    		MLogUtil.log().i("close logtail by exception",t);
 	    	}
 	    	
 	    }
