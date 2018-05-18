@@ -20,13 +20,17 @@ import java.util.Arrays;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
+import de.mhus.lib.mutable.KarafConsole;
+import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "console", description = "Manipulate and control the console")
 @Service
@@ -45,6 +49,9 @@ public class CmdConsole implements Action {
 	@Argument(index=1, name="arguments", required=false, description="arguments", multiValued=true)
     String arguments[];
 
+    @Reference
+    private Session session;
+	
 	@Override
 	public Object execute() throws Exception {
 
@@ -53,7 +60,7 @@ public class CmdConsole implements Action {
 		case "info": {
 			System.out.println("Default Width :" + Console.DEFAULT_WIDTH);
 			System.out.println("Default Height: " + Console.DEFAULT_HEIGHT);
-			System.out.println("Current Type  : " + Console.getConsoleType() );
+			System.out.println("Current Type  : " + Console.get().getClass().getCanonicalName() );
 			Console console = Console.get();
 			if (console != null) {
 				System.out.println();
@@ -69,32 +76,42 @@ public class CmdConsole implements Action {
 				System.out.println("Attributes: " + (console.isBlink() ? "blink " : "") + (console.isBold() ? "bold " : "") );
 			}
 			System.out.println();
-			System.out.println("Supported types : " + Arrays.toString(Console.CONSOLE_TYPE.values()));
 			System.out.println("Supported colors: " + Arrays.toString(Console.COLOR.values()));
+		} break;
+		case "set": {
+			Console.set(new KarafConsole(session));
+			System.out.println(Console.get().getWidth() + "x" + Console.get().getHeight());
 		} break;
 		case "create": {
 			Console.resetConsole();
-			Console.setConsoleType(null);
 			if (arguments != null && arguments.length > 0) {
-				Console.setConsoleType(Console.CONSOLE_TYPE.valueOf(arguments[0].toUpperCase()));
+				Object console = new OsgiBundleClassLoader().loadClass(arguments[0]).newInstance();
+				Console.set((Console) console);
+			} else {
+				Console.create();
 			}
-			System.out.println( Console.create() );
+			System.out.println( Console.get() );
 		} break;
-		case "size": {
+		case "defaultsize": {
 			Console.DEFAULT_WIDTH = MCast.toint(arguments[0], Console.DEFAULT_WIDTH);
 			Console.DEFAULT_HEIGHT = MCast.toint(arguments[1], Console.DEFAULT_HEIGHT);
 			System.out.println(Console.DEFAULT_WIDTH + "x" + Console.DEFAULT_HEIGHT );
 		} break;
+		case "size": {
+			Console.get().setWidth(MCast.toint(arguments[0], Console.DEFAULT_WIDTH));
+			Console.get().setHeight(MCast.toint(arguments[1], Console.DEFAULT_HEIGHT));
+			System.out.println(Console.get().getWidth() + "x" + Console.get().getHeight());
+		} break;
 		case "reset": {
-			Console console = Console.create();
+			Console console = Console.get();
 			console.resetTerminal();
 		} break;
 		case "cleanup": {
-			Console console = Console.create();
+			Console console = Console.get();
 			console.cleanup();
 		} break;
 		case "color": {
-			Console console = Console.create();
+			Console console = Console.get();
 			console.setColor(Console.COLOR.valueOf(arguments[0].toUpperCase()), Console.COLOR.valueOf(arguments[1].toUpperCase()));
 			System.out.println(console.getForegroundColor() + " " + console.getBackgroundColor());
 		} break;
