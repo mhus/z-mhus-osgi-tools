@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -25,6 +24,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
 
@@ -109,6 +109,9 @@ public class CmdConsole implements Action {
 				System.out.println("CmdConsole  : " + Arrays.deepToString( new de.mhus.lib.core.console.CmdConsole().getRawSettings() ));
 			else {
 				System.out.println("XTermConsole: " + new XTermConsole().getRawSettings() );
+				for (String i : ANSIConsole.getRawAnsiSettings()) {
+					System.out.println(i);
+				}
 			}
 			System.out.println("stty        : " + XTermConsole.getRawTTYSettings() );
 		} break;
