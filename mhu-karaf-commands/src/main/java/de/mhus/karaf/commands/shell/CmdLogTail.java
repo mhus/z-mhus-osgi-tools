@@ -75,9 +75,9 @@ public class CmdLogTail implements Action {
 			a.close();
 			session.put("__log_tail2",null);
 		} else {
-	        if (entries == 0) {
-	            entries = 50;
-	        }
+//	        if (entries == 0) {
+//	            entries = 50;
+//	        }
 	        int minLevel = getMinLevel(level);
 			a = new LogTailContainer(session,entries,minLevel,context,logger,logService,formatter,overridenPattern, noColor, consoleOnly ? Thread.currentThread() : null);
 			session.put("__log_tail2",a);
