@@ -43,7 +43,7 @@ install -s mvn:de.mhus.ports/mhus-cglib/1.3.1-SNAPSHOT
 
 feature:repo-add activemq 5.12.1
 feature:repo-add cxf 3.1.5
-feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.3.2-SNAPSHOT/xml/features
+feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.4.1-SNAPSHOT/xml/features
 
 
 feature:install mhu-osgi-base

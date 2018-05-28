@@ -16,6 +16,13 @@ public class KarafConsole extends ANSIConsole {
 		this.session = session;
 	}
 
+	
+	@Override
+	protected void loadSettings() {
+//		super.loadSettings();
+		supportSize = true;
+	}
+
 	@Override
 	public int getWidth() {
 		if (width > 0) return width;
