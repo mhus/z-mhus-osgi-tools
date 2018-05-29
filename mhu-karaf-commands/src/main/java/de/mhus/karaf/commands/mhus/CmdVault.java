@@ -74,10 +74,20 @@ public class CmdVault extends MLog implements Action {
 		
 		if (cmd.equals("sources")) {
 			ConsoleTable out = new ConsoleTable(full);
-			out.setHeaderValues("Source","Info");
+			out.setHeaderValues("Source","Info","Mutable","MemoryBased");
 			for (String sourceName : vault.getSourceNames()) {
 				VaultSource source = vault.getSource(sourceName);
-				out.addRowValues(sourceName,source);
+				
+				boolean isMutable = false;
+				boolean isMemoryBased = false;
+				try {
+					MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+					isMutable = mutable != null;
+					isMemoryBased = mutable.isMemoryBased();
+					if (isMutable) {
+					}
+				} catch (Throwable t) {}
+				out.addRowValues(sourceName,source,isMutable,isMemoryBased);
 			}
 			out.print(System.out);
 		} else
