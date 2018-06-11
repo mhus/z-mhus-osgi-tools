@@ -69,7 +69,8 @@ public class CmdLog extends MLog implements Action {
 			+ " off - log mapping off\n"
 			+ " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
 			+ " maxmsgsize [new size] - show or set maximum message size, disable with 0\n"
-			+ " lambdadebug [true|false]", multiValued=false)
+			+ " lambdadebug [true|false]\n"
+			+ " stacktracetrace [true|false]", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -91,6 +92,10 @@ public class CmdLog extends MLog implements Action {
 		KarafMApiImpl api = (KarafMApiImpl)s;
 		
 		switch (cmd) {
+		case "stacktracetrace": {
+			Log.setStacktraceTrace(MCast.toboolean(parameters[0], false));
+			System.out.println("OK");
+		} break;
 		case "clear": {
 			api.clearTrace();
 			api.setFullTrace(false);
