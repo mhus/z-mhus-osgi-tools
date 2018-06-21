@@ -45,6 +45,15 @@ public class CmdBundleUpgrade implements Action {
 	@Argument(index=1, name="version", required=false, description="bundle version to install or empty to reinstall", multiValued=false)
     String bundleVersion;
 
+    @Option(name = "-t", aliases = { "--try" }, description = "Try run, download from repository will be enabled", required = false, multiValued = false)
+    boolean tryRun = false;
+
+    @Option(name = "-g", aliases = { "--get" }, description = "Download from repository with maven before installing the bundle", required = false, multiValued = false)
+    boolean mvnGet;
+
+    @Option(name = "-repo", description = "Set maven repository, e.g. http://nexus:8080/nexus/content/repositories/releases/", required = false, multiValued = false)
+    String mvnRepo = "http://central.maven.org/maven2";
+    
     @Option(name = "-i", aliases = { "--install" }, description = "Install only, do not start", required = false, multiValued = false)
     boolean installOnly;
     
@@ -66,6 +75,10 @@ public class CmdBundleUpgrade implements Action {
 	@Override
 	public Object execute() throws Exception {
 		
+		if (mvnGet && delete) {
+			System.out.println("The Options get and delete make no sense in the same time!");
+		}
+		
 		File repoHome = null;
 		if (delete) {
 			// this is not save ....
@@ -79,17 +92,52 @@ public class CmdBundleUpgrade implements Action {
 				System.out.println("Maven local repository not found: " + repoHome);
 				return null;
 			}
+			
+			if (tryRun)
+				System.out.println("Maven Local Repository: " + repoHome);
 		}
+		
 		
 		for (Bundle b : context.getBundles()) {
 			if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:")) {
-				System.out.println(">>> " + b.getLocation());
+				System.out.println(">>> " + b.getLocation() + " -> " + bundleVersion);
 				Cont c = new Cont(b);
+				
+				// download before via mvn command ...
+				if (mvnGet) {
+					/*
+mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get
+ -DrepoUrl=http://nexus:8080/nexus/content/repositories/releases/
+ -Dartifact=de.mhus.lib:mhu-lib-core:3.3.5
+
+					 */
+					String cmd = "mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get -DrepoUrl=" + mvnRepo 
+							+ " -Dartifact=" + c.getArtefactPath();
+					
+					System.out.println("--- Loading " + c.getArtefactPath() + " from " + mvnRepo);
+					String[] res = MSystem.execute(cmd);
+					if (res[0].indexOf("[ERROR] For more information") > 0) {
+						// failed
+						System.out.println("Loading artefact from repository failed");
+						System.out.println("shell:exec " + cmd);
+						System.out.println(res[0]);
+						System.out.println(res[1]);
+						continue;
+					}
+				}
+				
 				// stop
-				session.execute("bundle:stop " + c.bundle.getSymbolicName());
+				if (tryRun)
+					System.out.println("bundle:stop " + c.bundle.getSymbolicName());
+				else
+					session.execute("bundle:stop " + c.bundle.getSymbolicName());
+				
 				if (!startOnly) {
 					// uninstall
-					session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
+					if (tryRun)
+						System.out.println("bundle:uninstall " + c.bundle.getSymbolicName());
+					else
+						session.execute("bundle:uninstall " + c.bundle.getSymbolicName());
 					MThread.sleep(1000);
 	
 					// delete
@@ -101,8 +149,9 @@ public class CmdBundleUpgrade implements Action {
 								String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
 								File bundleHome = new File(repoHome,path);
 								if (bundleHome.exists()) {
-									System.out.println("Delete " + bundleHome);
-									MFile.deleteDir(bundleHome);
+									System.out.println("--- Delete " + bundleHome);
+									if (!tryRun)
+										MFile.deleteDir(bundleHome);
 								}
 							}
 						}
@@ -114,9 +163,11 @@ public class CmdBundleUpgrade implements Action {
 						System.out.println("*** Can't install " + c.bundle.getSymbolicName());
 					else {
 						String cmd = "bundle:install " + (installOnly ? "" : "-s ") + url;
-						System.out.println(cmd);
 						try {
-							session.execute(cmd);
+							if (tryRun)
+								System.out.println(cmd);
+							else
+								session.execute(cmd);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -130,10 +181,13 @@ public class CmdBundleUpgrade implements Action {
 		if (!installOnly) {
 			for (Bundle b : context.getBundles()) {
 				if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:") && b.getState() != Bundle.ACTIVE) {
-					System.out.println("Start >>> " + b.getLocation());
+					System.out.println("--- Start " + b.getLocation());
 					String cmd = "bundle:start " + b.getBundleId();
 					try {
-						session.execute(cmd);
+						if (tryRun)
+							System.out.println(cmd);
+						else
+							session.execute(cmd);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -160,6 +214,17 @@ public class CmdBundleUpgrade implements Action {
 			if (bundleVersion != null)
 				parts[2] = bundleVersion;
 			return MString.join(parts, '/');
+		}
+		
+		public String getArtefactPath() {
+			String loc = bundle.getLocation();
+			if (loc == null || !loc.startsWith("mvn:")) return null;
+			String[] parts = loc.split("/");
+			if (parts.length < 3) return null;
+			if (bundleVersion != null)
+				parts[2] = bundleVersion;
+			
+			return parts[0].substring(4) + ":" + parts[1] + ":" + parts[2];
 		}
 		
 	}
