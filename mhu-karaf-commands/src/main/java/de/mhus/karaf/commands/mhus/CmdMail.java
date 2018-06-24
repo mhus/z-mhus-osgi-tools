@@ -15,6 +15,7 @@
  */
 package de.mhus.karaf.commands.mhus;
 
+import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
@@ -26,6 +27,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
+import de.mhus.lib.core.mail.GpgEncryptedMail;
+import de.mhus.lib.core.mail.GpgSignedMail;
 import de.mhus.lib.core.mail.MSendMail;
 import de.mhus.lib.core.mail.MailAttachment;
 
@@ -56,6 +59,18 @@ public class CmdMail implements Action {
 
 	@Option(name="-p", aliases="--plain", description="Send plain text mail - currently no attachments",required=false)
 	boolean plain;
+
+	@Option(name="-ks", aliases="--keystore", description="Encrypt the mail (test)",required=false)
+	String keystore;
+
+	@Option(name="-ksp", aliases="--kspassphrase", description="Passphrase Encrypt the mail (test)",required=false)
+	String keystorePassphrase;
+
+	@Option(name="-signDN", description="Sign the mail (test)",required=false)
+	String signDN;
+
+	@Option(name="-origDN", description="Sign the mail (test)",required=false)
+	String origDN;
 	
 	@Override
 	public Object execute() throws Exception {
@@ -74,8 +89,14 @@ public class CmdMail implements Action {
 			message = MFile.readFile(isr);
 		}
 		
+		if (origDN != null) {
+			sendMail.sendMail(new GpgSignedMail().setFrom(from).setTo(to.split(";")).setSubject(subject).setContent(message).createCertificates(signDN, origDN));
+		} else
+		if (keystore != null) {
+			sendMail.sendMail(new GpgEncryptedMail().setFrom(from).setTo(to.split(";")).setSubject(subject).setContent(message).openKeyStore(new File(keystore), keystorePassphrase));
+		} else
 		if (plain)
-			sendMail.sendPlainMail(from, to.split(";"), cc.split(";"), bcc.split(";"), subject, message);
+			sendMail.sendPlainMail(from, to.split(";"), cc == null ? null : cc.split(";"), bcc == null ? null : bcc.split(";"), subject, message);
 		else
 			sendMail.sendHtmlMail(from, to.split(";"), cc == null ? null : cc.split(";"), bcc == null ? null : bcc.split(";"), subject, message, attachFiles);
 		
