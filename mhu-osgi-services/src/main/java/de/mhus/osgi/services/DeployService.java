@@ -22,7 +22,7 @@ public interface DeployService {
 	
 	String[] getResourcePathes();
 
-	void setDeployDirectory(File dir);
+	void setDeployDirectory(String path, File dir);
 
 	File getDeployDirectory();
 	

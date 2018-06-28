@@ -26,7 +26,7 @@ public abstract class AbstractDeployService extends MLog implements DeployServic
 	private File dir;
 
 	@Override
-	public void setDeployDirectory(File dir) {
+	public void setDeployDirectory(String path, File dir) {
 		this.dir = dir;
 	}
 
@@ -34,5 +34,12 @@ public abstract class AbstractDeployService extends MLog implements DeployServic
 	public File getDeployDirectory() {
 		return dir;
 	}
+
+	@Override
+	public String[] getResourcePathes() {
+		return new String[] {getResourcePath()};
+	}
+
+	protected abstract String getResourcePath();
 
 }

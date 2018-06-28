@@ -18,8 +18,11 @@ package de.mhus.osgi.services.deploy;
 import java.io.File;
 
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 
+import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Deactivate;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.services.DeployService;
@@ -29,7 +32,7 @@ import de.mhus.osgi.services.MOsgi.Service;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 import de.mhus.osgi.services.util.MServiceTracker;
 
-@Component
+@Component(immediate=true)
 public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 
 	MServiceTracker<DeployService> tracker = new MServiceTracker<DeployService>(DeployService.class) {
@@ -44,6 +47,18 @@ public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 			deploy(reference, service, SENSIVITY.UPDATE);
 		}
 	};
+	
+	@Activate
+	public void doActivate(ComponentContext ctx) {
+		tracker.setBundleContext(ctx.getBundleContext());
+		tracker.start();
+	}
+	
+	@Deactivate
+	public void doDeactivate(ComponentContext ctx) {
+		tracker.stop();
+	}
+	
 	@Override
 	public String getSimpleServiceInfo() {
 		return "redeploy <bundle>";
@@ -54,7 +69,7 @@ public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 			log().i("deploy",reference.getBundle().getSymbolicName(),path,sensivity);
 			try {
 				File dir = BundleDeployer.deploy(reference.getBundle(), path, sensivity);
-				service.setDeployDirectory(dir);
+				service.setDeployDirectory(path, dir);
 			} catch (Throwable e) {
 				log().w(reference,path,e);
 			}
@@ -65,7 +80,7 @@ public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 		for (String path : service.getResourcePathes()) {
 			log().i("undeploy",reference.getBundle().getSymbolicName(),path);
 			try {
-				service.setDeployDirectory(null);
+				service.setDeployDirectory(path,null);
 				BundleDeployer.delete(reference.getBundle(), path);
 			} catch (Throwable e) {
 				log().w(reference,path,e);
@@ -98,6 +113,7 @@ public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 				for (Service<DeployService> ref : MOsgi.getServiceRefs(DeployService.class, null)) {
 					table.addRowValues(ref.getReference().getBundle().getSymbolicName(),ref.getService().getClass().getCanonicalName(), ref.getService().getDeployDirectory());
 				}
+				table.print(System.out);
 			}
 		} catch (Throwable t) {
 			t.printStackTrace();
