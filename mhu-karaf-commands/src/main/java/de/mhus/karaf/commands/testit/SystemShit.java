@@ -1,19 +1,4 @@
-/**
- * Copyright 2018 Mike Hummel
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package de.mhus.karaf.commands.shell;
+package de.mhus.karaf.commands.testit;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
@@ -22,10 +7,6 @@ import java.util.Random;
 
 import javax.sql.DataSource;
 
-import org.apache.karaf.shell.api.action.Action;
-import org.apache.karaf.shell.api.action.Argument;
-import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
@@ -33,28 +14,25 @@ import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MThread;
 import de.mhus.osgi.services.util.DataSourceUtil;
 
-@Command(scope = "mhus", name = "shityo", description = "Command to do some shit")
-@Service
-public class CmdShitYo implements Action {
-
-	@Argument(index=0, name="cmd", required=true, description=
-			  " memkill\n"
-			+ " stackkill\n"
-			+ " stress [seconds=1] [threads=auto] [iterations=0] [sleep=1] [tolerance=5]\n"
-			+ " parallel [interval=1] [lifetime=10] [silent=true]"
-			, multiValued=false)
-    String cmd;
-
-	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
-    String[] parameters;
+public class SystemShit implements ShitIfc {
 
 	private int cnt;
 
 	private int parallelCnt;
-    
-	@Override
-	public Object execute() throws Exception {
 
+	@Override
+	public void printUsage() {
+		System.out.println(
+		  " memkill\n"
+		+ " stackkill\n"
+		+ " stress [seconds=1] [threads=auto] [iterations=0] [sleep=1] [tolerance=5]\n"
+		+ " parallel [interval=1] [lifetime=10] [silent=true]"
+		);
+		
+	}
+
+	@Override
+	public Object doExecute(String cmd, String[] parameters) throws Exception {
 		if (cmd.equals("memkill")) {
 			String kill = "killkill";
 			int len = kill.length();
