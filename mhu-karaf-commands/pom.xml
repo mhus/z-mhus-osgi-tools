@@ -107,14 +107,6 @@
 			<version>${karaf.version}</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>
-        		org.apache.felix.servicediagnostics.plugin
-        	</artifactId>
-			<version>0.1.3</version>
-			<type>bundle</type>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.ops4j.pax.url/pax-url-aether -->
 		<dependency>
 			<groupId>org.ops4j.pax.url</groupId>
