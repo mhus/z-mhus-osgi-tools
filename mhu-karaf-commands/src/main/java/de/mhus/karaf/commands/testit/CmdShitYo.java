@@ -42,6 +42,7 @@ public class CmdShitYo implements Action {
 	{
 		shortcuts.put("system",SystemShit.class);
 		shortcuts.put("jaas", JaasShit.class);
+		shortcuts.put("address", AddressShit.class);
 	}
 	
 	@Override
