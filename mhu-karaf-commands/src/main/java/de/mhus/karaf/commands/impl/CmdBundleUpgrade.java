@@ -29,8 +29,9 @@ import org.osgi.framework.BundleContext;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
+import de.mhus.lib.core.util.MMaven;
+import de.mhus.lib.core.util.MMaven.Artifact;
 
 @Command(scope = "bundle", name = "upgrade", description = "Upgrade bundle version")
 @Service
@@ -50,9 +51,6 @@ public class CmdBundleUpgrade implements Action {
 
     @Option(name = "-g", aliases = { "--get" }, description = "Download from repository with maven before installing the bundle", required = false, multiValued = false)
     boolean mvnGet;
-
-    @Option(name = "-repo", description = "Set maven repository, e.g. http://nexus:8080/nexus/content/repositories/releases/", required = false, multiValued = false)
-    String mvnRepo = "http://central.maven.org/maven2";
     
     @Option(name = "-i", aliases = { "--install" }, description = "Install only, do not start", required = false, multiValued = false)
     boolean installOnly;
@@ -66,9 +64,6 @@ public class CmdBundleUpgrade implements Action {
     @Option(name = "-s", aliases = { "--start" }, description = "Stop and Start only", required = false, multiValued = false)
     boolean startOnly;
     
-    @Option(name = "-r", aliases = { "--repo" }, description = "Change maven repository location", required = false, multiValued = false)
-    String mavenRepoLocation;
-    
     @Reference
     private Session session;
 
@@ -79,50 +74,22 @@ public class CmdBundleUpgrade implements Action {
 			System.out.println("The Options get and delete make no sense in the same time!");
 		}
 		
-		File repoHome = null;
-		if (delete) {
-			// this is not save ....
-			if (mavenRepoLocation != null)
-				repoHome = new File(mavenRepoLocation);
-			else {
-				File home = MSystem.getUserHome();
-				repoHome = new File(home,".m2/repository");
-			}
-			if (!repoHome.exists() && repoHome.isDirectory()) {
-				System.out.println("Maven local repository not found: " + repoHome);
-				return null;
-			}
-			
-			if (tryRun)
-				System.out.println("Maven Local Repository: " + repoHome);
-		}
-		
-		
 		for (Bundle b : context.getBundles()) {
 			if (b.getSymbolicName().matches(bundleFilter) && b.getLocation().startsWith("mvn:")) {
 				System.out.println(">>> " + b.getLocation() + " -> " + bundleVersion);
 				Cont c = new Cont(b);
 				
-				// download before via mvn command ...
 				if (mvnGet) {
-					/*
-mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get
- -DrepoUrl=http://nexus:8080/nexus/content/repositories/releases/
- -Dartifact=de.mhus.lib:mhu-lib-core:3.3.5
-
-					 */
-					String cmd = "mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get -DrepoUrl=" + mvnRepo 
-							+ " -Dartifact=" + c.getArtefactPath();
-					
-					System.out.println("--- Loading " + c.getArtefactPath() + " from " + mvnRepo);
-					String[] res = MSystem.execute(cmd);
-					if (res[0].indexOf("[ERROR] For more information") > 0) {
-						// failed
-						System.out.println("Loading artefact from repository failed");
-						System.out.println("shell:exec " + cmd);
-						System.out.println(res[0]);
-						System.out.println(res[1]);
-						continue;
+					// download ...
+					if (tryRun) {
+						System.out.println("--- Loading " + c.getArtefactPath());
+					} else {
+						if (MMaven.downloadArtefact(c.getArtifact()))
+							System.out.println("--- Loaded " + c.getArtifact() );
+						else {
+							System.out.println("*** Loading artifact failed");
+							continue;
+						}
 					}
 				}
 				
@@ -141,19 +108,14 @@ mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get
 					MThread.sleep(1000);
 	
 					// delete
-					if (repoHome != null) {
-						String loc = c.bundle.getLocation();
-						if (loc != null && loc.startsWith("mvn:")) {
-							String[] parts = loc.substring(4).split("/");
-							if (parts.length >= 3) {
-								String path = parts[0].replace('.', '/') + "/" + parts[1] + "/" + parts[2];
-								File bundleHome = new File(repoHome,path);
-								if (bundleHome.exists()) {
-									System.out.println("--- Delete " + bundleHome);
-									if (!tryRun)
-										MFile.deleteDir(bundleHome);
-								}
-							}
+					Artifact artifact = c.getArtifact();
+					if (artifact != null) {
+						File location = MMaven.locateArtifact(artifact);
+						if (location != null) {
+							location = location.getParentFile();
+							System.out.println("--- Delete " + location);
+							if (!tryRun)
+								MFile.deleteDir(location);
 						}
 					}
 					
@@ -204,6 +166,11 @@ mvn org.apache.maven.plugins:maven-dependency-plugin:2.1:get
 
 		public Cont(Bundle b) {
 			this.bundle = b;
+		}
+
+		public Artifact getArtifact() {
+			String loc = bundle.getLocation();
+			return MMaven.toArtifact(loc);
 		}
 
 		public String getNewUrl() {
