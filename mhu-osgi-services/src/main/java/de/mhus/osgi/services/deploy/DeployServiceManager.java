@@ -50,8 +50,7 @@ public class DeployServiceManager extends MLog implements SimpleServiceIfc {
 	
 	@Activate
 	public void doActivate(ComponentContext ctx) {
-		tracker.setBundleContext(ctx.getBundleContext());
-		tracker.start();
+		tracker.start(ctx);
 	}
 	
 	@Deactivate

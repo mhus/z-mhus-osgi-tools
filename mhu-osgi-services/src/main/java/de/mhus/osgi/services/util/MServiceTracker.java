@@ -17,6 +17,7 @@ package de.mhus.osgi.services.util;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -67,6 +68,19 @@ public abstract class MServiceTracker<T> {
 		if (context == null) context = MOsgi.getBundleContext();
 		this.context = context;
 		this.clazz = clazz;
+	}
+	
+	public MServiceTracker<T> start(ComponentContext ctx) {
+		if (ctx != null)
+			return start(ctx.getBundleContext());
+		else
+			return start();
+	}
+	
+	public MServiceTracker<T> start(BundleContext ctx) {
+		if (ctx != null)
+			context = ctx;
+		return start();
 	}
 	
 	public MServiceTracker<T> start() {
