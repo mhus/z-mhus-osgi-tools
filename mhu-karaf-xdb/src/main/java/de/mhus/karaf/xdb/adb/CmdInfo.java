@@ -33,16 +33,13 @@ public class CmdInfo implements Action {
 	@Override
 	public Object execute() throws Exception {
 
-		for ( DbManagerService service : AdbUtilKaraf.getAdmin().getServices()) {
-			if (service.getClass().getCanonicalName().equals(serviceName)) {
-				System.out.println("Pool     : " + service.getManager().getPool().getClass());
-				System.out.println("Pool Size: " + service.getManager().getPool().getSize());
-				System.out.println("Pool Used: " + service.getManager().getPool().getUsedSize());
-				System.out.println("DataSource Name:" + service.getManager().getDataSourceName());
-				System.out.println("Schema     : " + service.getManager().getSchema().getClass());
-				System.out.println("Schema Name: " +service.getManager().getSchemaName());
-			}
-		}
+		DbManagerService service = AdbUtilKaraf.getAdmin().getService(serviceName);
+		System.out.println("Pool     : " + service.getManager().getPool().getClass());
+		System.out.println("Pool Size: " + service.getManager().getPool().getSize());
+		System.out.println("Pool Used: " + service.getManager().getPool().getUsedSize());
+		System.out.println("DataSource Name:" + service.getManager().getDataSourceName());
+		System.out.println("Schema     : " + service.getManager().getSchema().getClass());
+		System.out.println("Schema Name: " +service.getManager().getSchemaName());
 		return null;
 	}
 
