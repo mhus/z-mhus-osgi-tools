@@ -24,7 +24,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -41,9 +43,11 @@ public class CmdConfig extends MLog implements Action {
 
 	@Argument(index=0, name="cmd", required=true, description="Command:\n"
 			+ " list\n"
+			+ " info\n"
 			+ " set <owner> <path> <value>\n"
-			+ " restart"
-			+ "", multiValued=false)
+			+ " restart\n"
+			+ " dump\n"
+			+ " owners", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -65,14 +69,18 @@ public class CmdConfig extends MLog implements Action {
 		//KarafMApiImpl api = (KarafMApiImpl)s;
 		
 		switch (cmd) {
+		case "info": {
+			CfgManager cfg = MApi.get().getCfgManager();
+			System.out.println("Last Update: " + MDate.toIso8601(cfg.getLastConfigUpdate() ));
+		} break;
 		case "restart": {
 			MApi.get().getCfgManager().reConfigure();
 		} break;
 		case "list": {
 			ConsoleTable out = new ConsoleTable(full);
-			out.setHeaderValues("Owner", "Path", "Value", "Default");
+			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
-				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault() );
+				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), value.getClass().getSimpleName(), MDate.toIso8601(value.getUpdated()) );
 			}
 			out.print(System.out);
 		} break;
@@ -87,6 +95,14 @@ public class CmdConfig extends MLog implements Action {
 
 		} break;
 		case "dump": {
+			for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
+				System.out.println(">>> " + provider.getClass().getCanonicalName());
+				IConfig cfg = provider.getConfig();
+				System.out.println(cfg.dump());
+				System.out.println("<<<");
+			}
+		} break;
+		case "owners": {
 			CfgManager api = MApi.get().getCfgManager();
 			for (String owner : api.getOwners()) {
 				System.out.println(">>> Owner: " + owner);
