@@ -27,6 +27,7 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.sql.DbPool;
 import de.mhus.osgi.services.adb.AdbUtilKaraf;
@@ -43,7 +44,7 @@ public class CmdAdbControl implements Action {
 			+ " jmx-list - list all pools using jmx\n"
 			+ " jmx-all  - list all jmx components - debug only"
 			+ " info     - info about the adb service\n"
-			+ " cleanup  - cleanup pool\n"
+			+ " cleanup  <unused also (true)>- cleanup pool\n"
 			+ " datasource <name> - change datasource (be aware!)\n"
 			+ " mapping  - print service mappings", multiValued=false)
     String cmd;
@@ -108,8 +109,9 @@ public class CmdAdbControl implements Action {
 			
 			DbManagerService service = AdbUtilKaraf.getAdmin().getService(serviceName);
 			DbPool pool = service.getManager().getPool();
-			pool.cleanup(true);
-			System.out.println("Size: " + pool.getSize());
+			pool.cleanup(args != null && args.length > 0 ? MCast.toboolean(args[0], false) : false);
+			System.out.println("Size  : " + pool.getSize());
+			System.out.println("Unused: " + pool.getUsedSize());
 			
 		} else
 		if (cmd.equals("jmx-all")) {
