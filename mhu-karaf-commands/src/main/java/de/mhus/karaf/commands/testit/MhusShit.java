@@ -1,12 +1,16 @@
 package de.mhus.karaf.commands.testit;
 
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.MThreadPool;
+import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
+import de.mhus.lib.core.system.DefaultHousekeeper;
 import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
 public class MhusShit implements ShitIfc {
@@ -40,9 +44,12 @@ public class MhusShit implements ShitIfc {
 			return obj;
 		}
 		if (cmd.equals("housekeepertasks")) {
-			MHousekeeper housekeeper = MApi.lookup(MHousekeeper.class);
-			for (String info : housekeeper.getHousekeeperTaskInfo())
-				System.out.println(info);
+			Map<MHousekeeperTask, Long> map = DefaultHousekeeper.getAll();
+			ConsoleTable table = new ConsoleTable(false);
+			table.setHeaderValues("Name","Class","Sleep");
+			for (Entry<MHousekeeperTask, Long> entry : map.entrySet())
+				table.addRowValues(entry.getKey().getName(),entry.getKey().getClass().getCanonicalName(),entry.getValue());
+			table.print(System.out);
 		}
 		if (cmd.equals("housekeepertest")) {
 			MHousekeeper housekeeper = MApi.lookup(MHousekeeper.class);

@@ -18,6 +18,7 @@ package de.mhus.osgi.services.scheduler;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.TimerTask;
 import java.util.WeakHashMap;
 
@@ -56,6 +57,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 	private MServiceTracker<SchedulerService> tracker;
 	private WeakHashMap<SchedulerService,SchedulerJob> services = new WeakHashMap<>();
 	public static TimerFactoryImpl instance; //TODO use method
+	private static LinkedList<SchedulerJob> preSchedule = new LinkedList<>();
 		
 	public TimerFactoryImpl() {
 	}
@@ -109,6 +111,10 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 				addSchedulerService(reference, service);
 			}
 		}.start();
+		
+		// import preSchedule
+		preSchedule.forEach(j -> getTimer().schedule(j));
+		preSchedule.clear();
 		
 	}
 
@@ -384,6 +390,13 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 	
 	public boolean isRunning() {
 		return tracker.isRunning();
+	}
+
+	public static void schedule(SchedulerJob job) {
+		if (instance != null)
+			instance.getTimer().schedule(job);
+		else
+			preSchedule.add(job);
 	}
 	
 }

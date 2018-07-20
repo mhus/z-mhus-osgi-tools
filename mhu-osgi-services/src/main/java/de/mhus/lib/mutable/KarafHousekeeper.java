@@ -16,9 +16,7 @@
 package de.mhus.lib.mutable;
 
 import java.lang.ref.WeakReference;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.WeakHashMap;
+import java.util.Map.Entry;
 
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
@@ -27,29 +25,34 @@ import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.lang.MObject;
 import de.mhus.lib.core.schedule.IntervalJob;
+import de.mhus.lib.core.system.DefaultHousekeeper;
+import de.mhus.osgi.services.scheduler.TimerFactoryImpl;
 
 public class KarafHousekeeper extends MObject implements MHousekeeper {
 
-	private WeakHashMap<MHousekeeperTask, Long> list = new WeakHashMap<>();
+	public KarafHousekeeper() {
+		for ( Entry<MHousekeeperTask, Long> task : DefaultHousekeeper.getAll().entrySet()) {
+			String name = task.getKey().getName();
+			log().d("import",name,task.getKey(),task.getValue());
 
+			WeakObserver t = new WeakObserver(task.getKey(), "housekeeper:" + name);
+			IntervalJob job = new IntervalJob(task.getValue(), t);
+			t.setJob(job);
+			TimerFactoryImpl.schedule(job);
+
+		}
+	}
+	
 	@Override
 	public void register(MHousekeeperTask task, long sleep) {
 		String name = task.getName();
 		log().d("register",name,task,sleep);
-		list.put(task, sleep);
-		TimerIfc timer = MApi.lookup(TimerIfc.class);
+		DefaultHousekeeper.put(task, sleep);
 
 		WeakObserver t = new WeakObserver(task, "housekeeper:" + name);
 		IntervalJob job = new IntervalJob(sleep, t);
 		t.setJob(job);
-		timer.schedule(job);
-	}
-
-	@Override
-	public List<String> getHousekeeperTaskInfo() {
-		LinkedList<String> out = new LinkedList<>();
-		list.forEach((k,v) -> out.add(k.getName() + "," + k.getClass().getCanonicalName() + "," + v) );
-		return out;
+		TimerFactoryImpl.schedule(job);
 	}
 
 	private static class WeakObserver implements ITimerTask {
