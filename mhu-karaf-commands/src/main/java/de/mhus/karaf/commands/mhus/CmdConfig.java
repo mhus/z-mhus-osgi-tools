@@ -26,6 +26,7 @@ import org.apache.karaf.shell.api.console.Session;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
@@ -80,7 +81,7 @@ public class CmdConfig extends MLog implements Action {
 			ConsoleTable out = new ConsoleTable(full);
 			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated","Calling");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
-				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), value.getClass().getSimpleName(), MDate.toIso8601(value.getUpdated()), value.getCalling() );
+				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), MSystem.getSimpleName(value.getClass()), MDate.toIso8601(value.getUpdated()), value.getCalling() );
 			}
 			out.print(System.out);
 		} break;
