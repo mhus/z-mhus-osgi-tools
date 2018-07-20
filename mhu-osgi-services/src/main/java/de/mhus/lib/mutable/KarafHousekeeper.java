@@ -19,10 +19,8 @@ import java.lang.ref.WeakReference;
 import java.util.Map.Entry;
 
 import de.mhus.lib.core.ITimerTask;
-import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
-import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.lang.MObject;
 import de.mhus.lib.core.schedule.IntervalJob;
 import de.mhus.lib.core.system.DefaultHousekeeper;
