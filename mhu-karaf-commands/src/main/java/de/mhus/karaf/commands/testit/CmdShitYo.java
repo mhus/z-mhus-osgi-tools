@@ -45,6 +45,7 @@ public class CmdShitYo implements Action {
 		shortcuts.put("address", AddressShit.class);
 		shortcuts.put("maven", MavenShit.class);
 		shortcuts.put("soffice", SOfficeShit.class);
+		shortcuts.put("mhus", MhusShit.class);
 	}
 	
 	@Override

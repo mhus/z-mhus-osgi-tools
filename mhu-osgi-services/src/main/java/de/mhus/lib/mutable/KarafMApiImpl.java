@@ -93,14 +93,14 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 		baseControl = new KarafBaseControl();
 		logFactory = new JavaLoggerFactory();
 		mlogFactory = new SingleMLogInstanceFactory();
-		getBaseControl().getCurrentBase().addObject(MLogFactory.class, mlogFactory);
+		getBaseControl().base().addObject(MLogFactory.class, mlogFactory);
 		
 		getCfgManager(); // init
 //		TimerFactoryImpl.indoCheckTimers();
 		
 		try {
 			housekeeper = new KarafHousekeeper();
-			getBaseControl().getCurrentBase().addObject(MHousekeeper.class, housekeeper);
+			getBaseControl().base().addObject(MHousekeeper.class, housekeeper);
 		} catch (Throwable t) {
 			System.out.println("Can't initialize housekeeper base: " + t);
 		}
@@ -138,7 +138,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
 	@Override
 	public Base base() {
-		return getBaseControl().getCurrentBase();
+		return getBaseControl().base();
 	}
 
 	@Override

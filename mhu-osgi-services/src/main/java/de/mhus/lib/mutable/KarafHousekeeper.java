@@ -16,6 +16,9 @@
 package de.mhus.lib.mutable;
 
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.WeakHashMap;
 
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
@@ -27,17 +30,26 @@ import de.mhus.lib.core.schedule.IntervalJob;
 
 public class KarafHousekeeper extends MObject implements MHousekeeper {
 
+	private WeakHashMap<MHousekeeperTask, Long> list = new WeakHashMap<>();
 
 	@Override
 	public void register(MHousekeeperTask task, long sleep) {
 		String name = task.getName();
 		log().d("register",name,task,sleep);
+		list.put(task, sleep);
 		TimerIfc timer = MApi.lookup(TimerIfc.class);
 
 		WeakObserver t = new WeakObserver(task, "housekeeper:" + name);
 		IntervalJob job = new IntervalJob(sleep, t);
 		t.setJob(job);
 		timer.schedule(job);
+	}
+
+	@Override
+	public List<String> getHousekeeperTaskInfo() {
+		LinkedList<String> out = new LinkedList<>();
+		list.forEach((k,v) -> out.add(k.getName() + "," + k.getClass().getCanonicalName() + "," + v) );
+		return out;
 	}
 
 	private static class WeakObserver implements ITimerTask {
