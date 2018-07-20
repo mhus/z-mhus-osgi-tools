@@ -78,9 +78,9 @@ public class CmdConfig extends MLog implements Action {
 		} break;
 		case "list": {
 			ConsoleTable out = new ConsoleTable(full);
-			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated");
+			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated","Calling");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
-				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), value.getClass().getSimpleName(), MDate.toIso8601(value.getUpdated()) );
+				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), value.getClass().getSimpleName(), MDate.toIso8601(value.getUpdated()), value.getCalling() );
 			}
 			out.print(System.out);
 		} break;
