@@ -24,7 +24,7 @@
 	<description>mongo</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.4.2</version>
+		<version>1.4.3-SNAPSHOT</version>
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
