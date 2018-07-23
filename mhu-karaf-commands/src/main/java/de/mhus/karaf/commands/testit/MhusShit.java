@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
+import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThreadPool;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
@@ -48,7 +49,7 @@ public class MhusShit implements ShitIfc {
 			ConsoleTable table = new ConsoleTable(false);
 			table.setHeaderValues("Name","Class","Sleep");
 			for (Entry<MHousekeeperTask, Long> entry : map.entrySet())
-				table.addRowValues(entry.getKey().getName(),entry.getKey().getClass().getCanonicalName(),entry.getValue());
+				table.addRowValues(entry.getKey().getName(),MSystem.getCanonicalClassName(entry.getKey().getClass()),entry.getValue());
 			table.print(System.out);
 		}
 		if (cmd.equals("housekeepertest")) {
