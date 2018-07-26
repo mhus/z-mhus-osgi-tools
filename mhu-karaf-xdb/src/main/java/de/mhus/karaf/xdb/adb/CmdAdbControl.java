@@ -42,7 +42,7 @@ public class CmdAdbControl implements Action {
 
 	@Argument(index=1, name="command", required=true, description="Command:\n"
 			+ " jmx-list - list all pools using jmx\n"
-			+ " jmx-all  - list all jmx components - debug only"
+			+ " jmx-all  - list all jmx components - debug only\n"
 			+ " info     - info about the adb service\n"
 			+ " cleanup  <unused also (true)>- cleanup pool\n"
 			+ " datasource <name> - change datasource (be aware!)\n"

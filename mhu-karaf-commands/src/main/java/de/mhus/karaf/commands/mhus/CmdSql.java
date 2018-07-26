@@ -48,7 +48,7 @@ public class CmdSql extends MLog implements Action {
     private Session session;
 
 	@Argument(index=0, name="cmd", required=true, description="Command:\n"
-			+ " set - sets analytics tool ,\n"
+			+ " set - sets analytics tool (analyzer,writer,warning,reporter,<class>),\n"
 			+ " reset - remove analytics tool,\n"
 			+ " list - print analysis data,\n"
 			+ "", multiValued=false)

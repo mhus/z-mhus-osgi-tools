@@ -18,6 +18,7 @@ package de.mhus.karaf.commands.testit;
 import java.io.File;
 
 import de.mhus.lib.core.util.MMaven;
+import de.mhus.lib.core.util.Version;
 
 public class MavenShit implements ShitIfc {
 
@@ -27,6 +28,10 @@ public class MavenShit implements ShitIfc {
 		System.out.println("Artifact syntax: groupdId:artifactId:type:version");
 		System.out.println("locate <artifact>");
 		System.out.println("download <artifact>");
+		System.out.println("delete <artifact> - delete local artifact");
+		System.out.println("local <group part> - list all local artifacts in the list");
+		System.out.println("cleanupsnapshots <group part> <'force'> - delete all local snapshots in this groups");
+		System.out.println("cleanupolder <group part> <version> <'force'> - delete all local and older then version artifacts");
 	}
 
 	@Override
@@ -44,6 +49,32 @@ public class MavenShit implements ShitIfc {
 			System.out.println("Location: " + location );
 			boolean res = MMaven.downloadArtefact(artifact);
 			System.out.println("Downloaded: " + res + " " + (res ? location.length() + " Bytes" : ""));
+		}
+		if (cmd.equals("delete")) {
+			MMaven.Artifact artifact = MMaven.toArtifact(parameters[0]);
+			System.out.println("Artifact: " + artifact);
+			if (MMaven.deleteLocalArtifact(artifact))
+				System.out.println("Deleted");
+		}
+		if (cmd.equals("local")) {
+			for (MMaven.Artifact item : MMaven.findLocalArtifacts(parameters[0]))
+				System.out.println(item + " " + item.getEstimatedVersion());
+		}
+		if (cmd.equals("cleanupsnapshots")) {
+			boolean force = parameters.length > 1 && parameters[1].equals("force");
+			for (MMaven.Artifact item : MMaven.findLocalArtifacts(parameters[0]))
+				if (!item.isRelease()) {
+					if (!force || MMaven.deleteLocalArtifact(item))
+						System.out.println("-- deleted " + item);
+				}
+		}
+		if (cmd.equals("cleanupolder")) {
+			boolean force = parameters.length > 2 && parameters[2].equals("force");
+			Version v = new Version(parameters[1]);
+			for (MMaven.Artifact item : MMaven.findLocalArtifacts(parameters[0]))
+				if (item.getEstimatedVersion().compareTo(v) < 0 || !item.isRelease() && item.getEstimatedVersion().compareTo(v) == 0)
+					if (!force || MMaven.deleteLocalArtifact(item))
+						System.out.println("-- deleted " + item);
 		}
 		return null;
 	}
