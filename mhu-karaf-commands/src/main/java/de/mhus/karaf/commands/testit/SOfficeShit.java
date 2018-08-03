@@ -28,6 +28,7 @@ public class SOfficeShit implements ShitIfc {
 		System.out.println("version");
 		System.out.println("convert <file> <format> [<output directory>]");
 		System.out.println("replace <from> <to> [key=value]*");
+		System.out.println("content <from>");
 	}
 
 	@Override
@@ -58,6 +59,11 @@ public class SOfficeShit implements ShitIfc {
 			}
 				
 			SOfficeConnector.replace(new File(parameters[0]), new File(parameters[1]), replacer);
+		}
+		if (cmd.equals("content")) {
+			System.out.println(
+				SOfficeConnector.content(new File(parameters[0]))
+			);
 		}
 		return null;
 	}
