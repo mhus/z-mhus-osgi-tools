@@ -1,9 +1,12 @@
 package de.mhus.karaf.commands.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
@@ -17,6 +20,9 @@ import de.mhus.osgi.services.uptime.UptimeRecord;
 @Service
 public class CmdUptime implements Action {
 
+    @Option(name = "-u", aliases = { "--uptime" }, description = "Order by uptime descend", required = false, multiValued = false)
+    boolean orderUptime;
+
 	@Override
 	public Object execute() throws Exception {
 		
@@ -28,6 +34,15 @@ public class CmdUptime implements Action {
 			System.out.println("Records are not available");
 			return null;
 		}
+		if (orderUptime)
+			Collections.sort(records, new Comparator<UptimeRecord>() {
+
+				@Override
+				public int compare(UptimeRecord o1, UptimeRecord o2) {
+					return -Long.compare(o1.getUptime(), o2.getUptime());
+				}
+			});
+		
 		for (UptimeRecord record : records)
 			out.addRowValues(
 				record.getStatus(), 

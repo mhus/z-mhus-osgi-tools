@@ -15,12 +15,13 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.cfg.CfgInt;
 import de.mhus.lib.core.system.IApi;
 
 @Component(immediate=true)
 public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 
-	private static final int MAX = 100000;
+	private static final CfgInt MAX = new CfgInt(UptimeAdminIfc.class, "max", 10000);
 	private List<MutableRecord> db;
 	
 	@Activate
@@ -62,7 +63,7 @@ public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 			List<String> lines = MFile.readLines(file, true);
 			for (String line : lines)
 				out.add(new MutableRecord(line));
-			while (out.size() > MAX)
+			while (out.size() > MAX.value())
 				out.remove(0);
 			return out;
 		} catch (Throwable t) {
@@ -158,6 +159,8 @@ public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 		
 		@Override
 		public long getSystemUptime() {
+			if (status == STATUS.CURRENT.ordinal())
+				return MSystem.getSystemUptime();
 			return sysUptime;
 		}
 		
