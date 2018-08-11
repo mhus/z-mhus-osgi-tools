@@ -24,6 +24,7 @@ import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThreadPool;
+import de.mhus.lib.core.base.service.LockManager;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
@@ -38,10 +39,17 @@ public class MhusShit implements ShitIfc {
 		System.out.println("lookup <ifc> [<def>]");
 		System.out.println("housekeepertest");
 		System.out.println("housekeepertasks");
+		System.out.println("locks - print current locks from LockManager");
 	}
 
 	@Override
 	public Object doExecute(String cmd, String[] parameters) throws Exception {
+		
+		if (cmd.equals("locks")) {
+			System.out.println(
+					MApi.lookup(LockManager.class).currentLocks()
+				);
+		} else
 		if (cmd.equals("lookup")) {
 			OsgiBundleClassLoader loader = new OsgiBundleClassLoader();
 			Class<?> ifc = loader.loadClass(parameters[0]);
