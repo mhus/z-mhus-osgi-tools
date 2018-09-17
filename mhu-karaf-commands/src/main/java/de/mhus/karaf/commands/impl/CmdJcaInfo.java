@@ -25,7 +25,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.core.crypt.BouncyUtil;
+import de.mhus.lib.core.crypt.MBouncy;
 
 @Command(scope = "java", name = "jcainfo", description = "JCA Security Information")
 @Service
@@ -37,7 +37,7 @@ public class CmdJcaInfo extends MLog implements Action {
 	@Override
 	public Object execute() throws Exception {
 			try {
-				BouncyUtil.init();
+				MBouncy.init();
 			} catch (Throwable t) {}
 			
 			if (parameters != null && parameters.length > 0) {

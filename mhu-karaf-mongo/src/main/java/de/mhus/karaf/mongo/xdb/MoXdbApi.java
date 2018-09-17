@@ -288,6 +288,15 @@ public class MoXdbApi implements XdbApi {
 			}
 		}
 
+		@Override
+		public long count(AQuery<T> query) throws MException {
+			try {
+				return service.getManager().getCount(MongoUtil.createQuery(service.getManager(), query).iterator());
+			} catch (IOException e) {
+				throw new MException(e);
+			}
+		}
+		
 		@SuppressWarnings("unchecked")
 		@Override
 		public T newInstance() throws Exception {
