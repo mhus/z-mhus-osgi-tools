@@ -68,6 +68,9 @@ public class CmdVault extends MLog implements Action {
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
 
+	@Option(name="-id", description="Optiona a existing uuid to import in raw mode",required=false)
+	String id = null;
+	
 	@Override
 	public Object execute() throws Exception {
 		MVault vault = MVaultUtil.loadDefault();
@@ -133,7 +136,11 @@ public class CmdVault extends MLog implements Action {
 			String type = parameters[0];
 			String description = parameters[1];
 			String value = parameters[2];
-			DefaultEntry entry = new DefaultEntry(type, description, value);
+			DefaultEntry entry = null;
+			if (id != null)
+				entry = new DefaultEntry(UUID.fromString(id), type, description, value);
+			else
+				entry = new DefaultEntry(type, description, value);
 			mutable.addEntry(entry);
 			System.out.println("Created " + entry + ". Don't forget to save!");
 		} else
