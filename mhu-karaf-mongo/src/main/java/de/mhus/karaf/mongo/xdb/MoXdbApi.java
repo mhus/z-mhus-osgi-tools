@@ -121,7 +121,7 @@ public class MoXdbApi implements XdbApi {
 		}
 		
 		@Override
-		public <T> XdbType<T> getType(Class<?> type) throws NotFoundException {
+		public <T> XdbType<T> getType(Class<T> type) throws NotFoundException {
 			Class<?> out = null;
 			for (Class<? extends Persistable> s : service.getManager().getManagedTypes())
 				if (s.getName().equals(type.getName())) {
@@ -350,6 +350,15 @@ public class MoXdbApi implements XdbApi {
 		@Override
 		public T getObject(String... keys) throws MException {
 			return (T)service.getManager().getObject(type, (Object[])keys);
+		}
+
+		@Override
+		public DbCollection<T> getAll() throws MException {
+			try {
+				return new Result<T>( MongoUtil.createQuery(service.getManager(), type, "", null).iterator() );
+			} catch (IOException e) {
+				throw new MException(e);
+			}
 		}
 		
 	}
