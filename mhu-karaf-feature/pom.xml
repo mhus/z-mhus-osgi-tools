@@ -24,7 +24,7 @@
 	<parent>
 		<artifactId>mhus-osgi-tools</artifactId>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.4.3-SNAPSHOT</version>
+		<version>1.4.3</version>
 	</parent>
 
 	<properties>
