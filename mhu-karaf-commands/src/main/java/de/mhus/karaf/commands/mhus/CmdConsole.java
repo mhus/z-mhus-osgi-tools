@@ -24,6 +24,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.karaf.commands.editor.Editor;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.ANSIConsole;
@@ -43,7 +44,8 @@ public class CmdConsole implements Action {
 			+ " reset           - recreate console instance\n"
 			+ " cleanup         - cleanup console\n"
 			+ " color <fg> <bg> - set colors\n"
-			+ " debug           - print console debug information", multiValued=false)
+			+ " debug           - print console debug information\n"
+			+ " keys            - debug keyboard", multiValued=false)
     String cmd;
 	
 	@Argument(index=1, name="arguments", required=false, description="arguments", multiValued=true)
@@ -132,6 +134,20 @@ public class CmdConsole implements Action {
 			}
 			System.out.println("stty        : " + XTermConsole.getRawTTYSettings() );
 		} break;
+		case "keys": {
+			System.out.println(">>> Key debug mode - press 'q' to leave");
+			while (true) {
+				int key = Console.get().read();
+				System.out.println("KeyCode: " + key);
+				if (key == ANSIConsole.KEY_q) break;
+				if (key == ANSIConsole.KEY_ENTER)
+					System.out.println();
+			}
+		} break;
+		case "edit": {
+			Editor editor = new Editor();
+			editor.edit();
+		}
 		default:
 			System.out.println("Command not found");
 		}
