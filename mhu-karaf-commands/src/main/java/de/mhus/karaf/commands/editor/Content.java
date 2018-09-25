@@ -20,6 +20,7 @@ import java.util.LinkedList;
 public class Content {
 
 	private LinkedList<Line> lines = new LinkedList<>();
+	@SuppressWarnings("unused")
 	private Editor editor;
 	
 	public void init(Editor editor) {

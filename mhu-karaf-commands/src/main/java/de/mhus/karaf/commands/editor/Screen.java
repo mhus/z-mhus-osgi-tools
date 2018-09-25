@@ -17,6 +17,7 @@ package de.mhus.karaf.commands.editor;
 
 public class Screen {
 
+	@SuppressWarnings("unused")
 	private Editor editor;
 
 	public void init(Editor editor) {
