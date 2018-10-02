@@ -47,6 +47,9 @@ public class CmdVault extends MLog implements Action {
 			+ " sources\n"
 			+ " list\n"
 			+ " get <id>\n"
+			+ " move <id> <to source>   - clone and remove from old source\n"
+			+ " clone <id> <to source>  - copy with the same id\n"
+			+ " copy <id> <to source>   - copy with a new id\n"
 			+ " addfile <file> [description]\n"
 			+ " addraw <type> <description> <value>\n"
 			+ " remove <id>\n"
@@ -63,7 +66,7 @@ public class CmdVault extends MLog implements Action {
     String[] parameters;
 
 	@Option(name="-s", aliases="--source",description="Set vault source name")
-	String sourcename = MVault.SOURCE_DEFAULT;
+	String sourcename = null;
 	
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
@@ -75,6 +78,54 @@ public class CmdVault extends MLog implements Action {
 	public Object execute() throws Exception {
 		MVault vault = MVaultUtil.loadDefault();
 		
+		if (cmd.equals("copy")) {
+			VaultEntry entry = null;
+			if (sourcename != null)
+				entry = vault.getSource(sourcename).getEntry(UUID.fromString(parameters[0]));
+			else
+				entry = vault.getEntry(UUID.fromString(parameters[0]));
+			if (entry == null) {
+				System.out.println("Entry not found");
+				return null;
+			}
+			entry = new DefaultEntry(entry.getType(), entry.getDescription(), entry.getValue());
+			vault.getSource(parameters[1]).getEditable().addEntry(entry);
+			System.out.println("OK " + entry.getId());
+		} else
+		if (cmd.equals("move")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
+			VaultSource source = vault.getSource(sourcename);
+			if (source == null) {
+				System.out.println("Source not found " + sourcename);
+				return null;
+			}
+			MutableVaultSource editable = source.getEditable();
+			if (editable == null) {
+				System.out.println("Source is not editable " + sourcename);
+				return null;
+			}
+			VaultEntry entry = source.getEntry(UUID.fromString(parameters[0]));
+			if (entry == null) {
+				System.out.println("Entry not found in source " + sourcename);
+				return null;
+			}
+			vault.getSource(parameters[1]).getEditable().addEntry(entry);
+			editable.removeEntry(UUID.fromString(parameters[0]));
+			System.out.println("OK");
+		} else
+		if (cmd.equals("clone")) {
+			VaultEntry entry = null;
+			if (sourcename != null)
+				entry = vault.getSource(sourcename).getEntry(UUID.fromString(parameters[0]));
+			else
+				entry = vault.getEntry(UUID.fromString(parameters[0]));
+			if (entry == null) {
+				System.out.println("Entry not found");
+				return null;
+			}
+			vault.getSource(parameters[1]).getEditable().addEntry(entry);
+			System.out.println("OK");
+		} else
 		if (cmd.equals("sources")) {
 			ConsoleTable out = new ConsoleTable(full);
 			out.setHeaderValues("Source","Info","Mutable","MemoryBased");
@@ -95,7 +146,7 @@ public class CmdVault extends MLog implements Action {
 			out.print(System.out);
 		} else
 		if (cmd.equals("list")) {
-			if (sourcename.equals(MVault.SOURCE_DEFAULT)) {
+			if (sourcename == null) {
 				ConsoleTable out = new ConsoleTable(full);
 				out.setHeaderValues("Source","Id","Type","Description");
 				for (String sourceName : vault.getSourceNames()) {
@@ -126,6 +177,7 @@ public class CmdVault extends MLog implements Action {
 			}
 		} else
 		if (cmd.equals("addraw")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
 				System.out.println("Source not found!");
@@ -145,6 +197,7 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("Created " + entry + ". Don't forget to save!");
 		} else
 		if (cmd.equals("addfile")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
 				System.out.println("Source not found!");
@@ -181,6 +234,7 @@ public class CmdVault extends MLog implements Action {
 			
 		} else
 		if (cmd.equals("save")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
 				System.out.println("Source not found!");
@@ -191,6 +245,7 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("load")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
 				System.out.println("Source not found!");
@@ -201,7 +256,11 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("get")) {
-			VaultEntry entry = vault.getEntry(UUID.fromString(parameters[0]));
+			VaultEntry entry = null;
+			if (sourcename != null)
+				entry = vault.getSource(sourcename).getEntry(UUID.fromString(parameters[0]));
+			else
+				entry = vault.getEntry(UUID.fromString(parameters[0]));
 			if (entry == null) {
 				System.out.println("Entry not found");
 				return null;
@@ -215,6 +274,7 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("-------");
 		} else
 		if (cmd.equals("remove")) {
+			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
 				System.out.println("Source not found!");
