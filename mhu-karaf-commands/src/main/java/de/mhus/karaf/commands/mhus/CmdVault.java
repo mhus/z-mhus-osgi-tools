@@ -84,7 +84,7 @@ public class CmdVault extends MLog implements Action {
 				boolean isMutable = false;
 				boolean isMemoryBased = false;
 				try {
-					MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+					MutableVaultSource mutable = source.getEditable();
 					isMutable = mutable != null;
 					isMemoryBased = mutable.isMemoryBased();
 					if (isMutable) {
@@ -131,7 +131,7 @@ public class CmdVault extends MLog implements Action {
 				System.out.println("Source not found!");
 				return null;
 			}
-			MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+			MutableVaultSource mutable = source.getEditable();
 			
 			String type = parameters[0];
 			String description = parameters[1];
@@ -150,7 +150,7 @@ public class CmdVault extends MLog implements Action {
 				System.out.println("Source not found!");
 				return null;
 			}
-			MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+			MutableVaultSource mutable = source.getEditable();
 			
 			File file = new File(parameters[0]);
 			if (!file.exists()) {
@@ -186,7 +186,7 @@ public class CmdVault extends MLog implements Action {
 				System.out.println("Source not found!");
 				return null;
 			}
-			MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+			MutableVaultSource mutable = source.getEditable();
 			mutable.doSave();
 			System.out.println("OK");
 		} else
@@ -196,7 +196,7 @@ public class CmdVault extends MLog implements Action {
 				System.out.println("Source not found!");
 				return null;
 			}
-			MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
+			MutableVaultSource mutable = source.getEditable();
 			mutable.doLoad();
 			System.out.println("OK");
 		} else
@@ -211,7 +211,7 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("Description: " + entry.getDescription());
 			System.out.println(" Value");
 			System.out.println("-------");
-			System.out.println(entry.getValue());
+			System.out.println(entry.getValue().value());
 			System.out.println("-------");
 		} else
 		if (cmd.equals("remove")) {
@@ -220,8 +220,8 @@ public class CmdVault extends MLog implements Action {
 				System.out.println("Source not found!");
 				return null;
 			}
-			MutableVaultSource mutable = source.adaptTo(MutableVaultSource.class);
-
+			MutableVaultSource mutable = source.getEditable();
+			
 			mutable.removeEntry(UUID.fromString(parameters[0]));
 			System.out.println("OK");
 		} else
