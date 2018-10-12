@@ -59,7 +59,9 @@ public class CmdVault extends MLog implements Action {
 			+ " removesource <id>\n"
 			+ " encodepasswordrot13 <clear>\n"
 			+ " encodepasswordwithkey <key id> <clear>\n"
-			+ " decodepassword <encoded password>", multiValued=false)
+			+ " encodepasswordmd5 <clear>\n"
+			+ " decodepassword <encoded password>\n"
+			+ "", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -295,10 +297,13 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("encodepasswordrot13")) {
-			System.out.println( MPassword.encode(MPassword.TYPE_ROT13, parameters[0], null) );
+			System.out.println( MPassword.encode(MPassword.METHOD.ROT13, parameters[0]) );
 		}
 		if (cmd.equals("encodepasswordwithkey")) {
-			System.out.println( MPassword.encode(MPassword.TYPE_RSA, parameters[1], parameters[0]) );
+			System.out.println( MPassword.encode(MPassword.METHOD.RSA, parameters[1], parameters[0]) );
+		} else
+		if (cmd.equals("encodepasswordmd5")) {
+			System.out.println( MPassword.encode(MPassword.METHOD.HASH_MD5, parameters[1]) );
 		} else
 		if (cmd.equals("decodepassword")) {
 			System.out.println( MPassword.decode(parameters[0]));
