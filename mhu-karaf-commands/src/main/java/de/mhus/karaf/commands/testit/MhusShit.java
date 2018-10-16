@@ -45,10 +45,32 @@ public class MhusShit implements ShitIfc {
 		System.out.println("housekeepertasks");
 		System.out.println("locks - print known locks from LockManager");
 		System.out.println("releaselock <id>");
+		System.out.println("createlock <name> - create managed lock");
+		System.out.println("setlock <id>");
 	}
 
 	@Override
 	public Object doExecute(String cmd, String[] parameters) throws Exception {
+		if (cmd.equals("createlock")) {
+			Lock lock = MApi.lookup(LockManager.class).getLock(parameters[0]);
+			System.out.println("Created " + lock.hashCode());
+		} else
+		if (cmd.equals("setlock")) {
+			int id = M.c(parameters[0], 0);
+			for (Lock lock : MApi.lookup(LockManager.class).getRegisteredLocks())
+				if (id == lock.hashCode()) {
+					System.out.println("Set " + id);
+					lock.lock();
+					return null;
+				}
+			for (Lock lock : MApi.lookup(LockManager.class).managedLocks())
+				if (id == lock.hashCode()) {
+					System.out.println("Set " + id);
+					lock.lock();
+					return null;
+				}
+			System.out.println("Not found");
+		} else
 		if (cmd.equals("releaselock")) {
 			int id = M.c(parameters[0], 0);
 			for (Lock lock : MApi.lookup(LockManager.class).getRegisteredLocks())
@@ -66,12 +88,12 @@ public class MhusShit implements ShitIfc {
 			System.out.println("Not found");
 		} else
 		if (cmd.equals("locks")) {
-			ConsoleTable out = new ConsoleTable(true);
+			ConsoleTable out = new ConsoleTable(false);
 			long now = System.currentTimeMillis();
 			out.setHeaderValues("Id","Name","Locked","Privacy","Locker","Time","Since","Managed");
 			for (Lock lock : MApi.lookup(LockManager.class).managedLocks())
 				out.addRowValues(
-						lock, 
+						lock.hashCode(), 
 						lock.getName(),
 						lock.isLocked(),
 						lock.isPrivacy(),
