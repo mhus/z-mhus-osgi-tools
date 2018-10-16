@@ -16,15 +16,19 @@
 package de.mhus.karaf.commands.testit;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThreadPool;
+import de.mhus.lib.core.MTimeInterval;
 import de.mhus.lib.core.base.service.LockManager;
+import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
@@ -39,16 +43,55 @@ public class MhusShit implements ShitIfc {
 		System.out.println("lookup <ifc> [<def>]");
 		System.out.println("housekeepertest");
 		System.out.println("housekeepertasks");
-		System.out.println("locks - print current locks from LockManager");
+		System.out.println("locks - print known locks from LockManager");
+		System.out.println("releaselock <id>");
 	}
 
 	@Override
 	public Object doExecute(String cmd, String[] parameters) throws Exception {
-		
+		if (cmd.equals("releaselock")) {
+			int id = M.c(parameters[0], 0);
+			for (Lock lock : MApi.lookup(LockManager.class).getRegisteredLocks())
+				if (id == lock.hashCode()) {
+					System.out.println("Unlock " + id);
+					lock.unlockHard();
+					return null;
+				}
+			for (Lock lock : MApi.lookup(LockManager.class).managedLocks())
+				if (id == lock.hashCode()) {
+					System.out.println("Unlock " + id);
+					lock.unlockHard();
+					return null;
+				}
+			System.out.println("Not found");
+		} else
 		if (cmd.equals("locks")) {
-			System.out.println(
-					MApi.lookup(LockManager.class).currentLocks()
-				);
+			ConsoleTable out = new ConsoleTable(true);
+			long now = System.currentTimeMillis();
+			out.setHeaderValues("Id","Name","Locked","Privacy","Locker","Time","Since","Managed");
+			for (Lock lock : MApi.lookup(LockManager.class).managedLocks())
+				out.addRowValues(
+						lock, 
+						lock.getName(),
+						lock.isLocked(),
+						lock.isPrivacy(),
+						lockerName(lock.getLocker()),
+						lock.isLocked() ? new Date(lock.getLockTime()) : "",
+						lock.isLocked() ? MTimeInterval.getIntervalAsStringSec(now - lock.getLockTime()) : "",
+								"true"
+						);
+			for (Lock lock : MApi.lookup(LockManager.class).getRegisteredLocks())
+				out.addRowValues(
+						lock.hashCode(), 
+						lock.getName(),
+						lock.isLocked(),
+						lock.isPrivacy(),
+						lockerName(lock.getLocker()),
+						lock.isLocked() ? new Date(lock.getLockTime()) : "",
+						lock.isLocked() ? MTimeInterval.getIntervalAsStringSec(now - lock.getLockTime()) : "",
+								"false"
+						);
+			out.print();
 		} else
 		if (cmd.equals("lookup")) {
 			OsgiBundleClassLoader loader = new OsgiBundleClassLoader();
@@ -101,6 +144,11 @@ public class MhusShit implements ShitIfc {
 			System.out.println(res + " " + doitTime);
 		}
 		return null;
+	}
+
+	private String lockerName(Thread locker) {
+		if (locker == null) return "";
+		return locker.getId() + " " + locker.getName();
 	}
 
 }
