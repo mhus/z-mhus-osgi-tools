@@ -41,7 +41,6 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.logging.TrailLevelMapper;
 import de.mhus.lib.core.system.IApi;
-import de.mhus.lib.core.util.lambda.LambdaUtil;
 import de.mhus.lib.logging.level.GeneralMapper;
 import de.mhus.lib.logging.level.ThreadBasedMapper;
 import de.mhus.lib.logging.level.ThreadMapperConfig;
@@ -69,7 +68,6 @@ public class CmdLog extends MLog implements Action {
 			+ " off - log mapping off\n"
 			+ " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
 			+ " maxmsgsize [new size] - show or set maximum message size, disable with 0\n"
-			+ " lambdadebug [true|false]\n"
 			+ " stacktracetrace [true|false]", multiValued=false)
     String cmd;
 
@@ -422,10 +420,6 @@ public class CmdLog extends MLog implements Action {
 //				System.out.println("On");
 //			}
 			
-		} break;
-		case "lambdadebug": {
-			LambdaUtil.debugOut = MCast.toboolean(parameters[0], false);
-			System.out.println("OK");
 		} break;
 		default:
 			System.out.println("Unknown cmd");
