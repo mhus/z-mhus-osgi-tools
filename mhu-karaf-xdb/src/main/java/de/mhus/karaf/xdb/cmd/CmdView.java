@@ -77,6 +77,10 @@ public class CmdView implements Action {
 		
 		for (Object object : XdbUtil.createObjectList(type, search, null)) {
 			
+			if (object == null) {
+				System.out.println("*** Object not found");
+				continue;
+			}
 			System.out.println(">>> VIEW " + type.getIdAsString(object));
 
 			ConsoleTable out = new ConsoleTable(full);
