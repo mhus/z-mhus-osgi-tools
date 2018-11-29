@@ -25,8 +25,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.MThread;
-import de.mhus.lib.core.lang.Value;
 
 @Command(scope = "shell", name = "bash", description = "Execute bash line")
 @Service
@@ -49,38 +47,15 @@ public class CmdBash extends MLog implements Action {
 		 
         PumpStreamHandler handler = new PumpStreamHandler(System.in, System.out, System.err, "Command" + args.toString());
 
-        Value<Process> p = new Value<>();
-        Value<String> error = new Value<>();
-        new MThread() {
-	        	@Override
-	        	public void run() {
-                log().d("Executing", builder.command());
-                try {
-					p.value = builder.start();
-				} catch (Throwable e) {
-					e.printStackTrace();
-					error.value = e.toString();
-				}
-	        	}
-        };
-        // wait for process to start
-        int cnt = 0;
-        while (p.value == null && error.value == null) {
-        		MThread.sleep(100);
-        		cnt++;
-        		if (cnt > 100) {
-        			System.out.println("*** Timeout");
-        			return null;
-        		}
-        }
-        if (error.value != null) return null;
-        
-        handler.attach(p.value);
+        log().d("Executing", builder.command());
+        Process p = builder.start();
+
+        handler.attach(p);
         handler.start();
 
         log().d("Waiting for process to exit...");
         
-        int status = p.value.waitFor();
+        int status = p.waitFor();
 
        log().d("Process exited w/status", status);
 
