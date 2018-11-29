@@ -28,9 +28,11 @@ import org.osgi.service.component.ComponentContext;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.base.service.TimerIfc;
+import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.services.MOsgi;
 
@@ -112,9 +114,8 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 	}
 	
 	private File getFile() {
-		return new File("etc/" + PersistentWatch.class.getCanonicalName() + ".cfg");
+		return MApi.getFile(IApi.SCOPE.ETC, PersistentWatch.class.getCanonicalName() + ".cfg");
 	}
-
 
 	@Override
 	public void add(String line) throws IOException {
