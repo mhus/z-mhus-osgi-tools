@@ -24,7 +24,7 @@ import java.util.TreeSet;
 
 import org.mongodb.morphia.annotations.Id;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.DbComfortableObject;

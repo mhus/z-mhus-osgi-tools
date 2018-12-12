@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.osgi.framework.InvalidSyntaxException;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.xdb.XdbService;
