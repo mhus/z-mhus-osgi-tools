@@ -53,8 +53,8 @@
 
 		<scr.packages>*</scr.packages>
 		<felix.scr.version>1.6.0</felix.scr.version>
-		<karaf.version>4.0.10</karaf.version>
-		<karaf.tool.version>4.0.10</karaf.tool.version>
+		<karaf.version>4.2.1</karaf.version>
+		<karaf.tool.version>4.2.1</karaf.tool.version>
 		<bndlib.version>1.50.0</bndlib.version>
 		<felix.metatype.version>1.0.10</felix.metatype.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -222,7 +222,7 @@
 					<version>2.8.2</version>
 				</plugin>
 				<plugin>
-					<groupId>de.mhus.ports.karaf.tooling</groupId>
+					<groupId>org.apache.karaf.tooling</groupId>
 					<artifactId>karaf-services-maven-plugin</artifactId>
 					<version>${karaf.tool.version}</version>
 					<executions>
