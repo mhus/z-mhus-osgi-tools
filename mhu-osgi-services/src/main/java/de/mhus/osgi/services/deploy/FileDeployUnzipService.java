@@ -26,7 +26,7 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.io.Unzip;
 
-@Component(service = FileDeployer.class, properties="extension=zip")
+@Component(service = FileDeployer.class, property="extension=zip")
 public class FileDeployUnzipService extends MLog implements FileDeployer {
 
 	@Override

@@ -41,7 +41,7 @@ import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.lib.xdb.XdbType;
 
-@Component(properties="xdb.type=mo")
+@Component(property="xdb.type=mo")
 public class MoXdbApi implements XdbApi {
 
 	@Override
