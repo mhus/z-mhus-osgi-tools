@@ -30,7 +30,6 @@
 		<!-- <config>foo=bar</config> -->
 		<feature>scr</feature>
 		<feature>jdbc</feature>
-		<feature>openjpa</feature>
 		<feature>jndi</feature>
 		<feature>http</feature>
 		<feature>http-whiteboard</feature>

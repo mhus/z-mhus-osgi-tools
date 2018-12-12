@@ -20,13 +20,13 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.io.Unzip;
 
-@Component(provide = FileDeployer.class, properties="extension=zip")
+@Component(service = FileDeployer.class, properties="extension=zip")
 public class FileDeployUnzipService extends MLog implements FileDeployer {
 
 	@Override

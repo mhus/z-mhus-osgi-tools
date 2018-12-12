@@ -22,10 +22,10 @@ import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
-import aQute.bnd.annotation.component.Reference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
@@ -35,7 +35,7 @@ import de.mhus.osgi.services.jms.JmsDataSource;
 import de.mhus.osgi.services.jms.JmsManagerService;
 import de.mhus.osgi.services.jms.JmsUtil;
 
-@Component(provide=HeartbeatAdmin.class,immediate=true,name="de.mhus.lib.karaf.jms.heartbeat.HeartbeatAdmin")
+@Component(service=HeartbeatAdmin.class,immediate=true,name="de.mhus.lib.karaf.jms.heartbeat.HeartbeatAdmin")
 public class HeartbeatAdminImpl extends MLog implements HeartbeatAdmin {
 
 	private TimerIfc timer;

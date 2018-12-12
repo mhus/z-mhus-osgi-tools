@@ -61,6 +61,10 @@
 					</instructions>
 				</configuration>
 			</plugin>
+                <plugin>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-services-maven-plugin</artifactId>
+                </plugin>
 		</plugins>
 	</build>
 
@@ -75,11 +79,12 @@
 			<artifactId>org.osgi.compendium</artifactId>
 			<version>${osgi.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>biz.aQute</groupId>
-			<artifactId>bndlib</artifactId>
-			<version>${bndlib.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>biz.aQute.bnd</groupId>
+            <artifactId>bndlib</artifactId>
+            <version>${bndlib.version}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
