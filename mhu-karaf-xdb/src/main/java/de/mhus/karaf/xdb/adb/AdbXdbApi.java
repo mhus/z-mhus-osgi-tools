@@ -29,7 +29,7 @@ import de.mhus.lib.xdb.XdbType;
 import de.mhus.osgi.services.adb.AdbUtilKaraf;
 import de.mhus.osgi.services.adb.DbManagerService;
 
-@Component(properties="xdb.type=adb")
+@Component(property="xdb.type=adb")
 public class AdbXdbApi implements XdbApi {
 
 	public static final String NAME = "adb";
