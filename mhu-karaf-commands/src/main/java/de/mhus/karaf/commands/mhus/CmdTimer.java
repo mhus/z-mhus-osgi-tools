@@ -198,7 +198,7 @@ public class CmdTimer extends MLog implements Action {
 							job.getInfo(),
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
 							"Running",
-							job.getThread(),
+							job.getThread().getId() + " " + job.getThread(),
 							"-",
 							job.getTimeoutInMinutes(),
 							job.isCanceled(),
@@ -214,7 +214,7 @@ public class CmdTimer extends MLog implements Action {
 							job,
 							job.getInfo(),
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
-							job.getThread(),
+							job.getThread().getId() + " " + job.getThread(),
 							"-",
 							job.isCanceled(),
 							getStatus(job)
