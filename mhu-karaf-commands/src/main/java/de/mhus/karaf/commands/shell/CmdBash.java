@@ -15,12 +15,14 @@
  */
 package de.mhus.karaf.commands.shell;
 
+import java.io.ByteArrayInputStream;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MLog;
@@ -32,6 +34,10 @@ public class CmdBash extends MLog implements Action {
 
 	@Argument(index = 0, name = "command", description = "Execution bash command with arguments", required = true, multiValued = true)
     private List<String> bashArgs;
+	
+	@Option(name="-i", description="Delegate Input",required=false, multiValued=true)
+	boolean useInput = false;
+
 
 	@Override
 	public Object execute() throws Exception {
@@ -45,7 +51,7 @@ public class CmdBash extends MLog implements Action {
 		
 		ProcessBuilder builder = new ProcessBuilder(args);
 		 
-        PumpStreamHandler handler = new PumpStreamHandler(System.in, System.out, System.err, "Command" + args.toString());
+        PumpStreamHandler handler = new PumpStreamHandler(useInput ? System.in : new ByteArrayInputStream(new byte[0]), System.out, System.err, "Command" + args.toString());
 
         log().d("Executing", builder.command());
         Process p = builder.start();
