@@ -30,7 +30,7 @@ import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.xdb.XdbType;
 
-@Command(scope = "xdb", name = "create", description = "Select data from DB DataSource ant print the results")
+@Command(scope = "xdb", name = "create", description = "Select data from DB DataSource and print the results")
 @Service
 public class CmdCreate implements Action {
 	
