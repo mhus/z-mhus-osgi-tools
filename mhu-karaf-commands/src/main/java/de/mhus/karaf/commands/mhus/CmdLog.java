@@ -190,14 +190,17 @@ public class CmdLog extends MLog implements Action {
 			mapper.setConfig(config);
 			api.getLogFactory().setLevelMapper(mapper);
 			System.out.println("Sel Global Mapper: OK " + api.getLogFactory().getLevelMapper() + " " + config.getTrailId());
+			log().d("Set general mapper");
 		} break;
 		case "trail": {
 			api.getLogFactory().setLevelMapper(new ThreadBasedMapper());
 			System.out.println("Set Trail Mapper OK " + api.getLogFactory().getLevelMapper() );
+			log().d("Set trail mapper");
 		} break;
 		case "off": {
 			api.getLogFactory().setLevelMapper(null);
 			System.out.println("Remove Mapper OK " + api.getLogFactory().getLevelMapper() );
+			log().d("Mapper off");
 		} break;
 		case "trace": {
 			log().t((Object[])parameters);
