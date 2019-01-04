@@ -17,13 +17,13 @@ package de.mhus.osgi.services;
 
 import org.osgi.service.component.ComponentContext;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.lib.core.vault.DefaultVault;
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.MVaultUtil;
 
-@Component(provide=MVault.class,immediate=true)
+@Component(service=MVault.class,immediate=true)
 public class VaultServiceImpl extends DefaultVault {
 	
 	@Activate

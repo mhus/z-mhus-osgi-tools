@@ -18,15 +18,15 @@ package de.mhus.osgi.services;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
-import aQute.bnd.annotation.component.Reference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.VaultSource;
 import de.mhus.osgi.services.util.MServiceTracker;
 
-@Component(provide=SimpleServiceIfc.class,immediate=true)
+@Component(service=SimpleServiceIfc.class,immediate=true)
 public class VaultManagerImpl extends SimpleService {
 	
 	MServiceTracker<VaultSource> services;

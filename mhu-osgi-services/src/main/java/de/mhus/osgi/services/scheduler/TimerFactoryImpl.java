@@ -28,9 +28,9 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import de.mhus.lib.basics.Named;
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
@@ -49,7 +49,7 @@ import de.mhus.osgi.services.MOsgi;
 import de.mhus.osgi.services.MOsgi.Service;
 import de.mhus.osgi.services.util.MServiceTracker;
 
-@Component(provide = TimerFactory.class, immediate=true,name="de.mhus.lib.karaf.services.TimerFactoryImpl")
+@Component(service = TimerFactory.class, immediate=true,name="de.mhus.lib.karaf.services.TimerFactoryImpl")
 public class TimerFactoryImpl extends MLog implements TimerFactory {
 	
 	protected static Log log = Log.getLog(TimerFactoryImpl.class);

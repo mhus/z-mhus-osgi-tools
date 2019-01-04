@@ -24,10 +24,9 @@ import java.util.TimerTask;
 
 import org.apache.karaf.bundle.core.BundleWatcher;
 import org.osgi.service.component.ComponentContext;
-
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
@@ -36,7 +35,7 @@ import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.services.MOsgi;
 
-@Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",provide=PersistentWatch.class)
+@Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",service=PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
 	private TimerIfc timer;

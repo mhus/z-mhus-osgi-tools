@@ -24,7 +24,7 @@ import java.util.TreeSet;
 
 import org.mongodb.morphia.annotations.Id;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.adb.DbCollection;
 import de.mhus.lib.adb.DbComfortableObject;
@@ -41,7 +41,7 @@ import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.lib.xdb.XdbType;
 
-@Component(properties="xdb.type=mo")
+@Component(property="xdb.type=mo")
 public class MoXdbApi implements XdbApi {
 
 	@Override

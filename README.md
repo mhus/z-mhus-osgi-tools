@@ -41,8 +41,8 @@ Use Feature
 Maybe need cglib provider installed:
 install -s mvn:de.mhus.ports/mhus-cglib/1.3.1-SNAPSHOT
 
-feature:repo-add activemq 5.12.1
-feature:repo-add cxf 3.1.5
+feature:repo-add activemq 5.15.8
+feature:repo-add cxf 3.2.7
 feature:repo-add mvn:de.mhus.osgi/mhu-karaf-feature/1.4.1-SNAPSHOT/xml/features
 
 

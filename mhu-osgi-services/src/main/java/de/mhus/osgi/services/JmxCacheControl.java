@@ -15,14 +15,15 @@
  */
 package de.mhus.osgi.services;
 
-import aQute.bnd.annotation.component.Component;
+import org.osgi.service.component.annotations.Component;
+
 import de.mhus.lib.annotations.jmx.JmxManaged;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.jmx.JmxObjectMBean;
 import de.mhus.lib.core.jmx.MJmx;
 
 // http://localhost:8181/jolokia/read/de.mhus.lib.core.jmx.JmxObject:name=de.mhus.lib.karaf.services.JmxCacheControl,type=JmxCacheControl
-@Component(immediate=true,provide=JmxObjectMBean.class)
+@Component(immediate=true,service=JmxObjectMBean.class)
 @JmxManaged(descrition = "Cache Control Service")
 public class JmxCacheControl extends MJmx {
 

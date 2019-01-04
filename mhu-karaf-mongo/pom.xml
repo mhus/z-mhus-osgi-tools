@@ -57,10 +57,10 @@
 			<version>${felix.metatype.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>biz.aQute</groupId>
-			<artifactId>bndlib</artifactId>
-			<version>${bndlib.version}</version>
+        <dependency>
+            <groupId>biz.aQute.bnd</groupId>
+            <artifactId>bndlib</artifactId>
+            <version>${bndlib.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
