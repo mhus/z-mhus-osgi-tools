@@ -28,7 +28,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MSystem.TopThreadInfo;
-import de.mhus.lib.core.MTimeInterval;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
 
@@ -139,7 +139,7 @@ public class CmdTop implements Action {
 							t.getThread().getState() + ";"+ 
 							twoDForm.format(t.getCpuPercentage()) + ";"+
 							twoDForm.format(t.getUserPercentage()) + ";"+ 
-							MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ) + ";"+
+							MPeriod.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ) + ";"+
 							(stackAlso ? toString( t.getStacktrace() ) : "") 
 						);
 					}
@@ -175,7 +175,7 @@ public class CmdTop implements Action {
 								t.getThread().getState(), 
 								twoDForm.format(t.getCpuPercentage()), 
 								twoDForm.format(t.getUserPercentage()), 
-								MTimeInterval.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
+								MPeriod.getIntervalAsStringSec(t.getCpuTotal() / 1000000 ),
 								stackAlso ? toString( t.getStacktrace() ) : "" );
 					}
 				}

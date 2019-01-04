@@ -26,7 +26,7 @@ import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThreadPool;
-import de.mhus.lib.core.MTimeInterval;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.base.service.LockManager;
 import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -99,7 +99,7 @@ public class MhusShit implements ShitIfc {
 						lock.isPrivacy(),
 						lockerName(lock.getLocker()),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
-						lock.isLocked() ? MTimeInterval.getIntervalAsStringSec(now - lock.getLockTime()) : "",
+						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"true"
 						);
 			for (Lock lock : MApi.lookup(LockManager.class).getRegisteredLocks())
@@ -110,7 +110,7 @@ public class MhusShit implements ShitIfc {
 						lock.isPrivacy(),
 						lockerName(lock.getLocker()),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
-						lock.isLocked() ? MTimeInterval.getIntervalAsStringSec(now - lock.getLockTime()) : "",
+						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"false"
 						);
 			out.print();

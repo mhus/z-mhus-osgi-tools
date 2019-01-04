@@ -30,7 +30,7 @@ import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MThread;
-import de.mhus.lib.core.MTimeInterval;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -124,7 +124,7 @@ public class CmdTimer extends MLog implements Action {
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
 							MDate.toIsoDateTime(job.getLastExecutionStop()),
 							MDate.toIsoDateTime(job.getScheduledTime()), 
-							MTimeInterval.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
+							MPeriod.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
 							job.getTimeoutInMinutes(),
 							job.isCanceled(),
 							job.isDone(),
@@ -140,7 +140,7 @@ public class CmdTimer extends MLog implements Action {
 							job.getInfo(),
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
 							MDate.toIsoDateTime(job.getScheduledTime()), 
-							MTimeInterval.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
+							MPeriod.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
 							job.isCanceled(),
 							getStatus(job)
 						);
@@ -230,7 +230,7 @@ public class CmdTimer extends MLog implements Action {
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
 							MDate.toIsoDateTime(job.getLastExecutionStop()),
 							MDate.toIsoDateTime(job.getScheduledTime()), 
-							MTimeInterval.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
+							MPeriod.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
 							job.getTimeoutInMinutes(),
 							job.isCanceled(),
 							job.isDone(),
@@ -246,7 +246,7 @@ public class CmdTimer extends MLog implements Action {
 							job.getInfo(),
 							MDate.toIsoDateTime(job.getLastExecutionStart()),
 							MDate.toIsoDateTime(job.getScheduledTime()), 
-							MTimeInterval.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
+							MPeriod.getIntervalAsStringSec(job.getScheduledTime() - System.currentTimeMillis()),
 							job.isCanceled(),
 							getStatus(job)
 						);
@@ -263,7 +263,7 @@ public class CmdTimer extends MLog implements Action {
 			
 			long time = System.currentTimeMillis();
 			for (SchedulerJob job : running) {
-				long timeout = job.getTimeoutInMinutes() * MTimeInterval.MINUTE_IN_MILLISECOUNDS;
+				long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECOUNDS;
 				if (timeout > 0 && timeout + job.getLastExecutionStart() <= time) {
 					table.addRowValues(job.getTask(),job,MDate.toIsoDateTime(job.getLastExecutionStart()),"Running",job.getDescription(),job.getName(),"Running",job.getTimeoutInMinutes());
 				}
@@ -285,7 +285,7 @@ public class CmdTimer extends MLog implements Action {
 			List<SchedulerJob> running = scheduler.getRunningJobs();
 			long time = System.currentTimeMillis();
 			for (SchedulerJob job : running) {
-				long timeout = job.getTimeoutInMinutes() * MTimeInterval.MINUTE_IN_MILLISECOUNDS;
+				long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECOUNDS;
 				if (timeout > 0 && timeout + job.getLastExecutionStart() <= time) {
 					Thread thread = job.getThread();
 					if (thread != null) {
@@ -296,12 +296,12 @@ public class CmdTimer extends MLog implements Action {
 			}
 		}
 		if (cmd.equals("dummy")) {
-			scheduler.schedule(new OnceJob(System.currentTimeMillis() + MTimeInterval.MINUTE_IN_MILLISECOUNDS, new MTimerTask() {
+			scheduler.schedule(new OnceJob(System.currentTimeMillis() + MPeriod.MINUTE_IN_MILLISECOUNDS, new MTimerTask() {
 				
 				@Override
 				protected void doit() throws Exception {
 					log().i(">>> Start Dummy");
-					MThread.sleep(MTimeInterval.MINUTE_IN_MILLISECOUNDS * 2);
+					MThread.sleep(MPeriod.MINUTE_IN_MILLISECOUNDS * 2);
 					log().i("<<< Stop Dummy");
 				}
 			})
