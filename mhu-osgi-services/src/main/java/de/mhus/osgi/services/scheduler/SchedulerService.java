@@ -21,10 +21,15 @@ import de.mhus.lib.core.schedule.TimerTaskIntercepter;
 
 /**
  * Create this interface as a component and the timer will schedule the observer as a timer task.
+ * 
+ * Deprecated:
+ * 
  * Use the parameter 'interval' to define the default interval as time or cron job definition.
- * interval=15m - every 15 minutes from start (do not insert spaces!)
- * interval=1m,1h - first execution after 1 minute then every hour (do not insert spaces!)
+ * interval=15min - every 15 minutes from start (do not insert spaces!)
+ * interval=1min,1h - first execution after 1 minute then every hour (do not insert spaces!)
  * interval=1,15,30,45 * * * * * Every 15 minutes exact every quarter hour
+ * 
+ * Use annotation '@Interval' and use SchedulerServiceAdapter to set a interval.
  * 
  * @author mikehummel
  *

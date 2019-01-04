@@ -15,7 +15,10 @@
  */
 package de.mhus.osgi.services.scheduler;
 
+import de.mhus.lib.annotations.util.Interval;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.TimerTaskIntercepter;
 
@@ -45,6 +48,17 @@ public abstract class SchedulerServiceAdapter extends MLog implements SchedulerS
 
 	@Override
 	public String getInterval() {
+		Interval interval = getClass().getAnnotation(Interval.class);
+		if (interval != null) {
+			if (MString.isSet(interval.cfgPath())) {
+				String path = interval.cfgPath();
+				Class<?> owner = interval.cfgOwner();
+				if (owner == Class.class)
+					owner = getClass();
+				return MApi.get().getCfgString(owner, path, interval.value());
+			} else
+				return interval.value();
+		}
 		return null;
 	}
 
