@@ -22,6 +22,7 @@ import java.util.Map.Entry;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
 import de.mhus.lib.core.MSystem;
@@ -32,6 +33,7 @@ import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
+import de.mhus.lib.core.util.AtomicClockUtil;
 import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
 public class MhusShit implements ShitIfc {
@@ -47,10 +49,21 @@ public class MhusShit implements ShitIfc {
 		System.out.println("releaselock <id>");
 		System.out.println("createlock <name> - create managed lock");
 		System.out.println("setlock <id>");
+		System.out.println("atomictime [<server>] - without server will use getCurrentTime() and return a cached time");
+		System.out.println("atomicservers");
 	}
 
 	@Override
 	public Object doExecute(String cmd, String[] parameters) throws Exception {
+		
+		if (cmd.equals("atomicservers")) {
+			AtomicClockUtil.TIME_SERVERS.forEach(s -> System.out.println(s));
+		} else
+		if (cmd.equals("atomictime")) {
+			long time = MCollection.isEmpty(parameters) ? AtomicClockUtil.getCurrentTime() : AtomicClockUtil.getAtomicTime(parameters[0]);
+			System.out.println("Time: " + time);
+			System.out.println("Date: " + new Date(time));
+		} else
 		if (cmd.equals("createlock")) {
 			Lock lock = MApi.lookup(LockManager.class).getLock(parameters[0]);
 			System.out.println("Created " + lock.hashCode());
