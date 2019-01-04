@@ -35,7 +35,7 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbType;
 
-@Command(scope = "xdb", name = "select", description = "Select data from DB DataSource ant print the results")
+@Command(scope = "xdb", name = "select", description = "Select data from DB DataSource and print the results")
 //@Parsing(XdbParser.class) see https://github.com/apache/karaf/tree/master/jdbc/src/main/java/org/apache/karaf/jdbc/command/parsing
 @Service
 public class CmdSelect implements Action {
