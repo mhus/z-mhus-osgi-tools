@@ -24,12 +24,12 @@
 	<parent>
 		<artifactId>mhus-osgi-tools</artifactId>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.4.4-SNAPSHOT</version>
+		<version>1.4.4</version>
 	</parent>
 
 	<properties>
-		<servlettools.version>1.4.1-SNAPSHOT</servlettools.version>
-		<crypttools.version>1.4.1-SNAPSHOT</crypttools.version>
+		<servlettools.version>1.4.3</servlettools.version>
+		<crypttools.version>1.4.3</crypttools.version>
 	</properties>
 
 	<build>
