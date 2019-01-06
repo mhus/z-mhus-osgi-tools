@@ -86,7 +86,7 @@
 
 		<plugins>
 			<plugin>
-				<groupId>de.mhus.ports.karaf.tooling</groupId>
+				<groupId>org.apache.karaf.tooling</groupId>
 				<artifactId>karaf-services-maven-plugin</artifactId>
 				<configuration>
 					<artifactInclude>.*mhu.*</artifactInclude>
