@@ -28,8 +28,8 @@
 	</parent>
 
 	<properties>
-		<servlettools.version>1.4.3</servlettools.version>
-		<crypttools.version>1.4.3</crypttools.version>
+		<servlettools.version>1.5.0-SNAPSHOT</servlettools.version>
+		<crypttools.version>1.5.0-SNAPSHOT</crypttools.version>
 	</properties>
 
 	<build>
@@ -38,11 +38,10 @@
 				<plugin>
 					<groupId>org.apache.karaf.tooling</groupId>
 					<artifactId>karaf-maven-plugin</artifactId>
-					<version>3.0.1</version>
+					<version>${karaf.version}</version>
 					<extensions>true</extensions>
 				</plugin>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -59,12 +58,13 @@
 											karaf-maven-plugin
 										</artifactId>
 										<versionRange>
-											[3.0.1,)
+											[4.2.2,)
 										</versionRange>
 										<goals>
 											<goal>
 												features-generate-descriptor
 											</goal>
+											<goal>verify</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
@@ -91,28 +91,6 @@
 					<logDependencyChanges>true</logDependencyChanges>
 					<overwriteChangedDependencies>true</overwriteChangedDependencies>
 				</configuration>
-				    <dependencies>
-				        <dependency>
-				            <groupId>javax.xml.bind</groupId>
-				            <artifactId>jaxb-api</artifactId>
-				            <version>2.3.0</version>
-				        </dependency>
-				        <dependency>
-				            <groupId>com.sun.xml.bind</groupId>
-				            <artifactId>jaxb-impl</artifactId>
-				            <version>2.3.0</version>
-				        </dependency>
-				        <dependency>
-				            <groupId>org.glassfish.jaxb</groupId>
-				            <artifactId>jaxb-runtime</artifactId>
-				            <version>2.3.0</version>
-				        </dependency>
-				        <dependency>
-				            <groupId>javax.activation</groupId>
-				            <artifactId>activation</artifactId>
-				            <version>1.1.1</version>
-				        </dependency>
-				    </dependencies>
 			</plugin>
 		</plugins>
 	</build>
