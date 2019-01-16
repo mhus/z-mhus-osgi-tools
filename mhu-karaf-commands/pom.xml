@@ -54,6 +54,7 @@
 				            org.mongodb.*;resolution:=optional,
 				            org.apache.karaf.*;resolution:=optional,
 							org.apache.karaf.bundle.core.*;resolution:=optional,
+							javax.xml.bind*;resolution:=optional,
 							*
 						</Import-Package>
 						<Service-Component>*</Service-Component>
