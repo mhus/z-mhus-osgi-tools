@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 public class OsgiBundleClassLoader extends ClassLoader {
@@ -31,7 +32,10 @@ public class OsgiBundleClassLoader extends ClassLoader {
             throws ClassNotFoundException
         {
 			loadedFrom = FrameworkUtil.getBundle(OsgiBundleClassLoader.class).getSymbolicName();
-    		for (Bundle bundle : FrameworkUtil.getBundle(OsgiBundleClassLoader.class).getBundleContext().getBundles()) {
+			Bundle myBundle = FrameworkUtil.getBundle(OsgiBundleClassLoader.class);
+			BundleContext context = myBundle.getBundleContext();
+			Bundle[] bundles = context.getBundles();
+    		for (Bundle bundle : bundles) {
     			try {
     				Class<?> clazz = bundle.loadClass(name);
     				if (clazz != null) {
