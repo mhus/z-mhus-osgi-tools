@@ -22,6 +22,8 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.lib.core.MApi;
+
 public class OsgiBundleClassLoader extends ClassLoader {
 
 	
@@ -31,8 +33,8 @@ public class OsgiBundleClassLoader extends ClassLoader {
 	protected Class<?> loadClass(String name, boolean resolve)
             throws ClassNotFoundException
         {
-			loadedFrom = FrameworkUtil.getBundle(OsgiBundleClassLoader.class).getSymbolicName();
-			Bundle myBundle = FrameworkUtil.getBundle(OsgiBundleClassLoader.class);
+			loadedFrom = FrameworkUtil.getBundle(MApi.class).getSymbolicName();
+			Bundle myBundle = FrameworkUtil.getBundle(MApi.class);
 			BundleContext context = myBundle.getBundleContext();
 			Bundle[] bundles = context.getBundles();
     		for (Bundle bundle : bundles) {
