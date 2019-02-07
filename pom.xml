@@ -61,7 +61,7 @@
 		<compileSource>1.8</compileSource>
 		<bundle.plugin.version>4.1.0</bundle.plugin.version>
 		<osgi.version>5.0.0</osgi.version>
-        <cxf.version>3.2.7</cxf.version>
+        <cxf.version>3.3.0</cxf.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<gwt.plugin.version>2.2.0</gwt.plugin.version>
