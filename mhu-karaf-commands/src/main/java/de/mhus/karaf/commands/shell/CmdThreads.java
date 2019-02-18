@@ -148,11 +148,11 @@ public class CmdThreads implements Action {
 							exception = (Throwable) Class.forName(arguments[1]).getConstructor(String.class).newInstance(message);
 						}
 						System.out.println("STOP " + thread.getId() + " " + thread.getName() + " by " + exception);
-						thread.stop(exception);
+						thread.stop();
 					} break;
 					case "destroy": {
 						System.out.println("DESTROY " + thread.getId() + " " + thread.getName());
-						thread.destroy();
+						// thread.destroy();
 					} break;
 					case "priority": {
 						System.out.println("PRIORITY " + thread.getId() + " " + thread.getName() + " = " + arguments[0]);
