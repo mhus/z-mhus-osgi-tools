@@ -42,7 +42,7 @@ public class CmdJcaInfo extends MLog implements Action {
 			
 			if (parameters != null && parameters.length > 0) {
 				Provider provider = Security.getProvider(parameters[0]);
-				System.out.println(">>> " + provider.getName() + "-" + provider.getVersion() + " " + provider.getInfo());
+				System.out.println(">>> " + provider.getName() + "-" + provider.getVersionStr() + " " + provider.getInfo());
 				ConsoleTable out = new ConsoleTable();
 				out.setHeaderValues("Algorithm","Type");
 				for (java.security.Provider.Service service : provider.getServices()) {
@@ -55,7 +55,7 @@ public class CmdJcaInfo extends MLog implements Action {
 				ConsoleTable out = new ConsoleTable();
 				out.setHeaderValues("Name","Version","Info");
 				for (Provider provider : Security.getProviders()) {
-					out.addRowValues(provider.getName(), provider.getVersion(), provider.getInfo());
+					out.addRowValues(provider.getName(), provider.getVersionStr(), provider.getInfo());
 //					System.out.println(">>> " + provider.getName() + "-" + provider.getVersion() + " " + provider.getInfo());
 //					for (java.security.Provider.Service service : provider.getServices()) {
 //						System.out.println("  - " + service.getAlgorithm() + " " + service.getType());

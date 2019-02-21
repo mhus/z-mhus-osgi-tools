@@ -15,6 +15,7 @@
  */
 package de.mhus.karaf.commands.testit;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import org.apache.karaf.shell.api.action.Action;
@@ -71,7 +72,7 @@ public class CmdShitYo implements Action {
 	}
 
 	@SuppressWarnings("unchecked")
-	private ShitIfc getModule(String name) throws NotFoundException, InstantiationException, IllegalAccessException {
+	private ShitIfc getModule(String name) throws NotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Class<? extends ShitIfc> clazz = shortcuts.get(name);
 		if (clazz == null) {
 			try {
@@ -81,7 +82,7 @@ public class CmdShitYo implements Action {
 			}
 		}
 		if (clazz == null) throw new NotFoundException("module not found",name);
-		return clazz.newInstance();
+		return clazz.getDeclaredConstructor().newInstance();
 	}
 
 }

@@ -250,7 +250,7 @@ public class CmdLog extends MLog implements Action {
 							StringBuilder buf = new StringBuilder();
 							boolean niceMode = false;
 							Field runningField = finalSession.getClass().getDeclaredField("running");
-							if (!runningField.isAccessible()) runningField.setAccessible(true);
+							if (!runningField.canAccess(finalSession)) runningField.setAccessible(true);
 							try {
 								while (true) {
 									if (maxDelta > 0 && tail.available() > maxDelta  ) {

@@ -79,7 +79,7 @@ public class CmdSql extends MLog implements Action {
 				analyzer = new SqlReporter();
 			else {
 				OsgiBundleClassLoader loader = new OsgiBundleClassLoader();
-				analyzer = (SqlAnalyzer) loader.loadClass(parameters[0]).newInstance();
+				analyzer = (SqlAnalyzer) loader.loadClass(parameters[0]).getDeclaredConstructor().newInstance();
 			}
 			
 			if (parameters != null)

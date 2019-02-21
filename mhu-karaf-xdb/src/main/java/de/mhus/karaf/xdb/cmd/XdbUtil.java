@@ -73,7 +73,7 @@ public class XdbUtil {
 					if (t.isInterface())
 						map = new HashMap<>();
 					else
-						map = (Map) t.newInstance();
+						map = (Map) t.getDeclaredConstructor().newInstance();
 					type.set(object, p1, map);
 				}
 				map.put(p2, v);
@@ -84,7 +84,7 @@ public class XdbUtil {
 					if (t.isInterface())
 						col = new LinkedList<>();
 					else
-						col = (Collection) t.newInstance();
+						col = (Collection) t.getDeclaredConstructor().newInstance();
 					type.set(object, p1, col);
 				}
 				if (p2.equals("add") || p2.equals("last")) {

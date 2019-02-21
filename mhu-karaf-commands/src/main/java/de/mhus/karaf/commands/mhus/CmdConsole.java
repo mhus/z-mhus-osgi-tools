@@ -87,7 +87,7 @@ public class CmdConsole implements Action {
 		case "create": {
 			Console.resetConsole();
 			if (arguments != null && arguments.length > 0) {
-				Object console = new OsgiBundleClassLoader().loadClass(arguments[0]).newInstance();
+				Object console = new OsgiBundleClassLoader().loadClass(arguments[0]).getDeclaredConstructor().newInstance();
 				Console.set((Console) console);
 			} else {
 				Console.create();
