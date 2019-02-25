@@ -21,7 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.mhus.osgi</groupId>
 	<artifactId>mhus-osgi-tools</artifactId>
-	<version>1.5.0</version>
+	<version>1.5.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Tools</name>
 	<description>A set of tools to improve OSGi frameworks and karaf</description>
@@ -47,13 +47,9 @@
 		</developer>
 	</developers>
 	<properties>
-		<mhulib.version>3.5.0</mhulib.version>
+		<mhulib.version>1.5.1-SNAPSHOT</mhulib.version>
 		<ports.version>1.3.7</ports.version>
 		<ports.vaadin.version>1.3.7</ports.vaadin.version>
-		<!-- only used in features -->
-        <servlettools.version>1.5.0</servlettools.version>
-        <crypttools.version>1.5.0</crypttools.version>
-		<!-- END -->
 		<scr.packages>*</scr.packages>
 		<felix.scr.version>2.1.14</felix.scr.version>
 		<karaf.version>4.2.3</karaf.version>
@@ -264,9 +260,6 @@
 		<module>mhu-osgi-jms</module>
 		<module>mhu-karaf-xdb</module>
 		<module>mhu-karaf-commands</module>
-		<!-- could not deploy the feature ... 
-		<module>mhu-karaf-feature</module>
-		 -->
 	</modules>
 
 	<distributionManagement>
