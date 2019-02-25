@@ -24,14 +24,14 @@ import java.util.TimerTask;
 
 import org.apache.karaf.bundle.core.BundleWatcher;
 import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.base.service.TimerIfc;
-import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.services.MOsgi;
 
@@ -113,7 +113,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 	}
 	
 	private File getFile() {
-		return MApi.getFile(IApi.SCOPE.ETC, PersistentWatch.class.getCanonicalName() + ".cfg");
+		return MApi.getFile(MApi.SCOPE.ETC, PersistentWatch.class.getCanonicalName() + ".cfg");
 	}
 
 	@Override

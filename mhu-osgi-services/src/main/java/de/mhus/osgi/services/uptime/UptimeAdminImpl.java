@@ -21,17 +21,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.cfg.CfgInt;
-import de.mhus.lib.core.system.IApi;
 
 @Component(immediate=true)
 public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
@@ -57,7 +56,7 @@ public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 	
 	
 	private void saveDb(List<MutableRecord> db) {
-		File file = MApi.getFile(IApi.SCOPE.DATA, "uptime.db");
+		File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
 		List<String> lines = new LinkedList<>();
 		for (MutableRecord record : db)
 			lines.add(record.toLine());
@@ -70,7 +69,7 @@ public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 
 
 	private List<MutableRecord> loadDb() {
-		File file = MApi.getFile(IApi.SCOPE.DATA, "uptime.db");
+		File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
 		List<MutableRecord> out = new LinkedList<>();
 		if (!file.exists()) 
 			return out;

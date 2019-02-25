@@ -158,7 +158,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 	}
 
 	@Override
-	public File getFile(SCOPE scope, String dir) {
+	public File getFile(MApi.SCOPE scope, String dir) {
 		dir = MFile.normalizePath(dir);
 		switch (scope) {
 		case DATA:
