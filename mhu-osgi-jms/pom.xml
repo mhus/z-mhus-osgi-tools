@@ -24,7 +24,7 @@
 	<description>jms-commands</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.6.0-SNAPSHOT</version>
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
@@ -117,14 +117,10 @@
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-core</artifactId>
-			<version>${mhulib.version}</version>
-			<type>bundle</type>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-jms</artifactId>
-			<version>${mhulib.version}</version>
-			<type>bundle</type>
 		</dependency>
        	<dependency>
 			<groupId>de.mhus.osgi</groupId>
