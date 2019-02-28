@@ -77,15 +77,12 @@
 			<version>${osgi.version}</version>
 		</dependency>
         <dependency>
-            <groupId>biz.aQute.bnd</groupId>
-            <artifactId>bndlib</artifactId>
-            <version>${bndlib.version}</version>
-            <scope>provided</scope>
+                <groupId>biz.aQute.bnd</groupId>
+                <artifactId>bndlib</artifactId>
         </dependency>
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
-			<version>${karaf.version}</version>
 		</dependency>
 		<!-- 
 		<dependency>
