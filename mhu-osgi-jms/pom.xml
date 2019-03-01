@@ -28,16 +28,11 @@
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
-	<properties>
-		<activemq.version>5.7.0</activemq.version>
-	</properties>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>${bundle.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
@@ -61,57 +56,38 @@
 		<dependency>
 			<groupId>org.apache.felix</groupId>
 			<artifactId>org.apache.felix.metatype</artifactId>
-			<version>${felix.metatype.version}</version>
 		</dependency>
         <dependency>
             <groupId>biz.aQute.bnd</groupId>
             <artifactId>bndlib</artifactId>
-            <version>${bndlib.version}</version>
-            <scope>provided</scope>
         </dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
-			<version>4.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.compendium</artifactId>
-			<version>4.3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.6</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
-			<version>${karaf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.felix</groupId>
-			<artifactId>
-        		org.apache.felix.servicediagnostics.plugin
-        	</artifactId>
-			<version>0.1.3</version>
-			<type>bundle</type>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-jms_1.1_spec</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
-			<version>${activemq.version}</version>
-			<type>bundle</type>
+	        <groupId>org.apache.activemq</groupId>
+	        <artifactId>activemq-osgi</artifactId>
 		</dependency>
 
 		<dependency>
@@ -125,20 +101,14 @@
        	<dependency>
 			<groupId>de.mhus.osgi</groupId>
 			<artifactId>mhu-osgi-services</artifactId>
-			<version>${project.version}</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.axis/axis -->
 		<dependency>
 			<groupId>org.apache.axis</groupId>
 			<artifactId>axis</artifactId>
-			<version>1.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.xml.rpc/javax.xml.rpc-api -->
 		<dependency>
 			<groupId>javax.xml.rpc</groupId>
 			<artifactId>javax.xml.rpc-api</artifactId>
-			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 </project>
