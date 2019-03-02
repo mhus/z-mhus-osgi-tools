@@ -22,7 +22,7 @@
     <parent>
         <groupId>de.mhus.lib</groupId>
         <version>3.6.0-SNAPSHOT</version>
-        <artifactId>mhus-oss</artifactId>
+        <artifactId>mhus-karaf</artifactId>
     </parent>
 	<groupId>de.mhus.osgi</groupId>
 	<artifactId>mhus-osgi-tools</artifactId>
