@@ -1,20 +1,24 @@
 package de.mhus.karaf.commands.testit;
 
 import de.mhus.lib.core.M;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MStopWatch;
 import de.mhus.lib.core.MThread;
+import de.mhus.lib.core.logging.LevelMapper;
+import de.mhus.lib.core.logging.TrailLevelMapper;
 
 public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
 
-    private static Thread myThread = null;
-    private static boolean close = false;
+    private Thread myThread = null;
+    private boolean close = false;
     private long interval = 10000;
     private ThreadLocal<String> threadLocal = new ThreadLocal<>();
+    private String msg = "Crazy Shit";
     
     @Override
     public void printUsage() {
-        System.out.println("status, start, stop");
+        System.out.println("status, start, stop, interval <msec>, msg <string>");
     }
 
     @Override
@@ -37,6 +41,8 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             }
         } else if (cmd.equals("interval")) {
             interval = M.c(parameters[0], 10000);
+        } else if (cmd.equals("msg")) {
+            msg = parameters[0];
         }
         return null;
     }
@@ -44,11 +50,23 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
     @Override
     public void run() {
         log().i("Start Thread");
-        threadLocal.set("Crazy Shit");
+        threadLocal.set(msg);
+        {
+            LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
+            if (lm != null && lm instanceof TrailLevelMapper) {
+                log().i("Set trail level");
+                ((TrailLevelMapper)lm).doConfigureTrail("MAP,TEST,T,D,I,W,E,F,G,0");
+            }
+        }
         MStopWatch time = new MStopWatch().start();
         while (!close) {
             MThread.sleep(interval);
-            log().i("Content",time,threadLocal.get());
+            String trail = null;
+            LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
+            if (lm != null && lm instanceof TrailLevelMapper) {
+                trail = ((TrailLevelMapper)lm).getTrailId();
+            }
+            log().i("Content",time,threadLocal.get(), trail);
         }
         log().i("Exit Thread",time);
         myThread = null; // cleanup before exit

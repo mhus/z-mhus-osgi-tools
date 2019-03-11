@@ -145,7 +145,7 @@ public class CmdLog extends MLog implements Action {
 		case "settrail": {
 			LevelMapper mapper = api.getLogFactory().getLevelMapper();
 			if (MLogUtil.isTrailLevelMapper()) {
-				MLogUtil.setTrailConfig(parameters == null || parameters.length < 1 ? "" : parameters[0]);
+				MLogUtil.setTrailConfig(MLogUtil.TRAIL_SOURCE_SHELL,parameters == null || parameters.length < 1 ? "" : parameters[0]);
 				System.out.println("Trail Config: " + MLogUtil.getTrailConfig() );
 			} else {
 				System.out.println("Wrong Mapper " + mapper);
