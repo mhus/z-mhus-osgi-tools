@@ -49,6 +49,7 @@ public class CmdShitYo implements Action {
 		shortcuts.put("mhus", MhusShit.class);
 		shortcuts.put("crypt", CryptShit.class);
 		shortcuts.put("jdbcmeta", JdbcMetaShit.class);
+		shortcuts.put("threadlocal", ThreadLocalShit.class);
 	}
 	
 	@Override
