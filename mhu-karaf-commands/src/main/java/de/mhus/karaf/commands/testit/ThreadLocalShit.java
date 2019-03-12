@@ -10,11 +10,11 @@ import de.mhus.lib.core.logging.TrailLevelMapper;
 
 public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
 
-    private Thread myThread = null;
-    private boolean close = false;
-    private long interval = 10000;
-    private ThreadLocal<String> threadLocal = new ThreadLocal<>();
-    private String msg = "Crazy Shit";
+    private static Thread myThread = null;
+    private static boolean close = false;
+    private static long interval = 10000;
+    private static ThreadLocal<String> threadLocal = new ThreadLocal<>();
+    private static String msg = "Crazy Shit";
     
     @Override
     public void printUsage() {
@@ -42,8 +42,10 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             }
         } else if (cmd.equals("interval")) {
             interval = M.c(parameters[0], 10000);
+            System.out.println("Interval: " + interval);
         } else if (cmd.equals("msg")) {
             msg = parameters[0];
+            System.out.println("Msg: " + msg);
         }
         return null;
     }
