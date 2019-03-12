@@ -55,7 +55,7 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
             if (lm != null && lm instanceof TrailLevelMapper) {
                 log().i("Set trail level");
-                ((TrailLevelMapper)lm).doConfigureTrail("MAP,TEST,T,D,I,W,E,F,G,0");
+                ((TrailLevelMapper)lm).doConfigureTrail(null,"MAP,T,D,I,W,E,F,G,0,TEST");
             }
         }
         MStopWatch time = new MStopWatch().start();

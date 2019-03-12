@@ -185,7 +185,7 @@ public class CmdLog extends MLog implements Action {
 		} break;
 		case "general": {
 			ThreadMapperConfig config = new ThreadMapperConfig();
-			config.doConfigure(parameters == null || parameters.length < 1 ? "" : parameters[0]);
+			config.doConfigure(MLogUtil.TRAIL_SOURCE_SHELL, parameters == null || parameters.length < 1 ? "" : parameters[0]);
 			GeneralMapper mapper = new GeneralMapper();
 			mapper.setConfig(config);
 			api.getLogFactory().setLevelMapper(mapper);
