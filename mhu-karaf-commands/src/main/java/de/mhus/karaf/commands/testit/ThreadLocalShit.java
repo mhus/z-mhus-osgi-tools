@@ -32,6 +32,7 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             if (myThread == null) {
                 close = false;
                 myThread = new Thread(this);
+                myThread.start();
                 System.out.println("STARTED");
             }
         } else if (cmd.equals("stop")) {
