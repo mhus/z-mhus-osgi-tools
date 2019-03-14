@@ -123,7 +123,7 @@ public class CmdThreads implements Action {
 		} else
 		if (action != null) {
 			for (Thread thread : traces.keySet()) {
-				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
+				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId) || threadId.equals("current") && thread == Thread.currentThread() ) {
 					switch (action) {
 					case "suspend": {
 						System.out.println("SUSPEND " + thread.getId() + " " + thread.getName());
@@ -163,7 +163,7 @@ public class CmdThreads implements Action {
 			}
 		} else {
 			for (Thread thread : traces.keySet()) {
-				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId)) {
+				if (String.valueOf(thread.getId()).equals(threadId) || thread.getName().equals(threadId) || threadId.equals("current") && thread == Thread.currentThread() ) {
 					printThread(thread, table);
 					StackTraceElement[] stack = traces.get(thread);
 					printStack(stack,table);
