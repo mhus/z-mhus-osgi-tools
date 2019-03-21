@@ -85,7 +85,7 @@ public class CmdConsole implements Action {
             System.out.println("OutputFlags : " + attr.getOutputFlags());
             System.out.println("LocalFlags  : " + attr.getLocalFlags());
 		} break;
-		case "jline.set": {
+		case "terminal.set": {
             Attributes attr = ((org.jline.terminal.Terminal)session.getTerminal()).getAttributes();
             if (arguments[0].equals("ControlChar"))
                 attr.setControlChar(ControlChar.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], 0));
