@@ -23,8 +23,17 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReader.Option;
+import org.jline.terminal.Attributes;
+import org.jline.terminal.Attributes.ControlChar;
+import org.jline.terminal.Attributes.ControlFlag;
+import org.jline.terminal.Attributes.InputFlag;
+import org.jline.terminal.Attributes.LocalFlag;
+import org.jline.terminal.Attributes.OutputFlag;
 
 import de.mhus.karaf.commands.editor.Editor;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.ANSIConsole;
@@ -59,6 +68,42 @@ public class CmdConsole implements Action {
 
 		
 		switch (cmd) {
+		case "reader.status": {
+            LineReader reader = (LineReader) session.get(".jline.reader");
+            for (Option option : Option.values())
+                System.out.println(option + ": " + reader.isSet(option));
+		} break;
+		case "reader.set": {
+		    LineReader reader = (LineReader) session.get(".jline.reader");
+		    reader.option(Option.valueOf(arguments[0].toUpperCase()), M.c(arguments[1], false));
+		} break;
+		case "terminal.status": {
+            Attributes attr = ((org.jline.terminal.Terminal)session.getTerminal()).getAttributes();
+            System.out.println("ControlChars: " + attr.getControlChars());
+            System.out.println("ControlFlags: " + attr.getControlFlags());
+            System.out.println("InputFlags  : " + attr.getInputFlags());
+            System.out.println("OutputFlags : " + attr.getOutputFlags());
+            System.out.println("LocalFlags  : " + attr.getLocalFlags());
+		} break;
+		case "jline.set": {
+            Attributes attr = ((org.jline.terminal.Terminal)session.getTerminal()).getAttributes();
+            if (arguments[0].equals("ControlChar"))
+                attr.setControlChar(ControlChar.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], 0));
+            else
+            if (arguments[0].equals("ControlFlag"))
+                attr.setControlFlag(ControlFlag.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], false));
+            else
+            if (arguments[0].equals("InputFlag"))
+                attr.setInputFlag(InputFlag.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], false));
+            else
+            if (arguments[0].equals("OutputFlag"))
+                attr.setOutputFlag(OutputFlag.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], false));
+            else
+            if (arguments[0].equals("LocalFlag"))
+                attr.setLocalFlag(LocalFlag.valueOf(arguments[1].toUpperCase()), M.c(arguments[2], false));
+            else
+                System.out.println("Flags unknown: " + arguments[0]);
+		} break;
 		case "info": {
 			System.out.println("Default Width :" + Console.DEFAULT_WIDTH);
 			System.out.println("Default Height: " + Console.DEFAULT_HEIGHT);
