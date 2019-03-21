@@ -68,7 +68,9 @@ public class CmdLog extends MLog implements Action {
 			+ " off - log mapping off\n"
 			+ " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
 			+ " maxmsgsize [new size] - show or set maximum message size, disable with 0\n"
-			+ " stacktracetrace [true|false]", multiValued=false)
+			+ " stacktracetrace [true|false]\n"
+			+ " status\n"
+			+ " ", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -115,7 +117,7 @@ public class CmdLog extends MLog implements Action {
 			MApi.updateLoggers();
 			System.out.println("OK");
 		} break;
-		case "list": {
+		case "status": {
 			System.out.println("Default Level  : " + api.getLogFactory().getDefaultLevel());
 			System.out.println("Trace          : " + api.isFullTrace());
 			System.out.println("LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
@@ -124,7 +126,7 @@ public class CmdLog extends MLog implements Action {
 			if (lm != null) {
 			System.out.println("LevelMapper    : " + lm.getClass().getSimpleName());
 			if (lm instanceof TrailLevelMapper)
-			System.out.println("   Configurtion: " + ((TrailLevelMapper)lm).doSerializeTrail() );
+			System.out.println("   Configuration: " + ((TrailLevelMapper)lm).doSerializeTrail() );
 			}
 			if (api.getLogFactory().getParameterMapper() != null)
 			System.out.println("ParameterMapper: " + api.getLogFactory().getParameterMapper().getClass().getSimpleName());

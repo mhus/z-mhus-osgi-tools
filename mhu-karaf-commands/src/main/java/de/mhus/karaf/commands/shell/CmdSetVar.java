@@ -27,9 +27,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-@Command(scope = "shell", name = "set", description = "Set a variable with a value, used in pipes")
+@Command(scope = "shell", name = "setvar", description = "Set a variable with a value, used in pipes")
 @Service
-public class CmdSet implements Action {
+public class CmdSetVar implements Action {
 
 	@Argument(index = 0, name = "names", description = "Name of the variable to set", required = true, multiValued = true)
     private String[] names;
