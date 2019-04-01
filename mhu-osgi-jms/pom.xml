@@ -24,7 +24,7 @@
 	<description>jms-commands</description>
 	<parent>
 		<groupId>de.mhus.osgi</groupId>
-		<version>1.6.1</version>
+		<version>1.6.2-SNAPSHOT</version>
 		<artifactId>mhus-osgi-tools</artifactId>
 	</parent>
 
