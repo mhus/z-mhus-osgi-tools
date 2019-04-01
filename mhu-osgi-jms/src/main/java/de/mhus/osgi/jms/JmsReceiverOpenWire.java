@@ -83,7 +83,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 				@Override
 				public void receivedOneWay(Message msg) throws JMSException {
 					if (msg instanceof MapMessage) ((MapMessage)msg).getMapNames();
-					log().i("Received One Way", msg);
+					log().d("Received One Way", msg);
 					doProcess(msg);
 				}
 				
@@ -91,7 +91,7 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 				public Message received(Message msg) throws JMSException {
 					if (msg instanceof MapMessage) ((MapMessage)msg).getMapNames();
 					// System.out.println("--- " + getName() + " Received: " + msg);
-					log().i("Received", msg);
+					log().d("Received", msg);
 					doProcess(msg);
 					TextMessage ret = con.getSession().createTextMessage("ok");
 					return ret;

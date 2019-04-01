@@ -69,7 +69,7 @@ public class ScheduleGogo extends MLog implements SimpleServiceIfc {
 
 	protected void doExecute() {
 		if (command == null || timer == null) return;
-		log().i(name,"execute",command);
+		log().d(name,"execute",command);
 		
 		StreamToLogAdapter out = new StreamToLogAdapter(LEVEL.INFO, null);
 		StreamToLogAdapter err = new StreamToLogAdapter(LEVEL.ERROR, null);

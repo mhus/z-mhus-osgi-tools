@@ -129,7 +129,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			if (interval == null)
 				interval = reference.getProperty("interval");
 			if (interval == null) {
-				log().i("interval configuration not found for SchedulerService",service,reference);
+				log().w("interval configuration not found for SchedulerService",service,reference);
 				return;
 			}
 			// parse configuration and create job
@@ -150,7 +150,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			services.put(service,job);
 			myTimer.schedule(job);
 		} else {
-			log().i("interval configuration syntax error for SchedulerService",service,reference,interval);
+			log().w("interval configuration syntax error for SchedulerService",service,reference,interval);
 		}
 		
 	}
@@ -161,7 +161,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			job.setNextExecutionTime(SchedulerJob.REMOVE_TIME);
 			myTimer.removeJob(job);
 		} else {
-			log().i("timer task not found for ScheduledService", service);
+			log().w("timer task not found for ScheduledService", service);
 		}
 	}
 
