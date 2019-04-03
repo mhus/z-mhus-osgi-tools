@@ -32,7 +32,6 @@ import org.jline.terminal.Attributes.InputFlag;
 import org.jline.terminal.Attributes.LocalFlag;
 import org.jline.terminal.Attributes.OutputFlag;
 
-import de.mhus.karaf.commands.editor.Editor;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
@@ -189,10 +188,6 @@ public class CmdConsole implements Action {
 					System.out.println();
 			}
 		} break;
-		case "edit": {
-			Editor editor = new Editor();
-			editor.edit();
-		}
 		default:
 			System.out.println("Command not found");
 		}
