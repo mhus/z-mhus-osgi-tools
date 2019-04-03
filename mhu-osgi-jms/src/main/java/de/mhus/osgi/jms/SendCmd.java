@@ -93,7 +93,19 @@ public class SendCmd implements Action {
 	
 	@Option(name="-o", aliases="--object", description="File (Object Message)",required=false)
 	String object;
-	
+
+    @Option(name="--priority", description="Priority as integer",required=false)
+    Integer priority = null;
+
+    @Option(name="--deliveryMode", description="DeliveryMode as integer",required=false)
+    Integer deliveryMode = null;
+   
+    @Option(name="--timestamp", description="timestamp as long",required=false)
+    Long timestamp = null;
+    
+    @Option(name="--expiration", description="expiration as long",required=false)
+    Long expiration = null;
+    
 	boolean ownConnection = false;
 	
 	@Override
@@ -151,6 +163,18 @@ public class SendCmd implements Action {
                 			message.setStringProperty( name, value);
                 	}
                 }
+                
+                if (priority != null)
+                    message.setJMSPriority(priority);
+                
+                if (deliveryMode !=  null)
+                    message.setJMSDeliveryMode(deliveryMode);
+                
+                if (timestamp != null)
+                    message.setJMSTimestamp(timestamp);
+                
+                if (expiration != null)
+                    message.setJMSExpiration(expiration);
                 
                 log.i("Sending message #" + i, message);
 
