@@ -17,7 +17,7 @@ package de.mhus.osgi.services.jms;
 
 import javax.jms.JMSException;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.jms.JmsChannel;
 import de.mhus.lib.jms.JmsConnection;
@@ -122,7 +122,7 @@ public abstract class AbstractJmsDataChannel extends MLog implements JmsDataChan
 			channel.isConnected();
 		} else 
 		if (!channel.isClosed() && !channel.isConnected()) {
-			MApi.lookup(JmsManagerService.class).resetConnection(getConnectionName());
+			M.l(JmsManagerService.class).resetConnection(getConnectionName());
 			onConnect();
 		}
 	}

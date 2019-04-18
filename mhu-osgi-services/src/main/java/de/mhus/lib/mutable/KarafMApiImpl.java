@@ -21,6 +21,7 @@ import java.util.Set;
 
 import de.mhus.lib.core.MActivator;
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
@@ -194,7 +195,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 	@Override
 	public synchronized Log lookupLog(Object owner) {
 		if (mlogFactory == null)
-			mlogFactory = MApi.lookup(MLogFactory.class);
+			mlogFactory = M.l(MLogFactory.class);
 		return mlogFactory.lookup(owner);
 	}
 	

@@ -24,7 +24,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -43,7 +43,7 @@ public class CmdUptime implements Action {
 		
 		ConsoleTable out = new ConsoleTable(false);
 		out.setHeaderValues("Status","Runtime","Start","Pid","System");
-		UptimeAdminIfc api = MApi.lookup(UptimeAdminIfc.class);
+		UptimeAdminIfc api = M.l(UptimeAdminIfc.class);
 		List<UptimeRecord> records = api.getRecords();
 		if (records == null) {
 			System.out.println("Records are not available");

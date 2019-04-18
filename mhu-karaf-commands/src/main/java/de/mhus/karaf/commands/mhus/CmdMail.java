@@ -25,7 +25,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.mail.GpgEncryptedMail;
 import de.mhus.lib.core.mail.GpgSignedMail;
@@ -75,7 +75,7 @@ public class CmdMail implements Action {
 	@Override
 	public Object execute() throws Exception {
 		
-		MSendMail sendMail = MApi.lookup(MSendMail.class);
+		MSendMail sendMail = M.l(MSendMail.class);
 		
 		MailAttachment[] attachFiles = null;
 		if (attachments != null) {

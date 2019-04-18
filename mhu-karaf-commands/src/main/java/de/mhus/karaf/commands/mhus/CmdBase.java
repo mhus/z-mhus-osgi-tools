@@ -25,6 +25,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
@@ -63,7 +64,7 @@ public class CmdBase extends MLog implements Action {
 			OsgiBundleClassLoader cl = new OsgiBundleClassLoader();
 			Class<?> ifc = cl.loadClass(parameters[0]);
 			    System.out.println("From Bundle : " + cl.getLoadBundle());
-			Object obj = MApi.lookup(ifc);
+			Object obj = M.l(ifc);
 			if (obj != null) {
 				System.out.println("Owner Bundle: " + FrameworkUtil.getBundle(ifc));
 				System.out.println("Object Id   : " + MSystem.getObjectId(obj));
@@ -77,7 +78,7 @@ public class CmdBase extends MLog implements Action {
 				try {
 					Class<?> ifc = item.getValue();
    					    System.out.println("From Bundle  : " + item.getKey() + " " + ifc);
-					Object obj = MApi.lookup(ifc);
+					Object obj = M.l(ifc);
 					if (obj != null) {
 						System.out.println(" Owner Bundle: " + FrameworkUtil.getBundle(ifc));
 						System.out.println(" Object Id   : " + MSystem.getObjectId(obj));

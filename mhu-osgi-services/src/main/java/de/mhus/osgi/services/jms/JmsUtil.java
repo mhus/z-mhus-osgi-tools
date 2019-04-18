@@ -34,7 +34,7 @@ org.osgi.framework.ServiceException: Service factory returned null. (Component: 
 	at org.apache.felix.framework.BundleContextImpl.getService(BundleContextImpl.java:470)[org.apache.felix.framework-5.6.4.jar:]
 	at de.mhus.lib.mutable.KarafBase.lookup(KarafBase.java:55)
 	at de.mhus.lib.core.lang.Base.lookup(Base.java:19)
-	at de.mhus.lib.core.MApi.lookup(MApi.java:139)
+	at de.mhus.lib.core.M.l(MApi.java:139)
 	at de.mhus.lib.karaf.jms.JmsUtil.getService(JmsUtil.java:18)
 	at de.mhus.lib.karaf.jms.JmsUtil.getConnection(JmsUtil.java:27)
 	at de.mhus.lib.karaf.jms.AbstractJmsDataChannel.onConnect(AbstractJmsDataChannel.java:78)
@@ -42,7 +42,7 @@ org.osgi.framework.ServiceException: Service factory returned null. (Component: 
 	at de.mhus.lib.karaf.jms.JmsManagerServiceImpl$MyChannelTrackerCustomizer.addingService(JmsManagerServiceImpl.java:238)
 	at de.mhus.lib.karaf.jms.JmsManagerServiceImpl$MyChannelTrackerCustomizer.addingService(JmsManagerServiceImpl.java:1)
 	 */
-		// return MApi.lookup(JmsManagerService.class);
+		// return M.l(JmsManagerService.class);
 	}
 	
 	/**

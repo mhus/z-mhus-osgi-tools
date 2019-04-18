@@ -20,7 +20,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.service.ServerIdent;
 
@@ -33,7 +33,7 @@ public class CmdIdent implements Action {
 
 	@Override
 	public Object execute() throws Exception {
-		ServerIdent service = MApi.lookup(ServerIdent.class);
+		ServerIdent service = M.l(ServerIdent.class);
 		return service.toString() + (full ? " " + MSystem.getPid() + "@" + MSystem.getHostname() : "");
 	}
 

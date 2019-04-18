@@ -27,10 +27,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+
 import de.mhus.lib.basics.Named;
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
