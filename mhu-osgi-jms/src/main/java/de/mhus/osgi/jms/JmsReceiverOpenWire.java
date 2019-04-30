@@ -17,6 +17,7 @@ package de.mhus.osgi.jms;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
@@ -25,6 +26,9 @@ import javax.jms.Message;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import org.apache.activemq.BlobMessage;
+
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.ServerJms;
@@ -110,11 +114,30 @@ public class JmsReceiverOpenWire extends MLog implements JmsReceiver {
 
 	protected void doProcess(Message msg) {
 		try {
+		    if (msg instanceof BlobMessage && msg.getStringProperty("filename") != null) {
+                String filename = msg.getStringProperty("filename");
+                filename = filename.replace("..", "_");
+                filename = filename.replace("~", "_");
+                while (filename.startsWith("/")) filename = filename.substring(1);
+                File file = new File("jms/" + queue + "/" + filename );
+                file.getParentFile().mkdirs();
+                FileOutputStream os = new FileOutputStream(file);
+                BlobMessage blob = (BlobMessage)msg;
+                System.out.println("Filename: " + filename);
+                System.out.println("Filesize: " + msg.getLongProperty("filesize"));
+                System.out.println("Blob Name: " + blob.getName());
+                InputStream is = blob.getInputStream();
+                MFile.copyFile(is, os);
+                os.close();
+                is.close();
+		    } else
 			if (msg instanceof BytesMessage && msg.getStringProperty("filename") != null) {
 				String filename = msg.getStringProperty("filename");
 				filename = filename.replace("..", "_");
 				filename = filename.replace("~", "_");
 				while (filename.startsWith("/")) filename = filename.substring(1);
+                System.out.println("Filename: " + filename);
+                System.out.println("Filesize: " + msg.getLongProperty("filesize"));
 				File file = new File("jms/" + queue + "/" + filename );
 				file.getParentFile().mkdirs();
 				FileOutputStream os = new FileOutputStream(file);

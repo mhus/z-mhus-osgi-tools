@@ -26,6 +26,8 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQSession;
+import org.apache.activemq.BlobMessage;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -59,6 +61,9 @@ public class SendFileCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
+    @Option(name="-b", aliases="--blob", description="Use blob message instead of byte message",required=false)
+    boolean useBlob = false;
+    
 	@Override
 	public Object execute() throws Exception {
 
@@ -114,12 +119,19 @@ public class SendFileCmd implements Action {
 		}
 		if (f.isFile()) {
 			System.out.println("Send " + f.getName() + " " + f.length());
-            BytesMessage message = session.createBytesMessage();
-            message.setStringProperty("filename", f.getName());
-            byte[] b = MFile.readBinaryFile(f);
-            message.writeBytes(b);
-            producer.send(message);
-
+			if (useBlob) {
+			    BlobMessage message = ((ActiveMQSession)session).createBlobMessage(f);
+                message.setStringProperty("filename", f.getName());
+                message.setLongProperty("filesize", f.length());
+                producer.send(message);
+			} else {
+                BytesMessage message = session.createBytesMessage();
+                message.setStringProperty("filename", f.getName());
+                message.setLongProperty("filesize", f.length());
+                byte[] b = MFile.readBinaryFile(f);
+                message.writeBytes(b);
+                producer.send(message);
+			}
 		}
 	}
 	
