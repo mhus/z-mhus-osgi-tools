@@ -29,6 +29,10 @@ public class CmdJdbcMetadata implements Action {
             + "tables <name> <types: table,view,...> <schemaPattern> <catalog>\n"
             + "indexes <table> <schema> <catalog>\n"
             + "columns <table> <column pattern> <schema pattern> <catalog>\n"
+            + "catalogs\n"
+            + "attributes <attribute> <type> <schema pattern> <catalog>\n"
+            + "functions <function> <schema pattern> <catalog>\n"
+            + "schemas\n"
             + "info", multiValued=false)
     String type;
     
@@ -43,6 +47,30 @@ public class CmdJdbcMetadata implements Action {
         DataSource ds = new DataSourceUtil().getDataSource(source);
         if (ds == null) throw new MException("DataSource not found",source);
         
+        if (type.equals("schemas")) {
+            Connection con = ds.getConnection();
+            ResultSet res = con.getMetaData().getSchemas();
+            out(res);
+            con.close();
+        } else
+        if (type.equals("attributes")) {
+            Connection con = ds.getConnection();
+            ResultSet res = con.getMetaData().getAttributes(attr(3,null), attr(2,null), attr(1,null), attr(0, null));
+            out(res);
+            con.close();
+        } else
+        if (type.equals("functions")) {
+            Connection con = ds.getConnection();
+            ResultSet res = con.getMetaData().getFunctions(attr(2,null), attr(1,null), attr(0, null));
+            out(res);
+            con.close();
+        } else
+        if (type.equals("catalogs")) {
+            Connection con = ds.getConnection();
+            ResultSet res = con.getMetaData().getCatalogs();
+            out(res);
+            con.close();
+        } else
         if (type.equals("tables")) {
             Connection con = ds.getConnection();
             ResultSet res = con.getMetaData().getTables(attr(3, null), attr(2, null), attr(0, null), attrarr(1, new String[] {"TABLE"}));
