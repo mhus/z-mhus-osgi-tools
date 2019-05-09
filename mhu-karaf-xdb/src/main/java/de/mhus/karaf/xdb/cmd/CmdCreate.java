@@ -15,8 +15,7 @@
  */
 package de.mhus.karaf.xdb.cmd;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -28,6 +27,7 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.util.Pair;
 import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "create", description = "Select data from DB DataSource and print the results")
@@ -64,21 +64,26 @@ public class CmdCreate implements Action {
 		
 		Object object = type.newInstance();
 		
-		HashMap<String, Object> attrObj = null;
-		attrObj = new HashMap<>();
+        LinkedList<Pair<String, String>> attrObj = null;
+        attrObj = new LinkedList<>();
 		if (attributes != null) {
 			for (String item : attributes) {
 				String key = MString.beforeIndex(item, '=').trim();
 				String value = MString.afterIndex(item, '=').trim();
-				attrObj.put(key, value);
+                attrObj.add(new Pair<String,String>(key, value));
 			}
 		}
 
-		for (Entry<String, Object> entry : attrObj.entrySet()) {
-			String name = entry.getKey();
-			Object v = XdbUtil.prepareValue(type, name, entry.getValue());
-			System.out.println("--- SET " + name + "  = " + v );
-			XdbUtil.setValue(type,object,name,v);
+        for (Pair<String, String> entry : attrObj) {
+		    String name = entry.getKey();
+		    Object v = XdbUtil.prepareValue(type, name, entry.getValue());
+		    try {
+    			System.out.println("--- SET " + name + "  = " + v );
+    			XdbUtil.setValue(type,object,name,v);
+		    } catch (Throwable t) {
+		        System.out.println("*** Error: " + type + " " + name + " " + v);
+		        t.printStackTrace();
+		    }
 		}
 		
 //		for (String name : type.getAttributeNames()) {

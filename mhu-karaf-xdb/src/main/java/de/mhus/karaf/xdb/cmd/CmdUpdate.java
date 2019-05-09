@@ -15,8 +15,7 @@
  */
 package de.mhus.karaf.xdb.cmd;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
@@ -28,6 +27,7 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.util.Pair;
 import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "update", description = "Update a single object in database")
@@ -67,13 +67,13 @@ public class CmdUpdate implements Action {
 		apiName = XdbUtil.getApiName(session, apiName);
 		serviceName = XdbUtil.getServiceName(session, serviceName);
 
-		HashMap<String, Object> attrObj = null;
-		attrObj = new HashMap<>();
+		LinkedList<Pair<String, String>> attrObj = null;
+		attrObj = new LinkedList<>();
 		if (attributes != null) {
 			for (String item : attributes) {
 				String key = MString.beforeIndex(item, '=').trim();
 				String value = MString.afterIndex(item, '=').trim();
-				attrObj.put(key, value);
+				attrObj.add(new Pair<String,String>(key, value));
 			}
 		}
 
@@ -85,11 +85,16 @@ public class CmdUpdate implements Action {
 		for (Object object : XdbUtil.createObjectList(type, search, null)) {
 			System.out.println(">>> UPDATE " + object);
 			
-			for (Entry<String, Object> entry : attrObj.entrySet()) {
+			for (Pair<String, String> entry : attrObj) {
 				String name = entry.getKey();
 				Object v = XdbUtil.prepareValue(type, name, entry.getValue());
 				System.out.println("--- SET " + name + "  = " + v );
-				XdbUtil.setValue(type,object,name,v);
+				try {
+				    XdbUtil.setValue(type,object,name,v);
+				} catch (Throwable t) {
+				    System.out.println("*** Error: " + name);
+				    t.printStackTrace();
+				}
 			}
 			
 //			for (String name : type.getAttributeNames()) {
