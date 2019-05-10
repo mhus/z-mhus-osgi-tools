@@ -76,7 +76,14 @@ public class XdbUtil {
 						map = (Map) t.getDeclaredConstructor().newInstance();
 					type.set(object, p1, map);
 				}
-				map.put(p2, v);
+				if (p2.equals("remove")) {
+				    map.remove(v);
+				} else
+				if (p2.startsWith("set:")) {
+				    p2 = p2.substring(4);
+	                map.put(p2, v);
+				} else
+				    map.put(p2, v);
 			} else
 			if (Collection.class.isAssignableFrom(t)) {
 				Collection col = type.get(object, p1);
