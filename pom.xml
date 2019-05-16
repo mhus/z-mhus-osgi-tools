@@ -64,5 +64,6 @@
 		<module>mhu-osgi-jms</module>
 		<module>mhu-karaf-xdb</module>
 		<module>mhu-karaf-commands</module>
+		<module>mhu-karaf-feature</module>
 	</modules>
 </project>
