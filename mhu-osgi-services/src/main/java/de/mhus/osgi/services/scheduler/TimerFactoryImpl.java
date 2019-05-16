@@ -56,6 +56,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 	private SchedulerTimer myTimer = new SchedulerTimer("de.mhus.lib.karaf.Scheduler");
 	private MServiceTracker<SchedulerService> tracker;
 	private WeakHashMap<SchedulerService,SchedulerJob> services = new WeakHashMap<>();
+    private BundleContext context;
 	public static TimerFactoryImpl instance; //TODO use method
 	private static LinkedList<SchedulerJob> preSchedule = new LinkedList<>();
 		
@@ -69,6 +70,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 		tracker.stop();
 		myTimer.cancel();
 		myTimer = null;
+		context = null;
 		instance = null;
 	}
 
@@ -96,7 +98,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			System.out.println("Can't initialize timer base: " + t);
 		}
 				
-		BundleContext context = ctx.getBundleContext();
+		context = ctx.getBundleContext();
 		tracker = new MServiceTracker<SchedulerService>(context,SchedulerService.class) {
 			
 			@Override
@@ -185,7 +187,11 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			properties.put("job.interval", interval);
 			properties.put("job.bundle", caller.getSymbolicName());
 			properties.put("job.timer", MSystem.getObjectId(this));
-			caller.getBundleContext().registerService(SchedulerService.class, service, properties);
+			if (caller == null || caller.getBundleContext() == null) {
+			    log().w("Can't register scheduler to others bundle context",service,properties);
+			    context.registerService(SchedulerService.class, service, properties);
+			} else
+			    caller.getBundleContext().registerService(SchedulerService.class, service, properties);
 		}
 
 		private void createService(SchedulerJob job) {
@@ -198,7 +204,11 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			properties.put("job.task", job.getTask().getClass());
 			properties.put("job.bundle", caller.getSymbolicName());
 			properties.put("job.timer", MSystem.getObjectId(this));
-			caller.getBundleContext().registerService(SchedulerService.class, service, properties);
+			if (caller == null || caller.getBundleContext() == null) {
+			    log().w("Can't register scheduler to others bundle context",service,properties);
+			    context.registerService(SchedulerService.class, service, properties);
+			} else
+			    caller.getBundleContext().registerService(SchedulerService.class, service, properties);
 		}
 		
 		public SchedulerTimer getScheduler() {
