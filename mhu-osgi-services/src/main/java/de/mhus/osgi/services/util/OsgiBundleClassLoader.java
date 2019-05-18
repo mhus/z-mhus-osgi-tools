@@ -23,6 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.osgi.services.MOsgi;
 
 public class OsgiBundleClassLoader extends ClassLoader {
 
@@ -36,6 +37,10 @@ public class OsgiBundleClassLoader extends ClassLoader {
 			loadedFrom = FrameworkUtil.getBundle(MApi.class).getSymbolicName();
 			Bundle myBundle = FrameworkUtil.getBundle(MApi.class);
 			BundleContext context = myBundle.getBundleContext();
+			if (context == null) {
+			    context = MOsgi.getBundleContext();
+			    loadedFrom = "MOsgi";
+			}
 			Bundle[] bundles = context.getBundles();
     		for (Bundle bundle : bundles) {
     			try {

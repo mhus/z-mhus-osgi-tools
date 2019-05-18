@@ -16,12 +16,17 @@
 package de.mhus.karaf.commands.shell;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
@@ -32,7 +37,7 @@ import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 public class CmdNewInstance implements Action {
 
 	@Argument(index=0, name="classname", required=true, description="Class name", multiValued=false)
-    String className;
+    Object className;
 
 	@Argument(index=1, name="parameters", required=false, description="a", multiValued=true)
     Object[] parameters;
@@ -40,13 +45,32 @@ public class CmdNewInstance implements Action {
     @Option(name = "-t", aliases = { "--parameterTypes" }, description = "Parameter Types", required = false, multiValued = false)
     String pt;
     
+    @Option(name = "-p", aliases = { "--proxy" }, description = "Creates an proxy and call the shell command", required = false, multiValued = false)
+    String proxyCmd;
+    
+    @Reference
+    private Session session;
+
 	@Override
 	public Object execute() throws Exception {
 		
 		OsgiBundleClassLoader cl = new OsgiBundleClassLoader();
-		Class<?> clazz = cl.loadClass(className);
+		
+		Class<?> clazz = null;
+		if (className instanceof Class)
+		    clazz = (Class<?>)className;
+		else
+		if (className instanceof String)
+		    clazz = cl.loadClass(String.valueOf(className));
+		else
+		    clazz = className.getClass();
 		
 		Class<?>[] parameterTypes = null;
+		
+		if (proxyCmd != null) {
+		    Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] {clazz}, new MyInvocationHandler(session, clazz, proxyCmd));
+		    return obj;
+		}
 		
 		if (pt != null) {
 			String[] p = pt.split(",");
@@ -76,4 +100,25 @@ public class CmdNewInstance implements Action {
 		return obj;
 	}
 
+	private static class MyInvocationHandler implements InvocationHandler {
+
+        private Session session;
+        private String cmd;
+        private Class<?> clazz;
+
+        public MyInvocationHandler(Session session, Class<?> clazz, String proxyCmd) {
+            this.session = session;
+            this.clazz = clazz;
+            this.cmd = proxyCmd;
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            if (method.getName().equals("toString"))
+                return "Proxy of " + clazz.getCanonicalName();
+            session.put("args", args);
+            return session.execute(cmd + " " + method.getName() + " $args");
+        }
+	    
+	}
 }

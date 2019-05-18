@@ -21,6 +21,11 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import de.mhus.lib.core.MDate;
+import de.mhus.osgi.services.MOsgi;
 
 @Command(scope = "shell", name = "inspectObject", description = "Inspect a object")
 @Service
@@ -33,6 +38,16 @@ public class CmdObjectInspect implements Action {
 	public Object execute() throws Exception {
 		
 		Class<? extends Object> clazz = object.getClass();
+		
+		Bundle bundle = FrameworkUtil.getBundle(clazz);
+		if (bundle == null)
+		    System.out.println("Bundle is null");
+		else {
+		    System.out.println("Bundle: " + bundle.getSymbolicName() + " [" + bundle.getBundleId() + "]");
+		    System.out.println("  Modified: " + MDate.toIso8601(bundle.getLastModified()));
+		    System.out.println("  Status  : " + MOsgi.getState(bundle));
+		}
+		
 		System.out.println("Class " + clazz.getCanonicalName() + ":");
 		System.out.println();
 		for (Method method : clazz.getMethods()) {

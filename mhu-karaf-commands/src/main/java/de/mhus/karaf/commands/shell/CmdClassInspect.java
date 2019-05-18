@@ -88,7 +88,7 @@ public class CmdClassInspect implements Action {
 			}
 		}
 		
-		return null;
+		return clazz;
 	}
 
 }
