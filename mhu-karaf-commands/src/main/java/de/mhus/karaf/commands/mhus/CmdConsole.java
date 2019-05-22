@@ -180,12 +180,18 @@ public class CmdConsole implements Action {
 		} break;
 		case "keys": {
 			System.out.println(">>> Key debug mode - press 'q' to leave");
+			int cnt = 1000;
 			while (true) {
 				int key = Console.get().read();
 				System.out.println("KeyCode: " + key);
 				if (key == ANSIConsole.KEY_q) break;
 				if (key == ANSIConsole.KEY_ENTER)
 					System.out.println();
+				if (key < 0) {
+				    System.out.println("Cnt: " + cnt);
+				    cnt--;
+				    Thread.sleep(100);
+				}
 			}
 		} break;
 		default:
