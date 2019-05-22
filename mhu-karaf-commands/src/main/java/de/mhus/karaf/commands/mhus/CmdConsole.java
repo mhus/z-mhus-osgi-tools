@@ -34,6 +34,7 @@ import org.jline.terminal.Attributes.OutputFlag;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
@@ -53,7 +54,9 @@ public class CmdConsole implements Action {
 			+ " cleanup         - cleanup console\n"
 			+ " color <fg> <bg> - set colors\n"
 			+ " debug           - print console debug information\n"
-			+ " keys            - debug keyboard", multiValued=false)
+			+ " keys            - debug keyboard\n"
+			+ " ask <question> <answers>"
+			+ "", multiValued=false)
     String cmd;
 	
 	@Argument(index=1, name="arguments", required=false, description="arguments", multiValued=true)
@@ -194,6 +197,10 @@ public class CmdConsole implements Action {
 				}
 			}
 		} break;
+		case "ask": {
+		    char res = Console.askQuestion(arguments[0], arguments[1].toCharArray(), true, true);
+		    System.out.println("Result: " + MString.toHexString(res));
+		}
 		default:
 			System.out.println("Command not found");
 		}
