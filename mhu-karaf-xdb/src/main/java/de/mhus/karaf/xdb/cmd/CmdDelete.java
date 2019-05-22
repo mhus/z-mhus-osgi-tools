@@ -24,6 +24,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.karaf.xdb.model.XdbApi;
+import de.mhus.lib.core.console.Console;
 import de.mhus.lib.xdb.XdbType;
 
 @Command(scope = "xdb", name = "delete", description = "Delete a single object from database")
@@ -45,6 +46,9 @@ public class CmdDelete implements Action {
 	@Option(name="-s", description="Service Name",required=false)
 	String serviceName;
 
+    @Option(name="-y", description="Automatic yes",required=false)
+    boolean yes;
+    
     @Reference
     private Session session;
 
@@ -59,6 +63,11 @@ public class CmdDelete implements Action {
 		XdbApi api = XdbUtil.getApi(apiName);
 		
 		XdbType<?> type = api.getType(serviceName, typeName);
+		
+		if (!yes && Console.askQuestion("Really delete " + type + " items?", new char[] {'y','N'}, true, false) != 'y') {
+		    System.out.println("Canceled by user");
+		    return null;
+		}
 		
 		for (Object object : XdbUtil.createObjectList(type, search, null)) {
 			System.out.println("*** DELETE " + object);
