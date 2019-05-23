@@ -125,75 +125,76 @@ public class SendCmd implements Action {
         	JmsDestination destination = topic ? connection.createTopic(queue) : connection.createQueue(queue);
         	destination.open();
         	
-        	ClientJms client = new ClientJms(destination);
-            client.setTimeout(30 * 1000);
-            MStopWatch watch = new MStopWatch().start();
-            for (int i = 0; i < count; i++) {
-            	Message message = null;
-            	
-            	if (map != null) {
-            		MapMessage mm = connection.getSession().createMapMessage();
-                	for (String h : map) {
-                		String name = MString.beforeIndex(h, '=');
-                		String value = MString.afterIndex(h, '=');
-                		if (MString.isSet(name))
-                			mm.setString( name, value);
-                	}
-            		message = mm;
-            	} else
-            	if (file != null) {
-            		BytesMessage mm = connection.getSession().createBytesMessage();
-            		File f = new File(file);
-                    byte[] b = MFile.readBinaryFile(f);
-                    mm.writeBytes(b);
-            	} else
-            	if (object != null) {
-            		Object o = session.get(object);
-            		message = connection.getSession().createObjectMessage((Serializable) o);
-            	} else
-            		message = connection.getSession().createTextMessage(msg);
-            	
-                //String id = UUID.randomUUID().toString();
-                
-                if (header != null) {
-                	for (String h : header) {
-                		String name = MString.beforeIndex(h, '=');
-                		String value = MString.afterIndex(h, '=');
-                		if (MString.isSet(name))
-                			message.setStringProperty( name, value);
-                	}
+        	try (ClientJms client = new ClientJms(destination)) {
+                client.setTimeout(30 * 1000);
+                MStopWatch watch = new MStopWatch().start();
+                for (int i = 0; i < count; i++) {
+                	Message message = null;
+                	
+                	if (map != null) {
+                		MapMessage mm = connection.getSession().createMapMessage();
+                    	for (String h : map) {
+                    		String name = MString.beforeIndex(h, '=');
+                    		String value = MString.afterIndex(h, '=');
+                    		if (MString.isSet(name))
+                    			mm.setString( name, value);
+                    	}
+                		message = mm;
+                	} else
+                	if (file != null) {
+                		BytesMessage mm = connection.getSession().createBytesMessage();
+                		File f = new File(file);
+                        byte[] b = MFile.readBinaryFile(f);
+                        mm.writeBytes(b);
+                	} else
+                	if (object != null) {
+                		Object o = session.get(object);
+                		message = connection.getSession().createObjectMessage((Serializable) o);
+                	} else
+                		message = connection.getSession().createTextMessage(msg);
+                	
+                    //String id = UUID.randomUUID().toString();
+                    
+                    if (header != null) {
+                    	for (String h : header) {
+                    		String name = MString.beforeIndex(h, '=');
+                    		String value = MString.afterIndex(h, '=');
+                    		if (MString.isSet(name))
+                    			message.setStringProperty( name, value);
+                    	}
+                    }
+                    
+                    if (priority != null)
+                        message.setJMSPriority(priority);
+                    
+                    if (deliveryMode !=  null)
+                        message.setJMSDeliveryMode(deliveryMode);
+                    
+                    if (timestamp != null)
+                        message.setJMSTimestamp(timestamp);
+                    
+                    if (expiration != null)
+                        message.setJMSExpiration(expiration);
+                    
+                    log.i("Sending message #" + i, message);
+    
+                    if (sync) {
+                    	Message res = client.sendJms(message);
+                    	if (res != null) {
+                    		if (res instanceof MapMessage)
+                    			((MapMessage)res).getMapNames(); // touch the map message
+                    	}
+                		log.i("Answer", watch.getCurrentTimeAsString(), res);
+                    } else
+                    	client.sendJmsOneWay(message);
+    
                 }
-                
-                if (priority != null)
-                    message.setJMSPriority(priority);
-                
-                if (deliveryMode !=  null)
-                    message.setJMSDeliveryMode(deliveryMode);
-                
-                if (timestamp != null)
-                    message.setJMSTimestamp(timestamp);
-                
-                if (expiration != null)
-                    message.setJMSExpiration(expiration);
-                
-                log.i("Sending message #" + i, message);
-
-                if (sync) {
-                	Message res = client.sendJms(message);
-                	if (res != null) {
-                		if (res instanceof MapMessage)
-                			((MapMessage)res).getMapNames(); // touch the map message
-                	}
-            		log.i("Answer", watch.getCurrentTimeAsString(), res);
-                } else
-                	client.sendJmsOneWay(message);
-
-            }
-            watch.stop();
-            log.i(watch.getCurrentTimeAsString());
-            // tell the subscribers we're done
-//            producer.send(session.createTextMessage("END"));
-
+                watch.stop();
+                log.i(watch.getCurrentTimeAsString());
+                // tell the subscribers we're done
+    //            producer.send(session.createTextMessage("END"));
+        	}
+        	
         } catch (Exception e) {
             log.e("Caught exception!", e);
         }

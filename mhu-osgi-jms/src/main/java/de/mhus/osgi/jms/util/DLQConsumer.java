@@ -37,7 +37,8 @@ public class DLQConsumer extends ServerJms {
 		this(con.getConnection());
 	}
 	
-	public DLQConsumer(JmsConnection con) {
+	@SuppressWarnings("resource")
+    public DLQConsumer(JmsConnection con) {
 		super(new JmsDestination("ActiveMQ.DLQ", false).setConnection(con));
 	}
 
