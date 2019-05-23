@@ -21,7 +21,9 @@ import java.util.HashMap;
 import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.services.util.OsgiBundleClassLoader;
@@ -39,6 +41,9 @@ public class CmdShitYo implements Action {
 	@Argument(index=2, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
     
+    @Reference
+    Session session;
+
 	HashMap<String,Class<? extends ShitIfc>> shortcuts = new HashMap<>();
 	{
 		shortcuts.put("system",SystemShit.class);
@@ -68,7 +73,7 @@ public class CmdShitYo implements Action {
 			return null;
 		}
 		
-		return mod.doExecute(cmd, parameters);
+		return mod.doExecute(this, cmd, parameters);
 		
 	}
 

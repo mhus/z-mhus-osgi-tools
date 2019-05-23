@@ -37,7 +37,7 @@ public class AddressShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		if (cmd.equals("reload")) {
 			Address.reloadDefinition();
 			return "OK";

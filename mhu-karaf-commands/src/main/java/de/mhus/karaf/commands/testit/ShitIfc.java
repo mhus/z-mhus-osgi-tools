@@ -19,6 +19,6 @@ public interface ShitIfc {
 
 	void printUsage();
 
-	Object doExecute(String cmd, String[] parameters) throws Exception;
+	Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception;
 
 }

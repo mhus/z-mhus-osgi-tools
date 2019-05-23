@@ -35,6 +35,8 @@ public class SystemShit implements ShitIfc {
 
 	private int parallelCnt;
 
+    private static Object lock = new Object();
+
 	@Override
 	public void printUsage() {
 		System.out.println(
@@ -47,7 +49,17 @@ public class SystemShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
+	    if (cmd.equals("threadid")) {
+	        synchronized (lock) {
+    	        String threadid = (String)base.session.get("threadid");
+    	        if (threadid == null) threadid = "";
+    	        threadid = threadid + " " + Thread.currentThread().getId();
+    	        base.session.put("threadid", threadid);
+    	        System.out.println(threadid);
+	        }
+	        return null;
+	    }
 		if (cmd.equals("memkill")) {
 			String kill = "killkill";
 			int len = kill.length();

@@ -54,7 +54,7 @@ public class MhusShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		
 		if (cmd.equals("atomicservers")) {
 			AtomicClockUtil.TIME_SERVERS.forEach(s -> System.out.println(s));

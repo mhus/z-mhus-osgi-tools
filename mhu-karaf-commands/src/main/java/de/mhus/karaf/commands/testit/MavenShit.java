@@ -35,7 +35,7 @@ public class MavenShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		if (cmd.equals("locate")) {
 			MMaven.Artifact artifact = MMaven.toArtifact(parameters[0]);
 			System.out.println("Artifact: " + artifact);

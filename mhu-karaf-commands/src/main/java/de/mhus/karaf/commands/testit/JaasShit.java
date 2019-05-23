@@ -40,7 +40,7 @@ public class JaasShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		if (cmd.equals("realm")) {
 			JaasRealm realm = KarafJaasUtil.getRealm(parameters[0]);
 			System.out.println(realm);

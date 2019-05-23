@@ -27,7 +27,12 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPassword;
+import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.crypt.Blowfish;
+import de.mhus.lib.core.crypt.pem.PemBlock;
+import de.mhus.lib.core.crypt.pem.PemUtil;
+import de.mhus.lib.core.parser.ParseException;
 import de.mhus.lib.core.vault.DefaultEntry;
 import de.mhus.lib.core.vault.FileVaultSource;
 import de.mhus.lib.core.vault.MVault;
@@ -50,8 +55,8 @@ public class CmdVault extends MLog implements Action {
 			+ " move <id> <to source>   - clone and remove from old source\n"
 			+ " clone <id> <to source>  - copy with the same id\n"
 			+ " copy <id> <to source>   - copy with a new id\n"
-			+ " addfile <file> [description]\n"
-			+ " addraw <type> <description> <value>\n"
+			+ " import <file> [description]\n"
+			+ " add <type> <description> <value>\n"
 			+ " remove <id>\n"
 			+ " save\n"
 			+ " load\n"
@@ -70,12 +75,18 @@ public class CmdVault extends MLog implements Action {
 	@Option(name="-s", aliases="--source",description="Set vault source name")
 	String sourcename = null;
 	
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
+	@Option(name="-x", aliases="--full", description="Full output",required=false)
 	boolean full = false;
 
+    @Option(name="-f", aliases="--force", description="Overwrite existing",required=false)
+    boolean force = false;
+    
 	@Option(name="-id", description="Optiona a existing uuid to import in raw mode",required=false)
 	String id = null;
 	
+    @Option(name = "-p", aliases = { "--passphrase" }, description = "Define a passphrase if required", required = false, multiValued = false)
+    String passphrase = null;
+
 	@Override
 	public Object execute() throws Exception {
 		MVault vault = MVaultUtil.loadDefault();
@@ -87,7 +98,7 @@ public class CmdVault extends MLog implements Action {
 			else
 				entry = vault.getEntry(UUID.fromString(parameters[0]));
 			if (entry == null) {
-				System.out.println("Entry not found");
+				System.out.println("*** Entry not found");
 				return null;
 			}
 			entry = new DefaultEntry(entry.getType(), entry.getDescription(), entry.getValue());
@@ -98,17 +109,17 @@ public class CmdVault extends MLog implements Action {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
-				System.out.println("Source not found " + sourcename);
+				System.out.println("*** Source not found " + sourcename);
 				return null;
 			}
 			MutableVaultSource editable = source.getEditable();
 			if (editable == null) {
-				System.out.println("Source is not editable " + sourcename);
+				System.out.println("*** Source is not editable " + sourcename);
 				return null;
 			}
 			VaultEntry entry = source.getEntry(UUID.fromString(parameters[0]));
 			if (entry == null) {
-				System.out.println("Entry not found in source " + sourcename);
+				System.out.println("*** Entry not found in source " + sourcename);
 				return null;
 			}
 			vault.getSource(parameters[1]).getEditable().addEntry(entry);
@@ -122,7 +133,7 @@ public class CmdVault extends MLog implements Action {
 			else
 				entry = vault.getEntry(UUID.fromString(parameters[0]));
 			if (entry == null) {
-				System.out.println("Entry not found");
+				System.out.println("*** Entry not found");
 				return null;
 			}
 			vault.getSource(parameters[1]).getEditable().addEntry(entry);
@@ -166,7 +177,7 @@ public class CmdVault extends MLog implements Action {
 			} else {
 				VaultSource source = vault.getSource(sourcename);
 				if (source == null) {
-					System.out.println("Source not found!");
+					System.out.println("*** Source not found!");
 					return null;
 				}
 				ConsoleTable out = new ConsoleTable(full);
@@ -178,68 +189,124 @@ public class CmdVault extends MLog implements Action {
 				out.print(System.out);
 			}
 		} else
-		if (cmd.equals("addraw")) {
+		if (cmd.equals("add") || cmd.equals("addraw")) {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
-				System.out.println("Source not found!");
+				System.out.println("*** Source not found!");
 				return null;
 			}
 			MutableVaultSource mutable = source.getEditable();
 			
 			String type = parameters[0];
 			String description = parameters[1];
-			String value = parameters[2];
-			DefaultEntry entry = null;
-			if (id != null)
-				entry = new DefaultEntry(UUID.fromString(id), type, description, value);
-			else
-				entry = new DefaultEntry(type, description, value);
+			String content = parameters[2];
+			
+            if (passphrase != null && content.contains("-----BEGIN CIPHER-----")) {
+                if ("".equals(passphrase)) {
+                      System.out.print("Passphrase: ");
+                      System.out.flush();
+                      passphrase = Console.get().readPassword();
+                }
+                PemBlock pem = PemUtil.parse(content);
+                if (id == null && pem.containsKey(PemBlock.IDENT))
+                    id = pem.getString(PemBlock.IDENT);
+                content = pem.getBlock();
+                content = Blowfish.decrypt(content, passphrase);
+          }
+
+            if (type.equals(""))
+                type = MVaultUtil.getType(content);
+
+            
+            PemBlock pem = null;
+            try {
+                pem = PemUtil.parse(content);
+            } catch (ParseException e) {
+            }
+            if (pem != null && description.equals("")) {
+                description = pem.getString(PemBlock.DESCRIPTION, "");
+            }
+            
+			DefaultEntry entry = new DefaultEntry(type, description, content);
+            if (id != null)
+                entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getDescription(), entry.getValue());
+
+            if (mutable.getEntry(entry.getId()) != null) {
+                if (force)
+                    mutable.removeEntry(entry.getId());
+                else {
+                    System.out.println("*** Entry already exists " + entry.getId());
+                    return null;
+                }
+            }
+
 			mutable.addEntry(entry);
 			System.out.println("Created " + entry + ". Don't forget to save!");
+			return entry.getId().toString();
 		} else
-		if (cmd.equals("addfile")) {
+		if (cmd.equals("import")) {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
-				System.out.println("Source not found!");
+				System.out.println("*** Source not found!");
 				return null;
 			}
 			MutableVaultSource mutable = source.getEditable();
 			
 			File file = new File(parameters[0]);
 			if (!file.exists()) {
-				System.out.println("File not found");
+				System.out.println("*** File not found");
 				return null;
 			}
 			if (!file.isFile()) {
-				System.out.println("File is not an file");
+				System.out.println("*** File is not an file");
 				return null;
 			}
 			if (file.length() > MAX_FILE_LENGTH) {
-				System.out.println("File to large to load");
+				System.out.println("*** File to large to load");
 				return null;
 			}
+			
+            String desc = (parameters.length > 1 ? parameters[1] + ";" : "") + file.getName() ;
 			String content = MFile.readFile(file);
-			String desc = (parameters.length > 1 ? parameters[1] + ";" : "") + file.getName() ;
-			VaultEntry entry = null;
-			if (content.contains("-----BEGIN RSA PRIVATE KEY-----")) {
-				entry = new DefaultEntry(MVault.TYPE_RSA_PRIVATE_KEY,desc,content);
-			} else
-			if (content.contains("-----BEGIN RSA PUBLIC KEY-----")) {
-				entry = new DefaultEntry(MVault.TYPE_RSA_PUBLIC_KEY,desc,content);
-			} else
-				entry = new DefaultEntry(MVault.TYPE_TEXT,desc,content);
+			if (passphrase != null && content.contains("-----BEGIN CIPHER-----")) {
+		          if ("".equals(passphrase)) {
+		                System.out.print("Passphrase: ");
+		                System.out.flush();
+		                passphrase = Console.get().readPassword();
+		          }
+		          PemBlock pem = PemUtil.parse(content);
+		          if (id == null && pem.containsKey(PemBlock.IDENT))
+		              id = pem.getString(PemBlock.IDENT);
+		          desc = pem.getString(PemBlock.DESCRIPTION, desc);
+		          content = pem.getBlock();
+		          content = Blowfish.decrypt(content, passphrase);
+			}
 			
+			String type = MVaultUtil.getType(content);
+			VaultEntry entry = new DefaultEntry(type,desc,content);
+			
+			if (id != null)
+			    entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getDescription(), entry.getValue());
+			
+			if (mutable.getEntry(entry.getId()) != null) {
+			    if (force)
+			        mutable.removeEntry(entry.getId());
+			    else {
+			        System.out.println("*** Entry already exists " + entry.getId());
+			        return null;
+			    }
+			}
 			mutable.addEntry(entry);
-			System.out.println("Create " + entry.getId() + " " + entry.getType() + ". Don't forget to save!");
-			
+			System.out.println("Created " + entry.getId() + " " + entry.getType() + ". Don't forget to save!");
+			return entry.getId().toString();
 		} else
 		if (cmd.equals("save")) {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
-				System.out.println("Source not found!");
+				System.out.println("*** Source not found!");
 				return null;
 			}
 			MutableVaultSource mutable = source.getEditable();
@@ -264,7 +331,7 @@ public class CmdVault extends MLog implements Action {
 			else
 				entry = vault.getEntry(UUID.fromString(parameters[0]));
 			if (entry == null) {
-				System.out.println("Entry not found");
+				System.out.println("*** Entry not found");
 				return null;
 			}
 			System.out.println("Id         : " + entry.getId());
@@ -274,12 +341,13 @@ public class CmdVault extends MLog implements Action {
 			System.out.println("-------");
 			System.out.println(entry.getValue().value());
 			System.out.println("-------");
+			return entry;
 		} else
 		if (cmd.equals("remove")) {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
 			if (source == null) {
-				System.out.println("Source not found!");
+				System.out.println("*** Source not found!");
 				return null;
 			}
 			MutableVaultSource mutable = source.getEditable();

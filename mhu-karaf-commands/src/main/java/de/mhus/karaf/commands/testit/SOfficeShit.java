@@ -32,7 +32,7 @@ public class SOfficeShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		if (cmd.equals("version")) {
 			SOfficeConnector tool = new SOfficeConnector();
 			System.out.println("Binary : " + tool.getBinary());

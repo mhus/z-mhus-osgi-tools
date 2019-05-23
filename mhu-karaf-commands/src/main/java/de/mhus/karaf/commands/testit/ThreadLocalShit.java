@@ -37,7 +37,7 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
     }
 
     @Override
-    public Object doExecute(String cmd, String[] parameters) throws Exception {
+    public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         if (cmd.equals("status")) {
             if (myThread == null)
                 System.out.println("Stopped");

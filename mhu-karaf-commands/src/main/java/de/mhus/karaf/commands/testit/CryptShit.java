@@ -54,7 +54,7 @@ public class CryptShit implements ShitIfc {
 	}
 
 	@Override
-	public Object doExecute(String cmd, String[] parameters) throws Exception {
+	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 		switch(cmd) {
 		case "aes.string.encrypt": {
 			String md5 = MCrypt.md5(parameters[0]);
