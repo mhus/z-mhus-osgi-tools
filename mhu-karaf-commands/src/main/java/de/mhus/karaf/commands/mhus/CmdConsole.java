@@ -25,6 +25,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReader.Option;
+import org.jline.reader.impl.LineReaderImpl;
 import org.jline.terminal.Attributes;
 import org.jline.terminal.Attributes.ControlChar;
 import org.jline.terminal.Attributes.ControlFlag;
@@ -39,6 +40,7 @@ import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
+import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.mutable.KarafConsole;
 import de.mhus.osgi.services.util.OsgiBundleClassLoader;
 
@@ -123,6 +125,19 @@ public class CmdConsole implements Action {
 				System.out.println("Background: "+console.getBackgroundColor());
 				System.out.println("Support   : " + (console.isSupportBlink() ? "blink " : "") + (console.isSupportBold() ? "bold " : "") + (console.isSupportColor() ? "color " : "") + (console.isSupportCursor() ? "cursor " : "") + (console.isSupportSize() ? "size ": "") );
 				System.out.println("Attributes: " + (console.isBlink() ? "blink " : "") + (console.isBold() ? "bold " : "") );
+				System.out.println();
+				System.out.println("Ansi : " + console.isAnsi());
+				System.out.println("Blink: "+console.isBlink());
+				System.out.println("Bold : "+console.isBold());
+				
+				try {
+				    LineReaderImpl reader = console.adaptTo(LineReaderImpl.class);
+				    System.out.println();
+				    System.out.println("jline3 Console:");
+				    System.out.println("  Type: "+reader.getTerminal().getType());
+				} catch (NotSupportedException e) {
+				    System.out.println("Not a jline3 console");
+				}
 			}
 			System.out.println();
 			System.out.println("Supported colors: " + Arrays.toString(Console.COLOR.values()));
@@ -199,8 +214,21 @@ public class CmdConsole implements Action {
 		} break;
 		case "ask": {
 		    char res = Console.askQuestion(arguments[0], arguments[1].toCharArray(), true, true);
-		    System.out.println("Result: " + MString.toHexString(res));
-		}
+		    System.out.println("Result: " + res + " " + MString.toHexString(res));
+		} break;
+		case "test": {
+            LineReaderImpl reader = Console.get().adaptTo(LineReaderImpl.class);
+            boolean echo = reader.getTerminal().echo();
+            reader.getTerminal().echo(false);
+            int c = reader.readCharacter();
+            System.out.println(c);
+            reader.getTerminal().echo(echo);
+		} break;
+        case "testline": {
+            LineReaderImpl reader = Console.get().adaptTo(LineReaderImpl.class);
+            String line = reader.readLine(">");
+            System.out.println(line);
+		} break;
 		default:
 			System.out.println("Command not found");
 		}

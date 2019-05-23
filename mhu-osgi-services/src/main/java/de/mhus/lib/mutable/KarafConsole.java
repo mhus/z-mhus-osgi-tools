@@ -18,6 +18,7 @@ package de.mhus.lib.mutable;
 import java.io.IOException;
 
 import org.apache.karaf.shell.api.console.Session;
+import org.jline.reader.impl.LineReaderImpl;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.console.ANSIConsole;
@@ -27,11 +28,17 @@ public class KarafConsole extends ANSIConsole {
 	private Session session;
 
 	public KarafConsole(Session session) throws IOException {
-		super();
+		super((LineReaderImpl) session.get(".reader"));
 		this.session = session;
 	}
 
-	
+	   @Override
+	   @SuppressWarnings("unchecked")
+	   public <T> T adaptTo(Class<? extends T> clazz) {
+	       if (clazz == Session.class) return (T)session;
+	       return super.adaptTo(clazz);
+	   }
+
 	@Override
 	protected void loadSettings() {
 //		super.loadSettings();
