@@ -226,6 +226,8 @@ public class CmdVault extends MLog implements Action {
             }
             if (pem != null && description.equals("")) {
                 description = pem.getString(PemBlock.DESCRIPTION, "");
+                if (id == null)
+                    id = pem.getString(PemBlock.IDENT, null);
             }
             
 			DefaultEntry entry = new DefaultEntry(type, description, content);
