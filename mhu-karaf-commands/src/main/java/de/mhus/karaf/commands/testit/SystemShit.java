@@ -19,6 +19,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -50,6 +51,8 @@ public class SystemShit implements ShitIfc {
 
 	@Override
 	public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
+	    if (cmd.equals("uuid"))
+	        return UUID.randomUUID().toString();
 	    if (cmd.equals("threadid")) {
 	        synchronized (lock) {
     	        String threadid = (String)base.session.get("threadid");
