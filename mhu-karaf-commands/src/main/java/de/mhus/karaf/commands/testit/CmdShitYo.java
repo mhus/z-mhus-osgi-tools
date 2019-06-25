@@ -26,7 +26,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "shityo", description = "Command to do test some shit")
 @Service

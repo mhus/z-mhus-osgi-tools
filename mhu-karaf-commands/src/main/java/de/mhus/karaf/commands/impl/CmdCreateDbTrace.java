@@ -27,9 +27,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
+import de.mhus.osgi.api.util.DataSourceUtil;
+import de.mhus.osgi.api.util.TemplateUtils;
 import de.mhus.osgi.commands.db.TraceDataSource;
-import de.mhus.osgi.services.util.DataSourceUtil;
-import de.mhus.osgi.services.util.TemplateUtils;
 
 @Command(scope = "jdbc", name = "createdbtrace", description = "Create DB Trace")
 @Service

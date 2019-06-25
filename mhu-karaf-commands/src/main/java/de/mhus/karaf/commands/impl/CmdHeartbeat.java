@@ -23,9 +23,9 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.osgi.services.heartbeat.HeartbeatAdmin;
-import de.mhus.osgi.services.heartbeat.HeartbeatService;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.services.HeartbeatAdmin;
+import de.mhus.osgi.api.services.HeartbeatServiceIfc;
 
 @Command(scope = "jms", name = "heartbeat", description = "Send heardbeat")
 @Service
@@ -44,7 +44,7 @@ public class CmdHeartbeat implements Action {
 		}
 
 		if ("list".equals(cmd)) {
-			for (HeartbeatService s : service.getServices())
+			for (HeartbeatServiceIfc s : service.getServices())
 				System.out.println(s.getName());
 		} else
 		if ("enable".equals(cmd) || "disbale".equals(cmd)) {

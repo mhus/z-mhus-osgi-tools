@@ -27,7 +27,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "service", name = "invoke", description = "Invoke a service method")
 @Service

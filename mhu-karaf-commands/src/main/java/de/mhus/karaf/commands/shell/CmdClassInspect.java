@@ -27,7 +27,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "shell", name = "inspectClass", description = "Inspect a class")
 @Service

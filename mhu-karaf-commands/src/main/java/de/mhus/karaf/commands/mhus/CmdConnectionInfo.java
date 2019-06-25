@@ -22,9 +22,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.osgi.services.jms.JmsDataChannel;
-import de.mhus.osgi.services.jms.JmsManagerService;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsDataChannel;
+import de.mhus.osgi.api.jms.JmsManagerService;
+import de.mhus.osgi.api.jms.JmsUtil;
 
 @Command(scope = "jms", name = "connection-info", description = "Connection Information")
 @Service

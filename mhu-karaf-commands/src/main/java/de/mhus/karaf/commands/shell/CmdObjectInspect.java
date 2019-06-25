@@ -25,7 +25,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MDate;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "shell", name = "inspectObject", description = "Inspect a object")
 @Service

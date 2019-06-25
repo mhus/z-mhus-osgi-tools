@@ -22,7 +22,9 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsReceiver;
+import de.mhus.osgi.api.jms.JmsReceiverAdmin;
+import de.mhus.osgi.api.jms.JmsUtil;
 
 @Command(scope = "jms", name = "direct-listen", description = "listen")
 @Service

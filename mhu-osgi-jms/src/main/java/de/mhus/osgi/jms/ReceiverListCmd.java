@@ -19,6 +19,9 @@ import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.jms.JmsReceiver;
+import de.mhus.osgi.api.jms.JmsReceiverAdmin;
+
 @Command(scope = "jms", name = "direct-list", description = "listen")
 @Service
 public class ReceiverListCmd implements Action {

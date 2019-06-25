@@ -24,7 +24,9 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.VaultSource;
-import de.mhus.osgi.services.util.MServiceTracker;
+import de.mhus.osgi.api.services.SimpleService;
+import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.util.MServiceTracker;
 
 @Component(service=SimpleServiceIfc.class,immediate=true)
 public class VaultManagerImpl extends SimpleService {

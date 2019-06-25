@@ -24,7 +24,7 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.osgi.services.util.TemplateUtils;
+import de.mhus.osgi.api.util.TemplateUtils;
 
 @Command(scope = "jms", name = "connection-add", description = "Remove connection")
 @Service

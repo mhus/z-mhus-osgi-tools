@@ -59,6 +59,7 @@
 	</dependencies>
 
 	<modules>
+        <module>mhu-osgi-api</module>
 		<module>mhu-osgi-services</module>
 		<module>mhu-osgi-jms</module>
 		<module>mhu-karaf-xdb</module>

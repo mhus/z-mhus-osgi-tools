@@ -31,7 +31,7 @@ import org.osgi.service.cm.ManagedService;
 
 import de.mhus.lib.core.MString;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.services.MOsgi;
 
 public class PersistentWatchConfig implements ManagedService {
 

@@ -28,7 +28,7 @@ import org.osgi.framework.ServiceReference;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MThread;
-import de.mhus.osgi.services.util.DataSourceUtil;
+import de.mhus.osgi.api.util.DataSourceUtil;
 
 public class SystemShit implements ShitIfc {
 

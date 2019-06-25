@@ -21,6 +21,8 @@ import de.mhus.lib.annotations.jmx.JmxManaged;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.jmx.JmxObjectMBean;
 import de.mhus.lib.core.jmx.MJmx;
+import de.mhus.osgi.api.services.CacheControlIfc;
+import de.mhus.osgi.api.services.MOsgi;
 
 // http://localhost:8181/jolokia/read/de.mhus.lib.core.jmx.JmxObject:name=de.mhus.lib.karaf.services.JmxCacheControl,type=JmxCacheControl
 @Component(immediate=true,service=JmxObjectMBean.class)

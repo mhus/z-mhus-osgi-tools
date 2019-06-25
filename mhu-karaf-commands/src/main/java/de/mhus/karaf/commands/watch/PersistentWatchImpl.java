@@ -33,7 +33,7 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.services.MOsgi;
 
 @Component(immediate=true,name="de.mhus.osgi.commands.watch.PersistentWatch",service=PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {

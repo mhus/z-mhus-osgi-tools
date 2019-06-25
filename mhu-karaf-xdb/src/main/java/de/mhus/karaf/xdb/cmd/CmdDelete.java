@@ -23,9 +23,10 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.api.xdb.XdbApi;
+import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "delete", description = "Delete a single object from database")
 @Service

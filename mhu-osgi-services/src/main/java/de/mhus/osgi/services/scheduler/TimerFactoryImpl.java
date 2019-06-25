@@ -45,9 +45,10 @@ import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
 import de.mhus.lib.core.schedule.TimerTaskIntercepter;
-import de.mhus.osgi.services.MOsgi;
-import de.mhus.osgi.services.MOsgi.Service;
-import de.mhus.osgi.services.util.MServiceTracker;
+import de.mhus.osgi.api.scheduler.SchedulerService;
+import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.services.MOsgi.Service;
+import de.mhus.osgi.api.util.MServiceTracker;
 
 @Component(service = TimerFactory.class, immediate=true,name="de.mhus.lib.karaf.services.TimerFactoryImpl")
 public class TimerFactoryImpl extends MLog implements TimerFactory {

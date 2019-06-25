@@ -25,11 +25,12 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.util.Pair;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.api.xdb.XdbApi;
+import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "update", description = "Update a single object in database")
 @Service

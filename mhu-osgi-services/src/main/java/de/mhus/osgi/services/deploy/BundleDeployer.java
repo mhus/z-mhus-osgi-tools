@@ -28,7 +28,7 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.services.MOsgi;
 
 public class BundleDeployer extends MLog {
 

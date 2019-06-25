@@ -27,7 +27,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.SimpleServiceIfc;
 
 @Command(scope = "mhus", name = "simpleservice", description = "Simple Service Interaction")
 @Service

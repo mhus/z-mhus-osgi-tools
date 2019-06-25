@@ -22,12 +22,13 @@ import java.util.List;
 import org.osgi.framework.InvalidSyntaxException;
 
 import org.osgi.service.component.annotations.Component;
-import de.mhus.karaf.xdb.model.XdbApi;
+
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.lib.xdb.XdbType;
-import de.mhus.osgi.services.adb.AdbUtilKaraf;
-import de.mhus.osgi.services.adb.DbManagerService;
+import de.mhus.osgi.api.adb.AdbUtilKaraf;
+import de.mhus.osgi.api.adb.DbManagerService;
+import de.mhus.osgi.api.xdb.XdbApi;
 
 @Component(property="xdb.type=adb")
 public class AdbXdbApi implements XdbApi {
@@ -67,6 +68,5 @@ public class AdbXdbApi implements XdbApi {
 		}
 		return out;
 	}
-
 
 }

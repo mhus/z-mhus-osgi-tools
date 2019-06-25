@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.services.DeployService;
-import de.mhus.osgi.services.MOsgi;
-import de.mhus.osgi.services.SimpleServiceIfc;
-import de.mhus.osgi.services.MOsgi.Service;
+import de.mhus.osgi.api.deploy.DeployService;
+import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.MOsgi.Service;
+import de.mhus.osgi.api.util.MServiceTracker;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
-import de.mhus.osgi.services.util.MServiceTracker;
 
 @Component(immediate=true)
 public class DeployServiceManager extends MLog implements SimpleServiceIfc {

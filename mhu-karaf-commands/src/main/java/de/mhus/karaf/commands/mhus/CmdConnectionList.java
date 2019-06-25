@@ -22,9 +22,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.osgi.services.jms.JmsDataSource;
-import de.mhus.osgi.services.jms.JmsManagerService;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsDataSource;
+import de.mhus.osgi.api.jms.JmsManagerService;
+import de.mhus.osgi.api.jms.JmsUtil;
 
 @Command(scope = "jms", name = "connection-list", description = "Remove connection")
 @Service
@@ -43,7 +43,7 @@ public class CmdConnectionList implements Action {
 		
 		ConsoleTable table = new ConsoleTable(full);
 		table.setHeaderValues("Id","Name","Url","User","Connected","Closed");
-		for (de.mhus.osgi.services.MOsgi.Service<JmsDataSource> ref : service.getDataSources()) {
+		for (de.mhus.osgi.api.services.MOsgi.Service<JmsDataSource> ref : service.getDataSources()) {
 			try {
 				JmsConnection con = ref.getService().getConnection();
 				String name = service.getServiceName(ref);

@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.commands.db.DataSourceUtil;
+import de.mhus.osgi.api.db.DataSourceUtil;
 
 public class JdbcMetaShit implements ShitIfc {
 

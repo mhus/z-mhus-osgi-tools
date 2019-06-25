@@ -34,7 +34,7 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
 import de.mhus.lib.core.util.AtomicClockUtil;
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 public class MhusShit implements ShitIfc {
 

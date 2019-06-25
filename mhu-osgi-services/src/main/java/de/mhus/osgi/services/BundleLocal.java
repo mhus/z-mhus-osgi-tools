@@ -24,7 +24,7 @@ import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
- * Stores a local value for an bundle. If the bundle is stopped, the value will
+ * Stores a local value for a bundle. If the bundle is stopped, the value will
  * be removed.
  * 
  * @author mikehummel

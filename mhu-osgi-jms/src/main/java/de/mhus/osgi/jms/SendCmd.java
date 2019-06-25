@@ -36,7 +36,7 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.jms.ClientJms;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.JmsDestination;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsUtil;
 
 /*
 MESSAGE

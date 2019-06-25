@@ -28,8 +28,8 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.services.uptime.UptimeAdminIfc;
-import de.mhus.osgi.services.uptime.UptimeRecord;
+import de.mhus.osgi.api.services.UptimeAdminIfc;
+import de.mhus.osgi.api.services.UptimeRecord;
 
 @Command(scope = "mhus", name = "uptime", description = "Information about runtime")
 @Service

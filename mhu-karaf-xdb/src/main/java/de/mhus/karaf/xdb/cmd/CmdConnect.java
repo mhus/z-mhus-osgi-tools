@@ -23,8 +23,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.karaf.xdb.model.XdbApi;
 import de.mhus.lib.xdb.XdbService;
+import de.mhus.osgi.api.xdb.XdbApi;
+import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "connect", description = "Connect ADB DataSource")
 @Service

@@ -30,8 +30,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.sql.DbPool;
-import de.mhus.osgi.services.adb.AdbUtilKaraf;
-import de.mhus.osgi.services.adb.DbManagerService;
+import de.mhus.osgi.api.adb.AdbUtilKaraf;
+import de.mhus.osgi.api.adb.DbManagerService;
 
 @Command(scope = "adb", name = "control", description = "Control ADB specific attributes")
 @Service

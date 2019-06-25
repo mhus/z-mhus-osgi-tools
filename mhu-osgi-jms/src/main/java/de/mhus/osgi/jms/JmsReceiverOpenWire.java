@@ -32,6 +32,8 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.ServerJms;
+import de.mhus.osgi.api.jms.JmsReceiver;
+import de.mhus.osgi.api.jms.JmsReceiverAdmin;
 
 /*
  http://activemq.apache.org/how-should-i-implement-request-response-with-jms.html

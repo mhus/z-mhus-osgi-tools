@@ -26,6 +26,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
+import de.mhus.osgi.api.jms.JmsReceiver;
+import de.mhus.osgi.api.jms.JmsReceiverAdmin;
+
 @Component(name="JmsReceiverAdmin",immediate=true)
 public class JmsReceiverAdminImpl implements JmsReceiverAdmin {
 

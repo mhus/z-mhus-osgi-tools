@@ -30,7 +30,7 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "shell", name = "newInstance", description = "Create a new instance of an object")
 @Service

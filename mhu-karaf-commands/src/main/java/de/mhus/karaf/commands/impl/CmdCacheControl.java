@@ -22,9 +22,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.jmx.MJmx;
-import de.mhus.osgi.services.CacheControlIfc;
-import de.mhus.osgi.services.CacheControlUtil;
-import de.mhus.osgi.services.MOsgi;
+import de.mhus.osgi.api.services.CacheControlIfc;
+import de.mhus.osgi.api.services.CacheControlUtil;
+import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "mhus", name = "cache", description = "Cache Control Service Control")
 @Service

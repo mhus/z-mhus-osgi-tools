@@ -100,7 +100,7 @@
 		</dependency>
        	<dependency>
 			<groupId>de.mhus.osgi</groupId>
-			<artifactId>mhu-osgi-services</artifactId>
+			<artifactId>mhu-osgi-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.rpc</groupId>

@@ -33,7 +33,8 @@ import de.mhus.lib.sql.DataSourceProvider;
 import de.mhus.lib.sql.DbPool;
 import de.mhus.lib.sql.DefaultDbPool;
 import de.mhus.lib.sql.Dialect;
-import de.mhus.osgi.services.util.DataSourceUtil;
+import de.mhus.osgi.api.adb.DbManagerService;
+import de.mhus.osgi.api.util.DataSourceUtil;
 //@Component(provide=DbManagerService.class,name="...",immediate=true)
 public abstract class DbManagerServiceImpl extends MLog implements DbManagerService {
 

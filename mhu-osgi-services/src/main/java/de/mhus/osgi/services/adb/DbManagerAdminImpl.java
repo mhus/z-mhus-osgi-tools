@@ -27,6 +27,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import de.mhus.lib.core.jmx.MJmx;
+import de.mhus.osgi.api.adb.DbManagerAdmin;
+import de.mhus.osgi.api.adb.DbManagerService;
 
 @Component(service=DbManagerAdmin.class,immediate=true,name="de.mhus.lib.karaf.adb.DbManagerAdmin")
 public class DbManagerAdminImpl extends MJmx implements DbManagerAdmin {

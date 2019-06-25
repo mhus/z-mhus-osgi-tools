@@ -20,6 +20,8 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.jms.JmsReceiverAdmin;
+
 @Command(scope = "jms", name = "direct-remove", description = "listen")
 @Service
 public class ReceiverRemoveCmd implements Action {

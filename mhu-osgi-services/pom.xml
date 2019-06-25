@@ -48,7 +48,6 @@
                         	de.mhus.lib.jpa*;resolution:=optional,
                         	de.mhus.lib.cao*;resolution:=optional,
                         	de.mhus.lib.sql*;resolution:=optional,
-                        	de.mhus.lib.jms*;resolution:=optional,
                         	org.apache.activemq.*;resolution:=optional,
                         	javax.jms.*;resolution:=optional,
                             *
@@ -89,10 +88,10 @@
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-persistence</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-jms</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>de.mhus.osgi</groupId>
+            <artifactId>mhu-osgi-api</artifactId>
+        </dependency>
 						
 	</dependencies>
 </project>

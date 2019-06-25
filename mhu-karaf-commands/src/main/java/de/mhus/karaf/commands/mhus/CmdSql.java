@@ -36,7 +36,7 @@ import de.mhus.lib.sql.analytics.SqlAnalyzer;
 import de.mhus.lib.sql.analytics.SqlReporter;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer.Container;
-import de.mhus.osgi.services.util.OsgiBundleClassLoader;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 import de.mhus.lib.sql.analytics.SqlRuntimeWarning;
 import de.mhus.lib.sql.analytics.SqlRuntimeWriter;
 

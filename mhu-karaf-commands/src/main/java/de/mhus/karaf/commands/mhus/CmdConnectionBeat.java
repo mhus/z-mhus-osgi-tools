@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.osgi.services.jms.JmsManagerService;
-import de.mhus.osgi.services.jms.JmsUtil;
+import de.mhus.osgi.api.jms.JmsManagerService;
+import de.mhus.osgi.api.jms.JmsUtil;
 
 @Command(scope = "jms", name = "connection-beat", description = "Beat the connection, load connections and channels")
 @Service

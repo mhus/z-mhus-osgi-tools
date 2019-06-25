@@ -129,6 +129,10 @@
 			<groupId>de.mhus.osgi</groupId>
 			<artifactId>mhu-osgi-services</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>de.mhus.osgi</groupId>
+            <artifactId>mhu-osgi-api</artifactId>
+        </dependency>
 				
 	</dependencies>
 </project>

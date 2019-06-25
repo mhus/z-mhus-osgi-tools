@@ -25,6 +25,7 @@ import javax.sql.DataSource;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.osgi.api.db.DataSourceUtil;
 import de.mhus.osgi.commands.impl.AbstractDataSource;
 
 
