@@ -19,7 +19,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.Enumeration;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -31,10 +30,11 @@ import org.osgi.framework.BundleContext;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MString;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "bundle", name = "reinstall", description = "Remove from local repository and reinstall bundles from the remote repository")
 @Service
-public class CmdBundleReinstall implements Action {
+public class CmdBundleReinstall extends AbstractCmd {
 
     @Reference
 	private BundleContext context;
@@ -61,7 +61,7 @@ public class CmdBundleReinstall implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 
 		for (Bundle b : context.getBundles())

@@ -15,20 +15,21 @@
  */
 package de.mhus.karaf.commands.shell;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 @Command(scope = "shell", name = "systemexit", description = "Call a hard system exit")
 @Service
-public class CmdSystemExit implements Action {
+public class CmdSystemExit extends AbstractCmd {
 
 	@Argument(index=0, name="exit code", required=true, description="Exit code", multiValued=false)
 	int exitCode;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		System.out.print("Really exit (y/N):");
 		System.out.flush();
 		int in = System.in.read();

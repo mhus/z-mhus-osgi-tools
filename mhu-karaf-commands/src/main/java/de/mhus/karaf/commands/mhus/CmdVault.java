@@ -18,14 +18,12 @@ package de.mhus.karaf.commands.mhus;
 import java.io.File;
 import java.util.UUID;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPassword;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -40,10 +38,11 @@ import de.mhus.lib.core.vault.MVaultUtil;
 import de.mhus.lib.core.vault.MutableVaultSource;
 import de.mhus.lib.core.vault.VaultEntry;
 import de.mhus.lib.core.vault.VaultSource;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "vault", description = "Vault Manipulation")
 @Service
-public class CmdVault extends MLog implements Action {
+public class CmdVault extends AbstractCmd {
 
 	private static final long MAX_FILE_LENGTH = 1024 * 1024; // max 1 MB
 
@@ -88,7 +87,7 @@ public class CmdVault extends MLog implements Action {
     String passphrase = null;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		MVault vault = MVaultUtil.loadDefault();
 		
 		if (cmd.equals("copy")) {

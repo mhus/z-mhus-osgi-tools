@@ -18,7 +18,6 @@ package de.mhus.karaf.commands.shell;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -26,10 +25,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MValidator;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "range", description = "Print a range of outputs numbers or lower case characters")
 @Service
-public class CmdRange implements Action {
+public class CmdRange extends AbstractCmd {
 
 	@Argument(index=0, name="from", required=true, description="From -n .. +n or abc ", multiValued=false)
     String from;
@@ -50,7 +50,7 @@ public class CmdRange implements Action {
 //    private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		StringWriter sw = toOut ? null : new StringWriter();
 		@SuppressWarnings("resource")

@@ -22,7 +22,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -32,10 +31,11 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.errors.MException;
 import de.mhus.osgi.api.db.DataSourceUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jdbc", name = "metadata", description = "Print JDBC Metadata for a Datasource")
 @Service
-public class CmdJdbcMetadata implements Action {
+public class CmdJdbcMetadata extends AbstractCmd {
 
     @Argument(index=0, name="source", required=true, description="Datasource", multiValued=false)
     String source;
@@ -58,7 +58,7 @@ public class CmdJdbcMetadata implements Action {
     boolean full = false;
 
     @Override
-    public Object execute() throws Exception {
+    public Object execute2() throws Exception {
         DataSource ds = new DataSourceUtil().getDataSource(source);
         if (ds == null) throw new MException("DataSource not found",source);
         

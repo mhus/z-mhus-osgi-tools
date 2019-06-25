@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.impl;
 
 import java.io.File;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -32,10 +31,11 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.util.MMaven;
 import de.mhus.lib.core.util.MMaven.Artifact;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "bundle", name = "upgrade", description = "Upgrade bundle version")
 @Service
-public class CmdBundleUpgrade implements Action {
+public class CmdBundleUpgrade extends AbstractCmd {
 
     @Reference
 	private BundleContext context;
@@ -68,7 +68,7 @@ public class CmdBundleUpgrade implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		if (mvnGet && delete) {
 			System.out.println("The Options get and delete make no sense in the same time!");

@@ -20,7 +20,6 @@ import java.io.PrintStream;
 
 import org.apache.karaf.log.core.LogEventFormatter;
 import org.apache.karaf.log.core.LogService;
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Completion;
@@ -36,11 +35,13 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 // From https://github.com/apache/karaf/blob/678177241a3b03181490ba4a942e99b7745ba055/log/src/main/java/org/apache/karaf/log/command/LogTail.java
 
 @Command(scope = "mhus", name = "logtail", description = "Continuously display log entries. Use ctrl-c to quit this command")
 @Service
-public class CmdLogTail implements Action {
+public class CmdLogTail extends AbstractCmd {
 	
     public final static int ERROR_INT = 3;
     public final static int WARN_INT  = 4;
@@ -80,7 +81,7 @@ public class CmdLogTail implements Action {
     BundleContext context;
 
     @Override
-    public Object execute() throws Exception {
+    public Object execute2() throws Exception {
     	
     	LogTailContainer a = (LogTailContainer) session.get("__log_tail2");
 		if (a != null) {

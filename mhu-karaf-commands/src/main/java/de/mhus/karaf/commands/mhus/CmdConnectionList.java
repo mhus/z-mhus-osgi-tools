@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -25,16 +24,17 @@ import de.mhus.lib.jms.JmsConnection;
 import de.mhus.osgi.api.jms.JmsDataSource;
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jms", name = "connection-list", description = "Remove connection")
 @Service
-public class CmdConnectionList implements Action {
+public class CmdConnectionList extends AbstractCmd {
 
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		JmsManagerService service = JmsUtil.getService();
 		if (service == null) {
 			System.out.println("Service not found");

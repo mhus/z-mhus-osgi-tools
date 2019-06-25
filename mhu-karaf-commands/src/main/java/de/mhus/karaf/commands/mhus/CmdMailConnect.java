@@ -15,20 +15,20 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.mail.MSendMail;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "mailconnect", description = "Send a mail via MSendMail")
 @Service
-public class CmdMailConnect implements Action {
+public class CmdMailConnect extends AbstractCmd {
 
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		MSendMail sendMail = M.l(MSendMail.class);
 		System.out.println("Server: " + sendMail.getMailTransport().getConnectInfo() );

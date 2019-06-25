@@ -15,24 +15,24 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.cao.CaoDataSource;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "cao", name = "ds-list", description = "List All CAO Datasources")
 @Service
-public class CmdCaoDs implements Action {
+public class CmdCaoDs extends AbstractCmd {
 
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		ConsoleTable out = new ConsoleTable(full);
 		out.setHeaderValues("Name","Type","Status");
 		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {

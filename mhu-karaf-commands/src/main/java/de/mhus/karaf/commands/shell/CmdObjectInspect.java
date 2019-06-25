@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.shell;
 
 import java.lang.reflect.Method;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -25,17 +24,18 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MDate;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "shell", name = "inspectObject", description = "Inspect a object")
 @Service
-public class CmdObjectInspect implements Action {
+public class CmdObjectInspect extends AbstractCmd {
 
 	@Argument(index=0, name="classname", required=true, description="Class name", multiValued=false)
     Object object;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		Class<? extends Object> clazz = object.getClass();
 		

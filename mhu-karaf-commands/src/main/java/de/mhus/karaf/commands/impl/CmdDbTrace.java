@@ -19,20 +19,20 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.DataSourceUtil;
 import de.mhus.osgi.commands.db.TraceDataSource;
 import de.mhus.osgi.commands.impl.TracedConnection;
 
 @Command(scope = "jdbc", name = "dbtrace", description = "Modify DB Trace")
 @Service
-public class CmdDbTrace implements Action {
+public class CmdDbTrace extends AbstractCmd {
 
 	@Argument(index=0, name="source", required=true, description="Source Datasource", multiValued=false)
     String source;
@@ -46,7 +46,7 @@ public class CmdDbTrace implements Action {
 	private DataSourceUtil util;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		DataSource ds = util.getDataSource(source);
 		Connection con = ds.getConnection();

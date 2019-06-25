@@ -17,14 +17,15 @@ package de.mhus.karaf.commands.mhus;
 
 import java.io.File;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 @Command(scope = "jms", name = "connection-remove", description = "Remove connection")
 @Service
-public class CmdConnectionRemove implements Action {
+public class CmdConnectionRemove extends AbstractCmd {
 
 	@Argument(index=0, name="name", required=true, description="ID of the connection", multiValued=false)
     String name;
@@ -33,7 +34,7 @@ public class CmdConnectionRemove implements Action {
 //    boolean online;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 	
 //		if (online) {
 //			JmsManagerService service = JmsUtil.getService();

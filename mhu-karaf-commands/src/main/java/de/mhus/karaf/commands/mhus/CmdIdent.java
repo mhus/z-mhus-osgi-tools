@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -23,10 +22,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.service.ServerIdent;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "ident", description = "Print the Server Ident")
 @Service
-public class CmdIdent implements Action {
+public class CmdIdent extends AbstractCmd {
 
 	@Option(name="-a", aliases="--all", description="Print also hostname and pid",required=false)
 	private boolean full;
@@ -35,7 +35,7 @@ public class CmdIdent implements Action {
     private boolean attr;
     
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		ServerIdent service = M.l(ServerIdent.class);
 		if (attr)
 		    System.out.println(ServerIdent.getAttributes());

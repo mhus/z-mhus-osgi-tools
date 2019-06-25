@@ -19,17 +19,17 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.TemplateUtils;
 
 @Command(scope = "jms", name = "channel-add", description = "add channel")
 @Service
-public class CmdChannelAdd implements Action {
+public class CmdChannelAdd extends AbstractCmd {
 
 	@Argument(index=0, name="name", required=true, description="ID of the channel", multiValued=false)
     String name;
@@ -53,7 +53,7 @@ public class CmdChannelAdd implements Action {
     boolean service;
     
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 //		if (online) {
 //			

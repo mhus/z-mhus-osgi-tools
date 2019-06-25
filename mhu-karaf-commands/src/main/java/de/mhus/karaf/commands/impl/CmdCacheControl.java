@@ -15,20 +15,19 @@
  */
 package de.mhus.karaf.commands.impl;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.core.jmx.MJmx;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.CacheControlIfc;
 import de.mhus.osgi.api.services.CacheControlUtil;
 import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "mhus", name = "cache", description = "Cache Control Service Control")
 @Service
-public class CmdCacheControl extends MJmx implements Action {
+public class CmdCacheControl extends AbstractCmd {
 
 	@Argument(index=0, name="cmd", required=true, description="list,clear", multiValued=false)
     String cmd;
@@ -37,7 +36,7 @@ public class CmdCacheControl extends MJmx implements Action {
     String[] parameters;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		if (cmd.equals("list")) {
 			ConsoleTable table = new ConsoleTable();

@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -32,10 +31,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MFile;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "read", description = "Read a line from stdin or a file")
 @Service
-public class CmdRead implements Action {
+public class CmdRead extends AbstractCmd {
 
 	@Argument(index=0, name="fileName", required=false, description="FileName to read from", multiValued=false)
     String fileName;
@@ -53,7 +53,7 @@ public class CmdRead implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		String content = null;
 		

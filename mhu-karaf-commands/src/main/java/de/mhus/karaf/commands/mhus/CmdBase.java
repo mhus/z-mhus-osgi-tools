@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.mhus;
 
 import java.util.Map.Entry;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -27,16 +26,16 @@ import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.mutable.KarafBase;
 import de.mhus.lib.mutable.KarafMApiImpl;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "base", description = "Base Manipulation")
 @Service
-public class CmdBase extends MLog implements Action {
+public class CmdBase extends AbstractCmd {
 
     @Reference
     private Session session;
@@ -50,7 +49,7 @@ public class CmdBase extends MLog implements Action {
 	// private Appender appender;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		IApi s = MApi.get();
 		if (! (s instanceof KarafMApiImpl)) {

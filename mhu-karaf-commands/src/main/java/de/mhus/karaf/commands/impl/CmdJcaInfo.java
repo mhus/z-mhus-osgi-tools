@@ -18,24 +18,23 @@ package de.mhus.karaf.commands.impl;
 import java.security.Provider;
 import java.security.Security;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.crypt.MBouncy;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "java", name = "jcainfo", description = "JCA Security Information")
 @Service
-public class CmdJcaInfo extends MLog implements Action {
+public class CmdJcaInfo extends AbstractCmd {
 
 	@Argument(index=0, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 			try {
 				MBouncy.init();
 			} catch (Throwable t) {}

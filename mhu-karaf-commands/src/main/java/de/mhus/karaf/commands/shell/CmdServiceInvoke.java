@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.shell;
 
 import java.lang.reflect.Method;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -27,11 +26,12 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "service", name = "invoke", description = "Invoke a service method")
 @Service
-public class CmdServiceInvoke implements Action {
+public class CmdServiceInvoke extends AbstractCmd {
 
 	@Argument(index=0, name="service", required=true, description="Service name", multiValued=false)
     String serviceName;
@@ -52,7 +52,7 @@ public class CmdServiceInvoke implements Action {
     String pt;
     
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		ServiceReference<?>[] res = FrameworkUtil.getBundle(CmdServiceInvoke.class).getBundleContext().getAllServiceReferences(serviceName, filter);
 		

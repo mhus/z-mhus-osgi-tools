@@ -19,16 +19,16 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.TemplateUtils;
 
 @Command(scope = "jms", name = "connection-add", description = "Remove connection")
 @Service
-public class CmdConnectionAdd implements Action {
+public class CmdConnectionAdd extends AbstractCmd {
 
 	@Argument(index=0, name="name", required=true, description="ID of the connection", multiValued=false)
     String name;
@@ -46,7 +46,7 @@ public class CmdConnectionAdd implements Action {
 //    boolean online;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 //		if (online) {
 //			JmsManagerService service = JmsUtil.getService();

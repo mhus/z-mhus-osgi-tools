@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.impl;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -24,18 +23,19 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.HeartbeatAdmin;
 import de.mhus.osgi.api.services.HeartbeatServiceIfc;
 
 @Command(scope = "jms", name = "heartbeat", description = "Send heardbeat")
 @Service
-public class CmdHeartbeat implements Action {
+public class CmdHeartbeat extends AbstractCmd {
 
 	@Argument(index=0, name="cmd", required=false, description="enable / disable, reset", multiValued=false)
     String cmd;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		HeartbeatAdmin service = getService();
 		if (service == null) {

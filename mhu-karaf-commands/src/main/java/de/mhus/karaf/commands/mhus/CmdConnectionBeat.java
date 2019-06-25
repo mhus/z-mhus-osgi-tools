@@ -15,23 +15,23 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jms", name = "connection-beat", description = "Beat the connection, load connections and channels")
 @Service
-public class CmdConnectionBeat implements Action {
+public class CmdConnectionBeat extends AbstractCmd {
 
 	@Option(name="-c",aliases="--channels",description="Beat also all channels",required=false)
 	boolean channels = false;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		JmsManagerService service = JmsUtil.getService();
 		if (service == null) {

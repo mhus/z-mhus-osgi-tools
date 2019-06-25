@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -27,10 +26,9 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MDate;
-import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MThread;
-import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -38,12 +36,13 @@ import de.mhus.lib.core.schedule.MutableSchedulerJob;
 import de.mhus.lib.core.schedule.OnceJob;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.services.scheduler.TimerFactoryImpl;
 
 @Command(scope = "mhus", name = "timer", description = "Default Timer Handling")
 @Service
-public class CmdTimer extends MLog implements Action {
+public class CmdTimer extends AbstractCmd {
 
 	@Argument(index=0, name="cmd", required=true, description=
 			"Command to execute"
@@ -71,7 +70,7 @@ public class CmdTimer extends MLog implements Action {
 	boolean full = false;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		TimerFactory factory = MOsgi.getService(TimerFactory.class);
 		SchedulerTimer scheduler = TimerFactoryImpl.getScheduler(factory);
 		

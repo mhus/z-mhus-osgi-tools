@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -30,11 +29,12 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MSystem;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "shell", name = "newInstance", description = "Create a new instance of an object")
 @Service
-public class CmdNewInstance implements Action {
+public class CmdNewInstance extends AbstractCmd {
 
 	@Argument(index=0, name="classname", required=true, description="Class name", multiValued=false)
     Object className;
@@ -55,7 +55,7 @@ public class CmdNewInstance implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		OsgiBundleClassLoader cl = new OsgiBundleClassLoader();
 		

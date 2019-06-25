@@ -21,20 +21,20 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MSystem.TopThreadInfo;
-import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "java", name = "top", description = "Print thread status information")
 @Service
-public class CmdTop implements Action {
+public class CmdTop extends AbstractCmd {
 
     @Option(name = "-s", aliases = { "--stacktrace" }, description = "print also stack traces extract", required = false, multiValued = false)
     boolean stackAlso;
@@ -69,7 +69,7 @@ public class CmdTop implements Action {
     DecimalFormat twoDForm = new DecimalFormat("#.00");
     
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		Console console = Console.create();
 		

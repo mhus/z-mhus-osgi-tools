@@ -15,16 +15,17 @@
  */
 package de.mhus.karaf.commands.impl;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 @Command(scope = "java", name = "mem", description = "Print the current memory situation of the JVM")
 @Service
-public class CmdMem implements Action {
+public class CmdMem extends AbstractCmd {
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		long free = Runtime.getRuntime().freeMemory();
 		long total = Runtime.getRuntime().totalMemory();
 		long max = Runtime.getRuntime().maxMemory();

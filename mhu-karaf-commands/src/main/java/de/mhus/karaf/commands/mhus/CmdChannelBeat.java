@@ -15,23 +15,23 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jms", name = "channel-beat", description = "Reconnect channel")
 @Service
-public class CmdChannelBeat implements Action {
+public class CmdChannelBeat extends AbstractCmd {
 
 	@Argument(index=0, name="name", required=false, description="ID of the channel", multiValued=false)
     String name;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		JmsManagerService service = JmsUtil.getService();
 		if (service == null) {

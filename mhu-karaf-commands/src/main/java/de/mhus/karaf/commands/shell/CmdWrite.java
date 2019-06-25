@@ -19,17 +19,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "write", description = "Write to file")
 @Service
-public class CmdWrite implements Action {
+public class CmdWrite extends AbstractCmd {
 
 	@Argument(index=0, name="fileName", required=false, description="FileName or * for std return", multiValued=false)
     String fileName;
@@ -38,7 +38,7 @@ public class CmdWrite implements Action {
     boolean append;
     
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		if (fileName.equals("*")) {
 			ByteArrayOutputStream ba = new ByteArrayOutputStream();

@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -31,10 +30,11 @@ import de.mhus.lib.core.mail.GpgEncryptedMail;
 import de.mhus.lib.core.mail.GpgSignedMail;
 import de.mhus.lib.core.mail.MSendMail;
 import de.mhus.lib.core.mail.MailAttachment;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "mail", description = "Send a mail via MSendMail")
 @Service
-public class CmdMail implements Action {
+public class CmdMail extends AbstractCmd {
 
 	@Argument(index=0, name="address", required=true, description="Recipients", multiValued=false)
     String to;
@@ -73,7 +73,7 @@ public class CmdMail implements Action {
 	String origDN;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		MSendMail sendMail = M.l(MSendMail.class);
 		

@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.impl;
 
 import java.util.Arrays;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -25,13 +24,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.SimpleServiceIfc;
 
 @Command(scope = "mhus", name = "simpleservice", description = "Simple Service Interaction")
 @Service
-public class CmdSimpleService extends MLog implements Action {
+public class CmdSimpleService extends AbstractCmd {
 
 	@Argument(index=0, name="cmd", required=true, description="list,cmd", multiValued=false)
     String cmd;
@@ -46,7 +45,7 @@ public class CmdSimpleService extends MLog implements Action {
     Object[] parameters;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		if (cmd.equals("list")) {
 			ConsoleTable table = new ConsoleTable();

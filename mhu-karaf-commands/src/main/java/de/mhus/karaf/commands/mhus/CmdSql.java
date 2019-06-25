@@ -18,7 +18,6 @@ package de.mhus.karaf.commands.mhus;
 import java.util.Collection;
 import java.util.Comparator;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -27,7 +26,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.M;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.config.PropertiesConfig;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -36,13 +34,14 @@ import de.mhus.lib.sql.analytics.SqlAnalyzer;
 import de.mhus.lib.sql.analytics.SqlReporter;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer;
 import de.mhus.lib.sql.analytics.SqlRuntimeAnalyzer.Container;
-import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 import de.mhus.lib.sql.analytics.SqlRuntimeWarning;
 import de.mhus.lib.sql.analytics.SqlRuntimeWriter;
+import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "sql", description = "Sql tooling")
 @Service
-public class CmdSql extends MLog implements Action {
+public class CmdSql extends AbstractCmd {
 
     @Reference
     private Session session;
@@ -61,7 +60,7 @@ public class CmdSql extends MLog implements Action {
 	protected boolean full; // Max output per block!
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		switch (cmd) {
 		case "set": {

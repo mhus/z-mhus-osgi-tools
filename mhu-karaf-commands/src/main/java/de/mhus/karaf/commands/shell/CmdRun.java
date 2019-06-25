@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -33,13 +32,13 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MFile;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.util.ArrayIterator;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "run", description = "Run Gogo Script")
 @Service
-public class CmdRun extends MLog implements Action {
+public class CmdRun extends AbstractCmd {
 
 	@Argument(index = 0, name = "command", description = "File or command", required = true, multiValued = true)
     private String[] cmd;
@@ -63,7 +62,7 @@ public class CmdRun extends MLog implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		List<String> lines = null;
 		String fileName = MString.join(cmd, ' ');

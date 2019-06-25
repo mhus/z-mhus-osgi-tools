@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -25,16 +24,17 @@ import de.mhus.lib.jms.JmsConnection;
 import de.mhus.osgi.api.jms.JmsDataChannel;
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jms", name = "connection-info", description = "Connection Information")
 @Service
-public class CmdConnectionInfo implements Action {
+public class CmdConnectionInfo extends AbstractCmd {
 
 	@Argument(index=0, name="name", required=true, description="ID of the connection", multiValued=false)
     String name;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 	
 		JmsManagerService service = JmsUtil.getService();
 		if (service == null) {

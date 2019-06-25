@@ -20,25 +20,25 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "shell", name = "inspectClass", description = "Inspect a class")
 @Service
-public class CmdClassInspect implements Action {
+public class CmdClassInspect extends AbstractCmd {
 
 	@Argument(index=0, name="classname", required=true, description="Class name", multiValued=false)
     String className;
 
 	@SuppressWarnings("deprecation")
     @Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		OsgiBundleClassLoader cl = new OsgiBundleClassLoader();
 		Class<?> clazz = cl.loadClass(className);

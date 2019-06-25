@@ -19,7 +19,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -27,9 +26,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 @Command(scope = "shell", name = "setvar", description = "Set a variable with a value, used in pipes")
 @Service
-public class CmdSetVar implements Action {
+public class CmdSetVar extends AbstractCmd {
 
 	@Argument(index = 0, name = "names", description = "Name of the variable to set", required = true, multiValued = true)
     private String[] names;
@@ -41,7 +42,7 @@ public class CmdSetVar implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		InputStreamReader isr = new InputStreamReader(System.in, Charset.forName("UTF-8"));
 	    BufferedReader br = new BufferedReader(isr);

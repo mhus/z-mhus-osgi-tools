@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.commands.watch;
+package de.mhus.osgi.api.services;
 
 import java.io.IOException;
 

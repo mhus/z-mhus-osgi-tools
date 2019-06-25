@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.shell;
 
 import java.lang.reflect.Method;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -25,9 +24,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+import de.mhus.osgi.api.karaf.AbstractCmd;
+
 @Command(scope = "service", name = "inspect", description = "Inspect a service")
 @Service
-public class CmdServiceInspect implements Action {
+public class CmdServiceInspect extends AbstractCmd {
 
 	@Argument(index=0, name="service", required=true, description="Service name", multiValued=false)
     String serviceName;
@@ -36,7 +37,7 @@ public class CmdServiceInspect implements Action {
     int index = 0;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		ServiceReference<?>[] res = FrameworkUtil.getBundle(CmdServiceInspect.class).getBundleContext().getAllServiceReferences(serviceName, null);
 		

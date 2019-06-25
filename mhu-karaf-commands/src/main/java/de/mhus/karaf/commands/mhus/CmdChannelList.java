@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.mhus;
 
 import java.util.Date;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -30,16 +29,17 @@ import de.mhus.lib.jms.ServerJms;
 import de.mhus.osgi.api.jms.JmsDataChannel;
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "jms", name = "channel-list", description = "List Channels")
 @Service
-public class CmdChannelList implements Action {
+public class CmdChannelList extends AbstractCmd {
 
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		JmsManagerService service = JmsUtil.getService();
 		if (service == null) {

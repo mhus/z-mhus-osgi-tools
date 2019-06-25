@@ -19,7 +19,6 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -28,11 +27,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.DataSourceUtil;
 
 @Command(scope = "jdbc", name = "datasources", description = "Show old datasources services")
 @Service
-public class CmdDatasources implements Action {
+public class CmdDatasources extends AbstractCmd {
 
 	@Option(name="-f", aliases="--full", description="Full output",required=false)
 	boolean full = false;
@@ -41,7 +41,7 @@ public class CmdDatasources implements Action {
 	private BundleContext context;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		ConsoleTable table = new ConsoleTable(full);
 		table.setHeaderValues("Name","Url","Status");
 		

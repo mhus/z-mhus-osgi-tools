@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -31,10 +30,11 @@ import org.osgi.framework.BundleContext;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "bundle", name = "ll", description = "Return the raw list of bundle names")
 @Service
-public class CmdBundleList implements Action  {
+public class CmdBundleList extends AbstractCmd {
 
     @Option(name = "-l", aliases = { "--location" }, description = "Print location", required = false, multiValued = false)
     boolean pLocation;
@@ -55,7 +55,7 @@ public class CmdBundleList implements Action  {
 	private BundleContext context;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		ConsoleTable table = new ConsoleTable(full);
 		table.addHeader("id");
 		table.addHeader("Bundle");

@@ -18,7 +18,6 @@ package de.mhus.karaf.commands.testit;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -26,11 +25,12 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.errors.NotFoundException;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "shityo", description = "Command to do test some shit")
 @Service
-public class CmdShitYo implements Action {
+public class CmdShitYo extends AbstractCmd {
 
 	@Argument(index=0, name="module", required=true, description="help or module class or module shortname", multiValued=false)
 	String module;
@@ -58,7 +58,7 @@ public class CmdShitYo implements Action {
 	}
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		if (module.equals("help")) {
 			System.out.println("Known module shortcuts:");

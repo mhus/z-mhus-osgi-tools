@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -28,18 +27,19 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.UptimeAdminIfc;
 import de.mhus.osgi.api.services.UptimeRecord;
 
 @Command(scope = "mhus", name = "uptime", description = "Information about runtime")
 @Service
-public class CmdUptime implements Action {
+public class CmdUptime extends AbstractCmd {
 
     @Option(name = "-u", aliases = { "--uptime" }, description = "Order by uptime descend", required = false, multiValued = false)
     boolean orderUptime;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		ConsoleTable out = new ConsoleTable(false);
 		out.setHeaderValues("Status","Runtime","Start","Pid","System");

@@ -20,17 +20,17 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "cut", description = "Cut out selected parts of a line")
 @Service
-public class CmdCut implements Action {
+public class CmdCut extends AbstractCmd {
 
     @Option(name = "-d", aliases = { "--delimiter" }, description = "Seperate parts by this regex", required = false, multiValued = false)
     String delim;
@@ -57,7 +57,7 @@ public class CmdCut implements Action {
 	private StringBuilder out;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		out = new StringBuilder();
 		InputStreamReader isr = new InputStreamReader(System.in, Charset.forName("UTF-8"));

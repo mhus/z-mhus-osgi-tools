@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.mhus;
 
 import java.util.Arrays;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -42,11 +41,12 @@ import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
 import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.mutable.KarafConsole;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "console", description = "Manipulate and control the console")
 @Service
-public class CmdConsole implements Action {
+public class CmdConsole extends AbstractCmd {
 
 	@Argument(index=0, name="cmd", required=false, description="Command: \n"
 			+ " info            - Print current console instance information\n"
@@ -68,7 +68,7 @@ public class CmdConsole implements Action {
     private Session session;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		
 		switch (cmd) {

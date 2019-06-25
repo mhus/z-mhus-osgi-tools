@@ -27,7 +27,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -35,10 +34,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "java", name = "thread", description = "Print thread information")
 @Service
-public class CmdThreads implements Action {
+public class CmdThreads extends AbstractCmd {
 
 	@Argument(index=0, name="thread", required=false, description="Thread Id", multiValued=false)
     String threadId;
@@ -68,7 +68,7 @@ public class CmdThreads implements Action {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		Map<Thread, StackTraceElement[]> traces = Thread.getAllStackTraces();
 		

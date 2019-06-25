@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.mhus;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -25,7 +24,6 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MDate;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
@@ -34,10 +32,11 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.system.CfgManager;
 import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "config", description = "Manipulate Configuration Values")
 @Service
-public class CmdConfig extends MLog implements Action {
+public class CmdConfig extends AbstractCmd {
 
     @Reference
     private Session session;
@@ -60,7 +59,7 @@ public class CmdConfig extends MLog implements Action {
 	// private Appender appender;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 
 		IApi s = MApi.get();
 		if (! (s instanceof KarafMApiImpl)) {
