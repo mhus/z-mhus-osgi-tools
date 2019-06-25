@@ -42,6 +42,7 @@ import de.mhus.lib.core.console.XTermConsole;
 import de.mhus.lib.errors.NotSupportedException;
 import de.mhus.lib.mutable.KarafConsole;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "console", description = "Manipulate and control the console")
@@ -111,8 +112,8 @@ public class CmdConsole extends AbstractCmd {
 		case "info": {
 			System.out.println("Default Width :" + Console.DEFAULT_WIDTH);
 			System.out.println("Default Height: " + Console.DEFAULT_HEIGHT);
-			System.out.println("Current Type  : " + Console.get().getClass().getCanonicalName() );
-			Console console = Console.get();
+			System.out.println("Current Type  : " + get().getClass().getCanonicalName() );
+			Console console = get();
 			if (console != null) {
 				System.out.println();
 				System.out.println("Current:");
@@ -143,18 +144,19 @@ public class CmdConsole extends AbstractCmd {
 			System.out.println("Supported colors: " + Arrays.toString(Console.COLOR.values()));
 		} break;
 		case "set": {
-			Console.set(new KarafConsole(session));
-			System.out.println(Console.get().getWidth() + "x" + Console.get().getHeight());
+		    CmdInterceptorUtil.setInterceptor(session, new ConsoleInterceptor(new KarafConsole(session)));
+			System.out.println(get().getWidth() + "x" + get().getHeight());
 		} break;
 		case "create": {
 			Console.resetConsole();
 			if (arguments != null && arguments.length > 0) {
 				Object console = new OsgiBundleClassLoader().loadClass(arguments[0]).getDeclaredConstructor().newInstance();
-				Console.set((Console) console);
+	            CmdInterceptorUtil.setInterceptor(session, new ConsoleInterceptor((Console)console));
 			} else {
-				Console.create();
+			    Console console = Console.create();
+                CmdInterceptorUtil.setInterceptor(session, new ConsoleInterceptor(console));
 			}
-			System.out.println( Console.get() );
+			System.out.println( get() );
 		} break;
 		case "defaultsize": {
 			Console.DEFAULT_WIDTH = MCast.toint(arguments[0], Console.DEFAULT_WIDTH);
@@ -162,20 +164,20 @@ public class CmdConsole extends AbstractCmd {
 			System.out.println(Console.DEFAULT_WIDTH + "x" + Console.DEFAULT_HEIGHT );
 		} break;
 		case "size": {
-			Console.get().setWidth(MCast.toint(arguments[0], Console.DEFAULT_WIDTH));
-			Console.get().setHeight(MCast.toint(arguments[1], Console.DEFAULT_HEIGHT));
-			System.out.println(Console.get().getWidth() + "x" + Console.get().getHeight());
+			get().setWidth(MCast.toint(arguments[0], Console.DEFAULT_WIDTH));
+			get().setHeight(MCast.toint(arguments[1], Console.DEFAULT_HEIGHT));
+			System.out.println(get().getWidth() + "x" + get().getHeight());
 		} break;
 		case "reset": {
-			Console console = Console.get();
+			Console console = get();
 			console.resetTerminal();
 		} break;
 		case "cleanup": {
-			Console console = Console.get();
+			Console console = get();
 			console.cleanup();
 		} break;
 		case "color": {
-			Console console = Console.get();
+			Console console = get();
 			console.setColor(Console.COLOR.valueOf(arguments[0].toUpperCase()), Console.COLOR.valueOf(arguments[1].toUpperCase()));
 			System.out.println(console.getForegroundColor() + " " + console.getBackgroundColor());
 		} break;
@@ -200,7 +202,7 @@ public class CmdConsole extends AbstractCmd {
 			System.out.println(">>> Key debug mode - press 'q' to leave");
 			int cnt = 1000;
 			while (true) {
-				int key = Console.get().read();
+				int key = get().read();
 				System.out.println("KeyCode: " + key);
 				if (key == ANSIConsole.KEY_q) break;
 				if (key == ANSIConsole.KEY_ENTER)
@@ -217,7 +219,7 @@ public class CmdConsole extends AbstractCmd {
 		    System.out.println("Result: " + res + " " + MString.toHexString(res));
 		} break;
 		case "test": {
-            LineReaderImpl reader = Console.get().adaptTo(LineReaderImpl.class);
+            LineReaderImpl reader = get().adaptTo(LineReaderImpl.class);
             boolean echo = reader.getTerminal().echo();
             reader.getTerminal().echo(false);
             int c = reader.readCharacter();
@@ -225,7 +227,7 @@ public class CmdConsole extends AbstractCmd {
             reader.getTerminal().echo(echo);
 		} break;
         case "testline": {
-            LineReaderImpl reader = Console.get().adaptTo(LineReaderImpl.class);
+            LineReaderImpl reader = get().adaptTo(LineReaderImpl.class);
             String line = reader.readLine(">");
             System.out.println(line);
 		} break;
@@ -235,5 +237,11 @@ public class CmdConsole extends AbstractCmd {
 		
 		return null;
 	}
+
+    private Console get() {
+        ConsoleInterceptor inter = CmdInterceptorUtil.getInterceptor(session, ConsoleInterceptor.class);
+        if (inter == null) return Console.get();
+        return inter.get();
+    }
 
 }

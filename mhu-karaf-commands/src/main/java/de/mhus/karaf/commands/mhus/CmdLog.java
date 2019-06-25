@@ -44,6 +44,7 @@ import de.mhus.lib.logging.level.ThreadBasedMapper;
 import de.mhus.lib.logging.level.ThreadMapperConfig;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
 @Command(scope = "mhus", name = "log", description = "Manipulate Log behavior.")
 @Service
@@ -146,8 +147,10 @@ public class CmdLog extends AbstractCmd {
 		case "settrail": {
 			LevelMapper mapper = api.getLogFactory().getLevelMapper();
 			if (MLogUtil.isTrailLevelMapper()) {
-				MLogUtil.setTrailConfig(MLogUtil.TRAIL_SOURCE_SHELL,parameters == null || parameters.length < 1 ? "" : parameters[0]);
-				System.out.println("Trail Config: " + MLogUtil.getTrailConfig() );
+			    String cfg = parameters == null || parameters.length < 1 ? "" : parameters[0];
+			    LogInterceptor inter = new LogInterceptor(cfg);
+			    CmdInterceptorUtil.setInterceptor(session, inter);
+				System.out.println("Trail Config: " + inter.getConfig());
 			} else {
 				System.out.println("Wrong Mapper " + mapper);
 			}
