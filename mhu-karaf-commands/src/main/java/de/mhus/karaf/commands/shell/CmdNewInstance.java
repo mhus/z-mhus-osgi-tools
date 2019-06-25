@@ -48,6 +48,9 @@ public class CmdNewInstance implements Action {
     @Option(name = "-p", aliases = { "--proxy" }, description = "Creates an proxy and call the shell command", required = false, multiValued = false)
     String proxyCmd;
     
+    @Option(name = "-s", aliases = { "--set" }, description = "Set to parameter", required = false, multiValued = false)
+    String set;
+    
     @Reference
     private Session session;
 
@@ -69,6 +72,8 @@ public class CmdNewInstance implements Action {
 		
 		if (proxyCmd != null) {
 		    Object obj = Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[] {clazz}, new MyInvocationHandler(session, clazz, proxyCmd));
+		    if (set != null)
+		        session.put(set, obj);
 		    return obj;
 		}
 		
@@ -97,6 +102,8 @@ public class CmdNewInstance implements Action {
 		
 		Object obj = constr.newInstance(parameters);
 		System.out.println("OK");
+        if (set != null)
+            session.put(set, obj);
 		return obj;
 	}
 

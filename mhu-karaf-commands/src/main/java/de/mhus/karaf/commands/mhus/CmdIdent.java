@@ -31,9 +31,14 @@ public class CmdIdent implements Action {
 	@Option(name="-a", aliases="--all", description="Print also hostname and pid",required=false)
 	private boolean full;
 
+    @Option(name="-p", aliases="--print", description="Print also attributes",required=false)
+    private boolean attr;
+    
 	@Override
 	public Object execute() throws Exception {
 		ServerIdent service = M.l(ServerIdent.class);
+		if (attr)
+		    System.out.println(ServerIdent.getAttributes());
 		return service.toString() + (full ? " " + MSystem.getPid() + "@" + MSystem.getHostname() : "");
 	}
 
