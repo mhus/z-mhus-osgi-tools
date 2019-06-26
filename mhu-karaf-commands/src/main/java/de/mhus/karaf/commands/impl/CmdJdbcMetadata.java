@@ -30,8 +30,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.errors.MException;
-import de.mhus.osgi.api.db.DataSourceUtil;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.util.DataSourceUtil;
 
 @Command(scope = "jdbc", name = "metadata", description = "Print JDBC Metadata for a Datasource")
 @Service
