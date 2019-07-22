@@ -30,8 +30,8 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdConnectionList extends AbstractCmd {
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -41,7 +41,7 @@ public class CmdConnectionList extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable(full);
+		ConsoleTable table = new ConsoleTable(consoleTable);
 		table.setHeaderValues("Id","Name","Url","User","Connected","Closed");
 		for (de.mhus.osgi.api.services.MOsgi.Service<JmsDataSource> ref : service.getDataSources()) {
 			try {

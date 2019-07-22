@@ -20,6 +20,7 @@ import java.security.Security;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
@@ -32,6 +33,9 @@ public class CmdJcaInfo extends AbstractCmd {
 
 	@Argument(index=0, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
+
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -51,7 +55,7 @@ public class CmdJcaInfo extends AbstractCmd {
 				}
 				out.print(System.out);
 			} else {
-				ConsoleTable out = new ConsoleTable();
+				ConsoleTable out = new ConsoleTable(consoleTable);
 				out.setHeaderValues("Name","Version","Info");
 				for (Provider provider : Security.getProviders()) {
 					out.addRowValues(provider.getName(), provider.getVersionStr(), provider.getInfo());

@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -44,11 +45,14 @@ public class CmdSimpleService extends AbstractCmd {
 	@Argument(index=3, name="paramteters", required=false, description="Parameters", multiValued=true)
     Object[] parameters;
 
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
+
 	@Override
 	public Object execute2() throws Exception {
 		
 		if (cmd.equals("list")) {
-			ConsoleTable table = new ConsoleTable();
+			ConsoleTable table = new ConsoleTable(consoleTable);
 			table.setHeaderValues("Name","Info","Status");
 			BundleContext context = FrameworkUtil.getBundle(CmdSimpleService.class).getBundleContext();
 			for (ServiceReference<SimpleServiceIfc> ref : context.getServiceReferences(SimpleServiceIfc.class, null)) {

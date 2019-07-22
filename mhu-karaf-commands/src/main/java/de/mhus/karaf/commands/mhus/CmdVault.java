@@ -74,9 +74,6 @@ public class CmdVault extends AbstractCmd {
 	@Option(name="-s", aliases="--source",description="Set vault source name")
 	String sourcename = null;
 	
-	@Option(name="-x", aliases="--full", description="Full output",required=false)
-	boolean full = false;
-
     @Option(name="-f", aliases="--force", description="Overwrite existing",required=false)
     boolean force = false;
     
@@ -85,6 +82,9 @@ public class CmdVault extends AbstractCmd {
 	
     @Option(name = "-p", aliases = { "--passphrase" }, description = "Define a passphrase if required", required = false, multiValued = false)
     String passphrase = null;
+
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -139,7 +139,7 @@ public class CmdVault extends AbstractCmd {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("sources")) {
-			ConsoleTable out = new ConsoleTable(full);
+			ConsoleTable out = new ConsoleTable(consoleTable);
 			out.setHeaderValues("Source","Info","Mutable","MemoryBased");
 			for (String sourceName : vault.getSourceNames()) {
 				VaultSource source = vault.getSource(sourceName);
@@ -159,7 +159,7 @@ public class CmdVault extends AbstractCmd {
 		} else
 		if (cmd.equals("list")) {
 			if (sourcename == null) {
-				ConsoleTable out = new ConsoleTable(full);
+				ConsoleTable out = new ConsoleTable(consoleTable);
 				out.setHeaderValues("Source","Id","Type","Description");
 				for (String sourceName : vault.getSourceNames()) {
 					try {
@@ -179,7 +179,7 @@ public class CmdVault extends AbstractCmd {
 					System.out.println("*** Source not found!");
 					return null;
 				}
-				ConsoleTable out = new ConsoleTable(full);
+				ConsoleTable out = new ConsoleTable(consoleTable);
 				out.setHeaderValues("Source","Id","Type","Description");
 				for (UUID id : source.getEntryIds()) {
 					VaultEntry entry = source.getEntry(id);

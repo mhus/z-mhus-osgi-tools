@@ -35,8 +35,8 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdChannelList extends AbstractCmd {
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -47,7 +47,7 @@ public class CmdChannelList extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable(full);
+		ConsoleTable table = new ConsoleTable(consoleTable);
 		table.setHeaderValues("Name","Connection","Destination","Type","Information","Connected","Closed", "Last Activity");
 		for (JmsDataChannel chd : service.getChannels()) {
 //			JmsDataChannel chd = service.getChannel(name);

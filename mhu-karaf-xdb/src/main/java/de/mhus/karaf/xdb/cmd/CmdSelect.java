@@ -47,9 +47,6 @@ public class CmdSelect implements Action {
 	@Argument(index=1, name="qualification", required=false, description="Select qualification", multiValued=false)
     String qualification;
 
-	@Option(name="-f", aliases="--full", description="Print the full value content also if it's very long",required=false)
-	boolean full = false;
-
 	@Option(name="-l", aliases="--oneline", description="Disable multi line output in table cells",required=false)
 	boolean oneLine = false;
 	
@@ -77,6 +74,9 @@ public class CmdSelect implements Action {
 	@Option(name="-p", aliases="--parameter", description="Define a parameter key=value",required=false,multiValued=true)
 	String[] parameters = null;
 	
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
+
     @Reference
     private Session session;
 
@@ -118,7 +118,7 @@ public class CmdSelect implements Action {
 				fieldNames.add(name);
 		}
 		
-		ConsoleTable out = new ConsoleTable(full);
+		ConsoleTable out = new ConsoleTable(consoleTable);
 		if (csv) {
 			out.setColSeparator(";");
 			out.setCellSpacer(false);

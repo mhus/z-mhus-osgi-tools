@@ -54,8 +54,8 @@ public class CmdJdbcMetadata extends AbstractCmd {
     @Argument(index=2, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
-    @Option(name="-x", description="Full Table Content",required=false, multiValued=false)
-    boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
     @Override
     public Object execute2() throws Exception {
@@ -138,7 +138,7 @@ public class CmdJdbcMetadata extends AbstractCmd {
     }
 
     private void out(ResultSet res) throws SQLException {
-        ConsoleTable table = new ConsoleTable(full);
+        ConsoleTable table = new ConsoleTable(consoleTable);
         int l = res.getMetaData().getColumnCount();
         String[] header = new String[l];
         for (int i = 0; i < l; i++)

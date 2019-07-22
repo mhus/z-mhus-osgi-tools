@@ -48,15 +48,15 @@ public class CmdBundleList extends AbstractCmd {
     @Option(name = "-s", aliases = { "--symbolic" }, description = "Order by symbolic name", required = false, multiValued = false)
     boolean orderSymbolic;
     
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
     @Reference
 	private BundleContext context;
 
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable table = new ConsoleTable(full);
+		ConsoleTable table = new ConsoleTable(consoleTable);
 		table.addHeader("id");
 		table.addHeader("Bundle");
 		table.addHeader("Version");

@@ -53,8 +53,8 @@ public class CmdConfig extends AbstractCmd {
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	// private Appender appender;
 
@@ -77,7 +77,7 @@ public class CmdConfig extends AbstractCmd {
 			MApi.get().getCfgManager().reConfigure();
 		} break;
 		case "list": {
-			ConsoleTable out = new ConsoleTable(full);
+			ConsoleTable out = new ConsoleTable(consoleTable);
 			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated","Calling");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
 				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), MSystem.getSimpleName(value.getClass()), MDate.toIso8601(value.getUpdated()), value.getCalling() );

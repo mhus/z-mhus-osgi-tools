@@ -64,6 +64,9 @@ public class CmdThreads extends AbstractCmd {
     @Option(name = "-r", aliases = { "--running" }, description = "Running only", required = false, multiValued = false)
     boolean running;
     
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
+    
 	ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 
 	@SuppressWarnings("deprecation")
@@ -107,7 +110,7 @@ public class CmdThreads extends AbstractCmd {
 			});
 		}
 
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(consoleTable);
 		table.setHeaderValues("Id", "Name", "Group","Status", "Prio","Alive","Daemon");
 		
 		if (threadId == null) {

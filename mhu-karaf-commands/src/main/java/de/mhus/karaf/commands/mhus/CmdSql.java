@@ -56,8 +56,8 @@ public class CmdSql extends AbstractCmd {
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
-	@Option(name="-f", aliases="--full", description="Full table output",required=false)
-	protected boolean full; // Max output per block!
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -95,7 +95,7 @@ public class CmdSql extends AbstractCmd {
 			SqlAnalyzer analyzer = SqlAnalytics.getAnalyzer();
 			if (analyzer instanceof SqlRuntimeAnalyzer) {
 				Collection<Container> data = ((SqlRuntimeAnalyzer)analyzer).getData();
-				ConsoleTable table = new ConsoleTable(full);
+				ConsoleTable table = new ConsoleTable(consoleTable);
 				table.setHeaderValues("Count","Runtime","R/C","Sql");
 				for (Container d : data) {
 					table.addRowValues(d.getCnt(),d.getRuntime(), d.getRuntime() / (long)d.getCnt(), d.getSql());

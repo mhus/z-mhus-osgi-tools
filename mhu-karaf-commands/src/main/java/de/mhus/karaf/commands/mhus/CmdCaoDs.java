@@ -28,12 +28,12 @@ import de.mhus.osgi.api.services.MOsgi;
 @Service
 public class CmdCaoDs extends AbstractCmd {
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable out = new ConsoleTable(full);
+		ConsoleTable out = new ConsoleTable(consoleTable);
 		out.setHeaderValues("Name","Type","Status");
 		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {
 			out.addRowValues(ds.getName(), ds.getType(), ds);

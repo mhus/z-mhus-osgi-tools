@@ -34,15 +34,15 @@ import de.mhus.osgi.api.util.DataSourceUtil;
 @Service
 public class CmdDatasources extends AbstractCmd {
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Reference
 	private BundleContext context;
 	
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable table = new ConsoleTable(full);
+		ConsoleTable table = new ConsoleTable(consoleTable);
 		table.setHeaderValues("Name","Url","Status");
 		
         DataSourceUtil util = new DataSourceUtil(context);

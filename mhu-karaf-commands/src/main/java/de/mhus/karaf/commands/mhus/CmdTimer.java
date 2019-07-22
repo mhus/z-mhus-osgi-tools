@@ -66,8 +66,8 @@ public class CmdTimer extends AbstractCmd {
 	@Option(name="-a", aliases="--all", description="return all informations",required=false)
 	boolean all = false;
 
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
 
 	@Override
 	public Object execute2() throws Exception {
@@ -80,7 +80,7 @@ public class CmdTimer extends AbstractCmd {
 		
 		if (cmd.equals("jobs")) {
 			List<SchedulerJob> scheduled = scheduler.getJobs();
-			ConsoleTable table = new ConsoleTable(full);
+			ConsoleTable table = new ConsoleTable(consoleTable);
 			if (all)
 				table.setLineSpacer(true);
 			if (all)
@@ -155,7 +155,7 @@ public class CmdTimer extends AbstractCmd {
 			List<SchedulerJob> scheduled = scheduler.getScheduledJobs();
 			List<SchedulerJob> running = scheduler.getRunningJobs();
 			
-			ConsoleTable table = new ConsoleTable(full);
+			ConsoleTable table = new ConsoleTable(consoleTable);
 			if (all)
 				table.setLineSpacer(true);
 			if (all)
@@ -257,7 +257,7 @@ public class CmdTimer extends AbstractCmd {
 		if (cmd.equals("timeout")) {
 			List<SchedulerJob> running = scheduler.getRunningJobs();
 			
-			ConsoleTable table = new ConsoleTable(full);
+			ConsoleTable table = new ConsoleTable(consoleTable);
 			table.setHeaderValues("Task","Job","Started","Stopped", "Description","Name","Scheduled","Timeout");
 			
 			long time = System.currentTimeMillis();

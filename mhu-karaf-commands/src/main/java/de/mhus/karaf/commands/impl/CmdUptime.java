@@ -38,10 +38,13 @@ public class CmdUptime extends AbstractCmd {
     @Option(name = "-u", aliases = { "--uptime" }, description = "Order by uptime descend", required = false, multiValued = false)
     boolean orderUptime;
 
+    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
+    String consoleTable;
+
 	@Override
 	public Object execute2() throws Exception {
 		
-		ConsoleTable out = new ConsoleTable(false);
+		ConsoleTable out = new ConsoleTable(consoleTable);
 		out.setHeaderValues("Status","Runtime","Start","Pid","System");
 		UptimeAdminIfc api = M.l(UptimeAdminIfc.class);
 		List<UptimeRecord> records = api.getRecords();
