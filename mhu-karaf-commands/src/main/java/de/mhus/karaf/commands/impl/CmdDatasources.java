@@ -20,7 +20,6 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
@@ -34,15 +33,12 @@ import de.mhus.osgi.api.util.DataSourceUtil;
 @Service
 public class CmdDatasources extends AbstractCmd {
 
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
 	@Reference
 	private BundleContext context;
 	
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable table = new ConsoleTable(consoleTable);
+		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
 		table.setHeaderValues("Name","Url","Status");
 		
         DataSourceUtil util = new DataSourceUtil(context);

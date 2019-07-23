@@ -20,7 +20,6 @@ import java.security.Security;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
@@ -34,9 +33,6 @@ public class CmdJcaInfo extends AbstractCmd {
 	@Argument(index=0, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
 	@Override
 	public Object execute2() throws Exception {
 			try {
@@ -46,7 +42,7 @@ public class CmdJcaInfo extends AbstractCmd {
 			if (parameters != null && parameters.length > 0) {
 				Provider provider = Security.getProvider(parameters[0]);
 				System.out.println(">>> " + provider.getName() + "-" + provider.getVersionStr() + " " + provider.getInfo());
-				ConsoleTable out = new ConsoleTable();
+				ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
 				out.setHeaderValues("Algorithm","Type");
 				for (java.security.Provider.Service service : provider.getServices()) {
 					if (parameters.length < 2 || parameters[1].equals(service.getType()))
@@ -55,7 +51,7 @@ public class CmdJcaInfo extends AbstractCmd {
 				}
 				out.print(System.out);
 			} else {
-				ConsoleTable out = new ConsoleTable(consoleTable);
+				ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
 				out.setHeaderValues("Name","Version","Info");
 				for (Provider provider : Security.getProviders()) {
 					out.addRowValues(provider.getName(), provider.getVersionStr(), provider.getInfo());

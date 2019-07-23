@@ -18,7 +18,6 @@ package de.mhus.karaf.xdb.cmd;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -28,12 +27,13 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.xdb.XdbApi;
 import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "info", description = "Show information of a type")
 @Service
-public class CmdInfo implements Action {
+public class CmdInfo extends AbstractCmd {
 	
 	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
@@ -48,7 +48,7 @@ public class CmdInfo implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		apiName = XdbUtil.getApiName(session, apiName);
 		serviceName = XdbUtil.getServiceName(session, serviceName);
@@ -73,7 +73,7 @@ public class CmdInfo implements Action {
 		});
 
 		
-		ConsoleTable out = new ConsoleTable();
+		ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
 		out.setHeaderValues("Field Name","Type","PrimaryKey","Persistent","Mapping");
 		for (String name : fieldNames) {
 			out.addRowValues(name, type.getAttributeType(name), type.isPrimaryKey(name), type.isPersistent(name), type.getTechnicalName(name) );
@@ -85,7 +85,7 @@ public class CmdInfo implements Action {
 		String regName = service.getManager().getRegistryName(type);
 		Table tableInfo = service.getManager().getTable(regName);
 		
-		ConsoleTable out = new ConsoleTable();
+		ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
 		out.setHeaderValues("Field Name","Type","PrimaryKey","Persistent","Mapping");
 		
 		LinkedList<String> primaryNames = new LinkedList<>();

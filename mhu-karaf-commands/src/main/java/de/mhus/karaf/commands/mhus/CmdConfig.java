@@ -17,7 +17,6 @@ package de.mhus.karaf.commands.mhus;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
@@ -53,9 +52,6 @@ public class CmdConfig extends AbstractCmd {
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
     String[] parameters;
 
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
 	// private Appender appender;
 
 	@Override
@@ -77,7 +73,7 @@ public class CmdConfig extends AbstractCmd {
 			MApi.get().getCfgManager().reConfigure();
 		} break;
 		case "list": {
-			ConsoleTable out = new ConsoleTable(consoleTable);
+			ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
 			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated","Calling");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
 				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), MSystem.getSimpleName(value.getClass()), MDate.toIso8601(value.getUpdated()), value.getCalling() );

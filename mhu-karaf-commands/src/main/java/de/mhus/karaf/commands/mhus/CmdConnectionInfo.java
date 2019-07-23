@@ -48,7 +48,7 @@ public class CmdConnectionInfo extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
 		table.setHeaderValues("Name","Queue","Type");
 		for (JmsDataChannel c : service.getChannels()) {
 			if (c.getChannel() != null && c.getChannel().getJmsDestination() != null && c.getChannel().getJmsDestination().getConnection() == con)

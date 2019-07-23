@@ -16,7 +16,6 @@
 package de.mhus.karaf.commands.mhus;
 
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.cao.CaoDataSource;
@@ -28,12 +27,9 @@ import de.mhus.osgi.api.services.MOsgi;
 @Service
 public class CmdCaoDs extends AbstractCmd {
 
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable out = new ConsoleTable(consoleTable);
+		ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
 		out.setHeaderValues("Name","Type","Status");
 		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {
 			out.addRowValues(ds.getName(), ds.getType(), ds);

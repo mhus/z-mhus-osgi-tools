@@ -22,7 +22,6 @@ import java.util.TreeSet;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
@@ -32,10 +31,11 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.sql.DbPool;
 import de.mhus.osgi.api.adb.AdbUtilKaraf;
 import de.mhus.osgi.api.adb.DbManagerService;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "adb", name = "control", description = "Control ADB specific attributes")
 @Service
-public class CmdAdbControl implements Action {
+public class CmdAdbControl extends AbstractCmd {
 
 	@Argument(index=0, name="service", required=true, description="Service Class", multiValued=false)
     String serviceName;
@@ -53,13 +53,13 @@ public class CmdAdbControl implements Action {
     String[] args;
 	
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		MBeanServer server = ManagementFactory.getPlatformMBeanServer();
 		
 		if (cmd.equals("mapping")) {
 			DbManagerService service = AdbUtilKaraf.getService(serviceName);
 			
-			ConsoleTable table = new ConsoleTable();
+			ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
 			table.setHeaderValues("Key","Mapping");
 			
 			Map<String, Object> map = service.getManager().getNameMapping();
@@ -76,7 +76,7 @@ public class CmdAdbControl implements Action {
 			System.out.println("Datasource: " + service.getDataSourceName());
 		} else
 		if (cmd.equals("jmx-list")) {
-			ConsoleTable out = new ConsoleTable();
+			ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
 			out.setHeaderValues("Id", "Name","Class", "Size", "Used");
 			for (ObjectInstance instance : server.queryMBeans(null, null)) {
 				if (instance.getObjectName().getCanonicalName().startsWith("de.mhus.lib.core.jmx.JmxObject:name=de.mhus.lib.sql.DbPool")) {

@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.xdb.cmd;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -24,30 +23,28 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbService;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.xdb.XdbApi;
 import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "list", description = "List all DB Services")
 @Service
-public class CmdList implements Action {
+public class CmdList extends AbstractCmd {
 
 	@Option(name="-a", description="Api Name",required=false)
 	String apiName;
-
-	@Option(name="-f", aliases="--full", description="Full output",required=false)
-	boolean full = false;
 
     @Reference
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		apiName = XdbUtil.getApiName(session, apiName);
 
 		XdbApi api = XdbUtil.getApi(apiName);
 
-		ConsoleTable table = new ConsoleTable(full);
+		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
 		table.setHeaderValues("Service","Schema","DataSource","Managed Types");
 		for (String serviceName : api.getServiceNames()) {
 			XdbService service = api.getService(serviceName);
@@ -100,7 +97,7 @@ public class CmdList implements Action {
 			System.out.println("Admin not found");
 			return null;
 		}
-		ConsoleTable table = new ConsoleTable();
+		ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
 		table.setHeaderValues("Nr","Service","Schema","DataSource","Managed Types");
 		// iterate all services
 		

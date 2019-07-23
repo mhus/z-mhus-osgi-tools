@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import org.apache.karaf.shell.api.action.Action;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
@@ -33,13 +32,14 @@ import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.xdb.XdbApi;
 import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "select", description = "Select data from DB DataSource and print the results")
 //@Parsing(XdbParser.class) see https://github.com/apache/karaf/tree/master/jdbc/src/main/java/org/apache/karaf/jdbc/command/parsing
 @Service
-public class CmdSelect implements Action {
+public class CmdSelect extends AbstractCmd {
 
 	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
@@ -74,14 +74,11 @@ public class CmdSelect implements Action {
 	@Option(name="-p", aliases="--parameter", description="Define a parameter key=value",required=false,multiValued=true)
 	String[] parameters = null;
 	
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
     @Reference
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		Object output = null;
 		
@@ -118,7 +115,7 @@ public class CmdSelect implements Action {
 				fieldNames.add(name);
 		}
 		
-		ConsoleTable out = new ConsoleTable(consoleTable);
+		ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
 		if (csv) {
 			out.setColSeparator(";");
 			out.setCellSpacer(false);
@@ -145,7 +142,7 @@ public class CmdSelect implements Action {
 		if (page == null) {
 			for (Object object : type.getByQualification(qualification, queryParam)) {
 				
-				ConsoleTable.Row row = out.addRow();
+			    ConsoleTable.Row row = out.addRow();
 				for (String name : fieldNames) {
 					Object value = toValue( type.get(object, name) );
 					row.add(value);
@@ -157,7 +154,7 @@ public class CmdSelect implements Action {
 			int lines = MCast.toint(page.substring(1), 100);
 			DbCollection<?> res = type.getByQualification(qualification, null);
 			for (Object object : res) {
-				ConsoleTable.Row row = out.addRow();
+			    ConsoleTable.Row row = out.addRow();
 				for (String name : fieldNames) {
 					Object value = toValue( type.get(object, name) );
 					row.add(value);
@@ -174,7 +171,7 @@ public class CmdSelect implements Action {
 			int lines = MCast.toint(page.substring(1), 100);
 			for (Object object : type.getByQualification(qualification, null)) {
 				
-				ConsoleTable.Row row = out.addRow();
+			    ConsoleTable.Row row = out.addRow();
 				for (String name : fieldNames) {
 					Object value = toValue( type.get(object, name) );
 					row.add(value);

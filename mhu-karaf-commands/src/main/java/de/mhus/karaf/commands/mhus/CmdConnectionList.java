@@ -16,7 +16,6 @@
 package de.mhus.karaf.commands.mhus;
 
 import org.apache.karaf.shell.api.action.Command;
-import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.console.ConsoleTable;
@@ -30,9 +29,6 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdConnectionList extends AbstractCmd {
 
-    @Option(name = "-ct", aliases = { "--console-table" }, description = "Console table options", required = false, multiValued = false)
-    String consoleTable;
-
 	@Override
 	public Object execute2() throws Exception {
 		JmsManagerService service = JmsUtil.getService();
@@ -41,7 +37,7 @@ public class CmdConnectionList extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable(consoleTable);
+		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
 		table.setHeaderValues("Id","Name","Url","User","Connected","Closed");
 		for (de.mhus.osgi.api.services.MOsgi.Service<JmsDataSource> ref : service.getDataSources()) {
 			try {
