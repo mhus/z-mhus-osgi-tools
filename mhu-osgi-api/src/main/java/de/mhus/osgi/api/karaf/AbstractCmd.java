@@ -15,13 +15,16 @@ public abstract class AbstractCmd extends MObject implements Action {
     protected String tblOpt;
 
     @Option(name = "-ta", aliases = { "--table-all" }, description = "Console table print all", required = false, multiValued = false)
-    protected boolean tableAll;
+    private boolean tableAll;
 
     @Reference
     private Session session;
 
     @Override
     public final Object execute() throws Exception {
+        if (tableAll) {
+            if (tblOpt == null) tblOpt = "all=1"; else tblOpt = "all=1 " + tblOpt;
+        }
         @SuppressWarnings("unchecked")
         List<CmdInterceptor> interceptors = (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
         if (interceptors != null) {

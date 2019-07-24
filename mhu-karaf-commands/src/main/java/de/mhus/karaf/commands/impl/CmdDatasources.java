@@ -38,7 +38,7 @@ public class CmdDatasources extends AbstractCmd {
 	
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Name","Url","Status");
 		
         DataSourceUtil util = new DataSourceUtil(context);

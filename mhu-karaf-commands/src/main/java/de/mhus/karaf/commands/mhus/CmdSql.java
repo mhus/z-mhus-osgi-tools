@@ -91,7 +91,7 @@ public class CmdSql extends AbstractCmd {
 			SqlAnalyzer analyzer = SqlAnalytics.getAnalyzer();
 			if (analyzer instanceof SqlRuntimeAnalyzer) {
 				Collection<Container> data = ((SqlRuntimeAnalyzer)analyzer).getData();
-				ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+				ConsoleTable table = new ConsoleTable(tblOpt);
 				table.setHeaderValues("Count","Runtime","R/C","Sql");
 				for (Container d : data) {
 					table.addRowValues(d.getCnt(),d.getRuntime(), d.getRuntime() / (long)d.getCnt(), d.getSql());

@@ -41,7 +41,7 @@ public class CmdUptime extends AbstractCmd {
 	@Override
 	public Object execute2() throws Exception {
 		
-		ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable out = new ConsoleTable(tblOpt);
 		out.setHeaderValues("Status","Runtime","Start","Pid","System");
 		UptimeAdminIfc api = M.l(UptimeAdminIfc.class);
 		List<UptimeRecord> records = api.getRecords();

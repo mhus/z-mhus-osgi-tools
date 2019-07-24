@@ -44,7 +44,7 @@ public class CmdList extends AbstractCmd {
 
 		XdbApi api = XdbUtil.getApi(apiName);
 
-		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Service","Schema","DataSource","Managed Types");
 		for (String serviceName : api.getServiceNames()) {
 			XdbService service = api.getService(serviceName);
@@ -97,7 +97,7 @@ public class CmdList extends AbstractCmd {
 			System.out.println("Admin not found");
 			return null;
 		}
-		ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Nr","Service","Schema","DataSource","Managed Types");
 		// iterate all services
 		

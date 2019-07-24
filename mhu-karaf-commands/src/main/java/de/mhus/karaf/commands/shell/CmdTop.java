@@ -148,7 +148,7 @@ public class CmdTop extends AbstractCmd {
 				}
 				System.out.println();
 			} else {
-				ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
+				ConsoleTable table = new ConsoleTable(tblOpt);
 				int height = console.getHeight();
 				int width = console.getWidth();
 				table.setHeaderValues("Id", "Name", "Status", "Cpu", "User", "Time", "Stacktrace");

@@ -73,7 +73,7 @@ public class CmdInfo extends AbstractCmd {
 		});
 
 		
-		ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
+		ConsoleTable out = new ConsoleTable(tblOpt);
 		out.setHeaderValues("Field Name","Type","PrimaryKey","Persistent","Mapping");
 		for (String name : fieldNames) {
 			out.addRowValues(name, type.getAttributeType(name), type.isPrimaryKey(name), type.isPersistent(name), type.getTechnicalName(name) );
@@ -85,7 +85,7 @@ public class CmdInfo extends AbstractCmd {
 		String regName = service.getManager().getRegistryName(type);
 		Table tableInfo = service.getManager().getTable(regName);
 		
-		ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
+		ConsoleTable out = new ConsoleTable(tblOpt);
 		out.setHeaderValues("Field Name","Type","PrimaryKey","Persistent","Mapping");
 		
 		LinkedList<String> primaryNames = new LinkedList<>();

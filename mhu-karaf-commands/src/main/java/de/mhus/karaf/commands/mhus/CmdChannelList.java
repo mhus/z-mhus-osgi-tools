@@ -43,7 +43,7 @@ public class CmdChannelList extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Name","Connection","Destination","Type","Information","Connected","Closed", "Last Activity");
 		for (JmsDataChannel chd : service.getChannels()) {
 //			JmsDataChannel chd = service.getChannel(name);

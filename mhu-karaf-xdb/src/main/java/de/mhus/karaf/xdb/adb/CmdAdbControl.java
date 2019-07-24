@@ -59,7 +59,7 @@ public class CmdAdbControl extends AbstractCmd {
 		if (cmd.equals("mapping")) {
 			DbManagerService service = AdbUtilKaraf.getService(serviceName);
 			
-			ConsoleTable table = new ConsoleTable(tableAll,tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			table.setHeaderValues("Key","Mapping");
 			
 			Map<String, Object> map = service.getManager().getNameMapping();
@@ -76,7 +76,7 @@ public class CmdAdbControl extends AbstractCmd {
 			System.out.println("Datasource: " + service.getDataSourceName());
 		} else
 		if (cmd.equals("jmx-list")) {
-			ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
+			ConsoleTable out = new ConsoleTable(tblOpt);
 			out.setHeaderValues("Id", "Name","Class", "Size", "Used");
 			for (ObjectInstance instance : server.queryMBeans(null, null)) {
 				if (instance.getObjectName().getCanonicalName().startsWith("de.mhus.lib.core.jmx.JmxObject:name=de.mhus.lib.sql.DbPool")) {

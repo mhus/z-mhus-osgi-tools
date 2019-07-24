@@ -77,7 +77,7 @@ public class CmdTimer extends AbstractCmd {
 		
 		if (cmd.equals("jobs")) {
 			List<SchedulerJob> scheduled = scheduler.getJobs();
-			ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			if (all)
 				table.setLineSpacer(true);
 			if (all)
@@ -152,7 +152,7 @@ public class CmdTimer extends AbstractCmd {
 			List<SchedulerJob> scheduled = scheduler.getScheduledJobs();
 			List<SchedulerJob> running = scheduler.getRunningJobs();
 			
-			ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			if (all)
 				table.setLineSpacer(true);
 			if (all)
@@ -254,7 +254,7 @@ public class CmdTimer extends AbstractCmd {
 		if (cmd.equals("timeout")) {
 			List<SchedulerJob> running = scheduler.getRunningJobs();
 			
-			ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			table.setHeaderValues("Task","Job","Started","Stopped", "Description","Name","Scheduled","Timeout");
 			
 			long time = System.currentTimeMillis();

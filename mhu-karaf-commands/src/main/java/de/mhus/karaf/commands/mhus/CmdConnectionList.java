@@ -37,7 +37,7 @@ public class CmdConnectionList extends AbstractCmd {
 			return null;
 		}
 		
-		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Id","Name","Url","User","Connected","Closed");
 		for (de.mhus.osgi.api.services.MOsgi.Service<JmsDataSource> ref : service.getDataSources()) {
 			try {

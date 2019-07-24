@@ -73,7 +73,7 @@ public class CmdConfig extends AbstractCmd {
 			MApi.get().getCfgManager().reConfigure();
 		} break;
 		case "list": {
-			ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable out = new ConsoleTable(tblOpt);
 			out.setHeaderValues("Owner", "Path", "Value", "Default", "Type","Updated","Calling");
 			for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
 				out.addRowValues(value.getOwner(), value.getPath(), value.value(), value.getDefault(), MSystem.getSimpleName(value.getClass()), MDate.toIso8601(value.getUpdated()), value.getCalling() );

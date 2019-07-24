@@ -136,7 +136,7 @@ public class CmdVault extends AbstractCmd {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("sources")) {
-			ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable out = new ConsoleTable(tblOpt);
 			out.setHeaderValues("Source","Info","Mutable","MemoryBased");
 			for (String sourceName : vault.getSourceNames()) {
 				VaultSource source = vault.getSource(sourceName);
@@ -156,7 +156,7 @@ public class CmdVault extends AbstractCmd {
 		} else
 		if (cmd.equals("list")) {
 			if (sourcename == null) {
-				ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+				ConsoleTable out = new ConsoleTable(tblOpt);
 				out.setHeaderValues("Source","Id","Type","Description");
 				for (String sourceName : vault.getSourceNames()) {
 					try {
@@ -176,7 +176,7 @@ public class CmdVault extends AbstractCmd {
 					System.out.println("*** Source not found!");
 					return null;
 				}
-				ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+				ConsoleTable out = new ConsoleTable(tblOpt);
 				out.setHeaderValues("Source","Id","Type","Description");
 				for (UUID id : source.getEntryIds()) {
 					VaultEntry entry = source.getEntry(id);

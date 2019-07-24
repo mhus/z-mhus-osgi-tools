@@ -29,7 +29,7 @@ public class CmdCaoDs extends AbstractCmd {
 
 	@Override
 	public Object execute2() throws Exception {
-		ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable out = new ConsoleTable(tblOpt);
 		out.setHeaderValues("Name","Type","Status");
 		for (CaoDataSource ds : MOsgi.getServices(CaoDataSource.class, null)) {
 			out.addRowValues(ds.getName(), ds.getType(), ds);

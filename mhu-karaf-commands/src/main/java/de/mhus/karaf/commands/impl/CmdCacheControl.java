@@ -39,7 +39,7 @@ public class CmdCacheControl extends AbstractCmd {
 	public Object execute2() throws Exception {
 		
 		if (cmd.equals("list")) {
-			ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			table.setHeaderValues("Name","Size","Enabled","Status");
 			for (CacheControlIfc c : MOsgi.getServices(CacheControlIfc.class, null))
 				try {

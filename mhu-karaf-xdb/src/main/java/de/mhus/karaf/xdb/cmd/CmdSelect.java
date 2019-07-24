@@ -115,7 +115,7 @@ public class CmdSelect extends AbstractCmd {
 				fieldNames.add(name);
 		}
 		
-		ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable out = new ConsoleTable(tblOpt);
 		if (csv) {
 			out.setColSeparator(";");
 			out.setCellSpacer(false);

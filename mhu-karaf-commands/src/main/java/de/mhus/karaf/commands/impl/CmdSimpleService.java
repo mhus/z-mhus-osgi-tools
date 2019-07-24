@@ -48,7 +48,7 @@ public class CmdSimpleService extends AbstractCmd {
 	public Object execute2() throws Exception {
 		
 		if (cmd.equals("list")) {
-			ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+			ConsoleTable table = new ConsoleTable(tblOpt);
 			table.setHeaderValues("Name","Info","Status");
 			BundleContext context = FrameworkUtil.getBundle(CmdSimpleService.class).getBundleContext();
 			for (ServiceReference<SimpleServiceIfc> ref : context.getServiceReferences(SimpleServiceIfc.class, null)) {

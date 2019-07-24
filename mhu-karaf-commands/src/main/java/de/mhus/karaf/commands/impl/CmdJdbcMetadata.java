@@ -134,7 +134,7 @@ public class CmdJdbcMetadata extends AbstractCmd {
     }
 
     private void out(ResultSet res) throws SQLException {
-        ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+        ConsoleTable table = new ConsoleTable(tblOpt);
         int l = res.getMetaData().getColumnCount();
         String[] header = new String[l];
         for (int i = 0; i < l; i++)

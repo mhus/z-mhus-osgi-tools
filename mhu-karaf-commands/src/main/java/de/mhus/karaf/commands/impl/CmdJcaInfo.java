@@ -42,7 +42,7 @@ public class CmdJcaInfo extends AbstractCmd {
 			if (parameters != null && parameters.length > 0) {
 				Provider provider = Security.getProvider(parameters[0]);
 				System.out.println(">>> " + provider.getName() + "-" + provider.getVersionStr() + " " + provider.getInfo());
-				ConsoleTable out = new ConsoleTable(tableAll,tblOpt);
+				ConsoleTable out = new ConsoleTable(tblOpt);
 				out.setHeaderValues("Algorithm","Type");
 				for (java.security.Provider.Service service : provider.getServices()) {
 					if (parameters.length < 2 || parameters[1].equals(service.getType()))
@@ -51,7 +51,7 @@ public class CmdJcaInfo extends AbstractCmd {
 				}
 				out.print(System.out);
 			} else {
-				ConsoleTable out = new ConsoleTable(tableAll, tblOpt);
+				ConsoleTable out = new ConsoleTable(tblOpt);
 				out.setHeaderValues("Name","Version","Info");
 				for (Provider provider : Security.getProviders()) {
 					out.addRowValues(provider.getName(), provider.getVersionStr(), provider.getInfo());

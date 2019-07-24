@@ -107,7 +107,7 @@ public class CmdThreads extends AbstractCmd {
 			});
 		}
 
-		ConsoleTable table = new ConsoleTable(tableAll, tblOpt);
+		ConsoleTable table = new ConsoleTable(tblOpt);
 		table.setHeaderValues("Id", "Name", "Group","Status", "Prio","Alive","Daemon");
 		
 		if (threadId == null) {
