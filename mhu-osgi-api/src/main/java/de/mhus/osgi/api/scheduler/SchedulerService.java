@@ -17,7 +17,7 @@ package de.mhus.osgi.api.scheduler;
 
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.schedule.SchedulerJob;
-import de.mhus.lib.core.schedule.TimerTaskIntercepter;
+import de.mhus.lib.core.schedule.TimerTaskInterceptor;
 
 /**
  * Create this interface as a component and the timer will schedule the observer as a timer task.
@@ -50,6 +50,6 @@ public interface SchedulerService extends ITimerTask {
 	 * Return a intercepter to handle this
 	 * @return intercepter
 	 */
-	TimerTaskIntercepter getIntercepter();
+	TimerTaskInterceptor getInterceptor();
 	
 }

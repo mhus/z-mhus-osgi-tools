@@ -20,7 +20,7 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.schedule.SchedulerJob;
-import de.mhus.lib.core.schedule.TimerTaskIntercepter;
+import de.mhus.lib.core.schedule.TimerTaskInterceptor;
 
 public abstract class SchedulerServiceAdapter extends MLog implements SchedulerService {
 
@@ -68,7 +68,7 @@ public abstract class SchedulerServiceAdapter extends MLog implements SchedulerS
 	}
 
 	@Override
-	public TimerTaskIntercepter getIntercepter() {
+	public TimerTaskInterceptor getInterceptor() {
 		return null;
 	}
 

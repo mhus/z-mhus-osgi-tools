@@ -125,7 +125,7 @@ public class CmdTimer extends AbstractCmd {
 							job.isCanceled(),
 							job.isDone(),
 							getStatus(job),
-							job.getIntercepter(),
+							job.getInterceptor(),
 							job.getLogTrailConfig(),
 							job.isBusy()
 						);
@@ -200,7 +200,7 @@ public class CmdTimer extends AbstractCmd {
 							job.isCanceled(),
 							job.isDone(),
 							getStatus(job),
-							job.getIntercepter(),
+							job.getInterceptor(),
 							job.getLogTrailConfig(),
 							job.isBusy()
 						);
@@ -231,7 +231,7 @@ public class CmdTimer extends AbstractCmd {
 							job.isCanceled(),
 							job.isDone(),
 							getStatus(job),
-							job.getIntercepter(),
+							job.getInterceptor(),
 							job.getLogTrailConfig(),
 							job.isBusy()
 						);

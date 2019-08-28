@@ -44,7 +44,7 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
-import de.mhus.lib.core.schedule.TimerTaskIntercepter;
+import de.mhus.lib.core.schedule.TimerTaskInterceptor;
 import de.mhus.osgi.api.scheduler.SchedulerService;
 import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.api.services.MOsgi.Service;
@@ -147,7 +147,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 			job.setNextExecutionTime(SchedulerJob.CALCULATE_NEXT);
 
 			job.setInfo(reference.getBundle().getSymbolicName() + " [" + reference.getBundle().getBundleId() + "]");
-			TimerTaskIntercepter intercepter = service.getIntercepter();
+			TimerTaskInterceptor intercepter = service.getInterceptor();
 			if (intercepter != null)
 				job.setIntercepter(intercepter);
 			services.put(service,job);
@@ -362,9 +362,9 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 		}
 
 		@Override
-		public TimerTaskIntercepter getIntercepter() {
+		public TimerTaskInterceptor getInterceptor() {
 			if (task instanceof SchedulerJob)
-				return ((SchedulerJob)task).getIntercepter();
+				return ((SchedulerJob)task).getInterceptor();
 			return null;
 		}
 				
