@@ -114,7 +114,7 @@ public class JmsManagerServiceImpl extends MLog implements JmsManagerService {
                 channelTracker = new ServiceTracker<>(context, JmsDataChannel.class, new MyChannelTrackerCustomizer() );
                 channelTracker.open();
             }
-        });
+        }).start();
 		
 	}
 	
