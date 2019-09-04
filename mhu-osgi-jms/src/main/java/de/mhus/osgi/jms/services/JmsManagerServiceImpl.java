@@ -86,17 +86,23 @@ public class JmsManagerServiceImpl extends MLog implements JmsManagerService {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
-                while (true) {
-                    MThread.sleep(100);
-                    int state = ctx.getUsingBundle().getState();
-                    if (state == Bundle.STOPPING || state == Bundle.UNINSTALLED) {
-                        log().i("activation terminated");
-                        return;
-                    }
-                    if (state == Bundle.ACTIVE) break;
-                    if (MPeriod.isTimeOut(start, MPeriod.MINUTE_IN_MILLISECOUNDS * 2)) {
-                        log().i("activation timeout");
-                        return;
+                Bundle bundle = ctx.getUsingBundle();
+                if (bundle == null) {
+                    log().i("bundle is null");
+                    MThread.sleep(2000);
+                } else {
+                    while (true) {
+                        MThread.sleep(500);
+                        int state = bundle.getState();
+                        if (state == Bundle.STOPPING || state == Bundle.UNINSTALLED) {
+                            log().i("activation terminated");
+                            return;
+                        }
+                        if (state == Bundle.ACTIVE) break;
+                        if (MPeriod.isTimeOut(start, MPeriod.MINUTE_IN_MILLISECOUNDS)) {
+                            log().i("activation timeout");
+                            break;
+                        }
                     }
                 }
                 
