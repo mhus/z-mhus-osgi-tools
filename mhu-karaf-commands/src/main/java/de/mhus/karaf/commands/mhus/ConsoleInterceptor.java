@@ -16,7 +16,7 @@ public class ConsoleInterceptor implements CmdInterceptor {
     
     @Override
     public void onCmdStart(Session session) {
-        old = Console.get();
+        old = Console.isInitialized() ? Console.get() : null;
         Console.set(console);
     }
 
