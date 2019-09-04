@@ -22,6 +22,7 @@ import java.util.WeakHashMap;
 
 import javax.jms.JMSException;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
@@ -33,6 +34,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MPeriod;
+import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
@@ -75,14 +78,37 @@ public class JmsManagerServiceImpl extends MLog implements JmsManagerService {
 	@Activate
 	public void doActivate(ComponentContext ctx) {
 		
-		log().i("activate");
-		instance = this;
-		context = ctx.getBundleContext();
-		connectionTracker = new ServiceTracker<>(context, JmsDataSource.class, new MyConnectionTrackerCustomizer() );
-		connectionTracker.open();
+	    instance = this;
+	    // decouple starting of tracker from bundle activation
+	    // this could cause a circular reference call
+	    new MThread(new Runnable() {
+            
+            @Override
+            public void run() {
+                long start = System.currentTimeMillis();
+                while (true) {
+                    MThread.sleep(100);
+                    int state = ctx.getUsingBundle().getState();
+                    if (state == Bundle.STOPPING || state == Bundle.UNINSTALLED) {
+                        log().i("activation terminated");
+                        return;
+                    }
+                    if (state == Bundle.ACTIVE) break;
+                    if (MPeriod.isTimeOut(start, MPeriod.MINUTE_IN_MILLISECOUNDS * 2)) {
+                        log().i("activation timeout");
+                        return;
+                    }
+                }
+                
+                log().i("activate");
+                context = ctx.getBundleContext();
+                connectionTracker = new ServiceTracker<>(context, JmsDataSource.class, new MyConnectionTrackerCustomizer() );
+                connectionTracker.open();
 
-		channelTracker = new ServiceTracker<>(context, JmsDataChannel.class, new MyChannelTrackerCustomizer() );
-		channelTracker.open();
+                channelTracker = new ServiceTracker<>(context, JmsDataChannel.class, new MyChannelTrackerCustomizer() );
+                channelTracker.open();
+            }
+        });
 		
 	}
 	
@@ -101,7 +127,13 @@ public class JmsManagerServiceImpl extends MLog implements JmsManagerService {
 	}
 
 	@Reference(service=TimerFactory.class)
-	public void setTimerFactory(TimerFactory factory) {
+	public synchronized void setTimerFactory(TimerFactory factory) {
+	    
+	    if (timerTask != null) {
+	        timerTask.cancel();
+	        timerTask = null;
+	    }
+	        
 		log().i("create timer");
 		timer = factory.getTimer();
 		timerTask = new MTimerTask() {
