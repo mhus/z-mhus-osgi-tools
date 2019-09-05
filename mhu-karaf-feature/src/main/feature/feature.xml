@@ -36,7 +36,7 @@
 
 		<bundle>mvn:org.jsoup/jsoup/1.8.3</bundle>
 		
-		<bundle>mvn:mysql/mysql-connector-java/${mysql.version}</bundle>
+        <bundle>mvn:commons-codec/commons-codec/${commons-codec.version}</bundle>
 		<bundle>mvn:org.apache.commons/commons-jexl/${commons-jexl.version}</bundle>
 		<bundle><![CDATA[wrap:mvn:org.w3c.css/sac/1.3/$Bundle-SymbolicName=sac&Bundle-Version=1.3&Export-Package=org.w3c.css.sac;version="1.3",!*]]></bundle>
 
@@ -44,12 +44,12 @@
 		<bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.asl.version}</bundle>
 		<bundle><![CDATA[wrap:mvn:org.apache.commons/commons-io/${commons-io.version}/$Bundle-SymbolicName=commons-io&Bundle-Version=${commons-io.version}&Export-Package=org.apache.commons.io;version="${commons-io.version}",!*]]></bundle>
 
-		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhus-lib.version}</bundle>
 
+        <bundle>mvn:de.mhus.osgi/mhu-osgi-api/${project.version}</bundle>
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-services/${project.version}</bundle>
 		<bundle>mvn:de.mhus.osgi/mhu-karaf-commands/${project.version}</bundle>
 		<bundle>mvn:de.mhus.osgi/mhu-karaf-xdb/${project.version}</bundle>
@@ -61,7 +61,7 @@
 	<feature name='mhu-osgi-jms' description='mhu-osgi-jms' version='${project.version}'>
 		<feature>activemq-client</feature>
 		<feature>mhu-osgi-base</feature>
-		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhulib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhus-lib.version}</bundle>
 		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${project.version}</bundle>
 	</feature>
 	
@@ -70,7 +70,7 @@
 		
         <bundle><![CDATA[wrap:mvn:com.googlecode.gentyref/gentyref/1.2.0/$Bundle-SymbolicName=gentyref&Bundle-Version=1.2.0&Export-Package=com.googlecode.gentyref;version="1.2.0",!*]]></bundle>
         <bundle>mvn:org.jsoup/jsoup/1.11.3</bundle>
-		<bundle>mvn:de.mhus.ports/vaadin-shared-deps/${ports.vaadin.version}</bundle>
+		<bundle>mvn:de.mhus.ports/vaadin-shared-deps/${mhus-ports-vaadin.version}</bundle>
         <bundle>mvn:com.vaadin/vaadin-compatibility-shared/${vaadin.version}</bundle>
         <bundle>mvn:com.vaadin/vaadin-shared/${vaadin.version}</bundle>
         <bundle>mvn:com.vaadin/vaadin-compatibility-themes/${vaadin.version}</bundle>
@@ -86,9 +86,9 @@
         <bundle>mvn:com.vaadin/vaadin-compatibility-client-compiled/${vaadin.version}</bundle>
         <bundle>mvn:com.vaadin/vaadin-client-compiled/${vaadin.version}</bundle>
 
-		<bundle>mvn:de.mhus.lib/mhu-lib-vaadin/${mhulib.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinbridge/${servlettools.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-karaf-vaadinbridge/${servlettools.version}</bundle>
+		<bundle>mvn:de.mhus.vaadin/vaadin-core/${mhus-vaadin.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinbridge/${mhus-vaadin.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/mhu-karaf-vaadinbridge/${mhus-vaadin.version}</bundle>
 
 	</feature>
 	
@@ -98,12 +98,12 @@
 		<feature>mhu-osgi-vaadin</feature>
 	</feature>
 	
-
+<!--
 	<feature name='mhus-osgi-morphia' description='mongo morphia' version='${project.version}'>
 		<bundle>mvn:org.mongodb/mongo-java-driver/${mongo.version}</bundle>
     	<bundle>wrap:mvn:com.thoughtworks.proxytoys/proxytoys/1.0</bundle>
     	<bundle>mvn:org.mongodb.morphia/morphia/${mongo.morphia.version}</bundle>	
 		<bundle>mvn:de.mhus.osgi/mhu-karaf-mongo/${project.version}</bundle>
 	</feature>
-		
+-->		
 </features>
