@@ -298,7 +298,7 @@ public class MOsgi {
                 
             }
         }, 
-        getBundleCaption(ctx.getUsingBundle()) 
+        "Starter:"+getBundleCaption(ctx.getUsingBundle()) 
         ).start();
 	}
 
