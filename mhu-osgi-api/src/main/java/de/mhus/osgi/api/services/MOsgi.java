@@ -297,7 +297,19 @@ public class MOsgi {
                 }
                 
             }
-        }).start();
+        }, 
+        getBundleCaption(ctx.getUsingBundle()) 
+        ).start();
 	}
+
+	/**
+	 * Return bundle name and id in brackets
+	 * @param bundle
+	 * @return Caption to identify the bundle
+	 */
+    public static String getBundleCaption(Bundle bundle) {
+        if (bundle == null) return "null";
+        return bundle.getSymbolicName() + " [" + bundle.getBundleId() + "]";
+    }
 	
 }
