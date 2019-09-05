@@ -19,14 +19,21 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
+import java.util.function.Consumer;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 
+import de.mhus.lib.annotations.pojo.Hidden;
+import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MPeriod;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.core.base.service.TimerImpl;
@@ -214,6 +221,83 @@ public class MOsgi {
 		for (Bundle bundle : FrameworkUtil.getBundle(MOsgi.class).getBundleContext().getBundles())
 			if (bundle.getSymbolicName().equals(name)) return bundle;
 		throw new NotFoundException("Bundle not found",name);
+	}
+	
+	public static void runAfterActivation(ComponentContext ctx, Consumer<ComponentContext> consumer) {
+	    
+	    if (consumer == null) return;
+	    
+	    runAfterActivation(ctx, new BundleStarter() {
+	        @Hidden
+	        private Log log;
+	        // get log name from consumer
+	        // de.mhus.inka.tryit.ConsumerTest$$Lambda$1/0x0000000800060840@75828a0f
+	        @Override
+            public synchronized Log log() {
+	            if (log == null) {
+	                String name = consumer.toString();
+	                name = MString.beforeIndex(name, '$');
+                    log = MApi.get().lookupLog(name);
+	            }
+	            return log;
+	        }
+
+            @Override
+            public void run() {
+                consumer.accept(ctx);
+            }
+        });
+	}
+	
+	public static void runAfterActivation(ComponentContext ctx, BundleStarter task) {
+	    
+	    if (ctx == null || task == null) return;
+	    Bundle bundle = ctx.getUsingBundle();
+	    
+	    
+        new MThread(new Runnable() {
+           
+            @Override
+            public void run() {
+                if (bundle == null) {
+                    task.log().i("executing bundle is null");
+                    // can't wait for end of activation
+                    MThread.sleep(2000);
+                } else {
+                    // wait for end of activation
+                    long start = System.currentTimeMillis();
+                    while (true) {
+                        MThread.sleep(300);
+                        int state = bundle.getState();
+                        if (state == Bundle.STOPPING || state == Bundle.UNINSTALLED) {
+                            task.log().i("activation terminated");
+                            return;
+                        }
+                        if (state == Bundle.ACTIVE) break;
+                        if (MPeriod.isTimeOut(start, task.getTimeout() )) {
+                            task.log().i("activation timeout");
+                            if (task.exitOnTimeout())
+                                return;
+                            else
+                                break;
+                        }
+                    }
+                }
+                
+                try {
+                    task.log().d("start");
+                    task.run();
+                    while (task.isRetry()) {
+                        MThread.sleep(2000);
+                        task.log().d("retry");
+                        task.run();
+                    }
+                } catch (Throwable t) {
+                    task.log().e(t);
+                }
+                
+            }
+        }).start();
 	}
 	
 }

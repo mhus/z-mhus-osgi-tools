@@ -22,20 +22,17 @@ import java.util.WeakHashMap;
 
 import javax.jms.JMSException;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.MPeriod;
-import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.base.service.TimerFactory;
 import de.mhus.lib.core.base.service.TimerIfc;
@@ -81,41 +78,17 @@ public class JmsManagerServiceImpl extends MLog implements JmsManagerService {
 	    instance = this;
 	    // decouple starting of tracker from bundle activation
 	    // this could cause a circular reference call
-	    new MThread(new Runnable() {
-            
-            @Override
-            public void run() {
-                long start = System.currentTimeMillis();
-                Bundle bundle = ctx.getUsingBundle();
-                if (bundle == null) {
-                    log().i("bundle is null");
-                    MThread.sleep(2000);
-                } else {
-                    while (true) {
-                        MThread.sleep(500);
-                        int state = bundle.getState();
-                        if (state == Bundle.STOPPING || state == Bundle.UNINSTALLED) {
-                            log().i("activation terminated");
-                            return;
-                        }
-                        if (state == Bundle.ACTIVE) break;
-                        if (MPeriod.isTimeOut(start, MPeriod.MINUTE_IN_MILLISECOUNDS)) {
-                            log().i("activation timeout");
-                            break;
-                        }
-                    }
-                }
-                
-                log().i("activate");
-                context = ctx.getBundleContext();
-                connectionTracker = new ServiceTracker<>(context, JmsDataSource.class, new MyConnectionTrackerCustomizer() );
-                connectionTracker.open();
+	    MOsgi.runAfterActivation(ctx, this::doStart);
 
-                channelTracker = new ServiceTracker<>(context, JmsDataChannel.class, new MyChannelTrackerCustomizer() );
-                channelTracker.open();
-            }
-        }).start();
-		
+	}
+	
+	public void doStart(ComponentContext ctx) {
+        context = ctx.getBundleContext();
+        connectionTracker = new ServiceTracker<>(context, JmsDataSource.class, new MyConnectionTrackerCustomizer() );
+        connectionTracker.open();
+
+        channelTracker = new ServiceTracker<>(context, JmsDataChannel.class, new MyChannelTrackerCustomizer() );
+        channelTracker.open();
 	}
 	
 	@Deactivate
