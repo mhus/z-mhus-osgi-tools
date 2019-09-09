@@ -55,6 +55,7 @@ public class CmdShitYo extends AbstractCmd {
 		shortcuts.put("crypt", CryptShit.class);
 		shortcuts.put("jdbcmeta", JdbcMetaShit.class);
 		shortcuts.put("threadlocal", ThreadLocalShit.class);
+		shortcuts.put("karaf", KarafShit.class);
 	}
 	
 	@Override
@@ -91,4 +92,7 @@ public class CmdShitYo extends AbstractCmd {
 		return clazz.getDeclaredConstructor().newInstance();
 	}
 
+	public Session getSession() {
+	    return session;
+	}
 }
