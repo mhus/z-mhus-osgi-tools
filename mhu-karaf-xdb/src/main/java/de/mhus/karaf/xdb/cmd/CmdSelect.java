@@ -28,6 +28,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.adb.DbCollection;
+import de.mhus.lib.adb.query.AQuery;
+import de.mhus.lib.adb.query.Db;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -74,6 +76,9 @@ public class CmdSelect extends AbstractCmd {
 	@Option(name="-p", aliases="--parameter", description="Define a parameter key=value",required=false,multiValued=true)
 	String[] parameters = null;
 	
+    @Option(name="-q", description="xdb query parser",required=false)
+    boolean xdbQuery = false;
+
     @Reference
     private Session session;
 
@@ -138,6 +143,10 @@ public class CmdSelect extends AbstractCmd {
 				queryParam.put(k, v);
 			}
 		}
+		
+//		if (xdbQuery) {
+//		    AQuery<?> query = Db.parse(type, qualification);
+//		}
 		
 		if (page == null) {
 			for (Object object : type.getByQualification(qualification, queryParam)) {
