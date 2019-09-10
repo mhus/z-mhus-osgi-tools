@@ -28,8 +28,6 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.adb.DbCollection;
-import de.mhus.lib.adb.query.AQuery;
-import de.mhus.lib.adb.query.Db;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
