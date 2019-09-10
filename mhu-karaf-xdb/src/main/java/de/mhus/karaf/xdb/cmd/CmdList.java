@@ -15,12 +15,15 @@
  */
 package de.mhus.karaf.xdb.cmd;
 
+import java.util.List;
+
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
@@ -34,63 +37,74 @@ public class CmdList extends AbstractCmd {
 	@Option(name="-a", description="Api Name",required=false)
 	String apiName;
 
+    @Option(name="-c", description="Connect",required=false)
+    boolean connect;
+    
     @Reference
     private Session session;
 
 	@Override
 	public Object execute2() throws Exception {
 		
-		apiName = XdbUtil.getApiName(session, apiName);
+	    List<String> apis = apiName == null ? XdbUtil.getApis() : MCollection.toList( XdbUtil.getApiName(session, apiName) );
 
-		XdbApi api = XdbUtil.getApi(apiName);
-
-		ConsoleTable table = new ConsoleTable(tblOpt);
-		table.setHeaderValues("Service","Schema","DataSource","Managed Types");
-		for (String serviceName : api.getServiceNames()) {
-			XdbService service = api.getService(serviceName);
-			if (service == null) {
-				System.out.println("*** Service is null: " + serviceName);
-				continue;
-			}
-			if (service.isConnected()) {
-				
-				int c = 0;
-				for (String typeName : service.getTypeNames() ) {
-					if (c == 0) {
-						table.addRowValues(
-								serviceName,
-								service.getSchemaName(),
-								service.getDataSourceName(),
-								typeName
-							);
-					} else {
-						table.addRowValues(
-								"",
-								"",
-								"",
-								typeName
-							);
-						
-					}
-					c++;
-				}
-				if (c == 0) {
-					table.addRowValues(
-							serviceName,
-							service.getSchemaName(),
-							service.getDataSourceName(),
-							""
-						);
-				}
-			} else {
-				table.addRowValues(
-						serviceName,
-						"[not connected]", 
-						service.getDataSourceName(),
-						""
-					);
-			}
-		}
+	    ConsoleTable table = new ConsoleTable(tblOpt);
+	    table.setHeaderValues("Service","Schema","DataSource","Managed Types");
+	    
+	    for (String name : apis) {
+    
+    		XdbApi api = XdbUtil.getApi(name);
+    
+    		for (String serviceName : api.getServiceNames()) {
+    			XdbService service = api.getService(serviceName);
+    			if (service == null) {
+    				System.out.println("*** Service is null: " + serviceName);
+    				continue;
+    			}
+    			
+    			if (connect && !service.isConnected())
+    			    service.connect();
+    			
+    			if (service.isConnected()) {
+    				
+    				int c = 0;
+    				for (String typeName : service.getTypeNames() ) {
+    					if (c == 0) {
+    						table.addRowValues(
+    								serviceName,
+    								service.getSchemaName(),
+    								service.getDataSourceName(),
+    								typeName
+    							);
+    					} else {
+    						table.addRowValues(
+    								"",
+    								"",
+    								"",
+    								typeName
+    							);
+    						
+    					}
+    					c++;
+    				}
+    				if (c == 0) {
+    					table.addRowValues(
+    							serviceName,
+    							service.getSchemaName(),
+    							service.getDataSourceName(),
+    							""
+    						);
+    				}
+    			} else {
+    				table.addRowValues(
+    						serviceName,
+    						"[not connected]", 
+    						service.getDataSourceName(),
+    						""
+    					);
+    			}
+    		}
+	    }
 /*		
 		DbManagerAdmin admin = AdbUtil.getAdmin();
 		if (admin == null) {
