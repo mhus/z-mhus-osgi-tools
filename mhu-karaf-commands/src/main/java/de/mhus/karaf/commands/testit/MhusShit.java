@@ -110,7 +110,7 @@ public class MhusShit implements ShitIfc {
 						lock.getName(),
 						lock.isLocked(),
 						lock.isPrivacy(),
-						lockerName(lock.getLocker()),
+						lock.getLocker(),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
 						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"true"
@@ -121,7 +121,7 @@ public class MhusShit implements ShitIfc {
 						lock.getName(),
 						lock.isLocked(),
 						lock.isPrivacy(),
-						lockerName(lock.getLocker()),
+						lock.getLocker(),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
 						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"false"
@@ -179,11 +179,6 @@ public class MhusShit implements ShitIfc {
 			System.out.println(res + " " + doitTime);
 		}
 		return null;
-	}
-
-	private String lockerName(Thread locker) {
-		if (locker == null) return "";
-		return locker.getId() + " " + locker.getName();
 	}
 
 }
