@@ -103,14 +103,13 @@ public class MhusShit implements ShitIfc {
 		if (cmd.equals("locks")) {
 			ConsoleTable out = new ConsoleTable(false);
 			long now = System.currentTimeMillis();
-			out.setHeaderValues("Id","Name","Locked","Privacy","Locker","Time","Since","Managed");
+			out.setHeaderValues("Id","Name","Locked","Owner","Time","Since","Managed");
 			for (Lock lock : M.l(LockManager.class).managedLocks())
 				out.addRowValues(
 						lock.hashCode(), 
 						lock.getName(),
 						lock.isLocked(),
-						lock.isPrivacy(),
-						lock.getLocker(),
+						lock.getOwner(),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
 						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"true"
@@ -120,8 +119,7 @@ public class MhusShit implements ShitIfc {
 						lock.hashCode(), 
 						lock.getName(),
 						lock.isLocked(),
-						lock.isPrivacy(),
-						lock.getLocker(),
+						lock.getOwner(),
 						lock.isLocked() ? new Date(lock.getLockTime()) : "",
 						lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
 								"false"
