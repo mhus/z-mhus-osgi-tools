@@ -45,14 +45,18 @@ public class ReceiverAddCmd implements Action {
 	@Option(name="-p", aliases="--password", description="Password",required=false)
 	String password = "password";
 
+    @Option(name="-d", aliases="--daemon", description="Work in the background",required=false)
+    boolean daemon = false;
+	
 	@Override
 	public Object execute() throws Exception {
 		
-		if (url.indexOf(':') > 0) {
+        JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
+        JmsReceiver receiver = null;
+        if (url.indexOf(':') > 0) {
 		
-			JmsReceiver receiver = new JmsReceiverOpenWire(user, password, url, topic, queue);
+			receiver = new JmsReceiverOpenWire(user, password, url, topic, queue);
 			
-			JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
 			admin.add(receiver);
 			
 		} else {
@@ -63,11 +67,22 @@ public class ReceiverAddCmd implements Action {
 				return null;
 			}
 			
-			JmsReceiver receiver = new JmsReceiverOpenWire(con, topic, queue);
+			receiver = new JmsReceiverOpenWire(con, topic, queue);
 			
-			JmsReceiverAdmin admin = JmsReceiverAdminImpl.findAdmin();
 			admin.add(receiver);
 			
+		}
+		
+		System.out.println("Receiving messages");
+		if (!daemon) {
+            System.out.println("Press ctrl+c to stop receiving");
+    		try {
+        		while (true) {
+        		    Thread.sleep(10000);
+        		}
+    		} catch (InterruptedException e) {}
+    		receiver.close();
+    		System.out.println("Stopped receiving messages");
 		}
 		return null;
 		
