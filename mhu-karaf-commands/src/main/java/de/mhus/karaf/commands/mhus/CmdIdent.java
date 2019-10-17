@@ -21,7 +21,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MSystem;
-import de.mhus.lib.core.service.ServerIdent;
+import de.mhus.lib.core.base.service.ServerIdent;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "ident", description = "Print the Server Ident")
