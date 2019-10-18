@@ -120,7 +120,7 @@ public class CmdConfig extends AbstractCmd {
             for (File file : ((CfgManager.CentralMhusCfgProvider)api.getProviders().get(0)).files()) {
                 System.out.println(file.getAbsolutePath());
             }
-		}
+		} break;
 		default:
 			System.out.println("Command not found");
 		}
