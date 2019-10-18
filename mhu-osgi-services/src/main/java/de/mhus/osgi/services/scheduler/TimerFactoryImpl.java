@@ -317,7 +317,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 		}
 
 		@Override
-		public void run(Object environment) {
+		public void run(Object environment) throws Exception {
 			if (task instanceof ITimerTask)
 				((ITimerTask)task).run(environment);
 			else
