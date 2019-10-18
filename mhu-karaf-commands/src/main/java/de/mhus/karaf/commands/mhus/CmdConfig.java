@@ -15,6 +15,8 @@
  */
 package de.mhus.karaf.commands.mhus;
 
+import java.io.File;
+
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
@@ -46,7 +48,9 @@ public class CmdConfig extends AbstractCmd {
 			+ " set <owner> <path> <value>\n"
 			+ " restart\n"
 			+ " dump\n"
-			+ " owners", multiValued=false)
+			+ " owners\n"
+			+ " reload\n"
+			+ " files", multiValued=false)
     String cmd;
 
 	@Argument(index=1, name="paramteters", required=false, description="Parameters", multiValued=true)
@@ -106,6 +110,17 @@ public class CmdConfig extends AbstractCmd {
 				System.out.println(cfg);
 			}
 		} break;
+		case "reload": {
+            CfgManager api = MApi.get().getCfgManager();
+            ((CfgManager.CentralMhusCfgProvider)api.getProviders().get(0)).internalLoadConfig();
+            System.out.println("ok");
+		} break;
+		case "files": {
+            CfgManager api = MApi.get().getCfgManager();
+            for (File file : ((CfgManager.CentralMhusCfgProvider)api.getProviders().get(0)).files()) {
+                System.out.println(file.getAbsolutePath());
+            }
+		}
 		default:
 			System.out.println("Command not found");
 		}
