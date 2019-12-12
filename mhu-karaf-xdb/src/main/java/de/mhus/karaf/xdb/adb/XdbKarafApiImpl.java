@@ -17,9 +17,11 @@ package de.mhus.karaf.xdb.adb;
 
 import java.io.File;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 import de.mhus.karaf.xdb.cmd.CmdUse;
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.lang.MObject;
 import de.mhus.lib.core.util.MUri;
@@ -32,6 +34,7 @@ public class XdbKarafApiImpl extends MObject implements XdbKarafApi {
     private String service = null;
     private String datasource = null;
 
+    @Activate
     public void doActivate() {
         load();
     }
@@ -41,6 +44,7 @@ public class XdbKarafApiImpl extends MObject implements XdbKarafApi {
         try {
             File f = getFile();
             if (f.exists()) {
+                log().d("load from",f);
                 MUri uri = MUri.toUri(MFile.readFile(f).trim());
                 if ("xdb".equals(uri.getScheme())) {
                     if (uri.getPathParts().length > 0)
@@ -51,19 +55,24 @@ public class XdbKarafApiImpl extends MObject implements XdbKarafApi {
                         datasource = uri.getPathParts()[2];
                 }
                 log().i("XDB loaded",uri);
+            } else {
+                log().d("not found",f);
             }
-        } catch (Throwable t) {}
+        } catch (Throwable t) {
+            log().d(t);
+        }
     }
 
     @Override
     public void save() {
         File f = getFile();
         String content = "xdb:" + MUri.encode(api) + "/" + MUri.encode(service) + "/" + MUri.encode(datasource);
+        log().d("save to",f);
         MFile.writeFile(f, content);
     }
     
     private File getFile() {
-        return new File("etc/" + CmdUse.class.getCanonicalName() + ".cfg");
+        return MApi.getFile(MApi.SCOPE.ETC, CmdUse.class.getCanonicalName() + ".cfg");
     }
 
     @Override
