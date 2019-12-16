@@ -183,8 +183,16 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 		String value = System.getProperty(name);
 		if (value == null) {
 			switch (name) {
-			case MConstants.PROP_CONFIG_FILE: return "etc/" + def;
-			case MConstants.PROP_TIMER_CONFIG_FILE: return "etc/" + def;
+			case MConstants.PROP_CONFIG_FILE: {
+			    String file = MConstants.DEFAULT_MHUS_CONFIG_FILE;
+			    file = getCfgString(IApi.class, MConstants.PROP_CONFIG_FILE, file);
+			    return MApi.getFile(MApi.SCOPE.ETC, file).getAbsolutePath();
+			}
+			case MConstants.PROP_TIMER_CONFIG_FILE: {
+                String file = MConstants.DEFAULT_MHUS_TIMER_CONFIG_FILE;
+                file = getCfgString(IApi.class, MConstants.PROP_TIMER_CONFIG_FILE, file);
+			    return MApi.getFile(MApi.SCOPE.ETC, MConstants.DEFAULT_MHUS_TIMER_CONFIG_FILE).getAbsolutePath();
+			}
 			default:
 				return def;
 			}
