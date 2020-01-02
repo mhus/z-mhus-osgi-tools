@@ -46,6 +46,15 @@ public abstract class AbstractCmd extends MObject implements Action {
             for (CmdInterceptor interceptor : interceptors)
                 interceptor.onCmdStart(session);
         }
+        // shorten thread name - for logging
+        String tName = Thread.currentThread().getName();
+        if (tName == null || tName.length() == 0)
+            Thread.currentThread().setName(getClass().getName()); // should not happen
+        else
+        if (tName.length() > 40) {
+            Thread.currentThread().setName(tName.substring(0,40));
+        }
+        // execute
         Object ret = null;
         try {
             ret = execute2();
