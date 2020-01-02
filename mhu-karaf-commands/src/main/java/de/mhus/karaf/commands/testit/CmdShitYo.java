@@ -95,4 +95,8 @@ public class CmdShitYo extends AbstractCmd {
 	public Session getSession() {
 	    return session;
 	}
+	
+	public String getTblOpt() {
+	    return tblOpt;
+	}
 }

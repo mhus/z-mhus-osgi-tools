@@ -46,6 +46,7 @@ public class MhusShit implements ShitIfc {
 		System.out.println("housekeepertest");
 		System.out.println("housekeepertasks");
 		System.out.println("locks - print known locks from LockManager");
+		System.out.println("lock <id> - print details");
 		System.out.println("releaselock <id>");
 		System.out.println("createlock <name> - create managed lock");
 		System.out.println("setlock <id>");
@@ -100,8 +101,22 @@ public class MhusShit implements ShitIfc {
 				}
 			System.out.println("Not found");
 		} else
+		if (cmd.equals("lock")) {
+		    long id = Long.parseLong(parameters[0]);
+            for (Lock lock : M.l(LockManager.class).managedLocks()) {
+                if (lock.hashCode() == id) {
+                    System.out.println("Lock: " + lock);
+                    System.out.println("Name: " + lock.getName());
+                    System.out.println("Locked: " + lock.isLocked());
+                    System.out.println("Owner: " + lock.getOwner());
+                    System.out.println("Time: " + lock.getLockTime());
+                    System.out.println("Start StackTrace:");
+                    System.out.println(lock.getStartStackTrace());
+                }
+            }
+		} else
 		if (cmd.equals("locks")) {
-			ConsoleTable out = new ConsoleTable(false);
+			ConsoleTable out = new ConsoleTable(base.getTblOpt());
 			long now = System.currentTimeMillis();
 			out.setHeaderValues("Id","Name","Locked","Owner","Time","Since","Managed","Cnt");
 			for (Lock lock : M.l(LockManager.class).managedLocks())
@@ -147,7 +162,7 @@ public class MhusShit implements ShitIfc {
 		}
 		if (cmd.equals("housekeepertasks")) {
 			Map<MHousekeeperTask, Long> map = DefaultHousekeeper.getAll();
-			ConsoleTable table = new ConsoleTable(false);
+			ConsoleTable table = new ConsoleTable(base.getTblOpt());
 			table.setHeaderValues("Name","Class","Sleep");
 			for (Entry<MHousekeeperTask, Long> entry : map.entrySet())
 				table.addRowValues(entry.getKey().getName(),MSystem.getCanonicalClassName(entry.getKey().getClass()),entry.getValue());
