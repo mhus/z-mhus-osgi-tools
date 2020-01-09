@@ -32,7 +32,7 @@ import de.mhus.lib.core.crypt.pem.PemBlock;
 import de.mhus.lib.core.crypt.pem.PemUtil;
 import de.mhus.lib.core.parser.ParseException;
 import de.mhus.lib.core.vault.DefaultEntry;
-import de.mhus.lib.core.vault.FileVaultSource;
+import de.mhus.lib.core.vault.VaultSourceFromSecFile;
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.MVaultUtil;
 import de.mhus.lib.core.vault.MutableVaultSource;
@@ -354,7 +354,7 @@ public class CmdVault extends AbstractCmd {
 			System.out.println("OK");
 		} else
 		if (cmd.equals("addfilesource")) {
-			FileVaultSource source = new FileVaultSource(new File(parameters[0]), parameters[1]);
+			VaultSourceFromSecFile source = new VaultSourceFromSecFile(new File(parameters[0]), parameters[1]);
 			vault.registerSource(source);
 			System.out.println("Registered " + source);
 		} else
