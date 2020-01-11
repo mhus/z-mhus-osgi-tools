@@ -48,11 +48,17 @@ public abstract class AbstractCmd extends MObject implements Action {
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
-        if (tName == null || tName.length() == 0)
-            Thread.currentThread().setName(getClass().getName()); // should not happen
-        else
+        if (tName == null || tName.length() == 0) {
+            tName = getClass().getName();
+            Thread.currentThread().setName(tName); // should not happen
+        } else
         if (tName.length() > 40) {
-            Thread.currentThread().setName(tName.substring(0,40));
+            tName = tName.substring(0,40);
+            Thread.currentThread().setName(tName);
+        }
+        if (tName.indexOf('\n') > -1) {
+                tName = tName.replace('\n', ' ');
+                Thread.currentThread().setName(tName);
         }
         // execute
         Object ret = null;
