@@ -28,12 +28,13 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.xdb.XdbType;
+import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.xdb.XdbApi;
 import de.mhus.osgi.api.xdb.XdbUtil;
 
 @Command(scope = "xdb", name = "view", description = "Show a object")
 @Service
-public class CmdView implements Action {
+public class CmdView extends AbstractCmd {
 
 	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
     String typeName;
@@ -43,9 +44,6 @@ public class CmdView implements Action {
 	
 	@Option(name="-o", aliases="--out", description="Comma separated list of fields to print",required=false)
 	String fieldsComma = null;
-
-	@Option(name="-f", aliases="--full", description="Print the full value content also if it's very long",required=false)
-	boolean full = false;
 
 	@Option(name="-v", aliases="--verbose", description="Try to analyse Objects and print the values separately",required=false)
 	boolean verbose = false;
@@ -66,7 +64,7 @@ public class CmdView implements Action {
     private Session session;
 
 	@Override
-	public Object execute() throws Exception {
+	public Object execute2() throws Exception {
 		
 		apiName = XdbUtil.getApiName(session, apiName);
 		serviceName = XdbUtil.getServiceName(session, serviceName);
@@ -84,7 +82,7 @@ public class CmdView implements Action {
 			}
 			System.out.println(">>> VIEW " + type.getIdAsString(object));
 
-			ConsoleTable out = new ConsoleTable(full);
+			ConsoleTable out = new ConsoleTable(tblOpt);
 			out.setHeaderValues("Field","Value","Type");
 
 			List<String> fieldNames = type.getAttributeNames();
@@ -107,7 +105,7 @@ public class CmdView implements Action {
 				out.addRowValues(name,v,type.getAttributeType(name));
 			}
 			
-			out.print(System.out);
+			out.print();
 			output = object;
 			
 		}
@@ -116,6 +114,6 @@ public class CmdView implements Action {
 			session.put(outputParam, output);
 		return null;
 	}
-	
+
 
 }
