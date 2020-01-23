@@ -243,7 +243,7 @@ public class CmdLogTail extends AbstractCmd {
 	    	if (closed) return;
 	    	try {
 	    		
-	    		if (threadFilter != null && threadFilter.contains(Thread.currentThread()) )
+	    		if (threadFilter != null && !threadFilter.contains(Thread.currentThread()) )
 	    			return;
 	    		
 		        if ((logger != null) &&
