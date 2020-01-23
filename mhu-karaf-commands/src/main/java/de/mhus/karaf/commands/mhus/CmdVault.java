@@ -40,7 +40,7 @@ import de.mhus.lib.core.vault.VaultEntry;
 import de.mhus.lib.core.vault.VaultSource;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "vault", description = "Vault Manipulation")
+@Command(scope = "mhus", name = "keychain", description = "Vault Manipulation")
 @Service
 public class CmdVault extends AbstractCmd {
 
