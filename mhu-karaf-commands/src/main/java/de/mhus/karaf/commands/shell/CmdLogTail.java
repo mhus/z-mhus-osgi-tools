@@ -17,6 +17,7 @@ package de.mhus.karaf.commands.shell;
 
 
 import java.io.PrintStream;
+import java.util.LinkedList;
 
 import org.apache.karaf.log.core.LogEventFormatter;
 import org.apache.karaf.log.core.LogService;
@@ -36,6 +37,8 @@ import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.karaf.CmdInterceptor;
+import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
 // From https://github.com/apache/karaf/blob/678177241a3b03181490ba4a942e99b7745ba055/log/src/main/java/org/apache/karaf/log/command/LogTail.java
 
@@ -93,8 +96,12 @@ public class CmdLogTail extends AbstractCmd {
 //	            entries = 50;
 //	        }
 	        int minLevel = getMinLevel(level);
-			a = new LogTailContainer(session,entries,minLevel,context,logger,logService,formatter,overridenPattern, noColor, consoleOnly ? Thread.currentThread() : null);
+			a = new LogTailContainer(session,entries,minLevel,context,logger,logService,formatter,overridenPattern, noColor, consoleOnly );
 			session.put("__log_tail2",a);
+			if (consoleOnly) {
+			    LogTaggerIntercepter inter = new LogTaggerIntercepter();
+    			CmdInterceptorUtil.setInterceptor(session, inter);
+			}
 		}
 
         return null;
@@ -113,6 +120,33 @@ public class CmdLogTail extends AbstractCmd {
         return minLevel;
     }
     
+    private static class LogTaggerIntercepter implements CmdInterceptor {
+
+        @Override
+        public void onCmdStart(Session session) {
+            LogTailContainer tail = (LogTailContainer)session.get("__log_tail2");
+            if (tail == null || tail.threadFilter == null) {
+                close(session);
+                return;
+            }
+            tail.threadFilter.add(Thread.currentThread());
+        }
+
+        @Override
+        public void onCmdEnd(Session session) {
+            LogTailContainer tail = (LogTailContainer)session.get("__log_tail2");
+            if (tail == null || tail.threadFilter == null) {
+                close(session);
+                return;
+            }
+            tail.threadFilter.remove(Thread.currentThread());
+        }
+
+        public static void close(Session session) {
+            CmdInterceptorUtil.getInterceptor(session, LogTaggerIntercepter.class);
+        }
+        
+    }
     
     /**
      * Track LogService dynamically so we can react when the log core bundle stops even while we block for the tail
@@ -160,20 +194,22 @@ public class CmdLogTail extends AbstractCmd {
 		private String overridenPattern;
 		private int entries;
 		private boolean noColor;
-		private Thread threadFilter;
+		private LinkedList<Thread> threadFilter;
 		private boolean closed;
+        private Session session;
     	
-		public LogTailContainer(Session session, int entries, int minLevel, BundleContext context, String logger, LogService logService, LogEventFormatter formatter, String overridenPattern, boolean noColor, Thread threadFilter) {
+		public LogTailContainer(Session session, int entries, int minLevel, BundleContext context, String logger, LogService logService, LogEventFormatter formatter, String overridenPattern, boolean noColor, boolean threadFilter) {
 			this.logService = logService;
 			this.logger = logger;
 			this.formatter = formatter;
 			this.overridenPattern = overridenPattern;
 			this.entries = entries;
 			this.noColor = noColor;
-			this.threadFilter = threadFilter;
+			this.threadFilter = threadFilter ? new LinkedList<>(): null;
 			
-			System.out.println("Start LogTail " + (threadFilter != null ? "for " + threadFilter : "" ) );
+			System.out.println("Start LogTail " + (threadFilter ? "for console" : "" ) );
 			
+			this.session = session;
 	        // Do not use System.out as it may write to the wrong console depending on the thread that calls our log handler
 	        PrintStream out = session.getConsole();
 	        display(out, minLevel);
@@ -188,6 +224,10 @@ public class CmdLogTail extends AbstractCmd {
 		public void close() {
 			if (closed) return;
 			closed = true;
+			if (threadFilter != null)
+			    LogTaggerIntercepter.close(session);
+			threadFilter = null;
+			session = null;
             tracker.close();
 		}
 
@@ -203,7 +243,7 @@ public class CmdLogTail extends AbstractCmd {
 	    	if (closed) return;
 	    	try {
 	    		
-	    		if (threadFilter != null && threadFilter != Thread.currentThread())
+	    		if (threadFilter != null && threadFilter.contains(Thread.currentThread()) )
 	    			return;
 	    		
 		        if ((logger != null) &&

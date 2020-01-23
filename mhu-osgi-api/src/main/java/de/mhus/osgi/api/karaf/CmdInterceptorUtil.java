@@ -57,4 +57,17 @@ public class CmdInterceptorUtil {
         return null;
     }
     
+    @SuppressWarnings("unchecked")
+    public static <T extends CmdInterceptor> T removeInterceptor(Session session, Class<?> clazz) {
+        List<CmdInterceptor> interceptors = (List<CmdInterceptor>) session.get(SESSION_KEY);
+        if (interceptors == null) return null;
+        for (CmdInterceptor interceptor : interceptors) {
+            if (interceptor.getClass().getCanonicalName().equals(clazz.getCanonicalName())) {
+                interceptors.remove(interceptor);
+                return (T)interceptor;
+            }
+        }
+        return null;
+    }
+    
 }
