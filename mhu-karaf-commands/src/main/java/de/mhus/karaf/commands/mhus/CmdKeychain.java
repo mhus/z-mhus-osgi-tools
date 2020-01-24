@@ -25,6 +25,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MPassword;
+import de.mhus.lib.core.MValidator;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.crypt.Blowfish;
@@ -50,7 +51,7 @@ public class CmdKeychain extends AbstractCmd {
 			+ "Commands:\n"
 			+ " sources\n"
 			+ " list\n"
-			+ " get <id>\n"
+			+ " get <id/name>\n"
 			+ " move <id> <to source>   - clone and remove from old source\n"
 			+ " clone <id> <to source>  - copy with the same id\n"
 			+ " copy <id> <to source>   - copy with a new id\n"
@@ -326,10 +327,17 @@ public class CmdKeychain extends AbstractCmd {
 		} else
 		if (cmd.equals("get")) {
 			VaultEntry entry = null;
-			if (sourcename != null)
-				entry = vault.getSource(sourcename).getEntry(UUID.fromString(parameters[0]));
-			else
-				entry = vault.getEntry(UUID.fromString(parameters[0]));
+			if (sourcename != null) {
+			    if (MValidator.isUUID(parameters[0]))
+			        entry = vault.getSource(sourcename).getEntry(UUID.fromString(parameters[0]));
+			    else
+                    entry = vault.getSource(sourcename).getEntry(parameters[0]);
+			} else {
+                if (MValidator.isUUID(parameters[0]))
+                    entry = vault.getEntry(UUID.fromString(parameters[0]));
+                else
+                    entry = vault.getEntry(parameters[0]);
+			}
 			if (entry == null) {
 				System.out.println("*** Entry not found");
 				return null;
