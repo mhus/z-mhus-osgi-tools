@@ -52,6 +52,10 @@ public class CmdKeychain extends AbstractCmd {
 			+ " sources\n"
 			+ " list\n"
 			+ " get <id/name>\n"
+            + " set <id> <type> <name> <description>\n"
+			+ " settype <id> <type>\n"
+            + " setname <id> <name>\n"
+            + " setdesc <id> <description>\n"
 			+ " move <id> <to source>   - clone and remove from old source\n"
 			+ " clone <id> <to source>  - copy with the same id\n"
 			+ " copy <id> <to source>   - copy with a new id\n"
@@ -158,13 +162,13 @@ public class CmdKeychain extends AbstractCmd {
 		if (cmd.equals("list")) {
 			if (sourcename == null) {
 				ConsoleTable out = new ConsoleTable(tblOpt);
-				out.setHeaderValues("Source","Id","Type","Description");
+				out.setHeaderValues("Source","Id","Type","Name","Description");
 				for (String sourceName : vault.getSourceNames()) {
 					try {
 						VaultSource source = vault.getSource(sourceName);
 						for (UUID id : source.getEntryIds()) {
 							VaultEntry entry = source.getEntry(id);
-							out.addRowValues(sourceName,id,entry.getType(),entry.getDescription());
+							out.addRowValues(sourceName,id,entry.getType(),entry.getName(),entry.getDescription());
 						}
 					} catch (Throwable t) {
 						log().d(sourceName,t);
@@ -178,10 +182,10 @@ public class CmdKeychain extends AbstractCmd {
 					return null;
 				}
 				ConsoleTable out = new ConsoleTable(tblOpt);
-				out.setHeaderValues("Source","Id","Type","Description");
+				out.setHeaderValues("Source","Id","Type","Name","Description");
 				for (UUID id : source.getEntryIds()) {
 					VaultEntry entry = source.getEntry(id);
-					out.addRowValues(sourcename,id,entry.getType(),entry.getDescription());
+					out.addRowValues(sourcename,id,entry.getType(),entry.getName(),entry.getDescription());
 				}
 				out.print(System.out);
 			}
@@ -344,6 +348,7 @@ public class CmdKeychain extends AbstractCmd {
 			}
 			System.out.println("Id         : " + entry.getId());
 			System.out.println("Type       : " + entry.getType());
+            System.out.println("Name       : " + entry.getName());
 			System.out.println("Description: " + entry.getDescription());
 			System.out.println(" Value");
 			System.out.println("-------");
@@ -351,6 +356,58 @@ public class CmdKeychain extends AbstractCmd {
 			System.out.println("-------");
 			return entry;
 		} else
+		if (cmd.equals("setname")) {
+            if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
+            VaultSource source = vault.getSource(sourcename);
+            if (source == null) {
+                System.out.println("*** Source not found!");
+                return null;
+            }
+            MutableVaultSource mutable = source.getEditable();
+		    VaultEntry entry = mutable.getEntry(UUID.fromString(parameters[0]));
+		    DefaultEntry newEntry = new DefaultEntry(entry.getId(), entry.getType(), parameters[1], entry.getDescription(), "");
+		    mutable.updateEntry(newEntry);
+		    System.out.println("Set");
+		} else
+        if (cmd.equals("setdesc")) {
+            if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
+            VaultSource source = vault.getSource(sourcename);
+            if (source == null) {
+                System.out.println("*** Source not found!");
+                return null;
+            }
+            MutableVaultSource mutable = source.getEditable();
+            VaultEntry entry = mutable.getEntry(UUID.fromString(parameters[0]));
+            DefaultEntry newEntry = new DefaultEntry(entry.getId(), entry.getType(), entry.getName(), parameters[1], "");
+            mutable.updateEntry(newEntry);
+            System.out.println("Set");
+        } else
+        if (cmd.equals("settype")) {
+            if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
+            VaultSource source = vault.getSource(sourcename);
+            if (source == null) {
+                System.out.println("*** Source not found!");
+                return null;
+            }
+            MutableVaultSource mutable = source.getEditable();
+            VaultEntry entry = mutable.getEntry(UUID.fromString(parameters[0]));
+            DefaultEntry newEntry = new DefaultEntry(entry.getId(), parameters[1], entry.getName(), entry.getDescription(), "");
+            mutable.updateEntry(newEntry);
+            System.out.println("Set");
+        } else
+        if (cmd.equals("set")) {
+            if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
+            VaultSource source = vault.getSource(sourcename);
+            if (source == null) {
+                System.out.println("*** Source not found!");
+                return null;
+            }
+            MutableVaultSource mutable = source.getEditable();
+            VaultEntry entry = mutable.getEntry(UUID.fromString(parameters[0]));
+            DefaultEntry newEntry = new DefaultEntry(entry.getId(), parameters[1], parameters[2], parameters[3], "");
+            mutable.updateEntry(newEntry);
+            System.out.println("Set");
+        } else
 		if (cmd.equals("remove")) {
 			if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
 			VaultSource source = vault.getSource(sourcename);
