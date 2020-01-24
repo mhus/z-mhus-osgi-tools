@@ -42,7 +42,7 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "keychain", description = "Vault Manipulation")
 @Service
-public class CmdVault extends AbstractCmd {
+public class CmdKeychain extends AbstractCmd {
 
 	private static final long MAX_FILE_LENGTH = 1024 * 1024; // max 1 MB
 
@@ -54,8 +54,8 @@ public class CmdVault extends AbstractCmd {
 			+ " move <id> <to source>   - clone and remove from old source\n"
 			+ " clone <id> <to source>  - copy with the same id\n"
 			+ " copy <id> <to source>   - copy with a new id\n"
-			+ " import <file> [description]\n"
-			+ " add <type> <description> <value>\n"
+			+ " import <file> [name] [description]\n"
+			+ " add <type> <name> <description> <value>\n"
 			+ " remove <id>\n"
 			+ " save\n"
 			+ " load\n"
@@ -97,7 +97,7 @@ public class CmdVault extends AbstractCmd {
 				System.out.println("*** Entry not found");
 				return null;
 			}
-			entry = new DefaultEntry(entry.getType(), entry.getDescription(), entry.getValue());
+			entry = new DefaultEntry(entry.getType(), entry.getName(), entry.getDescription(), entry.getValue());
 			vault.getSource(parameters[1]).getEditable().addEntry(entry);
 			System.out.println("OK " + entry.getId());
 		} else
@@ -195,8 +195,9 @@ public class CmdVault extends AbstractCmd {
 			MutableVaultSource mutable = source.getEditable();
 			
 			String type = parameters[0];
-			String description = parameters[1];
-			String content = parameters[2];
+			String name = parameters[1];
+			String description = parameters[2];
+			String content = parameters[3];
 			
             if (passphrase != null && content.contains("-----BEGIN CIPHER-----")) {
                 if ("".equals(passphrase)) {
@@ -226,9 +227,9 @@ public class CmdVault extends AbstractCmd {
                     id = pem.getString(PemBlock.IDENT, null);
             }
             
-			DefaultEntry entry = new DefaultEntry(type, description, content);
+			DefaultEntry entry = new DefaultEntry(type, name, description, content);
             if (id != null)
-                entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getDescription(), entry.getValue());
+                entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getName(), entry.getDescription(), entry.getValue());
 
             if (mutable.getEntry(entry.getId()) != null) {
                 if (force)
@@ -266,7 +267,8 @@ public class CmdVault extends AbstractCmd {
 				return null;
 			}
 			
-            String desc = (parameters.length > 1 ? parameters[1] + ";" : "") + file.getName() ;
+			String name = (parameters.length > 1 ? parameters[1] + ";" : "") ;
+            String desc = (parameters.length > 2 ? parameters[2] + ";" : "") + file.getName();
 			String content = MFile.readFile(file);
 			if (passphrase != null && content.contains("-----BEGIN CIPHER-----")) {
 		          if ("".equals(passphrase)) {
@@ -283,10 +285,10 @@ public class CmdVault extends AbstractCmd {
 			}
 			
 			String type = MVaultUtil.getType(content);
-			VaultEntry entry = new DefaultEntry(type,desc,content);
+			VaultEntry entry = new DefaultEntry(type,name,desc,content);
 			
 			if (id != null)
-			    entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getDescription(), entry.getValue());
+			    entry = new DefaultEntry(UUID.fromString(id), entry.getType(), entry.getName(), entry.getDescription(), entry.getValue());
 			
 			if (mutable.getEntry(entry.getId()) != null) {
 			    if (force)
