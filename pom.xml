@@ -21,16 +21,19 @@
 	<modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.mhus.lib</groupId>
-        <version>6.4.0</version>
+        <version>6.4.1-SNAPSHOT</version>
         <artifactId>mhus-karaf</artifactId>
     </parent>
 	<groupId>de.mhus.osgi</groupId>
 	<artifactId>mhus-osgi-tools</artifactId>
-	<version>6.4.0</version>
+	<version>6.4.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Tools</name>
 	<description>A set of tools to improve OSGi frameworks and karaf</description>
 	<url>http://www.mhus.de</url>
+	<properties>
+	   <mhus-osgi-tools.version>${project.version}</mhus-osgi-tools.version>
+	</properties>
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
