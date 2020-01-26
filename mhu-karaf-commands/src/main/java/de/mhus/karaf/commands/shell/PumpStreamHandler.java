@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.karaf.commands.shell;
@@ -22,8 +20,7 @@ import java.io.OutputStream;
 /**
  * Copies standard output and error of children streams to standard output and error of the parent.
  */
-public class PumpStreamHandler
-{
+public class PumpStreamHandler {
     private final InputStream in;
 
     private final OutputStream out;
@@ -42,7 +39,8 @@ public class PumpStreamHandler
     // NOTE: May want to use a ThreadPool here, 3 threads per/pair seems kinda expensive :-(
     //
 
-    public PumpStreamHandler(final InputStream in, final OutputStream out, final OutputStream err, String name) {
+    public PumpStreamHandler(
+            final InputStream in, final OutputStream out, final OutputStream err, String name) {
         assert in != null;
         assert out != null;
         assert err != null;
@@ -68,7 +66,8 @@ public class PumpStreamHandler
 
     /**
      * Set the input stream from which to read the standard output of the child.
-     * @param in 
+     *
+     * @param in
      */
     public void setChildOutputStream(final InputStream in) {
         assert in != null;
@@ -78,7 +77,8 @@ public class PumpStreamHandler
 
     /**
      * Set the input stream from which to read the standard error of the child.
-     * @param in 
+     *
+     * @param in
      */
     public void setChildErrorStream(final InputStream in) {
         assert in != null;
@@ -90,25 +90,26 @@ public class PumpStreamHandler
 
     /**
      * Set the output stream by means of which input can be sent to the child.
-     * @param out 
+     *
+     * @param out
      */
     public void setChildInputStream(final OutputStream out) {
         assert out != null;
 
         if (in != null) {
             inputPump = createInputPump(in, out, true);
-        }
-        else {
+        } else {
             try {
                 out.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 
     /**
      * Attach to a child streams from the given process.
      *
-     * @param p     The process to attach to.
+     * @param p The process to attach to.
      */
     public void attach(final Process p) {
         assert p != null;
@@ -117,9 +118,7 @@ public class PumpStreamHandler
         setChildOutputStream(p.getInputStream());
         setChildErrorStream(p.getErrorStream());
     }
-    /**
-     * Start pumping the streams.
-     */
+    /** Start pumping the streams. */
     public void start() {
         if (outputPump != null) {
             Thread thread = new Thread(outputPump);
@@ -143,54 +142,53 @@ public class PumpStreamHandler
         }
     }
 
-    /**
-     * Stop pumping the streams.
-     */
+    /** Stop pumping the streams. */
     public void stop() {
         if (outputPump != null) {
             try {
                 outputPump.stop();
                 outputPump.waitFor();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 // ignore
             }
             try {
                 outputPump.getIn().close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
 
         if (errorPump != null) {
             try {
                 errorPump.stop();
                 errorPump.waitFor();
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 // ignore
             }
             try {
                 errorPump.getIn().close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
 
         if (inputPump != null) {
             inputPump.stop();
             try {
                 inputPump.getOut().close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
 
         try {
             err.flush();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        }
         try {
             out.flush();
-        } catch (IOException e) { }
+        } catch (IOException e) {
+        }
     }
 
-    /**
-     * Create the pump to handle child output.
-     */
+    /** Create the pump to handle child output. */
     protected void createChildOutputPump(final InputStream in, final OutputStream out) {
         assert in != null;
         assert out != null;
@@ -198,9 +196,7 @@ public class PumpStreamHandler
         outputPump = createPump(in, out);
     }
 
-    /**
-     * Create the pump to handle error output.
-     */
+    /** Create the pump to handle error output. */
     protected void createChildErrorPump(final InputStream in, final OutputStream out) {
         assert in != null;
         assert out != null;
@@ -208,9 +204,7 @@ public class PumpStreamHandler
         errorPump = createPump(in, out);
     }
 
-    /**
-     * Creates a stream pumper to copy the given input stream to the given output stream.
-     */
+    /** Creates a stream pumper to copy the given input stream to the given output stream. */
     protected StreamPumper createPump(final InputStream in, final OutputStream out) {
         assert in != null;
         assert out != null;
@@ -219,15 +213,15 @@ public class PumpStreamHandler
     }
 
     /**
-     * Creates a stream pumper to copy the given input stream to the
-     * given output stream.
+     * Creates a stream pumper to copy the given input stream to the given output stream.
      *
-     * @param in                    The input stream to copy from.
-     * @param out                   The output stream to copy to.
-     * @param closeWhenExhausted    If true close the inputstream.
-     * @return                      A thread object that does the pumping.
+     * @param in The input stream to copy from.
+     * @param out The output stream to copy to.
+     * @param closeWhenExhausted If true close the inputstream.
+     * @return A thread object that does the pumping.
      */
-    protected StreamPumper createPump(final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
+    protected StreamPumper createPump(
+            final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
         assert in != null;
         assert out != null;
 
@@ -236,10 +230,11 @@ public class PumpStreamHandler
     }
 
     /**
-     * Creates a stream pumper to copy the given input stream to the
-     * given output stream. Used for standard input.
+     * Creates a stream pumper to copy the given input stream to the given output stream. Used for
+     * standard input.
      */
-    protected StreamPumper createInputPump(final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
+    protected StreamPumper createInputPump(
+            final InputStream in, final OutputStream out, final boolean closeWhenExhausted) {
         assert in != null;
         assert out != null;
 
@@ -248,11 +243,11 @@ public class PumpStreamHandler
         pumper.setAutoflush(true);
         return pumper;
     }
-    
+
     public StreamPumper getOutputPump() {
         return this.outputPump;
     }
-    
+
     public StreamPumper getErrorPump() {
         return this.errorPump;
     }

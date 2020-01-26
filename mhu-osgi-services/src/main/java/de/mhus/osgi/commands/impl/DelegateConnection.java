@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.osgi.commands.impl;
@@ -37,309 +35,298 @@ import java.util.concurrent.Executor;
 import de.mhus.osgi.commands.db.DelegatedDataSource;
 
 public class DelegateConnection implements Connection {
-	
-	protected Connection instance;
-	protected DelegatedDataSource dataSource;
 
-	public DelegateConnection(Connection connection,
-			DelegatedDataSource dataSource) {
-		instance = connection;
-		this.dataSource = dataSource;
-	}
+    protected Connection instance;
+    protected DelegatedDataSource dataSource;
 
-	@Override
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		return instance.unwrap(iface);
-	}
+    public DelegateConnection(Connection connection, DelegatedDataSource dataSource) {
+        instance = connection;
+        this.dataSource = dataSource;
+    }
 
-	@Override
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		return instance.isWrapperFor(iface);
-	}
+    @Override
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return instance.unwrap(iface);
+    }
 
-	@Override
-	public Statement createStatement() throws SQLException {
-		return instance.createStatement();
-	}
+    @Override
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return instance.isWrapperFor(iface);
+    }
 
-	@Override
-	public PreparedStatement prepareStatement(String sql) throws SQLException {
-		return instance.prepareStatement(sql);
-	}
+    @Override
+    public Statement createStatement() throws SQLException {
+        return instance.createStatement();
+    }
 
-	@Override
-	public CallableStatement prepareCall(String sql) throws SQLException {
-		return instance.prepareCall(sql);
-	}
+    @Override
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return instance.prepareStatement(sql);
+    }
 
-	@Override
-	public String nativeSQL(String sql) throws SQLException {
-		return instance.nativeSQL(sql);
-	}
+    @Override
+    public CallableStatement prepareCall(String sql) throws SQLException {
+        return instance.prepareCall(sql);
+    }
 
-	@Override
-	public void setAutoCommit(boolean autoCommit) throws SQLException {
-		instance.setAutoCommit(autoCommit);
-	}
+    @Override
+    public String nativeSQL(String sql) throws SQLException {
+        return instance.nativeSQL(sql);
+    }
 
-	@Override
-	public boolean getAutoCommit() throws SQLException {
-		return instance.getAutoCommit();
-	}
+    @Override
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        instance.setAutoCommit(autoCommit);
+    }
 
-	@Override
-	public void commit() throws SQLException {
-		instance.commit();
-	}
+    @Override
+    public boolean getAutoCommit() throws SQLException {
+        return instance.getAutoCommit();
+    }
 
-	@Override
-	public void rollback() throws SQLException {
-		instance.rollback();
-	}
+    @Override
+    public void commit() throws SQLException {
+        instance.commit();
+    }
 
-	@Override
-	public void close() throws SQLException {
-		instance.close();
-	}
+    @Override
+    public void rollback() throws SQLException {
+        instance.rollback();
+    }
 
-	@Override
-	public boolean isClosed() throws SQLException {
-		return instance.isClosed();
-	}
+    @Override
+    public void close() throws SQLException {
+        instance.close();
+    }
 
-	@Override
-	public DatabaseMetaData getMetaData() throws SQLException {
-		return new DelegateMetaData( instance.getMetaData(), dataSource);
-	}
+    @Override
+    public boolean isClosed() throws SQLException {
+        return instance.isClosed();
+    }
 
-	@Override
-	public void setReadOnly(boolean readOnly) throws SQLException {
-		instance.setReadOnly(readOnly);
-	}
+    @Override
+    public DatabaseMetaData getMetaData() throws SQLException {
+        return new DelegateMetaData(instance.getMetaData(), dataSource);
+    }
 
-	@Override
-	public boolean isReadOnly() throws SQLException {
-		return instance.isReadOnly();
-	}
+    @Override
+    public void setReadOnly(boolean readOnly) throws SQLException {
+        instance.setReadOnly(readOnly);
+    }
 
-	@Override
-	public void setCatalog(String catalog) throws SQLException {
-		instance.setCatalog(catalog);
-	}
+    @Override
+    public boolean isReadOnly() throws SQLException {
+        return instance.isReadOnly();
+    }
 
-	@Override
-	public String getCatalog() throws SQLException {
-		return instance.getCatalog();
-	}
+    @Override
+    public void setCatalog(String catalog) throws SQLException {
+        instance.setCatalog(catalog);
+    }
 
-	@Override
-	public void setTransactionIsolation(int level) throws SQLException {
-		instance.setTransactionIsolation(level);
-	}
+    @Override
+    public String getCatalog() throws SQLException {
+        return instance.getCatalog();
+    }
 
-	@Override
-	public int getTransactionIsolation() throws SQLException {
-		return instance.getTransactionIsolation();
-	}
+    @Override
+    public void setTransactionIsolation(int level) throws SQLException {
+        instance.setTransactionIsolation(level);
+    }
 
-	@Override
-	public SQLWarning getWarnings() throws SQLException {
-		return instance.getWarnings();
-	}
+    @Override
+    public int getTransactionIsolation() throws SQLException {
+        return instance.getTransactionIsolation();
+    }
 
-	@Override
-	public void clearWarnings() throws SQLException {
-		instance.clearWarnings();
-	}
+    @Override
+    public SQLWarning getWarnings() throws SQLException {
+        return instance.getWarnings();
+    }
 
-	@Override
-	public Statement createStatement(int resultSetType, int resultSetConcurrency)
-			throws SQLException {
-		return instance.createStatement(resultSetType, resultSetConcurrency);
-	}
-	
-	@Override
-	public PreparedStatement prepareStatement(String sql, int resultSetType,
-			int resultSetConcurrency) throws SQLException {
-		return instance.prepareStatement(sql, resultSetType,
-				resultSetConcurrency);
-	}
+    @Override
+    public void clearWarnings() throws SQLException {
+        instance.clearWarnings();
+    }
 
-	@Override
-	public CallableStatement prepareCall(String sql, int resultSetType,
-			int resultSetConcurrency) throws SQLException {
-		return instance.prepareCall(sql, resultSetType, resultSetConcurrency);
-	}
+    @Override
+    public Statement createStatement(int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        return instance.createStatement(resultSetType, resultSetConcurrency);
+    }
 
-	@Override
-	public Map<String, Class<?>> getTypeMap() throws SQLException {
-		return instance.getTypeMap();
-	}
+    @Override
+    public PreparedStatement prepareStatement(
+            String sql, int resultSetType, int resultSetConcurrency) throws SQLException {
+        return instance.prepareStatement(sql, resultSetType, resultSetConcurrency);
+    }
 
-	@Override
-	public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
-		instance.setTypeMap(map);
-	}
+    @Override
+    public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency)
+            throws SQLException {
+        return instance.prepareCall(sql, resultSetType, resultSetConcurrency);
+    }
 
-	@Override
-	public void setHoldability(int holdability) throws SQLException {
-		instance.setHoldability(holdability);
-	}
+    @Override
+    public Map<String, Class<?>> getTypeMap() throws SQLException {
+        return instance.getTypeMap();
+    }
 
-	@Override
-	public int getHoldability() throws SQLException {
-		return instance.getHoldability();
-	}
+    @Override
+    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+        instance.setTypeMap(map);
+    }
 
-	@Override
-	public Savepoint setSavepoint() throws SQLException {
-		return instance.setSavepoint();
-	}
+    @Override
+    public void setHoldability(int holdability) throws SQLException {
+        instance.setHoldability(holdability);
+    }
 
-	@Override
-	public Savepoint setSavepoint(String name) throws SQLException {
-		return instance.setSavepoint(name);
-	}
+    @Override
+    public int getHoldability() throws SQLException {
+        return instance.getHoldability();
+    }
 
-	@Override
-	public void rollback(Savepoint savepoint) throws SQLException {
-		instance.rollback(savepoint);
-	}
+    @Override
+    public Savepoint setSavepoint() throws SQLException {
+        return instance.setSavepoint();
+    }
 
-	@Override
-	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-		instance.releaseSavepoint(savepoint);
-	}
+    @Override
+    public Savepoint setSavepoint(String name) throws SQLException {
+        return instance.setSavepoint(name);
+    }
 
-	@Override
-	public Statement createStatement(int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return instance.createStatement(resultSetType, resultSetConcurrency,
-				resultSetHoldability);
-	}
+    @Override
+    public void rollback(Savepoint savepoint) throws SQLException {
+        instance.rollback(savepoint);
+    }
 
-	@Override
-	public PreparedStatement prepareStatement(String sql, int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return instance.prepareStatement(sql, resultSetType,
-				resultSetConcurrency, resultSetHoldability);
-	}
+    @Override
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+        instance.releaseSavepoint(savepoint);
+    }
 
-	@Override
-	public CallableStatement prepareCall(String sql, int resultSetType,
-			int resultSetConcurrency, int resultSetHoldability)
-			throws SQLException {
-		return instance.prepareCall(sql, resultSetType, resultSetConcurrency,
-				resultSetHoldability);
-	}
+    @Override
+    public Statement createStatement(
+            int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
+        return instance.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	@Override
-	public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys)
-			throws SQLException {
-		return instance.prepareStatement(sql, autoGeneratedKeys);
-	}
+    @Override
+    public PreparedStatement prepareStatement(
+            String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
+        return instance.prepareStatement(
+                sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	@Override
-	public PreparedStatement prepareStatement(String sql, int[] columnIndexes)
-			throws SQLException {
-		return instance.prepareStatement(sql, columnIndexes);
-	}
+    @Override
+    public CallableStatement prepareCall(
+            String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
+            throws SQLException {
+        return instance.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
 
-	@Override
-	public PreparedStatement prepareStatement(String sql, String[] columnNames)
-			throws SQLException {
-		return instance.prepareStatement(sql, columnNames);
-	}
+    @Override
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys)
+            throws SQLException {
+        return instance.prepareStatement(sql, autoGeneratedKeys);
+    }
 
-	@Override
-	public Clob createClob() throws SQLException {
-		return instance.createClob();
-	}
+    @Override
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+        return instance.prepareStatement(sql, columnIndexes);
+    }
 
-	@Override
-	public Blob createBlob() throws SQLException {
-		return instance.createBlob();
-	}
+    @Override
+    public PreparedStatement prepareStatement(String sql, String[] columnNames)
+            throws SQLException {
+        return instance.prepareStatement(sql, columnNames);
+    }
 
-	@Override
-	public NClob createNClob() throws SQLException {
-		return instance.createNClob();
-	}
+    @Override
+    public Clob createClob() throws SQLException {
+        return instance.createClob();
+    }
 
-	@Override
-	public SQLXML createSQLXML() throws SQLException {
-		return instance.createSQLXML();
-	}
+    @Override
+    public Blob createBlob() throws SQLException {
+        return instance.createBlob();
+    }
 
-	@Override
-	public boolean isValid(int timeout) throws SQLException {
-		return instance.isValid(timeout);
-	}
+    @Override
+    public NClob createNClob() throws SQLException {
+        return instance.createNClob();
+    }
 
-	@Override
-	public void setClientInfo(String name, String value)
-			throws SQLClientInfoException {
-		instance.setClientInfo(name, value);
-	}
+    @Override
+    public SQLXML createSQLXML() throws SQLException {
+        return instance.createSQLXML();
+    }
 
-	@Override
-	public void setClientInfo(Properties properties)
-			throws SQLClientInfoException {
-		instance.setClientInfo(properties);
-	}
+    @Override
+    public boolean isValid(int timeout) throws SQLException {
+        return instance.isValid(timeout);
+    }
 
-	@Override
-	public String getClientInfo(String name) throws SQLException {
-		return instance.getClientInfo(name);
-	}
+    @Override
+    public void setClientInfo(String name, String value) throws SQLClientInfoException {
+        instance.setClientInfo(name, value);
+    }
 
-	@Override
-	public Properties getClientInfo() throws SQLException {
-		return instance.getClientInfo();
-	}
+    @Override
+    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+        instance.setClientInfo(properties);
+    }
 
-	@Override
-	public Array createArrayOf(String typeName, Object[] elements)
-			throws SQLException {
-		return instance.createArrayOf(typeName, elements);
-	}
+    @Override
+    public String getClientInfo(String name) throws SQLException {
+        return instance.getClientInfo(name);
+    }
 
-	@Override
-	public Struct createStruct(String typeName, Object[] attributes)
-			throws SQLException {
-		return instance.createStruct(typeName, attributes);
-	}
+    @Override
+    public Properties getClientInfo() throws SQLException {
+        return instance.getClientInfo();
+    }
 
-	@Override
-	public void setSchema(String schema) throws SQLException {
-		instance.setSchema(schema);
-	}
+    @Override
+    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+        return instance.createArrayOf(typeName, elements);
+    }
 
-	@Override
-	public String getSchema() throws SQLException {
-		return instance.getSchema();
-	}
+    @Override
+    public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+        return instance.createStruct(typeName, attributes);
+    }
 
-	@Override
-	public void abort(Executor executor) throws SQLException {
-		instance.abort(executor);
-	}
+    @Override
+    public void setSchema(String schema) throws SQLException {
+        instance.setSchema(schema);
+    }
 
-	@Override
-	public void setNetworkTimeout(Executor executor, int milliseconds)
-			throws SQLException {
-		instance.setNetworkTimeout(executor, milliseconds);
-	}
+    @Override
+    public String getSchema() throws SQLException {
+        return instance.getSchema();
+    }
 
-	@Override
-	public int getNetworkTimeout() throws SQLException {
-		return instance.getNetworkTimeout();
-	}
+    @Override
+    public void abort(Executor executor) throws SQLException {
+        instance.abort(executor);
+    }
 
-	public DelegatedDataSource getDataSource() {
-		return dataSource;
-	}
+    @Override
+    public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
+        instance.setNetworkTimeout(executor, milliseconds);
+    }
 
+    @Override
+    public int getNetworkTimeout() throws SQLException {
+        return instance.getNetworkTimeout();
+    }
+
+    public DelegatedDataSource getDataSource() {
+        return dataSource;
+    }
 }

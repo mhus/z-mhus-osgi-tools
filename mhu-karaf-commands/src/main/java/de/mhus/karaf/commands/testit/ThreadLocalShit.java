@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.karaf.commands.testit;
@@ -30,7 +28,7 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
     private static long interval = 10000;
     private static ThreadLocal<String> threadLocal = new ThreadLocal<>();
     private static String msg = "Crazy Shit";
-    
+
     @Override
     public void printUsage() {
         System.out.println("status, start, stop, interval <msec>, msg <string>");
@@ -39,10 +37,8 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         if (cmd.equals("status")) {
-            if (myThread == null)
-                System.out.println("Stopped");
-            else
-                System.out.println("Started");
+            if (myThread == null) System.out.println("Stopped");
+            else System.out.println("Started");
         } else if (cmd.equals("start")) {
             if (myThread == null) {
                 close = false;
@@ -73,7 +69,7 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
             if (lm != null && lm instanceof TrailLevelMapper) {
                 log().i("Set trail level");
-                ((TrailLevelMapper)lm).doConfigureTrail(null,"MAP,T,D,I,W,E,F,G,0,TEST");
+                ((TrailLevelMapper) lm).doConfigureTrail(null, "MAP,T,D,I,W,E,F,G,0,TEST");
             }
         }
         MStopWatch time = new MStopWatch().start();
@@ -82,12 +78,11 @@ public class ThreadLocalShit extends MLog implements ShitIfc, Runnable {
             String trail = null;
             LevelMapper lm = MApi.get().getLogFactory().getLevelMapper();
             if (lm != null && lm instanceof TrailLevelMapper) {
-                trail = ((TrailLevelMapper)lm).getTrailId();
+                trail = ((TrailLevelMapper) lm).getTrailId();
             }
-            log().i("Content",time,threadLocal.get(), trail);
+            log().i("Content", time, threadLocal.get(), trail);
         }
-        log().i("Exit Thread",time);
+        log().i("Exit Thread", time);
         myThread = null; // cleanup before exit
     }
-
 }

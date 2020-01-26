@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 /*
@@ -89,7 +87,6 @@ public class LDAPOptions {
         if (o == null || getClass() != o.getClass()) return false;
         LDAPOptions that = (LDAPOptions) o;
         return options.equals(that.options);
-
     }
 
     @Override
@@ -179,11 +176,18 @@ public class LDAPOptions {
             env.put("java.naming.ldap.factory.socket", ManagedSSLSocketFactory.class.getName());
             ref = bundleContext.getServiceReference(KeystoreManager.class.getName());
             KeystoreManager manager = (KeystoreManager) bundleContext.getService(ref);
-            SSLSocketFactory factory = manager.createSSLFactory(
-                    getSslProvider(), getSslProtocol(), getSslAlgorithm(), getSslKeystore(),
-                    getSslKeyAlias(), getSslTrustStore(), getSslTimeout());
+            SSLSocketFactory factory =
+                    manager.createSSLFactory(
+                            getSslProvider(),
+                            getSslProtocol(),
+                            getSslAlgorithm(),
+                            getSslKeystore(),
+                            getSslKeyAlias(),
+                            getSslTrustStore(),
+                            getSslTimeout());
             ManagedSSLSocketFactory.setSocketFactory(factory);
-            Thread.currentThread().setContextClassLoader(ManagedSSLSocketFactory.class.getClassLoader());
+            Thread.currentThread()
+                    .setContextClassLoader(ManagedSSLSocketFactory.class.getClassLoader());
         } catch (Exception e) {
             throw new NamingException("Unable to setup SSL support for LDAP: " + e.getMessage());
         } finally {

@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 /*
@@ -53,20 +51,22 @@ import org.apache.karaf.jaas.modules.AbstractKarafLoginModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Karaf JAAS login module which uses a LDAP backend.
- */
+/** Karaf JAAS login module which uses a LDAP backend. */
 public class LDAPLoginModule extends AbstractKarafLoginModule {
 
     private static Logger logger = LoggerFactory.getLogger(LDAPLoginModule.class);
 
     @Override
-	public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
+    public void initialize(
+            Subject subject,
+            CallbackHandler callbackHandler,
+            Map<String, ?> sharedState,
+            Map<String, ?> options) {
         super.initialize(subject, callbackHandler, options);
     }
 
     @Override
-	public boolean login() throws LoginException {
+    public boolean login() throws LoginException {
         ClassLoader tccl = Thread.currentThread().getContextClassLoader();
         try {
             return doLogin();
@@ -86,7 +86,9 @@ public class LDAPLoginModule extends AbstractKarafLoginModule {
         } catch (IOException ioException) {
             throw new LoginException(ioException.getMessage());
         } catch (UnsupportedCallbackException unsupportedCallbackException) {
-            throw new LoginException(unsupportedCallbackException.getMessage() + " not available to obtain information from user.");
+            throw new LoginException(
+                    unsupportedCallbackException.getMessage()
+                            + " not available to obtain information from user.");
         }
 
         user = ((NameCallback) callbacks[0]).getName();
@@ -94,13 +96,14 @@ public class LDAPLoginModule extends AbstractKarafLoginModule {
         char[] tmpPassword = ((PasswordCallback) callbacks[1]).getPassword();
 
         // If either a username or password is specified don't allow authentication = "none".
-        // This is to prevent someone from logging into Karaf as any user without providing a 
-        // valid password (because if authentication = none, the password could be any 
+        // This is to prevent someone from logging into Karaf as any user without providing a
+        // valid password (because if authentication = none, the password could be any
         // value - it is ignored).
         LDAPOptions options = new LDAPOptions(this.options);
         String authentication = options.getAuthentication();
         if ("none".equals(authentication) && (user != null || tmpPassword != null)) {
-            logger.debug("Changing from authentication = none to simple since user or password was specified.");
+            logger.debug(
+                    "Changing from authentication = none to simple since user or password was specified.");
             // default to simple so that the provided user/password will get checked
             authentication = "simple";
             Map<String, Object> opts = new HashMap<>(this.options);
@@ -108,7 +111,8 @@ public class LDAPLoginModule extends AbstractKarafLoginModule {
             options = new LDAPOptions(opts);
         }
         boolean allowEmptyPasswords = options.getAllowEmptyPasswords();
-        if (!"none".equals(authentication) && !allowEmptyPasswords
+        if (!"none".equals(authentication)
+                && !allowEmptyPasswords
                 && (tmpPassword == null || tmpPassword.length == 0)) {
             throw new LoginException("Empty passwords not allowed");
         }
@@ -136,12 +140,19 @@ public class LDAPLoginModule extends AbstractKarafLoginModule {
         // step 2: bind the user using the DN
         DirContext context = null;
         try {
-            // switch the credentials to the Karaf login user so that we can verify his password is correct
+            // switch the credentials to the Karaf login user so that we can verify his password is
+            // correct
             logger.debug("Bind user (authentication).");
             Hashtable<String, Object> env = options.getEnv();
             env.put(Context.SECURITY_AUTHENTICATION, authentication);
-            logger.debug("Set the security principal for " + userDnAndNamespace[0] + "," + options.getUserBaseDn());
-            env.put(Context.SECURITY_PRINCIPAL, userDnAndNamespace[0] + "," + options.getUserBaseDn());
+            logger.debug(
+                    "Set the security principal for "
+                            + userDnAndNamespace[0]
+                            + ","
+                            + options.getUserBaseDn());
+            env.put(
+                    Context.SECURITY_PRINCIPAL,
+                    userDnAndNamespace[0] + "," + options.getUserBaseDn());
             env.put(Context.SECURITY_CREDENTIALS, password);
             logger.debug("Binding the user.");
             context = new InitialDirContext(env);
@@ -173,15 +184,14 @@ public class LDAPLoginModule extends AbstractKarafLoginModule {
     }
 
     @Override
-	public boolean abort() throws LoginException {
+    public boolean abort() throws LoginException {
         return true;
     }
 
     @Override
-	public boolean logout() throws LoginException {
+    public boolean logout() throws LoginException {
         subject.getPrincipals().removeAll(principals);
         principals.clear();
         return true;
     }
-
 }

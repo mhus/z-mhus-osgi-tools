@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.karaf.commands.impl;
@@ -35,52 +33,65 @@ import de.mhus.osgi.commands.db.FailoverDataSource;
 @Service
 public class CmdCreateDbFailover extends AbstractCmd {
 
-    @Option(name = "-o", aliases = { "--online" }, description = "Create the datasource online and not a blueprint", required = false, multiValued = false)
+    @Option(
+            name = "-o",
+            aliases = {"--online"},
+            description = "Create the datasource online and not a blueprint",
+            required = false,
+            multiValued = false)
     boolean online;
 
-	@Argument(index=0, name="sources", required=true, description="Source Datasources, separated by comma", multiValued=false)
+    @Argument(
+            index = 0,
+            name = "sources",
+            required = true,
+            description = "Source Datasources, separated by comma",
+            multiValued = false)
     String sources;
 
-	@Argument(index=1, name="target", required=true, description="New Pooling Datasource", multiValued=false)
+    @Argument(
+            index = 1,
+            name = "target",
+            required = true,
+            description = "New Pooling Datasource",
+            multiValued = false)
     String target;
-	
-    @Reference
-	private BundleContext context;
 
-	private DataSourceUtil util;
+    @Reference private BundleContext context;
 
-	@Override
-	public Object execute2() throws Exception {
+    private DataSourceUtil util;
+
+    @Override
+    public Object execute2() throws Exception {
 
         this.util = new DataSourceUtil(context);
-        
-		if (online) {
-	        
-	        FailoverDataSource dataSource = new FailoverDataSource();
-	        dataSource.setSource(sources);
-	        dataSource.setContext(context);
-	        
-	        util.registerDataSource(dataSource, target);
-	        
-		} else {
-			
-	        File karafBase = new File(System.getProperty("karaf.base"));
-	        File deployFolder = new File(karafBase, "deploy");
-	        File outFile = new File(deployFolder, "datasource-failover_" + target + ".xml");
 
-	        HashMap<String, String> properties = new HashMap<String, String>();
-	        properties.put("name", target);
-	        properties.put("source", sources);
-	        String templateFile = "datasource-failover.xml";
+        if (online) {
+
+            FailoverDataSource dataSource = new FailoverDataSource();
+            dataSource.setSource(sources);
+            dataSource.setContext(context);
+
+            util.registerDataSource(dataSource, target);
+
+        } else {
+
+            File karafBase = new File(System.getProperty("karaf.base"));
+            File deployFolder = new File(karafBase, "deploy");
+            File outFile = new File(deployFolder, "datasource-failover_" + target + ".xml");
+
+            HashMap<String, String> properties = new HashMap<String, String>();
+            properties.put("name", target);
+            properties.put("source", sources);
+            String templateFile = "datasource-failover.xml";
             InputStream is = this.getClass().getResourceAsStream(templateFile);
             if (is == null) {
-                throw new IllegalArgumentException("Template resource " + templateFile + " doesn't exist");
+                throw new IllegalArgumentException(
+                        "Template resource " + templateFile + " doesn't exist");
             }
             TemplateUtils.createFromTemplate(outFile, is, properties);
-			
-		}
+        }
 
-		return null;
-	}
-
+        return null;
+    }
 }

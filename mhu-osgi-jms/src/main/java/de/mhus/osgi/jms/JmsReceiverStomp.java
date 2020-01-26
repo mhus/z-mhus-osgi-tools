@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.osgi.jms;
@@ -30,83 +28,88 @@ import org.apache.activemq.transport.stomp.StompFrame;
 
 public class JmsReceiverStomp implements JmsReceiver {
 
-	private String user;
-	private String password;
-	private String url;
-	private boolean topic;
-	private String queue;
-	@SuppressWarnings("unused")
-	private JmsReceiverAdmin admin;
-	private StompConnection connection;
-	private Timer timer;
+    private String user;
+    private String password;
+    private String url;
+    private boolean topic;
+    private String queue;
 
-	public JmsReceiverStomp(String user, String password, String url, boolean topic, String queue) {
-		this.user = user;
-		this.password = password;
-		this.url = url;
-		this.topic = topic;
-		this.queue = queue;
-	}
+    @SuppressWarnings("unused")
+    private JmsReceiverAdmin admin;
 
-	@Override
-	public void init(JmsReceiverAdmin admin) {
-		this.admin = admin;
+    private StompConnection connection;
+    private Timer timer;
 
-		try {
-			connection = new StompConnection();
-			URL u = new URL(url);
-			connection.open(u.getHost(), u.getPort());
-			         
-			connection.connect(user, password);
-			
-			timer = new Timer(true);
-			timer.schedule(new TimerTask() {
-				
-				@Override
-				public void run() {
-					doReceive();
-				}
-			}, 1000, 100);
-			
-			connection.subscribe((topic ? "/topic/" : "/queue/") + queue, Subscribe.AckModeValues.CLIENT);
-//			connection.subscribe((topic ? "/topic/" : "/queue/") + queue, Subscribe.AckModeValues.AUTO);
-			
-			System.out.println("--- " + getName() + " Listening");
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-	}
+    public JmsReceiverStomp(String user, String password, String url, boolean topic, String queue) {
+        this.user = user;
+        this.password = password;
+        this.url = url;
+        this.topic = topic;
+        this.queue = queue;
+    }
 
-	protected void doReceive() {
-		try {
-			while (true) {
-				StompFrame msg = connection.receive(1000);
-				if (msg == null) return;
-				System.out.println("--- " + getName() + " Received: " + msg.getBody());
-				connection.ack(msg);
-			}			
-		} catch (SocketTimeoutException e) {
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-	}
+    @Override
+    public void init(JmsReceiverAdmin admin) {
+        this.admin = admin;
 
-	@Override
-	public void close() {
+        try {
+            connection = new StompConnection();
+            URL u = new URL(url);
+            connection.open(u.getHost(), u.getPort());
 
-		try {
-			timer.cancel();
-			connection.close();
-		} catch (Throwable t) {
-			t.printStackTrace();
-		}
-		System.out.println("--- " + getName() + " Closed");
-		
-	}
+            connection.connect(user, password);
 
-	@Override
-	public String getName() {
-		return "stomp:/" + (topic ? "topic/" : "queue/") + queue;
-	}
+            timer = new Timer(true);
+            timer.schedule(
+                    new TimerTask() {
 
+                        @Override
+                        public void run() {
+                            doReceive();
+                        }
+                    },
+                    1000,
+                    100);
+
+            connection.subscribe(
+                    (topic ? "/topic/" : "/queue/") + queue, Subscribe.AckModeValues.CLIENT);
+            //			connection.subscribe((topic ? "/topic/" : "/queue/") + queue,
+            // Subscribe.AckModeValues.AUTO);
+
+            System.out.println("--- " + getName() + " Listening");
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    protected void doReceive() {
+        try {
+            while (true) {
+                StompFrame msg = connection.receive(1000);
+                if (msg == null) return;
+                System.out.println("--- " + getName() + " Received: " + msg.getBody());
+                connection.ack(msg);
+            }
+        } catch (SocketTimeoutException e) {
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    @Override
+    public void close() {
+
+        try {
+            timer.cancel();
+            connection.close();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        System.out.println("--- " + getName() + " Closed");
+    }
+
+    @Override
+    public String getName() {
+        return "stomp:/" + (topic ? "topic/" : "queue/") + queue;
+    }
 }

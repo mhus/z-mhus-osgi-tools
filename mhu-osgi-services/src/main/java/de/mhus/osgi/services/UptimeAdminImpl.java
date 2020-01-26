@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.osgi.services;
@@ -34,158 +32,148 @@ import de.mhus.lib.core.cfg.CfgInt;
 import de.mhus.osgi.api.services.UptimeAdminIfc;
 import de.mhus.osgi.api.services.UptimeRecord;
 
-@Component(immediate=true)
+@Component(immediate = true)
 public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 
-	private static final CfgInt MAX = new CfgInt(UptimeAdminIfc.class, "max", 10000);
-	private List<MutableRecord> db;
-	
-	@Activate
-	public void doActivate(ComponentContext ctx) {
-		long jStart = MSystem.getJvmStartTime();
-		db = loadDb();
-		if (db == null) return;
-		
-		if (db.size() == 0 || db.get(db.size()-1).getStart() != jStart) {
-			// new Entry
-			db.add(new MutableRecord(jStart));
-		} else {
-			// set last to current
-			db.get(db.size()-1).setCurrent();
-		}
-		saveDb(db);
-	}
-	
-	
-	private void saveDb(List<MutableRecord> db) {
-		File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
-		List<String> lines = new LinkedList<>();
-		for (MutableRecord record : db)
-			lines.add(record.toLine());
-		try {
-			MFile.writeLines(file, lines, false);
-		} catch (IOException e) {
-			log().e(e);
-		}
-	}
+    private static final CfgInt MAX = new CfgInt(UptimeAdminIfc.class, "max", 10000);
+    private List<MutableRecord> db;
 
+    @Activate
+    public void doActivate(ComponentContext ctx) {
+        long jStart = MSystem.getJvmStartTime();
+        db = loadDb();
+        if (db == null) return;
 
-	private List<MutableRecord> loadDb() {
-		File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
-		List<MutableRecord> out = new LinkedList<>();
-		if (!file.exists()) 
-			return out;
-		try {
-			List<String> lines = MFile.readLines(file, true);
-			for (String line : lines)
-				out.add(new MutableRecord(line));
-			while (out.size() > MAX.value())
-				out.remove(0);
-			return out;
-		} catch (Throwable t) {
-			log().e(t);
-		}
-		return null;
-	}
+        if (db.size() == 0 || db.get(db.size() - 1).getStart() != jStart) {
+            // new Entry
+            db.add(new MutableRecord(jStart));
+        } else {
+            // set last to current
+            db.get(db.size() - 1).setCurrent();
+        }
+        saveDb(db);
+    }
 
-	@Override
-	public List<UptimeRecord> getRecords() {
-		if (db == null) return null;
-		return new LinkedList<UptimeRecord>(db);
-	}
+    private void saveDb(List<MutableRecord> db) {
+        File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
+        List<String> lines = new LinkedList<>();
+        for (MutableRecord record : db) lines.add(record.toLine());
+        try {
+            MFile.writeLines(file, lines, false);
+        } catch (IOException e) {
+            log().e(e);
+        }
+    }
 
-	@Deactivate
-	public void doDeactivate(ComponentContext ctx) {
-		long jStart = MSystem.getJvmStartTime();
-		if (db == null) return;
-		if (db.size() == 0 || db.get(db.size()-1).getStart() != jStart) {
-			// new Entry - should not happen
-			db.add(new MutableRecord(jStart));
-			log().w("new record at shut down");
-		}
-		// set last to closed
-		db.get(db.size()-1).setCloses();
-		saveDb(db);
-	}
+    private List<MutableRecord> loadDb() {
+        File file = MApi.getFile(MApi.SCOPE.DATA, "uptime.db");
+        List<MutableRecord> out = new LinkedList<>();
+        if (!file.exists()) return out;
+        try {
+            List<String> lines = MFile.readLines(file, true);
+            for (String line : lines) out.add(new MutableRecord(line));
+            while (out.size() > MAX.value()) out.remove(0);
+            return out;
+        } catch (Throwable t) {
+            log().e(t);
+        }
+        return null;
+    }
 
-	private static class MutableRecord implements UptimeRecord {
+    @Override
+    public List<UptimeRecord> getRecords() {
+        if (db == null) return null;
+        return new LinkedList<UptimeRecord>(db);
+    }
 
-		private long start;
-		private int status;
-		private long stop;
-		private String pid;
-		private long sysUptime;
+    @Deactivate
+    public void doDeactivate(ComponentContext ctx) {
+        long jStart = MSystem.getJvmStartTime();
+        if (db == null) return;
+        if (db.size() == 0 || db.get(db.size() - 1).getStart() != jStart) {
+            // new Entry - should not happen
+            db.add(new MutableRecord(jStart));
+            log().w("new record at shut down");
+        }
+        // set last to closed
+        db.get(db.size() - 1).setCloses();
+        saveDb(db);
+    }
 
-		public MutableRecord(long start) {
-			this.start = start;
-			this.status = STATUS.CURRENT.ordinal();
-			pid = MSystem.getPid();
-			sysUptime = MSystem.getSystemUptime();
-		}
+    private static class MutableRecord implements UptimeRecord {
 
-		public MutableRecord(String line) {
-			String[] parts = line.split(";");
-			start = M.c(parts[0], 0l);
-			stop = M.c(parts[1], 0l);
-			status = M.c(parts[2], 0);
-			pid = parts[3].replace(';', ',');
-			sysUptime = M.c(parts[4], 0l);
-			
-			if (status == STATUS.CURRENT.ordinal())
-				status = STATUS.UNKNOWN.ordinal();
-		}
+        private long start;
+        private int status;
+        private long stop;
+        private String pid;
+        private long sysUptime;
 
-		public void setCloses() {
-			status = STATUS.CLOSED.ordinal();
-			sysUptime = MSystem.getSystemUptime();
-			pid = MSystem.getPid();
-			stop = System.currentTimeMillis();
-		}
+        public MutableRecord(long start) {
+            this.start = start;
+            this.status = STATUS.CURRENT.ordinal();
+            pid = MSystem.getPid();
+            sysUptime = MSystem.getSystemUptime();
+        }
 
-		public String toLine() {
-			return start + ";" + stop + ";" + status + ";" + pid + ";" + sysUptime;
-		}
+        public MutableRecord(String line) {
+            String[] parts = line.split(";");
+            start = M.c(parts[0], 0l);
+            stop = M.c(parts[1], 0l);
+            status = M.c(parts[2], 0);
+            pid = parts[3].replace(';', ',');
+            sysUptime = M.c(parts[4], 0l);
 
-		public void setCurrent() {
-			status = STATUS.CURRENT.ordinal();
-			stop = System.currentTimeMillis();
-			sysUptime = MSystem.getSystemUptime();
-			pid = MSystem.getPid();
-		}
+            if (status == STATUS.CURRENT.ordinal()) status = STATUS.UNKNOWN.ordinal();
+        }
 
-		@Override
-		public long getStart() {
-			return start;
-		}
+        public void setCloses() {
+            status = STATUS.CLOSED.ordinal();
+            sysUptime = MSystem.getSystemUptime();
+            pid = MSystem.getPid();
+            stop = System.currentTimeMillis();
+        }
 
-		@Override
-		public long getStop() {
-			return stop;
-		}
+        public String toLine() {
+            return start + ";" + stop + ";" + status + ";" + pid + ";" + sysUptime;
+        }
 
-		@Override
-		public STATUS getStatus() {
-			return STATUS.values()[status];
-		}
+        public void setCurrent() {
+            status = STATUS.CURRENT.ordinal();
+            stop = System.currentTimeMillis();
+            sysUptime = MSystem.getSystemUptime();
+            pid = MSystem.getPid();
+        }
 
-		@Override
-		public String getPid() {
-			return pid;
-		}
-		
-		@Override
-		public long getSystemUptime() {
-			if (status == STATUS.CURRENT.ordinal())
-				return MSystem.getSystemUptime();
-			return sysUptime;
-		}
-		
-		@Override
-		public long getUptime() {
-			if (status == STATUS.CURRENT.ordinal())
-				return System.currentTimeMillis() - start;
-			return stop - start;
-		}
-		
-	}
+        @Override
+        public long getStart() {
+            return start;
+        }
+
+        @Override
+        public long getStop() {
+            return stop;
+        }
+
+        @Override
+        public STATUS getStatus() {
+            return STATUS.values()[status];
+        }
+
+        @Override
+        public String getPid() {
+            return pid;
+        }
+
+        @Override
+        public long getSystemUptime() {
+            if (status == STATUS.CURRENT.ordinal()) return MSystem.getSystemUptime();
+            return sysUptime;
+        }
+
+        @Override
+        public long getUptime() {
+            if (status == STATUS.CURRENT.ordinal()) return System.currentTimeMillis() - start;
+            return stop - start;
+        }
+    }
 }

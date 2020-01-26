@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.karaf.xdb.cmd;
@@ -31,114 +29,121 @@ import de.mhus.lib.xdb.XdbType;
 import de.mhus.osgi.api.xdb.XdbApi;
 import de.mhus.osgi.api.xdb.XdbUtil;
 
-@Command(scope = "xdb", name = "create", description = "Select data from DB DataSource and print the results")
+@Command(
+        scope = "xdb",
+        name = "create",
+        description = "Select data from DB DataSource and print the results")
 @Service
 public class CmdCreate implements Action {
-	
-	@Argument(index=0, name="type", required=true, description="Type to select", multiValued=false)
+
+    @Argument(
+            index = 0,
+            name = "type",
+            required = true,
+            description = "Type to select",
+            multiValued = false)
     String typeName;
-	
-	@Argument(index=1, name="attributes", required=false, description="Attributes for the initial creation", multiValued=true)
+
+    @Argument(
+            index = 1,
+            name = "attributes",
+            required = false,
+            description = "Attributes for the initial creation",
+            multiValued = true)
     String[] attributes;
-	
-	@Option(name="-x", description="Output parameter",required=false)
-	String outputParam = null;
 
-	@Option(name="-a", description="Api Name",required=false)
-	String apiName;
+    @Option(name = "-x", description = "Output parameter", required = false)
+    String outputParam = null;
 
-	@Option(name="-s", description="Service Name",required=false)
-	String serviceName;
+    @Option(name = "-a", description = "Api Name", required = false)
+    String apiName;
 
-    @Reference
-    private Session session;
+    @Option(name = "-s", description = "Service Name", required = false)
+    String serviceName;
 
-	@Override
-	public Object execute() throws Exception {
-		
-		apiName = XdbUtil.getApiName(session, apiName);
-		serviceName = XdbUtil.getServiceName(session, serviceName);
+    @Reference private Session session;
 
-		XdbApi api = XdbUtil.getApi(apiName);
+    @Override
+    public Object execute() throws Exception {
 
-		XdbType<?> type = api.getType(serviceName, typeName);
-		
-		Object object = type.newInstance();
-		
+        apiName = XdbUtil.getApiName(session, apiName);
+        serviceName = XdbUtil.getServiceName(session, serviceName);
+
+        XdbApi api = XdbUtil.getApi(apiName);
+
+        XdbType<?> type = api.getType(serviceName, typeName);
+
+        Object object = type.newInstance();
+
         LinkedList<Pair<String, String>> attrObj = null;
         attrObj = new LinkedList<>();
-		if (attributes != null) {
-			for (String item : attributes) {
-				String key = MString.beforeIndex(item, '=').trim();
-				String value = MString.afterIndex(item, '=').trim();
-                attrObj.add(new Pair<String,String>(key, value));
-			}
-		}
+        if (attributes != null) {
+            for (String item : attributes) {
+                String key = MString.beforeIndex(item, '=').trim();
+                String value = MString.afterIndex(item, '=').trim();
+                attrObj.add(new Pair<String, String>(key, value));
+            }
+        }
 
         for (Pair<String, String> entry : attrObj) {
-		    String name = entry.getKey();
-		    Object v = XdbUtil.prepareValue(type, name, entry.getValue());
-		    try {
-    			System.out.println("--- SET " + name + "  = " + v );
-    			XdbUtil.setValue(type,object,name,v);
-		    } catch (Throwable t) {
-		        System.out.println("*** Error: " + type + " " + name + " " + v);
-		        t.printStackTrace();
-		    }
-		}
-		
-//		for (String name : type.getAttributeNames()) {
-//			if (attrObj.containsKey(name)) {
-//				Object v = type.prepareValue(name, attrObj.get(name));
-//				System.out.println("--- SET " + name + "  = " + v );
-//				XdbUtil.setValue(type,object,name,v);
-//			}
-//		}
-		
-		System.out.print("*** CREATE ");
-		type.createObject(object);
-		System.out.println(type.getIdAsString(object));
-		
-		
-/*		
-		DbManagerService service = AdbUtil.getService(serviceName);
-		Class<? extends Persistable> type = AdbUtil.getType(service, typeName);
-		String regName = service.getManager().getRegistryName(type);
-		Table tableInfo = service.getManager().getTable(regName);
+            String name = entry.getKey();
+            Object v = XdbUtil.prepareValue(type, name, entry.getValue());
+            try {
+                System.out.println("--- SET " + name + "  = " + v);
+                XdbUtil.setValue(type, object, name, v);
+            } catch (Throwable t) {
+                System.out.println("*** Error: " + type + " " + name + " " + v);
+                t.printStackTrace();
+            }
+        }
 
-		Object object = service.getManager().inject(type.newInstance());
-		
-		HashMap<String, Object> attrObj = null;
-		attrObj = new HashMap<>();
-		if (attributes != null) {
-			for (String item : attributes) {
-				String key = MString.beforeIndex(item, '=').trim();
-				String value = MString.afterIndex(item, '=').trim();
-				attrObj.put(key, value);
-			}
-		}
-		
-		for (Field f : tableInfo.getFields()) {
-			if (attrObj.containsKey(f.getName())) {
-				Object v = AdbUtil.createAttribute(f.getType(), attrObj.get(f.getName()) );
-				System.out.println("--- SET " + f.getName() + "  = " + v );
-				f.set(object, v);
-			}
-		}
-		
-		System.out.print("*** CREATE");
-		service.getManager().createObject(regName, object);
-		for (Field f : tableInfo.getPrimaryKeys()) {
-			System.out.print(" ");
-			System.out.print(f.get(object));
-		}
-		System.out.println();
-		*/
-		if (outputParam != null)
-			session.put(outputParam, object);
-		return null;
-		
-	}
-	
+        //		for (String name : type.getAttributeNames()) {
+        //			if (attrObj.containsKey(name)) {
+        //				Object v = type.prepareValue(name, attrObj.get(name));
+        //				System.out.println("--- SET " + name + "  = " + v );
+        //				XdbUtil.setValue(type,object,name,v);
+        //			}
+        //		}
 
+        System.out.print("*** CREATE ");
+        type.createObject(object);
+        System.out.println(type.getIdAsString(object));
+
+        /*
+        DbManagerService service = AdbUtil.getService(serviceName);
+        Class<? extends Persistable> type = AdbUtil.getType(service, typeName);
+        String regName = service.getManager().getRegistryName(type);
+        Table tableInfo = service.getManager().getTable(regName);
+
+        Object object = service.getManager().inject(type.newInstance());
+
+        HashMap<String, Object> attrObj = null;
+        attrObj = new HashMap<>();
+        if (attributes != null) {
+        	for (String item : attributes) {
+        		String key = MString.beforeIndex(item, '=').trim();
+        		String value = MString.afterIndex(item, '=').trim();
+        		attrObj.put(key, value);
+        	}
+        }
+
+        for (Field f : tableInfo.getFields()) {
+        	if (attrObj.containsKey(f.getName())) {
+        		Object v = AdbUtil.createAttribute(f.getType(), attrObj.get(f.getName()) );
+        		System.out.println("--- SET " + f.getName() + "  = " + v );
+        		f.set(object, v);
+        	}
+        }
+
+        System.out.print("*** CREATE");
+        service.getManager().createObject(regName, object);
+        for (Field f : tableInfo.getPrimaryKeys()) {
+        	System.out.print(" ");
+        	System.out.print(f.get(object));
+        }
+        System.out.println();
+        */
+        if (outputParam != null) session.put(outputParam, object);
+        return null;
+    }
 }

@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.osgi.api.karaf;
@@ -26,39 +24,48 @@ import de.mhus.lib.core.lang.MObject;
 
 public abstract class AbstractCmd extends MObject implements Action {
 
-    @Option(name = "-tbl", aliases = { "--table" }, description = "Console table options", required = false, multiValued = false)
+    @Option(
+            name = "-tbl",
+            aliases = {"--table"},
+            description = "Console table options",
+            required = false,
+            multiValued = false)
     protected String tblOpt;
 
-    @Option(name = "-ta", aliases = { "--table-all" }, description = "Console table print all", required = false, multiValued = false)
+    @Option(
+            name = "-ta",
+            aliases = {"--table-all"},
+            description = "Console table print all",
+            required = false,
+            multiValued = false)
     private boolean tableAll;
 
-    @Reference
-    private Session session;
+    @Reference private Session session;
 
     @Override
     public final Object execute() throws Exception {
         if (tableAll) {
-            if (tblOpt == null) tblOpt = "all=1"; else tblOpt = "all=1 " + tblOpt;
+            if (tblOpt == null) tblOpt = "all=1";
+            else tblOpt = "all=1 " + tblOpt;
         }
         @SuppressWarnings("unchecked")
-        List<CmdInterceptor> interceptors = (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
+        List<CmdInterceptor> interceptors =
+                (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
         if (interceptors != null) {
-            for (CmdInterceptor interceptor : interceptors)
-                interceptor.onCmdStart(session);
+            for (CmdInterceptor interceptor : interceptors) interceptor.onCmdStart(session);
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
         if (tName == null || tName.length() == 0) {
             tName = getClass().getName();
             Thread.currentThread().setName(tName); // should not happen
-        } else
-        if (tName.length() > 40) {
-            tName = tName.substring(0,40);
+        } else if (tName.length() > 40) {
+            tName = tName.substring(0, 40);
             Thread.currentThread().setName(tName);
         }
         if (tName.indexOf('\n') > -1) {
-                tName = tName.replace('\n', ' ');
-                Thread.currentThread().setName(tName);
+            tName = tName.replace('\n', ' ');
+            Thread.currentThread().setName(tName);
         }
         // execute
         Object ret = null;
@@ -66,13 +73,11 @@ public abstract class AbstractCmd extends MObject implements Action {
             ret = execute2();
         } finally {
             if (interceptors != null) {
-                for (CmdInterceptor interceptor : interceptors)
-                    interceptor.onCmdEnd(session);
+                for (CmdInterceptor interceptor : interceptors) interceptor.onCmdEnd(session);
             }
         }
         return ret;
     }
 
     public abstract Object execute2() throws Exception;
-    
 }

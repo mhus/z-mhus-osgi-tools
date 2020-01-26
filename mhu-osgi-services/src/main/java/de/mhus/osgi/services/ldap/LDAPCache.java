@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 /*
@@ -177,7 +175,8 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         LOGGER.debug("  base DN: " + options.getUserBaseDn());
         LOGGER.debug("  filter: " + filter);
 
-        NamingEnumeration<?> namingEnumeration = context.search(options.getUserBaseDn(), filter, controls);
+        NamingEnumeration<?> namingEnumeration =
+                context.search(options.getUserBaseDn(), filter, controls);
         try {
             if (!namingEnumeration.hasMore()) {
                 LOGGER.warn("User " + user + " not found in LDAP.");
@@ -186,7 +185,8 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
             LOGGER.debug("Found the user DN.");
             SearchResult result = (SearchResult) namingEnumeration.next();
 
-            // We need to do the following because slashes are handled badly. For example, when searching
+            // We need to do the following because slashes are handled badly. For example, when
+            // searching
             // for a user with lots of special characters like cn=admin,=+<>#;\
             // SearchResult contains 2 different results:
             //
@@ -196,12 +196,16 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
             // the second escapes the slashes correctly.
             String userDNNamespace = result.getNameInNamespace();
             // handle case where cn, ou, dc case doesn't match
-            int indexOfUserBaseDN = userDNNamespace.toLowerCase().indexOf("," + options.getUserBaseDn().toLowerCase());
-            String userDN = (indexOfUserBaseDN > 0) ?
-                    userDNNamespace.substring(0, indexOfUserBaseDN) :
-                    result.getName();
+            int indexOfUserBaseDN =
+                    userDNNamespace
+                            .toLowerCase()
+                            .indexOf("," + options.getUserBaseDn().toLowerCase());
+            String userDN =
+                    (indexOfUserBaseDN > 0)
+                            ? userDNNamespace.substring(0, indexOfUserBaseDN)
+                            : result.getName();
 
-            return new String[]{userDN, userDNNamespace};
+            return new String[] {userDN, userDNNamespace};
         } finally {
             if (namingEnumeration != null) {
                 try {
@@ -213,12 +217,13 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         }
     }
 
-    public synchronized String[] getUserRoles(String user, String userDn, String userDnNamespace) throws Exception {
+    public synchronized String[] getUserRoles(String user, String userDn, String userDnNamespace)
+            throws Exception {
         String[] result = userRoles.get(userDn);
-//        if (result == null) {
-            result = doGetUserRoles(user, userDn, userDnNamespace);
-            userRoles.put(userDn, result);
-//        }
+        //        if (result == null) {
+        result = doGetUserRoles(user, userDn, userDnNamespace);
+        userRoles.put(userDn, result);
+        //        }
         return result;
     }
 
@@ -238,8 +243,8 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         return roles;
     }
 
-
-    private String[] doGetUserRoles(String user, String userDn, String userDnNamespace) throws NamingException {
+    private String[] doGetUserRoles(String user, String userDn, String userDnNamespace)
+            throws NamingException {
         DirContext context = open();
 
         SearchControls controls = new SearchControls();
@@ -252,14 +257,17 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         String filter = options.getRoleFilter();
         filter = filter.replaceAll(Pattern.quote("%u"), Matcher.quoteReplacement(user));
         filter = filter.replaceAll(Pattern.quote("%dn"), Matcher.quoteReplacement(userDn));
-        filter = filter.replaceAll(Pattern.quote("%fqdn"), Matcher.quoteReplacement(userDnNamespace));
+        filter =
+                filter.replaceAll(
+                        Pattern.quote("%fqdn"), Matcher.quoteReplacement(userDnNamespace));
         filter = filter.replace("\\", "\\\\");
 
         LOGGER.debug("Looking for the user roles in LDAP with ");
         LOGGER.debug("  base DN: " + options.getRoleBaseDn());
         LOGGER.debug("  filter: " + filter);
 
-        NamingEnumeration<?> namingEnumeration = context.search(options.getRoleBaseDn(), filter, controls);
+        NamingEnumeration<?> namingEnumeration =
+                context.search(options.getRoleBaseDn(), filter, controls);
         try {
             List<String> rolesList = new ArrayList<>();
             while (namingEnumeration.hasMore()) {
@@ -285,7 +293,6 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
                         }
                     }
                 }
-
             }
             return rolesList.toArray(new String[rolesList.size()]);
         } finally {

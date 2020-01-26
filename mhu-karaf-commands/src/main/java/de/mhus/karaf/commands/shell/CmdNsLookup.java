@@ -13,21 +13,25 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdNsLookup extends AbstractCmd {
 
-    @Argument(index=0, name="name", required=true, description="DNS name or IP", multiValued=false)
+    @Argument(
+            index = 0,
+            name = "name",
+            required = true,
+            description = "DNS name or IP",
+            multiValued = false)
     String name;
 
     @Override
     public Object execute2() throws Exception {
-        
+
         try {
             InetAddress ipAddress = InetAddress.getByName(name);
             System.out.println("Hostname : " + ipAddress.getHostName());
             System.out.println("Canonical: " + ipAddress.getCanonicalHostName());
             System.out.println("IP       : " + ipAddress.getHostAddress());
         } catch (UnknownHostException e) {
-            System.out.println("IP address not found for: " + name );
+            System.out.println("IP address not found for: " + name);
         }
         return null;
     }
-
 }

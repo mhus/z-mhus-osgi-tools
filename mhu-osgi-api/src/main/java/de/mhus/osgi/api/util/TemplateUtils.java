@@ -1,16 +1,14 @@
 /**
  * Copyright 2018 Mike Hummel
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * <p>http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * <p>Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package de.mhus.osgi.api.util;
@@ -27,15 +25,19 @@ import java.util.Scanner;
 
 public class TemplateUtils {
 
-    public static void createFromTemplate(File outFile, InputStream templateIs, HashMap<String, String> properties) {
+    public static void createFromTemplate(
+            File outFile, InputStream templateIs, HashMap<String, String> properties) {
         if (outFile.exists()) {
-            throw new IllegalArgumentException("File " + outFile.getPath()
-                                               + " already exists. Remove it if you wish to recreate it.");
+            throw new IllegalArgumentException(
+                    "File "
+                            + outFile.getPath()
+                            + " already exists. Remove it if you wish to recreate it.");
         }
         PrintStream out = null;
         Scanner scanner = null;
         try {
-            // read it line at a time so that we can use the platform line ending when we write it out
+            // read it line at a time so that we can use the platform line ending when we write it
+            // out
             out = new PrintStream(new FileOutputStream(outFile));
             scanner = new Scanner(templateIs);
 
@@ -52,7 +54,7 @@ public class TemplateUtils {
             safeClose(templateIs);
         }
     }
-    
+
     private static String filter(String line, HashMap<String, String> props) {
         for (Map.Entry<String, String> entry : props.entrySet()) {
             String key = "${" + entry.getKey() + "}";
@@ -76,5 +78,4 @@ public class TemplateUtils {
             // nothing to do
         }
     }
-
 }
