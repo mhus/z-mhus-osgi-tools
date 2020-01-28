@@ -42,11 +42,15 @@ public class SystemShit implements ShitIfc {
                 " memkill\n"
                         + " stackkill\n"
                         + " stress [seconds=1] [threads=auto] [iterations=0] [sleep=1] [tolerance=5]\n"
-                        + " parallel [interval=1] [lifetime=10] [silent=true]");
+                        + " parallel [interval=1] [lifetime=10] [silent=true]\n"
+                        + " oome - throw OutOfMemoryError");
     }
 
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
+        if (cmd.equals("oome")) {
+            throw new OutOfMemoryError("test");
+        }
         if (cmd.equals("uuid")) return UUID.randomUUID().toString();
         if (cmd.equals("threadid")) {
             synchronized (lock) {
