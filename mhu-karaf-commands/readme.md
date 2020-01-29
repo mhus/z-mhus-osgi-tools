@@ -39,3 +39,14 @@ This will cause the following dependecies:
 	Delegate: targetdb -> db_failover
 
 
+Problems with bundle:upgrade
+---------------
+
+If you get a ClassNotFound exception for 'HttpUriRequest' you need to install the apache httpclient:
+
+    install -s mvn:org.apache.httpcomponents/httpcore-osgi/4.4.10
+    install -s mvn:org.apache.httpcomponents/httpclient-osgi/4.5.6
+ 
+
+
+
