@@ -20,6 +20,7 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.lang.MObject;
 
 public abstract class AbstractCmd extends MObject implements Action {
@@ -52,8 +53,25 @@ public abstract class AbstractCmd extends MObject implements Action {
         List<CmdInterceptor> interceptors =
                 (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
         if (interceptors != null) {
-            for (CmdInterceptor interceptor : interceptors) interceptor.onCmdStart(session);
+            for (CmdInterceptor interceptor : interceptors) 
+                try {
+                    interceptor.onCmdStart(session);
+                } catch (Throwable t) {
+                    log().d(t);
+                }
         }
+        
+        try {
+            if (!Console.isInitialized()) { // init console by default
+                ConsoleInterceptor interceptor = new ConsoleInterceptor(new KarafConsole(session));
+                CmdInterceptorUtil.setInterceptor(
+                        session, interceptor);
+                interceptor.onCmdStart(session);
+            }
+        } catch (Throwable t) {
+            log().d(t);
+        }
+        
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
         if (tName == null || tName.length() == 0) {
@@ -73,7 +91,12 @@ public abstract class AbstractCmd extends MObject implements Action {
             ret = execute2();
         } finally {
             if (interceptors != null) {
-                for (CmdInterceptor interceptor : interceptors) interceptor.onCmdEnd(session);
+                for (CmdInterceptor interceptor : interceptors) 
+                    try {
+                        interceptor.onCmdEnd(session);
+                    } catch (Throwable t) {
+                        log().d(t);
+                    }
             }
         }
         return ret;

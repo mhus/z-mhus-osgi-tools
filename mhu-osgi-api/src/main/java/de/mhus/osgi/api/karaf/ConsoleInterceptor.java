@@ -11,12 +11,11 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.commands.mhus;
+package de.mhus.osgi.api.karaf;
 
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.console.Console;
-import de.mhus.osgi.api.karaf.CmdInterceptor;
 
 public class ConsoleInterceptor implements CmdInterceptor {
 

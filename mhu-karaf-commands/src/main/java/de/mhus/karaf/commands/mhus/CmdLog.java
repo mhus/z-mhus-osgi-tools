@@ -43,6 +43,7 @@ import de.mhus.lib.logging.level.ThreadMapperConfig;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
+import de.mhus.osgi.api.karaf.LogInterceptor;
 
 @Command(scope = "mhus", name = "log", description = "Manipulate Log behavior.")
 @Service

@@ -28,6 +28,7 @@ import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThreadPool;
 import de.mhus.lib.core.base.service.LockManager;
 import de.mhus.lib.core.concurrent.Lock;
+import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
@@ -51,12 +52,20 @@ public class MhusShit implements ShitIfc {
         System.out.println(
                 "atomictime [<server>] - without server will use getCurrentTime() and return a cached time");
         System.out.println("atomicservers");
+        System.out.println("ask - try console input");
     }
 
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 
-        if (cmd.equals("atomicservers")) {
+        if (cmd.equals("ask")) {
+            char result = Console.askQuestion(
+                    "Really do something?",
+                    new char[] {'y', 'N'},
+                    true,
+                    false);
+            System.out.println("Result: " + result);
+        } else if (cmd.equals("atomicservers")) {
             AtomicClockUtil.TIME_SERVERS.forEach(s -> System.out.println(s));
         } else if (cmd.equals("atomictime")) {
             long time =

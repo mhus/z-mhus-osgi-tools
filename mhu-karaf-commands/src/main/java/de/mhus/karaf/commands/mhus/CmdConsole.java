@@ -38,9 +38,10 @@ import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.XTermConsole;
 import de.mhus.lib.errors.NotSupportedException;
-import de.mhus.lib.mutable.KarafConsole;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
+import de.mhus.osgi.api.karaf.ConsoleInterceptor;
+import de.mhus.osgi.api.karaf.KarafConsole;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "console", description = "Manipulate and control the console")
