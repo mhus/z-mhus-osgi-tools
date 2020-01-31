@@ -243,7 +243,6 @@ public class CmdKeychain extends AbstractCmd {
             }
 
             if (type.equals("")) type = MVaultUtil.getType(content);
-
             PemBlock pem = null;
             try {
                 pem = PemUtil.parse(content);
@@ -253,6 +252,8 @@ public class CmdKeychain extends AbstractCmd {
                 description = pem.getString(PemBlock.DESCRIPTION, "");
                 if (id == null) id = pem.getString(PemBlock.IDENT, null);
             }
+//            if (pem != null && name.equals("")) 
+//                name = pem.getString("");
 
             DefaultEntry entry = new DefaultEntry(type, name, description, content);
             if (id != null)
@@ -446,7 +447,7 @@ public class CmdKeychain extends AbstractCmd {
                             entry.getId(), parameters[1], parameters[2], parameters[3], "");
             mutable.updateEntry(newEntry);
             System.out.println("Set");
-        } else if (cmd.equals("remove")) {
+        } else if (cmd.equals("remove") || cmd.equals("delete")) {
             if (sourcename == null) sourcename = MVault.SOURCE_DEFAULT;
             VaultSource source = vault.getSource(sourcename);
             if (source == null) {
@@ -467,15 +468,15 @@ public class CmdKeychain extends AbstractCmd {
             System.out.println("OK");
         } else if (cmd.equals("encodepasswordrot13")) {
             System.out.println(MPassword.encode(MPassword.METHOD.ROT13, parameters[0]));
-        }
-        if (cmd.equals("encodepasswordwithkey")) {
+        } else if (cmd.equals("encodepasswordwithkey")) {
             System.out.println(
                     MPassword.encode(MPassword.METHOD.RSA, parameters[1], parameters[0]));
         } else if (cmd.equals("encodepasswordmd5")) {
             System.out.println(MPassword.encode(MPassword.METHOD.HASH_MD5, parameters[1]));
         } else if (cmd.equals("decodepassword")) {
             System.out.println(MPassword.decode(parameters[0]));
-        }
+        } else
+            System.out.println("Command unknown");
 
         return null;
     }
