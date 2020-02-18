@@ -60,6 +60,7 @@ public class CmdShitYo extends AbstractCmd {
 
     {
         shortcuts.put("system", SystemShit.class);
+        shortcuts.put("stress", StressShit.class);
         shortcuts.put("jaas", JaasShit.class);
         shortcuts.put("address", AddressShit.class);
         shortcuts.put("maven", MavenShit.class);

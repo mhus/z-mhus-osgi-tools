@@ -13,13 +13,11 @@
  */
 package de.mhus.karaf.commands.testit;
 
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import de.mhus.lib.core.M;
-import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
@@ -33,7 +31,6 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
 import de.mhus.lib.core.util.AtomicClockUtil;
-import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 public class MhusShit implements ShitIfc {
 
@@ -41,7 +38,6 @@ public class MhusShit implements ShitIfc {
 
     @Override
     public void printUsage() {
-        System.out.println("lookup <ifc> [<def>]");
         System.out.println("housekeepertest");
         System.out.println("housekeepertasks");
         System.out.println("locks - print known locks from LockManager");
@@ -149,24 +145,7 @@ public class MhusShit implements ShitIfc {
                         "false",
                         lock.getCnt());
             out.print();
-        } else if (cmd.equals("lookup")) {
-            OsgiBundleClassLoader loader = new OsgiBundleClassLoader();
-            Class<?> ifc = loader.loadClass(parameters[0]);
-            Object obj = null;
-            if (parameters.length > 1) {
-                Class<?> def = loader.loadClass(parameters[1]);
-                Method method = MApi.class.getMethod("lookup", Class.class, Class.class);
-                obj = method.invoke(null, ifc, def);
-            } else {
-                obj = M.l(ifc);
-            }
-
-            if (obj != null) {
-                System.out.println(obj.getClass());
-            }
-            return obj;
-        }
-        if (cmd.equals("housekeepertasks")) {
+        } else if (cmd.equals("housekeepertasks")) {
             Map<MHousekeeperTask, Long> map = DefaultHousekeeper.getAll();
             ConsoleTable table = new ConsoleTable(base.getTblOpt());
             table.setHeaderValues("Name", "Class", "Sleep");
@@ -176,8 +155,7 @@ public class MhusShit implements ShitIfc {
                         MSystem.getCanonicalClassName(entry.getKey().getClass()),
                         entry.getValue());
             table.print(System.out);
-        }
-        if (cmd.equals("housekeepertest")) {
+        } else if (cmd.equals("housekeepertest")) {
             MHousekeeper housekeeper = M.l(MHousekeeper.class);
             doitTime = 0;
             MHousekeeperTask task =
