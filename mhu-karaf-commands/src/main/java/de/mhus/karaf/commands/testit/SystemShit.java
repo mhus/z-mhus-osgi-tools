@@ -13,6 +13,8 @@
  */
 package de.mhus.karaf.commands.testit;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.LinkedList;
@@ -43,11 +45,34 @@ public class SystemShit implements ShitIfc {
                         + " stackkill\n"
                         + " stress [seconds=1] [threads=auto] [iterations=0] [sleep=1] [tolerance=5]\n"
                         + " parallel [interval=1] [lifetime=10] [silent=true]\n"
-                        + " oome - throw OutOfMemoryError");
+                        + " oome - throw OutOfMemoryError\n"
+                        + " bigfile [path]");
     }
 
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
+        if (cmd.equals("bigfile")) {
+            File f = new File(parameters[0]);
+            FileOutputStream fos = new FileOutputStream(f);
+            long size = 0;
+            long round = 0;
+            byte[] buffer = new byte[1024 * 10];
+            try {
+                while (true) {
+                    fos.write(buffer);
+                    fos.flush();
+                    size+=buffer.length;
+                    round++;
+                    if (round % 100 == 0)
+                        System.out.println("Size " + MCast.toByteUnit(size));
+                    Thread.sleep(1);
+                }
+            } finally {
+                fos.close();
+                System.out.println("Final Size " + MCast.toByteUnit(f.length()));
+                f.delete();
+            }
+        }
         if (cmd.equals("oome")) {
             throw new OutOfMemoryError("test");
         }
