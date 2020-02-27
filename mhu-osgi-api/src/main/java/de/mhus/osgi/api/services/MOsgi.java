@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.function.Consumer;
 
+import javax.sql.DataSource;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -39,6 +41,7 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.util.Version;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.errors.NotFoundRuntimeException;
+import de.mhus.osgi.api.util.DataSourceUtil;
 
 public class MOsgi {
 
@@ -319,4 +322,10 @@ public class MOsgi {
         if (bundle == null) return "null";
         return bundle.getSymbolicName() + " [" + bundle.getBundleId() + "]";
     }
+    
+    public static DataSource getDataSource(String name) {
+        BundleContext context = getBundleContext();
+        return new DataSourceUtil(context).getDataSource(name);
+    }
+    
 }
