@@ -88,7 +88,13 @@ public class CmdShitYo extends AbstractCmd {
             return null;
         }
 
-        return mod.doExecute(this, cmd, parameters);
+        Object oldIgnoreInterrupts = session.get(Session.IGNORE_INTERRUPTS);
+        try {
+            session.put(Session.IGNORE_INTERRUPTS, Boolean.TRUE);
+            return mod.doExecute(this, cmd, parameters);
+        } finally {
+            session.put(Session.IGNORE_INTERRUPTS, oldIgnoreInterrupts);
+        }
     }
 
     @SuppressWarnings("unchecked")

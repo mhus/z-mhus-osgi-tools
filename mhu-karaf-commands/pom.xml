@@ -48,6 +48,7 @@
                         	de.mhus.lib.vaadin*;resolution:=optional,
                         	com.vaadin*;resolution:=optional,
                         	org.apache.activemq.*;resolution:=optional,
+                            org.apache.http.*;resolution:=optional,
                         	javax.jms.*;resolution:=optional,
 				            com.mongodb.*;resolution:=optional,
 				            org.mongodb.*;resolution:=optional,
