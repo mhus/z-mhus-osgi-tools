@@ -121,7 +121,8 @@ public class StressShit implements ShitIfc {
                         System.out.println(len + " " + free);
                     }
                 } catch (OutOfMemoryError e) {
-                    System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters");
+                    free = Runtime.getRuntime().freeMemory();
+                    System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters (" + len + ")");
                     System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
                 }
                 if (!p.getBoolean("permanent", false))
