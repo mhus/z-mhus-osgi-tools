@@ -46,6 +46,7 @@
                         	de.mhus.lib.sql*;resolution:=optional,
                         	de.mhus.lib.jms*;resolution:=optional,
                         	de.mhus.lib.vaadin*;resolution:=optional,
+                            org.apache.felix.hc.*;resolution:=optional,
                         	com.vaadin*;resolution:=optional,
                         	org.apache.activemq.*;resolution:=optional,
                             org.apache.http.*;resolution:=optional,
@@ -114,6 +115,12 @@
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
 		</dependency>
+		
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.healthcheck.api</artifactId>
+        </dependency>
+		
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
 			<artifactId>mhu-lib-core</artifactId>
