@@ -40,7 +40,7 @@
 		<pax.url.version>2.5.4</pax.url.version>
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<karaf.version>4.0.10</karaf.version>
+		<karaf.version>4.2.8</karaf.version>
 		<junit.version>4.11</junit.version>
 		<inject.version>1.0</inject.version>
 		<dependencymanager.version>3.2.0</dependencymanager.version>
