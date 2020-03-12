@@ -19,13 +19,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-osgi-api</artifactId>
+	<artifactId>osgi-api</artifactId>
 	<packaging>bundle</packaging>
 	<description>commands OSGi blueprint bundle project.</description>
 	<parent>
 		<artifactId>mhus-osgi-tools</artifactId>
 		<groupId>de.mhus.osgi</groupId>
-		<version>6.5.0-SNAPSHOT</version>
+		<version>7.0.0-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -71,15 +71,15 @@
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-core</artifactId>
+			<artifactId>lib-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-persistence</artifactId>
+			<artifactId>lib-persistence</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-jms</artifactId>
+			<artifactId>lib-jms</artifactId>
 		</dependency>
 						
 	</dependencies>

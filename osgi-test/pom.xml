@@ -24,7 +24,7 @@
  https://github.com/cschneider/osgi-testing-example
   -->
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-osgi-test</artifactId>
+	<artifactId>osgi-test</artifactId>
 	<parent>
 		<artifactId>mhus-osgi-tools</artifactId>
 		<groupId>de.mhus.osgi</groupId>

@@ -19,13 +19,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>mhu-karaf-xdb</artifactId>
+	<artifactId>osgi-services</artifactId>
 	<packaging>bundle</packaging>
-	<description>abstract db commands</description>
+	<description>commands OSGi blueprint bundle project.</description>
 	<parent>
 		<artifactId>mhus-osgi-tools</artifactId>
 		<groupId>de.mhus.osgi</groupId>
-		<version>6.5.0-SNAPSHOT</version>
+		<version>7.0.0-SNAPSHOT</version>
 	</parent>
 
 	<build>
@@ -38,11 +38,25 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 						<Bundle-Version>${project.version}</Bundle-Version>
-						<Export-Package>de.mhus.karaf.xdb*;version=${project.version}</Export-Package>
+						<Export-Package>
+							de.mhus.osgi.commands.*;version=${project.version},
+							de.mhus.osgi.services.*;version=${project.version},
+                            de.mhus.lib.mutable*;version=${project.version}
+						</Export-Package>
 						<Import-Package>
-							*
+                        	de.mhus.lib.adb*;resolution:=optional,
+                        	de.mhus.lib.jpa*;resolution:=optional,
+                        	de.mhus.lib.cao*;resolution:=optional,
+                        	de.mhus.lib.sql*;resolution:=optional,
+                        	org.apache.activemq.*;resolution:=optional,
+                        	javax.jms.*;resolution:=optional,
+                            *
 						</Import-Package>
+						<Private-Package>
+							de.mhus.osgi.commands.impl*
+						</Private-Package>
 						<Service-Component>*</Service-Component>
+                        <DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>
 				</configuration>
 			</plugin>
@@ -58,34 +72,22 @@
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.compendium</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>biz.aQute.bnd</groupId>
-            <artifactId>bndlib</artifactId>
-        </dependency>
 		<dependency>
 			<groupId>org.apache.karaf.shell</groupId>
 			<artifactId>org.apache.karaf.shell.console</artifactId>
 		</dependency>
-
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
+			<groupId>de.mhus.lib</groupId>
+			<artifactId>lib-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-core</artifactId>
+			<artifactId>lib-persistence</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
-			<artifactId>mhu-lib-persistence</artifactId>
-		</dependency>
-       	<dependency>
-			<groupId>de.mhus.osgi</groupId>
-			<artifactId>mhu-osgi-api</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>de.mhus.osgi</groupId>
+            <artifactId>osgi-api</artifactId>
+        </dependency>
+						
 	</dependencies>
 </project>

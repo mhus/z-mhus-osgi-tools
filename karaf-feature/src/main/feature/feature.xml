@@ -44,15 +44,15 @@
 		<bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/${jackson.asl.version}</bundle>
 		<bundle><![CDATA[wrap:mvn:org.apache.commons/commons-io/${commons-io.version}/$Bundle-SymbolicName=commons-io&Bundle-Version=${commons-io.version}&Export-Package=org.apache.commons.io;version="${commons-io.version}",!*]]></bundle>
 
-		<bundle>mvn:de.mhus.lib/mhu-lib-annotations/${mhus-lib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-core/${mhus-lib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-persistence/${mhus-lib.version}</bundle>
-		<bundle>mvn:de.mhus.lib/mhu-lib-j2ee/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/lib-annotations/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/lib-core/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/lib-persistence/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.lib/lib-j2ee/${mhus-lib.version}</bundle>
 
-        <bundle>mvn:de.mhus.osgi/mhu-osgi-api/${project.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-services/${project.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-karaf-commands/${project.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-karaf-xdb/${project.version}</bundle>
+        <bundle>mvn:de.mhus.osgi/osgi-api/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/osgi-services/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/karaf-commands/${project.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/karaf-xdb/${project.version}</bundle>
 
 		<bundle>mvn:javax.xml.rpc/javax.xml.rpc-api/${javax.xml.rpc.version}</bundle>
 
@@ -61,8 +61,8 @@
 	<feature name='mhu-osgi-jms' description='mhu-osgi-jms' version='${project.version}'>
 		<feature>activemq-client</feature>
 		<feature>mhu-osgi-base</feature>
-		<bundle>mvn:de.mhus.lib/mhu-lib-jms/${mhus-lib.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-jms/${project.version}</bundle>
+		<bundle>mvn:de.mhus.lib/lib-jms/${mhus-lib.version}</bundle>
+		<bundle>mvn:de.mhus.osgi/osgi-jms/${project.version}</bundle>
 	</feature>
 	
 	<feature name='mhu-osgi-vaadin' description='mhu-osgi-vaadin' version='${project.version}'>
@@ -87,8 +87,8 @@
         <bundle>mvn:com.vaadin/vaadin-client-compiled/${vaadin.version}</bundle>
 
 		<bundle>mvn:de.mhus.vaadin/vaadin-core/${mhus-vaadin.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-osgi-vaadinbridge/${mhus-vaadin.version}</bundle>
-		<bundle>mvn:de.mhus.osgi/mhu-karaf-vaadinbridge/${mhus-vaadin.version}</bundle>
+		<bundle>mvn:de.mhus.vaadin/osgi-vaadinbridge/${mhus-vaadin.version}</bundle>
+		<bundle>mvn:de.mhus.vaadin/karaf-vaadinbridge/${mhus-vaadin.version}</bundle>
 
 	</feature>
 	
