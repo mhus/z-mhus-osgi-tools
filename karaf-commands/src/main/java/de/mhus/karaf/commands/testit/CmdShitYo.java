@@ -33,7 +33,7 @@ public class CmdShitYo extends AbstractCmd {
     @Argument(
             index = 0,
             name = "module",
-            required = true,
+            required = false,
             description = "help or module class or module shortname",
             multiValued = false)
     String module;
@@ -41,7 +41,7 @@ public class CmdShitYo extends AbstractCmd {
     @Argument(
             index = 1,
             name = "cmd",
-            required = true,
+            required = false,
             description = "module cmd or help",
             multiValued = false)
     String cmd;
@@ -75,7 +75,7 @@ public class CmdShitYo extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        if (module.equals("help")) {
+        if (module == null || module.equals("help")) {
             System.out.println("Known module shortcuts:");
             System.out.println(shortcuts.keySet());
             return null;
@@ -83,7 +83,7 @@ public class CmdShitYo extends AbstractCmd {
 
         ShitIfc mod = getModule(module);
 
-        if (cmd.equals("help")) {
+        if (cmd == null || cmd.equals("help")) {
             mod.printUsage();
             return null;
         }

@@ -53,15 +53,24 @@ public class StressShit implements ShitIfc {
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         if (cmd.equals("ctrl-c")) {
+            int cnt = 20;
             try {
                 while (true) {
-                    System.out.println("Wait for Ctrl-C - off");
+                    System.out.println("Wait for Ctrl-C - blocked " + cnt);
                     MThread.sleep(3000);
-                    System.out.println("Wait for Ctrl-C - on");
+                    System.out.println("Wait for Ctrl-C - possible " + cnt);
                     Thread.sleep(3000);
+                    cnt--;
+                    if (cnt <= 0) {
+                        System.out.println("Loop end");
+                        return null;
+                    }
                 }
             } catch (InterruptedException e) {
                 System.out.println("Interrupted !!!!");
+                e.printStackTrace();
+            } catch (Throwable t) {
+                t.printStackTrace();
             }
         } else
         if (cmd.equals("bigfile")) {
