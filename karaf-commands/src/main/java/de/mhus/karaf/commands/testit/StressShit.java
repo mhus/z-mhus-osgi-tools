@@ -50,11 +50,40 @@ public class StressShit implements ShitIfc {
                         + " parallel [interval=1] [lifetime=10] [silent=true]\n"
                         + " oome - throw OutOfMemoryError\n"
                         + " bigfile [path]\n"
-                        + " ctrl-c [iterations=5]");
+                        + " ctrl-c [iterations=5]"
+                        + " threads [next=100 - wait until next create] [sleep=10000 - sleep inside the thread]");
     }
 
+    long current = 0;
+    long sum = 0;
+    
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
+        if (cmd.equals("threads")) {
+            MProperties p = MProperties.explodeToMProperties(parameters);
+            final long next = p.getLong("next", 100);
+            final long sleep = p.getLong("sleep", 10000);
+            long nextOutput = System.currentTimeMillis();
+            current = 0;
+            sum = 0;
+            while (true) {
+                new Thread(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        sum++;
+                        current++;
+                        MThread.sleepForSure(sleep);
+                        current--;
+                    }
+                }).start();
+                MThread.sleepInLoop(next);
+                if (System.currentTimeMillis() > nextOutput) {
+                    System.out.println("Current: " + current + " Sum: " + sum);
+                    nextOutput = System.currentTimeMillis() + 5000;
+                }
+            }
+        }
         if (cmd.equals("ctrl-c")) {
             MProperties p = MProperties.explodeToMProperties(parameters);
             int cnt = p.getInt("iterations", 3);
@@ -111,7 +140,7 @@ public class StressShit implements ShitIfc {
             } catch (Throwable t) {
                 t.printStackTrace();
             }
-        } else
+        }
         if (cmd.equals("bigfile")) {
             File f = new File(parameters[0]);
             FileOutputStream fos = new FileOutputStream(f);
@@ -126,7 +155,8 @@ public class StressShit implements ShitIfc {
                     round++;
                     if (round % 100 == 0)
                         System.out.println("Size " + MCast.toByteUnit(size));
-                    Thread.sleep(1);
+                    if (Thread.interrupted())
+                        break;
                 }
             } finally {
                 fos.close();
@@ -156,28 +186,37 @@ public class StressShit implements ShitIfc {
             long freeStart = Runtime.getRuntime().freeMemory();
             long free = 0;
             System.gc();
-            while (true) {
-                try {
-                    while (true) {
-                        if (small != null) {
-                            small = small + small;
-                            kill = kill + small;
-                        } else
-                            kill = kill + kill;
-                        len = kill.length();
+            try {
+                main: while (true) {
+                    try {
+                        while (true) {
+                            if (Thread.interrupted())
+                                break main;
+                            if (small != null) {
+                                small = small + small;
+                                kill = kill + small;
+                            } else
+                                kill = kill + kill;
+                            len = kill.length();
+                            free = Runtime.getRuntime().freeMemory();
+                            System.out.println(len + " " + free);
+                            if (Thread.interrupted())
+                                break main;
+                        }
+                    } catch (OutOfMemoryError e) {
                         free = Runtime.getRuntime().freeMemory();
-                        System.out.println(len + " " + free);
+                        System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters (" + len + ")");
+                        System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
+                        if (Thread.interrupted())
+                            break main;
                     }
-                } catch (OutOfMemoryError e) {
-                    free = Runtime.getRuntime().freeMemory();
-                    System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters (" + len + ")");
-                    System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
+                    if (!p.getBoolean("permanent", false))
+                        break;
+                    MThread.sleepInLoop(500);
+                    small = "a";
                 }
-                if (!p.getBoolean("permanent", false))
-                    break;
-                MThread.sleepInLoop(500);
-                small = "a";
-            }
+            } catch (InterruptedException e) {}
+            small = "";
             kill = "";
             System.gc();
             System.out.println("Exit memkill, free memory");
