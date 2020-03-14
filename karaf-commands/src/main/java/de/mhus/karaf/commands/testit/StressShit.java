@@ -26,8 +26,11 @@ import javax.sql.DataSource;
 import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MThread;
+import de.mhus.lib.core.crypt.MBouncy;
+import de.mhus.lib.errors.RuntimeInterruptedException;
 import de.mhus.osgi.api.util.DataSourceUtil;
 
 public class StressShit implements ShitIfc {
@@ -47,26 +50,62 @@ public class StressShit implements ShitIfc {
                         + " parallel [interval=1] [lifetime=10] [silent=true]\n"
                         + " oome - throw OutOfMemoryError\n"
                         + " bigfile [path]\n"
-                        + " ctrl-c");
+                        + " ctrl-c [iterations=5]");
     }
 
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         if (cmd.equals("ctrl-c")) {
-            int cnt = 20;
+            MProperties p = MProperties.explodeToMProperties(parameters);
+            int cnt = p.getInt("iterations", 3);
+            long sleep = p.getLong("sleep", 3000);
             try {
                 while (true) {
-                    System.out.println("Wait for Ctrl-C - blocked " + cnt);
-                    MThread.sleep(3000);
-                    System.out.println("Wait for Ctrl-C - possible " + cnt);
-                    Thread.sleep(3000);
+                    System.out.println("Wait for Ctrl-C - MThread.sleepForSure " + cnt);
+                    if (MThread.sleepForSure(sleep)) {
+                        if (Thread.interrupted()) {
+                            System.out.println("Thread was interrupted - wrong state 1");
+                            break;
+                        }
+                        System.out.println("Thread was interrupted");
+                        break;
+                    }
+                    if (Thread.interrupted()) {
+                        System.out.println("Thread was interrupted - wrong state 2");
+                        break;
+                    }
+
+                    System.out.println("Wait for Ctrl-C - MThread.sleep " + cnt);
+                    MThread.sleep(sleep);
+
+                    System.out.println("Wait for Ctrl-C - Thread.sleep " + cnt);
+                    Thread.sleep(sleep);
+
+                    System.out.println("Wait for Ctrl-C - generateRsaKey " + cnt);
+                    long start = System.currentTimeMillis();
+                    while (!MPeriod.isTimeOut(start, sleep)) {
+                        MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
+                    }
+                    if (Thread.interrupted()) {
+                        System.out.println("Thread was interrupted");
+                        break;
+                    }
+
+                    System.out.println("Wait for Ctrl-C - generateRsaKey and MThread.sleepInLoop " + cnt);
+                    start = System.currentTimeMillis();
+                    while (!MPeriod.isTimeOut(start, sleep)) {
+                        MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
+                    }
+                    MThread.sleepInLoop(100); // only to test exception - not for waiting
+                    
+                    
                     cnt--;
                     if (cnt <= 0) {
                         System.out.println("Loop end");
                         return null;
                     }
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | RuntimeInterruptedException e) {
                 System.out.println("Interrupted !!!!");
                 e.printStackTrace();
             } catch (Throwable t) {
@@ -136,7 +175,7 @@ public class StressShit implements ShitIfc {
                 }
                 if (!p.getBoolean("permanent", false))
                     break;
-                Thread.sleep(500);
+                MThread.sleepInLoop(500);
                 small = "a";
             }
             kill = "";
@@ -148,6 +187,7 @@ public class StressShit implements ShitIfc {
             try {
                 doInfinity();
             } catch (Throwable t) {
+                System.out.println( t.getMessage() );
             }
             System.out.println("Depth: " + cnt);
         } else if (cmd.equals("stress")) {
@@ -226,8 +266,7 @@ public class StressShit implements ShitIfc {
                     cnt--;
                     if (cnt <= 0) break;
                 }
-
-                Thread.sleep(sleep);
+                MThread.sleepInLoop(sleep);
             }
 
         } else if (cmd.equals("parallel")) {
@@ -241,13 +280,13 @@ public class StressShit implements ShitIfc {
             try {
                 while (true) {
                     new Thread(new ParallelThread(lifetime, silent)).start();
-                    Thread.sleep(interval);
+                    MThread.sleepInLoop(interval);
                     cnt++;
                     System.out.println(cnt + " Current Threads: " + parallelCnt);
                 }
             } catch (InterruptedException e) {
                 System.out.println("Stopping ...");
-                MThread.sleep(1000); // will not interrupt
+                MThread.sleepForSure(1000); // will not interrupt
                 while (parallelCnt > 0) {
                     Thread.sleep(1000);
                     cnt++;
@@ -294,7 +333,7 @@ public class StressShit implements ShitIfc {
             parallelCnt++;
             while (lifetime > 0) {
                 try {
-                    Thread.sleep(1000);
+                    MThread.sleepInLoop(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

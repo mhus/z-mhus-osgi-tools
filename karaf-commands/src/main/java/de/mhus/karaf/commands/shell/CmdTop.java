@@ -117,6 +117,8 @@ public class CmdTop extends AbstractCmd {
         Console console = Console.create();
 
         while (true) {
+            if (Thread.interrupted())
+                break;
             List<TopThreadInfo> threads = MSystem.threadTop(sleep);
             if (running)
                 threads.removeIf(
