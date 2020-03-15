@@ -308,19 +308,24 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 
         @Override
         public void cancel() {
-
-            for (Service<SchedulerService> ref :
-                    MOsgi.getServiceRefs(
-                            SchedulerService.class,
-                            "(job.timer=" + MSystem.getObjectId(this) + ")"))
-                try {
-                    ref.getReference()
-                            .getBundle()
-                            .getBundleContext()
-                            .ungetService(ref.getReference());
-                } catch (Throwable t) {
-                    log().d("unset SchedulerService", MSystem.getObjectId(this), ref, t);
-                }
+            try {
+                for (Service<SchedulerService> ref :
+                        MOsgi.getServiceRefs(
+                                SchedulerService.class,
+                                "(job.timer=" + MSystem.getObjectId(this) + ")"))
+                    try {
+                        ref.getReference()
+                                .getBundle()
+                                .getBundleContext()
+                                .ungetService(ref.getReference());
+                    } catch (Throwable t) {
+                        log().d("unset SchedulerService", MSystem.getObjectId(this), ref);
+                        log().t(t);
+                    }
+            } catch (Throwable t) {
+                log().d("unable to cancel timers");
+                log().t(t);
+            }
         }
     }
 
