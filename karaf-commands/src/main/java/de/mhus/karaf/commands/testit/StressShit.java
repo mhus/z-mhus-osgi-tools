@@ -50,8 +50,8 @@ public class StressShit implements ShitIfc {
                         + " parallel [interval=1] [lifetime=10] [silent=true]\n"
                         + " oome - throw OutOfMemoryError\n"
                         + " bigfile [path]\n"
-                        + " ctrl-c [iterations=5]"
-                        + " threads [next=100 - wait until next create] [sleep=10000 - sleep inside the thread]");
+                        + " ctrl-c [iterations=5] [scenario=0: 0-6]"
+                        + " threads [next=100: wait until next create] [sleep=10000: sleep inside the thread]");
     }
 
     long current = 0;
@@ -88,58 +88,82 @@ public class StressShit implements ShitIfc {
             MProperties p = MProperties.explodeToMProperties(parameters);
             int cnt = p.getInt("iterations", 3);
             long sleep = p.getLong("sleep", 3000);
+            int scenario = p.getInt("scenario", 0);
             try {
+                System.out.println("--- Thread ID " + Thread.currentThread().getId());
                 while (true) {
-                    System.out.println("Wait for Ctrl-C - MThread.sleepForSure " + cnt);
-                    if (MThread.sleepForSure(sleep)) {
-                        if (Thread.interrupted()) {
-                            System.out.println("Thread was interrupted - wrong state 1");
+                    System.out.println(">>> Loop " + cnt);
+                    if (scenario == 0 || scenario == 1) {
+                        System.out.println("1: Wait for Ctrl-C - MThread.sleepForSure");
+                        if (MThread.sleepForSure(sleep)) {
+                            if (Thread.interrupted()) {
+                                System.out.println("Thread was interrupted - wrong state 1");
+                                break;
+                            }
+                            System.out.println("Thread was interrupted");
                             break;
                         }
-                        System.out.println("Thread was interrupted");
-                        break;
+                        if (Thread.interrupted()) {
+                            System.out.println("Thread was interrupted - wrong state 2");
+                            break;
+                        }
                     }
-                    if (Thread.interrupted()) {
-                        System.out.println("Thread was interrupted - wrong state 2");
-                        break;
+                    if (scenario == 0 || scenario == 2) {
+                        System.out.println("2: Wait for Ctrl-C - MThread.sleep");
+                        MThread.sleep(sleep);
+                    }
+                    if (scenario == 0 || scenario == 3) {
+                        System.out.println("3: Wait for Ctrl-C - Thread.sleep");
+                        Thread.sleep(sleep);
+                    }
+                    if (scenario == 0 || scenario == 4) {
+                        System.out.println("4: Wait for Ctrl-C - generateRsaKey");
+                        long start = System.currentTimeMillis();
+                        while (!MPeriod.isTimeOut(start, sleep)) {
+                            MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
+                        }
+                        if (Thread.interrupted()) {
+                            System.out.println("Thread was interrupted");
+                            break;
+                        }
+                    }
+                    if (scenario == 5) {
+                        System.out.println("5: Wait for Ctrl-C - generateRsaKey and MThread.sleepInLoop");
+                        long start = System.currentTimeMillis();
+                        while (!MPeriod.isTimeOut(start, sleep)) {
+                            MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
+                        }
+                        System.out.println("Finish loop");
+                        if (Thread.interrupted()) {
+                            System.out.println("Thread was interrupted");
+                            throw new InterruptedException();
+                        }
+                        Thread.sleep(100);
+                        // MThread.sleepInLoop(100); // only to test exception - not for waiting
+                    }
+                    if (scenario == 6) {
+                        System.out.println("6: Wait for Ctrl-C - generateRsaKey and Thread.sleep");
+                        long start = System.currentTimeMillis();
+                        while (!MPeriod.isTimeOut(start, sleep)) {
+                            MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
+                        }
+                        System.out.println("Finish loop");
+                        Thread.sleep(100); // only to test exception - not for waiting
                     }
 
-                    System.out.println("Wait for Ctrl-C - MThread.sleep " + cnt);
-                    MThread.sleep(sleep);
-
-                    System.out.println("Wait for Ctrl-C - Thread.sleep " + cnt);
-                    Thread.sleep(sleep);
-
-                    System.out.println("Wait for Ctrl-C - generateRsaKey " + cnt);
-                    long start = System.currentTimeMillis();
-                    while (!MPeriod.isTimeOut(start, sleep)) {
-                        MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
-                    }
-                    if (Thread.interrupted()) {
-                        System.out.println("Thread was interrupted");
-                        break;
-                    }
-
-                    System.out.println("Wait for Ctrl-C - generateRsaKey and MThread.sleepInLoop " + cnt);
-                    start = System.currentTimeMillis();
-                    while (!MPeriod.isTimeOut(start, sleep)) {
-                        MBouncy.generateRsaKey(MBouncy.RSA_KEY_SIZE.B2048);
-                    }
-                    MThread.sleepInLoop(100); // only to test exception - not for waiting
-                    
-                    
                     cnt--;
                     if (cnt <= 0) {
-                        System.out.println("Loop end");
+                        System.out.println("<<< Loop ends");
                         return null;
                     }
                 }
             } catch (InterruptedException | RuntimeInterruptedException e) {
-                System.out.println("Interrupted !!!!");
+                System.out.println("<<< Interrupted !!!!");
                 e.printStackTrace();
             } catch (Throwable t) {
                 t.printStackTrace();
             }
+            System.out.println("<<< End");
         }
         if (cmd.equals("bigfile")) {
             File f = new File(parameters[0]);
@@ -155,8 +179,7 @@ public class StressShit implements ShitIfc {
                     round++;
                     if (round % 100 == 0)
                         System.out.println("Size " + MCast.toByteUnit(size));
-                    if (Thread.interrupted())
-                        break;
+                    MThread.checkInterruptedException();
                 }
             } finally {
                 fos.close();
@@ -187,11 +210,10 @@ public class StressShit implements ShitIfc {
             long free = 0;
             System.gc();
             try {
-                main: while (true) {
+                while (true) {
                     try {
                         while (true) {
-                            if (Thread.interrupted())
-                                break main;
+                            MThread.checkInterruptedException();
                             if (small != null) {
                                 small = small + small;
                                 kill = kill + small;
@@ -200,15 +222,13 @@ public class StressShit implements ShitIfc {
                             len = kill.length();
                             free = Runtime.getRuntime().freeMemory();
                             System.out.println(len + " " + free);
-                            if (Thread.interrupted())
-                                break main;
+                            MThread.checkInterruptedException();
                         }
                     } catch (OutOfMemoryError e) {
                         free = Runtime.getRuntime().freeMemory();
                         System.out.println("Buffer     : " + MCast.toUnit(len) + " Characters (" + len + ")");
                         System.out.println("Memory lost: " + MCast.toByteUnit(freeStart - free) + "B");
-                        if (Thread.interrupted())
-                            break main;
+                        MThread.checkInterruptedException();
                     }
                     if (!p.getBoolean("permanent", false))
                         break;
