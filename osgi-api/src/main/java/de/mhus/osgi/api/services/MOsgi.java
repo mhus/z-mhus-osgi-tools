@@ -46,8 +46,12 @@ import de.mhus.osgi.api.util.DataSourceUtil;
 public class MOsgi {
 
     public static final String COMPONENT_NAME = "component.name";
+    public static final String SERVICE_ID = "service.id";
+    public static final String SERVICE_SCOPE = "service.scope";
+    public static final String OBJECT_CLASS = "object.class";
 
     private static final Log log = Log.getLog(MOsgi.class);
+
     private static Timer localTimer; // fallback timer
 
     public static <T> T getService(Class<T> ifc) throws NotFoundException {
