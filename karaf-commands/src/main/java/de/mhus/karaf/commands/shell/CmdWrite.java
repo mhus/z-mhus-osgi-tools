@@ -16,13 +16,15 @@ package de.mhus.karaf.commands.shell;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.MFile;
+import de.mhus.lib.core.MThread;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "write", description = "Write to file")
@@ -50,16 +52,44 @@ public class CmdWrite extends AbstractCmd {
 
         if (fileName.equals("*")) {
             ByteArrayOutputStream ba = new ByteArrayOutputStream();
-            MFile.copyFile(System.in, ba);
+            copyFile(System.in, ba);
             return new String(ba.toByteArray());
         } else {
             File f = new File(fileName);
             FileOutputStream fos = new FileOutputStream(f, append);
 
-            MFile.copyFile(System.in, fos);
+            copyFile(System.in, fos);
             fos.close();
 
             return null;
         }
     }
+    
+    // copied from MFile
+    public long copyFile(InputStream _is, OutputStream _os) {
+        if (_is == null || _os == null) return -1;
+
+        long size = 0;
+        long free = Runtime.getRuntime().freeMemory();
+        if (free < 1024) free = 1024;
+        if (free > 32768) free = 32768;
+
+        byte[] buffer = new byte[(int) free];
+        int i = 0;
+
+        try {
+            while ((i = _is.read(buffer)) != -1) {
+                if (i == 0) 
+                    MThread.sleepInLoop(100);
+                else {
+                    _os.write(buffer, 0, i);
+                    size+=i;
+                }
+            }
+        } catch (Exception e) {
+            log().d(e);
+        }
+        return size;
+    }
+    
 }
