@@ -13,9 +13,8 @@
  */
 package de.mhus.karaf.commands.watch;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TimerTask;
@@ -26,8 +25,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
-import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.MFile;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
@@ -36,17 +34,18 @@ import de.mhus.osgi.api.services.PersistentWatch;
 
 @Component(
         immediate = true,
-        name = "de.mhus.osgi.commands.watch.PersistentWatch",
+        name = PersistentWatchImpl.PID,
         service = PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
+    public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
+    private static final String CONFIG_LIST = "watch";
     private TimerIfc timer;
     private TimerTask timerTask;
     //	private PersistentWatchConfig pwc;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
-
         //	    pwc = new PersistentWatchConfig();
         //	    pwc.register(ctx.getBundleContext());
 
@@ -101,21 +100,18 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     }
 
     private List<String> readFile() throws IOException {
-        try {
-            return MFile.readLines(getFile(), true);
-        } catch (FileNotFoundException e) {
-            return new LinkedList<>();
-        }
-        //		return pwc.readFile();
+        Dictionary<String, Object> prop = MOsgi.loadConfiguration(PID);
+        String[] list = (String[])prop.get(CONFIG_LIST);
+        if (list != null)
+            return MCollection.toList(list);
+        return new LinkedList<>();
     }
 
     private void writeFile(List<String> content) throws IOException {
-        MFile.writeLines(getFile(), content, false);
-        //		pwc.writeFile(content);
-    }
-
-    private File getFile() {
-        return MApi.getFile(MApi.SCOPE.ETC, PersistentWatch.class.getCanonicalName() + ".cfg");
+        Dictionary<String, Object> prop = MOsgi.loadConfiguration(PID);
+        String[] list = content.toArray(new String[content.size()]);
+        prop.put(CONFIG_LIST, list);
+        MOsgi.saveConfiguration(PID, prop);
     }
 
     @Override
@@ -162,4 +158,5 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
             writeFile(watched);
         }
     }
+
 }

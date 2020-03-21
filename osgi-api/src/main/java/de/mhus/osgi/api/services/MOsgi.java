@@ -14,6 +14,8 @@
 package de.mhus.osgi.api.services;
 
 import java.io.File;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
@@ -26,10 +28,14 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 
 import de.mhus.lib.annotations.pojo.Hidden;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
@@ -331,5 +337,63 @@ public class MOsgi {
         BundleContext context = getBundleContext();
         return new DataSourceUtil(context).getDataSource(name);
     }
+
+    public static boolean touchConfig(String pid) {
+        File file = MApi.getFile(MApi.SCOPE.ETC, pid + ".cfg");
+        if (!file.exists()) {
+            log.d("Touch configuration",pid,file);
+            MFile.touch(file);
+            return true;
+        }
+        return false;
+    }
+
+    public static String getPid(ComponentContext ctx) {
+        return ctx.getComponentInstance().getInstance().getClass().getCanonicalName();
+    }
+
+    public static String getPid(Class<?> clazz) {
+        return clazz.getCanonicalName();
+    }
+
+    public static Dictionary<String, Object> loadConfiguration(ComponentContext ctx) {
+        return loadConfiguration(getPid(ctx));
+    }
+
+    public static Dictionary<String, Object> loadConfiguration(String pid) {
+        try {
+            touchConfig(pid);
+            ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
+            Configuration config = admin.getConfiguration(pid);
+            if (config == null)
+                config = admin.createFactoryConfiguration(pid);
+            Dictionary<String, Object> prop = config.getProperties();
+            if (prop == null) prop = new Hashtable<>();
+            return prop;
+        } catch (Throwable t) {
+            log.d(pid,t);
+        }
+        return new Hashtable<>();
+    }
     
+    public static boolean saveConfiguration(ComponentContext ctx, Dictionary<String, Object> properties) {
+        return saveConfiguration(getPid(ctx), properties);
+    }
+    
+    public static boolean saveConfiguration(String pid, Dictionary<String, Object> properties) {
+        try {
+            touchConfig(pid); // Wait until config is loaded?!
+            ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
+            Configuration config = admin.getConfiguration(pid);
+            if (config == null)
+                config = admin.createFactoryConfiguration(pid);
+            config.update(properties);
+            return true;
+        } catch (Throwable t) {
+            log.d(pid,t);
+        }
+        return false;
+    }
+    
+
 }
