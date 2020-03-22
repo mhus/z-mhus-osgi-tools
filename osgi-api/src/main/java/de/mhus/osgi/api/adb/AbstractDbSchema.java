@@ -18,10 +18,9 @@ import java.util.HashMap;
 import de.mhus.lib.adb.DbSchema;
 import de.mhus.lib.adb.model.Table;
 import de.mhus.lib.adb.transaction.MemoryLockStrategy;
-import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MPeriod;
-import de.mhus.lib.core.security.AccessApi;
+import de.mhus.lib.core.shiro.ShiroUtil;
 import de.mhus.lib.errors.AccessDeniedException;
 import de.mhus.lib.sql.DbConnection;
 
@@ -44,7 +43,7 @@ public abstract class AbstractDbSchema extends DbSchema {
     @Override
     public void authorizeSaveForceAllowed(DbConnection con, Table table, Object object, boolean raw)
             throws AccessDeniedException {
-        if (!M.l(AccessApi.class).getCurrentOrGuest().isAdminMode())
+        if (!ShiroUtil.isAdmin())
             throw new AccessDeniedException();
     }
 
@@ -52,7 +51,7 @@ public abstract class AbstractDbSchema extends DbSchema {
     public void authorizeUpdateAttributes(
             DbConnection con, Table table, Object object, boolean raw, String... attributeNames)
             throws AccessDeniedException {
-        if (!M.l(AccessApi.class).getCurrentOrGuest().isAdminMode())
+        if (!ShiroUtil.isAdmin())
             throw new AccessDeniedException();
     }
 

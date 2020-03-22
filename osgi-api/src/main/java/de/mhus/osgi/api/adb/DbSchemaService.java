@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.UUID;
 
 import de.mhus.lib.adb.Persistable;
-import de.mhus.lib.core.security.AaaContext;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.xdb.XdbService;
 
@@ -29,13 +28,13 @@ public interface DbSchemaService {
 
     void doDestroy();
 
-    boolean canRead(AaaContext context, Persistable obj) throws MException;
+    boolean canRead(Persistable obj) throws MException;
 
-    boolean canUpdate(AaaContext context, Persistable obj) throws MException;
+    boolean canUpdate(Persistable obj) throws MException;
 
-    boolean canDelete(AaaContext context, Persistable obj) throws MException;
+    boolean canDelete(Persistable obj) throws MException;
 
-    boolean canCreate(AaaContext context, Persistable obj) throws MException;
+    boolean canCreate(Persistable obj) throws MException;
 
     Persistable getObject(String type, UUID id) throws MException;
 
@@ -47,5 +46,4 @@ public interface DbSchemaService {
 
     void doPostInitialize(XdbService manager) throws Exception;
 
-    String getAcl(AaaContext context, Persistable obj) throws MException;
 }

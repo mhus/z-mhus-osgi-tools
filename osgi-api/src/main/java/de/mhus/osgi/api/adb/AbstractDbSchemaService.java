@@ -26,6 +26,7 @@ import de.mhus.lib.core.MValidator;
 import de.mhus.lib.core.cfg.CfgLong;
 import de.mhus.lib.core.security.AaaContext;
 import de.mhus.lib.core.security.AaaUtil;
+import de.mhus.lib.core.shiro.ShiroUtil;
 import de.mhus.lib.errors.MException;
 
 public abstract class AbstractDbSchemaService extends MLog implements DbSchemaService {
@@ -34,7 +35,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             new CfgLong(DbSchemaService.class, "cacheTimeout", MPeriod.MINUTE_IN_MILLISECOUNDS * 5);
 
     @Override
-    public boolean canRead(AaaContext context, Persistable obj) throws MException {
+    public boolean canRead(Persistable obj) throws MException {
         //		return
         // M.l(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(),
         // String.valueOf(obj.getId()), Account.ACT_READ, null);
@@ -42,25 +43,25 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
     }
 
     @Override
-    public boolean canUpdate(AaaContext context, Persistable obj) throws MException {
+    public boolean canUpdate(Persistable obj) throws MException {
         //		return
         // M.l(AccessApi.class).hasResourceAccess(account.getAccount(),obj.getClass().getName(),
         // String.valueOf(obj.getId()), Account.ACT_UPDATE, null);
-        return getAce(context, obj).canUpdate();
+        return getAce(obj).canUpdate();
     }
 
     @Override
-    public boolean canDelete(AaaContext context, Persistable obj) throws MException {
+    public boolean canDelete(Persistable obj) throws MException {
         //		return
         // M.l(AccessApi.class).hasResourceAccess(context.getAccount(),obj.getClass().getName(),
         // String.valueOf(obj.getId()), Account.ACT_DELETE, null);
-        return getAce(context, obj).canDelete();
+        return getAce(obj).canDelete();
     }
 
-    public Ace getAce(AaaContext context, Persistable obj) throws MException {
+    public Ace getAce(Persistable obj) throws MException {
 
         if (obj == null) return Ace.ACE_NONE;
-        if (context.isAdminMode()) return Ace.ACE_ALL;
+        if (ShiroUtil.isAdmin()) return Ace.ACE_ALL;
 
         String ident = null;
         if (obj instanceof UuidIdentificable) {
@@ -87,7 +88,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
 //            if (aclObject != null) acl = aclObject.getList();
 //        }
         if (acl == null) {
-            acl = getAcl(context, obj);
+            acl = getAcl(obj);
         }
         if (acl != null) {
             ace = AaaUtil.getAccessAce(context, acl);
@@ -104,8 +105,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
      * @return The ACL
      * @throws MException
      */
-    @Override
-    public abstract String getAcl(AaaContext context, Persistable obj) throws MException;
+    public abstract String getAcl(Persistable obj) throws MException;
 
     @Override
     public Persistable getObject(String type, UUID id) throws MException {
