@@ -31,11 +31,7 @@ import de.mhus.lib.adb.DbMetadata;
 import de.mhus.lib.adb.Persistable;
 import de.mhus.lib.adb.query.AQuery;
 import de.mhus.lib.basics.UuidIdentificable;
-import de.mhus.lib.core.M;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.MPeriod;
-import de.mhus.lib.core.security.AaaContext;
-import de.mhus.lib.core.security.AccessApi;
 import de.mhus.lib.errors.MException;
 import de.mhus.lib.xdb.XdbService;
 import de.mhus.osgi.api.aaa.ContextCachedItem;
@@ -44,7 +40,6 @@ import de.mhus.osgi.api.adb.DbSchemaService;
 import de.mhus.osgi.api.adb.Reference;
 import de.mhus.osgi.api.adb.Reference.TYPE;
 import de.mhus.osgi.api.adb.ReferenceCollector;
-import de.mhus.osgi.services.aaa.AaaContextImpl;
 
 // @Component(immediate=true) done by blueprint
 public class AdbApiImpl extends MLog implements AdbApi {
@@ -112,62 +107,62 @@ public class AdbApiImpl extends MLog implements AdbApi {
         return ret;
     }
 
-    protected boolean canRead(AaaContext c, DbMetadata obj) throws MException {
+    protected boolean canReadX(DbMetadata obj) throws MException {
 
-        Boolean item = ((AaaContextImpl) c).getCached("ace_read|" + obj.getId());
-        if (item != null) return item;
+//XXX        Boolean item = ((AaaContextImpl) c).getCached("ace_read|" + obj.getId());
+//        if (item != null) return item;
 
         DbSchemaService controller = getController(obj.getClass().getCanonicalName());
         if (controller == null) return false;
 
         ContextCachedItem ret = new ContextCachedItem();
-        ret.bool = controller.canRead(c, obj);
-        ((AaaContextImpl) c)
-                .setCached("ace_read|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
+        ret.bool = controller.canRead(obj);
+//        ((AaaContextImpl) c)
+//                .setCached("ace_read|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
         return ret.bool;
     }
 
-    protected boolean canUpdate(AaaContext c, DbMetadata obj) throws MException {
+    protected boolean canUpdateX(DbMetadata obj) throws MException {
 
-        Boolean item = ((AaaContextImpl) c).getCached("ace_update|" + obj.getId());
-        if (item != null) return item;
+//        Boolean item = ((AaaContextImpl) c).getCached("ace_update|" + obj.getId());
+//        if (item != null) return item;
 
         DbSchemaService controller = getController(obj.getClass().getCanonicalName());
         if (controller == null) return false;
 
         ContextCachedItem ret = new ContextCachedItem();
-        ret.bool = controller.canUpdate(c, obj);
-        ((AaaContextImpl) c)
-                .setCached("ace_update|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
+        ret.bool = controller.canUpdate(obj);
+//        ((AaaContextImpl) c)
+//               .setCached("ace_update|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
         return ret.bool;
     }
 
-    protected boolean canDelete(AaaContext c, DbMetadata obj) throws MException {
+    protected boolean canDeleteX(DbMetadata obj) throws MException {
 
-        Boolean item = ((AaaContextImpl) c).getCached("ace_delete" + "|" + obj.getId());
-        if (item != null) return item;
+//        Boolean item = ((AaaContextImpl) c).getCached("ace_delete" + "|" + obj.getId());
+//        if (item != null) return item;
 
         DbSchemaService controller = getController(obj.getClass().getCanonicalName());
         if (controller == null) return false;
 
         ContextCachedItem ret = new ContextCachedItem();
-        ret.bool = controller.canDelete(c, obj);
-        ((AaaContextImpl) c)
-                .setCached("ace_delete|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
+        ret.bool = controller.canDelete(obj);
+//        ((AaaContextImpl) c)
+//                .setCached("ace_delete|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
         return ret.bool;
     }
 
-    protected boolean canCreate(AaaContext c, DbMetadata obj) throws MException {
-        Boolean item = ((AaaContextImpl) c).getCached("ace_create" + "|" + obj.getId());
-        if (item != null) return item;
+    protected boolean canCreateX(DbMetadata obj) throws MException {
+//        Boolean item = ((AaaContextImpl) c).getCached("ace_create" + "|" + obj.getId());
+//        if (item != null) return item;
 
         DbSchemaService controller = getController(obj.getClass().getCanonicalName());
         if (controller == null) return false;
 
         ContextCachedItem ret = new ContextCachedItem();
-        ret.bool = controller.canCreate(c, obj);
-        ((AaaContextImpl) c)
-                .setCached("ace_create|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
+        ret.bool = controller.canCreate(obj);
+//        ((AaaContextImpl) c)
+//                .setCached("ace_create|" + obj.getId(), MPeriod.MINUTE_IN_MILLISECOUNDS * 5, ret);
         return ret.bool;
     }
 
@@ -259,37 +254,25 @@ public class AdbApiImpl extends MLog implements AdbApi {
     @Override
     public boolean canRead(DbMetadata obj) throws MException {
         if (obj == null) return false;
-        AaaContext c = getCurrent();
-        if (c.isAdminMode()) return true;
-        return canRead(c, obj);
-    }
-
-    private AaaContext getCurrent() {
-        return M.l(AccessApi.class).getCurrentOrGuest();
+        return canReadX(obj);
     }
 
     @Override
     public boolean canUpdate(DbMetadata obj) throws MException {
         if (obj == null) return false;
-        AaaContext c = getCurrent();
-        if (c.isAdminMode()) return true;
-        return canUpdate(c, obj);
+        return canUpdateX(obj);
     }
 
     @Override
     public boolean canDelete(DbMetadata obj) throws MException {
         if (obj == null) return false;
-        AaaContext c = getCurrent();
-        if (c.isAdminMode()) return true;
-        return canDelete(c, obj);
+        return canDeleteX(obj);
     }
 
     @Override
     public boolean canCreate(DbMetadata obj) throws MException {
         if (obj == null) return false;
-        AaaContext c = getCurrent();
-        if (c == null || c.isAdminMode()) return true;
-        return canCreate(c, obj);
+        return canCreateX(obj);
     }
 
     @Override
