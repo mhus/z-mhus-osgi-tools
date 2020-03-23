@@ -39,7 +39,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.checkPermission(type + ":read:" + ident);
+        return ShiroUtil.isPermitted(type + ":read:" + ident);
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.checkPermission(type + ":update:" + ident);
+        return ShiroUtil.isPermitted(type + ":update:" + ident);
     }
 
     @Override
@@ -61,7 +61,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.checkPermission(type + ":delete:" + ident);
+        return ShiroUtil.isPermitted(type + ":delete:" + ident);
     }
 
     @Override
