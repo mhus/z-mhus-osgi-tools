@@ -50,6 +50,8 @@
                         	de.mhus.lib.sql*;resolution:=optional,
                         	org.apache.activemq.*;resolution:=optional,
                         	javax.jms.*;resolution:=optional,
+                        	org.apache.commons.beanutils;resolution:=optional,
+                        	org.apache.shiro.*;resolution:=optional,
                             *
 						</Import-Package>
 						<Private-Package>
@@ -88,6 +90,12 @@
             <groupId>de.mhus.osgi</groupId>
             <artifactId>osgi-api</artifactId>
         </dependency>
+						
+		<dependency>
+		    <groupId>commons-beanutils</groupId>
+		    <artifactId>commons-beanutils</artifactId>
+		</dependency>
+						
 						
 	</dependencies>
 </project>

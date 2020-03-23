@@ -14,8 +14,11 @@
 package de.mhus.karaf.commands.testit;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCollection;
@@ -31,6 +34,8 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.lang.ValueProvider;
 import de.mhus.lib.core.system.DefaultHousekeeper;
 import de.mhus.lib.core.util.AtomicClockUtil;
+import de.mhus.osgi.api.karaf.CmdInterceptor;
+import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
 public class MhusShit implements ShitIfc {
 
@@ -49,11 +54,19 @@ public class MhusShit implements ShitIfc {
                 "atomictime [<server>] - without server will use getCurrentTime() and return a cached time");
         System.out.println("atomicservers");
         System.out.println("ask - try console input");
+        System.out.println("interceptors - print all session interceptors");
     }
 
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
 
+        if (cmd.equals("interceptors")) {
+            Session session = base.getSession();
+            @SuppressWarnings("unchecked")
+            List<CmdInterceptor> interceptors = (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
+            for (CmdInterceptor inter : interceptors)
+                System.out.println(inter.getClass().getCanonicalName() + " = " + inter);
+        } else
         if (cmd.equals("ask")) {
             char result = Console.askQuestion(
                     "Really do something?",

@@ -39,11 +39,14 @@ public class CmdInterceptorUtil {
             interceptors = new LinkedList<>();
             session.put(SESSION_KEY, interceptors);
         } else {
-            interceptors.removeIf(
-                    i ->
-                            i.getClass()
-                                    .getCanonicalName()
-                                    .equals(interceptor.getClass().getCanonicalName()));
+            for (CmdInterceptor inter : interceptors) {
+                if (inter.getClass().getCanonicalName().equals(interceptor.getClass().getCanonicalName())) {
+                    interceptors.remove(inter);
+                    try {
+                        inter.onCmdEnd(session);
+                    } catch (Throwable t) {}
+                }
+            }
         }
         interceptors.add(interceptor);
     }
@@ -66,6 +69,9 @@ public class CmdInterceptorUtil {
         for (CmdInterceptor interceptor : interceptors) {
             if (interceptor.getClass().getCanonicalName().equals(clazz.getCanonicalName())) {
                 interceptors.remove(interceptor);
+                try {
+                    interceptor.onCmdEnd(session);
+                } catch (Throwable t) {}
                 return (T) interceptor;
             }
         }
