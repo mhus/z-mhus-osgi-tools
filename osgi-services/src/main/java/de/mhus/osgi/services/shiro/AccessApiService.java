@@ -4,11 +4,11 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.shiro.SecurityUtils;
 import org.osgi.service.component.annotations.Component;
 
-import de.mhus.lib.core.shiro.DefaultShiroSecurity;
-import de.mhus.lib.core.shiro.ShiroSecurity;
+import de.mhus.lib.core.shiro.DefaultAccessApi;
+import de.mhus.lib.core.shiro.AccessApi;
 
-@Component(service = ShiroSecurity.class)
-public class ShiroSecurityService extends DefaultShiroSecurity {
+@Component(service = AccessApi.class)
+public class AccessApiService extends DefaultAccessApi {
 
     @Override
     protected void initialize() {

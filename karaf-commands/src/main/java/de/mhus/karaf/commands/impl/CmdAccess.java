@@ -12,8 +12,8 @@ import org.apache.shiro.subject.Subject;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.console.Console;
-import de.mhus.lib.core.shiro.ShiroSecurity;
-import de.mhus.lib.core.shiro.ShiroUtil;
+import de.mhus.lib.core.shiro.AccessApi;
+import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.core.shiro.SubjectEnvironment;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptor;
@@ -53,9 +53,9 @@ public class CmdAccess extends AbstractCmd {
 
         if (cmd.equals("admin")) {
             String user = "admin";
-            String pass = MApi.get().getCfgString(ShiroSecurity.class, "adminPassword", "secret");
-            Subject subject = M.l(ShiroSecurity.class).createSubject();
-            ShiroUtil.login(subject, user, pass, true, Locale.getDefault());
+            String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
+            Subject subject = M.l(AccessApi.class).createSubject();
+            AccessUtil.login(subject, user, pass, true, Locale.getDefault());
             CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
             System.out.println("OK");
         } else
@@ -71,15 +71,15 @@ public class CmdAccess extends AbstractCmd {
                 pass = parameters[1];
             else
                 pass = Console.get().readPassword();
-            Subject subject = M.l(ShiroSecurity.class).createSubject();
-            ShiroUtil.login(subject, user, pass, true, Locale.getDefault());
+            Subject subject = M.l(AccessApi.class).createSubject();
+            AccessUtil.login(subject, user, pass, true, Locale.getDefault());
             CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
             System.out.println("OK");
         } else
         if (cmd.equals("id")) {
-            System.out.println(ShiroUtil.getPrincipal());
+            System.out.println(AccessUtil.getPrincipal());
         } else if (cmd.equals("subject")) {
-            Subject subject = ShiroUtil.getSubject();
+            Subject subject = AccessUtil.getSubject();
             System.out.println("Subject: " + subject);
             System.out.println("Principal: " + String.valueOf(subject.getPrincipal()));
             System.out.println("Authenticated: " + subject.isAuthenticated());
@@ -101,7 +101,7 @@ public class CmdAccess extends AbstractCmd {
         @Override
         public void onCmdStart(Session session) {
             if (subject != null)
-                env = ShiroUtil.useSubject(subject);
+                env = AccessUtil.useSubject(subject);
         }
 
         @Override

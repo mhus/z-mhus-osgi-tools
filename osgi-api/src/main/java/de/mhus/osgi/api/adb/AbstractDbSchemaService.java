@@ -23,7 +23,7 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MValidator;
 import de.mhus.lib.core.cfg.CfgLong;
-import de.mhus.lib.core.shiro.ShiroUtil;
+import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.errors.MException;
 
 public abstract class AbstractDbSchemaService extends MLog implements DbSchemaService {
@@ -39,7 +39,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.isPermitted(type + ":read:" + ident);
+        return AccessUtil.isPermitted(type + ":read:" + ident);
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.isPermitted(type + ":update:" + ident);
+        return AccessUtil.isPermitted(type + ":update:" + ident);
     }
 
     @Override
@@ -61,7 +61,7 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             UUID uuid = ((UuidIdentificable) obj).getId();
             if (uuid != null) ident = uuid.toString();
         }
-        return ShiroUtil.isPermitted(type + ":delete:" + ident);
+        return AccessUtil.isPermitted(type + ":delete:" + ident);
     }
 
     @Override
