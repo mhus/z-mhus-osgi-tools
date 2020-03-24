@@ -36,6 +36,7 @@ public class CmdAccess extends AbstractCmd {
                     + "\n  logout"
                     + "\n  id - print current id"
                     + "\n  subject - print current subject and session information"
+                    + "\n  restart - restart engine"
             ,
             multiValued = false)
     String cmd;
@@ -51,6 +52,10 @@ public class CmdAccess extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (cmd.equals("restart")) {
+            M.l(AccessApi.class).restart();
+            System.out.println("OK");
+        } else
         if (cmd.equals("admin")) {
             String user = "admin";
             String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
