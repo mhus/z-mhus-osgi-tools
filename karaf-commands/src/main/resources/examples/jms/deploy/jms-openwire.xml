@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+    <bean id="dataSource" class="de.mhus.osgi.jms.services.JmsDataSourceOpenWire">
+        <property name="name" value="sop"/>
+        <property name="url" value="failover:tcp://#{ENV_JMS_SERVER}"/>
+        <property name="user" value="#{ENV_JMS_SOP_USER}"/>
+        <property name="password" value="#{ENV_JMS_SOP_PASS}"/>
+    </bean>
+
+    <service id="jms_sop" interface="de.mhus.osgi.api.jms.JmsDataSource" ref="dataSource">
+        <service-properties>
+            <entry key="osgi.jndi.service.name" value="jms_sop"/>
+        </service-properties>
+    </service>
+</blueprint>
+

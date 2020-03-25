@@ -1,0 +1,5 @@
+<mhus>
+    <de.mhus.lib.core.security.TrustApi>
+        <trust name="default" password="default"/>
+    </de.mhus.lib.core.security.TrustApi>
+</mhus>
