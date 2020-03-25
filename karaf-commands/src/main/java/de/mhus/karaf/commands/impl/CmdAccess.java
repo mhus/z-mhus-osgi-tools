@@ -19,7 +19,7 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptor;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
-@Command(scope = "shiro", name = "access", description = "Access Control")
+@Command(scope = "mhus", name = "access", description = "Access Control")
 @Service
 public class CmdAccess extends AbstractCmd {
 
