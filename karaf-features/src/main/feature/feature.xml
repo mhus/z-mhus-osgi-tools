@@ -161,4 +161,14 @@
         <bundle>mvn:de.mhus.lib/mongo-karaf-impl/${mhus-mongo.version}</bundle>
     </feature>
 
+    <feature name='mhu-dev' description='Mongo enhancement' version='${project.version}'>
+        <feature>mhu-base</feature>
+        <bundle>mvn:de.mhus.osgi/karaf-dev/${mhus-osgi-dev.version}</bundle>
+    </feature>
+
+    <feature name='mhu-dev-critical' description='Mongo enhancement' version='${project.version}'>
+        <feature>mhu-dev</feature>
+        <bundle>mvn:de.mhus.osgi/karaf-dev/${mhus-osgi-dev.version}</bundle>
+        <bundle>mvn:de.mhus.osgi/karaf-critical/${mhus-osgi-dev.version}</bundle>
+    </feature>
 </features>

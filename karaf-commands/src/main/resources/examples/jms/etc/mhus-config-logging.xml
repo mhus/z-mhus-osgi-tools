@@ -1,5 +1,0 @@
-<mhus>
-  <de.mhus.lib.core.logging.ConsoleFactory
-    level="DEBUG"
-  />
-</mhus>

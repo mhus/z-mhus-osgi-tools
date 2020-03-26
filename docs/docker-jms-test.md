@@ -44,7 +44,7 @@ And install software in both environments
 feature:repo-add activemq
 feature:repo-add mvn:org.apache.shiro/shiro-features/1.5.1/xml/features
 feature:repo-add mvn:de.mhus.osgi/karaf-features/7.0.0-SNAPSHOT/xml/features
-feature:install mhu-micro-jms
+feature:install mhu-micro-jms mhu-dev
 
 mhus:dev -y cp jms ENV_JMS_SOP_USER=admin ENV_JMS_SOP_PASS=nein ENV_JMS_SERVER=jmsserver:61616
 
