@@ -137,7 +137,7 @@
 		
        	<dependency>
 			<groupId>de.mhus.osgi</groupId>
-			<artifactId>mhu-karaf-feature</artifactId>
+			<artifactId>mhus-feature</artifactId>
 			<version>${project.version}</version>
 			<type>xml</type>
 			<classifier>features</classifier>

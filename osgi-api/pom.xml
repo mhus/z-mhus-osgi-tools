@@ -75,10 +75,6 @@
 		</dependency>
 		<dependency>
 			<groupId>de.mhus.lib</groupId>
-			<artifactId>lib-persistence</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>de.mhus.lib</groupId>
 			<artifactId>lib-jms</artifactId>
 		</dependency>
 		<dependency>

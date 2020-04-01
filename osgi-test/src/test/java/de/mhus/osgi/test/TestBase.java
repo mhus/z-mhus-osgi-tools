@@ -115,7 +115,7 @@ public class TestBase extends org.junit.Assert {
                 configureConsole().ignoreRemoteShell(),
                 junitBundles(),
                 features(
-                		maven().groupId("de.mhus.osgi").artifactId("mhu-karaf-feature").type("xml")
+                		maven().groupId("de.mhus.osgi").artifactId("mhus-feature").type("xml")
                 		.classifier("features").versionAsInProject()
                 		,"") // mhu-osgi-test
                 );
