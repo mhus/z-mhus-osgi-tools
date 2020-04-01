@@ -65,7 +65,6 @@
         <module>osgi-api</module>
 		<module>osgi-services</module>
 		<module>osgi-jms</module>
-		<module>karaf-xdb</module>
 		<module>karaf-commands</module>
 		<module>karaf-features</module>
 	</modules>

@@ -71,6 +71,7 @@ public class CmdCreateDbTrace extends AbstractCmd {
             TraceDataSource dataSource = new TraceDataSource();
             dataSource.setSource(source);
             dataSource.setContext(context);
+            dataSource.setTrace(true);
 
             util.registerDataSource(dataSource, target);
 

@@ -32,6 +32,17 @@ public abstract class AbstractDbSchemaService extends MLog implements DbSchemaSe
             new CfgLong(DbSchemaService.class, "cacheTimeout", MPeriod.MINUTE_IN_MILLISECOUNDS * 5);
 
     @Override
+    public boolean canCreate(Persistable obj) throws MException {
+        String type = obj.getClass().getCanonicalName();
+        String ident = "*";
+        if (obj instanceof UuidIdentificable) {
+            UUID uuid = ((UuidIdentificable) obj).getId();
+            if (uuid != null) ident = uuid.toString();
+        }
+        return AccessUtil.isPermitted(type + ":create:" + ident);
+    }
+    
+    @Override
     public boolean canRead(Persistable obj) throws MException {
         String type = obj.getClass().getCanonicalName();
         String ident = "*";

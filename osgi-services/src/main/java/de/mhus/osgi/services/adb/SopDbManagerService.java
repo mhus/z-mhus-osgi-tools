@@ -38,13 +38,11 @@ import de.mhus.osgi.api.adb.DbManagerService;
 import de.mhus.osgi.api.adb.DbSchemaService;
 import de.mhus.osgi.api.services.MOsgi;
 
-@Component(service = DbManagerService.class, immediate = true)
+//@Component(service = DbManagerService.class, immediate = true)
 public class SopDbManagerService extends DbManagerServiceImpl {
 
     private static final CfgBoolean CFG_USE_PSEUDO =
             new CfgBoolean(SopDbManagerService.class, "usePseudoPool", false);
-    private static final CfgBoolean CFG_ENABLED =
-            new CfgBoolean(SopDbManagerService.class, "enabled", false);
 
     private ServiceTracker<DbSchemaService, DbSchemaService> tracker;
     private TreeMap<String, DbSchemaService> schemaList = new TreeMap<>();
@@ -72,10 +70,7 @@ public class SopDbManagerService extends DbManagerServiceImpl {
         context = ctx.getBundleContext();
 
         if (context == null) return;
-        if (!CFG_ENABLED.value()) {
-            log().i("not enabled");
-            return;
-        }
+
         instance = this;
         MOsgi.runAfterActivation(ctx, this::doStart);
     }

@@ -26,7 +26,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 
 import de.mhus.lib.core.MDate;
-import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
@@ -46,7 +45,7 @@ public class CmdBundleList extends AbstractCmd {
             index = 0,
             name = "filter",
             required = false,
-            description = "Filter Regular Expression over Bundle Name",
+            description = "Filter Bundle Name includes",
             multiValued = false)
     String filter;
 
@@ -89,7 +88,7 @@ public class CmdBundleList extends AbstractCmd {
                 valid = e.getMessage();
             }
 
-            if (filter == null || MString.compareRegexPattern(b.getSymbolicName(), filter)) {
+            if (filter == null || b.getSymbolicName().contains(filter)) {
                 list.add(new Object[] {b, valid});
             }
         }
