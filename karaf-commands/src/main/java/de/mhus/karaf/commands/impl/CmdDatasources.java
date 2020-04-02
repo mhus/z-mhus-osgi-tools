@@ -38,9 +38,7 @@ public class CmdDatasources extends AbstractCmd {
         ConsoleTable table = new ConsoleTable(tblOpt);
         table.setHeaderValues("Name", "Url", "Status");
 
-        DataSourceUtil util = new DataSourceUtil(context);
-
-        for (ServiceReference<DataSource> reference : util.getDataSources()) {
+        for (ServiceReference<DataSource> reference : DataSourceUtil.getDataSources()) {
             DataSource service = context.getService(reference);
             Object name = reference.getProperty(DataSourceUtil.SERVICE_JNDI_NAME_KEY);
             String url = "";

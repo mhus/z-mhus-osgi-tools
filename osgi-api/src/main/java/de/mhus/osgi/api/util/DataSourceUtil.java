@@ -20,33 +20,31 @@ import java.util.Hashtable;
 import javax.sql.DataSource;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.jdbc.DataSourceFactory;
 
+import de.mhus.osgi.api.services.MOsgi;
+
 public class DataSourceUtil {
 
     public static final String SERVICE_JNDI_NAME_KEY = "osgi.jndi.service.name";
-    private BundleContext context;
 
-    public DataSourceUtil() {
-        this.context = FrameworkUtil.getBundle(DataSourceUtil.class).getBundleContext();
+    public static DataSource getDataSource(String name) {
+        BundleContext context = MOsgi.getBundleContext();
+        return getDataSource(name, context);
     }
-
-    public DataSourceUtil(BundleContext context) {
-        this.context = context;
-    }
-
-    public DataSource getDataSource(String name) {
+    
+    public static DataSource getDataSource(String name, BundleContext context) {
         try {
+            // BundleContext context = FrameworkUtil.getBundle(DataSourceUtil.class).getBundleContext();
             Collection<ServiceReference<DataSource>> refs =
-                    getContext()
+                    context
                             .getServiceReferences(
                                     DataSource.class,
                                     "(" + SERVICE_JNDI_NAME_KEY + "=" + name + ")");
             if (refs.size() > 0) {
-                return getContext().getService(refs.iterator().next());
+                return context.getService(refs.iterator().next());
             }
         } catch (InvalidSyntaxException e) {
             throw new RuntimeException(e);
@@ -66,10 +64,11 @@ public class DataSourceUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public ServiceReference<DataSource>[] getDataSources() {
+    public static ServiceReference<DataSource>[] getDataSources() {
         try {
+            BundleContext context = MOsgi.getBundleContext();
             ServiceReference<?>[] dsRefs =
-                    getContext().getServiceReferences(DataSource.class.getName(), null);
+                    context.getServiceReferences(DataSource.class.getName(), null);
             if (dsRefs == null) {
                 dsRefs = new ServiceReference[] {};
             }
@@ -79,20 +78,18 @@ public class DataSourceUtil {
         }
     }
 
-    public String getServiceJndiName(ServiceReference<?> ref) {
+    public static String getServiceJndiName(ServiceReference<?> ref) {
         String jndiName = (String) ref.getProperty(SERVICE_JNDI_NAME_KEY);
         return jndiName;
     }
 
-    public BundleContext getContext() {
-        return context;
-    }
-
-    public void registerDataSource(DataSource dataSource, String name) {
+    public static void registerDataSource(DataSource dataSource, String name) {
+        BundleContext context = MOsgi.getBundleContext();
         Dictionary<String, Object> properties = new Hashtable<String, Object>();
         properties.put(SERVICE_JNDI_NAME_KEY, name);
         properties.put(DataSourceFactory.JDBC_DATASOURCE_NAME, name);
 
         context.registerService(DataSource.class, dataSource, properties);
     }
+    
 }

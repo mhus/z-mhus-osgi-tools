@@ -94,6 +94,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
                     }
                 }
             }
+        } catch (NotFoundException e) {
         } catch (Throwable t) {
             log().d(t);
         }
