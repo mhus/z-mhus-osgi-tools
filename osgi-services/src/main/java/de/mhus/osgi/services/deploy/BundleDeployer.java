@@ -142,7 +142,7 @@ public class BundleDeployer extends MLog {
             }
         } else {
 
-            FileDeployer deployer = findFileDeployer(MFile.getFileSuffix(path));
+            FileDeployer deployer = findFileDeployer(MFile.getFileExtension(path));
             URL entry = bundle.getEntry(path);
             if (deployer != null) {
                 deployer.doDeploy(root, path.substring(prefixLength), entry, config);

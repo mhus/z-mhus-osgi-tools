@@ -69,7 +69,7 @@ public class CmdJdbcMetadata extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
-        DataSource ds = new DataSourceUtil().getDataSource(source);
+        DataSource ds = DataSourceUtil.getDataSource(source);
         if (ds == null) throw new MException("DataSource not found", source);
 
         if (type.equals("schemas")) {
