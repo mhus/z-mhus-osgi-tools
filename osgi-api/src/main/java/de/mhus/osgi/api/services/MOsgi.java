@@ -31,7 +31,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 
 import de.mhus.lib.annotations.pojo.Hidden;
-import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MPeriod;
@@ -366,12 +365,12 @@ public class MOsgi {
         return clazz.getCanonicalName();
     }
 
-    public static Dictionary<String, Object> loadConfiguration(ComponentContext ctx) {
-        return loadConfiguration(getPid(ctx));
+    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, ComponentContext ctx) {
+        return loadConfiguration(admin, getPid(ctx));
     }
 
-    public static Dictionary<String, Object> loadConfiguration(Class<?> serviceClass) {
-        return loadConfiguration(findServicePid(serviceClass));
+    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, Class<?> serviceClass) {
+        return loadConfiguration(admin, findServicePid(serviceClass));
     }
     
     public static String findServicePid(Class<?> service) {
@@ -391,10 +390,10 @@ public class MOsgi {
         return service.getCanonicalName();
     }
 
-    public static Dictionary<String, Object> loadConfiguration(String pid) {
+    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, String pid) {
         try {
             touchConfig(pid);
-            ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
+            // ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
             Configuration config = admin.getConfiguration(pid);
             if (config == null)
                 config = admin.createFactoryConfiguration(pid);
@@ -402,30 +401,30 @@ public class MOsgi {
             if (prop == null) prop = new Hashtable<>();
             return prop;
         } catch (Throwable t) {
-            log.d(pid,t);
+            log.w(pid,t);
         }
         return new Hashtable<>();
     }
     
-    public static boolean saveConfiguration(ComponentContext ctx, Dictionary<String, Object> properties) {
-        return saveConfiguration(getPid(ctx), properties);
+    public static boolean saveConfiguration(ConfigurationAdmin admin, ComponentContext ctx, Dictionary<String, Object> properties) {
+        return saveConfiguration(admin, getPid(ctx), properties);
     }
     
-    public static boolean saveConfiguration(Class<?> serviceClass, Dictionary<String, Object> properties) {
-        return saveConfiguration(findServicePid(serviceClass), properties);
+    public static boolean saveConfiguration(ConfigurationAdmin admin, Class<?> serviceClass, Dictionary<String, Object> properties) {
+        return saveConfiguration(admin, findServicePid(serviceClass), properties);
     }
     
-    public static boolean saveConfiguration(String pid, Dictionary<String, Object> properties) {
+    public static boolean saveConfiguration(ConfigurationAdmin admin, String pid, Dictionary<String, Object> properties) {
         try {
             touchConfig(pid); // Wait until config is loaded?!
-            ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
+            // ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
             Configuration config = admin.getConfiguration(pid);
             if (config == null)
                 config = admin.createFactoryConfiguration(pid);
             config.update(properties);
             return true;
         } catch (Throwable t) {
-            log.d(pid,t);
+            log.w(pid,t);
         }
         return false;
     }

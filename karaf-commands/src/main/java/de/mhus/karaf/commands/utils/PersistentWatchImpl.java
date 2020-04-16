@@ -19,11 +19,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.karaf.bundle.core.BundleWatcher;
-import org.apache.karaf.shell.api.action.lifecycle.Reference;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
@@ -40,8 +41,8 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
     private static final String CONFIG_LIST = "watch";
  
-    @Reference
     private BundleWatcher bundleWatcher;
+    private ConfigurationAdmin configurationAdmin;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
@@ -65,17 +66,17 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
                             bundleWatcher.add(line);
                         }
                     } catch (Throwable t) {
-                        log().d(t);
+                        log().w(t);
                     }
                 }
             }
         } catch (Throwable t) {
-            log().d(t);
+            log().i(t);
         }
     }
 
     private List<String> readFile() throws IOException {
-        Dictionary<String, Object> prop = MOsgi.loadConfiguration(PID);
+        Dictionary<String, Object> prop = MOsgi.loadConfiguration(configurationAdmin, PID);
         String[] list = (String[])prop.get(CONFIG_LIST);
         if (list != null)
             return MCollection.toList(list);
@@ -83,10 +84,10 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     }
 
     private void writeFile(List<String> content) throws IOException {
-        Dictionary<String, Object> prop = MOsgi.loadConfiguration(PID);
+        Dictionary<String, Object> prop = MOsgi.loadConfiguration(configurationAdmin, PID);
         String[] list = content.toArray(new String[content.size()]);
         prop.put(CONFIG_LIST, list);
-        MOsgi.saveConfiguration(PID, prop);
+        MOsgi.saveConfiguration(configurationAdmin, PID, prop);
     }
 
     @Override
@@ -132,6 +133,16 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
             List<String> watched = bundleWatcher.getWatchURLs();
             writeFile(watched);
         }
+    }
+
+    @Reference
+    public void setBundleWatcher(BundleWatcher bundleWatcher) {
+        this.bundleWatcher = bundleWatcher;
+    }
+
+    @Reference
+    public void setConfigurationAdmin(ConfigurationAdmin admin) {
+        configurationAdmin = admin;
     }
 
 }
