@@ -105,6 +105,15 @@ public class MOsgi {
         return out;
     }
 
+    /**
+     * Use 
+     * /@Reference
+     * private TimerFactory timerFactory;
+     * instead.
+     * 
+     * @return A timer factory
+     */
+    @Deprecated
     public static synchronized TimerIfc getTimer() {
         TimerIfc timer = null;
         try {
@@ -335,6 +344,10 @@ public class MOsgi {
         return bundle.getSymbolicName() + " [" + bundle.getBundleId() + "]";
     }
 
+    public static boolean touchConfig(Class<?> serviceClass) {
+        return touchConfig(serviceClass.getCanonicalName());
+    }
+    
     public static boolean touchConfig(String pid) {
         File file = MApi.getFile(MApi.SCOPE.ETC, pid + ".cfg");
         if (!file.exists()) {

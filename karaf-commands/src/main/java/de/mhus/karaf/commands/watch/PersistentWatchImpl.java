@@ -17,17 +17,16 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimerTask;
 
 import org.apache.karaf.bundle.core.BundleWatcher;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.base.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.api.services.PersistentWatch;
@@ -40,61 +39,36 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
     public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
     private static final String CONFIG_LIST = "watch";
-    private TimerIfc timer;
-    private TimerTask timerTask;
-    //	private PersistentWatchConfig pwc;
+ 
+    @Reference
+    private BundleWatcher bundleWatcher;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
-        //	    pwc = new PersistentWatchConfig();
-        //	    pwc.register(ctx.getBundleContext());
-
-        timer = MOsgi.getTimer();
-        timerTask =
-                new TimerTask() {
-
-                    @Override
-                    public void run() {
-                        doTask();
-                    }
-                };
-        timer.schedule(timerTask, 10000, 60000);
+        doConfigure();
     }
 
-    @Deactivate
-    public void doDeactivate(ComponentContext ctx) {
-        timerTask.cancel();
-        //		pwc.unregister();
+    @Modified
+    public void modified(ComponentContext ctx) {
+        doConfigure();
     }
 
-    protected void doTask() {
+    private void doConfigure() {
+        log().i("doConfigure");
         try {
             synchronized (this) {
-                BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
                 List<String> watched = bundleWatcher.getWatchURLs();
                 for (String line : readFile()) {
                     try {
                         if (!watched.contains(line)) {
-
                             log().i("add", line);
                             bundleWatcher.add(line);
-
-                            /*
-                            CommandProcessor commandProcessor=MOsgi.getService(CommandProcessor.class);
-                            CommandSession commandSession=commandProcessor.createSession(System.in,System.out,System.err);
-
-                            commandSession.put("APPLICATION",System.getProperty("karaf.name","root"));
-                            commandSession.put("USER","karaf");
-
-                            commandSession.execute("bundle:watch " + line);
-                            */
                         }
                     } catch (Throwable t) {
                         log().d(t);
                     }
                 }
             }
-        } catch (NotFoundException e) {
         } catch (Throwable t) {
             log().d(t);
         }
@@ -143,7 +117,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
     @Override
     public void watch() {
-        doTask();
+        doConfigure();
     }
 
     @Override
