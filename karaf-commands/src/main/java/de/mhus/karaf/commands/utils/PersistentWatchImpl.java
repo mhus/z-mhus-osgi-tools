@@ -11,7 +11,7 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.commands.watch;
+package de.mhus.karaf.commands.utils;
 
 import java.io.IOException;
 import java.util.Dictionary;
