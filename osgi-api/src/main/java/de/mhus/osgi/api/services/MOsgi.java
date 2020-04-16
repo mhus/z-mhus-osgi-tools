@@ -345,7 +345,7 @@ public class MOsgi {
     }
 
     public static boolean touchConfig(Class<?> serviceClass) {
-        return touchConfig(serviceClass.getCanonicalName());
+        return touchConfig(findServicePid(serviceClass));
     }
     
     public static boolean touchConfig(String pid) {
@@ -370,6 +370,27 @@ public class MOsgi {
         return loadConfiguration(getPid(ctx));
     }
 
+    public static Dictionary<String, Object> loadConfiguration(Class<?> serviceClass) {
+        return loadConfiguration(findServicePid(serviceClass));
+    }
+    
+    public static String findServicePid(Class<?> service) {
+        if (service == null) throw new NullPointerException();
+        {
+            org.osgi.service.component.annotations.Component component = service.getAnnotation(org.osgi.service.component.annotations.Component.class);
+            if (component != null) {
+                if (component.configurationPid().length() > 0)
+                    return component.configurationPid();
+                if (component.name().length() > 0)
+                    return component.name();
+                return service.getCanonicalName();
+            }
+        }
+
+        log.w("Class is not a service",service.getCanonicalName());
+        return service.getCanonicalName();
+    }
+
     public static Dictionary<String, Object> loadConfiguration(String pid) {
         try {
             touchConfig(pid);
@@ -388,6 +409,10 @@ public class MOsgi {
     
     public static boolean saveConfiguration(ComponentContext ctx, Dictionary<String, Object> properties) {
         return saveConfiguration(getPid(ctx), properties);
+    }
+    
+    public static boolean saveConfiguration(Class<?> serviceClass, Dictionary<String, Object> properties) {
+        return saveConfiguration(findServicePid(serviceClass), properties);
     }
     
     public static boolean saveConfiguration(String pid, Dictionary<String, Object> properties) {
