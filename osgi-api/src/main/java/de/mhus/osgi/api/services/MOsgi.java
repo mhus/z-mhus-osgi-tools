@@ -29,6 +29,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.annotations.pojo.Hidden;
 import de.mhus.lib.core.MApi;
@@ -378,8 +379,10 @@ public class MOsgi {
         {
             org.osgi.service.component.annotations.Component component = service.getAnnotation(org.osgi.service.component.annotations.Component.class);
             if (component != null) {
-                if (component.configurationPid().length() > 0)
-                    return component.configurationPid();
+                if (component.configurationPid().length > 0) {
+                    if (!component.configurationPid()[0].equals(Component.NAME))
+                        return component.configurationPid()[0];
+                }
                 if (component.name().length() > 0)
                     return component.name();
                 return service.getCanonicalName();

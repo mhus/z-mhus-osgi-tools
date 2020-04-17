@@ -41,7 +41,10 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
     private static final String CONFIG_LIST = "watch";
  
+    @Reference
     private BundleWatcher bundleWatcher;
+    
+    @Reference
     private ConfigurationAdmin configurationAdmin;
 
     @Activate
@@ -50,7 +53,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     }
 
     @Modified
-    public void modified(ComponentContext ctx) {
+    public void doModify(ComponentContext ctx) {
         doConfigure();
     }
 
@@ -133,16 +136,6 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
             List<String> watched = bundleWatcher.getWatchURLs();
             writeFile(watched);
         }
-    }
-
-    @Reference
-    public void setBundleWatcher(BundleWatcher bundleWatcher) {
-        this.bundleWatcher = bundleWatcher;
-    }
-
-    @Reference
-    public void setConfigurationAdmin(ConfigurationAdmin admin) {
-        configurationAdmin = admin;
     }
 
 }

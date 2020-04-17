@@ -53,12 +53,17 @@ public abstract class AbstractCmd extends MObject implements Action {
         List<CmdInterceptor> interceptors =
                 (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
         if (interceptors != null) {
-            for (CmdInterceptor interceptor : interceptors) 
-                try {
-                    interceptor.onCmdStart(session);
-                } catch (Throwable t) {
-                    log().d(t);
-                }
+            try {
+                for (CmdInterceptor interceptor : interceptors) 
+                    try {
+                        interceptor.onCmdStart(session);
+                    } catch (Throwable t) {
+                        log().d(t);
+                    }
+            } catch (ClassCastException e) {
+                log().d("Reset Interceptors");
+                interceptors.clear();
+            }
         }
         
         try {
