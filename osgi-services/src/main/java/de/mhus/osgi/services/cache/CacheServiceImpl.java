@@ -45,6 +45,17 @@ public class CacheServiceImpl extends MLog implements CacheService {
         CacheWrapper<K,V> wrapper = new CacheWrapper<>(cacheManager, cache, name, register);
         return wrapper;
     }
+    
+    @Override
+    public String[] getCaches() {
+        return register.keySet().toArray(new String[0]);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <K, V> CloseableCache<K, V> getCache(String name) {
+        return (CloseableCache<K, V>) register.get(name);
+    }
 
 
 }

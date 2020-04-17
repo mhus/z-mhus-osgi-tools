@@ -16,12 +16,13 @@ package de.mhus.karaf.commands.impl;
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.ehcache.config.ResourceType;
+import org.osgi.service.component.annotations.Reference;
 
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.cache.CacheService;
+import de.mhus.osgi.api.cache.CloseableCache;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.CacheControlIfc;
-import de.mhus.osgi.api.services.CacheControlUtil;
-import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "mhus", name = "cache", description = "Cache Control Service Control")
 @Service
@@ -31,7 +32,7 @@ public class CmdCacheControl extends AbstractCmd {
             index = 0,
             name = "cmd",
             required = true,
-            description = "list,clear",
+            description = "list,clear <name>",
             multiValued = false)
     String cmd;
 
@@ -43,39 +44,31 @@ public class CmdCacheControl extends AbstractCmd {
             multiValued = true)
     String[] parameters;
 
+    @Reference
+    CacheService service;
+    
     @Override
     public Object execute2() throws Exception {
 
         if (cmd.equals("list")) {
             ConsoleTable table = new ConsoleTable(tblOpt);
-            table.setHeaderValues("Name", "Size", "Enabled", "Status");
-            for (CacheControlIfc c : MOsgi.getServices(CacheControlIfc.class, null))
-                try {
-                    table.addRowValues(c.getName(), c.getSize(), c.isEnabled(), "ok");
-                } catch (Throwable t) {
-                    log().d(c, t);
-                    table.addRowValues(c.getName(), "?", "?", t.toString());
+            table.setHeaderValues("Name", "Size");
+            
+            for (String name : service.getCaches()) {
+                CloseableCache<Object, Object> cache = service.getCache(name);
+                if (cache != null) {
+                    table.addRowValues(name, cache.getRuntimeConfiguration().getResourcePools()
+                            .getPoolForResource(ResourceType.Core.HEAP).getSize());
                 }
-            table.print(System.out);
+            }
+            table.print();
         } else if (cmd.equals("clear")) {
-            String name = null;
-            if (parameters != null && parameters.length > 0) name = parameters[0];
-            CacheControlUtil.clear(name);
+            String name = parameters[0];
+            service.getCache(name).clear();
             System.out.println("OK");
 
-        } else if (cmd.equals("enable")) {
-            String name = null;
-            if (parameters != null && parameters.length > 0) name = parameters[0];
-            CacheControlUtil.enable(name, true);
-            System.out.println("OK");
-
-        } else if (cmd.equals("disable")) {
-            String name = null;
-            if (parameters != null && parameters.length > 0) name = parameters[0];
-            CacheControlUtil.enable(name, false);
-            System.out.println("OK");
         }
-
+        
         return null;
     }
 }

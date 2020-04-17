@@ -10,5 +10,9 @@ public interface CacheService {
     CacheManagerBuilder<CacheManager> getCacheBuilder();
     
     <K,V> CloseableCache<K, V> createCache(Class<?> owner, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder );
+
+    String[] getCaches();
+
+    <K,V> CloseableCache<K, V> getCache(String name);
     
 }

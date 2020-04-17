@@ -13,31 +13,38 @@
  */
 package de.mhus.osgi.services;
 
+import org.ehcache.config.ResourceType;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import de.mhus.lib.annotations.jmx.JmxManaged;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.jmx.JmxObjectMBean;
 import de.mhus.lib.core.jmx.MJmx;
-import de.mhus.osgi.api.services.CacheControlIfc;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.cache.CacheService;
+import de.mhus.osgi.api.cache.CloseableCache;
 
 // http://localhost:8181/jolokia/read/de.mhus.lib.core.jmx.JmxObject:name=de.mhus.lib.karaf.services.JmxCacheControl,type=JmxCacheControl
 @Component(immediate = true, service = JmxObjectMBean.class)
 @JmxManaged(descrition = "Cache Control Service")
 public class JmxCacheControl extends MJmx {
 
+    @Reference
+    CacheService service;
+    
     @JmxManaged
     public String[][] getTable() {
         ConsoleTable table = new ConsoleTable();
-        table.setHeaderValues("Name", "Size", "Enabled", "Status");
-        for (CacheControlIfc c : MOsgi.getServices(CacheControlIfc.class, null))
-            try {
-                table.addRowValues(c.getName(), c.getSize(), c.isEnabled(), "ok");
-            } catch (Throwable t) {
-                log().d(c, t);
-                table.addRowValues(c.getName(), "", "", t.getMessage());
+        table.setHeaderValues("Name", "Size");
+        
+        for (String name : service.getCaches()) {
+            CloseableCache<Object, Object> cache = service.getCache(name);
+            if (cache != null) {
+                table.addRowValues(name, cache.getRuntimeConfiguration().getResourcePools()
+                        .getPoolForResource(ResourceType.Core.HEAP).getSize());
             }
+        }
+        
         return table.toStringMatrix(false);
     }
 }
