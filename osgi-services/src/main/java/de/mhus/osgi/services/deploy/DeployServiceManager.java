@@ -17,16 +17,16 @@ import java.io.File;
 
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.deploy.DeployService;
 import de.mhus.osgi.api.services.MOsgi;
-import de.mhus.osgi.api.services.SimpleServiceIfc;
 import de.mhus.osgi.api.services.MOsgi.Service;
+import de.mhus.osgi.api.services.SimpleServiceIfc;
 import de.mhus.osgi.api.util.MServiceTracker;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 

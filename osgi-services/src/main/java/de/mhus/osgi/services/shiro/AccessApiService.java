@@ -4,8 +4,8 @@ import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.shiro.SecurityUtils;
 import org.osgi.service.component.annotations.Component;
 
-import de.mhus.lib.core.shiro.DefaultAccessApi;
 import de.mhus.lib.core.shiro.AccessApi;
+import de.mhus.lib.core.shiro.DefaultAccessApi;
 
 @Component(service = AccessApi.class)
 public class AccessApiService extends DefaultAccessApi {

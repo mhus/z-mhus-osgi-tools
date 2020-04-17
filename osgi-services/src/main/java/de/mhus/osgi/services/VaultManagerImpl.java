@@ -15,11 +15,11 @@ package de.mhus.osgi.services;
 
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
 import de.mhus.lib.core.vault.MVault;
 import de.mhus.lib.core.vault.VaultSource;
 import de.mhus.osgi.api.services.SimpleService;
