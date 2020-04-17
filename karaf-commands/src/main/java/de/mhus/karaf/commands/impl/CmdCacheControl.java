@@ -17,12 +17,13 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.ehcache.config.ResourceType;
+import org.ehcache.core.statistics.CacheStatistics;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.cache.CacheService;
 import de.mhus.osgi.api.cache.CloseableCache;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.services.cache.CacheWrapper;
 
 @Command(scope = "mhus", name = "cache", description = "Cache Control Service Control")
 @Service
@@ -52,13 +53,17 @@ public class CmdCacheControl extends AbstractCmd {
 
         if (cmd.equals("list")) {
             ConsoleTable table = new ConsoleTable(tblOpt);
-            table.setHeaderValues("Name", "Size");
+            table.setHeaderValues("Name", "Size", "Bytes");
             
             for (String name : service.getCaches()) {
                 CloseableCache<Object, Object> cache = service.getCache(name);
                 if (cache != null) {
-                    table.addRowValues(name, cache.getRuntimeConfiguration().getResourcePools()
-                            .getPoolForResource(ResourceType.Core.HEAP).getSize());
+                    CacheStatistics cacheStatistics = ((CacheWrapper<?,?>)cache).getCacheStatistics();
+                    table.addRowValues(
+                            name, 
+                            cacheStatistics.getTierStatistics().get("OnHeap").getMappings(),
+                            cacheStatistics.getTierStatistics().get("OnHeap").getOccupiedByteSize()
+                            );
                 }
             }
             table.print();

@@ -9,6 +9,7 @@ import org.ehcache.CacheManager;
 import org.ehcache.config.Builder;
 import org.ehcache.config.ResourcePools;
 import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.core.statistics.DefaultStatisticsService;
 import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.core.MLog;
@@ -20,6 +21,7 @@ public class CacheServiceImpl extends MLog implements CacheService {
 
     private CacheManagerBuilder<CacheManager> cacheBuilder;
     private WeakHashMap<String, CacheWrapper<?,?>> register = new  WeakHashMap<>();
+    private DefaultStatisticsService statisticsService;
 
     @Override
     public CacheManagerBuilder<CacheManager> getCacheBuilder() {
@@ -33,16 +35,20 @@ public class CacheServiceImpl extends MLog implements CacheService {
     public <K, V> CloseableCache<K, V> createCache(Class<?> owner, String name, Class<K> keyType,
             Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder) {
 
-        name = owner.getCanonicalName() + "." + name;
+        name = owner.getCanonicalName() + ":" + name;
         CacheWrapper<?, ?> weak = register.get(name);
         if (weak != null) return (CloseableCache<K, V>) weak;
 
+        if (statisticsService == null)
+            statisticsService = new DefaultStatisticsService();
+        
         CacheManager cacheManager = getCacheBuilder().withCache(name,
                 newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder))
-              .build(true);
+                .using(statisticsService)
+                .build(true);
 
         Cache<K, V> cache = cacheManager.getCache(name, keyType, valueType);
-        CacheWrapper<K,V> wrapper = new CacheWrapper<>(cacheManager, cache, name, register);
+        CacheWrapper<K,V> wrapper = new CacheWrapper<>(cacheManager, cache, name, register, statisticsService);
         return wrapper;
     }
     

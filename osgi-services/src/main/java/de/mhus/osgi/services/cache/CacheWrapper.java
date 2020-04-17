@@ -10,6 +10,8 @@ import java.util.function.Consumer;
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.ehcache.config.CacheRuntimeConfiguration;
+import org.ehcache.core.spi.service.StatisticsService;
+import org.ehcache.core.statistics.CacheStatistics;
 import org.ehcache.spi.loaderwriter.BulkCacheLoadingException;
 import org.ehcache.spi.loaderwriter.BulkCacheWritingException;
 import org.ehcache.spi.loaderwriter.CacheLoadingException;
@@ -23,15 +25,21 @@ public class CacheWrapper<K,V> implements CloseableCache<K, V> {
     private CacheManager manager;
     private String name;
     private Map<String, CacheWrapper<?, ?>> register;
+    private StatisticsService statisticsService;
 
-    public CacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, Map<String, CacheWrapper<?,?>> register) {
+    public CacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, Map<String, CacheWrapper<?,?>> register, StatisticsService statisticsService) {
         this.manager = cacheManager;
         this.instance = cache;
         this.name = name;
         this.register = register;
+        this.statisticsService = statisticsService;
         register.put(name, this);
     }
 
+    public CacheStatistics getCacheStatistics() {
+        return statisticsService.getCacheStatistics(name);
+    }
+    
     @Override
     public CacheManager getCacheManager() {
         return manager;
