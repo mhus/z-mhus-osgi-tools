@@ -13,10 +13,11 @@
  */
 package de.mhus.lib.mutable;
 
-import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map.Entry;
+import static org.ehcache.config.units.MemoryUnit.MB;
 
+import java.io.Serializable;
+
+import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -25,10 +26,15 @@ import org.osgi.framework.ServiceReference;
 import de.mhus.lib.core.lang.Base;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.system.DefaultBase;
+import de.mhus.lib.errors.NotFoundException;
+import de.mhus.osgi.api.cache.CacheService;
+import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.services.MOsgi;
 
 public class KarafBase extends DefaultBase {
 
-    private static HashMap<String, Container> apiCache = new HashMap<>();
+
+    private CloseableCache<String, Container> apiCache;
 
     public KarafBase(Base parent) {
         super(parent);
@@ -42,15 +48,25 @@ public class KarafBase extends DefaultBase {
 
         if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
 
-            Container cached = apiCache.get(ifc.getCanonicalName());
-            if (cached != null) {
-                if (cached.bundle.getState() != Bundle.ACTIVE
-                        || cached.modified != cached.bundle.getLastModified()) {
-                    apiCache.remove(cached.ifc.getCanonicalName());
-                    cached = null;
-                }
+            if (apiCache == null) {
+                try {
+                    CacheService cacheService = MOsgi.getService(CacheService.class);
+                    apiCache = cacheService.createCache(KarafBase.class, "api", String.class, Container.class, ResourcePoolsBuilder.heap(100).offheap(1, MB) );
+                } catch (NotFoundException e) {}
             }
 
+            Container cached = null;
+            if (apiCache != null) {
+                cached = apiCache.get(ifc.getCanonicalName());
+                if (cached != null) {
+                    if (cached.bundle.getState() != Bundle.ACTIVE
+                            || cached.modified != cached.bundle.getLastModified()) {
+                        apiCache.remove(cached.ifc.getCanonicalName());
+                        cached = null;
+                    }
+                }
+            }
+            
             if (cached == null) {
                 Bundle bundle = FrameworkUtil.getBundle(KarafBase.class);
                 if (bundle != null) {
@@ -91,27 +107,13 @@ public class KarafBase extends DefaultBase {
         return super.lookup(ifc, def);
     }
 
-    public void clearCache() {
-        apiCache.clear();
-    }
+    public static class Container implements Serializable {
 
-    private static class Container {
-
+        private static final long serialVersionUID = 1L;
         public long modified;
         public Class<?> ifc;
         public Object api;
         public Bundle bundle;
     }
 
-    public void dumpCache(PrintStream out) {
-        for (Entry<String, Container> item : apiCache.entrySet()) {
-            out.println(item.getKey() + ": " + item.getValue().ifc);
-            out.println(
-                    "  Bundle: "
-                            + item.getValue().bundle.getSymbolicName()
-                            + " "
-                            + item.getValue().bundle.getState());
-            out.println("  Object: " + item.getValue().api);
-        }
-    }
 }

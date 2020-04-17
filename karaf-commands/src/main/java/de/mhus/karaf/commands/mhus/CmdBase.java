@@ -26,7 +26,6 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.system.IApi;
-import de.mhus.lib.mutable.KarafBase;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
@@ -61,11 +60,12 @@ public class CmdBase extends AbstractCmd {
         IApi s = MApi.get();
         if (!(s instanceof KarafMApiImpl)) {
             System.out.println("Karaf MApi not set");
-            return null;
         }
-        KarafMApiImpl api = (KarafMApiImpl) s;
 
         switch (cmd) {
+            case "test": {
+                System.out.println(M.l(IApi.class));
+            } break;
             case "get":
                 {
                     OsgiBundleClassLoader cl = new OsgiBundleClassLoader();
@@ -98,18 +98,6 @@ public class CmdBase extends AbstractCmd {
                             t.printStackTrace();
                         }
                     }
-                }
-                break;
-            case "clear":
-                {
-                    ((KarafBase) api.getBaseControl().base()).clearCache();
-                    System.out.println("OK");
-                }
-                break;
-            case "dump":
-                {
-                    ((KarafBase) api.getBaseControl().base()).dumpCache(System.out);
-                    System.out.println("OK");
                 }
                 break;
             default:

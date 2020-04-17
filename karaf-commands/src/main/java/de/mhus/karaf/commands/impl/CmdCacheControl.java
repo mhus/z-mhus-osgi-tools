@@ -15,9 +15,9 @@ package de.mhus.karaf.commands.impl;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.ehcache.config.ResourceType;
-import org.osgi.service.component.annotations.Reference;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.cache.CacheService;
