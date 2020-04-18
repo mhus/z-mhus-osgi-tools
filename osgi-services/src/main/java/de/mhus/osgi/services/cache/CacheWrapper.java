@@ -16,24 +16,53 @@ import org.ehcache.spi.loaderwriter.BulkCacheLoadingException;
 import org.ehcache.spi.loaderwriter.BulkCacheWritingException;
 import org.ehcache.spi.loaderwriter.CacheLoadingException;
 import org.ehcache.spi.loaderwriter.CacheWritingException;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceRegistration;
 
+import de.mhus.lib.core.MLog;
 import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.services.MOsgi;
 
-public class CacheWrapper<K,V> implements CloseableCache<K, V> {
+public class CacheWrapper<K,V> extends MLog implements CloseableCache<K, V> {
 
     private Cache<K,V> instance;
     private CacheManager manager;
     private String name;
-    private Map<String, CacheWrapper<?, ?>> register;
     private StatisticsService statisticsService;
+    private BundleContext bundleContext;
+    @SuppressWarnings("rawtypes")
+    private ServiceRegistration<CloseableCache> serviceRegistration;
 
-    public CacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, Map<String, CacheWrapper<?,?>> register, StatisticsService statisticsService) {
+    public CacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, BundleContext bundleContext, StatisticsService statisticsService) {
+        log().d("open",name);
         this.manager = cacheManager;
         this.instance = cache;
         this.name = name;
-        this.register = register;
         this.statisticsService = statisticsService;
-        register.put(name, this);
+        this.bundleContext = bundleContext;
+        
+        serviceRegistration = bundleContext.registerService(CloseableCache.class, this, MOsgi.createProperties("name",name));
+        try {
+            bundleContext.addServiceListener(ev -> serviceListener(ev), MOsgi.filterObjectClass(CloseableCache.class));
+        } catch (InvalidSyntaxException e) {
+            log().e(name,e);
+        }
+    }
+
+    private Object serviceListener(ServiceEvent ev) {
+        if (ev.getServiceReference().equals(serviceRegistration.getReference()) && ev.getType() == ServiceEvent.UNREGISTERING )
+            log().d("unregister",name);
+            try {
+                serviceRegistration = null;
+                close();
+            } catch (IOException e) {
+                log().e(name,e);
+                
+            }
+        return null;
     }
 
     public CacheStatistics getCacheStatistics() {
@@ -127,18 +156,22 @@ public class CacheWrapper<K,V> implements CloseableCache<K, V> {
 
     @Override
     public void close() throws IOException {
+        log().d("close",name);
+        if (serviceRegistration != null) {
+            @SuppressWarnings("rawtypes")
+            ServiceRegistration<CloseableCache> sr = serviceRegistration; // need to set it null before unregister for the listener
+            serviceRegistration = null;
+            sr.unregister();
+        }
         if (manager != null) {
             manager.close();
-            register.remove(name);
+            manager = null;
         }
-        manager = null;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
+    public Bundle getBundle() {
+        return bundleContext.getBundle();
     }
-    
+
 }

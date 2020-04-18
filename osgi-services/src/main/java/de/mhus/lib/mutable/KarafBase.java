@@ -51,7 +51,12 @@ public class KarafBase extends DefaultBase {
             if (apiCache == null) {
                 try {
                     CacheService cacheService = MOsgi.getService(CacheService.class);
-                    apiCache = cacheService.createCache(KarafBase.class, "api", String.class, Container.class, ResourcePoolsBuilder.heap(100).offheap(1, MB) );
+                    apiCache = cacheService.createCache(
+                            FrameworkUtil.getBundle(KarafBase.class).getBundleContext(),
+                            "baseApi", 
+                            String.class, Container.class, 
+                            ResourcePoolsBuilder.heap(100).offheap(1, MB) 
+                            );
                 } catch (NotFoundException e) {}
             }
 

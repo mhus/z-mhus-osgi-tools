@@ -51,11 +51,15 @@ public class CmdCacheControl extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (service == null) {
+            System.out.println("CacheService not found, exiting");
+            return null;
+        }
         if (cmd.equals("list")) {
             ConsoleTable table = new ConsoleTable(tblOpt);
             table.setHeaderValues("Name", "Size", "Bytes");
             
-            for (String name : service.getCaches()) {
+            for (String name : service.getCacheNames()) {
                 CloseableCache<Object, Object> cache = service.getCache(name);
                 if (cache != null) {
                     CacheStatistics cacheStatistics = ((CacheWrapper<?,?>)cache).getCacheStatistics();

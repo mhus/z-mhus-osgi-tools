@@ -14,6 +14,7 @@
 package de.mhus.osgi.api.services;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -128,6 +129,10 @@ public class MOsgi {
         return timer;
     }
 
+    public static String filterValue(String name, String value) {
+        return "(" + name + "=" + value + ")";
+    }
+    
     public static String filterServiceId(String name) {
         return "(" + Constants.SERVICE_ID + "=" + name + ")";
     }
@@ -140,6 +145,10 @@ public class MOsgi {
         return "(" + Constants.OBJECTCLASS + "=" + clazz + ")";
     }
 
+    public static String filterObjectClass(Class<?> clazz) {
+        return "(" + Constants.OBJECTCLASS + "=" + clazz.getCanonicalName() + ")";
+    }
+    
     public static String filterAdd(String... parts) {
         StringBuilder out = new StringBuilder().append("(&");
         for (String part : parts) out.append(part);
@@ -431,6 +440,39 @@ public class MOsgi {
         }
         return false;
     }
+
+    /**
+     * Compile a list of properties from the input parameters.
+     * Input parameters are alternating key-value values.
+     * @param kv key, value, key, value, ...
+     * @return The property dictionary
+     */
+    public static Dictionary<String, ?> createProperties(Object ... kv) {
+        Hashtable<String, Object> prop = new Hashtable<>();
+        for (int i = 0; i < kv.length-1; i=i+2) {
+            prop.put(String.valueOf(kv[i]), kv[i+1]);
+        }
+        return prop;
+    }
+
+    public static <T> List<String> collectStringProperty(List<Service<T>> serviceRefs, String propertyName) {
+        ArrayList<String> out = new ArrayList<>(serviceRefs.size());
+        for (Service<?> ref : serviceRefs) {
+            Object value = ref.getReference().getProperty(propertyName);
+            if (value != null)
+                out.add(String.valueOf(value));
+        }
+        return out;
+    }
     
+    public static <T> List<Object> collectProperty(List<Service<T>> serviceRefs, String propertyName) {
+        ArrayList<Object> out = new ArrayList<>(serviceRefs.size());
+        for (Service<?> ref : serviceRefs) {
+            Object value = ref.getReference().getProperty(propertyName);
+            if (value != null)
+                out.add(value);
+        }
+        return null;
+    }
 
 }
