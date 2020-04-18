@@ -262,6 +262,11 @@ public class MOsgi {
             if (bundle.getSymbolicName().equals(name)) return bundle;
         throw new NotFoundException("Bundle not found", name);
     }
+    
+    public static Bundle getBundleOrNull(long bundleId) {
+        return FrameworkUtil.getBundle(MOsgi.class).getBundleContext().getBundle(bundleId);
+    }
+
 
     public static void runAfterActivation(
             ComponentContext ctx, Consumer<ComponentContext> consumer) {

@@ -3,11 +3,13 @@ package de.mhus.osgi.services.cache;
 import static org.ehcache.config.builders.CacheConfigurationBuilder.newCacheConfigurationBuilder;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.ehcache.config.Builder;
 import org.ehcache.config.ResourcePools;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.core.statistics.DefaultStatisticsService;
 import org.osgi.framework.BundleContext;
@@ -35,7 +37,7 @@ public class CacheServiceImpl extends MLog implements CacheService {
     @SuppressWarnings("unchecked")
     @Override
     public <K, V> CloseableCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType,
-            Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder) {
+            Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator ) {
 
         name = ownerContext.getBundle().getSymbolicName() + ":" + ownerContext.getBundle().getBundleId() + "/" + name;
         CloseableCache<Object, Object> existing = getCache(name);
@@ -45,8 +47,12 @@ public class CacheServiceImpl extends MLog implements CacheService {
         if (statisticsService == null)
             statisticsService = new DefaultStatisticsService();
         
+        CacheConfigurationBuilder<K,V> ccb = newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder);
+        if (configurator != null)
+            configurator.accept(ccb);
+        
         CacheManager cacheManager = getCacheBuilder().withCache(name,
-                newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder))
+                 ccb)
                 .using(statisticsService)
                 .build(true);
 
