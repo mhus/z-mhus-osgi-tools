@@ -13,13 +13,10 @@
  */
 package de.mhus.lib.mutable;
 
-import static org.ehcache.config.units.MemoryUnit.MB;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -30,6 +27,7 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.lang.Base;
 import de.mhus.lib.core.logging.MLogUtil;
+import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.core.system.DefaultBase;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.cache.CacheService;
@@ -51,6 +49,8 @@ public class KarafBase extends DefaultBase {
 
         if (ifc == null) return null;
 
+        T result = null;
+        
         if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
 
             if (apiCache == null) {
@@ -133,9 +133,19 @@ public class KarafBase extends DefaultBase {
                     }
                 }
             }
-            if (cached != null) return (T) cached.api;
+            if (cached != null)
+                result = (T) cached.api;
         }
-        return super.lookup(ifc, def);
+        
+        if (result == null)
+            result = super.lookup(ifc, def);
+        
+        if (result != null) {
+            // check access
+            AccessUtil.checkPermission(result);
+        }
+            
+        return result;
     }
 
     public static class Container implements Serializable {
