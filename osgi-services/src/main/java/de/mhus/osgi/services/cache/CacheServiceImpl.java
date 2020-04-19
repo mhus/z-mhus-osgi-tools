@@ -1,7 +1,5 @@
 package de.mhus.osgi.services.cache;
 
-import static org.ehcache.config.builders.CacheConfigurationBuilder.newCacheConfigurationBuilder;
-
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -12,6 +10,7 @@ import org.ehcache.config.ResourcePools;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.core.statistics.DefaultStatisticsService;
+import org.ehcache.impl.config.copy.DefaultCopierConfiguration;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Component;
 
@@ -46,17 +45,35 @@ public class CacheServiceImpl extends MLog implements CacheService {
 
         if (statisticsService == null)
             statisticsService = new DefaultStatisticsService();
-        
-        CacheConfigurationBuilder<K,V> ccb = newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder);
-        if (configurator != null)
-            configurator.accept(ccb);
-        
-        CacheManager cacheManager = getCacheBuilder().withCache(name,
-                 ccb)
-                .using(statisticsService)
-                .build(true);
 
-        Cache<K, V> cache = cacheManager.getCache(name, keyType, valueType);
+        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+                .using(statisticsService)
+                .build(false);
+        cacheManager.init();
+
+        
+        CacheConfigurationBuilder<K, V> ccb = CacheConfigurationBuilder.newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder);
+        
+        if (resourcePoolsBuilder == null)
+            throw new NullPointerException("resourcePoolsBuilder is null");
+        
+        if (configurator != null) {
+            configurator.accept(ccb);
+        } else {
+            // default configuration
+            @SuppressWarnings("rawtypes")
+            DefaultCopierConfiguration<String> copierConfigurationKey = new DefaultCopierConfiguration(
+                    NoneCopier.class, DefaultCopierConfiguration.Type.KEY);
+            @SuppressWarnings("rawtypes")
+            DefaultCopierConfiguration<String> copierConfigurationValue = new DefaultCopierConfiguration(
+                    NoneCopier.class, DefaultCopierConfiguration.Type.VALUE);
+            ccb
+                .withService(copierConfigurationKey)
+                .withService(copierConfigurationValue);
+        }
+        
+        Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
+
         CacheWrapper<K,V> wrapper = new CacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
         return wrapper;
     }

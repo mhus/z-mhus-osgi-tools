@@ -16,11 +16,9 @@ package de.mhus.lib.mutable;
 import static org.ehcache.config.units.MemoryUnit.MB;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -62,10 +60,11 @@ public class KarafBase extends DefaultBase {
                             FrameworkUtil.getBundle(KarafBase.class).getBundleContext(),
                             "baseApi", 
                             String.class, Container.class, 
-                            ResourcePoolsBuilder.heap(100).offheap(1, MB),
-                            ccb -> ccb.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(5)))
+                            100
                             );
-                } catch (NotFoundException e) {}
+                } catch (NotFoundException e) {
+                    MApi.dirtyLogDebug(e);
+                }
             }
 
             Container cached = null;
@@ -120,7 +119,7 @@ public class KarafBase extends DefaultBase {
                             } catch (Throwable t) {
                             }
                             if (obj != null) {
-                                MLogUtil.log().d("KarafBase", "loaded from OSGi", ifc);
+                                MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc);
                                 cached = new Container();
                                 cached.bundleId = ref.getBundle().getBundleId();
                                 cached.bundleName = ref.getBundle().getSymbolicName();

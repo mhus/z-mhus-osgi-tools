@@ -28,6 +28,7 @@ import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.system.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.services.SimpleServiceIfc;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 @Command(scope = "mhus", name = "base", description = "Base Manipulation")
@@ -64,7 +65,7 @@ public class CmdBase extends AbstractCmd {
 
         switch (cmd) {
             case "test": {
-                System.out.println(M.l(IApi.class));
+                System.out.println(M.l(SimpleServiceIfc.class));
             } break;
             case "get":
                 {
