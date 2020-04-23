@@ -16,12 +16,12 @@ import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.api.cache.CacheService;
-import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.cache.LocalCacheService;
+import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.services.MOsgi;
 
 @Component
-public class CacheServiceImpl extends MLog implements CacheService {
+public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
 
     private CacheManagerBuilder<CacheManager> cacheBuilder;
     private DefaultStatisticsService statisticsService;
@@ -35,13 +35,13 @@ public class CacheServiceImpl extends MLog implements CacheService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <K, V> CloseableCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType,
+    public <K, V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType,
             Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator ) {
 
         name = ownerContext.getBundle().getSymbolicName() + ":" + ownerContext.getBundle().getBundleId() + "/" + name;
-        CloseableCache<Object, Object> existing = getCache(name);
+        LocalCache<Object, Object> existing = getCache(name);
         if (existing != null && existing.getBundle().getBundleId() == ownerContext.getBundle().getBundleId())
-            return (CloseableCache<K, V>) existing;
+            return (LocalCache<K, V>) existing;
 
         if (statisticsService == null)
             statisticsService = new DefaultStatisticsService();
@@ -74,20 +74,20 @@ public class CacheServiceImpl extends MLog implements CacheService {
         
         Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
 
-        CacheWrapper<K,V> wrapper = new CacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
+        LocalCacheWrapper<K,V> wrapper = new LocalCacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
         return wrapper;
     }
     
     @Override
     public List<String> getCacheNames() {
-        return MOsgi.collectStringProperty( MOsgi.getServiceRefs(CloseableCache.class, null) , "name");
+        return MOsgi.collectStringProperty( MOsgi.getServiceRefs(LocalCache.class, null) , "name");
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public <K, V> CloseableCache<K, V> getCache(String name) {
+    public <K, V> LocalCache<K, V> getCache(String name) {
         try {
-            return MOsgi.getService(CloseableCache.class, MOsgi.filterValue("name",name));
+            return MOsgi.getService(LocalCache.class, MOsgi.filterValue("name",name));
         } catch (NotFoundException e) {
             log().t("not found",name);
             return null;

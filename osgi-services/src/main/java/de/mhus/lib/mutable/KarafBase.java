@@ -30,14 +30,14 @@ import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.core.system.DefaultBase;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.api.cache.CacheService;
-import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.cache.LocalCacheService;
+import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.services.MOsgi;
 
 public class KarafBase extends DefaultBase {
 
 
-    private CloseableCache<String, Container> apiCache;
+    private LocalCache<String, Container> apiCache;
 
     public KarafBase(Base parent) {
         super(parent);
@@ -55,7 +55,7 @@ public class KarafBase extends DefaultBase {
 
             if (apiCache == null) {
                 try {
-                    CacheService cacheService = MOsgi.getService(CacheService.class);
+                    LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
                     apiCache = cacheService.createCache(
                             FrameworkUtil.getBundle(KarafBase.class).getBundleContext(),
                             "baseApi", 

@@ -23,10 +23,10 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceRegistration;
 
 import de.mhus.lib.core.MLog;
-import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.services.MOsgi;
 
-public class CacheWrapper<K,V> extends MLog implements CloseableCache<K, V> {
+public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
 
     private Cache<K,V> instance;
     private CacheManager manager;
@@ -34,9 +34,9 @@ public class CacheWrapper<K,V> extends MLog implements CloseableCache<K, V> {
     private StatisticsService statisticsService;
     private BundleContext bundleContext;
     @SuppressWarnings("rawtypes")
-    private ServiceRegistration<CloseableCache> serviceRegistration;
+    private ServiceRegistration<LocalCache> serviceRegistration;
 
-    public CacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, BundleContext bundleContext, StatisticsService statisticsService) {
+    public LocalCacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, BundleContext bundleContext, StatisticsService statisticsService) {
         log().d("open",name);
         this.manager = cacheManager;
         this.instance = cache;
@@ -44,9 +44,9 @@ public class CacheWrapper<K,V> extends MLog implements CloseableCache<K, V> {
         this.statisticsService = statisticsService;
         this.bundleContext = bundleContext;
         
-        serviceRegistration = bundleContext.registerService(CloseableCache.class, this, MOsgi.createProperties("name",name));
+        serviceRegistration = bundleContext.registerService(LocalCache.class, this, MOsgi.createProperties("name",name));
         try {
-            bundleContext.addServiceListener(ev -> serviceListener(ev), MOsgi.filterObjectClass(CloseableCache.class));
+            bundleContext.addServiceListener(ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
         } catch (InvalidSyntaxException e) {
             log().e(name,e);
         }
@@ -159,7 +159,7 @@ public class CacheWrapper<K,V> extends MLog implements CloseableCache<K, V> {
         log().d("close",name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
-            ServiceRegistration<CloseableCache> sr = serviceRegistration; // need to set it null before unregister for the listener
+            ServiceRegistration<LocalCache> sr = serviceRegistration; // need to set it null before unregister for the listener
             serviceRegistration = null;
             sr.unregister();
         }

@@ -20,10 +20,10 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.ehcache.core.statistics.CacheStatistics;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.api.cache.CacheService;
-import de.mhus.osgi.api.cache.CloseableCache;
+import de.mhus.osgi.api.cache.LocalCacheService;
+import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.services.cache.CacheWrapper;
+import de.mhus.osgi.services.cache.LocalCacheWrapper;
 
 @Command(scope = "mhus", name = "cache", description = "Cache Control Service Control")
 @Service
@@ -46,7 +46,7 @@ public class CmdCacheControl extends AbstractCmd {
     String[] parameters;
 
     @Reference
-    CacheService service;
+    LocalCacheService service;
     
     @Override
     public Object execute2() throws Exception {
@@ -60,9 +60,9 @@ public class CmdCacheControl extends AbstractCmd {
             table.setHeaderValues("Name", "Size", "Bytes");
             
             for (String name : service.getCacheNames()) {
-                CloseableCache<Object, Object> cache = service.getCache(name);
+                LocalCache<Object, Object> cache = service.getCache(name);
                 if (cache != null) {
-                    CacheStatistics cacheStatistics = ((CacheWrapper<?,?>)cache).getCacheStatistics();
+                    CacheStatistics cacheStatistics = ((LocalCacheWrapper<?,?>)cache).getCacheStatistics();
                     table.addRowValues(
                             name, 
                             cacheStatistics.getTierStatistics().get("OnHeap").getMappings(),

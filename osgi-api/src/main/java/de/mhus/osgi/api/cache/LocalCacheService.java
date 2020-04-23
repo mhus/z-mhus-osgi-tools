@@ -11,24 +11,24 @@ import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.osgi.framework.BundleContext;
 
-public interface CacheService {
+public interface LocalCacheService {
 
     // ccb -> ccb.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(5)))
 
     CacheManagerBuilder<CacheManager> getCacheBuilder();
 
-    default <K,V> CloseableCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, int heapSize) {
+    default <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, int heapSize) {
         return createCache(ownerContext, name, keyType, valueType, ResourcePoolsBuilder.heap(heapSize), null);
     }
 
-    default <K,V> CloseableCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder) {
+    default <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder) {
         return createCache(ownerContext, name, keyType, valueType, resourcePoolsBuilder, null);
     }
 
-    <K,V> CloseableCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator );
+    <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator );
 
     List<String> getCacheNames();
 
-    <K,V> CloseableCache<K, V> getCache(String name);
+    <K,V> LocalCache<K, V> getCache(String name);
 
 }
