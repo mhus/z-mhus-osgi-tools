@@ -157,7 +157,7 @@ public class CmdJdbcMetadata extends AbstractCmd {
 
     private boolean attrbool(int index, boolean def) {
         if (parameters == null || index >= parameters.length) return def;
-        return M.c(parameters[index], def);
+        return M.to(parameters[index], def);
     }
 
     private void out(ResultSet res) throws SQLException {

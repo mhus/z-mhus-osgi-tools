@@ -92,7 +92,7 @@ public class CmdConsole extends AbstractCmd {
                 {
                     LineReader reader = (LineReader) session.get(".jline.reader");
                     reader.option(
-                            Option.valueOf(arguments[0].toUpperCase()), M.c(arguments[1], false));
+                            Option.valueOf(arguments[0].toUpperCase()), M.to(arguments[1], false));
                 }
                 break;
             case "terminal.status":
@@ -113,23 +113,23 @@ public class CmdConsole extends AbstractCmd {
                     if (arguments[0].equals("ControlChar"))
                         attr.setControlChar(
                                 ControlChar.valueOf(arguments[1].toUpperCase()),
-                                M.c(arguments[2], 0));
+                                M.to(arguments[2], 0));
                     else if (arguments[0].equals("ControlFlag"))
                         attr.setControlFlag(
                                 ControlFlag.valueOf(arguments[1].toUpperCase()),
-                                M.c(arguments[2], false));
+                                M.to(arguments[2], false));
                     else if (arguments[0].equals("InputFlag"))
                         attr.setInputFlag(
                                 InputFlag.valueOf(arguments[1].toUpperCase()),
-                                M.c(arguments[2], false));
+                                M.to(arguments[2], false));
                     else if (arguments[0].equals("OutputFlag"))
                         attr.setOutputFlag(
                                 OutputFlag.valueOf(arguments[1].toUpperCase()),
-                                M.c(arguments[2], false));
+                                M.to(arguments[2], false));
                     else if (arguments[0].equals("LocalFlag"))
                         attr.setLocalFlag(
                                 LocalFlag.valueOf(arguments[1].toUpperCase()),
-                                M.c(arguments[2], false));
+                                M.to(arguments[2], false));
                     else System.out.println("Flags unknown: " + arguments[0]);
                 }
                 break;

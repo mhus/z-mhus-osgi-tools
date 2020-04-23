@@ -107,7 +107,7 @@ public class CmdLock extends AbstractCmd {
                 }
             case "unlock":
                 {
-                    int id = M.c(parameters[0], 0);
+                    int id = M.to(parameters[0], 0);
                     for (Lock lock : M.l(LockManager.class).getRegisteredLocks())
                         if (id == lock.hashCode()) {
                             System.out.println("Unlock " + id);

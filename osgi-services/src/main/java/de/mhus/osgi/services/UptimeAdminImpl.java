@@ -117,11 +117,11 @@ public class UptimeAdminImpl extends MLog implements UptimeAdminIfc {
 
         public MutableRecord(String line) {
             String[] parts = line.split(";");
-            start = M.c(parts[0], 0l);
-            stop = M.c(parts[1], 0l);
-            status = M.c(parts[2], 0);
+            start = M.to(parts[0], 0l);
+            stop = M.to(parts[1], 0l);
+            status = M.to(parts[2], 0);
             pid = parts[3].replace(';', ',');
-            sysUptime = M.c(parts[4], 0l);
+            sysUptime = M.to(parts[4], 0l);
 
             if (status == STATUS.CURRENT.ordinal()) status = STATUS.UNKNOWN.ordinal();
         }
