@@ -117,6 +117,7 @@ public class KarafBase extends DefaultBase {
                                 obj = ref.getBundle().getBundleContext().getService(ref);
                                 //								obj = context.getService(ref);
                             } catch (Throwable t) {
+                                t.printStackTrace();
                             }
                             if (obj != null) {
                                 MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc);
@@ -127,7 +128,8 @@ public class KarafBase extends DefaultBase {
                                 cached.api = obj;
                                 cached.ifc = ifc;
                                 cached.filter = filter;
-                                apiCache.put(ifc.getCanonicalName(), cached);
+                                if (apiCache != null)
+                                    apiCache.put(ifc.getCanonicalName(), cached);
                             }
                         }
                     }
@@ -141,7 +143,6 @@ public class KarafBase extends DefaultBase {
             result = super.lookup(ifc, def);
         
         if (result != null) {
-            // check access
             AccessUtil.checkPermission(result);
         }
             

@@ -69,6 +69,17 @@ public class MOsgi {
         return obj;
     }
 
+    public static <T> T getServiceOrNull(Class<T> ifc) {
+        BundleContext context = FrameworkUtil.getBundle(ifc).getBundleContext();
+        if (context == null) context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
+        if (context == null) return null;
+        ServiceReference<T> ref = context.getServiceReference(ifc);
+        if (ref == null) return null;
+        T obj = context.getService(ref);
+        if (obj == null) return null;
+        return obj;
+    }
+    
     public static <T> T getService(Class<T> ifc, String filter) throws NotFoundException {
         List<T> list = getServices(ifc, filter);
         if (list.size() == 0) throw new NotFoundException("service not found", ifc, filter);
@@ -478,6 +489,10 @@ public class MOsgi {
                 out.add(value);
         }
         return null;
+    }
+
+    public static boolean isValid(BundleContext bundleContext) {
+        return bundleContext != null && bundleContext.getBundle().getState() != Bundle.UNINSTALLED;
     }
 
 }

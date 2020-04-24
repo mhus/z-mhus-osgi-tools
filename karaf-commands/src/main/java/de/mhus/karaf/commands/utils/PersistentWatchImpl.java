@@ -26,8 +26,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MThread;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.api.services.PersistentWatch;
@@ -41,15 +43,20 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
     private static final String CONFIG_LIST = "watch";
  
-    @Reference
-    private BundleWatcher bundleWatcher;
+//    private BundleWatcher bundleWatcher;
     
     @Reference
     private ConfigurationAdmin configurationAdmin;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
-        doConfigure();
+        MThread.run(() -> {
+            while (MOsgi.getServiceOrNull(BundleWatcher.class) == null) {
+                if (!MOsgi.isValid(ctx.getBundleContext())) return;
+                MThread.sleep(1000);
+            }
+            doConfigure();
+        });
     }
 
     @Modified
@@ -58,8 +65,11 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     }
 
     private void doConfigure() {
+        
         log().i("doConfigure");
         try {
+            BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
+
             synchronized (this) {
                 List<String> watched = bundleWatcher.getWatchURLs();
                 for (String line : readFile()) {
@@ -138,4 +148,13 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
         }
     }
 
+//    @Reference(policy = ReferencePolicy.DYNAMIC, unbind = "unsetBundleWatcher")
+//    public void setBundleWatcher(BundleWatcher bundleWatcher) {
+//        this.bundleWatcher = bundleWatcher;
+//        doConfigure();
+//    }
+//
+//    public void unsetBundleWatcher(BundleWatcher bundleWatcher) {
+//        
+//    }
 }
