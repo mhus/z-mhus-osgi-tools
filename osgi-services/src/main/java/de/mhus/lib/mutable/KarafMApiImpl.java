@@ -27,11 +27,11 @@ import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.LogFactory;
 import de.mhus.lib.core.logging.MLogFactory;
 import de.mhus.lib.core.mapi.ApiInitialize;
-import de.mhus.lib.core.mapi.CfgManager;
+import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
+import de.mhus.lib.core.mapi.MBase;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
-import de.mhus.lib.core.util.Base;
 import de.mhus.lib.core.util.BaseControl;
 import de.mhus.lib.logging.JavaLoggerFactory;
 
@@ -44,7 +44,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     private LogFactory logFactory;
     private BaseControl baseControl;
-    private CfgManager configProvider;
+    private MCfgManager configProvider;
     private boolean fullTrace = false;
     private HashSet<String> logTrace = new HashSet<>();
 
@@ -76,9 +76,9 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
     }
 
     @Override
-    public synchronized CfgManager getCfgManager() {
+    public synchronized MCfgManager getCfgManager() {
         if (configProvider == null) {
-            configProvider = new CfgManager(this);
+            configProvider = new MCfgManager(this);
         }
         return configProvider;
     }
@@ -131,7 +131,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
     }
 
     @Override
-    public Base base() {
+    public MBase base() {
         return getBaseControl().base();
     }
 

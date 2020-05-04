@@ -27,8 +27,8 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.mapi.DefaultBase;
+import de.mhus.lib.core.mapi.MBase;
 import de.mhus.lib.core.shiro.AccessUtil;
-import de.mhus.lib.core.util.Base;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.cache.LocalCacheService;
 import de.mhus.osgi.api.cache.LocalCache;
@@ -39,7 +39,7 @@ public class KarafBase extends DefaultBase {
 
     private LocalCache<String, Container> apiCache;
 
-    public KarafBase(Base parent) {
+    public KarafBase(MBase parent) {
         super(parent);
     }
 

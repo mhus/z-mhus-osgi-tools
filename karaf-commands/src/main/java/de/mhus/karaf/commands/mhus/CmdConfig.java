@@ -28,7 +28,7 @@ import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.core.mapi.CfgManager;
+import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
@@ -79,7 +79,7 @@ public class CmdConfig extends AbstractCmd {
         switch (cmd) {
             case "info":
                 {
-                    CfgManager cfg = MApi.get().getCfgManager();
+                    MCfgManager cfg = MApi.get().getCfgManager();
                     System.out.println(
                             "Last Update: " + MDate.toIso8601(cfg.getLastConfigUpdate()));
                 }
@@ -131,7 +131,7 @@ public class CmdConfig extends AbstractCmd {
                 break;
             case "owners":
                 {
-                    CfgManager api = MApi.get().getCfgManager();
+                    MCfgManager api = MApi.get().getCfgManager();
                     for (String owner : api.getOwners()) {
                         System.out.println(">>> Owner: " + owner);
                         IConfig cfg = api.getCfg(owner);
@@ -141,17 +141,17 @@ public class CmdConfig extends AbstractCmd {
                 break;
             case "reload":
                 {
-                    CfgManager api = MApi.get().getCfgManager();
-                    ((CfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
+                    MCfgManager api = MApi.get().getCfgManager();
+                    ((MCfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
                             .internalLoadConfig();
                     System.out.println("ok");
                 }
                 break;
             case "files":
                 {
-                    CfgManager api = MApi.get().getCfgManager();
+                    MCfgManager api = MApi.get().getCfgManager();
                     for (File file :
-                            ((CfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
+                            ((MCfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
                                     .files()) {
                         System.out.println(file.getAbsolutePath());
                     }

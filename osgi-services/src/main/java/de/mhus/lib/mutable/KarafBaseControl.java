@@ -13,15 +13,15 @@
  */
 package de.mhus.lib.mutable;
 
-import de.mhus.lib.core.util.Base;
+import de.mhus.lib.core.mapi.MBase;
 import de.mhus.lib.core.util.BaseControl;
 
 public class KarafBaseControl extends BaseControl {
 
-    Base defaultBase = new KarafBase(null);
+    MBase defaultBase = new KarafBase(null);
 
     @Override
-    public Base base() {
+    public MBase base() {
         return defaultBase;
     }
 }

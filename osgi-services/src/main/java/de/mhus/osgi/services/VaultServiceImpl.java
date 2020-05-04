@@ -17,15 +17,15 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
-import de.mhus.lib.core.vault.DefaultVault;
-import de.mhus.lib.core.vault.MVault;
-import de.mhus.lib.core.vault.MVaultUtil;
+import de.mhus.lib.core.keychain.DefaultKeychain;
+import de.mhus.lib.core.keychain.MKeychain;
+import de.mhus.lib.core.keychain.MKeychainUtil;
 
-@Component(service = MVault.class, immediate = true)
-public class VaultServiceImpl extends DefaultVault {
+@Component(service = MKeychain.class, immediate = true)
+public class VaultServiceImpl extends DefaultKeychain {
 
     @Activate
     public void doActivate(ComponentContext ctx) {
-        MVaultUtil.checkDefault(this);
+        MKeychainUtil.checkDefault(this);
     }
 }

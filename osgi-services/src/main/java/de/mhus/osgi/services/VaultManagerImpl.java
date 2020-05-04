@@ -20,8 +20,8 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import de.mhus.lib.core.vault.MVault;
-import de.mhus.lib.core.vault.VaultSource;
+import de.mhus.lib.core.keychain.MKeychain;
+import de.mhus.lib.core.keychain.KeychainSource;
 import de.mhus.osgi.api.services.SimpleService;
 import de.mhus.osgi.api.services.SimpleServiceIfc;
 import de.mhus.osgi.api.util.MServiceTracker;
@@ -29,24 +29,24 @@ import de.mhus.osgi.api.util.MServiceTracker;
 @Component(service = SimpleServiceIfc.class, immediate = true)
 public class VaultManagerImpl extends SimpleService {
 
-    MServiceTracker<VaultSource> services;
-    private MVault vault;
+    MServiceTracker<KeychainSource> services;
+    private MKeychain vault;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
         services =
-                new MServiceTracker<VaultSource>(ctx.getBundleContext(), VaultSource.class) {
+                new MServiceTracker<KeychainSource>(ctx.getBundleContext(), KeychainSource.class) {
 
                     @Override
                     protected void removeService(
-                            ServiceReference<VaultSource> reference, VaultSource service) {
+                            ServiceReference<KeychainSource> reference, KeychainSource service) {
                         //				MVault vault = MVaultUtil.loadDefault();
                         vault.unregisterSource(service.getName());
                     }
 
                     @Override
                     protected void addService(
-                            ServiceReference<VaultSource> reference, VaultSource service) {
+                            ServiceReference<KeychainSource> reference, KeychainSource service) {
                         //				MVault vault = MVaultUtil.loadDefault();
                         vault.registerSource(service);
                     }
@@ -59,8 +59,8 @@ public class VaultManagerImpl extends SimpleService {
         services = null;
     }
 
-    @Reference(service = MVault.class)
-    public void setVault(MVault vault) {
+    @Reference(service = MKeychain.class)
+    public void setVault(MKeychain vault) {
         log().i("Reference Vault");
         this.vault = vault;
     }
