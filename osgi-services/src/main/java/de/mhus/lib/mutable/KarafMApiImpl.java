@@ -78,7 +78,8 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
     @Override
     public synchronized MCfgManager getCfgManager() {
         if (configProvider == null) {
-            configProvider = new MCfgManager(this);
+            configProvider = new KarafCfgManager(this);
+            configProvider.startInitiators();
         }
         return configProvider;
     }
