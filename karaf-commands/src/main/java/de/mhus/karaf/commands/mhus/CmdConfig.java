@@ -45,8 +45,8 @@ public class CmdConfig extends AbstractCmd {
             required = true,
             description =
                     "Command:\n"
-                            + " list\n"
-                            + " owners\n"
+                            + " listeners\n"
+                            + " providers [owner]\n"
                             + " set <owner> <path> <value>\n"
                             + " restart\n"
                             + " reinit\n"
@@ -81,7 +81,7 @@ public class CmdConfig extends AbstractCmd {
                     MApi.get().getCfgManager().doRestart();
                 }
                 break;
-            case "list":
+            case "listeners":
                 {
                     ConsoleTable out = new ConsoleTable(tblOpt);
                     out.setHeaderValues(
@@ -125,12 +125,27 @@ public class CmdConfig extends AbstractCmd {
                 {
                     MCfgManager api = MApi.get().getCfgManager();
                     for (String owner : api.getOwners()) {
-                        System.out.println(">>> Owner: " + owner);
-                        IConfig cfg = api.getCfg(owner);
-                        System.out.println(cfg);
+                        System.out.println(owner);
                     }
                 }
                 break;
+            case "providers":
+            {
+                ConsoleTable out = new ConsoleTable(tblOpt);
+                out.setHeaderValues(
+                        "Owner", "Key", "Value", "Type");
+                MCfgManager api = MApi.get().getCfgManager();
+                for (String owner : api.getOwners()) {
+                    out.addRowValues(owner, "", "", "");
+                    if (parameters == null || parameters.length < 1 || parameters[0].equals(owner)) {
+                        IConfig cfg = api.getCfg(owner);
+                        for (String key : cfg.keys())
+                        out.addRowValues("", key, cfg.get(key), cfg.get(key).getClass().getCanonicalName());
+                    }
+                }
+                out.print();
+            }
+            break;
             case "reinit":
                 {
                     MCfgManager api = MApi.get().getCfgManager();

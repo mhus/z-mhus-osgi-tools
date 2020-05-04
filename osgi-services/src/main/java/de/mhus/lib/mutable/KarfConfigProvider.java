@@ -23,10 +23,12 @@ public class KarfConfigProvider extends CfgProvider {
         ConfigurationAdmin admin = MOsgi.getServiceOrNull(ConfigurationAdmin.class);
         Configuration configuration = admin.getConfiguration(getName());
         config = new MConfig();
-        Enumeration<String> enu = configuration.getProperties().keys();
-        while (enu.hasMoreElements()) {
-            String key = enu.nextElement();
-            config.put(key, configuration.getProperties().get(key));
+        if (configuration != null && configuration.getProperties() != null) {
+            Enumeration<String> enu = configuration.getProperties().keys();
+            while (enu.hasMoreElements()) {
+                String key = enu.nextElement();
+                config.put(key, configuration.getProperties().get(key));
+            }
         }
     }
     

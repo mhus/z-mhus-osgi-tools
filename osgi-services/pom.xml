@@ -54,9 +54,11 @@
                         	org.apache.shiro.*;resolution:=optional,
                             *
 						</Import-Package>
+						<!-- 
 						<Private-Package>
 							de.mhus.osgi.commands.impl*
 						</Private-Package>
+						 -->
 						<Service-Component>*</Service-Component>
                         <DynamicImport-Package>*</DynamicImport-Package>
 					</instructions>

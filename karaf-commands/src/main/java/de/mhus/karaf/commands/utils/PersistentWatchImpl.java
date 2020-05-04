@@ -26,7 +26,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
-import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MThread;
