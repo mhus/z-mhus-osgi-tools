@@ -13,8 +13,8 @@
  */
 package de.mhus.lib.mutable;
 
-import de.mhus.lib.core.system.IApi;
-import de.mhus.lib.core.system.IApiFactory;
+import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.core.mapi.IApiFactory;
 
 public class MApiFactory implements IApiFactory {
 

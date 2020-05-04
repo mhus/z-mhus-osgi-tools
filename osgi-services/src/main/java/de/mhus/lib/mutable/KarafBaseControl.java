@@ -13,8 +13,8 @@
  */
 package de.mhus.lib.mutable;
 
-import de.mhus.lib.core.lang.Base;
-import de.mhus.lib.core.lang.BaseControl;
+import de.mhus.lib.core.util.Base;
+import de.mhus.lib.core.util.BaseControl;
 
 public class KarafBaseControl extends BaseControl {
 

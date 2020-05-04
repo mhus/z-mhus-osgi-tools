@@ -28,8 +28,8 @@ import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.core.system.CfgManager;
-import de.mhus.lib.core.system.IApi;
+import de.mhus.lib.core.mapi.CfgManager;
+import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 

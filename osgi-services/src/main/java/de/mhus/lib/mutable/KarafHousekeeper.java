@@ -19,9 +19,9 @@ import java.util.Map.Entry;
 import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.MHousekeeperTask;
-import de.mhus.lib.core.lang.MObject;
+import de.mhus.lib.core.mapi.DefaultHousekeeper;
 import de.mhus.lib.core.schedule.IntervalJob;
-import de.mhus.lib.core.system.DefaultHousekeeper;
+import de.mhus.lib.core.util.MObject;
 import de.mhus.osgi.services.scheduler.TimerFactoryImpl;
 
 public class KarafHousekeeper extends MObject implements MHousekeeper {

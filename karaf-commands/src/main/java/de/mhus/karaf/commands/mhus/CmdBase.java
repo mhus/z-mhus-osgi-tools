@@ -25,7 +25,7 @@ import org.osgi.framework.FrameworkUtil;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MSystem;
-import de.mhus.lib.core.system.IApi;
+import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.SimpleServiceIfc;

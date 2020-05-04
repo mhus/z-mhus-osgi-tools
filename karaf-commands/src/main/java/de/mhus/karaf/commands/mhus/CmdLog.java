@@ -36,7 +36,7 @@ import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.logging.TrailLevelMapper;
-import de.mhus.lib.core.system.IApi;
+import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.logging.level.GeneralMapper;
 import de.mhus.lib.logging.level.ThreadBasedMapper;
 import de.mhus.lib.logging.level.ThreadMapperConfig;

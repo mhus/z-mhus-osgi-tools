@@ -4,9 +4,9 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.base.service.ClusterApi;
 import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.concurrent.LockWithExtend;
+import de.mhus.lib.core.operation.DefaultTaskContext;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.TimerTaskInterceptor;
-import de.mhus.lib.core.strategy.DefaultTaskContext;
 
 public class TimerTaskClusterInterceptor implements TimerTaskInterceptor {
 

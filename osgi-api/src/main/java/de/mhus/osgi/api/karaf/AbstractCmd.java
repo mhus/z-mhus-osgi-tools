@@ -21,7 +21,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.console.Console;
-import de.mhus.lib.core.lang.MObject;
+import de.mhus.lib.core.util.MObject;
 
 public abstract class AbstractCmd extends MObject implements Action {
 

@@ -23,16 +23,16 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.activator.DefaultActivator;
-import de.mhus.lib.core.lang.Base;
-import de.mhus.lib.core.lang.BaseControl;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.LogFactory;
 import de.mhus.lib.core.logging.MLogFactory;
-import de.mhus.lib.core.system.ApiInitialize;
-import de.mhus.lib.core.system.CfgManager;
-import de.mhus.lib.core.system.IApi;
-import de.mhus.lib.core.system.IApiInternal;
-import de.mhus.lib.core.system.SingleMLogInstanceFactory;
+import de.mhus.lib.core.mapi.ApiInitialize;
+import de.mhus.lib.core.mapi.CfgManager;
+import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.core.mapi.IApiInternal;
+import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
+import de.mhus.lib.core.util.Base;
+import de.mhus.lib.core.util.BaseControl;
 import de.mhus.lib.logging.JavaLoggerFactory;
 
 /**
