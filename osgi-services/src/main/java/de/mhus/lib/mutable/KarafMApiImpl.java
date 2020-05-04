@@ -100,7 +100,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
             System.out.println("Can't initialize housekeeper base: " + t);
         }
 
-        getCfgManager().reConfigure();
+        getCfgManager().doRestart();
 
         // logFactory.setLevelMapper(new ThreadBasedMapper() );
     }

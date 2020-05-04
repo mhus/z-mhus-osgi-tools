@@ -28,8 +28,8 @@ import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
@@ -46,12 +46,11 @@ public class CmdConfig extends AbstractCmd {
             description =
                     "Command:\n"
                             + " list\n"
-                            + " info\n"
+                            + " owners\n"
                             + " set <owner> <path> <value>\n"
                             + " restart\n"
+                            + " reinit\n"
                             + " dump\n"
-                            + " owners\n"
-                            + " reload\n"
                             + " files",
             multiValued = false)
     String cmd;
@@ -77,16 +76,9 @@ public class CmdConfig extends AbstractCmd {
         // KarafMApiImpl api = (KarafMApiImpl)s;
 
         switch (cmd) {
-            case "info":
-                {
-                    MCfgManager cfg = MApi.get().getCfgManager();
-                    System.out.println(
-                            "Last Update: " + MDate.toIso8601(cfg.getLastConfigUpdate()));
-                }
-                break;
             case "restart":
                 {
-                    MApi.get().getCfgManager().reConfigure();
+                    MApi.get().getCfgManager().doRestart();
                 }
                 break;
             case "list":
@@ -139,24 +131,18 @@ public class CmdConfig extends AbstractCmd {
                     }
                 }
                 break;
-            case "reload":
+            case "reinit":
                 {
                     MCfgManager api = MApi.get().getCfgManager();
-                    ((MCfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
-                            .internalLoadConfig();
+                    api.startInitiators();
                     System.out.println("ok");
                 }
                 break;
-            case "files":
-                {
-                    MCfgManager api = MApi.get().getCfgManager();
-                    for (File file :
-                            ((MCfgManager.CentralMhusCfgProvider) api.getProviders().get(0))
-                                    .files()) {
-                        System.out.println(file.getAbsolutePath());
-                    }
-                }
-                break;
+            case "files": {
+                MCfgManager api = MApi.get().getCfgManager();
+                for (File file : api.getMhusConfigFiles())
+                    System.out.println(file.getAbsolutePath());
+            } break;
             default:
                 System.out.println("Command not found");
         }

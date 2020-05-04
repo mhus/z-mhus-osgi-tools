@@ -169,7 +169,7 @@ public class CmdLog extends AbstractCmd {
                 break;
             case "reloadconfig":
                 { // TODO need single command class
-                    api.getCfgManager().reConfigure();
+                    api.getCfgManager().doRestart();
                     MApi.updateLoggers();
                     System.out.println("OK");
                 }
