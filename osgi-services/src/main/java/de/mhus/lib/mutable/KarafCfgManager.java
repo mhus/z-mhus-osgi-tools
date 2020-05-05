@@ -7,6 +7,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.osgi.api.services.MOsgi;
@@ -35,7 +36,15 @@ public class KarafCfgManager extends MCfgManager {
             }
         }
         
-        startInitiators();
+        // prepare system config for default
+        IConfig system = provider.getConfig();
+        if (!system.containsKey(MConstants.PROP_LOG_FACTORY_CLASS)) {
+            system.setString(MConstants.PROP_LOG_FACTORY_CLASS, "de.mhus.lib.logging.Log4JFactory");
+        }
+        if (!system.containsKey(MConstants.PROP_LOG_CONSOLE_REDIRECT)) {
+            system.setString(MConstants.PROP_LOG_CONSOLE_REDIRECT, "false");
+        }
+        
     }
 
     public void update(String pid) {
