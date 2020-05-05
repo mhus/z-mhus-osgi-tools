@@ -82,6 +82,7 @@ public class MyReflectionBuilder {
     private static final String HEX_BEGIN_TOKEN = "0x";
     private static final String NULL_VALUE_TOKEN = "null";
     private static final String EMPTY_STRING_VALUE_TOKEN = "\"\"";
+    @SuppressWarnings("unused")
     private static final char STRING_VALUE_DELIMETER = '"';
     private static final char MAP_PROPERTY_BEGIN_TOKEN = '[';
     private static final char MAP_PROPERTY_END_TOKEN = ']';
@@ -131,6 +132,7 @@ public class MyReflectionBuilder {
         // SHIRO-619
         // SHIRO-739
         beanUtilsBean = new BeanUtilsBean(new ConvertUtilsBean() {
+            @SuppressWarnings({ "unchecked", "rawtypes" })
             @Override
             public Object convert(String value, Class clazz) {
                 if (clazz.isEnum()){
@@ -205,6 +207,7 @@ public class MyReflectionBuilder {
     }
 
     //@since 1.3
+    @SuppressWarnings("rawtypes")
     private boolean isEventSubscriber(Object bean, String name) {
         List annotatedMethods = ClassUtils.getAnnotatedMethods(bean.getClass(), Subscribe.class);
         return !isEmpty(annotatedMethods);
@@ -272,7 +275,6 @@ public class MyReflectionBuilder {
         return null;
     }
 
-    @SuppressWarnings({"unchecked"})
     public Map<String, ?> buildObjects(Map<String, String> kvPairs) {
 
         if (kvPairs != null && !kvPairs.isEmpty()) {
@@ -345,6 +347,7 @@ public class MyReflectionBuilder {
         objects.put(name, instance);
     }
 
+    @SuppressWarnings("rawtypes")
     protected void applyProperty(String key, String value, Map objects) {
 
         int index = key.indexOf('.');
@@ -365,6 +368,7 @@ public class MyReflectionBuilder {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     protected void applyGlobalProperty(Map objects, String property, String value) {
         for (Object instance : objects.values()) {
             try {
@@ -381,6 +385,7 @@ public class MyReflectionBuilder {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     protected void applySingleProperty(Map objects, String name, String property, String value) {
         Object instance = objects.get(name);
         if (property.equals("class")) {
@@ -425,6 +430,7 @@ public class MyReflectionBuilder {
         return value;
     }
 
+    @SuppressWarnings("rawtypes")
     protected Object resolveReference(String reference) {
         String id = getId(reference);
         log.debug("Encountered object reference '{}'.  Looking up object with id '{}'", reference, id);
@@ -435,6 +441,7 @@ public class MyReflectionBuilder {
         return referencedObject;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected boolean isTypedProperty(Object object, String propertyName, Class clazz) {
         if (clazz == null) {
             throw new NullPointerException("type (class) argument cannot be null.");
@@ -457,6 +464,7 @@ public class MyReflectionBuilder {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     protected Set<?> toSet(String sValue) {
         String[] tokens = StringUtils.split(sValue);
         if (tokens == null || tokens.length <= 0) {
@@ -482,6 +490,7 @@ public class MyReflectionBuilder {
         return values;
     }
 
+    @SuppressWarnings("rawtypes")
     protected Map<?, ?> toMap(String sValue) {
         String[] tokens = StringUtils.split(sValue, StringUtils.DEFAULT_DELIMITER_CHAR,
                 StringUtils.DEFAULT_QUOTE_CHAR, StringUtils.DEFAULT_QUOTE_CHAR, true, true);
@@ -520,6 +529,7 @@ public class MyReflectionBuilder {
     }
 
     // @since 1.2.2
+    @SuppressWarnings("rawtypes")
     protected Collection<?> toCollection(String sValue) {
 
         String[] tokens = StringUtils.split(sValue);
@@ -544,6 +554,7 @@ public class MyReflectionBuilder {
         return values;
     }
 
+    @SuppressWarnings("rawtypes")
     protected List<?> toList(String sValue) {
         String[] tokens = StringUtils.split(sValue);
         if (tokens == null || tokens.length <= 0) {
@@ -608,6 +619,7 @@ public class MyReflectionBuilder {
         }
     }
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     protected void applyProperty(Object object, String propertyPath, Object value) {
 
         int mapBegin = propertyPath.indexOf(MAP_PROPERTY_BEGIN_TOKEN);
@@ -766,6 +778,7 @@ public class MyReflectionBuilder {
      * Sets the {@link Interpolator} used when evaluating the right side of the expressions.
      * @since 1.4
      */
+    @SuppressWarnings("javadoc")
     public void setInterpolator(Interpolator interpolator) {
         this.interpolator = interpolator;
     }
@@ -943,6 +956,7 @@ public class MyReflectionBuilder {
             return this.result;
         }
 
+        @SuppressWarnings("unused")
         public Object getBean() {
             return this.bean;
         }
@@ -954,6 +968,7 @@ public class MyReflectionBuilder {
             }
         }
 
+        @SuppressWarnings("unused")
         public Object getResult() {
             return result;
         }
@@ -1018,10 +1033,12 @@ public class MyReflectionBuilder {
     //////////////////////////
     // CollectionUtils cannot be removed from shiro-core until 2.0 as it has a dependency on PrincipalCollection
 
+    @SuppressWarnings("rawtypes")
     private static boolean isEmpty(Map m) {
         return m == null || m.isEmpty();
     }
 
+    @SuppressWarnings("rawtypes")
     private static boolean isEmpty(Collection c) {
         return c == null || c.isEmpty();
     }
