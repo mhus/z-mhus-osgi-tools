@@ -14,8 +14,17 @@
 package de.mhus.lib.mutable;
 
 import java.io.File;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MActivator;
@@ -23,17 +32,22 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.activator.DefaultActivator;
+import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.logging.LogFactory;
 import de.mhus.lib.core.logging.MLogFactory;
+import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.mapi.ApiInitialize;
-import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
-import de.mhus.lib.core.mapi.MBase;
+import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
-import de.mhus.lib.core.util.BaseControl;
+import de.mhus.lib.core.shiro.AccessUtil;
+import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.logging.JavaLoggerFactory;
+import de.mhus.osgi.api.cache.LocalCache;
+import de.mhus.osgi.api.cache.LocalCacheService;
+import de.mhus.osgi.api.services.MOsgi;
 
 /**
  * TODO: Map config to service TODO: Add MActivator with mapper to OSGi Services
@@ -43,10 +57,10 @@ import de.mhus.lib.logging.JavaLoggerFactory;
 public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     private LogFactory logFactory;
-    private BaseControl baseControl;
     private MCfgManager configProvider;
     private boolean fullTrace = false;
     private HashSet<String> logTrace = new HashSet<>();
+    private DefaultActivator base = new DefaultActivator();
 
     private KarafHousekeeper housekeeper;
 
@@ -55,15 +69,8 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
     //	{
     //		baseDir.mkdirs();
     //	}
+    private LocalCache<String, Container> apiCache;
     
-    @Override
-    public synchronized BaseControl getBaseControl() {
-        if (baseControl == null) {
-            baseControl = new BaseControl();
-        }
-        return baseControl;
-    }
-
     @Override
     public MActivator createActivator() {
         //		return new DefaultActivator(new OsgiBundleClassLoader());
@@ -86,17 +93,16 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     @Override
     public void doInitialize(ClassLoader coreLoader) {
-        baseControl = new KarafBaseControl();
         logFactory = new JavaLoggerFactory();
         mlogFactory = new SingleMLogInstanceFactory();
-        getBaseControl().base().addObject(MLogFactory.class, mlogFactory);
+        base.addObject(MLogFactory.class, null, mlogFactory);
 
         getCfgManager(); // init
         //		TimerFactoryImpl.indoCheckTimers();
 
         try {
             housekeeper = new KarafHousekeeper();
-            getBaseControl().base().addObject(MHousekeeper.class, housekeeper);
+            base.addObject(MHousekeeper.class, null, housekeeper);
         } catch (Throwable t) {
             System.out.println("Can't initialize housekeeper base: " + t);
         }
@@ -129,11 +135,6 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     public boolean isFullTrace() {
         return fullTrace;
-    }
-
-    @Override
-    public MBase base() {
-        return getBaseControl().base();
     }
 
     @Override
@@ -188,4 +189,128 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
     public void setMLogFactory(MLogFactory mlogFactory) {
         this.mlogFactory = mlogFactory;
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T, D extends T> T lookup(Class<T> ifc, Class<D> def) {
+
+        if (ifc == null) return null;
+
+        T result = null;
+        
+        if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
+
+            if (apiCache == null) {
+                try {
+                    LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
+                    apiCache = cacheService.createCache(
+                            FrameworkUtil.getBundle(KarafMApiImpl.class).getBundleContext(),
+                            "baseApi", 
+                            String.class, Container.class, 
+                            100
+                            );
+                } catch (NotFoundException e) {
+                    MApi.dirtyLogDebug(e);
+                }
+            }
+
+            Container cached = null;
+            if (apiCache != null) {
+                cached = apiCache.get(ifc.getCanonicalName());
+                if (cached != null) {
+                    Bundle bundle = MOsgi.getBundleOrNull(cached.bundleId);
+                    if (bundle == null || bundle.getState() != Bundle.ACTIVE
+                            || cached.modified != bundle.getLastModified()) {
+                        apiCache.remove(cached.ifc.getCanonicalName());
+                        cached = null;
+                    }
+                }
+            }
+            
+            if (cached == null) {
+                Bundle bundle = FrameworkUtil.getBundle(KarafMApiImpl.class);
+                if (bundle != null) {
+                    BundleContext context = bundle.getBundleContext();
+                    if (context != null) {
+                        String filter = null;
+                        IConfig cfg = MApi.getCfg(ifc);
+                        if (cfg != null) {
+                            filter = cfg.getString("mhusApiBaseFilter", null);
+                        }
+                        ServiceReference<T> ref = null;
+                        try {
+                            Collection<ServiceReference<T>> refs = context.getServiceReferences(ifc, filter);
+                            Iterator<ServiceReference<T>> refsIterator = refs.iterator();
+                            
+                            if (refsIterator.hasNext())
+                                ref = refs.iterator().next();
+                            if (refsIterator.hasNext())
+                                MApi.dirtyLogDebug("more then one service found for singleton",ifc,filter);
+                        } catch (InvalidSyntaxException e) {
+                            MApi.dirtyLogError(ifc,filter,e);
+                        }
+                        if (ref != null) {
+                            if (ref.getBundle().getState() != Bundle.ACTIVE) {
+                                MLogUtil.log()
+                                        .d(
+                                                "KarafBase",
+                                                "found in bundle but not jet active",
+                                                ifc,
+                                                bundle.getSymbolicName());
+                                return null;
+                            }
+                            T obj = null;
+                            try {
+                                obj = ref.getBundle().getBundleContext().getService(ref);
+                                //                              obj = context.getService(ref);
+                            } catch (Throwable t) {
+                                t.printStackTrace();
+                            }
+                            if (obj != null) {
+                                MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc);
+                                cached = new Container();
+                                cached.bundleId = ref.getBundle().getBundleId();
+                                cached.bundleName = ref.getBundle().getSymbolicName();
+                                cached.modified = ref.getBundle().getLastModified();
+                                cached.api = obj;
+                                cached.ifc = ifc;
+                                cached.filter = filter;
+                                if (apiCache != null)
+                                    apiCache.put(ifc.getCanonicalName(), cached);
+                            }
+                        }
+                    }
+                }
+            }
+            if (cached != null)
+                result = (T) cached.api;
+        }
+        
+        if (result == null)
+            result = base.lookup(ifc, def);
+        
+        if (result != null) {
+            AccessUtil.checkPermission(result);
+        }
+            
+        return result;
+    }
+
+    public static class Container implements Serializable {
+
+        public String filter;
+        private static final long serialVersionUID = 1L;
+        public long modified;
+        public Class<?> ifc;
+        public Object api;
+        public String bundleName;
+        public long bundleId;
+
+    }
+
+    @Override
+    public DefaultActivator getLookupActivator() {
+        return base;
+    }
+
 }

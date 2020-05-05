@@ -86,14 +86,14 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
         try {
             TimerIfc timerIfc = new TimerWrap();
             int cnt = 0;
-            while (MApi.get().getBaseControl().base().removeObject(TimerIfc.class)) {
+            while (MApi.get().getLookupActivator().removeObject(TimerIfc.class, null)) {
                 cnt++;
                 if (cnt > 100) {
                     log().e("can't remove old timer ifc");
                     break;
                 }
             }
-            MApi.get().getBaseControl().base().addObject(TimerIfc.class, timerIfc);
+            MApi.get().getLookupActivator().addObject(TimerIfc.class, null, timerIfc);
         } catch (Throwable t) {
             System.out.println("Can't initialize timer base: " + t);
         }
