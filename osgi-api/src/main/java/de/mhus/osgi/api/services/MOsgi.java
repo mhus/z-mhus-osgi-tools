@@ -58,6 +58,11 @@ public class MOsgi {
 
     private static Timer localTimer; // fallback timer
 
+    public static <T> T getService(ServiceReference<T> reference) {
+        BundleContext context = getBundleContext();
+        return context.getService(reference);
+    }
+
     public static <T> T getService(Class<T> ifc) throws NotFoundException {
         BundleContext context = FrameworkUtil.getBundle(ifc).getBundleContext();
         if (context == null) context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
@@ -384,11 +389,11 @@ public class MOsgi {
     }
 
     public static String getPid(ComponentContext ctx) {
-        return ctx.getComponentInstance().getInstance().getClass().getCanonicalName();
+        return findServicePid(ctx.getComponentInstance().getInstance().getClass());
     }
 
     public static String getPid(Class<?> clazz) {
-        return clazz.getCanonicalName();
+        return findServicePid(clazz);
     }
 
     public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, ComponentContext ctx) {
@@ -401,7 +406,9 @@ public class MOsgi {
     
     public static String findServicePid(Class<?> service) {
         if (service == null) throw new NullPointerException();
-        {
+        if (service.isInterface()) return service.getCanonicalName();
+
+        try {
             org.osgi.service.component.annotations.Component component = service.getAnnotation(org.osgi.service.component.annotations.Component.class);
             if (component != null) {
                 if (component.configurationPid().length > 0) {
@@ -410,8 +417,15 @@ public class MOsgi {
                 }
                 if (component.name().length() > 0)
                     return component.name();
-                return service.getCanonicalName();
+                if (component.service().length > 0)
+                    return component.service()[0].getCanonicalName();
+                
             }
+        } catch (Throwable e) {
+            log.d(service,e);
+        }
+        if (service.getInterfaces().length > 0) {
+            return service.getInterfaces()[0].getCanonicalName();
         }
 
         log.w("Class is not a service",service.getCanonicalName());

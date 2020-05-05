@@ -30,15 +30,19 @@ public class KarafCfgManager extends MCfgManager {
             for (File file : new File("etc").listFiles()) {
                 if (file.isFile() && file.getName().endsWith(".cfg")) {
                     String pid = MString.beforeLastIndex(file.getName(), '.');
-                    if (!pid.equals(MConstants.CFG_SYSTEM)) {
-                        MApi.dirtyLogInfo("KarafCfgManager::Register PID",pid);
-                        registerCfgProvider(new KarfConfigProvider(pid));
-                    }
+                    update(pid);
                 }
             }
         }
         
         startInitiators();
+    }
+
+    public void update(String pid) {
+        if (!pid.equals(MConstants.CFG_SYSTEM)) {
+            MApi.dirtyLogInfo("KarafCfgManager::Register PID",pid);
+            registerCfgProvider(new KarfConfigProvider(pid));
+        }
     }
 
 }
