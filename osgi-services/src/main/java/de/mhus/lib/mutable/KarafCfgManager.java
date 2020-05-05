@@ -5,6 +5,7 @@ import java.io.File;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
@@ -29,8 +30,10 @@ public class KarafCfgManager extends MCfgManager {
             for (File file : new File("etc").listFiles()) {
                 if (file.isFile() && file.getName().endsWith(".cfg")) {
                     String pid = MString.beforeLastIndex(file.getName(), '.');
-                    MApi.dirtyLogInfo("KarafCfgManager::Register PID",pid);
-                    registerCfgProvider(new KarfConfigProvider(pid));
+                    if (!pid.equals(MConstants.CFG_SYSTEM)) {
+                        MApi.dirtyLogInfo("KarafCfgManager::Register PID",pid);
+                        registerCfgProvider(new KarfConfigProvider(pid));
+                    }
                 }
             }
         }
