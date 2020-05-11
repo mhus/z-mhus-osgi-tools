@@ -32,8 +32,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MTimerTask;
-import de.mhus.lib.core.base.service.TimerFactory;
-import de.mhus.lib.core.base.service.TimerIfc;
+import de.mhus.lib.core.service.TimerFactory;
+import de.mhus.lib.core.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.osgi.api.jms.JmsDataChannel;

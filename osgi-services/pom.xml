@@ -52,6 +52,7 @@
                         	javax.jms.*;resolution:=optional,
                         	org.apache.commons.beanutils;resolution:=optional,
                         	org.apache.shiro.*;resolution:=optional,
+                        	org.osgi.service.event;resolution:=optional,
                             *
 						</Import-Package>
 						<!-- 

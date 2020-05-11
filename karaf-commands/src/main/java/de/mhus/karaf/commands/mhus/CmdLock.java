@@ -23,9 +23,9 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MPeriod;
-import de.mhus.lib.core.base.service.LockManager;
 import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.service.LockManager;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "lock", description = "Locks management")
