@@ -20,8 +20,10 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.util.MObject;
+import io.opentracing.Scope;
 
 public abstract class AbstractCmd extends MObject implements Action {
 
@@ -41,6 +43,13 @@ public abstract class AbstractCmd extends MObject implements Action {
             multiValued = false)
     private boolean tableAll;
 
+    @Option(
+            name = "--trace",
+            description = "Console table print all",
+            required = false,
+            multiValued = false)
+    private boolean trace;
+    
     @Reference private Session session;
 
     @Override
@@ -77,6 +86,10 @@ public abstract class AbstractCmd extends MObject implements Action {
             log().d(t);
         }
         
+        Scope scope = null;
+        if (trace) {
+        	scope = M.tracer().start(getClass().getName(), true);
+        }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
         if (tName == null || tName.length() == 0) {
@@ -95,6 +108,11 @@ public abstract class AbstractCmd extends MObject implements Action {
         try {
             ret = execute2();
         } finally {
+        	if (scope != null) {
+        		try {
+        			scope.close();
+        		} catch (Throwable t) {}
+        	}
             if (interceptors != null) {
                 for (CmdInterceptor interceptor : interceptors) 
                     try {

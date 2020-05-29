@@ -93,6 +93,12 @@
 		    <groupId>commons-beanutils</groupId>
 		    <artifactId>commons-beanutils</artifactId>
 		</dependency>
+
+		<dependency>
+		  <groupId>io.jaegertracing</groupId>
+		  <artifactId>jaeger-client</artifactId>
+		</dependency>
+
 						
 	</dependencies>
 </project>
