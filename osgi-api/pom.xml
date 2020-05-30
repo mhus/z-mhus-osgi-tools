@@ -94,5 +94,18 @@
             <artifactId>ehcache-clustered</artifactId>
         </dependency>
 		
+        <dependency>
+            <groupId>org.ops4j.pax.url</groupId>
+            <artifactId>pax-url-aether</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.karaf.log</groupId>
+            <artifactId>org.apache.karaf.log.core</artifactId>
+        </dependency>
+        
 	</dependencies>
 </project>
