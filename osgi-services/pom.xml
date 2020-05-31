@@ -98,6 +98,13 @@
 		  <groupId>io.jaegertracing</groupId>
 		  <artifactId>jaeger-client</artifactId>
 		</dependency>
+		<!-- 
+		<dependency>
+		  <groupId>io.jaegertracing</groupId>
+		  <artifactId>jaeger-thrift</artifactId>
+		  <version>${jaeger.version}</version>
+		</dependency>
+		 -->
 
 						
 	</dependencies>

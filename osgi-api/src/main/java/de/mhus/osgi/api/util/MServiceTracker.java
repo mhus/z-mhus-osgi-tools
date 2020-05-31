@@ -65,7 +65,12 @@ public abstract class MServiceTracker<T> {
     protected abstract void addService(ServiceReference<T> reference, T service);
 
     public MServiceTracker(BundleContext context, Class<T> clazz) {
-        if (context == null) context = MOsgi.getBundleContext();
+        if (context == null) {
+        	try {
+	        	context = MOsgi.getBundleContext();
+	        } catch (Throwable t) {
+	        }
+        }
         this.context = context;
         this.clazz = clazz;
     }
