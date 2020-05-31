@@ -54,4 +54,18 @@ public class KarafCfgManager extends MCfgManager {
         }
     }
 
+	@SuppressWarnings("rawtypes")
+	public void reload(Object owner) {
+		if (owner == null) return;
+        
+    	if (owner instanceof String) {
+        	update(owner.toString());
+    	} else {
+        	Class clazz = owner.getClass();
+        	if (owner instanceof Class)
+        		clazz = (Class)owner;
+        	update(MOsgi.findServicePid(clazz));
+    	}
+	}
+
 }

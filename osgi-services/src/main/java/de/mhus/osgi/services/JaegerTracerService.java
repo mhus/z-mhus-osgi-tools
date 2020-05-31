@@ -4,15 +4,13 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ops4j.pax.logging.spi.PaxLocationInfo;
 import org.ops4j.pax.logging.spi.PaxLoggingEvent;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.metatype.annotations.Designate;
-import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
@@ -32,14 +30,15 @@ import io.jaegertracing.spi.Sender;
 import io.jaegertracing.thrift.internal.senders.ThriftSenderFactory;
 import io.opentracing.Scope;
 import io.opentracing.Span;
+import io.opentracing.Tracer;
 import io.opentracing.noop.NoopTracerFactory;
 import io.opentracing.tag.Tags;
 import io.opentracing.util.GlobalTracer;
 
 // https://www.scalyr.com/blog/jaeger-tracing-tutorial/
+// https://opentracing.io/guides/java/inject-extract/
 
-@Component(configurationPolicy = ConfigurationPolicy.OPTIONAL)
-@Designate(ocd = JaegerTracerService.Config.class)
+@Component
 public class JaegerTracerService extends MLog implements ITracer {
 
 	private CfgString CFG_LOG_LEVEL = new CfgString(JaegerTracerService.class, "logLevel", "DEBUG").updateAction(v -> updateLogLevel());
@@ -60,23 +59,9 @@ public class JaegerTracerService extends MLog implements ITracer {
 			"JAEGER_REPORTER_MAX_QUEUE_SIZE",
 			"JAEGER_SERVICE_NAME"
 	};
-	
-    @ObjectClassDefinition(name = "JaegerTracingService", description = "Jaeger Tracing Service")
-    public @interface Config {
-    	String JAEGER_SAMPLER_TYPE() default "";
-    	String JAEGER_SAMPLER_PARAM() default"";
-    	String JAEGER_SAMPLER_MANAGER_HOST_PORT() default "";
-    	String JAEGER_REPORTER_LOG_SPANS() default "";
-    	String JAEGER_AGENT_HOST() default "";
-    	String JAEGER_AGENT_PORT() default "";
-    	String JAEGER_REPORTER_FLUSH_INTERVAL() default "";
-    	String JAEGER_REPORTER_MAX_QUEUE_SIZE() default "";
-    	String JAEGER_SERVICE_NAME() default "";
-    	String logLevel() default "DEBUG";
-    }
-	
+		
 	@Activate
-    public void doActivate(ComponentContext ctx, Config config) {
+    public void doActivate(ComponentContext ctx) {
 	    MOsgi.touchConfig(JaegerTracerService.class);
 		updateLogLevel();
 		update();
@@ -96,7 +81,8 @@ public class JaegerTracerService extends MLog implements ITracer {
 	}
 
 	@Modified
-    public void doModified(ComponentContext ctx, Config config) {
+    public void doModified(ComponentContext ctx) {
+		MApi.get().getCfgManager().reload(JaegerTracerService.class);
 		update();
 	}
 	
@@ -125,16 +111,21 @@ public class JaegerTracerService extends MLog implements ITracer {
 	    if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
 	    	log().i("Create ThriftSender");
 		    Sender sender = new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
-		    log().i("Sender",sender);
-		    RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
-		    tracer = config.getTracerBuilder().withReporter(reporter).build();
-	    } else {
+		    if (sender == null)
+		    	log().e("Can't create ThriftSender");
+		    else {
+		    	RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
+		    	tracer = config.getTracerBuilder().withReporter(reporter).build();
+		    }
+	    }
+	    if (tracer == null) {
 	    	tracer = config.getTracer();
 	    }
+	    
 	    if (GlobalTracer.get() instanceof GlobalTracer) {
 	    	try {
 		    	Field field = GlobalTracer.class.getDeclaredField("tracer");
-		    	if (!field.isAccessible())
+		    	if (!field.canAccess(null))
 		    		field.setAccessible(true);
 		    	field.set(null, NoopTracerFactory.create());
 	    	} catch (Throwable t) {
@@ -159,8 +150,9 @@ public class JaegerTracerService extends MLog implements ITracer {
     	fields.put("message", e.getMessage());
     	fields.put("logger", e.getLoggerName());
     	fields.put("thread", e.getThreadName());
-    	fields.put("location", e.getLocationInformation().toString());
-    	fields.put("ident", IdentUtil.getServerIdent());
+    	PaxLocationInfo location = e.getLocationInformation();
+    	fields.put("location", 
+    			location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName() + ":" + location.getLineNumber() + ")" );
 		span.log(fields );
 	}
 
@@ -174,13 +166,14 @@ public class JaegerTracerService extends MLog implements ITracer {
 	public Scope start(String name, boolean active, String... tagPairs) {
 		
 		// cleanup all before start
-		while (tracer.scopeManager().active() != null)
-			tracer.scopeManager().active().close();
+//		while (tracer.scopeManager().active() != null)
+//			tracer.scopeManager().active().close();
 		
 		SpanBuilder span = tracer.buildSpan(name);
 		for (int i = 0; i < tagPairs.length-1; i=i+2)
 			span.withTag(tagPairs[i],tagPairs[i+1]);
-		Scope scope = span.startActive(true);
+    	span.withTag("ident", IdentUtil.getFullIdent());
+		Scope scope = span.ignoreActiveSpan().startActive(true);
 		if (active)
 			Tags.SAMPLING_PRIORITY.set(scope.span(), 1);
 		return scope;
@@ -188,30 +181,29 @@ public class JaegerTracerService extends MLog implements ITracer {
 
 	@Override
 	public Scope enter(String name, String... tagPairs) {
-		SpanBuilder span = tracer.buildSpan(name);
+		return enter(null, name, tagPairs);
+	}
+
+	@Override
+	public Scope enter(Span parent, String name, String ... tagPairs) {
+		SpanBuilder span = tracer. buildSpan(name);
 		for (int i = 0; i < tagPairs.length-1; i=i+2)
 			span.withTag(tagPairs[i],tagPairs[i+1]);
+    	span.withTag("ident", IdentUtil.getFullIdent());
+		if (parent != null)
+			span.asChildOf(parent);
 		Scope scope = span.startActive(true);
 		return scope;
 	}
-
-
-	// https://opentracing.io/guides/java/inject-extract/
-	@Override
-	public void inject(String type, Object object) {
-		
-	}
-
-
-	@Override
-	public Scope extract(String type, Object object) {
-		return null;
-	}
-
-
+	
 	@Override
 	public Span current() {
 		return tracer.activeSpan();
+	}
+
+	@Override
+	public Tracer tracer() {
+		return tracer;
 	}
 
 }
