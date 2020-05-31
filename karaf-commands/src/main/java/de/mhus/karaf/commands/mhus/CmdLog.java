@@ -32,18 +32,10 @@ import de.mhus.lib.core.console.ANSIConsole;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.Console.COLOR;
 import de.mhus.lib.core.io.TailInputStream;
-import de.mhus.lib.core.logging.LevelMapper;
 import de.mhus.lib.core.logging.Log;
-import de.mhus.lib.core.logging.MLogUtil;
-import de.mhus.lib.core.logging.TrailLevelMapper;
 import de.mhus.lib.core.mapi.IApi;
-import de.mhus.lib.logging.level.GeneralMapper;
-import de.mhus.lib.logging.level.ThreadBasedMapper;
-import de.mhus.lib.logging.level.ThreadMapperConfig;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
-import de.mhus.osgi.api.karaf.LogInterceptor;
 
 @Command(scope = "mhus", name = "log", description = "Manipulate Log behavior.")
 @Service
@@ -63,12 +55,6 @@ public class CmdLog extends AbstractCmd {
                             + " dirty - enable dirty logging,\n"
                             + " level - set log level (console logger),\n"
                             + " reloadconfig,\n"
-                            + " settrail [<config>] - enable trail logging for this thread,\n"
-                            + " istrail - output the traillog config,\n"
-                            + " releasetrail - unset the current trail log config\n"
-                            + " resetalltrail - unset all trail log configs\n"
-                            + " general - enable general logging\n"
-                            + " off - log mapping off\n"
                             + " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
                             + " maxmsgsize [new size] - show or set maximum message size, disable with 0\n"
                             + " stacktracetrace [true|false]\n"
@@ -148,14 +134,6 @@ public class CmdLog extends AbstractCmd {
                     System.out.println(
                             "LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
                     System.out.println("DirtyTrace     : " + MApi.isDirtyTrace());
-                    LevelMapper lm = api.getLogFactory().getLevelMapper();
-                    if (lm != null) {
-                        System.out.println("LevelMapper    : " + lm.getClass().getSimpleName());
-                        if (lm instanceof TrailLevelMapper)
-                            System.out.println(
-                                    "   Configuration: "
-                                            + ((TrailLevelMapper) lm).doSerializeTrail());
-                    }
                     if (api.getLogFactory().getParameterMapper() != null)
                         System.out.println(
                                 "ParameterMapper: "
@@ -182,52 +160,6 @@ public class CmdLog extends AbstractCmd {
                     System.out.println("OK");
                 }
                 break;
-            case "settrail":
-                {
-                    LevelMapper mapper = api.getLogFactory().getLevelMapper();
-                    if (MLogUtil.isTrailLevelMapper()) {
-                        String cfg =
-                                parameters == null || parameters.length < 1 ? "" : parameters[0];
-                        LogInterceptor inter = new LogInterceptor(cfg);
-                        CmdInterceptorUtil.setInterceptor(session, inter);
-                        System.out.println("Trail Config: " + inter.getConfig());
-                    } else {
-                        System.out.println("Wrong Mapper " + mapper);
-                    }
-                }
-                break;
-            case "istrail":
-                {
-                    LevelMapper mapper = api.getLogFactory().getLevelMapper();
-                    if (MLogUtil.isTrailLevelMapper()) {
-                        System.out.println("LevelMapper: " + MLogUtil.getTrailConfig());
-                    } else {
-                        System.out.println("Wrong Mapper " + mapper);
-                    }
-                }
-                break;
-            case "releasetrail":
-                {
-                    LevelMapper mapper = api.getLogFactory().getLevelMapper();
-                    if (MLogUtil.isTrailLevelMapper()) {
-                        MLogUtil.releaseTrailConfig();
-                        System.out.println("OK");
-                    } else {
-                        System.out.println("Wrong Mapper " + mapper);
-                    }
-                }
-                break;
-            case "resetalltrail":
-                {
-                    LevelMapper mapper = api.getLogFactory().getLevelMapper();
-                    if (MLogUtil.isTrailLevelMapper()) {
-                        MLogUtil.resetAllTrailConfigs();
-                        System.out.println("OK");
-                    } else {
-                        System.out.println("Wrong Mapper " + mapper);
-                    }
-                }
-                break;
             case "maxmsgsize":
                 {
                     if (parameters != null && parameters.length > 0)
@@ -235,38 +167,6 @@ public class CmdLog extends AbstractCmd {
                     else
                         System.out.println(
                                 "Max Message Size: " + api.getLogFactory().getMaxMessageSize());
-                }
-                break;
-            case "general":
-                {
-                    ThreadMapperConfig config = new ThreadMapperConfig();
-                    config.doConfigure(
-                            MLogUtil.TRAIL_SOURCE_SHELL,
-                            parameters == null || parameters.length < 1 ? "" : parameters[0]);
-                    GeneralMapper mapper = new GeneralMapper();
-                    mapper.setConfig(config);
-                    api.getLogFactory().setLevelMapper(mapper);
-                    System.out.println(
-                            "Sel Global Mapper: OK "
-                                    + api.getLogFactory().getLevelMapper()
-                                    + " "
-                                    + config.getTrailId());
-                    log().d("Set general mapper");
-                }
-                break;
-            case "trail":
-                {
-                    api.getLogFactory().setLevelMapper(new ThreadBasedMapper());
-                    System.out.println(
-                            "Set Trail Mapper OK " + api.getLogFactory().getLevelMapper());
-                    log().d("Set trail mapper");
-                }
-                break;
-            case "off":
-                {
-                    api.getLogFactory().setLevelMapper(null);
-                    System.out.println("Remove Mapper OK " + api.getLogFactory().getLevelMapper());
-                    log().d("Mapper off");
                 }
                 break;
             case "trace":

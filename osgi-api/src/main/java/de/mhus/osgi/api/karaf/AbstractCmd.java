@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.Console;
+import de.mhus.lib.core.logging.ITracer;
 import de.mhus.lib.core.util.MObject;
 import io.opentracing.Scope;
 
@@ -88,7 +88,7 @@ public abstract class AbstractCmd extends MObject implements Action {
         
         Scope scope = null;
         if (trace) {
-        	scope = M.tracer().start(getClass().getName(), true);
+        	scope = ITracer.get().start(getClass().getName(), true);
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
