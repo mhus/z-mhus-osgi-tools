@@ -164,11 +164,6 @@ public class JaegerTracerService extends MLog implements ITracer {
 	
 	@Override
 	public Scope start(String name, boolean active, String... tagPairs) {
-		
-		// cleanup all before start
-//		while (tracer.scopeManager().active() != null)
-//			tracer.scopeManager().active().close();
-		
 		SpanBuilder span = tracer.buildSpan(name);
 		for (int i = 0; i < tagPairs.length-1; i=i+2)
 			span.withTag(tagPairs[i],tagPairs[i+1]);
