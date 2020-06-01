@@ -17,6 +17,7 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.cfg.CfgString;
 import de.mhus.lib.core.config.IConfig;
+import de.mhus.lib.core.logging.DefaultTracer;
 import de.mhus.lib.core.logging.ITracer;
 import de.mhus.lib.core.service.IdentUtil;
 import de.mhus.osgi.api.karaf.LogServiceTracker;
@@ -38,12 +39,11 @@ import io.opentracing.util.GlobalTracer;
 // https://www.scalyr.com/blog/jaeger-tracing-tutorial/
 // https://opentracing.io/guides/java/inject-extract/
 
-@Component
-public class JaegerTracerService extends MLog implements ITracer {
+@Component(service = ITracer.class)
+public class JaegerTracerService extends DefaultTracer {
 
 	private CfgString CFG_LOG_LEVEL = new CfgString(JaegerTracerService.class, "logLevel", "DEBUG").updateAction(v -> updateLogLevel());
 	
-	private JaegerTracer tracer;
 	private LogServiceTracker tracker;
 
 	private int logLevel;
@@ -70,6 +70,18 @@ public class JaegerTracerService extends MLog implements ITracer {
 	    tracker.open();
 	}
 
+	@Modified
+    public void doModified(ComponentContext ctx) {
+		MApi.get().getCfgManager().reload(JaegerTracerService.class);
+		update();
+	}
+	
+	@Deactivate
+    public void doDeactivate(ComponentContext ctx) {
+        if (tracker != null)
+            tracker.close();
+    }
+
 	private void updateLogLevel() {
 		try {
 			LOG_LEVEL level = LogServiceTracker.LOG_LEVEL.valueOf(CFG_LOG_LEVEL.value().toUpperCase());
@@ -78,12 +90,6 @@ public class JaegerTracerService extends MLog implements ITracer {
 			log().d(t);
 			logLevel = LogServiceTracker.DEBUG_INT;
 		}
-	}
-
-	@Modified
-    public void doModified(ComponentContext ctx) {
-		MApi.get().getCfgManager().reload(JaegerTracerService.class);
-		update();
 	}
 	
     private synchronized void update() {
@@ -103,11 +109,23 @@ public class JaegerTracerService extends MLog implements ITracer {
 	    Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
 	    Configuration config = new Configuration(IdentUtil.getServiceIdent()).withSampler(samplerConfig).withReporter(reporterConfig);
 
-	    if (tracer != null) {
-	    	tracer.close();
-	    	tracer = null;
+	    if (GlobalTracer.isRegistered()) {
+	    	try {
+		    	Field field = GlobalTracer.class.getDeclaredField("tracer");
+		    	if (!field.canAccess(null))
+		    		field.setAccessible(true);
+		    	Tracer tracer = (Tracer)field.get(null);
+		    	if (tracer != null && tracer instanceof JaegerTracer)
+		    		((JaegerTracer)tracer).close();
+		    	
+		    	field.set(null, NoopTracerFactory.create());
+
+	    	} catch (Throwable t) {
+	    		log().e(t);
+	    	}
 	    }
 
+	    JaegerTracer tracer = null;
 	    if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
 	    	log().i("Create ThriftSender");
 		    Sender sender = new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
@@ -121,22 +139,11 @@ public class JaegerTracerService extends MLog implements ITracer {
 	    if (tracer == null) {
 	    	tracer = config.getTracer();
 	    }
-	    
-	    if (GlobalTracer.get() instanceof GlobalTracer) {
-	    	try {
-		    	Field field = GlobalTracer.class.getDeclaredField("tracer");
-		    	if (!field.canAccess(null))
-		    		field.setAccessible(true);
-		    	field.set(null, NoopTracerFactory.create());
-	    	} catch (Throwable t) {
-	    		t.printStackTrace();
-	    	}
-	    }
 	    	
 	    if (!GlobalTracer.isRegistered())
 	    	GlobalTracer.register(tracer);
 	    else {
-	    	log().w("Could't register new tracer ");
+	    	log().e("Could't register new tracer ");
 	    }
 	}
 
@@ -155,50 +162,5 @@ public class JaegerTracerService extends MLog implements ITracer {
     			location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName() + ":" + location.getLineNumber() + ")" );
 		span.log(fields );
 	}
-
-	@Deactivate
-    public void deactivate(ComponentContext ctx) {
-        if (tracker != null)
-            tracker.close();
-    }
 	
-	@Override
-	public Scope start(String name, boolean active, String... tagPairs) {
-		SpanBuilder span = tracer.buildSpan(name);
-		for (int i = 0; i < tagPairs.length-1; i=i+2)
-			span.withTag(tagPairs[i],tagPairs[i+1]);
-    	span.withTag("ident", IdentUtil.getFullIdent());
-		Scope scope = span.ignoreActiveSpan().startActive(true);
-		if (active)
-			Tags.SAMPLING_PRIORITY.set(scope.span(), 1);
-		return scope;
-	}
-
-	@Override
-	public Scope enter(String name, String... tagPairs) {
-		return enter(null, name, tagPairs);
-	}
-
-	@Override
-	public Scope enter(Span parent, String name, String ... tagPairs) {
-		SpanBuilder span = tracer. buildSpan(name);
-		for (int i = 0; i < tagPairs.length-1; i=i+2)
-			span.withTag(tagPairs[i],tagPairs[i+1]);
-    	span.withTag("ident", IdentUtil.getFullIdent());
-		if (parent != null)
-			span.asChildOf(parent);
-		Scope scope = span.startActive(true);
-		return scope;
-	}
-	
-	@Override
-	public Span current() {
-		return tracer.activeSpan();
-	}
-
-	@Override
-	public Tracer tracer() {
-		return tracer;
-	}
-
 }
