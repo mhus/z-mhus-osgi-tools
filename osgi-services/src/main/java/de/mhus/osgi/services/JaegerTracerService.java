@@ -13,7 +13,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.cfg.CfgString;
 import de.mhus.lib.core.config.IConfig;
@@ -25,15 +24,12 @@ import de.mhus.osgi.api.karaf.LogServiceTracker.LOG_LEVEL;
 import de.mhus.osgi.api.services.MOsgi;
 import io.jaegertracing.Configuration;
 import io.jaegertracing.internal.JaegerTracer;
-import io.jaegertracing.internal.JaegerTracer.SpanBuilder;
 import io.jaegertracing.internal.reporters.RemoteReporter;
 import io.jaegertracing.spi.Sender;
 import io.jaegertracing.thrift.internal.senders.ThriftSenderFactory;
-import io.opentracing.Scope;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.noop.NoopTracerFactory;
-import io.opentracing.tag.Tags;
 import io.opentracing.util.GlobalTracer;
 
 // https://www.scalyr.com/blog/jaeger-tracing-tutorial/

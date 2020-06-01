@@ -20,6 +20,7 @@ import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.logging.ITracer;
 import de.mhus.lib.core.util.MObject;
@@ -48,7 +49,7 @@ public abstract class AbstractCmd extends MObject implements Action {
             description = "Console table print all",
             required = false,
             multiValued = false)
-    private boolean trace;
+    private String trace;
     
     @Reference private Session session;
 
@@ -87,8 +88,8 @@ public abstract class AbstractCmd extends MObject implements Action {
         }
         
         Scope scope = null;
-        if (trace) {
-        	scope = ITracer.get().start(getClass().getName(), true);
+        if (MString.isSet(trace)) {
+        	scope = ITracer.get().start(getClass().getName(), trace);
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
