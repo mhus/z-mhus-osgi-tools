@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.ops4j.pax.logging.spi.PaxLocationInfo;
 import org.ops4j.pax.logging.spi.PaxLoggingEvent;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -149,13 +148,13 @@ public class JaegerTracerService extends DefaultTracer {
     	if (e.getLevel().toInt() > logLevel) return;
     	
     	Map<String, String> fields = new HashMap<>();
-    	fields.put("level", e.getLevel().toString());
-    	fields.put("message", e.getMessage());
+    	fields.put("_level", e.getLevel().toString());
+    	fields.put("_msg", e.getMessage());
     	fields.put("logger", e.getLoggerName());
     	fields.put("thread", e.getThreadName());
-    	PaxLocationInfo location = e.getLocationInformation();
-    	fields.put("location", 
-    			location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName() + ":" + location.getLineNumber() + ")" );
+    	//PaxLocationInfo location = e.getLocationInformation();
+    	//fields.put("location", 
+    	//		location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName() + ":" + location.getLineNumber() + ")" );
 		span.log(fields );
 	}
 	
