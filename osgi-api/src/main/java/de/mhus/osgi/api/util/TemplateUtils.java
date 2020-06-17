@@ -20,13 +20,15 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
+
+import de.mhus.lib.core.parser.StringCompiler;
+import de.mhus.lib.errors.MException;
 
 public class TemplateUtils {
 
     public static void createFromTemplate(
-            File outFile, InputStream templateIs, HashMap<String, String> properties) {
+            File outFile, InputStream templateIs, HashMap<String, Object> properties) throws MException {
         if (outFile.exists()) {
             throw new IllegalArgumentException(
                     "File "
@@ -55,17 +57,9 @@ public class TemplateUtils {
         }
     }
 
-    private static String filter(String line, HashMap<String, String> props) {
-        for (Map.Entry<String, String> entry : props.entrySet()) {
-            String key = "${" + entry.getKey() + "}";
-            int p1 = line.indexOf(key);
-            if (p1 >= 0) {
-                String l1 = line.substring(0, p1);
-                String l2 = line.substring(p1 + key.length());
-                line = l1 + entry.getValue() + l2;
-            }
-        }
-        return line;
+    private static String filter(String line, HashMap<String, Object> props) throws MException {
+        if (!line.contains("$")) return line;
+        return StringCompiler.compile(line).execute(props);
     }
 
     private static void safeClose(Closeable cl) {

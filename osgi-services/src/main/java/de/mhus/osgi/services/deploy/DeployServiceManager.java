@@ -26,12 +26,12 @@ import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.deploy.DeployService;
 import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.api.services.MOsgi.Service;
-import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.ISimpleService;
 import de.mhus.osgi.api.util.MServiceTracker;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 
 @Component(immediate = true)
-public class DeployServiceManager extends MLog implements SimpleServiceIfc {
+public class DeployServiceManager extends MLog implements ISimpleService {
 
     MServiceTracker<DeployService> tracker =
             new MServiceTracker<DeployService>(DeployService.class) {

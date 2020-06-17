@@ -52,6 +52,7 @@ public class MOsgi {
     public static final String COMPONENT_NAME = "component.name";
     public static final String SERVICE_ID = "service.id";
     public static final String SERVICE_SCOPE = "service.scope";
+    public static final Object SERVICE_PID = "service.pid";
     public static final String OBJECT_CLASS = "object.class";
 
     private static final Log log = Log.getLog(MOsgi.class);
@@ -275,7 +276,7 @@ public class MOsgi {
      */
     public static Bundle getBundle(String name) throws NotFoundException {
         for (Bundle bundle : FrameworkUtil.getBundle(MOsgi.class).getBundleContext().getBundles())
-            if (bundle.getSymbolicName().equals(name)) return bundle;
+            if (bundle.getSymbolicName().equals(name) || name.equals(String.valueOf(bundle.getBundleId())) ) return bundle;
         throw new NotFoundException("Bundle not found", name);
     }
     
@@ -422,7 +423,7 @@ public class MOsgi {
                 
             }
         } catch (Throwable e) {
-            log.d(service,e);
+            // will create a loop log.d(service,e);
         }
         if (service.getInterfaces().length > 0) {
             return service.getInterfaces()[0].getCanonicalName();

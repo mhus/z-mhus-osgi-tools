@@ -13,7 +13,7 @@
  */
 package de.mhus.osgi.api.services;
 
-public interface SimpleServiceIfc {
+public interface ISimpleService {
 
     String getSimpleServiceInfo();
 

@@ -64,7 +64,8 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     private KarafHousekeeper housekeeper;
 
-    private File baseDir = new File(".");
+    private File baseDir = new File(System.getProperty("karaf.base"));
+
     private MLogFactory mlogFactory;
     //	{
     //		baseDir.mkdirs();
@@ -210,7 +211,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
                             100
                             );
                 } catch (NotFoundException e) {
-                    MApi.dirtyLogDebug(e);
+                    MApi.dirtyLogTrace(e);
                 }
             }
 

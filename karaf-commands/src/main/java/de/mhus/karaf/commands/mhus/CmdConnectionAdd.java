@@ -77,7 +77,7 @@ public class CmdConnectionAdd extends AbstractCmd {
         File deployFolder = new File(karafBase, "deploy");
         File outFile = new File(deployFolder, "jms-openwire_" + name + ".xml");
 
-        HashMap<String, String> properties = new HashMap<String, String>();
+        HashMap<String, Object> properties = new HashMap<>();
         properties.put("url", url);
         properties.put("user", user);
         properties.put("password", password);

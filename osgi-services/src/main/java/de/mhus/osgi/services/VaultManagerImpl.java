@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Reference;
 import de.mhus.lib.core.keychain.MKeychain;
 import de.mhus.lib.core.keychain.KeychainSource;
 import de.mhus.osgi.api.services.SimpleService;
-import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.ISimpleService;
 import de.mhus.osgi.api.util.MServiceTracker;
 
-@Component(service = SimpleServiceIfc.class, immediate = true)
+@Component(service = ISimpleService.class, immediate = true)
 public class VaultManagerImpl extends SimpleService {
 
     MServiceTracker<KeychainSource> services;

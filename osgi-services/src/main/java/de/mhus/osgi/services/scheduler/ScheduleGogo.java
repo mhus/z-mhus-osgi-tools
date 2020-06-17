@@ -26,9 +26,9 @@ import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.service.TimerFactory;
 import de.mhus.lib.core.service.TimerIfc;
 import de.mhus.osgi.api.services.MOsgi;
-import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.ISimpleService;
 
-public class ScheduleGogo extends MLog implements SimpleServiceIfc {
+public class ScheduleGogo extends MLog implements ISimpleService {
 
     private String interval;
     private String command;

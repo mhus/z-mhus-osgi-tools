@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.SimpleServiceIfc;
+import de.mhus.osgi.api.services.ISimpleService;
 
 @Command(scope = "mhus", name = "simpleservice", description = "Simple Service Interaction")
 @Service
@@ -70,9 +70,9 @@ public class CmdSimpleService extends AbstractCmd {
             table.setHeaderValues("Name", "Info", "Status");
             BundleContext context =
                     FrameworkUtil.getBundle(CmdSimpleService.class).getBundleContext();
-            for (ServiceReference<SimpleServiceIfc> ref :
-                    context.getServiceReferences(SimpleServiceIfc.class, null)) {
-                SimpleServiceIfc service = context.getService(ref);
+            for (ServiceReference<ISimpleService> ref :
+                    context.getServiceReferences(ISimpleService.class, null)) {
+                ISimpleService service = context.getService(ref);
                 table.addRowValues(
                         service.getClass().getCanonicalName(),
                         service.getSimpleServiceInfo(),
@@ -82,9 +82,9 @@ public class CmdSimpleService extends AbstractCmd {
         } else if (cmd.equals("cmd")) {
             BundleContext context =
                     FrameworkUtil.getBundle(CmdSimpleService.class).getBundleContext();
-            for (ServiceReference<SimpleServiceIfc> ref :
-                    context.getServiceReferences(SimpleServiceIfc.class, null)) {
-                SimpleServiceIfc service = context.getService(ref);
+            for (ServiceReference<ISimpleService> ref :
+                    context.getServiceReferences(ISimpleService.class, null)) {
+                ISimpleService service = context.getService(ref);
                 if (service.getClass().getCanonicalName().matches(serviceName)) {
                     System.out.println(
                             service.getClass().getCanonicalName()

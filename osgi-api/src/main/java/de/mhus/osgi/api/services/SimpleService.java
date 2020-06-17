@@ -15,7 +15,7 @@ package de.mhus.osgi.api.services;
 
 import de.mhus.lib.core.MLog;
 
-public class SimpleService extends MLog implements SimpleServiceIfc {
+public class SimpleService extends MLog implements ISimpleService {
 
     @Override
     public String getSimpleServiceStatus() {

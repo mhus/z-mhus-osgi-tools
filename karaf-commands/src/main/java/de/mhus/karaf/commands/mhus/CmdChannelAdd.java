@@ -110,7 +110,7 @@ public class CmdChannelAdd extends AbstractCmd {
         File deployFolder = new File(karafBase, "deploy");
         File outFile = new File(deployFolder, "jms-channel_" + name + ".xml");
 
-        HashMap<String, String> properties = new HashMap<String, String>();
+        HashMap<String, Object> properties = new HashMap<>();
         properties.put("connection", connection);
         properties.put("destination", destination);
         properties.put("topic", String.valueOf(topic));
