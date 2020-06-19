@@ -38,6 +38,7 @@ public class DataSourceUtil {
     public static DataSource getDataSource(String name, BundleContext context) {
         try {
             // BundleContext context = FrameworkUtil.getBundle(DataSourceUtil.class).getBundleContext();
+            if (context == null) return null;
             Collection<ServiceReference<DataSource>> refs =
                     context
                             .getServiceReferences(
