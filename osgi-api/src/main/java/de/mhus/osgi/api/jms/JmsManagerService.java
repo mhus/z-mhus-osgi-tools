@@ -16,7 +16,7 @@ package de.mhus.osgi.api.jms;
 import java.util.List;
 
 import de.mhus.lib.jms.JmsConnection;
-import de.mhus.osgi.api.services.MOsgi.Service;
+import de.mhus.osgi.api.MOsgi.Service;
 
 public interface JmsManagerService {
 
@@ -43,7 +43,7 @@ public interface JmsManagerService {
 
     List<Service<JmsDataSource>> getDataSources();
 
-    String getServiceName(de.mhus.osgi.api.services.MOsgi.Service<JmsDataSource> ref);
+    String getServiceName(de.mhus.osgi.api.MOsgi.Service<JmsDataSource> ref);
 
     void doBeat();
 

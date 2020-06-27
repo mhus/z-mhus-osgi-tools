@@ -30,7 +30,7 @@ import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MThread;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.services.PersistentWatch;
 
 @Component(

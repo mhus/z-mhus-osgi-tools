@@ -19,12 +19,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.activemq.transport.stomp.Stomp.Headers.Subscribe;
+import org.apache.activemq.transport.stomp.StompConnection;
+import org.apache.activemq.transport.stomp.StompFrame;
 
 import de.mhus.osgi.api.jms.JmsReceiver;
 import de.mhus.osgi.api.jms.JmsReceiverAdmin;
-
-import org.apache.activemq.transport.stomp.StompConnection;
-import org.apache.activemq.transport.stomp.StompFrame;
 
 public class JmsReceiverStomp implements JmsReceiver {
 

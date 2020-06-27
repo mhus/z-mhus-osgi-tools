@@ -8,7 +8,7 @@ import org.osgi.service.event.Event;
 import org.osgi.service.event.EventHandler;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 @Component(property = "event.topics=org/osgi/framework/ServiceEvent/MODIFIED")
 public class KarafCfgUpdater implements EventHandler {

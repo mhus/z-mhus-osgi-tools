@@ -20,10 +20,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import de.mhus.lib.core.keychain.MKeychain;
 import de.mhus.lib.core.keychain.KeychainSource;
-import de.mhus.osgi.api.services.SimpleService;
+import de.mhus.lib.core.keychain.MKeychain;
 import de.mhus.osgi.api.services.ISimpleService;
+import de.mhus.osgi.api.services.SimpleService;
 import de.mhus.osgi.api.util.MServiceTracker;
 
 @Component(service = ISimpleService.class, immediate = true)

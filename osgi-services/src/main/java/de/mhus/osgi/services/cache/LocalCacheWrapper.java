@@ -23,8 +23,8 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceRegistration;
 
 import de.mhus.lib.core.MLog;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
-import de.mhus.osgi.api.services.MOsgi;
 
 public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
 

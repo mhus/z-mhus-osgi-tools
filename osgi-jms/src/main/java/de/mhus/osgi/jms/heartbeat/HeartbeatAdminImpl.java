@@ -19,21 +19,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.osgi.service.component.ComponentContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MTimerTask;
 import de.mhus.lib.core.service.TimerFactory;
 import de.mhus.lib.core.service.TimerIfc;
+import de.mhus.osgi.api.MOsgi.Service;
 import de.mhus.osgi.api.jms.JmsDataSource;
 import de.mhus.osgi.api.jms.JmsManagerService;
 import de.mhus.osgi.api.jms.JmsUtil;
 import de.mhus.osgi.api.services.HeartbeatAdmin;
 import de.mhus.osgi.api.services.HeartbeatServiceIfc;
-import de.mhus.osgi.api.services.MOsgi.Service;
 
 @Component(
         service = HeartbeatAdmin.class,

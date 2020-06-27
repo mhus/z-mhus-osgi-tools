@@ -9,7 +9,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.config.MConfig;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public class KarfConfigProvider extends CfgProvider {
 

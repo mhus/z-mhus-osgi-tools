@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.ehcache.core.statistics.CacheStatistics;
 
 import de.mhus.lib.core.console.ConsoleTable;
-import de.mhus.osgi.api.cache.LocalCacheService;
 import de.mhus.osgi.api.cache.LocalCache;
+import de.mhus.osgi.api.cache.LocalCacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.cache.LocalCacheWrapper;
 

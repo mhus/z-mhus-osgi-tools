@@ -19,7 +19,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public abstract class MServiceTracker<T> {
 

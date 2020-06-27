@@ -17,8 +17,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.MOsgi;
 
 @Command(scope = "felix", name = "healthcheck", description = "Healthcheck")
 @Service

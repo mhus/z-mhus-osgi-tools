@@ -17,7 +17,7 @@ import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.errors.NotFoundRuntimeException;
 import de.mhus.lib.jms.JmsConnection;
 import de.mhus.lib.jms.ServerService;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public class JmsUtil {
 

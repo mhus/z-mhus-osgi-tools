@@ -16,9 +16,9 @@ import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.NotFoundException;
-import de.mhus.osgi.api.cache.LocalCacheService;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.cache.LocalCacheService;
 
 @Component
 public class LocalCacheServiceImpl extends MLog implements LocalCacheService {

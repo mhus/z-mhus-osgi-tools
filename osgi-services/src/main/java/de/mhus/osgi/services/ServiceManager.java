@@ -1,13 +1,18 @@
 package de.mhus.osgi.services;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.blueprint.container.BlueprintContainer;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -16,21 +21,24 @@ import de.mhus.lib.annotations.service.ServiceActivate;
 import de.mhus.lib.annotations.service.ServiceComponent;
 import de.mhus.lib.annotations.service.ServiceDeactivate;
 import de.mhus.lib.annotations.service.ServiceFactory;
+import de.mhus.lib.annotations.service.ServiceReference;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MApi.SCOPE;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
+import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.MXml;
 import de.mhus.lib.core.cfg.CfgProvider;
-import de.mhus.lib.core.config.ConfigList;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.errors.NotFoundException;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.services.IServiceManager;
-import de.mhus.osgi.api.services.MOsgi;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 import de.mhus.osgi.api.util.TemplateUtils;
+
+// https://docs.osgi.org/specification/osgi.cmpn/7.0.0/service.blueprint.html
 
 @Component(immediate = true)
 public class ServiceManager extends MLog implements IServiceManager {
@@ -47,22 +55,23 @@ public class ServiceManager extends MLog implements IServiceManager {
         x: while (true) {
             for ( Bundle b : c.getBundleContext().getBundles()) {
                 int state = b.getState();
-                if (state == Bundle.STARTING) 
+                if (state == Bundle.STARTING)  {
+                    MThread.sleep(200);
                     continue x;
-                break x;
+                }
             }
+            break;
         }
-
-        for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
-            ConfigList list = provider.getConfig().getArrayOrNull("service");
-            if (list != null) {
-                for (IConfig entry : list) {
-                    try {
-                        log().d("init",entry); // TODO update if needed
-                        create(entry.getString("class", null), entry.getString("bundle", null));
-                    } catch (Throwable t) {
-                        log().e(entry,t);
-                    }
+        log().i("doInit blueprint check");
+        for (CfgProvider provider : new ArrayList<>( MApi.get().getCfgManager().getProviders() )) {
+            
+            List<IConfig> list = provider.getConfig().getObjectList("service");
+            for (IConfig entry : list) {
+                try {
+                    log().i("create/update",entry);
+                    create(entry.getString("class", null), entry.getString("bundle", null), true);
+                } catch (Throwable t) {
+                    log().e(entry,t);
                 }
             }
         }
@@ -70,10 +79,39 @@ public class ServiceManager extends MLog implements IServiceManager {
 
     @Override
     public boolean create(String implClass, String bundleName) throws Exception {
-        if (MString.isEmpty(bundleName)) return false;
-        
+        return create(implClass, bundleName, false);
+    }
+    
+    @Override
+    public boolean update(String implClass, String bundleName) throws Exception {
+        return create(implClass, bundleName, true);
+    }
+    
+    public boolean create(String implClass, String bundleName, boolean update) throws Exception {
+        if (MString.isEmpty(implClass)) return false;
         File outFile = getBlueprintFle(implClass);
-        if (outFile.exists()) return false;
+        
+        String newContent = toString(implClass, bundleName);
+        
+        if (outFile.exists()) {
+            if (!update)
+                return false;
+            
+            String currentContent = MFile.readFile(outFile);
+            if (newContent.equals(currentContent))
+                return false;
+        }
+        
+        MFile.writeFile(outFile, newContent);
+        return true;
+    }
+
+    @Override
+    public String test(String implClass, String bundleName) throws Exception {
+        return toString(implClass, bundleName);
+    }
+    
+    public String toString(String implClass, String bundleName) throws Exception {
         
         // lookup class
         Class<?> clazz = null;
@@ -89,6 +127,96 @@ public class ServiceManager extends MLog implements IServiceManager {
         if (def == null)
             throw new IllegalArgumentException("Implementing class is not annotated by ServiceComponent");
         
+        // create references
+        
+        StringBuilder references = new StringBuilder();
+        StringBuilder beanReferences = new StringBuilder();
+
+        { // methods
+            List<Method> list = MSystem.findMethodsWithAnnotation(clazz, ServiceReference.class);
+            for (Method method : list) {
+                if (method.getParameterCount() < 1 || method.getParameterCount() > 2)
+                    throw new IllegalArgumentException("Reference has wrong parameter count: " + method);
+                
+                String rName = "refm-" + method.getName();
+                ServiceReference rDef = method.getAnnotation(ServiceReference.class);
+                String rIfc = method.getParameterTypes()[0].getCanonicalName();
+                if (rDef.service() != Object.class)
+                    rIfc = rDef.service().getCanonicalName();
+                
+                
+                String rField = method.getName();
+                if (rField.startsWith("set") && rField.length() > 3) {
+                    rField =  rField.substring(3, 4).toLowerCase() + rField.substring(4);
+                }
+                if (rIfc.equals(BlueprintContainer.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintContainer\"/>\n");
+                } else
+                if (rIfc.equals(Bundle.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintBundle\"/>\n");
+                } else
+                if (rIfc.equals(BundleContext.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintBundleContext\"/>\n");
+                } else {
+                    String rMethod = method.getName();
+                    references.append("<reference id=\"").append(rName).append("\" interface=\"").append(rIfc).append("\" ");
+                    if (rDef.mandatory())
+                        references.append("availability=\"mandatory\" ");
+                    else
+                        references.append("availability=\"optional\" ");
+                    if (rDef.timeout() > 0)
+                        references.append("timeout=\"").append(rDef.timeout()).append("\" ");
+                    if (rDef.ranking() > 0)
+                        references.append("ranking=\"").append(rDef.ranking()).append("\" ");
+                    references.append(">\n");
+                    references.append("  <reference-listener bind-method=\"").append(rMethod).append("\" ref=\"bean\"/>\n");
+                    references.append("</reference>\n");
+                }
+            }
+        }
+        /*
+        { // fields
+            List<Field> list = MSystem.findFieldsWithAnnotation(clazz, ServiceReference.class);
+            for (Field field : list) {
+                ServiceReference rDef = field.getAnnotation(ServiceReference.class);
+                String rName = "reff-" + field.getName();
+                String rIfc = field.getType().getCanonicalName();
+                String rField = field.getName();
+                
+                if (rIfc.equals(BlueprintContainer.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintContainer\"/>\n");
+                } else
+                if (rIfc.equals(Bundle.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintBundle\"/>\n");
+                } else
+                if (rIfc.equals(BundleContext.class.getCanonicalName())) {
+                    // special for bundle context
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"blueprintBundleContext\"/>\n");
+                } else {
+                    // all others
+                    if (rDef.service() != Object.class)
+                        rIfc = rDef.service().getCanonicalName();
+                    references.append("<reference id=\"").append(rName).append("\" interface=\"").append(rIfc).append("\" ");
+                    if (rDef.mandatory())
+                        references.append("availability=\"mandatory\" ");
+                    else
+                        references.append("availability=\"optional\" ");
+                    if (rDef.timeout() > 0)
+                        references.append("timeout=\"").append(rDef.timeout()).append("\" ");
+                    if (rDef.ranking() > 0)
+                        references.append("ranking=\"").append(rDef.ranking()).append("\" ");
+                    references.append("/>\n");
+                    
+                    beanReferences.append("  <property name=\"").append(rField).append("\" ref=\"").append(rName).append("\"/>\n");
+                }
+            }
+        }
+        */
         // create bean
         
         StringBuilder bean = new StringBuilder();
@@ -123,16 +251,17 @@ public class ServiceManager extends MLog implements IServiceManager {
             bean.append("scope=\"singleton\" ");
         }
         bean.append(">\n");
+        bean.append(beanReferences.toString());
         bean.append("</bean>\n");
         // create service
         
         StringBuilder service = new StringBuilder();
         
         Class<?>[] services = def.service();
-        if (service.length() == 0) {
+        if (services.length == 0) {
             services = clazz.getInterfaces();
         }
-        if (service.length() == 0)
+        if (services.length == 0)
             throw new NotFoundException("interface for service not found");
         
         for (Class<?> srv : services) {
@@ -162,6 +291,7 @@ public class ServiceManager extends MLog implements IServiceManager {
         // print template
         
         HashMap<String, Object> properties = new HashMap<>();
+        properties.put("references", references.toString());
         properties.put("bean", bean.toString());
         properties.put("service", service.toString());
         
@@ -171,9 +301,12 @@ public class ServiceManager extends MLog implements IServiceManager {
             throw new IllegalArgumentException(
                     "Template resource " + templateFile + " doesn't exist");
         }
-        TemplateUtils.createFromTemplate(outFile, is, properties);
+        
+        ByteArrayOutputStream sos = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(sos);
+        TemplateUtils.createFromTemplate(out, is, properties, true);
 
-        return true;
+        return sos.toString();
     }
 
     private File getBlueprintFle(String implClass) {

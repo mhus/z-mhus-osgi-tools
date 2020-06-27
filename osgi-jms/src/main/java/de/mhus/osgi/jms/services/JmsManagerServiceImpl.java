@@ -36,11 +36,11 @@ import de.mhus.lib.core.service.TimerFactory;
 import de.mhus.lib.core.service.TimerIfc;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.jms.JmsConnection;
+import de.mhus.osgi.api.MOsgi;
+import de.mhus.osgi.api.MOsgi.Service;
 import de.mhus.osgi.api.jms.JmsDataChannel;
 import de.mhus.osgi.api.jms.JmsDataSource;
 import de.mhus.osgi.api.jms.JmsManagerService;
-import de.mhus.osgi.api.services.MOsgi;
-import de.mhus.osgi.api.services.MOsgi.Service;
 
 /**
  * Note: because of a 'new behavior' or bug in Felix we need to delay the start of the service

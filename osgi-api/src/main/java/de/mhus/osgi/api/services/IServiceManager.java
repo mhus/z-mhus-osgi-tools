@@ -10,4 +10,8 @@ public interface IServiceManager {
 
     List<String> list();
 
+    boolean update(String implClass, String bundleName) throws Exception;
+
+    String test(String implClass, String bundleName) throws Exception;
+
 }

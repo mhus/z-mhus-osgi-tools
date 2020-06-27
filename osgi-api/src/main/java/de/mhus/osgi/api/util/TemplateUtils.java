@@ -27,6 +27,13 @@ import de.mhus.lib.errors.MException;
 
 public class TemplateUtils {
 
+    /**
+     * The method will close output and input stream.
+     * @param outFile
+     * @param templateIs
+     * @param properties
+     * @throws MException
+     */
     public static void createFromTemplate(
             File outFile, InputStream templateIs, HashMap<String, Object> properties) throws MException {
         if (outFile.exists()) {
@@ -36,11 +43,28 @@ public class TemplateUtils {
                             + " already exists. Remove it if you wish to recreate it.");
         }
         PrintStream out = null;
+        try {
+            out = new PrintStream(new FileOutputStream(outFile));
+            createFromTemplate(out, templateIs, properties, true);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Can not create " + outFile, e);
+        }
+    }
+    
+    /**
+     * 
+     * @param out
+     * @param templateIs
+     * @param properties
+     * @param close 
+     * @throws MException
+     */
+    public static void createFromTemplate(
+            PrintStream out, InputStream templateIs, HashMap<String, Object> properties, boolean close) throws MException {
         Scanner scanner = null;
         try {
             // read it line at a time so that we can use the platform line ending when we write it
             // out
-            out = new PrintStream(new FileOutputStream(outFile));
             scanner = new Scanner(templateIs);
 
             while (scanner.hasNextLine()) {
@@ -49,11 +73,11 @@ public class TemplateUtils {
                 out.println(line);
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Can not create " + outFile, e);
         } finally {
-            safeClose(out);
-            safeClose(templateIs);
+            if (close) {
+                safeClose(out);
+                safeClose(templateIs);
+            }
         }
     }
 

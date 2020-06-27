@@ -45,9 +45,9 @@ import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
 import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.logging.JavaLoggerFactory;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.cache.LocalCacheService;
-import de.mhus.osgi.api.services.MOsgi;
 
 /**
  * TODO: Map config to service TODO: Add MActivator with mapper to OSGi Services

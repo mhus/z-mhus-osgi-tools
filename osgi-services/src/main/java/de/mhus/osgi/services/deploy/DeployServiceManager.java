@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Deactivate;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.osgi.api.MOsgi;
+import de.mhus.osgi.api.MOsgi.Service;
 import de.mhus.osgi.api.deploy.DeployService;
-import de.mhus.osgi.api.services.MOsgi;
-import de.mhus.osgi.api.services.MOsgi.Service;
 import de.mhus.osgi.api.services.ISimpleService;
 import de.mhus.osgi.api.util.MServiceTracker;
 import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;

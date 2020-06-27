@@ -21,7 +21,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public class OsgiBundleClassLoader extends ClassLoader {
 

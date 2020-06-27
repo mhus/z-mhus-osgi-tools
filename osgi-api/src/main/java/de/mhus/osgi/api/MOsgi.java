@@ -11,7 +11,7 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.osgi.api.services;
+package de.mhus.osgi.api;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +31,9 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.event.Event;
+import org.osgi.service.event.EventConstants;
+import org.osgi.service.event.EventHandler;
 
 import de.mhus.lib.annotations.pojo.Hidden;
 import de.mhus.lib.core.MApi;
@@ -46,6 +49,7 @@ import de.mhus.lib.core.service.TimerImpl;
 import de.mhus.lib.core.util.Version;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.errors.NotFoundRuntimeException;
+import de.mhus.osgi.api.services.BundleStarter;
 
 public class MOsgi {
 
@@ -313,6 +317,21 @@ public class MOsgi {
                 });
     }
 
+    
+    public void listenForServiceEvents(ComponentContext ctx, Class<?> service, Consumer<Event> consumer) {
+//      EVENT: org/osgi/framework/ServiceEvent/REGISTERED {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]], event.topics=org/osgi/framework/ServiceEvent/REGISTERED, service=[javax.sql.DataSource], service.id=265, service.objectClass=[javax.sql.DataSource], timestamp=1593221077477}
+//      EVENT: org/osgi/framework/ServiceEvent/UNREGISTERING {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]], event.topics=org/osgi/framework/ServiceEvent/UNREGISTERING, service=[javax.sql.DataSource], service.id=261, service.objectClass=[javax.sql.DataSource], timestamp=1593221069398}
+        Dictionary<String,Object> props = new Hashtable<>();
+        props.put(EventConstants.EVENT_TOPIC, new String[] {"org/osgi/framework/ServiceEvent/*"} );
+        EventHandler inst = new EventHandler() {
+            @Override
+            public void handleEvent(Event event) {
+                consumer.accept(event);
+            }
+        };
+        ctx.getBundleContext().registerService(EventHandler.class, inst, props);
+    }
+    
     public static void runAfterActivation(ComponentContext ctx, BundleStarter task) {
 
         if (ctx == null || task == null) return;

@@ -10,7 +10,7 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public class KarafCfgManager extends MCfgManager {
 

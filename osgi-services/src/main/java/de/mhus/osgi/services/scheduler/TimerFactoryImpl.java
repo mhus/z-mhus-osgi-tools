@@ -42,9 +42,9 @@ import de.mhus.lib.core.schedule.SchedulerTimer;
 import de.mhus.lib.core.schedule.TimerTaskInterceptor;
 import de.mhus.lib.core.service.TimerFactory;
 import de.mhus.lib.core.service.TimerIfc;
+import de.mhus.osgi.api.MOsgi;
+import de.mhus.osgi.api.MOsgi.Service;
 import de.mhus.osgi.api.scheduler.SchedulerService;
-import de.mhus.osgi.api.services.MOsgi;
-import de.mhus.osgi.api.services.MOsgi.Service;
 import de.mhus.osgi.api.util.MServiceTracker;
 
 @Component(

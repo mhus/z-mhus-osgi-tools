@@ -19,7 +19,7 @@ import java.util.HashMap;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.osgi.api.services.MOsgi;
+import de.mhus.osgi.api.MOsgi;
 
 public class MServiceMap<T> extends MServiceTracker<T> {
 
