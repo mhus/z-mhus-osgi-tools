@@ -8,15 +8,10 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MConstants;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.config.IConfig;
-import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.osgi.api.MOsgi;
 
 public class KarafCfgManager extends MCfgManager {
-
-    public KarafCfgManager(IApiInternal internal) {
-        super(internal);
-    }
 
     @Override
     protected void initialConfiguration() {
@@ -54,7 +49,8 @@ public class KarafCfgManager extends MCfgManager {
         }
     }
 
-	@SuppressWarnings("rawtypes")
+	@Override
+    @SuppressWarnings("rawtypes")
 	public void reload(Object owner) {
 		if (owner == null) return;
         

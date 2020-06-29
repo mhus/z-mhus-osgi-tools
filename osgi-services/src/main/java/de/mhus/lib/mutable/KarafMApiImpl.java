@@ -16,7 +16,6 @@ package de.mhus.lib.mutable;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -26,18 +25,14 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.MActivator;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
-import de.mhus.lib.core.activator.DefaultActivator;
 import de.mhus.lib.core.config.IConfig;
-import de.mhus.lib.core.logging.Log;
-import de.mhus.lib.core.logging.LogFactory;
 import de.mhus.lib.core.logging.MLogFactory;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.mapi.ApiInitialize;
+import de.mhus.lib.core.mapi.DefaultMApi;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
@@ -50,50 +45,24 @@ import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.cache.LocalCacheService;
 
 /**
- * TODO: Map config to service TODO: Add MActivator with mapper to OSGi Services
  *
  * @author mikehummel
  */
-public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
+public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, IApiInternal {
 
-    private LogFactory logFactory;
-    private MCfgManager configProvider;
     private boolean fullTrace = false;
-    private HashSet<String> logTrace = new HashSet<>();
-    private DefaultActivator base = new DefaultActivator();
-
     private KarafHousekeeper housekeeper;
-
-    private File baseDir = new File(System.getProperty("karaf.base"));
-
-    private MLogFactory mlogFactory;
-    //	{
-    //		baseDir.mkdirs();
-    //	}
     private LocalCache<String, Container> apiCache;
-    
-    @Override
-    public MActivator createActivator() {
-        //		return new DefaultActivator(new OsgiBundleClassLoader());
-        return new DefaultActivator();
-    }
 
     @Override
-    public LogFactory getLogFactory() {
-        return logFactory;
+    protected MCfgManager createMCfgManager() {
+        return new KarafCfgManager();
     }
 
-    @Override
-    public synchronized MCfgManager getCfgManager() {
-        if (configProvider == null) {
-            configProvider = new KarafCfgManager(this);
-            configProvider.startInitiators();
-        }
-        return configProvider;
-    }
 
     @Override
     public void doInitialize(ClassLoader coreLoader) {
+        baseDir = new File(System.getProperty("karaf.base"));
         logFactory = new JavaLoggerFactory();
         mlogFactory = new SingleMLogInstanceFactory();
         base.addObject(MLogFactory.class, null, mlogFactory);
@@ -108,14 +77,11 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
             System.out.println("Can't initialize housekeeper base: " + t);
         }
 
-        getCfgManager().doRestart();
-
-        // logFactory.setLevelMapper(new ThreadBasedMapper() );
     }
 
     @Override
     public boolean isTrace(String name) {
-        return fullTrace || logTrace.contains(name);
+        return fullTrace || super.isTrace(name);
     }
 
     public void setFullTrace(boolean trace) {
@@ -136,11 +102,6 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
 
     public boolean isFullTrace() {
         return fullTrace;
-    }
-
-    @Override
-    public void setLogFactory(LogFactory logFactory) {
-        this.logFactory = logFactory;
     }
 
     @Override
@@ -174,23 +135,6 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
         return new File(baseDir, "data" + File.separator + "mhus" + File.separator + dir);
     }
 
-    @Override
-    public synchronized Log lookupLog(Object owner) {
-        if (mlogFactory == null) mlogFactory = M.l(MLogFactory.class);
-        return mlogFactory.lookup(owner);
-    }
-
-    @Override
-    public void updateLog() {
-        if (mlogFactory == null) return;
-        mlogFactory.update();
-    }
-
-    @Override
-    public void setMLogFactory(MLogFactory mlogFactory) {
-        this.mlogFactory = mlogFactory;
-    }
-    
     @SuppressWarnings("unchecked")
     @Override
     public <T, D extends T> T lookup(Class<T> ifc, Class<D> def) {
@@ -288,7 +232,7 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
         }
         
         if (result == null)
-            result = base.lookup(ifc, def);
+            result = super.lookup(ifc, def);
         
         if (result != null) {
             AccessUtil.checkPermission(result);
@@ -307,11 +251,6 @@ public class KarafMApiImpl implements IApi, ApiInitialize, IApiInternal {
         public String bundleName;
         public long bundleId;
 
-    }
-
-    @Override
-    public DefaultActivator getLookupActivator() {
-        return base;
     }
 
 }

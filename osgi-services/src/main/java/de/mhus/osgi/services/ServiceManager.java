@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +29,8 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.MXml;
-import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
+import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.services.IServiceManager;
@@ -50,8 +49,21 @@ public class ServiceManager extends MLog implements IServiceManager {
         MOsgi.runAfterActivation(ctx, c -> doInit(c));
     }
 
+    @Override
+    public void reloadConfigured() {
+        log().i("reloadConfigured");
+        List<IConfig> list = MCfgManager.getGlobalConfigurations("service");
+        for (IConfig entry : list) {
+            try {
+                log().i("create/update",entry);
+                create(entry.getString("class", null), entry.getString("bundle", null), true);
+            } catch (Throwable t) {
+                log().e(entry,t);
+            }
+        }
+    }
+
     private void doInit(ComponentContext c) {
-        
         x: while (true) {
             for ( Bundle b : c.getBundleContext().getBundles()) {
                 int state = b.getState();
@@ -62,19 +74,7 @@ public class ServiceManager extends MLog implements IServiceManager {
             }
             break;
         }
-        log().i("doInit blueprint check");
-        for (CfgProvider provider : new ArrayList<>( MApi.get().getCfgManager().getProviders() )) {
-            
-            List<IConfig> list = provider.getConfig().getObjectList("service");
-            for (IConfig entry : list) {
-                try {
-                    log().i("create/update",entry);
-                    create(entry.getString("class", null), entry.getString("bundle", null), true);
-                } catch (Throwable t) {
-                    log().e(entry,t);
-                }
-            }
-        }
+        reloadConfigured();
     }
 
     @Override
@@ -134,16 +134,37 @@ public class ServiceManager extends MLog implements IServiceManager {
 
         { // methods
             List<Method> list = MSystem.findMethodsWithAnnotation(clazz, ServiceReference.class);
+            
+            // find unset methods
+            HashMap<String,Method> unsetMethods = new HashMap<>();
+            for (Method method : list) {
+                ServiceReference rDef = method.getAnnotation(ServiceReference.class);
+                if (rDef == null || !rDef.unset())
+                    continue;
+                String rIfc = method.getParameterTypes()[0].getCanonicalName();
+                if (rDef.service() != Object.class)
+                    rIfc = rDef.service().getCanonicalName();
+                
+                if (method.getParameterCount() < 1 || method.getParameterCount() > 2)
+                    throw new IllegalArgumentException("Reference has wrong parameter count: " + method);
+
+                unsetMethods.put(rIfc,method);
+            }
+            
+            // find setter
             for (Method method : list) {
                 if (method.getParameterCount() < 1 || method.getParameterCount() > 2)
                     throw new IllegalArgumentException("Reference has wrong parameter count: " + method);
                 
                 String rName = "refm-" + method.getName();
                 ServiceReference rDef = method.getAnnotation(ServiceReference.class);
+                
+                if (rDef.unset())
+                    continue;
+                
                 String rIfc = method.getParameterTypes()[0].getCanonicalName();
                 if (rDef.service() != Object.class)
                     rIfc = rDef.service().getCanonicalName();
-                
                 
                 String rField = method.getName();
                 if (rField.startsWith("set") && rField.length() > 3) {
@@ -172,7 +193,11 @@ public class ServiceManager extends MLog implements IServiceManager {
                     if (rDef.ranking() > 0)
                         references.append("ranking=\"").append(rDef.ranking()).append("\" ");
                     references.append(">\n");
-                    references.append("  <reference-listener bind-method=\"").append(rMethod).append("\" ref=\"bean\"/>\n");
+                    references.append("  <reference-listener ref=\"bean\" bind-method=\"").append(rMethod).append("\" ");
+                    Method unset = unsetMethods.get(rIfc);
+                    if (unset != null)
+                        references.append("unbind-method=\"").append(unset.getName()).append("\" ");
+                    references.append(" />\n");
                     references.append("</reference>\n");
                 }
             }

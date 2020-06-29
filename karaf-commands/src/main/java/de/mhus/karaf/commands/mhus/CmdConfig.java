@@ -28,6 +28,7 @@ import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.cfg.CfgValue;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
+import de.mhus.lib.core.mapi.DefaultMApi;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.mutable.KarafMApiImpl;
@@ -149,8 +150,8 @@ public class CmdConfig extends AbstractCmd {
             break;
             case "reinit":
                 {
-                    MCfgManager api = MApi.get().getCfgManager();
-                    api.startInitiators();
+                    MApi.get().getCfgManager();
+                    ((DefaultMApi)MApi.get()).startInitiators();
                     System.out.println("ok");
                 }
                 break;

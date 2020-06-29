@@ -14,4 +14,6 @@ public interface IServiceManager {
 
     String test(String implClass, String bundleName) throws Exception;
 
+    void reloadConfigured();
+
 }
