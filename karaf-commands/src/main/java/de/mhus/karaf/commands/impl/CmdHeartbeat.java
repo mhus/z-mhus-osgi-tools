@@ -17,10 +17,9 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-import de.mhus.osgi.api.jms.JmsUtil;
+import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.HeartbeatAdmin;
 import de.mhus.osgi.api.services.HeartbeatServiceIfc;
@@ -61,7 +60,7 @@ public class CmdHeartbeat extends AbstractCmd {
     }
 
     private HeartbeatAdmin getService() {
-        BundleContext bc = FrameworkUtil.getBundle(JmsUtil.class).getBundleContext();
+        BundleContext bc = MOsgi.getBundleContext();
         if (bc == null) return null;
         ServiceReference<HeartbeatAdmin> ref = bc.getServiceReference(HeartbeatAdmin.class);
         if (ref == null) return null;
