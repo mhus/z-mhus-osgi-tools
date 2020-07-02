@@ -285,7 +285,7 @@ public class MOsgi {
     }
     
     public static Bundle getBundleOrNull(long bundleId) {
-        return FrameworkUtil.getBundle(MOsgi.class).getBundleContext().getBundle(bundleId);
+        return FrameworkUtil.getBundle(org.apache.karaf.log.core.LogMBean.class).getBundleContext().getBundle(bundleId);
     }
 
 
@@ -448,7 +448,8 @@ public class MOsgi {
             return service.getInterfaces()[0].getCanonicalName();
         }
 
-        log.w("Class is not a service",service.getCanonicalName());
+        if (log != null)
+            log.w("Class is not a service",service.getCanonicalName());
         return service.getCanonicalName();
     }
 
