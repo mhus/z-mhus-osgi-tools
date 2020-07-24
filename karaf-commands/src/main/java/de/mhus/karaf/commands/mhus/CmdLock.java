@@ -38,7 +38,7 @@ public class CmdLock extends AbstractCmd {
             index = 0,
             name = "cmd",
             required = true,
-            description = "Command:\n list",
+            description = "Command:\n list, get <id>, unlock <id>",
             multiValued = false)
     String cmd;
 

@@ -41,7 +41,9 @@ public class CmdBase extends AbstractCmd {
             index = 0,
             name = "cmd",
             required = true,
-            description = "Command:\n get <ifc>, clear, getall, dump",
+            description = "Command:\n"
+                    + " get <ifc>\n"
+                    + " getall <ifc>",
             multiValued = false)
     String cmd;
 
