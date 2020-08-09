@@ -401,7 +401,7 @@ public class MOsgi {
     public static boolean touchConfig(String pid) {
         File file = MApi.getFile(MApi.SCOPE.ETC, pid + ".cfg");
         if (!file.exists()) {
-            log.d("Touch configuration",pid,file);
+            //log.d("Touch configuration",pid,file);
             MFile.touch(file);
             return true;
         }
