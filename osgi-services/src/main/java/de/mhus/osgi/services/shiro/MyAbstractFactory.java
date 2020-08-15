@@ -23,8 +23,8 @@ import org.apache.shiro.util.Factory;
 
 /**
  * TODO - Class JavaDoc
- * @param <T> 
  *
+ * @param <T>
  * @since 1.0
  */
 public abstract class MyAbstractFactory<T> implements Factory<T> {

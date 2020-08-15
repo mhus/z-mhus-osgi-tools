@@ -17,18 +17,34 @@ public interface LocalCacheService {
 
     CacheManagerBuilder<CacheManager> getCacheBuilder();
 
-    default <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, int heapSize) {
-        return createCache(ownerContext, name, keyType, valueType, ResourcePoolsBuilder.heap(heapSize), null);
+    default <K, V> LocalCache<K, V> createCache(
+            BundleContext ownerContext,
+            String name,
+            Class<K> keyType,
+            Class<V> valueType,
+            int heapSize) {
+        return createCache(
+                ownerContext, name, keyType, valueType, ResourcePoolsBuilder.heap(heapSize), null);
     }
 
-    default <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder) {
+    default <K, V> LocalCache<K, V> createCache(
+            BundleContext ownerContext,
+            String name,
+            Class<K> keyType,
+            Class<V> valueType,
+            Builder<? extends ResourcePools> resourcePoolsBuilder) {
         return createCache(ownerContext, name, keyType, valueType, resourcePoolsBuilder, null);
     }
 
-    <K,V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType, Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator );
+    <K, V> LocalCache<K, V> createCache(
+            BundleContext ownerContext,
+            String name,
+            Class<K> keyType,
+            Class<V> valueType,
+            Builder<? extends ResourcePools> resourcePoolsBuilder,
+            Consumer<CacheConfigurationBuilder<K, V>> configurator);
 
     List<String> getCacheNames();
 
-    <K,V> LocalCache<K, V> getCache(String name);
-
+    <K, V> LocalCache<K, V> getCache(String name);
 }

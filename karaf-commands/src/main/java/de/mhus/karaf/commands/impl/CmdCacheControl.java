@@ -45,9 +45,8 @@ public class CmdCacheControl extends AbstractCmd {
             multiValued = true)
     String[] parameters;
 
-    @Reference
-    LocalCacheService service;
-    
+    @Reference LocalCacheService service;
+
     @Override
     public Object execute2() throws Exception {
 
@@ -58,16 +57,19 @@ public class CmdCacheControl extends AbstractCmd {
         if (cmd.equals("list")) {
             ConsoleTable table = new ConsoleTable(tblOpt);
             table.setHeaderValues("Name", "Size", "Bytes");
-            
+
             for (String name : service.getCacheNames()) {
                 LocalCache<Object, Object> cache = service.getCache(name);
                 if (cache != null) {
-                    CacheStatistics cacheStatistics = ((LocalCacheWrapper<?,?>)cache).getCacheStatistics();
+                    CacheStatistics cacheStatistics =
+                            ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
                     table.addRowValues(
-                            name, 
+                            name,
                             cacheStatistics.getTierStatistics().get("OnHeap").getMappings(),
-                            cacheStatistics.getTierStatistics().get("OnHeap").getOccupiedByteSize()
-                            );
+                            cacheStatistics
+                                    .getTierStatistics()
+                                    .get("OnHeap")
+                                    .getOccupiedByteSize());
                 }
             }
             table.print();
@@ -75,9 +77,8 @@ public class CmdCacheControl extends AbstractCmd {
             String name = parameters[0];
             service.getCache(name).clear();
             System.out.println("OK");
-
         }
-        
+
         return null;
     }
 }

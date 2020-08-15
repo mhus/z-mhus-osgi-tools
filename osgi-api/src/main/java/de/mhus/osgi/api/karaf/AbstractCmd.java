@@ -50,7 +50,7 @@ public abstract class AbstractCmd extends MObject implements Action {
             required = false,
             multiValued = false)
     private String trace;
-    
+
     @Reference private Session session;
 
     @Override
@@ -64,7 +64,7 @@ public abstract class AbstractCmd extends MObject implements Action {
                 (List<CmdInterceptor>) session.get(CmdInterceptorUtil.SESSION_KEY);
         if (interceptors != null) {
             try {
-                for (CmdInterceptor interceptor : interceptors) 
+                for (CmdInterceptor interceptor : interceptors)
                     try {
                         interceptor.onCmdStart(session);
                     } catch (Throwable t) {
@@ -75,21 +75,20 @@ public abstract class AbstractCmd extends MObject implements Action {
                 interceptors.clear();
             }
         }
-        
+
         try {
             if (!Console.isInitialized()) { // init console by default
                 ConsoleInterceptor interceptor = new ConsoleInterceptor(new KarafConsole(session));
-                CmdInterceptorUtil.setInterceptor(
-                        session, interceptor);
+                CmdInterceptorUtil.setInterceptor(session, interceptor);
                 interceptor.onCmdStart(session);
             }
         } catch (Throwable t) {
             log().d(t);
         }
-        
+
         Scope scope = null;
         if (MString.isSet(trace)) {
-        	scope = ITracer.get().start(getClass().getName(), trace);
+            scope = ITracer.get().start(getClass().getName(), trace);
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
@@ -109,13 +108,14 @@ public abstract class AbstractCmd extends MObject implements Action {
         try {
             ret = execute2();
         } finally {
-        	if (scope != null) {
-        		try {
-        			scope.close();
-        		} catch (Throwable t) {}
-        	}
+            if (scope != null) {
+                try {
+                    scope.close();
+                } catch (Throwable t) {
+                }
+            }
             if (interceptors != null) {
-                for (CmdInterceptor interceptor : interceptors) 
+                for (CmdInterceptor interceptor : interceptors)
                     try {
                         interceptor.onCmdEnd(session);
                     } catch (Throwable t) {

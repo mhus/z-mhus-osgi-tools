@@ -17,7 +17,7 @@ public class KarafCfgManager extends MCfgManager {
     protected void initialConfiguration() {
         CentralMhusCfgProvider provider = new CentralMhusCfgProvider();
         registerCfgProvider(provider);
-        
+
         // load all from etc
         ConfigurationAdmin admin = MOsgi.getServiceOrNull(ConfigurationAdmin.class);
         if (admin == null) {
@@ -30,7 +30,7 @@ public class KarafCfgManager extends MCfgManager {
                 }
             }
         }
-        
+
         // prepare system config for default
         IConfig system = provider.getConfig();
         if (!system.containsKey(MConstants.PROP_LOG_FACTORY_CLASS)) {
@@ -39,29 +39,26 @@ public class KarafCfgManager extends MCfgManager {
         if (!system.containsKey(MConstants.PROP_LOG_CONSOLE_REDIRECT)) {
             system.setString(MConstants.PROP_LOG_CONSOLE_REDIRECT, "false");
         }
-        
     }
 
     public void update(String pid) {
         if (!pid.equals(MConstants.CFG_SYSTEM)) {
-            MApi.dirtyLogInfo("KarafCfgManager::Register PID",pid);
+            MApi.dirtyLogInfo("KarafCfgManager::Register PID", pid);
             registerCfgProvider(new KarfConfigProvider(pid));
         }
     }
 
-	@Override
+    @Override
     @SuppressWarnings("rawtypes")
-	public void reload(Object owner) {
-		if (owner == null) return;
-        
-    	if (owner instanceof String) {
-        	update(owner.toString());
-    	} else {
-        	Class clazz = owner.getClass();
-        	if (owner instanceof Class)
-        		clazz = (Class)owner;
-        	update(MOsgi.findServicePid(clazz));
-    	}
-	}
+    public void reload(Object owner) {
+        if (owner == null) return;
 
+        if (owner instanceof String) {
+            update(owner.toString());
+        } else {
+            Class clazz = owner.getClass();
+            if (owner instanceof Class) clazz = (Class) owner;
+            update(MOsgi.findServicePid(clazz));
+        }
+    }
 }

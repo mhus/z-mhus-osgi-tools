@@ -18,5 +18,4 @@ public class CmdServiceReload extends AbstractCmd {
         System.out.println("OK");
         return null;
     }
-
 }

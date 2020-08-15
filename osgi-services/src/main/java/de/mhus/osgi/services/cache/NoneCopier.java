@@ -9,7 +9,4 @@ public class NoneCopier<T> extends ReadWriteCopier<T> implements Copier<T> {
     public T copy(T obj) {
         return obj;
     }
-
-
-
 }

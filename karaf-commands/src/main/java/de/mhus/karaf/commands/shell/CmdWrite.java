@@ -64,7 +64,7 @@ public class CmdWrite extends AbstractCmd {
             return null;
         }
     }
-    
+
     // copied from MFile
     public long copyFile(InputStream _is, OutputStream _os) {
         if (_is == null || _os == null) return -1;
@@ -79,11 +79,10 @@ public class CmdWrite extends AbstractCmd {
 
         try {
             while ((i = _is.read(buffer)) != -1) {
-                if (i == 0) 
-                    MThread.sleepInLoop(100);
+                if (i == 0) MThread.sleepInLoop(100);
                 else {
                     _os.write(buffer, 0, i);
-                    size+=i;
+                    size += i;
                 }
             }
         } catch (Exception e) {
@@ -91,5 +90,4 @@ public class CmdWrite extends AbstractCmd {
         }
         return size;
     }
-    
 }

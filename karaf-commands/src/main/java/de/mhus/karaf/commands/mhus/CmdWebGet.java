@@ -77,7 +77,7 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Command(scope = "mhus", name = "wget", description = "Download a http resource")
 @Service
 public class CmdWebGet extends AbstractCmd {
-    
+
     @Argument(
             index = 0,
             name = "url",
@@ -96,7 +96,8 @@ public class CmdWebGet extends AbstractCmd {
     @Option(
             name = "-a",
             aliases = "--authenticate",
-            description = "set the basic auth credentials use <user>:<pass> or <user> and it will ask for the password",
+            description =
+                    "set the basic auth credentials use <user>:<pass> or <user> and it will ask for the password",
             required = false)
     String auth = null;
 
@@ -107,7 +108,7 @@ public class CmdWebGet extends AbstractCmd {
             required = false,
             multiValued = true)
     String[] headers = null;
-    
+
     @Option(
             name = "-p",
             aliases = "--payload",
@@ -121,7 +122,7 @@ public class CmdWebGet extends AbstractCmd {
             required = false,
             multiValued = true)
     String[] formData = null;
-    
+
     @Option(
             name = "-o",
             aliases = "--output",
@@ -141,100 +142,117 @@ public class CmdWebGet extends AbstractCmd {
             description = "set to deny follow on permanently moved",
             required = false)
     boolean noFollow = false;
-    
+
     @Option(
             name = "--ignore-certificates",
             description = "Ignore SSL/TLS certificate host names",
             required = false)
     boolean ignoreCertificates = false;
-    
+
     @Option(
             name = "--iterate",
             description = "Iterate the requests multiple times",
             required = false)
     int iterate = 1;
-    
+
     @Option(
             name = "--iterateSleep",
             description = "Sleep time in seconds between iterations",
             required = false)
     int iterateSleep = 0;
-    
+
     @Option(
             name = "--proxy",
             description = "Set proxy or - for no proxy, default is system proxy",
             required = false)
     String proxy = null;
-    
-    @Option(
-            name = "--proxyAuth",
-            description = "Set proxy authentication",
-            required = false)
+
+    @Option(name = "--proxyAuth", description = "Set proxy authentication", required = false)
     String proxyAuth = null;
-    
+
     @Override
     public Object execute2() throws Exception {
 
         HttpClientBuilder builder = HttpClientBuilder.create();
         if (verbose) {
-            builder.addInterceptorFirst(new HttpRequestInterceptor() {
-                
-                @Override
-                public void process(HttpRequest arg0, HttpContext arg1) throws HttpException, IOException {
-                    System.out.println(">>> Request First: " + arg0);
-                }
-            });
-            builder.addInterceptorFirst(new HttpResponseInterceptor() {
-                
-                @Override
-                public void process(HttpResponse arg0, HttpContext arg1) throws HttpException, IOException {
-                    System.out.println(">>> Response First: " + arg0);
-                }
-            });
-            builder.addInterceptorLast(new HttpRequestInterceptor() {
-                
-                @Override
-                public void process(HttpRequest arg0, HttpContext arg1) throws HttpException, IOException {
-                    System.out.println("<<< Request Last: " + arg0);
-                }
-            });
-            builder.addInterceptorLast(new HttpResponseInterceptor() {
-                
-                @Override
-                public void process(HttpResponse arg0, HttpContext context) throws HttpException, IOException {
-                    
-                    
-                    ManagedHttpClientConnection routedConnection = (ManagedHttpClientConnection)context.getAttribute(HttpCoreContext.HTTP_CONNECTION);
-                    SSLSession sslSession = routedConnection.getSSLSession();
-                    if (sslSession != null) {
-                        Certificate[] peerCertificates = sslSession.getPeerCertificates();
-                        if (peerCertificates != null) {
-                            for (Certificate certificate : peerCertificates){
-                                X509Certificate real = (X509Certificate) certificate;
-                                System.out.println("=== Certificate");
-                                System.out.println("--- Type: " + real.getType());
-                                System.out.println("--- Signing Algorithm: " + real.getSigAlgName());
-                                System.out.println("--- IssuerDN Principal: " + real.getIssuerX500Principal());
-                                System.out.println("--- SubjectDN Principal: " + real.getSubjectX500Principal());
-                                System.out.println("--- Not After: " + DateUtils.formatDate(real.getNotAfter(), "dd-MM-yyyy"));
-                                System.out.println("--- Not Before: " + DateUtils.formatDate(real.getNotBefore(), "dd-MM-yyyy"));
-                            }
-                        } else {
-                            System.out.println("--- Certificate not found");
+            builder.addInterceptorFirst(
+                    new HttpRequestInterceptor() {
+
+                        @Override
+                        public void process(HttpRequest arg0, HttpContext arg1)
+                                throws HttpException, IOException {
+                            System.out.println(">>> Request First: " + arg0);
                         }
-                    } else
-                        System.out.println("--- SSL session not found");
-                    System.out.println("<<< Response Last: " + arg0);
-                }
-            });
+                    });
+            builder.addInterceptorFirst(
+                    new HttpResponseInterceptor() {
+
+                        @Override
+                        public void process(HttpResponse arg0, HttpContext arg1)
+                                throws HttpException, IOException {
+                            System.out.println(">>> Response First: " + arg0);
+                        }
+                    });
+            builder.addInterceptorLast(
+                    new HttpRequestInterceptor() {
+
+                        @Override
+                        public void process(HttpRequest arg0, HttpContext arg1)
+                                throws HttpException, IOException {
+                            System.out.println("<<< Request Last: " + arg0);
+                        }
+                    });
+            builder.addInterceptorLast(
+                    new HttpResponseInterceptor() {
+
+                        @Override
+                        public void process(HttpResponse arg0, HttpContext context)
+                                throws HttpException, IOException {
+
+                            ManagedHttpClientConnection routedConnection =
+                                    (ManagedHttpClientConnection)
+                                            context.getAttribute(HttpCoreContext.HTTP_CONNECTION);
+                            SSLSession sslSession = routedConnection.getSSLSession();
+                            if (sslSession != null) {
+                                Certificate[] peerCertificates = sslSession.getPeerCertificates();
+                                if (peerCertificates != null) {
+                                    for (Certificate certificate : peerCertificates) {
+                                        X509Certificate real = (X509Certificate) certificate;
+                                        System.out.println("=== Certificate");
+                                        System.out.println("--- Type: " + real.getType());
+                                        System.out.println(
+                                                "--- Signing Algorithm: " + real.getSigAlgName());
+                                        System.out.println(
+                                                "--- IssuerDN Principal: "
+                                                        + real.getIssuerX500Principal());
+                                        System.out.println(
+                                                "--- SubjectDN Principal: "
+                                                        + real.getSubjectX500Principal());
+                                        System.out.println(
+                                                "--- Not After: "
+                                                        + DateUtils.formatDate(
+                                                                real.getNotAfter(), "dd-MM-yyyy"));
+                                        System.out.println(
+                                                "--- Not Before: "
+                                                        + DateUtils.formatDate(
+                                                                real.getNotBefore(), "dd-MM-yyyy"));
+                                    }
+                                } else {
+                                    System.out.println("--- Certificate not found");
+                                }
+                            } else System.out.println("--- SSL session not found");
+                            System.out.println("<<< Response Last: " + arg0);
+                        }
+                    });
         }
         if (ignoreCertificates)
-            builder.setSSLHostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
+            builder.setSSLHostnameVerifier(
+                    new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    });
 
         if (auth != null) {
             if (!MString.isIndex(auth, ':')) {
@@ -246,15 +264,13 @@ public class CmdWebGet extends AbstractCmd {
                 auth = auth + ":" + pass;
             }
         }
-        
-        if (method != null) 
-            method = method.toLowerCase().trim();
-        
+
+        if (method != null) method = method.toLowerCase().trim();
+
         String proxyHost = null;
         int proxyPort = 1080;
         if (proxy != null) {
-            if (proxy.equals("-"))
-                builder.setProxy(null);
+            if (proxy.equals("-")) builder.setProxy(null);
             else {
                 proxyHost = proxy;
                 if (MString.isIndex(proxyHost, ':')) {
@@ -278,85 +294,79 @@ public class CmdWebGet extends AbstractCmd {
             UsernamePasswordCredentials creds = new UsernamePasswordCredentials(user, pass);
             CredentialsProvider credsProvider = new BasicCredentialsProvider();
             credsProvider.setCredentials(new AuthScope(proxyHost, proxyPort), creds);
-            builder.setDefaultCredentialsProvider(credsProvider);            
+            builder.setDefaultCredentialsProvider(credsProvider);
             ProxyAuthenticationStrategy proxyAuthStrategy = new ProxyAuthenticationStrategy();
             builder.setProxyAuthenticationStrategy(proxyAuthStrategy);
         }
-        
+
         try (CloseableHttpClient client = builder.build()) {
-            
+
             OutputStream os = null;
-            if (out == null)
-                os = new ByteArrayOutputStream();
-            else if (out.equals("-"))
-                os = System.out;
-            else
-                os = new FileOutputStream(out);
-    
+            if (out == null) os = new ByteArrayOutputStream();
+            else if (out.equals("-")) os = System.out;
+            else os = new FileOutputStream(out);
+
             for (int i = 0; i < iterate; i++) {
-                
-                if (i != 0 && iterateSleep > 0)
-                    Thread.sleep(iterateSleep * 1000);
-                
+
+                if (i != 0 && iterateSleep > 0) Thread.sleep(iterateSleep * 1000);
+
                 for (String url : urls) {
                     while (true) {
                         HttpUriRequest request = null;
-                        if (method == null || method.equals("get"))
-                            request = new HttpGet(url);
-                        else if (method.equals("post"))
-                            request = new HttpPost(url);
-                        else if (method.equals("put"))
-                            request = new HttpPut(url);
-                        else if (method.equals("delete"))
-                            request = new HttpDelete(url);
-                        else if (method.equals("head"))
-                            request = new HttpHead(url);
-                        else if (method.equals("options"))
-                            request = new HttpOptions(url);
-                        else
-                            throw new MException("http method unknown",method);
-            
+                        if (method == null || method.equals("get")) request = new HttpGet(url);
+                        else if (method.equals("post")) request = new HttpPost(url);
+                        else if (method.equals("put")) request = new HttpPut(url);
+                        else if (method.equals("delete")) request = new HttpDelete(url);
+                        else if (method.equals("head")) request = new HttpHead(url);
+                        else if (method.equals("options")) request = new HttpOptions(url);
+                        else throw new MException("http method unknown", method);
+
                         if (headers != null)
                             for (String header : headers)
-                                request.setHeader(MString.beforeIndex(header, ':'), MString.afterIndex(header, ':').trim());
-            
+                                request.setHeader(
+                                        MString.beforeIndex(header, ':'),
+                                        MString.afterIndex(header, ':').trim());
+
                         if (auth != null)
                             request.setHeader("Authorization", "Basic " + Base64.encode(auth));
-            
+
                         if (payload != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException("Payload is only possible for requests with POST and PUT");
+                                throw new MException(
+                                        "Payload is only possible for requests with POST and PUT");
                             StringEntity pl = new StringEntity(payload);
-                            if (verbose)
-                                System.out.println("--- Payload: " + pl);
-                            ((HttpEntityEnclosingRequest)request).setEntity(pl);
+                            if (verbose) System.out.println("--- Payload: " + pl);
+                            ((HttpEntityEnclosingRequest) request).setEntity(pl);
                         } else if (formData != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException("Form data is only possible for requests with POST and PUT");
+                                throw new MException(
+                                        "Form data is only possible for requests with POST and PUT");
                             List<NameValuePair> form = new ArrayList<>();
                             for (String data : formData)
-                                form.add(new BasicNameValuePair(MString.beforeIndex(data, '='), MString.afterIndex(data, '=') ));
-                            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(form, Consts.UTF_8);
-                            ((HttpEntityEnclosingRequest)request).setEntity(entity);
+                                form.add(
+                                        new BasicNameValuePair(
+                                                MString.beforeIndex(data, '='),
+                                                MString.afterIndex(data, '=')));
+                            UrlEncodedFormEntity entity =
+                                    new UrlEncodedFormEntity(form, Consts.UTF_8);
+                            ((HttpEntityEnclosingRequest) request).setEntity(entity);
                         }
-        
+
                         CloseableHttpResponse result = client.execute(request);
-    
+
                         StatusLine status = result.getStatusLine();
 
                         HttpEntity entity = result.getEntity();
                         if (entity != null) {
                             InputStream is = entity.getContent();
                             long size = MFile.copyFile(is, os);
-                            if (size > 0)
-                                os.write('\n');
+                            if (size > 0) os.write('\n');
                         }
                         result.close();
-        
+
                         if (status.getStatusCode() == 200) {
-                            if (verbose)
-                                System.out.println("--- " + status);
-        
+                            if (verbose) System.out.println("--- " + status);
+
                             os.flush();
                             break;
                         } else if (status.getStatusCode() == 401) {
@@ -378,12 +388,9 @@ public class CmdWebGet extends AbstractCmd {
                             if (l.startsWith("/")) {
                                 // relative to host name
                                 int pos = url.indexOf('/', 8); // could be a problem
-                                if (pos > 0)
-                                    url = url.substring(0, pos) + l;
-                                else
-                                    url = url + l;
-                                if (verbose)
-                                    System.out.println("--- Moved to " + url);
+                                if (pos > 0) url = url.substring(0, pos) + l;
+                                else url = url + l;
+                                if (verbose) System.out.println("--- Moved to " + url);
                             } else
                                 // full
                                 url = l;
@@ -394,15 +401,13 @@ public class CmdWebGet extends AbstractCmd {
                     }
                 }
             }
-            
+
             String ret = null;
-            if (out == null)
-                ret = new String( ((ByteArrayOutputStream)os).toByteArray() );
-            else if (out.equals("-"))
-                os.flush();
-            else
-                ((FileOutputStream)os).close();;
-    
+            if (out == null) ret = new String(((ByteArrayOutputStream) os).toByteArray());
+            else if (out.equals("-")) os.flush();
+            else ((FileOutputStream) os).close();
+            ;
+
             return ret;
         }
     }

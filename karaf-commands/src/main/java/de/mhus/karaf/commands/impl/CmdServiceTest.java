@@ -8,7 +8,10 @@ import de.mhus.lib.core.M;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.services.IServiceManager;
 
-@Command(scope = "service", name = "sb-test", description = "Create a service blueprint and print it")
+@Command(
+        scope = "service",
+        name = "sb-test",
+        description = "Create a service blueprint and print it")
 @Service
 public class CmdServiceTest extends AbstractCmd {
 
@@ -35,5 +38,4 @@ public class CmdServiceTest extends AbstractCmd {
 
         return ret;
     }
-
 }

@@ -66,10 +66,10 @@ public abstract class MServiceTracker<T> {
 
     public MServiceTracker(BundleContext context, Class<T> clazz) {
         if (context == null) {
-        	try {
-	        	context = MOsgi.getBundleContext();
-	        } catch (Throwable t) {
-	        }
+            try {
+                context = MOsgi.getBundleContext();
+            } catch (Throwable t) {
+            }
         }
         this.context = context;
         this.clazz = clazz;

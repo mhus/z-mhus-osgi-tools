@@ -32,14 +32,13 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
 
     public static final String DEFAULT_INI_RESOURCE_PATH = "classpath:shiro.ini";
 
-    private static transient final Logger log = LoggerFactory.getLogger(MyIniFactorySupport.class);
+    private static final transient Logger log = LoggerFactory.getLogger(MyIniFactorySupport.class);
 
     private Ini ini;
 
     private Map<String, ?> defaultBeans;
 
-    protected MyIniFactorySupport() {
-    }
+    protected MyIniFactorySupport() {}
 
     protected MyIniFactorySupport(Ini ini) {
         this.ini = ini;
@@ -54,8 +53,10 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
     }
 
     /**
-     * Returns a mapping of String to bean representing the default set of object used by the factory.
-     * These beans can be used by this factory in conjunction with objects parsed from the INI configuration.
+     * Returns a mapping of String to bean representing the default set of object used by the
+     * factory. These beans can be used by this factory in conjunction with objects parsed from the
+     * INI configuration.
+     *
      * @return A Map of default objects, or <code>null</code>.
      * @since 1.4
      */
@@ -64,8 +65,9 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
     }
 
     /**
-     * Sets the default objects used by this factory. These defaults may be used in conjunction with the INI
-     * configuration.
+     * Sets the default objects used by this factory. These defaults may be used in conjunction with
+     * the INI configuration.
+     *
      * @param defaultBeans String to object mapping used for default configuration in this factory.
      * @since 1.4
      */
@@ -74,11 +76,11 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
     }
 
     /**
-     * Returns a new Ini instance created from the default {@code classpath:shiro.ini} file, or {@code null} if
-     * the file does not exist.
+     * Returns a new Ini instance created from the default {@code classpath:shiro.ini} file, or
+     * {@code null} if the file does not exist.
      *
-     * @return a new Ini instance created from the default {@code classpath:shiro.ini} file, or {@code null} if
-     *         the file does not exist.
+     * @return a new Ini instance created from the default {@code classpath:shiro.ini} file, or
+     *     {@code null} if the file does not exist.
      */
     public static Ini loadDefaultClassPathIni() {
         Ini ini = null;
@@ -87,19 +89,23 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
             ini = new Ini();
             ini.loadFromPath(DEFAULT_INI_RESOURCE_PATH);
             if (CollectionUtils.isEmpty(ini)) {
-                log.warn("shiro.ini found at the root of the classpath, but it did not contain any data.");
+                log.warn(
+                        "shiro.ini found at the root of the classpath, but it did not contain any data.");
             }
         }
         return ini;
     }
 
     /**
-     * Tries to resolve the Ini instance to use for configuration.  This implementation functions as follows:
+     * Tries to resolve the Ini instance to use for configuration. This implementation functions as
+     * follows:
+     *
      * <ol>
-     * <li>The {@code Ini} instance returned from {@link #getIni()} will be returned if it is not null or empty.</li>
-     * <li>If {@link #getIni()} is {@code null} or empty, this implementation will attempt to find and load the
-     * {@link #loadDefaultClassPathIni() default class path Ini}.</li>
-     * <li>If neither of the two attempts above returns an instance, {@code null} is returned</li>
+     *   <li>The {@code Ini} instance returned from {@link #getIni()} will be returned if it is not
+     *       null or empty.
+     *   <li>If {@link #getIni()} is {@code null} or empty, this implementation will attempt to find
+     *       and load the {@link #loadDefaultClassPathIni() default class path Ini}.
+     *   <li>If neither of the two attempts above returns an instance, {@code null} is returned
      * </ol>
      *
      * @return the Ini instance to use for configuration.
@@ -107,18 +113,22 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
     protected Ini resolveIni() {
         Ini ini = getIni();
         if (CollectionUtils.isEmpty(ini)) {
-            log.debug("Null or empty Ini instance.  Falling back to the default {} file.", DEFAULT_INI_RESOURCE_PATH);
+            log.debug(
+                    "Null or empty Ini instance.  Falling back to the default {} file.",
+                    DEFAULT_INI_RESOURCE_PATH);
             ini = loadDefaultClassPathIni();
         }
         return ini;
     }
 
     /**
-     * Creates a new object instance by using a configured INI source.  This implementation functions as follows:
+     * Creates a new object instance by using a configured INI source. This implementation functions
+     * as follows:
+     *
      * <ol>
-     * <li>{@link #resolveIni() Resolve} the {@code Ini} source to use for configuration.</li>
-     * <li>If there was no resolved Ini source, create and return a simple default instance via the
-     * {@link #createDefaultInstance()} method.</li>
+     *   <li>{@link #resolveIni() Resolve} the {@code Ini} source to use for configuration.
+     *   <li>If there was no resolved Ini source, create and return a simple default instance via
+     *       the {@link #createDefaultInstance()} method.
      * </ol>
      *
      * @return a new {@code SecurityManager} instance by using a configured INI source.
@@ -133,17 +143,21 @@ public abstract class MyIniFactorySupport<T> extends MyAbstractFactory<T> {
             log.debug("No populated Ini available.  Creating a default instance.");
             instance = createDefaultInstance();
             if (instance == null) {
-                String msg = getClass().getName() + " implementation did not return a default instance in " +
-                        "the event of a null/empty Ini configuration.  This is required to support the " +
-                        "Factory interface.  Please check your implementation.";
+                String msg =
+                        getClass().getName()
+                                + " implementation did not return a default instance in "
+                                + "the event of a null/empty Ini configuration.  This is required to support the "
+                                + "Factory interface.  Please check your implementation.";
                 throw new IllegalStateException(msg);
             }
         } else {
             log.debug("Creating instance from Ini [" + ini + "]");
             instance = createInstance(ini);
             if (instance == null) {
-                String msg = getClass().getName() + " implementation did not return a constructed instance from " +
-                        "the createInstance(Ini) method implementation.";
+                String msg =
+                        getClass().getName()
+                                + " implementation did not return a constructed instance from "
+                                + "the createInstance(Ini) method implementation.";
                 throw new IllegalStateException(msg);
             }
         }

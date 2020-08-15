@@ -28,71 +28,79 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
 
     @Override
     public CacheManagerBuilder<CacheManager> getCacheBuilder() {
-        if (cacheBuilder == null)
-            cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
+        if (cacheBuilder == null) cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
         return cacheBuilder;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <K, V> LocalCache<K, V> createCache(BundleContext ownerContext, String name, Class<K> keyType,
-            Class<V> valueType, Builder<? extends ResourcePools> resourcePoolsBuilder, Consumer<CacheConfigurationBuilder<K,V>> configurator ) {
+    public <K, V> LocalCache<K, V> createCache(
+            BundleContext ownerContext,
+            String name,
+            Class<K> keyType,
+            Class<V> valueType,
+            Builder<? extends ResourcePools> resourcePoolsBuilder,
+            Consumer<CacheConfigurationBuilder<K, V>> configurator) {
 
-        name = ownerContext.getBundle().getSymbolicName() + ":" + ownerContext.getBundle().getBundleId() + "/" + name;
+        name =
+                ownerContext.getBundle().getSymbolicName()
+                        + ":"
+                        + ownerContext.getBundle().getBundleId()
+                        + "/"
+                        + name;
         LocalCache<Object, Object> existing = getCache(name);
-        if (existing != null && existing.getBundle().getBundleId() == ownerContext.getBundle().getBundleId())
+        if (existing != null
+                && existing.getBundle().getBundleId() == ownerContext.getBundle().getBundleId())
             return (LocalCache<K, V>) existing;
 
-        if (statisticsService == null)
-            statisticsService = new DefaultStatisticsService();
+        if (statisticsService == null) statisticsService = new DefaultStatisticsService();
 
-        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .using(statisticsService)
-                .build(false);
+        CacheManager cacheManager =
+                CacheManagerBuilder.newCacheManagerBuilder().using(statisticsService).build(false);
         cacheManager.init();
 
-        
-        CacheConfigurationBuilder<K, V> ccb = CacheConfigurationBuilder.newCacheConfigurationBuilder(keyType, valueType, resourcePoolsBuilder);
-        
+        CacheConfigurationBuilder<K, V> ccb =
+                CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                        keyType, valueType, resourcePoolsBuilder);
+
         if (resourcePoolsBuilder == null)
             throw new NullPointerException("resourcePoolsBuilder is null");
-        
+
         if (configurator != null) {
             configurator.accept(ccb);
         } else {
             // default configuration
             @SuppressWarnings("rawtypes")
-            DefaultCopierConfiguration<String> copierConfigurationKey = new DefaultCopierConfiguration(
-                    NoneCopier.class, DefaultCopierConfiguration.Type.KEY);
+            DefaultCopierConfiguration<String> copierConfigurationKey =
+                    new DefaultCopierConfiguration(
+                            NoneCopier.class, DefaultCopierConfiguration.Type.KEY);
             @SuppressWarnings("rawtypes")
-            DefaultCopierConfiguration<String> copierConfigurationValue = new DefaultCopierConfiguration(
-                    NoneCopier.class, DefaultCopierConfiguration.Type.VALUE);
-            ccb
-                .withService(copierConfigurationKey)
-                .withService(copierConfigurationValue);
+            DefaultCopierConfiguration<String> copierConfigurationValue =
+                    new DefaultCopierConfiguration(
+                            NoneCopier.class, DefaultCopierConfiguration.Type.VALUE);
+            ccb.withService(copierConfigurationKey).withService(copierConfigurationValue);
         }
-        
+
         Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
 
-        LocalCacheWrapper<K,V> wrapper = new LocalCacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
+        LocalCacheWrapper<K, V> wrapper =
+                new LocalCacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
         return wrapper;
     }
-    
+
     @Override
     public List<String> getCacheNames() {
-        return MOsgi.collectStringProperty( MOsgi.getServiceRefs(LocalCache.class, null) , "name");
+        return MOsgi.collectStringProperty(MOsgi.getServiceRefs(LocalCache.class, null), "name");
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public <K, V> LocalCache<K, V> getCache(String name) {
         try {
-            return MOsgi.getService(LocalCache.class, MOsgi.filterValue("name",name));
+            return MOsgi.getService(LocalCache.class, MOsgi.filterValue("name", name));
         } catch (NotFoundException e) {
-            log().t("not found",name);
+            log().t("not found", name);
             return null;
         }
     }
-
-
 }

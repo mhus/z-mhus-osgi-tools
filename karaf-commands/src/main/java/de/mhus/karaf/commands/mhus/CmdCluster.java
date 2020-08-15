@@ -91,21 +91,22 @@ public class CmdCluster extends AbstractCmd {
         if (cmd.equals("lockvalidate")) {
             MProperties properties = new MProperties();
             properties.setString("name", path);
-//            try {
-//
-//                OperationsSelector selector = new OperationsSelector();
-//                selector.setFilter(RegisterLockOperation.class.getCanonicalName());
-//                selector.addSelector(SelectorProvider.NOT_LOCAL_SELECTOR);
-//                List<OperationResult> results = selector.doExecuteAll(properties);
-//
-//                for (OperationResult res : results)
-//                    if (res.isSuccessful()) {
-//                        System.out.println(
-//                                "Instance " + res.getReturnCode() + " " + res.getResult());
-//                    }
-//            } catch (NotFoundException e) {
-//                e.printStackTrace();
-//            }
+            //            try {
+            //
+            //                OperationsSelector selector = new OperationsSelector();
+            //                selector.setFilter(RegisterLockOperation.class.getCanonicalName());
+            //                selector.addSelector(SelectorProvider.NOT_LOCAL_SELECTOR);
+            //                List<OperationResult> results = selector.doExecuteAll(properties);
+            //
+            //                for (OperationResult res : results)
+            //                    if (res.isSuccessful()) {
+            //                        System.out.println(
+            //                                "Instance " + res.getReturnCode() + " " +
+            // res.getResult());
+            //                    }
+            //            } catch (NotFoundException e) {
+            //                e.printStackTrace();
+            //            }
         } else if (cmd.equals("testscheduler")) {
             if (path == null) path = "test";
             String def = "* * * * *";
@@ -125,14 +126,18 @@ public class CmdCluster extends AbstractCmd {
                                     locks++;
                                     long ms = (long) (Math.random() * 120d) * 1000;
                                     System.out.println("# Start Job, wait " + (ms / 1000) + " sec");
-//                                    if (!((RegistryLock)
-//                                                    ((TimerTaskClusterInterceptor)
-//                                                                    job.getInterceptor())
-//                                                            .getLock())
-//                                            .validateLock()) {
-//                                        errors++;
-//                                        System.err.println("Error !!!! " + errors);
-//                                    }
+                                    //                                    if (!((RegistryLock)
+                                    //
+                                    // ((TimerTaskClusterInterceptor)
+                                    //
+                                    //      job.getInterceptor())
+                                    //
+                                    // .getLock())
+                                    //                                            .validateLock()) {
+                                    //                                        errors++;
+                                    //
+                                    // System.err.println("Error !!!! " + errors);
+                                    //                                    }
                                     MThread.sleep(ms);
                                     System.out.println("# End Job");
                                 }
@@ -228,37 +233,39 @@ public class CmdCluster extends AbstractCmd {
             }
             System.out.println("Finished!");
             System.out.println("With " + errors + " errors in " + locks + " locks");
-//        } else if (cmd.equals("fire")) {
-//            api.fireValueEvent(path, parameters[0]);
-//            System.out.println("ok");
-//        } else if (cmd.equals("register")) {
-//            ValueListener c =
-//                    new ValueListener() {
-//                        @Override
-//                        public void event(String name, String value, boolean local) {
-//                            System.out.println(
-//                                    (local ? "Local: " : "Remote: ") + name + "=" + value);
-//                        }
-//                    };
-//            api.registerValueListener(path, c);
-//        } else if (cmd.equals("listen")) {
-//            ValueListener c =
-//                    new ValueListener() {
-//                        @Override
-//                        public void event(String name, String value, boolean local) {
-//                            System.out.println(
-//                                    (local ? "Local: " : "Remote: ") + name + "=" + value);
-//                        }
-//                    };
-//            api.registerValueListener(path, c);
-//            System.out.println("Press Ctrl+C to exit");
-//            try {
-//                while (true) Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//            }
-//            api.unregisterValueListener(c);
+            //        } else if (cmd.equals("fire")) {
+            //            api.fireValueEvent(path, parameters[0]);
+            //            System.out.println("ok");
+            //        } else if (cmd.equals("register")) {
+            //            ValueListener c =
+            //                    new ValueListener() {
+            //                        @Override
+            //                        public void event(String name, String value, boolean local) {
+            //                            System.out.println(
+            //                                    (local ? "Local: " : "Remote: ") + name + "=" +
+            // value);
+            //                        }
+            //                    };
+            //            api.registerValueListener(path, c);
+            //        } else if (cmd.equals("listen")) {
+            //            ValueListener c =
+            //                    new ValueListener() {
+            //                        @Override
+            //                        public void event(String name, String value, boolean local) {
+            //                            System.out.println(
+            //                                    (local ? "Local: " : "Remote: ") + name + "=" +
+            // value);
+            //                        }
+            //                    };
+            //            api.registerValueListener(path, c);
+            //            System.out.println("Press Ctrl+C to exit");
+            //            try {
+            //                while (true) Thread.sleep(1000);
+            //            } catch (InterruptedException e) {
+            //            }
+            //            api.unregisterValueListener(c);
         } else if (cmd.equals("master")) {
-//            System.out.println(RegistryUtil.master(path, timeout));
+            //            System.out.println(RegistryUtil.master(path, timeout));
         } else if (cmd.equals("servicelock")) {
             System.out.println("Wait for lock");
             try (Lock lock = api.getServiceLock(path).lock()) {

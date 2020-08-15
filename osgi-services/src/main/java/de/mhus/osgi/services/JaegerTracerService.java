@@ -37,125 +37,129 @@ import io.opentracing.util.GlobalTracer;
 @Component(service = ITracer.class)
 public class JaegerTracerService extends DefaultTracer {
 
-	private CfgString CFG_LOG_LEVEL = new CfgString(JaegerTracerService.class, "logLevel", "DEBUG").updateAction(v -> updateLogLevel());
-	
-	private LogServiceTracker tracker;
+    private CfgString CFG_LOG_LEVEL =
+            new CfgString(JaegerTracerService.class, "logLevel", "DEBUG")
+                    .updateAction(v -> updateLogLevel());
 
-	private int logLevel;
-	
-	private static String[] JAEGER_ENV = new String[] {
-			"JAEGER_SAMPLER_TYPE",
-			"JAEGER_SAMPLER_PARAM",
-			"JAEGER_SAMPLER_MANAGER_HOST_PORT",
-			"JAEGER_REPORTER_LOG_SPANS",
-			"JAEGER_AGENT_HOST",
-			"JAEGER_AGENT_PORT",
-			"JAEGER_REPORTER_FLUSH_INTERVAL",
-			"JAEGER_REPORTER_MAX_QUEUE_SIZE",
-			"JAEGER_SERVICE_NAME"
-	};
-		
-	@Activate
+    private LogServiceTracker tracker;
+
+    private int logLevel;
+
+    private static String[] JAEGER_ENV =
+            new String[] {
+                "JAEGER_SAMPLER_TYPE",
+                "JAEGER_SAMPLER_PARAM",
+                "JAEGER_SAMPLER_MANAGER_HOST_PORT",
+                "JAEGER_REPORTER_LOG_SPANS",
+                "JAEGER_AGENT_HOST",
+                "JAEGER_AGENT_PORT",
+                "JAEGER_REPORTER_FLUSH_INTERVAL",
+                "JAEGER_REPORTER_MAX_QUEUE_SIZE",
+                "JAEGER_SERVICE_NAME"
+            };
+
+    @Activate
     public void doActivate(ComponentContext ctx) {
-	    MOsgi.touchConfig(JaegerTracerService.class);
-		updateLogLevel();
-		update();
-		
-	    tracker = new LogServiceTracker(ctx.getBundleContext(), e -> logEvent(e));
-	    tracker.open();
-	}
+        MOsgi.touchConfig(JaegerTracerService.class);
+        updateLogLevel();
+        update();
 
-	@Modified
-    public void doModified(ComponentContext ctx) {
-		MApi.get().getCfgManager().reload(JaegerTracerService.class);
-		update();
-	}
-	
-	@Deactivate
-    public void doDeactivate(ComponentContext ctx) {
-        if (tracker != null)
-            tracker.close();
+        tracker = new LogServiceTracker(ctx.getBundleContext(), e -> logEvent(e));
+        tracker.open();
     }
 
-	private void updateLogLevel() {
-		try {
-			LOG_LEVEL level = LogServiceTracker.LOG_LEVEL.valueOf(CFG_LOG_LEVEL.value().toUpperCase());
-			logLevel = level.toInt();
-		} catch (Throwable t) {
-			log().d(t);
-			logLevel = LogServiceTracker.DEBUG_INT;
-		}
-	}
-	
+    @Modified
+    public void doModified(ComponentContext ctx) {
+        MApi.get().getCfgManager().reload(JaegerTracerService.class);
+        update();
+    }
+
+    @Deactivate
+    public void doDeactivate(ComponentContext ctx) {
+        if (tracker != null) tracker.close();
+    }
+
+    private void updateLogLevel() {
+        try {
+            LOG_LEVEL level =
+                    LogServiceTracker.LOG_LEVEL.valueOf(CFG_LOG_LEVEL.value().toUpperCase());
+            logLevel = level.toInt();
+        } catch (Throwable t) {
+            log().d(t);
+            logLevel = LogServiceTracker.DEBUG_INT;
+        }
+    }
+
     private synchronized void update() {
-    	log().i("Update jaeger tracer");
-    	
-    	// prepare env
-    	IConfig cfg = MApi.getCfg(JaegerTracerService.class);
-    	for (String key : JAEGER_ENV) {
-    		if (cfg != null && MString.isSet(cfg.getString(key, null)))
-    			System.setProperty(key, cfg.getString(key, null));
-    		else
-			if (System.getenv(key) != null)
-    			System.setProperty(key, System.getenv(key));
-    	}
-    	
-		Configuration.SamplerConfiguration samplerConfig = Configuration.SamplerConfiguration.fromEnv();
-	    Configuration.ReporterConfiguration reporterConfig = Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
-	    Configuration config = new Configuration(IdentUtil.getServiceIdent()).withSampler(samplerConfig).withReporter(reporterConfig);
+        log().i("Update jaeger tracer");
 
-	    if (GlobalTracer.isRegistered()) {
-	    	try {
-		    	Field field = GlobalTracer.class.getDeclaredField("tracer");
-		    	if (!field.canAccess(null))
-		    		field.setAccessible(true);
-		    	Tracer tracer = (Tracer)field.get(null);
-		    	if (tracer != null && tracer instanceof JaegerTracer)
-		    		((JaegerTracer)tracer).close();
-		    	
-		    	field.set(null, NoopTracerFactory.create());
+        // prepare env
+        IConfig cfg = MApi.getCfg(JaegerTracerService.class);
+        for (String key : JAEGER_ENV) {
+            if (cfg != null && MString.isSet(cfg.getString(key, null)))
+                System.setProperty(key, cfg.getString(key, null));
+            else if (System.getenv(key) != null) System.setProperty(key, System.getenv(key));
+        }
 
-	    	} catch (Throwable t) {
-	    		log().e(t);
-	    	}
-	    }
+        Configuration.SamplerConfiguration samplerConfig =
+                Configuration.SamplerConfiguration.fromEnv();
+        Configuration.ReporterConfiguration reporterConfig =
+                Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
+        Configuration config =
+                new Configuration(IdentUtil.getServiceIdent())
+                        .withSampler(samplerConfig)
+                        .withReporter(reporterConfig);
 
-	    JaegerTracer tracer = null;
-	    if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
-	    	log().i("Create ThriftSender");
-		    Sender sender = new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
-		    if (sender == null)
-		    	log().e("Can't create ThriftSender");
-		    else {
-		    	RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
-		    	tracer = config.getTracerBuilder().withReporter(reporter).build();
-		    }
-	    }
-	    if (tracer == null) {
-	    	tracer = config.getTracer();
-	    }
-	    	
-	    if (!GlobalTracer.isRegistered())
-	    	GlobalTracer.register(tracer);
-	    else {
-	    	log().e("Could't register new tracer ");
-	    }
-	}
+        if (GlobalTracer.isRegistered()) {
+            try {
+                Field field = GlobalTracer.class.getDeclaredField("tracer");
+                if (!field.canAccess(null)) field.setAccessible(true);
+                Tracer tracer = (Tracer) field.get(null);
+                if (tracer != null && tracer instanceof JaegerTracer)
+                    ((JaegerTracer) tracer).close();
 
-	private void logEvent(PaxLoggingEvent e) {
-    	Span span = current();
-    	if (span == null) return;
-    	if (e.getLevel().toInt() > logLevel) return;
-    	
-    	Map<String, String> fields = new HashMap<>();
-    	fields.put("_level", e.getLevel().toString());
-    	fields.put("_msg", e.getMessage());
-    	fields.put("logger", e.getLoggerName());
-    	fields.put("thread", e.getThreadName());
-    	//PaxLocationInfo location = e.getLocationInformation();
-    	//fields.put("location", 
-    	//		location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName() + ":" + location.getLineNumber() + ")" );
-		span.log(fields );
-	}
-	
+                field.set(null, NoopTracerFactory.create());
+
+            } catch (Throwable t) {
+                log().e(t);
+            }
+        }
+
+        JaegerTracer tracer = null;
+        if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
+            log().i("Create ThriftSender");
+            Sender sender =
+                    new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
+            if (sender == null) log().e("Can't create ThriftSender");
+            else {
+                RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
+                tracer = config.getTracerBuilder().withReporter(reporter).build();
+            }
+        }
+        if (tracer == null) {
+            tracer = config.getTracer();
+        }
+
+        if (!GlobalTracer.isRegistered()) GlobalTracer.register(tracer);
+        else {
+            log().e("Could't register new tracer ");
+        }
+    }
+
+    private void logEvent(PaxLoggingEvent e) {
+        Span span = current();
+        if (span == null) return;
+        if (e.getLevel().toInt() > logLevel) return;
+
+        Map<String, String> fields = new HashMap<>();
+        fields.put("_level", e.getLevel().toString());
+        fields.put("_msg", e.getMessage());
+        fields.put("logger", e.getLoggerName());
+        fields.put("thread", e.getThreadName());
+        // PaxLocationInfo location = e.getLocationInformation();
+        // fields.put("location",
+        //		location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName()
+        // + ":" + location.getLineNumber() + ")" );
+        span.log(fields);
+    }
 }

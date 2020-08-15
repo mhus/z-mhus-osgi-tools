@@ -41,9 +41,7 @@ public class CmdBase extends AbstractCmd {
             index = 0,
             name = "cmd",
             required = true,
-            description = "Command:\n"
-                    + " get <ifc>\n"
-                    + " getall <ifc>",
+            description = "Command:\n" + " get <ifc>\n" + " getall <ifc>",
             multiValued = false)
     String cmd;
 
@@ -66,9 +64,11 @@ public class CmdBase extends AbstractCmd {
         }
 
         switch (cmd) {
-            case "test": {
-                System.out.println(M.l(ISimpleService.class));
-            } break;
+            case "test":
+                {
+                    System.out.println(M.l(ISimpleService.class));
+                }
+                break;
             case "get":
                 {
                     OsgiBundleClassLoader cl = new OsgiBundleClassLoader();

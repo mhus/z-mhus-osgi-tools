@@ -89,7 +89,7 @@ public class MOsgi {
         if (obj == null) return null;
         return obj;
     }
-    
+
     public static <T> T getService(Class<T> ifc, String filter) throws NotFoundException {
         List<T> list = getServices(ifc, filter);
         if (list.size() == 0) throw new NotFoundException("service not found", ifc, filter);
@@ -128,11 +128,8 @@ public class MOsgi {
     }
 
     /**
-     * Use 
-     * /@Reference
-     * private TimerFactory timerFactory;
-     * instead.
-     * 
+     * Use /@Reference private TimerFactory timerFactory; instead.
+     *
      * @return A timer factory
      */
     @Deprecated
@@ -153,7 +150,7 @@ public class MOsgi {
     public static String filterValue(String name, String value) {
         return "(" + name + "=" + value + ")";
     }
-    
+
     public static String filterServiceId(String name) {
         return "(" + Constants.SERVICE_ID + "=" + name + ")";
     }
@@ -169,7 +166,7 @@ public class MOsgi {
     public static String filterObjectClass(Class<?> clazz) {
         return "(" + Constants.OBJECTCLASS + "=" + clazz.getCanonicalName() + ")";
     }
-    
+
     public static String filterAdd(String... parts) {
         StringBuilder out = new StringBuilder().append("(&");
         for (String part : parts) out.append(part);
@@ -222,10 +219,8 @@ public class MOsgi {
      */
     public static BundleContext getBundleContext() {
         BundleContext context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
-        if (context == null)
-            context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
-        if (context == null)
-            log.w(MSystem.currentStackTrace("BundleContext is empty"));
+        if (context == null) context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
+        if (context == null) log.w(MSystem.currentStackTrace("BundleContext is empty"));
         return context;
     }
 
@@ -280,14 +275,16 @@ public class MOsgi {
      */
     public static Bundle getBundle(String name) throws NotFoundException {
         for (Bundle bundle : FrameworkUtil.getBundle(MOsgi.class).getBundleContext().getBundles())
-            if (bundle.getSymbolicName().equals(name) || name.equals(String.valueOf(bundle.getBundleId())) ) return bundle;
+            if (bundle.getSymbolicName().equals(name)
+                    || name.equals(String.valueOf(bundle.getBundleId()))) return bundle;
         throw new NotFoundException("Bundle not found", name);
     }
-    
-    public static Bundle getBundleOrNull(long bundleId) {
-        return FrameworkUtil.getBundle(org.apache.karaf.log.core.LogMBean.class).getBundleContext().getBundle(bundleId);
-    }
 
+    public static Bundle getBundleOrNull(long bundleId) {
+        return FrameworkUtil.getBundle(org.apache.karaf.log.core.LogMBean.class)
+                .getBundleContext()
+                .getBundle(bundleId);
+    }
 
     public static void runAfterActivation(
             ComponentContext ctx, Consumer<ComponentContext> consumer) {
@@ -317,21 +314,29 @@ public class MOsgi {
                 });
     }
 
-    
-    public void listenForServiceEvents(ComponentContext ctx, Class<?> service, Consumer<Event> consumer) {
-//      EVENT: org/osgi/framework/ServiceEvent/REGISTERED {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]], event.topics=org/osgi/framework/ServiceEvent/REGISTERED, service=[javax.sql.DataSource], service.id=265, service.objectClass=[javax.sql.DataSource], timestamp=1593221077477}
-//      EVENT: org/osgi/framework/ServiceEvent/UNREGISTERING {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]], event.topics=org/osgi/framework/ServiceEvent/UNREGISTERING, service=[javax.sql.DataSource], service.id=261, service.objectClass=[javax.sql.DataSource], timestamp=1593221069398}
-        Dictionary<String,Object> props = new Hashtable<>();
-        props.put(EventConstants.EVENT_TOPIC, new String[] {"org/osgi/framework/ServiceEvent/*"} );
-        EventHandler inst = new EventHandler() {
-            @Override
-            public void handleEvent(Event event) {
-                consumer.accept(event);
-            }
-        };
+    public void listenForServiceEvents(
+            ComponentContext ctx, Class<?> service, Consumer<Event> consumer) {
+        //      EVENT: org/osgi/framework/ServiceEvent/REGISTERED
+        // {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]],
+        // event.topics=org/osgi/framework/ServiceEvent/REGISTERED, service=[javax.sql.DataSource],
+        // service.id=265, service.objectClass=[javax.sql.DataSource], timestamp=1593221077477}
+        //      EVENT: org/osgi/framework/ServiceEvent/UNREGISTERING
+        // {event=org.osgi.framework.ServiceEvent[source=[javax.sql.DataSource]],
+        // event.topics=org/osgi/framework/ServiceEvent/UNREGISTERING,
+        // service=[javax.sql.DataSource], service.id=261,
+        // service.objectClass=[javax.sql.DataSource], timestamp=1593221069398}
+        Dictionary<String, Object> props = new Hashtable<>();
+        props.put(EventConstants.EVENT_TOPIC, new String[] {"org/osgi/framework/ServiceEvent/*"});
+        EventHandler inst =
+                new EventHandler() {
+                    @Override
+                    public void handleEvent(Event event) {
+                        consumer.accept(event);
+                    }
+                };
         ctx.getBundleContext().registerService(EventHandler.class, inst, props);
     }
-    
+
     public static void runAfterActivation(ComponentContext ctx, BundleStarter task) {
 
         if (ctx == null || task == null) return;
@@ -397,11 +402,11 @@ public class MOsgi {
     public static boolean touchConfig(Class<?> serviceClass) {
         return touchConfig(findServicePid(serviceClass));
     }
-    
+
     public static boolean touchConfig(String pid) {
         File file = MApi.getFile(MApi.SCOPE.ETC, pid + ".cfg");
         if (!file.exists()) {
-            //log.d("Touch configuration",pid,file);
+            // log.d("Touch configuration",pid,file);
             MFile.touch(file);
             return true;
         }
@@ -416,30 +421,31 @@ public class MOsgi {
         return findServicePid(clazz);
     }
 
-    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, ComponentContext ctx) {
+    public static Dictionary<String, Object> loadConfiguration(
+            ConfigurationAdmin admin, ComponentContext ctx) {
         return loadConfiguration(admin, getPid(ctx));
     }
 
-    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, Class<?> serviceClass) {
+    public static Dictionary<String, Object> loadConfiguration(
+            ConfigurationAdmin admin, Class<?> serviceClass) {
         return loadConfiguration(admin, findServicePid(serviceClass));
     }
-    
+
     public static String findServicePid(Class<?> service) {
         if (service == null) throw new NullPointerException();
         if (service.isInterface()) return service.getCanonicalName();
 
         try {
-            org.osgi.service.component.annotations.Component component = service.getAnnotation(org.osgi.service.component.annotations.Component.class);
+            org.osgi.service.component.annotations.Component component =
+                    service.getAnnotation(org.osgi.service.component.annotations.Component.class);
             if (component != null) {
                 if (component.configurationPid().length > 0) {
                     if (!component.configurationPid()[0].equals(Component.NAME))
                         return component.configurationPid()[0];
                 }
-                if (component.name().length() > 0)
-                    return component.name();
+                if (component.name().length() > 0) return component.name();
                 if (component.service().length > 0)
                     return component.service()[0].getCanonicalName();
-                
             }
         } catch (Throwable e) {
             // will create a loop log.d(service,e);
@@ -448,80 +454,84 @@ public class MOsgi {
             return service.getInterfaces()[0].getCanonicalName();
         }
 
-        if (log != null)
-            log.w("Class is not a service",service.getCanonicalName());
+        if (log != null) log.w("Class is not a service", service.getCanonicalName());
         return service.getCanonicalName();
     }
 
-    public static Dictionary<String, Object> loadConfiguration(ConfigurationAdmin admin, String pid) {
+    public static Dictionary<String, Object> loadConfiguration(
+            ConfigurationAdmin admin, String pid) {
         try {
             touchConfig(pid);
             // ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
             Configuration config = admin.getConfiguration(pid);
-            if (config == null)
-                config = admin.createFactoryConfiguration(pid);
+            if (config == null) config = admin.createFactoryConfiguration(pid);
             Dictionary<String, Object> prop = config.getProperties();
             if (prop == null) prop = new Hashtable<>();
             return prop;
         } catch (Throwable t) {
-            log.w(pid,t);
+            log.w(pid, t);
         }
         return new Hashtable<>();
     }
-    
-    public static boolean saveConfiguration(ConfigurationAdmin admin, ComponentContext ctx, Dictionary<String, Object> properties) {
+
+    public static boolean saveConfiguration(
+            ConfigurationAdmin admin, ComponentContext ctx, Dictionary<String, Object> properties) {
         return saveConfiguration(admin, getPid(ctx), properties);
     }
-    
-    public static boolean saveConfiguration(ConfigurationAdmin admin, Class<?> serviceClass, Dictionary<String, Object> properties) {
+
+    public static boolean saveConfiguration(
+            ConfigurationAdmin admin,
+            Class<?> serviceClass,
+            Dictionary<String, Object> properties) {
         return saveConfiguration(admin, findServicePid(serviceClass), properties);
     }
-    
-    public static boolean saveConfiguration(ConfigurationAdmin admin, String pid, Dictionary<String, Object> properties) {
+
+    public static boolean saveConfiguration(
+            ConfigurationAdmin admin, String pid, Dictionary<String, Object> properties) {
         try {
             touchConfig(pid); // Wait until config is loaded?!
             // ConfigurationAdmin admin = M.l(ConfigurationAdmin.class);
             Configuration config = admin.getConfiguration(pid);
-            if (config == null)
-                config = admin.createFactoryConfiguration(pid);
+            if (config == null) config = admin.createFactoryConfiguration(pid);
             config.update(properties);
             return true;
         } catch (Throwable t) {
-            log.w(pid,t);
+            log.w(pid, t);
         }
         return false;
     }
 
     /**
-     * Compile a list of properties from the input parameters.
-     * Input parameters are alternating key-value values.
+     * Compile a list of properties from the input parameters. Input parameters are alternating
+     * key-value values.
+     *
      * @param kv key, value, key, value, ...
      * @return The property dictionary
      */
-    public static Dictionary<String, ?> createProperties(Object ... kv) {
+    public static Dictionary<String, ?> createProperties(Object... kv) {
         Hashtable<String, Object> prop = new Hashtable<>();
-        for (int i = 0; i < kv.length-1; i=i+2) {
-            prop.put(String.valueOf(kv[i]), kv[i+1]);
+        for (int i = 0; i < kv.length - 1; i = i + 2) {
+            prop.put(String.valueOf(kv[i]), kv[i + 1]);
         }
         return prop;
     }
 
-    public static <T> List<String> collectStringProperty(List<Service<T>> serviceRefs, String propertyName) {
+    public static <T> List<String> collectStringProperty(
+            List<Service<T>> serviceRefs, String propertyName) {
         ArrayList<String> out = new ArrayList<>(serviceRefs.size());
         for (Service<?> ref : serviceRefs) {
             Object value = ref.getReference().getProperty(propertyName);
-            if (value != null)
-                out.add(String.valueOf(value));
+            if (value != null) out.add(String.valueOf(value));
         }
         return out;
     }
-    
-    public static <T> List<Object> collectProperty(List<Service<T>> serviceRefs, String propertyName) {
+
+    public static <T> List<Object> collectProperty(
+            List<Service<T>> serviceRefs, String propertyName) {
         ArrayList<Object> out = new ArrayList<>(serviceRefs.size());
         for (Service<?> ref : serviceRefs) {
             Object value = ref.getReference().getProperty(propertyName);
-            if (value != null)
-                out.add(value);
+            if (value != null) out.add(value);
         }
         return null;
     }
@@ -529,5 +539,4 @@ public class MOsgi {
     public static boolean isValid(BundleContext bundleContext) {
         return bundleContext != null && bundleContext.getBundle().getState() != Bundle.UNINSTALLED;
     }
-
 }

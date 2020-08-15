@@ -24,11 +24,8 @@ public class CmdServiceDelete extends AbstractCmd {
     public Object execute2() throws Exception {
         IServiceManager api = M.l(IServiceManager.class);
         boolean ret = api.delete(impl);
-        if (ret)
-            System.out.println("Deleted");
-        else
-            System.out.println("Skipped");
+        if (ret) System.out.println("Deleted");
+        else System.out.println("Skipped");
         return null;
     }
-
 }

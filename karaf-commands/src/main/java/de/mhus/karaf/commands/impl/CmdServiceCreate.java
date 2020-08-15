@@ -28,7 +28,7 @@ public class CmdServiceCreate extends AbstractCmd {
             description = "Bundle name or id",
             multiValued = false)
     String bundleName;
-    
+
     @Option(
             name = "-u",
             aliases = {"--update"},
@@ -36,21 +36,14 @@ public class CmdServiceCreate extends AbstractCmd {
             required = false,
             multiValued = false)
     boolean update = false;
-    
-    
+
     @Override
     public Object execute2() throws Exception {
         IServiceManager api = M.l(IServiceManager.class);
-        boolean ret = update ? 
-                api.update(impl, bundleName)
-                :
-                api.create(impl, bundleName);
-                
-        if (ret)
-            System.out.println("Created");
-        else
-            System.out.println("Skipped");
+        boolean ret = update ? api.update(impl, bundleName) : api.create(impl, bundleName);
+
+        if (ret) System.out.println("Created");
+        else System.out.println("Skipped");
         return null;
     }
-
 }

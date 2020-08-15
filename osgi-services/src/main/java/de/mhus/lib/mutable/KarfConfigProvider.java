@@ -31,7 +31,7 @@ public class KarfConfigProvider extends CfgProvider {
             }
         }
     }
-    
+
     @Override
     public IConfig getConfig() {
         return config;
@@ -53,8 +53,5 @@ public class KarfConfigProvider extends CfgProvider {
     }
 
     @Override
-    public void doStop() {
-
-    }
-
+    public void doStop() {}
 }

@@ -33,29 +33,26 @@ import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.services.PersistentWatch;
 
-@Component(
-        immediate = true,
-        name = PersistentWatchImpl.PID,
-        service = PersistentWatch.class)
+@Component(immediate = true, name = PersistentWatchImpl.PID, service = PersistentWatch.class)
 public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
     public static final String PID = "de.mhus.osgi.commands.watch.PersistentWatch";
     private static final String CONFIG_LIST = "watch";
- 
-//    private BundleWatcher bundleWatcher;
-    
-    @Reference
-    private ConfigurationAdmin configurationAdmin;
+
+    //    private BundleWatcher bundleWatcher;
+
+    @Reference private ConfigurationAdmin configurationAdmin;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
-        MThread.run(() -> {
-            while (MOsgi.getServiceOrNull(BundleWatcher.class) == null) {
-                if (!MOsgi.isValid(ctx.getBundleContext())) return;
-                MThread.sleep(1000);
-            }
-            doConfigure();
-        });
+        MThread.run(
+                () -> {
+                    while (MOsgi.getServiceOrNull(BundleWatcher.class) == null) {
+                        if (!MOsgi.isValid(ctx.getBundleContext())) return;
+                        MThread.sleep(1000);
+                    }
+                    doConfigure();
+                });
     }
 
     @Modified
@@ -64,7 +61,7 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
     }
 
     private void doConfigure() {
-        
+
         log().i("doConfigure");
         try {
             BundleWatcher bundleWatcher = MOsgi.getService(BundleWatcher.class);
@@ -89,9 +86,8 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
 
     private List<String> readFile() throws IOException {
         Dictionary<String, Object> prop = MOsgi.loadConfiguration(configurationAdmin, PID);
-        String[] list = (String[])prop.get(CONFIG_LIST);
-        if (list != null)
-            return MCollection.toList(list);
+        String[] list = (String[]) prop.get(CONFIG_LIST);
+        if (list != null) return MCollection.toList(list);
         return new LinkedList<>();
     }
 
@@ -147,13 +143,13 @@ public class PersistentWatchImpl extends MLog implements PersistentWatch {
         }
     }
 
-//    @Reference(policy = ReferencePolicy.DYNAMIC, unbind = "unsetBundleWatcher")
-//    public void setBundleWatcher(BundleWatcher bundleWatcher) {
-//        this.bundleWatcher = bundleWatcher;
-//        doConfigure();
-//    }
-//
-//    public void unsetBundleWatcher(BundleWatcher bundleWatcher) {
-//        
-//    }
+    //    @Reference(policy = ReferencePolicy.DYNAMIC, unbind = "unsetBundleWatcher")
+    //    public void setBundleWatcher(BundleWatcher bundleWatcher) {
+    //        this.bundleWatcher = bundleWatcher;
+    //        doConfigure();
+    //    }
+    //
+    //    public void unsetBundleWatcher(BundleWatcher bundleWatcher) {
+    //
+    //    }
 }

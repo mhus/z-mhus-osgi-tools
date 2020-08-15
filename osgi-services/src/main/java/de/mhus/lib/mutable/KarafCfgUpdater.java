@@ -13,26 +13,25 @@ import de.mhus.osgi.api.MOsgi;
 @Component(property = "event.topics=org/osgi/framework/ServiceEvent/MODIFIED")
 public class KarafCfgUpdater implements EventHandler {
 
-	
-	private BundleContext ctx;
+    private BundleContext ctx;
 
-	@Activate
-	public void doActivate(BundleContext ctx) {
-		this.ctx = ctx;
-	}
+    @Activate
+    public void doActivate(BundleContext ctx) {
+        this.ctx = ctx;
+    }
 
     @Override
     public void handleEvent(Event event) {
         try {
             @SuppressWarnings("unchecked")
-            ServiceReference<Object> serviceRef = (ServiceReference<Object>) event.getProperty("service");
+            ServiceReference<Object> serviceRef =
+                    (ServiceReference<Object>) event.getProperty("service");
             Object service = ctx.getService(serviceRef);
             String pid = MOsgi.getPid(service.getClass());
-            ((KarafCfgManager)MApi.get().getCfgManager()).update(pid);
+            ((KarafCfgManager) MApi.get().getCfgManager()).update(pid);
             MApi.getCfgUpdater().doUpdate(pid);
         } catch (Throwable t) {
             t.printStackTrace(); // should not happen
         }
     }
-
 }

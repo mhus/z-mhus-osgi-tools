@@ -29,13 +29,15 @@ public class TemplateUtils {
 
     /**
      * The method will close output and input stream.
+     *
      * @param outFile
      * @param templateIs
      * @param properties
      * @throws MException
      */
     public static void createFromTemplate(
-            File outFile, InputStream templateIs, HashMap<String, Object> properties) throws MException {
+            File outFile, InputStream templateIs, HashMap<String, Object> properties)
+            throws MException {
         if (outFile.exists()) {
             throw new IllegalArgumentException(
                     "File "
@@ -50,17 +52,20 @@ public class TemplateUtils {
             throw new RuntimeException("Can not create " + outFile, e);
         }
     }
-    
+
     /**
-     * 
      * @param out
      * @param templateIs
      * @param properties
-     * @param close 
+     * @param close
      * @throws MException
      */
     public static void createFromTemplate(
-            PrintStream out, InputStream templateIs, HashMap<String, Object> properties, boolean close) throws MException {
+            PrintStream out,
+            InputStream templateIs,
+            HashMap<String, Object> properties,
+            boolean close)
+            throws MException {
         Scanner scanner = null;
         try {
             // read it line at a time so that we can use the platform line ending when we write it

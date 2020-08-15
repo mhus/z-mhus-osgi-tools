@@ -34,16 +34,15 @@ public class DataSourceUtil {
         BundleContext context = MOsgi.getBundleContext();
         return getDataSource(name, context);
     }
-    
+
     public static DataSource getDataSource(String name, BundleContext context) {
         try {
-            // BundleContext context = FrameworkUtil.getBundle(DataSourceUtil.class).getBundleContext();
+            // BundleContext context =
+            // FrameworkUtil.getBundle(DataSourceUtil.class).getBundleContext();
             if (context == null) return null;
             Collection<ServiceReference<DataSource>> refs =
-                    context
-                            .getServiceReferences(
-                                    DataSource.class,
-                                    "(" + SERVICE_JNDI_NAME_KEY + "=" + name + ")");
+                    context.getServiceReferences(
+                            DataSource.class, "(" + SERVICE_JNDI_NAME_KEY + "=" + name + ")");
             if (refs.size() > 0) {
                 return context.getService(refs.iterator().next());
             }
@@ -92,5 +91,4 @@ public class DataSourceUtil {
 
         context.registerService(DataSource.class, dataSource, properties);
     }
-    
 }

@@ -31,6 +31,7 @@ public class CmdHealthCheck extends AbstractCmd {
             required = false,
             multiValued = false)
     private boolean checkCombineTagsWithOr = false;
+
     @Option(
             name = "-f",
             aliases = {"--force"},
@@ -38,7 +39,7 @@ public class CmdHealthCheck extends AbstractCmd {
             required = false,
             multiValued = false)
     private boolean checkForceInstantExecution = false;
-    
+
     @Option(
             name = "-t",
             aliases = {"--timeout"},
@@ -46,7 +47,7 @@ public class CmdHealthCheck extends AbstractCmd {
             required = false,
             multiValued = false)
     private String checkOverrideGlobalTimeoutStr = null;
-    
+
     @Argument(
             index = 0,
             name = "tags",
@@ -59,9 +60,9 @@ public class CmdHealthCheck extends AbstractCmd {
     public Object execute2() throws Exception {
         HealthCheckExecutor healthCheckExecutor = M.l(HealthCheckExecutor.class);
         if (healthCheckExecutor == null) System.out.println("HealthCheckExecutor not found");
-        
+
         ConsoleTable out = new ConsoleTable(tblOpt);
-        out.setHeaderValues("Name", "LogLevel","Status","Message","Exception");
+        out.setHeaderValues("Name", "LogLevel", "Status", "Message", "Exception");
         if (healthCheckExecutor != null) {
             // https://github.com/apache/felix/tree/archived/healthcheck/webconsoleplugin
 
@@ -70,18 +71,28 @@ public class CmdHealthCheck extends AbstractCmd {
             options.setForceInstantExecution(checkForceInstantExecution);
             if (MString.isSet(checkOverrideGlobalTimeoutStr))
                 try {
-                    options.setOverrideGlobalTimeout(Integer.valueOf(checkOverrideGlobalTimeoutStr));
+                    options.setOverrideGlobalTimeout(
+                            Integer.valueOf(checkOverrideGlobalTimeoutStr));
                 } catch (NumberFormatException nfe) {
                     // override not set in UI
                 }
-            HealthCheckSelector selector = MString.isSet(checkTags) ? HealthCheckSelector.tags(checkTags.split(",")) : HealthCheckSelector.empty();
-            Collection<HealthCheckExecutionResult> results = healthCheckExecutor.execute(selector, options);
+            HealthCheckSelector selector =
+                    MString.isSet(checkTags)
+                            ? HealthCheckSelector.tags(checkTags.split(","))
+                            : HealthCheckSelector.empty();
+            Collection<HealthCheckExecutionResult> results =
+                    healthCheckExecutor.execute(selector, options);
             for (HealthCheckExecutionResult result : results) {
                 try {
                     String name = result.getHealthCheckMetadata().getName();
                     Result status = result.getHealthCheckResult();
                     for (Entry entry : status) {
-                        out.addRowValues(name, entry.getLogLevel(), entry.getStatus(), entry.getMessage(),entry.getException());
+                        out.addRowValues(
+                                name,
+                                entry.getLogLevel(),
+                                entry.getStatus(),
+                                entry.getMessage(),
+                                entry.getException());
                     }
                 } catch (Throwable t) {
                     log().e(t);
@@ -93,10 +104,15 @@ public class CmdHealthCheck extends AbstractCmd {
                 try {
                     String name = check.toString();
                     int pos = name.indexOf('@');
-                    if (pos > 0) name = name.substring(0,pos);
+                    if (pos > 0) name = name.substring(0, pos);
                     Result status = check.execute();
                     for (Entry entry : status) {
-                        out.addRowValues(name, entry.getLogLevel(), entry.getStatus(), entry.getMessage(),entry.getException());
+                        out.addRowValues(
+                                name,
+                                entry.getLogLevel(),
+                                entry.getStatus(),
+                                entry.getMessage(),
+                                entry.getException());
                     }
                 } catch (Throwable t) {
                     log().e(t);
@@ -104,8 +120,7 @@ public class CmdHealthCheck extends AbstractCmd {
             }
         }
         out.print();
-        
+
         return null;
     }
-
 }

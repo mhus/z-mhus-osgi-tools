@@ -53,33 +53,32 @@ public class CmdServiceList extends AbstractCmd {
 
         ConsoleTable tbl = new ConsoleTable(tblOpt);
         tbl.setLineSpacer(true);
-        if (inspect)
-            tbl.setHeaderValues("Name","Bundle","Info");
-        else
-            tbl.setHeaderValues("Name","Bundle","Properties","Using");
+        if (inspect) tbl.setHeaderValues("Name", "Bundle", "Info");
+        else tbl.setHeaderValues("Name", "Bundle", "Properties", "Using");
 
         int serviceIdFilter = MCast.toint(filter, -1);
-        if (serviceIdFilter >=0 )
-            filter = null;
+        if (serviceIdFilter >= 0) filter = null;
 
         BundleContext ctx = FrameworkUtil.getBundle(CmdServiceList.class).getBundleContext();
-        for ( ServiceReference<?> ref : ctx.getAllServiceReferences(null, filter)) {
-            if (serviceIdFilter >= 0 && MCast.toint(ref.getProperty(MOsgi.SERVICE_ID), -1) != serviceIdFilter)
+        for (ServiceReference<?> ref : ctx.getAllServiceReferences(null, filter)) {
+            if (serviceIdFilter >= 0
+                    && MCast.toint(ref.getProperty(MOsgi.SERVICE_ID), -1) != serviceIdFilter)
                 continue;
             Object name = ref.getProperty(MOsgi.COMPONENT_NAME);
-            if (name == null) 
-                name = "[" + ref.getProperty(MOsgi.SERVICE_ID) + "]";
-            else
-                name = name.toString() + "\n[" + ref.getProperty(MOsgi.SERVICE_ID) + "]";
+            if (name == null) name = "[" + ref.getProperty(MOsgi.SERVICE_ID) + "]";
+            else name = name.toString() + "\n[" + ref.getProperty(MOsgi.SERVICE_ID) + "]";
             StringBuilder props = new StringBuilder();
             for (String key : ref.getPropertyKeys())
-                props.append(key).append('=').append(MString.toString(ref.getProperty(key))).append('\n');
+                props.append(key)
+                        .append('=')
+                        .append(MString.toString(ref.getProperty(key)))
+                        .append('\n');
             StringBuilder using = new StringBuilder();
             Bundle[] usingArray = ref.getUsingBundles();
             if (usingArray != null)
                 for (Bundle u : usingArray)
                     using.append(u.getSymbolicName() + " [" + u.getBundleId() + "]");
-            
+
             if (inspect) {
                 String info = "";
                 String clazz = "";
@@ -90,9 +89,24 @@ public class CmdServiceList extends AbstractCmd {
                 } catch (Throwable t) {
                     info = t.getMessage();
                 }
-                tbl.addRowValues(name, ref.getBundle().getSymbolicName() + " [" + ref.getBundle().getBundleId() + "]\n(" + clazz + ")",info);
+                tbl.addRowValues(
+                        name,
+                        ref.getBundle().getSymbolicName()
+                                + " ["
+                                + ref.getBundle().getBundleId()
+                                + "]\n("
+                                + clazz
+                                + ")",
+                        info);
             } else
-                tbl.addRowValues(name, ref.getBundle().getSymbolicName() + " [" + ref.getBundle().getBundleId() + "]",props,using);
+                tbl.addRowValues(
+                        name,
+                        ref.getBundle().getSymbolicName()
+                                + " ["
+                                + ref.getBundle().getBundleId()
+                                + "]",
+                        props,
+                        using);
         }
 
         tbl.print();

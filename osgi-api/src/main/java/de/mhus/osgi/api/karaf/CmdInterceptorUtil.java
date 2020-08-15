@@ -40,11 +40,14 @@ public class CmdInterceptorUtil {
             session.put(SESSION_KEY, interceptors);
         } else {
             for (CmdInterceptor inter : interceptors) {
-                if (inter.getClass().getCanonicalName().equals(interceptor.getClass().getCanonicalName())) {
+                if (inter.getClass()
+                        .getCanonicalName()
+                        .equals(interceptor.getClass().getCanonicalName())) {
                     interceptors.remove(inter);
                     try {
                         inter.onCmdEnd(session);
-                    } catch (Throwable t) {}
+                    } catch (Throwable t) {
+                    }
                 }
             }
         }
@@ -71,7 +74,8 @@ public class CmdInterceptorUtil {
                 interceptors.remove(interceptor);
                 try {
                     interceptor.onCmdEnd(session);
-                } catch (Throwable t) {}
+                } catch (Throwable t) {
+                }
                 return (T) interceptor;
             }
         }

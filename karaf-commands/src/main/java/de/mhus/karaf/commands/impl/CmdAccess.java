@@ -31,13 +31,12 @@ public class CmdAccess extends AbstractCmd {
             required = true,
             description =
                     "Command to execute"
-                    + "\n  admin - try to login as admin"
-                    + "\n  login <user> [password]"
-                    + "\n  logout"
-                    + "\n  id - print current id"
-                    + "\n  subject - print current subject and session information"
-                    + "\n  restart - restart engine"
-            ,
+                            + "\n  admin - try to login as admin"
+                            + "\n  login <user> [password]"
+                            + "\n  logout"
+                            + "\n  id - print current id"
+                            + "\n  subject - print current subject and session information"
+                            + "\n  restart - restart engine",
             multiValued = false)
     String cmd;
 
@@ -48,40 +47,34 @@ public class CmdAccess extends AbstractCmd {
             description = "Parameters",
             multiValued = true)
     String[] parameters;
-    
+
     @Override
     public Object execute2() throws Exception {
 
         if (cmd.equals("restart")) {
             M.l(AccessApi.class).restart();
             System.out.println("OK");
-        } else
-        if (cmd.equals("admin")) {
+        } else if (cmd.equals("admin")) {
             String user = "admin";
             String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
             Subject subject = M.l(AccessApi.class).createSubject();
             AccessUtil.login(subject, user, pass, true, Locale.getDefault());
             CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
             System.out.println("OK");
-        } else
-        if (cmd.equals("logout")) {
+        } else if (cmd.equals("logout")) {
             CmdInterceptorUtil.removeInterceptor(session, AaaInterceptor.class);
-//            CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(null));
+            //            CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(null));
             System.out.println("OK");
-        } else
-        if (cmd.equals("login")) {
+        } else if (cmd.equals("login")) {
             String user = parameters[0];
             String pass = null;
-            if (parameters.length > 1)
-                pass = parameters[1];
-            else
-                pass = Console.get().readPassword();
+            if (parameters.length > 1) pass = parameters[1];
+            else pass = Console.get().readPassword();
             Subject subject = M.l(AccessApi.class).createSubject();
             AccessUtil.login(subject, user, pass, true, Locale.getDefault());
             CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
             System.out.println("OK");
-        } else
-        if (cmd.equals("id")) {
+        } else if (cmd.equals("id")) {
             System.out.println(AccessUtil.getPrincipal());
         } else if (cmd.equals("subject")) {
             Subject subject = AccessUtil.getSubject();
@@ -93,7 +86,6 @@ public class CmdAccess extends AbstractCmd {
         return null;
     }
 
-    
     private static class AaaInterceptor implements CmdInterceptor {
 
         private Subject subject;
@@ -105,15 +97,13 @@ public class CmdAccess extends AbstractCmd {
 
         @Override
         public void onCmdStart(Session session) {
-            if (subject != null)
-                env = AccessUtil.useSubject(subject);
+            if (subject != null) env = AccessUtil.useSubject(subject);
         }
 
         @Override
         public void onCmdEnd(Session session) {
-            if (env != null)
-                env.close();
+            if (env != null) env.close();
             env = null;
         }
-    }    
+    }
 }

@@ -44,10 +44,7 @@ import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
 import de.mhus.osgi.api.cache.LocalCacheService;
 
-/**
- *
- * @author mikehummel
- */
+/** @author mikehummel */
 public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, IApiInternal {
 
     private boolean fullTrace = false;
@@ -58,7 +55,6 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     protected MCfgManager createMCfgManager() {
         return new KarafCfgManager();
     }
-
 
     @Override
     public void doInitialize(ClassLoader coreLoader) {
@@ -76,7 +72,6 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         } catch (Throwable t) {
             System.out.println("Can't initialize housekeeper base: " + t);
         }
-
     }
 
     @Override
@@ -142,18 +137,19 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         if (ifc == null) return null;
 
         T result = null;
-        
+
         if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
 
             if (apiCache == null) {
                 try {
                     LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
-                    apiCache = cacheService.createCache(
-                            FrameworkUtil.getBundle(KarafMApiImpl.class).getBundleContext(),
-                            "baseApi", 
-                            String.class, Container.class, 
-                            100
-                            );
+                    apiCache =
+                            cacheService.createCache(
+                                    FrameworkUtil.getBundle(KarafMApiImpl.class).getBundleContext(),
+                                    "baseApi",
+                                    String.class,
+                                    Container.class,
+                                    100);
                 } catch (NotFoundException e) {
                     MApi.dirtyLogTrace(e);
                 }
@@ -164,14 +160,15 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                 cached = apiCache.get(ifc.getCanonicalName());
                 if (cached != null) {
                     Bundle bundle = MOsgi.getBundleOrNull(cached.bundleId);
-                    if (bundle == null || bundle.getState() != Bundle.ACTIVE
+                    if (bundle == null
+                            || bundle.getState() != Bundle.ACTIVE
                             || cached.modified != bundle.getLastModified()) {
                         apiCache.remove(cached.ifc.getCanonicalName());
                         cached = null;
                     }
                 }
             }
-            
+
             if (cached == null) {
                 Bundle bundle = FrameworkUtil.getBundle(KarafMApiImpl.class);
                 if (bundle != null) {
@@ -184,15 +181,16 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                         }
                         ServiceReference<T> ref = null;
                         try {
-                            Collection<ServiceReference<T>> refs = context.getServiceReferences(ifc, filter);
+                            Collection<ServiceReference<T>> refs =
+                                    context.getServiceReferences(ifc, filter);
                             Iterator<ServiceReference<T>> refsIterator = refs.iterator();
-                            
+
+                            if (refsIterator.hasNext()) ref = refs.iterator().next();
                             if (refsIterator.hasNext())
-                                ref = refs.iterator().next();
-                            if (refsIterator.hasNext())
-                                MApi.dirtyLogDebug("more then one service found for singleton",ifc,filter);
+                                MApi.dirtyLogDebug(
+                                        "more then one service found for singleton", ifc, filter);
                         } catch (InvalidSyntaxException e) {
-                            MApi.dirtyLogError(ifc,filter,e);
+                            MApi.dirtyLogError(ifc, filter, e);
                         }
                         if (ref != null) {
                             if (ref.getBundle().getState() != Bundle.ACTIVE) {
@@ -220,24 +218,21 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                 cached.api = obj;
                                 cached.ifc = ifc;
                                 cached.filter = filter;
-                                if (apiCache != null)
-                                    apiCache.put(ifc.getCanonicalName(), cached);
+                                if (apiCache != null) apiCache.put(ifc.getCanonicalName(), cached);
                             }
                         }
                     }
                 }
             }
-            if (cached != null)
-                result = (T) cached.api;
+            if (cached != null) result = (T) cached.api;
         }
-        
-        if (result == null)
-            result = super.lookup(ifc, def);
-        
+
+        if (result == null) result = super.lookup(ifc, def);
+
         if (result != null) {
             AccessUtil.checkPermission(result);
         }
-            
+
         return result;
     }
 
@@ -250,7 +245,5 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         public Object api;
         public String bundleName;
         public long bundleId;
-
     }
-
 }

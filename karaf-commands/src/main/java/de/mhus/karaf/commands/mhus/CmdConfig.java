@@ -116,7 +116,8 @@ public class CmdConfig extends AbstractCmd {
             case "dump":
                 {
                     for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
-                        System.out.println(">>> " + provider.getClass().getCanonicalName() + " " + provider);
+                        System.out.println(
+                                ">>> " + provider.getClass().getCanonicalName() + " " + provider);
                         IConfig cfg = provider.getConfig();
                         System.out.println(cfg);
                         System.out.println("<<<");
@@ -132,39 +133,49 @@ public class CmdConfig extends AbstractCmd {
                 }
                 break;
             case "providers":
-            {
-                ConsoleTable out = new ConsoleTable(tblOpt);
-                out.setHeaderValues(
-                        "Owner", "Key", "Value", "Type");
-                MCfgManager api = MApi.get().getCfgManager();
-                for (String owner : api.getOwners()) {
-                    if (parameters == null || parameters.length < 1 || parameters[0].equals(owner)) {
-                        out.addRowValues(owner, "", "", "");
-                        IConfig cfg = api.getCfg(owner);
-                        for (String key : cfg.keys())
-                        out.addRowValues("", key, cfg.get(key), cfg.get(key).getClass().getCanonicalName());
+                {
+                    ConsoleTable out = new ConsoleTable(tblOpt);
+                    out.setHeaderValues("Owner", "Key", "Value", "Type");
+                    MCfgManager api = MApi.get().getCfgManager();
+                    for (String owner : api.getOwners()) {
+                        if (parameters == null
+                                || parameters.length < 1
+                                || parameters[0].equals(owner)) {
+                            out.addRowValues(owner, "", "", "");
+                            IConfig cfg = api.getCfg(owner);
+                            for (String key : cfg.keys())
+                                out.addRowValues(
+                                        "",
+                                        key,
+                                        cfg.get(key),
+                                        cfg.get(key).getClass().getCanonicalName());
+                        }
                     }
+                    out.print();
                 }
-                out.print();
-            }
-            break;
+                break;
             case "reinit":
                 {
                     MApi.get().getCfgManager();
-                    ((DefaultMApi)MApi.get()).startInitiators();
+                    ((DefaultMApi) MApi.get()).startInitiators();
                     System.out.println("ok");
                 }
                 break;
-            case "files": {
-                MCfgManager api = MApi.get().getCfgManager();
-                for (File file : api.getMhusConfigFiles())
-                    System.out.println(file.getAbsolutePath());
-            } break;
-            case "update": {
-                String name = parameters != null && parameters.length > 0 ? parameters[0] : null;
-                MApi.getCfgUpdater().doUpdate(name);
-                System.out.println("Done");
-            } break;
+            case "files":
+                {
+                    MCfgManager api = MApi.get().getCfgManager();
+                    for (File file : api.getMhusConfigFiles())
+                        System.out.println(file.getAbsolutePath());
+                }
+                break;
+            case "update":
+                {
+                    String name =
+                            parameters != null && parameters.length > 0 ? parameters[0] : null;
+                    MApi.getCfgUpdater().doUpdate(name);
+                    System.out.println("Done");
+                }
+                break;
             default:
                 System.out.println("Command not found");
         }

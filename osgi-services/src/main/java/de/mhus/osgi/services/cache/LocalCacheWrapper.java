@@ -26,54 +26,62 @@ import de.mhus.lib.core.MLog;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
 
-public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
+public class LocalCacheWrapper<K, V> extends MLog implements LocalCache<K, V> {
 
-    private Cache<K,V> instance;
+    private Cache<K, V> instance;
     private CacheManager manager;
     private String name;
     private StatisticsService statisticsService;
     private BundleContext bundleContext;
+
     @SuppressWarnings("rawtypes")
     private ServiceRegistration<LocalCache> serviceRegistration;
 
-    public LocalCacheWrapper(CacheManager cacheManager, Cache<K, V> cache, String name, BundleContext bundleContext, StatisticsService statisticsService) {
-        log().d("open",name);
+    public LocalCacheWrapper(
+            CacheManager cacheManager,
+            Cache<K, V> cache,
+            String name,
+            BundleContext bundleContext,
+            StatisticsService statisticsService) {
+        log().d("open", name);
         this.manager = cacheManager;
         this.instance = cache;
         this.name = name;
         this.statisticsService = statisticsService;
         this.bundleContext = bundleContext;
-        
-        serviceRegistration = bundleContext.registerService(LocalCache.class, this, MOsgi.createProperties("name",name));
+
+        serviceRegistration =
+                bundleContext.registerService(
+                        LocalCache.class, this, MOsgi.createProperties("name", name));
         try {
-            bundleContext.addServiceListener(ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
+            bundleContext.addServiceListener(
+                    ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
         } catch (InvalidSyntaxException e) {
-            log().e(name,e);
+            log().e(name, e);
         }
     }
 
     private Object serviceListener(ServiceEvent ev) {
-        if (ev.getServiceReference().equals(serviceRegistration.getReference()) && ev.getType() == ServiceEvent.UNREGISTERING )
-            log().d("unregister",name);
-            try {
-                serviceRegistration = null;
-                close();
-            } catch (IOException e) {
-                log().e(name,e);
-                
-            }
+        if (ev.getServiceReference().equals(serviceRegistration.getReference())
+                && ev.getType() == ServiceEvent.UNREGISTERING) log().d("unregister", name);
+        try {
+            serviceRegistration = null;
+            close();
+        } catch (IOException e) {
+            log().e(name, e);
+        }
         return null;
     }
 
     public CacheStatistics getCacheStatistics() {
         return statisticsService.getCacheStatistics(name);
     }
-    
+
     @Override
     public CacheManager getCacheManager() {
         return manager;
     }
-    
+
     @Override
     public void forEach(Consumer<? super Entry<K, V>> action) {
         instance.forEach(action);
@@ -140,7 +148,8 @@ public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
     }
 
     @Override
-    public boolean replace(K key, V oldValue, V newValue) throws CacheLoadingException, CacheWritingException {
+    public boolean replace(K key, V oldValue, V newValue)
+            throws CacheLoadingException, CacheWritingException {
         return instance.replace(key, oldValue, newValue);
     }
 
@@ -156,10 +165,11 @@ public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
 
     @Override
     public void close() throws IOException {
-        log().d("close",name);
+        log().d("close", name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
-            ServiceRegistration<LocalCache> sr = serviceRegistration; // need to set it null before unregister for the listener
+            ServiceRegistration<LocalCache> sr =
+                    serviceRegistration; // need to set it null before unregister for the listener
             serviceRegistration = null;
             sr.unregister();
         }
@@ -173,5 +183,4 @@ public class LocalCacheWrapper<K,V> extends MLog implements LocalCache<K, V> {
     public Bundle getBundle() {
         return bundleContext.getBundle();
     }
-
 }

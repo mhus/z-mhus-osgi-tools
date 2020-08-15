@@ -252,8 +252,8 @@ public class CmdKeychain extends AbstractCmd {
                 description = pem.getString(PemBlock.DESCRIPTION, "");
                 if (id == null) id = pem.getString(PemBlock.IDENT, null);
             }
-//            if (pem != null && name.equals("")) 
-//                name = pem.getString("");
+            //            if (pem != null && name.equals(""))
+            //                name = pem.getString("");
 
             DefaultEntry entry = new DefaultEntry(type, name, description, content);
             if (id != null)
@@ -475,8 +475,7 @@ public class CmdKeychain extends AbstractCmd {
             System.out.println(MPassword.encode(MPassword.METHOD.HASH_MD5, parameters[1]));
         } else if (cmd.equals("decodepassword")) {
             System.out.println(MPassword.decode(parameters[0]));
-        } else
-            System.out.println("Command unknown");
+        } else System.out.println("Command unknown");
 
         return null;
     }

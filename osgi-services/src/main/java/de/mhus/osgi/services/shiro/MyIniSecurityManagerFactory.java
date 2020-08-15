@@ -28,13 +28,14 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     public static final String SECURITY_MANAGER_NAME = "securityManager";
     public static final String INI_REALM_NAME = "iniRealm";
 
-    private static transient final Logger log = LoggerFactory.getLogger(MyIniSecurityManagerFactory.class);
+    private static final transient Logger log =
+            LoggerFactory.getLogger(MyIniSecurityManagerFactory.class);
 
     private MyReflectionBuilder builder;
 
     /**
-     * Creates a new instance.  See the {@link #getInstance()} JavaDoc for detailed explanation of how an INI
-     * source will be resolved to use to build the instance.
+     * Creates a new instance. See the {@link #getInstance()} JavaDoc for detailed explanation of
+     * how an INI source will be resolved to use to build the instance.
      */
     public MyIniSecurityManagerFactory() {
         this.builder = new MyReflectionBuilder();
@@ -54,7 +55,7 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     }
 
     public void destroy() {
-        if(getMyReflectionBuilder() != null) {
+        if (getMyReflectionBuilder() != null) {
             getMyReflectionBuilder().destroy();
         }
     }
@@ -89,7 +90,7 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
 
         Ini.Section mainSection = ini.getSection(MAIN_SECTION_NAME);
         if (CollectionUtils.isEmpty(mainSection)) {
-            //try the default:
+            // try the default:
             mainSection = ini.getSection(Ini.DEFAULT_SECTION_NAME);
         }
         return mainSection;
@@ -98,12 +99,13 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     protected boolean isAutoApplyRealms(SecurityManager securityManager) {
         boolean autoApply = true;
         if (securityManager instanceof RealmSecurityManager) {
-            //only apply realms if they haven't been explicitly set by the user:
+            // only apply realms if they haven't been explicitly set by the user:
             RealmSecurityManager realmSecurityManager = (RealmSecurityManager) securityManager;
             Collection<Realm> realms = realmSecurityManager.getRealms();
             if (!CollectionUtils.isEmpty(realms)) {
-                log.info("Realms have been explicitly set on the SecurityManager instance - auto-setting of " +
-                        "realms will not occur.");
+                log.info(
+                        "Realms have been explicitly set on the SecurityManager instance - auto-setting of "
+                                + "realms will not occur.");
                 autoApply = false;
             }
         }
@@ -120,10 +122,10 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
         boolean autoApplyRealms = isAutoApplyRealms(securityManager);
 
         if (autoApplyRealms) {
-            //realms and realm factory might have been created - pull them out first so we can
-            //initialize the securityManager:
+            // realms and realm factory might have been created - pull them out first so we can
+            // initialize the securityManager:
             Collection<Realm> realms = getRealms(objects);
-            //set them on the SecurityManager
+            // set them on the SecurityManager
             if (!CollectionUtils.isEmpty(realms)) {
                 applyRealmsToSecurityManager(realms, securityManager);
             }
@@ -161,7 +163,7 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     private void addToRealms(Collection<Realm> realms, RealmFactory factory) {
         LifecycleUtils.init(factory);
         Collection<Realm> factoryRealms = factory.getRealms();
-        //SHIRO-238: check factoryRealms (was 'realms'):
+        // SHIRO-238: check factoryRealms (was 'realms'):
         if (!CollectionUtils.isEmpty(factoryRealms)) {
             realms.addAll(factoryRealms);
         }
@@ -169,11 +171,11 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
 
     private Collection<Realm> getRealms(Map<String, ?> instances) {
 
-        //realms and realm factory might have been created - pull them out first so we can
-        //initialize the securityManager:
+        // realms and realm factory might have been created - pull them out first so we can
+        // initialize the securityManager:
         List<Realm> realms = new ArrayList<Realm>();
 
-        //iterate over the map entries to pull out the realm factory(s):
+        // iterate over the map entries to pull out the realm factory(s):
         for (Map.Entry<String, ?> entry : instances.entrySet()) {
 
             String name = entry.getKey();
@@ -183,14 +185,15 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
                 addToRealms(realms, (RealmFactory) value);
             } else if (value instanceof Realm) {
                 Realm realm = (Realm) value;
-                //set the name if null:
+                // set the name if null:
                 String existingName = realm.getName();
                 if (existingName == null || existingName.startsWith(realm.getClass().getName())) {
                     if (realm instanceof Nameable) {
                         ((Nameable) realm).setName(name);
                         log.debug("Applied name '{}' to Nameable realm instance {}", name, realm);
                     } else {
-                        log.info("Realm does not implement the {} interface.  Configured name will not be applied.",
+                        log.info(
+                                "Realm does not implement the {} interface.  Configured name will not be applied.",
                                 Nameable.class.getName());
                     }
                 }
@@ -206,31 +209,35 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
             throw new NullPointerException("securityManager instance cannot be null");
         }
         if (!(securityManager instanceof RealmSecurityManager)) {
-            String msg = "securityManager instance is not a " + RealmSecurityManager.class.getName() +
-                    " instance.  This is required to access or configure realms on the instance.";
+            String msg =
+                    "securityManager instance is not a "
+                            + RealmSecurityManager.class.getName()
+                            + " instance.  This is required to access or configure realms on the instance.";
             throw new ConfigurationException(msg);
         }
     }
 
-    protected void applyRealmsToSecurityManager(Collection<Realm> realms, SecurityManager securityManager) {
+    protected void applyRealmsToSecurityManager(
+            Collection<Realm> realms, SecurityManager securityManager) {
         assertRealmSecurityManager(securityManager);
         ((RealmSecurityManager) securityManager).setRealms(realms);
     }
 
     /**
-     * Returns {@code true} if the Ini contains account data and a {@code Realm} should be implicitly
-     * {@link #createRealm(Ini) created} to reflect the account data, {@code false} if no realm should be implicitly
-     * created.
+     * Returns {@code true} if the Ini contains account data and a {@code Realm} should be
+     * implicitly {@link #createRealm(Ini) created} to reflect the account data, {@code false} if no
+     * realm should be implicitly created.
      *
-     * @param ini the Ini instance to inspect for account data resulting in an implicitly created realm.
-     * @return {@code true} if the Ini contains account data and a {@code Realm} should be implicitly
-     *         {@link #createRealm(Ini) created} to reflect the account data, {@code false} if no realm should be
-     *         implicitly created.
+     * @param ini the Ini instance to inspect for account data resulting in an implicitly created
+     *     realm.
+     * @return {@code true} if the Ini contains account data and a {@code Realm} should be
+     *     implicitly {@link #createRealm(Ini) created} to reflect the account data, {@code false}
+     *     if no realm should be implicitly created.
      */
     protected boolean shouldImplicitlyCreateRealm(Ini ini) {
-        return !CollectionUtils.isEmpty(ini) &&
-                (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME)) ||
-                        !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
+        return !CollectionUtils.isEmpty(ini)
+                && (!CollectionUtils.isEmpty(ini.getSection(IniRealm.ROLES_SECTION_NAME))
+                        || !CollectionUtils.isEmpty(ini.getSection(IniRealm.USERS_SECTION_NAME)));
     }
 
     /**
@@ -240,15 +247,16 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
      * @return a new Realm instance reflecting the account data discovered in the {@code Ini}.
      */
     protected Realm createRealm(Ini ini) {
-        //IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
+        // IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
         IniRealm realm = new IniRealm();
         realm.setName(INI_REALM_NAME);
-        realm.setIni(ini); //added for SHIRO-322
+        realm.setIni(ini); // added for SHIRO-322
         return realm;
     }
 
     /**
      * Returns the MyReflectionBuilder instance used to create SecurityManagers object graph.
+     *
      * @return MyReflectionBuilder instance used to create SecurityManagers object graph.
      * @since 1.4
      */
@@ -257,8 +265,9 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     }
 
     /**
-     * Sets the MyReflectionBuilder that will be used to create the SecurityManager based on the contents of
-     * the Ini configuration.
+     * Sets the MyReflectionBuilder that will be used to create the SecurityManager based on the
+     * contents of the Ini configuration.
+     *
      * @param builder The MyReflectionBuilder used to parse the Ini configuration.
      * @since 1.4
      */
