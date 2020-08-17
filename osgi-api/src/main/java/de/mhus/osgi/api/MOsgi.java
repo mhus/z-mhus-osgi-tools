@@ -283,9 +283,15 @@ public class MOsgi {
     }
 
     public static Bundle getBundleOrNull(long bundleId) {
-        return FrameworkUtil.getBundle(org.apache.karaf.log.core.LogMBean.class)
-                .getBundleContext()
-                .getBundle(bundleId);
+        Bundle bundle = FrameworkUtil.getBundle(org.apache.karaf.log.core.LogMBean.class);
+        if (bundle == null) return null;
+        try {
+            BundleContext context = bundle.getBundleContext();
+            if (context == null) return null;
+            return context.getBundle(bundleId);
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 
     public static void runAfterActivation(
