@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2020 Mike Hummel (mh@mhus.de)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.mhus.osgi.services.shiro;
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -300,9 +315,8 @@ public class MyReflectionBuilder {
                 String rhs = interpolator.interpolate(entry.getValue());
 
                 String beanId = parseBeanId(lhs);
-                if (beanId
-                        != null) { // a beanId could be parsed, so the line is a bean instance
-                                   // definition
+                if (beanId != null) { // a beanId could be parsed, so the line is a bean instance
+                    // definition
                     processor.add(new InstantiationStatement(beanId, rhs));
                 } else { // the line must be a property configuration
                     processor.add(new AssignmentStatement(lhs, rhs));
@@ -355,9 +369,8 @@ public class MyReflectionBuilder {
                     value);
         }
 
-        Object
-                instance; // name with no property, assume right hand side of equals sign is the
-                          // class name:
+        Object instance; // name with no property, assume right hand side of equals sign is the
+        // class name:
         try {
             instance = ClassUtils.newInstance(value);
             if (instance instanceof Nameable) {
@@ -890,7 +903,7 @@ public class MyReflectionBuilder {
 
             statements.add(
                     statement); // we execute bean configuration statements in the order they are
-                                // declared.
+            // declared.
 
             if (statement instanceof InstantiationStatement) {
                 InstantiationStatement is = (InstantiationStatement) statement;
@@ -934,9 +947,8 @@ public class MyReflectionBuilder {
 
                 BeanConfiguration bd = statement.getBeanConfiguration();
 
-                if (bd
-                        .isExecuted()) { // bean is fully configured, no more statements to execute
-                                         // for it:
+                if (bd.isExecuted()) { // bean is fully configured, no more statements to execute
+                    // for it:
 
                     // bean configured overrides the 'eventBus' bean - replace the existing eventBus
                     // with the one configured:
@@ -997,7 +1009,7 @@ public class MyReflectionBuilder {
 
         public boolean
                 isGlobalConfig() { // BeanConfiguration instance representing the global 'shiro.'
-                                   // properties
+            // properties
             // (we should remove this concept).
             return GLOBAL_PROPERTY_PREFIX.equals(getBeanName());
         }
