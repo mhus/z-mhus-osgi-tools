@@ -15,7 +15,6 @@
  */
 package de.mhus.karaf.commands.shell;
 
-import java.lang.Thread.State;
 import java.lang.management.LockInfo;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MonitorInfo;
@@ -97,13 +96,13 @@ public class CmdThreads extends AbstractCmd {
     boolean orderGroup;
 
     @Option(
-            name = "-r",
-            aliases = {"--running"},
-            description = "Running only",
+            name = "-f",
+            aliases = {"--filter"},
+            description = "Filter Threads",
             required = false,
             multiValued = false)
-    boolean running;
-
+    String[] filter;
+    
     ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 
     @SuppressWarnings("deprecation")
@@ -114,12 +113,12 @@ public class CmdThreads extends AbstractCmd {
 
         List<Thread> threadList = new LinkedList<>(traces.keySet());
 
-        if (running)
-            threadList.removeIf(
-                    i -> {
-                        return i.getState() != State.RUNNABLE;
-                    });
-
+        if (filter != null) {
+            for (String f : filter) {
+                threadList.removeIf( i -> !matchFilter(f,i));
+            }
+        }
+        
         if (orderId) {
             Collections.sort(
                     threadList,
@@ -292,6 +291,30 @@ public class CmdThreads extends AbstractCmd {
         }
         table.print(System.out);
         return null;
+    }
+
+    private boolean matchFilter(String filter, Thread t) {
+
+        String[] parts = filter.split(":", 2);
+        if (parts.length == 1) {
+            // TODO
+            return true;
+        }
+        
+        String k = parts[0].toLowerCase().trim();
+        String v = parts[1];
+        
+        switch (k) {
+        case "state":
+            return t.getState().name().equalsIgnoreCase(v);
+        case "name":
+            return t.getName().contains(v);
+        case "stack":
+            return MCast.toString(t.getStackTrace()).contains(v);
+        case "group":
+            return t.getThreadGroup().getName().contains(v);
+        }
+        return false;
     }
 
     private void printStack(StackTraceElement[] stack, ConsoleTable table) {
