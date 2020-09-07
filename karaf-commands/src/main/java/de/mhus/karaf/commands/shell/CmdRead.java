@@ -15,13 +15,7 @@
  */
 package de.mhus.karaf.commands.shell;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.util.LinkedList;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -30,7 +24,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.lib.core.MFile;
+import de.mhus.lib.core.console.Console;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "shell", name = "read", description = "Read a line from stdin or a file")
@@ -74,58 +68,16 @@ public class CmdRead extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        String content = null;
+        Console console = Console.get();
 
-        if (fileName == null) {
-            try {
-
-                if (prompt != null) {
-                    System.out.print(prompt);
-                    System.out.flush();
-                }
-                Reader isr = new InputStreamReader(System.in);
-                StringBuilder sb = new StringBuilder();
-                while (true) {
-                    int c = isr.read();
-                    if (c < 0 || c == '\n' || c == '\r') {
-                        break;
-                    } else if (c == '\u007F') {
-                        if (sb.length() > 0) {
-                            sb.setLength(sb.length() - 1);
-                            System.out.print('\b');
-                            System.out.print(' ');
-                            System.out.print('\b');
-                            System.out.flush();
-                        } else {
-                            System.out.print('\7');
-                            System.out.flush();
-                        }
-                    } else {
-                        sb.append((char) c);
-                        if (secure) System.out.print('*');
-                        else System.out.print((char) c);
-                        System.out.flush();
-                    }
-                }
-                System.out.println();
-                content = sb.toString();
-            } catch (IOException t) {
-
-            }
-        } else {
-            InputStream is = null;
-            if (fileName.equals("*")) {
-                is = System.in;
-            } else {
-                File f = new File(fileName);
-                is = new FileInputStream(f);
-            }
-            ByteArrayOutputStream ba = new ByteArrayOutputStream();
-            MFile.copyFile(is, ba);
-            is.close();
-
-            content = new String(ba.toByteArray());
+        @SuppressWarnings("unchecked")
+        LinkedList<String> history = (LinkedList<String>) session.get("read_history");
+        if (history == null) {
+            history = new LinkedList<>();
+            session.put("read_histrory", history);
         }
+
+        String content = secure ? console.readPassword() : console.readLine(prompt, history);
 
         if (out != null) session.put(out, content);
         else return content;

@@ -30,6 +30,7 @@ import org.osgi.framework.ServiceReference;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
+import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogFactory;
 import de.mhus.lib.core.logging.MLogUtil;
@@ -52,10 +53,11 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     private boolean fullTrace = false;
     private KarafHousekeeper housekeeper;
     private LocalCache<String, Container> apiCache;
+    private boolean useLookupCache = false;
 
     @Override
     protected MCfgManager createMCfgManager() {
-        return new KarafCfgManager();
+        return new KarafCfgManager(this);
     }
 
     @Override
@@ -142,7 +144,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
         if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
 
-            if (apiCache == null) {
+            if (apiCache == null && useLookupCache) {
                 try {
                     LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
                     apiCache =
@@ -248,4 +250,12 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         public String bundleName;
         public long bundleId;
     }
+    
+    @Override
+    public void updateSystemCfg(CfgProvider system) {
+        super.updateSystemCfg(system);
+        if (system == null) return;
+        useLookupCache = system.getConfig().getBoolean("useLookupCache", useLookupCache);
+    }
+
 }

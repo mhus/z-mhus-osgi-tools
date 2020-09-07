@@ -28,6 +28,7 @@ import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MCast;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.console.ANSIConsole;
@@ -58,7 +59,8 @@ public class CmdLog extends AbstractCmd {
                             + " level - set log level (console logger),\n"
                             + " reloadconfig,\n"
                             + " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
-                            + " maxmsgsize [new size] - show or set maximum message size, disable with 0\n"
+                            + " maxmsgsize [new size]                 - show or set maximum message size, disable with 0\n"
+                            + " maxmessagesizeexceptions [exception]* - show or set exceptions for max message size\n"
                             + " stacktracetrace [true|false]\n"
                             + " status\n"
                             + " ",
@@ -171,6 +173,15 @@ public class CmdLog extends AbstractCmd {
                                 "Max Message Size: " + api.getLogFactory().getMaxMessageSize());
                 }
                 break;
+            case "maxmsgsizeexceptions":
+            {
+                if (parameters != null && parameters.length > 0)
+                    api.getLogFactory().setMaxMessageSizeExceptions(MCollection.toList(parameters));
+                else
+                    System.out.println(
+                            "Max Message Size Exceptions: " + api.getLogFactory().getMaxMessageSizeExceptions());
+            }
+            break;
             case "trace":
                 {
                     log().t((Object[]) parameters);
