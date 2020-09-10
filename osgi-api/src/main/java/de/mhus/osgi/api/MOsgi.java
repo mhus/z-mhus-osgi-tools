@@ -221,7 +221,7 @@ public class MOsgi {
      */
     public static BundleContext getBundleContext() {
         BundleContext context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
-        if (context == null) context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
+        if (context == null) context = FrameworkUtil.getBundle(FrameworkUtil.class).getBundleContext();
         if (context == null) log.w(MSystem.currentStackTrace("BundleContext is empty"));
         return context;
     }
