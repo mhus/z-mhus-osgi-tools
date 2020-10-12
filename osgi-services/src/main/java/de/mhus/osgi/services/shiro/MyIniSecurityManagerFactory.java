@@ -36,6 +36,8 @@ import org.apache.shiro.util.Nameable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.mhus.lib.core.shiro.IniDataRealm;
+
 public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityManager> {
 
     public static final String MAIN_SECTION_NAME = "main";
@@ -130,7 +132,7 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
     private SecurityManager createSecurityManager(Ini ini, Ini.Section mainSection) {
 
         getMyReflectionBuilder().setObjects(createDefaults(ini, mainSection));
-        Map<String, ?> objects = buildInstances(mainSection);
+        Map<String, ?> objects = buildInstances(mainSection, ini);
 
         SecurityManager securityManager = getSecurityManagerBean();
 
@@ -171,8 +173,8 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
         return defaults;
     }
 
-    private Map<String, ?> buildInstances(Ini.Section section) {
-        return getMyReflectionBuilder().buildObjects(section);
+    private Map<String, ?> buildInstances(Ini.Section section, Ini ini) {
+        return getMyReflectionBuilder().buildObjects(section, ini);
     }
 
     private void addToRealms(Collection<Realm> realms, RealmFactory factory) {
@@ -263,7 +265,7 @@ public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityMan
      */
     protected Realm createRealm(Ini ini) {
         // IniRealm realm = new IniRealm(ini); changed to support SHIRO-322
-        IniRealm realm = new IniRealm();
+        IniRealm realm = new IniDataRealm();
         realm.setName(INI_REALM_NAME);
         realm.setIni(ini); // added for SHIRO-322
         return realm;

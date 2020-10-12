@@ -34,6 +34,8 @@ package de.mhus.osgi.services.shiro;
  */
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,6 +54,7 @@ import org.apache.shiro.codec.Hex;
 import org.apache.shiro.config.CommonsInterpolator;
 import org.apache.shiro.config.ConfigurationException;
 import org.apache.shiro.config.DefaultInterpolator;
+import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Interpolator;
 import org.apache.shiro.config.UnresolveableReferenceException;
 import org.apache.shiro.config.event.BeanEvent;
@@ -304,7 +307,7 @@ public class MyReflectionBuilder {
         return null;
     }
 
-    public Map<String, ?> buildObjects(Map<String, String> kvPairs) {
+    public Map<String, ?> buildObjects(Map<String, String> kvPairs, Ini ini) {
 
         if (kvPairs != null && !kvPairs.isEmpty()) {
 
@@ -326,6 +329,22 @@ public class MyReflectionBuilder {
             processor.execute();
         }
 
+        // XXX set ini to realms if possible - should be done by Interface
+        objects.forEach((k,r) -> {
+            try {
+                Method method = r.getClass().getMethod("setName", String.class);
+                method.invoke(r, k);
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+//                System.out.println(k + ": " + e);
+            }
+            try {
+                Method method = r.getClass().getMethod("setIni", Ini.class);
+                method.invoke(r, ini);
+            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+//                System.out.println(k + ": " + e);
+            }
+        });
+        
         // SHIRO-413: init method must be called for constructed objects that are Initializable
         LifecycleUtils.init(objects.values());
 
