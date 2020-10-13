@@ -17,7 +17,7 @@ package de.mhus.osgi.api.services;
 
 import java.util.List;
 
-public interface IServiceManager {
+public interface IBlueprintManager {
 
     boolean create(String implClass, String bundleName) throws Exception;
 

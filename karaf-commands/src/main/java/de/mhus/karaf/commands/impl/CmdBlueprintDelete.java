@@ -15,26 +15,32 @@
  */
 package de.mhus.karaf.commands.impl;
 
-import java.util.List;
-
+import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.M;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.IServiceManager;
+import de.mhus.osgi.api.services.IBlueprintManager;
 
-@Command(scope = "service", name = "sb-list", description = "List managed service blueprint")
+@Command(scope = "service", name = "blue-delete", description = "Delete a service blueprint")
 @Service
-public class CmdServiceList extends AbstractCmd {
+public class CmdBlueprintDelete extends AbstractCmd {
+
+    @Argument(
+            index = 0,
+            name = "implementation",
+            required = true,
+            description = "Canonical name of implementation class",
+            multiValued = false)
+    String impl;
 
     @Override
     public Object execute2() throws Exception {
-        IServiceManager api = M.l(IServiceManager.class);
-        List<String> list = api.list();
-        for (String entry : list) {
-            System.out.println(entry);
-        }
+        IBlueprintManager api = M.l(IBlueprintManager.class);
+        boolean ret = api.delete(impl);
+        if (ret) System.out.println("Deleted");
+        else System.out.println("Skipped");
         return null;
     }
 }

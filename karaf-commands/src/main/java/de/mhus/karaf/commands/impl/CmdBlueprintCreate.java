@@ -22,11 +22,11 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.M;
 import de.mhus.osgi.api.karaf.AbstractCmd;
-import de.mhus.osgi.api.services.IServiceManager;
+import de.mhus.osgi.api.services.IBlueprintManager;
 
-@Command(scope = "service", name = "sb-create", description = "Create a service blueprint")
+@Command(scope = "service", name = "blue-create", description = "Create a service blueprint")
 @Service
-public class CmdServiceCreate extends AbstractCmd {
+public class CmdBlueprintCreate extends AbstractCmd {
 
     @Argument(
             index = 0,
@@ -54,7 +54,7 @@ public class CmdServiceCreate extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
-        IServiceManager api = M.l(IServiceManager.class);
+        IBlueprintManager api = M.l(IBlueprintManager.class);
         boolean ret = update ? api.update(impl, bundleName) : api.create(impl, bundleName);
 
         if (ret) System.out.println("Created");

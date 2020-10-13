@@ -48,14 +48,14 @@ import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
-import de.mhus.osgi.api.services.IServiceManager;
+import de.mhus.osgi.api.services.IBlueprintManager;
 import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 import de.mhus.osgi.api.util.TemplateUtils;
 
 // https://docs.osgi.org/specification/osgi.cmpn/7.0.0/service.blueprint.html
 
 @Component(immediate = true)
-public class ServiceManager extends MLog implements IServiceManager {
+public class BlueprintManager extends MLog implements IBlueprintManager {
 
     private static final String BLUEPRINT_PREFIX = "service-";
 
