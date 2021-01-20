@@ -102,7 +102,7 @@ public class CmdThreads extends AbstractCmd {
             required = false,
             multiValued = false)
     String[] filter;
-    
+
     ThreadMXBean tmxb = ManagementFactory.getThreadMXBean();
 
     @SuppressWarnings("deprecation")
@@ -115,10 +115,10 @@ public class CmdThreads extends AbstractCmd {
 
         if (filter != null) {
             for (String f : filter) {
-                threadList.removeIf( i -> !matchFilter(f,i));
+                threadList.removeIf(i -> !matchFilter(f, i));
             }
         }
-        
+
         if (orderId) {
             Collections.sort(
                     threadList,
@@ -300,19 +300,19 @@ public class CmdThreads extends AbstractCmd {
             // TODO
             return true;
         }
-        
+
         String k = parts[0].toLowerCase().trim();
         String v = parts[1];
-        
+
         switch (k) {
-        case "state":
-            return t.getState().name().equalsIgnoreCase(v);
-        case "name":
-            return t.getName().contains(v);
-        case "stack":
-            return MCast.toString(t.getStackTrace()).contains(v);
-        case "group":
-            return t.getThreadGroup().getName().contains(v);
+            case "state":
+                return t.getState().name().equalsIgnoreCase(v);
+            case "name":
+                return t.getName().contains(v);
+            case "stack":
+                return MCast.toString(t.getStackTrace()).contains(v);
+            case "group":
+                return t.getThreadGroup().getName().contains(v);
         }
         return false;
     }

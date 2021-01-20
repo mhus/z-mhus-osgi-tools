@@ -32,7 +32,7 @@ public class KarafCfgManager extends MCfgManager {
     public KarafCfgManager(IApiInternal internal) {
         super(internal);
     }
-    
+
     @Override
     protected void initialConfiguration() {
         CentralMhusCfgProvider provider = new CentralMhusCfgProvider();

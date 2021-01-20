@@ -174,14 +174,16 @@ public class CmdLog extends AbstractCmd {
                 }
                 break;
             case "maxmsgsizeexceptions":
-            {
-                if (parameters != null && parameters.length > 0)
-                    api.getLogFactory().setMaxMessageSizeExceptions(MCollection.toList(parameters));
-                else
-                    System.out.println(
-                            "Max Message Size Exceptions: " + api.getLogFactory().getMaxMessageSizeExceptions());
-            }
-            break;
+                {
+                    if (parameters != null && parameters.length > 0)
+                        api.getLogFactory()
+                                .setMaxMessageSizeExceptions(MCollection.toList(parameters));
+                    else
+                        System.out.println(
+                                "Max Message Size Exceptions: "
+                                        + api.getLogFactory().getMaxMessageSizeExceptions());
+                }
+                break;
             case "trace":
                 {
                     log().t((Object[]) parameters);

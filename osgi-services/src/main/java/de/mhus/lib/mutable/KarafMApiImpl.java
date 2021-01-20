@@ -250,12 +250,11 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         public String bundleName;
         public long bundleId;
     }
-    
+
     @Override
     public void updateSystemCfg(CfgProvider system) {
         super.updateSystemCfg(system);
         if (system == null) return;
         useLookupCache = system.getConfig().getBoolean("useLookupCache", useLookupCache);
     }
-
 }

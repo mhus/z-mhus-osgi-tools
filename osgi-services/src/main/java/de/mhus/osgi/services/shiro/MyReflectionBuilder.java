@@ -330,21 +330,30 @@ public class MyReflectionBuilder {
         }
 
         // XXX set ini to realms if possible - should be done by Interface
-        objects.forEach((k,r) -> {
-            try {
-                Method method = r.getClass().getMethod("setName", String.class);
-                method.invoke(r, k);
-            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-//                System.out.println(k + ": " + e);
-            }
-            try {
-                Method method = r.getClass().getMethod("setIni", Ini.class);
-                method.invoke(r, ini);
-            } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-//                System.out.println(k + ": " + e);
-            }
-        });
-        
+        objects.forEach(
+                (k, r) -> {
+                    try {
+                        Method method = r.getClass().getMethod("setName", String.class);
+                        method.invoke(r, k);
+                    } catch (NoSuchMethodException
+                            | SecurityException
+                            | IllegalAccessException
+                            | IllegalArgumentException
+                            | InvocationTargetException e) {
+                        //                System.out.println(k + ": " + e);
+                    }
+                    try {
+                        Method method = r.getClass().getMethod("setIni", Ini.class);
+                        method.invoke(r, ini);
+                    } catch (NoSuchMethodException
+                            | SecurityException
+                            | IllegalAccessException
+                            | IllegalArgumentException
+                            | InvocationTargetException e) {
+                        //                System.out.println(k + ": " + e);
+                    }
+                });
+
         // SHIRO-413: init method must be called for constructed objects that are Initializable
         LifecycleUtils.init(objects.values());
 
