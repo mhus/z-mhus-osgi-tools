@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.commands.mhus;
+package de.mhus.karaf.commands.impl;
 
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.karaf.shell.api.console.Session;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.mail.MSendMail;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
-@Command(scope = "mhus", name = "mail-connect", description = "Send a mail via MSendMail")
+@Command(scope = "mhus", name = "access-logout", description = "Access Control - logout current user from console")
 @Service
-public class CmdMailConnect extends AbstractCmd {
+public class CmdAccessLogout extends AbstractCmd {
+
+    @Reference Session session;
 
     @Override
     public Object execute2() throws Exception {
 
-        MSendMail sendMail = M.l(MSendMail.class);
-        System.out.println("Server: " + sendMail.getMailTransport().getConnectInfo());
-        System.out.println("From  : " + sendMail.getMailTransport().getFrom());
-        try {
-            sendMail.getMailTransport().getSession();
-            System.out.println("Connected");
-        } catch (Throwable t) {
-            System.out.println("Error: " + t);
-        }
+        CmdInterceptorUtil.removeInterceptor(session, CmdAccessLogin.AaaInterceptor.class);
+        //            CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(null));
+        System.out.println("OK");
         return null;
     }
+
 }

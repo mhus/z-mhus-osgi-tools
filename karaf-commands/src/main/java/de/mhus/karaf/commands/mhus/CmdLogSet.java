@@ -40,9 +40,9 @@ import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "log", description = "Manipulate Log behavior.")
+@Command(scope = "mhus", name = "log-set", description = "Manipulate Log behavior.")
 @Service
-public class CmdLog extends AbstractCmd {
+public class CmdLogSet extends AbstractCmd {
 
     @Reference private Session session;
 
@@ -58,11 +58,10 @@ public class CmdLog extends AbstractCmd {
                             + " dirty - enable dirty logging,\n"
                             + " level - set log level (console logger),\n"
                             + " reloadconfig,\n"
-                            + " trace,debug,info,warn,error,fatal <msg>\nconsole [console=ansi] [file=data/log/karaf.log] [color=true]\n"
+                            + " console [console=ansi] [file=data/log/karaf.log] [color=true]\n"
                             + " maxmsgsize [new size]                 - show or set maximum message size, disable with 0\n"
                             + " maxmessagesizeexceptions [exception]* - show or set exceptions for max message size\n"
                             + " stacktracetrace [true|false]\n"
-                            + " status\n"
                             + " ",
             multiValued = false)
     String cmd;
@@ -131,24 +130,6 @@ public class CmdLog extends AbstractCmd {
                     System.out.println("OK");
                 }
                 break;
-            case "status":
-                {
-                    System.out.println("Default Level  : " + api.getLogFactory().getDefaultLevel());
-                    System.out.println("Trace          : " + api.isFullTrace());
-                    System.out.println(
-                            "LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
-                    System.out.println("DirtyTrace     : " + MApi.isDirtyTrace());
-                    if (api.getLogFactory().getParameterMapper() != null)
-                        System.out.println(
-                                "ParameterMapper: "
-                                        + api.getLogFactory()
-                                                .getParameterMapper()
-                                                .getClass()
-                                                .getSimpleName());
-
-                    for (String name : api.getTraceNames()) System.out.println(name);
-                }
-                break;
             case "reloadconfig":
                 { // TODO need single command class
                     api.getCfgManager().doRestart();
@@ -182,36 +163,6 @@ public class CmdLog extends AbstractCmd {
                         System.out.println(
                                 "Max Message Size Exceptions: "
                                         + api.getLogFactory().getMaxMessageSizeExceptions());
-                }
-                break;
-            case "trace":
-                {
-                    log().t((Object[]) parameters);
-                }
-                break;
-            case "debug":
-                {
-                    log().d((Object[]) parameters);
-                }
-                break;
-            case "info":
-                {
-                    log().i((Object[]) parameters);
-                }
-                break;
-            case "warn":
-                {
-                    log().w((Object[]) parameters);
-                }
-                break;
-            case "error":
-                {
-                    log().e((Object[]) parameters);
-                }
-                break;
-            case "fatal":
-                {
-                    log().f((Object[]) parameters);
                 }
                 break;
             case "console":

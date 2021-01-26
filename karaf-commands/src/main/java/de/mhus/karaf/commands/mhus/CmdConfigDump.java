@@ -18,26 +18,34 @@ package de.mhus.karaf.commands.mhus;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.mail.MSendMail;
+import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.cfg.CfgProvider;
+import de.mhus.lib.core.config.IConfig;
+import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "mail-connect", description = "Send a mail via MSendMail")
+@Command(scope = "mhus", name = "config-dump", description = "Print all config values")
 @Service
-public class CmdMailConnect extends AbstractCmd {
+public class CmdConfigDump extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
 
-        MSendMail sendMail = M.l(MSendMail.class);
-        System.out.println("Server: " + sendMail.getMailTransport().getConnectInfo());
-        System.out.println("From  : " + sendMail.getMailTransport().getFrom());
-        try {
-            sendMail.getMailTransport().getSession();
-            System.out.println("Connected");
-        } catch (Throwable t) {
-            System.out.println("Error: " + t);
+        IApi s = MApi.get();
+        if (!(s instanceof KarafMApiImpl)) {
+            System.out.println("Karaf MApi not set");
+            return null;
         }
+
+        for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
+            System.out.println(
+                    ">>> " + provider.getClass().getCanonicalName() + " " + provider);
+            IConfig cfg = provider.getConfig();
+            System.out.println(cfg);
+            System.out.println("<<<");
+        }
+
         return null;
     }
 }

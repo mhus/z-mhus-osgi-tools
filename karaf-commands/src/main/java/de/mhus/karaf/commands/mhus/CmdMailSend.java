@@ -32,9 +32,9 @@ import de.mhus.lib.core.mail.MSendMail;
 import de.mhus.lib.core.mail.MailAttachment;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "mail", description = "Send a mail via MSendMail")
+@Command(scope = "mhus", name = "mail-send", description = "Send a mail via MSendMail")
 @Service
-public class CmdMail extends AbstractCmd {
+public class CmdMailSend extends AbstractCmd {
 
     @Argument(
             index = 0,

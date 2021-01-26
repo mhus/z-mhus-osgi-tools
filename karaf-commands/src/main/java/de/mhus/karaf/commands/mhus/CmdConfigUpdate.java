@@ -15,29 +15,39 @@
  */
 package de.mhus.karaf.commands.mhus;
 
+import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.mail.MSendMail;
+import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "mail-connect", description = "Send a mail via MSendMail")
+@Command(scope = "mhus", name = "config-update", description = "Update all or a single owner data")
 @Service
-public class CmdMailConnect extends AbstractCmd {
+public class CmdConfigUpdate extends AbstractCmd {
+
+    @Argument(
+            index = 0,
+            name = "owner",
+            required = false,
+            description = "Owner",
+            multiValued = false)
+    String ownerA;
 
     @Override
     public Object execute2() throws Exception {
 
-        MSendMail sendMail = M.l(MSendMail.class);
-        System.out.println("Server: " + sendMail.getMailTransport().getConnectInfo());
-        System.out.println("From  : " + sendMail.getMailTransport().getFrom());
-        try {
-            sendMail.getMailTransport().getSession();
-            System.out.println("Connected");
-        } catch (Throwable t) {
-            System.out.println("Error: " + t);
+        IApi s = MApi.get();
+        if (!(s instanceof KarafMApiImpl)) {
+            System.out.println("Karaf MApi not set");
+            return null;
         }
+
+        MApi.getCfgUpdater().doUpdate(ownerA);
+        System.out.println("Done");
+
         return null;
     }
 }

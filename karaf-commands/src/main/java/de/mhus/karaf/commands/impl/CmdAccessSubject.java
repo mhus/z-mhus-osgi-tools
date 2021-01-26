@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.mhus.karaf.commands.mhus;
+package de.mhus.karaf.commands.impl;
 
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
+import org.apache.shiro.subject.Subject;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.mail.MSendMail;
+import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "mail-connect", description = "Send a mail via MSendMail")
+@Command(scope = "mhus", name = "access-subject", description = "Access Control - print current subject and session information")
 @Service
-public class CmdMailConnect extends AbstractCmd {
+public class CmdAccessSubject extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
 
-        MSendMail sendMail = M.l(MSendMail.class);
-        System.out.println("Server: " + sendMail.getMailTransport().getConnectInfo());
-        System.out.println("From  : " + sendMail.getMailTransport().getFrom());
-        try {
-            sendMail.getMailTransport().getSession();
-            System.out.println("Connected");
-        } catch (Throwable t) {
-            System.out.println("Error: " + t);
-        }
+        Subject subject = AccessUtil.getSubject();
+        System.out.println("Subject: " + subject);
+        System.out.println("Principal: " + String.valueOf(subject.getPrincipal()));
+        System.out.println("Authenticated: " + subject.isAuthenticated());
+        System.out.println("Session: " + subject.getSession(false));
+
         return null;
     }
+
 }
