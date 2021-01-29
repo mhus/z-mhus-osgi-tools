@@ -60,6 +60,8 @@ public class JaegerTracerService extends DefaultTracer {
 
     private int logLevel;
 
+    private boolean initService;
+
     private static String[] JAEGER_ENV =
             new String[] {
                 "JAEGER_SAMPLER_TYPE",
@@ -77,8 +79,13 @@ public class JaegerTracerService extends DefaultTracer {
     public void doActivate(ComponentContext ctx) {
         MOsgi.touchConfig(JaegerTracerService.class);
         updateLogLevel();
-        update();
-
+        try {
+            initService = true;
+            update();
+        } finally {
+            initService = false;
+        }
+        
         tracker = new LogServiceTracker(ctx.getBundleContext(), e -> logEvent(e));
         tracker.open();
     }
@@ -106,7 +113,7 @@ public class JaegerTracerService extends DefaultTracer {
     }
 
     private synchronized void update() {
-        log().i("Update jaeger tracer");
+        logi("Update jaeger tracer");
 
         // prepare env
         IConfig cfg = MApi.getCfg(JaegerTracerService.class);
@@ -136,16 +143,16 @@ public class JaegerTracerService extends DefaultTracer {
                 field.set(null, NoopTracerFactory.create());
 
             } catch (Throwable t) {
-                log().e(t);
+                logi(t);
             }
         }
 
         JaegerTracer tracer = null;
         if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
-            log().i("Create ThriftSender");
+            logi("Create ThriftSender");
             Sender sender =
                     new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
-            if (sender == null) log().e("Can't create ThriftSender");
+            if (sender == null) logi("Can't create ThriftSender");
             else {
                 RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
                 tracer = config.getTracerBuilder().withReporter(reporter).build();
@@ -157,8 +164,25 @@ public class JaegerTracerService extends DefaultTracer {
 
         if (!GlobalTracer.isRegistered()) GlobalTracer.register(tracer);
         else {
-            log().e("Could't register new tracer ");
+            logi("Could't register new tracer ");
         }
+    }
+    
+    /**
+     * If service is initialized the usage of log() will cause in a loop. Therefore
+     * it will print the log messages instead of logging.
+     * 
+     * @param msg
+     */
+    private void logi(Object msg) {
+        if (!initService) {
+            log().i(msg);
+            return;
+        }
+        if (msg != null && msg instanceof Throwable) {
+            ((Throwable)msg).printStackTrace();
+        } else
+            System.out.println(msg);
     }
 
     private void logEvent(PaxLoggingEvent e) {
