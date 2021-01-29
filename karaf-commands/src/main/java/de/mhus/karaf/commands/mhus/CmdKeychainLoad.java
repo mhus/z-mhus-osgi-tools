@@ -25,7 +25,10 @@ import de.mhus.lib.core.keychain.MKeychainUtil;
 import de.mhus.lib.core.keychain.MutableVaultSource;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "keychain-load", description = "Load in memory sources from storage")
+@Command(
+        scope = "mhus",
+        name = "keychain-load",
+        description = "Load in memory sources from storage")
 @Service
 public class CmdKeychainLoad extends AbstractCmd {
 

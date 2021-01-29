@@ -22,7 +22,10 @@ import org.apache.shiro.subject.Subject;
 import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "access-subject", description = "Access Control - print current subject and session information")
+@Command(
+        scope = "mhus",
+        name = "access-subject",
+        description = "Access Control - print current subject and session information")
 @Service
 public class CmdAccessSubject extends AbstractCmd {
 
@@ -37,5 +40,4 @@ public class CmdAccessSubject extends AbstractCmd {
 
         return null;
     }
-
 }

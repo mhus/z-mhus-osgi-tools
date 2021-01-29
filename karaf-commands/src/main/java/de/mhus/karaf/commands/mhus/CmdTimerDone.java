@@ -50,7 +50,7 @@ public class CmdTimerDone extends AbstractCmd {
             description = "Set done or not, default is true",
             multiValued = false)
     boolean done = true;
-    
+
     @Override
     public Object execute2() throws Exception {
         TimerFactory factory = MOsgi.getService(TimerFactory.class);
@@ -60,14 +60,13 @@ public class CmdTimerDone extends AbstractCmd {
             System.out.println("ServiceTracker is not running!");
         }
 
+        for (SchedulerJob job : getScheduledJob(scheduler, jobName)) {
+            if (job != null && job instanceof MutableSchedulerJob) {
+                ((MutableSchedulerJob) job).setDone(done);
 
-            for (SchedulerJob job : getScheduledJob(scheduler, jobName)) {
-                if (job != null && job instanceof MutableSchedulerJob) {
-                    ((MutableSchedulerJob) job).setDone(done);
-
-                    System.out.println("OK " + job.getName());
-                }
+                System.out.println("OK " + job.getName());
             }
+        }
 
         return null;
     }

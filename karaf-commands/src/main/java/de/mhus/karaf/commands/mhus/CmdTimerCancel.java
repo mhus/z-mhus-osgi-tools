@@ -51,7 +51,6 @@ public class CmdTimerCancel extends AbstractCmd {
             System.out.println("ServiceTracker is not running!");
         }
 
-
         for (SchedulerJob job : getScheduledJob(scheduler, jobName)) {
             if (job != null) {
                 job.cancel();

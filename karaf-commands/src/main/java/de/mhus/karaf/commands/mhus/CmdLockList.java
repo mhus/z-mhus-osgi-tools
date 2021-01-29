@@ -36,8 +36,7 @@ public class CmdLockList extends AbstractCmd {
 
         ConsoleTable out = new ConsoleTable(tblOpt);
         long now = System.currentTimeMillis();
-        out.setHeaderValues(
-                "Id", "Name", "Locked", "Owner", "Time", "Since", "Managed", "Cnt");
+        out.setHeaderValues("Id", "Name", "Locked", "Owner", "Time", "Since", "Managed", "Cnt");
         for (Lock lock : M.l(LockManager.class).managedLocks())
             out.addRowValues(
                     lock.hashCode(),
@@ -45,9 +44,7 @@ public class CmdLockList extends AbstractCmd {
                     lock.isLocked(),
                     lock.getOwner(),
                     lock.isLocked() ? new Date(lock.getLockTime()) : "",
-                    lock.isLocked()
-                            ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime())
-                            : "",
+                    lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
                     "true",
                     lock.getCnt());
         for (Lock lock : M.l(LockManager.class).getRegisteredLocks())
@@ -57,9 +54,7 @@ public class CmdLockList extends AbstractCmd {
                     lock.isLocked(),
                     lock.getOwner(),
                     lock.isLocked() ? new Date(lock.getLockTime()) : "",
-                    lock.isLocked()
-                            ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime())
-                            : "",
+                    lock.isLocked() ? MPeriod.getIntervalAsStringSec(now - lock.getLockTime()) : "",
                     "false",
                     lock.getCnt());
         out.print();

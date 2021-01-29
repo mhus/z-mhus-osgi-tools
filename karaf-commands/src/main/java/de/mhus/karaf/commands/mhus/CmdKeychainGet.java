@@ -31,7 +31,6 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdKeychainGet extends AbstractCmd {
 
-
     @Argument(
             index = 0,
             name = "id/name",
@@ -58,8 +57,7 @@ public class CmdKeychainGet extends AbstractCmd {
                 entry = vault.getSource(sourcename).getEntry(UUID.fromString(name));
             else entry = vault.getSource(sourcename).getEntry(name);
         } else {
-            if (MValidator.isUUID(name))
-                entry = vault.getEntry(UUID.fromString(name));
+            if (MValidator.isUUID(name)) entry = vault.getEntry(UUID.fromString(name));
             else entry = vault.getEntry(name);
         }
         if (entry == null) {
@@ -75,6 +73,5 @@ public class CmdKeychainGet extends AbstractCmd {
         System.out.println(entry.getValue().value());
         System.out.println("-------");
         return entry;
-
     }
 }

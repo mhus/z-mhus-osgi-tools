@@ -30,7 +30,10 @@ import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
-@Command(scope = "mhus", name = "access-admin", description = "Access Control - try to login as admin and bind session to console")
+@Command(
+        scope = "mhus",
+        name = "access-admin",
+        description = "Access Control - try to login as admin and bind session to console")
 @Service
 public class CmdAccessAdmin extends AbstractCmd {
 
@@ -48,5 +51,4 @@ public class CmdAccessAdmin extends AbstractCmd {
 
         return null;
     }
-
 }

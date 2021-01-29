@@ -52,16 +52,12 @@ public class CmdConfigProviders extends AbstractCmd {
         out.setHeaderValues("Owner", "Key", "Value", "Type");
         MCfgManager api = MApi.get().getCfgManager();
         for (String owner : api.getOwners()) {
-            if (ownerFilter == null
-                    || ownerFilter.equals(owner)) {
+            if (ownerFilter == null || ownerFilter.equals(owner)) {
                 out.addRowValues(owner, "", "", "");
                 IConfig cfg = api.getCfg(owner);
                 for (String key : cfg.keys())
                     out.addRowValues(
-                            "",
-                            key,
-                            cfg.get(key),
-                            cfg.get(key).getClass().getCanonicalName());
+                            "", key, cfg.get(key), cfg.get(key).getClass().getCanonicalName());
             }
         }
         out.print();

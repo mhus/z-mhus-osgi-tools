@@ -37,12 +37,7 @@ public class CmdConfigSet extends AbstractCmd {
             multiValued = false)
     String ownerA;
 
-    @Argument(
-            index = 1,
-            name = "path",
-            required = true,
-            description = "Path",
-            multiValued = false)
+    @Argument(index = 1, name = "path", required = true, description = "Path", multiValued = false)
     String pathA;
 
     @Argument(
@@ -61,15 +56,14 @@ public class CmdConfigSet extends AbstractCmd {
             System.out.println("Karaf MApi not set");
             return null;
         }
- 
+
         for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
-            if (value.getOwner().equals(ownerA)
-                    && value.getPath().equals(pathA)) {
+            if (value.getOwner().equals(ownerA) && value.getPath().equals(pathA)) {
                 value.setValue(valueA);
                 System.out.println("OK");
             }
         }
-        
+
         return null;
     }
 }

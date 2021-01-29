@@ -39,10 +39,9 @@ public class CmdConfigListeners extends AbstractCmd {
             System.out.println("Karaf MApi not set");
             return null;
         }
-        
+
         ConsoleTable out = new ConsoleTable(tblOpt);
-        out.setHeaderValues(
-                "Owner", "Path", "Value", "Default", "Type", "Updated", "Calling");
+        out.setHeaderValues("Owner", "Path", "Value", "Default", "Type", "Updated", "Calling");
         for (CfgValue<?> value : MApi.getCfgUpdater().getList()) {
             out.addRowValues(
                     value.getOwner(),

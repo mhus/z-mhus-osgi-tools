@@ -22,17 +22,19 @@ import de.mhus.lib.core.M;
 import de.mhus.lib.core.shiro.AccessApi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "access-restart", description = "Access Control - restart access control engine")
+@Command(
+        scope = "mhus",
+        name = "access-restart",
+        description = "Access Control - restart access control engine")
 @Service
 public class CmdAccessRestart extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
 
-            M.l(AccessApi.class).restart();
-            System.out.println("OK");
+        M.l(AccessApi.class).restart();
+        System.out.println("OK");
 
         return null;
     }
-
 }

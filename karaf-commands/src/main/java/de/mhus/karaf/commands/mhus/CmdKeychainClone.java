@@ -30,12 +30,7 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdKeychainClone extends AbstractCmd {
 
-    @Argument(
-            index = 0,
-            name = "id",
-            required = true,
-            description = "Id",
-            multiValued = false)
+    @Argument(index = 0, name = "id", required = true, description = "Id", multiValued = false)
     String id;
 
     @Argument(
@@ -59,8 +54,7 @@ public class CmdKeychainClone extends AbstractCmd {
         MKeychain vault = MKeychainUtil.loadDefault();
 
         KeyEntry entry = null;
-        if (sourcename != null)
-            entry = vault.getSource(sourcename).getEntry(UUID.fromString(id));
+        if (sourcename != null) entry = vault.getSource(sourcename).getEntry(UUID.fromString(id));
         else entry = vault.getEntry(UUID.fromString(id));
         if (entry == null) {
             System.out.println("*** Entry not found");

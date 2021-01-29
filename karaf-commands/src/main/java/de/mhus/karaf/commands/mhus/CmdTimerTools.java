@@ -49,17 +49,17 @@ public class CmdTimerTools extends AbstractCmd {
             required = true,
             description =
                     "Command to execute\n"
-                    + " timeout\n"
-                    + " stacktrace\n"
-                    + " timeoutstacktrace\n"
-                    + " dummy\n"
-                    + " schedule\n"
-                    + " configure\n"
-                    + " debug\n"
-                    + " recreate\n"
-                    + " start\n"
-                    + " stop\n"
-                    + " trail",
+                            + " timeout\n"
+                            + " stacktrace\n"
+                            + " timeoutstacktrace\n"
+                            + " dummy\n"
+                            + " schedule\n"
+                            + " configure\n"
+                            + " debug\n"
+                            + " recreate\n"
+                            + " start\n"
+                            + " stop\n"
+                            + " trail",
             multiValued = false)
     String cmd;
 
@@ -79,7 +79,6 @@ public class CmdTimerTools extends AbstractCmd {
         if (!TimerFactoryImpl.instance.isRunning()) {
             System.out.println("ServiceTracker is not running!");
         }
-
 
         if (cmd.equals("timeout")) {
             List<SchedulerJob> running = scheduler.getRunningJobs();

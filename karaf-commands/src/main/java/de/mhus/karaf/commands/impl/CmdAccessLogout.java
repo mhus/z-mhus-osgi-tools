@@ -23,7 +23,10 @@ import org.apache.karaf.shell.api.console.Session;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
-@Command(scope = "mhus", name = "access-logout", description = "Access Control - logout current user from console")
+@Command(
+        scope = "mhus",
+        name = "access-logout",
+        description = "Access Control - logout current user from console")
 @Service
 public class CmdAccessLogout extends AbstractCmd {
 
@@ -37,5 +40,4 @@ public class CmdAccessLogout extends AbstractCmd {
         System.out.println("OK");
         return null;
     }
-
 }

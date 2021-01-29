@@ -40,8 +40,7 @@ public class CmdConfigFiles extends AbstractCmd {
         }
 
         MCfgManager api = MApi.get().getCfgManager();
-        for (File file : api.getMhusConfigFiles())
-            System.out.println(file.getAbsolutePath());
+        for (File file : api.getMhusConfigFiles()) System.out.println(file.getAbsolutePath());
 
         return null;
     }

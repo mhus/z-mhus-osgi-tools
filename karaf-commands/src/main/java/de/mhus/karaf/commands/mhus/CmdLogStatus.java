@@ -39,16 +39,12 @@ public class CmdLogStatus extends AbstractCmd {
 
         System.out.println("Default Level  : " + api.getLogFactory().getDefaultLevel());
         System.out.println("Trace          : " + api.isFullTrace());
-        System.out.println(
-                "LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
+        System.out.println("LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
         System.out.println("DirtyTrace     : " + MApi.isDirtyTrace());
         if (api.getLogFactory().getParameterMapper() != null)
             System.out.println(
                     "ParameterMapper: "
-                            + api.getLogFactory()
-                                    .getParameterMapper()
-                                    .getClass()
-                                    .getSimpleName());
+                            + api.getLogFactory().getParameterMapper().getClass().getSimpleName());
 
         for (String name : api.getTraceNames()) System.out.println(name);
 

@@ -28,16 +28,14 @@ import de.mhus.lib.core.keychain.MKeychainUtil;
 import de.mhus.lib.core.keychain.MutableVaultSource;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "keychain-move", description = "clone key and remove from old source")
+@Command(
+        scope = "mhus",
+        name = "keychain-move",
+        description = "clone key and remove from old source")
 @Service
 public class CmdKeychainMove extends AbstractCmd {
 
-    @Argument(
-            index = 0,
-            name = "id",
-            required = true,
-            description = "Id",
-            multiValued = false)
+    @Argument(index = 0, name = "id", required = true, description = "Id", multiValued = false)
     String id;
 
     @Argument(

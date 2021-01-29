@@ -33,7 +33,10 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptor;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
-@Command(scope = "mhus", name = "access-login", description = "Access Control - Login user an bind session to console")
+@Command(
+        scope = "mhus",
+        name = "access-login",
+        description = "Access Control - Login user an bind session to console")
 @Service
 public class CmdAccessLogin extends AbstractCmd {
 
@@ -58,8 +61,7 @@ public class CmdAccessLogin extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        if (pass == null)
-            pass = Console.get().readPassword();
+        if (pass == null) pass = Console.get().readPassword();
         Subject subject = M.l(AccessApi.class).createSubject();
         AccessUtil.login(subject, user, pass, true, Locale.getDefault());
         CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));

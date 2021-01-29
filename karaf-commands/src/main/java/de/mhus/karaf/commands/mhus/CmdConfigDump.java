@@ -39,8 +39,7 @@ public class CmdConfigDump extends AbstractCmd {
         }
 
         for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
-            System.out.println(
-                    ">>> " + provider.getClass().getCanonicalName() + " " + provider);
+            System.out.println(">>> " + provider.getClass().getCanonicalName() + " " + provider);
             IConfig cfg = provider.getConfig();
             System.out.println(cfg);
             System.out.println("<<<");

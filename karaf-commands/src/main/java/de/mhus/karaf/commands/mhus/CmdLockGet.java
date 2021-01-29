@@ -55,6 +55,5 @@ public class CmdLockGet extends AbstractCmd {
             }
         }
         return null;
-
     }
 }

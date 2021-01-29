@@ -126,5 +126,4 @@ public class CmdTimerJobs extends AbstractCmd {
         if (t == SchedulerJob.REMOVE_TIME) return "Remove";
         return "OK";
     }
-
 }

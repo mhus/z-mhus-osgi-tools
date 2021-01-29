@@ -36,7 +36,10 @@ import de.mhus.lib.core.keychain.MKeychainUtil;
 import de.mhus.lib.core.keychain.MutableVaultSource;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "keychain-import", description = "Add a new entry to the keychanin from a given file")
+@Command(
+        scope = "mhus",
+        name = "keychain-import",
+        description = "Add a new entry to the keychanin from a given file")
 @Service
 public class CmdKeychainImport extends AbstractCmd {
 
@@ -72,22 +75,13 @@ public class CmdKeychainImport extends AbstractCmd {
             required = false)
     String idO = null;
 
-    @Option(
-            name = "-t",
-            description = "Type to set",
-            required = false)
+    @Option(name = "-t", description = "Type to set", required = false)
     String typeO = null;
 
-    @Option(
-            name = "-n",
-            description = "Name to set",
-            required = false)
+    @Option(name = "-n", description = "Name to set", required = false)
     String nameO = null;
-    
-    @Option(
-            name = "-d",
-            description = "Description to set",
-            required = false)
+
+    @Option(name = "-d", description = "Description to set", required = false)
     String descO = null;
 
     @Option(name = "-f", aliases = "--force", description = "Overwrite existing", required = false)
@@ -129,8 +123,7 @@ public class CmdKeychainImport extends AbstractCmd {
                 passphraseO = Console.get().readPassword();
             }
             PemBlock pem = PemUtil.parse(content);
-            if (idO == null && pem.containsKey(PemBlock.IDENT))
-                idO = pem.getString(PemBlock.IDENT);
+            if (idO == null && pem.containsKey(PemBlock.IDENT)) idO = pem.getString(PemBlock.IDENT);
             desc = pem.getString(PemBlock.DESCRIPTION, desc);
             content = pem.getBlock();
             content = Blowfish.decrypt(content, passphraseO);

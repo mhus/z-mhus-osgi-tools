@@ -61,7 +61,6 @@ public class CmdTimerRelease extends AbstractCmd {
         return null;
     }
 
-
     private List<SchedulerJob> getScheduledJob(SchedulerTimer scheduler, String jobId) {
         List<SchedulerJob> jobs = scheduler.getScheduledJobs();
         LinkedList<SchedulerJob> out = new LinkedList<>();

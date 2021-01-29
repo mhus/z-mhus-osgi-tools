@@ -52,7 +52,6 @@ public class CmdTimerDisable extends AbstractCmd {
             System.out.println("ServiceTracker is not running!");
         }
 
-
         for (SchedulerJob job : getScheduledJob(scheduler, jobName)) {
             if (job != null && job instanceof MutableSchedulerJob) {
                 ((MutableSchedulerJob) job).doReschedule(scheduler, SchedulerJob.DISABLED_TIME);

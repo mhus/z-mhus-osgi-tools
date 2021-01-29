@@ -85,7 +85,7 @@ public class JaegerTracerService extends DefaultTracer {
         } finally {
             initService = false;
         }
-        
+
         tracker = new LogServiceTracker(ctx.getBundleContext(), e -> logEvent(e));
         tracker.open();
     }
@@ -167,11 +167,11 @@ public class JaegerTracerService extends DefaultTracer {
             logi("Could't register new tracer ");
         }
     }
-    
+
     /**
-     * If service is initialized the usage of log() will cause in a loop. Therefore
-     * it will print the log messages instead of logging.
-     * 
+     * If service is initialized the usage of log() will cause in a loop. Therefore it will print
+     * the log messages instead of logging.
+     *
      * @param msg
      */
     private void logi(Object msg) {
@@ -180,9 +180,8 @@ public class JaegerTracerService extends DefaultTracer {
             return;
         }
         if (msg != null && msg instanceof Throwable) {
-            ((Throwable)msg).printStackTrace();
-        } else
-            System.out.println(msg);
+            ((Throwable) msg).printStackTrace();
+        } else System.out.println(msg);
     }
 
     private void logEvent(PaxLoggingEvent e) {

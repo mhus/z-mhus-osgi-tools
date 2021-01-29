@@ -44,7 +44,6 @@ public class CmdKeychainList extends AbstractCmd {
     public Object execute2() throws Exception {
         MKeychain vault = MKeychainUtil.loadDefault();
 
-
         if (sourcename == null) {
             ConsoleTable out = new ConsoleTable(tblOpt);
             out.setHeaderValues("Source", "Id", "Type", "Name", "Description");
@@ -76,11 +75,7 @@ public class CmdKeychainList extends AbstractCmd {
             for (UUID id : source.getEntryIds()) {
                 KeyEntry entry = source.getEntry(id);
                 out.addRowValues(
-                        sourcename,
-                        id,
-                        entry.getType(),
-                        entry.getName(),
-                        entry.getDescription());
+                        sourcename, id, entry.getType(), entry.getName(), entry.getDescription());
             }
             out.print(System.out);
         }

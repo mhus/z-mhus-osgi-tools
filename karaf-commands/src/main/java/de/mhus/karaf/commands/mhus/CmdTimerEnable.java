@@ -54,8 +54,7 @@ public class CmdTimerEnable extends AbstractCmd {
 
         for (SchedulerJob job : getScheduledJob(scheduler, jobName)) {
             if (job != null && job instanceof MutableSchedulerJob) {
-                ((MutableSchedulerJob) job)
-                        .doReschedule(scheduler, SchedulerJob.CALCULATE_NEXT);
+                ((MutableSchedulerJob) job).doReschedule(scheduler, SchedulerJob.CALCULATE_NEXT);
                 System.out.println("OK " + job.getName());
             }
         }

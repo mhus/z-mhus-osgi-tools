@@ -31,12 +31,7 @@ import de.mhus.osgi.api.karaf.AbstractCmd;
 @Service
 public class CmdKeychainCopy extends AbstractCmd {
 
-    @Argument(
-            index = 0,
-            name = "id",
-            required = true,
-            description = "Id",
-            multiValued = false)
+    @Argument(index = 0, name = "id", required = true, description = "Id", multiValued = false)
     String id;
 
     @Argument(
@@ -60,8 +55,7 @@ public class CmdKeychainCopy extends AbstractCmd {
         MKeychain vault = MKeychainUtil.loadDefault();
 
         KeyEntry entry = null;
-        if (sourcename != null)
-            entry = vault.getSource(sourcename).getEntry(UUID.fromString(id));
+        if (sourcename != null) entry = vault.getSource(sourcename).getEntry(UUID.fromString(id));
         else entry = vault.getEntry(UUID.fromString(id));
         if (entry == null) {
             System.out.println("*** Entry not found");
@@ -69,10 +63,7 @@ public class CmdKeychainCopy extends AbstractCmd {
         }
         entry =
                 new DefaultEntry(
-                        entry.getType(),
-                        entry.getName(),
-                        entry.getDescription(),
-                        entry.getValue());
+                        entry.getType(), entry.getName(), entry.getDescription(), entry.getValue());
         vault.getSource(toSource).getEditable().addEntry(entry);
         System.out.println("OK " + entry.getId());
 

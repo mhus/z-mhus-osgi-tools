@@ -32,12 +32,7 @@ public class CmdLockUnlock extends AbstractCmd {
 
     @Reference private Session session;
 
-    @Argument(
-            index = 0,
-            name = "id",
-            required = true,
-            description = "Lock id",
-            multiValued = false)
+    @Argument(index = 0, name = "id", required = true, description = "Lock id", multiValued = false)
     long id;
 
     @Override

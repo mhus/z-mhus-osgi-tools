@@ -51,28 +51,16 @@ public class CmdKeychainSet extends AbstractCmd {
             multiValued = false)
     String sourcename = null;
 
-    @Option(
-            name = "-t",
-            description = "Type to set",
-            required = false)
+    @Option(name = "-t", description = "Type to set", required = false)
     String type = null;
 
-    @Option(
-            name = "-n",
-            description = "Name to set",
-            required = false)
+    @Option(name = "-n", description = "Name to set", required = false)
     String name = null;
-    
-    @Option(
-            name = "-d",
-            description = "Description to set",
-            required = false)
+
+    @Option(name = "-d", description = "Description to set", required = false)
     String desc = null;
-    
-    @Option(
-            name = "-v",
-            description = "Value to set",
-            required = false)
+
+    @Option(name = "-v", description = "Value to set", required = false)
     String value = null;
 
     @Override
@@ -89,12 +77,11 @@ public class CmdKeychainSet extends AbstractCmd {
         KeyEntry entry = mutable.getEntry(UUID.fromString(id));
         DefaultEntry newEntry =
                 new DefaultEntry(
-                        entry.getId(), 
-                        type == null ? entry.getType() : type, 
+                        entry.getId(),
+                        type == null ? entry.getType() : type,
                         name == null ? entry.getName() : name,
-                        desc == null ? entry.getDescription() : desc,  
-                        value == null ? entry.getValue() : new SecureString(value)
-                    );
+                        desc == null ? entry.getDescription() : desc,
+                        value == null ? entry.getValue() : new SecureString(value));
         mutable.updateEntry(newEntry);
         System.out.println("Set");
 

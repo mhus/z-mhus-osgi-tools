@@ -26,7 +26,10 @@ import de.mhus.osgi.api.cache.LocalCacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.cache.LocalCacheWrapper;
 
-@Command(scope = "mhus", name = "cache-list", description = "Cache Control Service - List all caches")
+@Command(
+        scope = "mhus",
+        name = "cache-list",
+        description = "Cache Control Service - List all caches")
 @Service
 public class CmdCacheList extends AbstractCmd {
 
@@ -51,10 +54,7 @@ public class CmdCacheList extends AbstractCmd {
                 table.addRowValues(
                         name,
                         cacheStatistics.getTierStatistics().get("OnHeap").getMappings(),
-                        cacheStatistics
-                                .getTierStatistics()
-                                .get("OnHeap")
-                                .getOccupiedByteSize());
+                        cacheStatistics.getTierStatistics().get("OnHeap").getOccupiedByteSize());
             }
         }
         table.print();

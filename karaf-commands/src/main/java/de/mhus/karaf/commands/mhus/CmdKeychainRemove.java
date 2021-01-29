@@ -46,7 +46,7 @@ public class CmdKeychainRemove extends AbstractCmd {
             description = "Source",
             multiValued = false)
     String sourcename = null;
-    
+
     @Override
     public Object execute2() throws Exception {
         MKeychain vault = MKeychainUtil.loadDefault();

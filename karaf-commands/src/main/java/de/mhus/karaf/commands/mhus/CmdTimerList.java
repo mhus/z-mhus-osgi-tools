@@ -35,7 +35,6 @@ import de.mhus.osgi.services.scheduler.TimerFactoryImpl;
 @Service
 public class CmdTimerList extends AbstractCmd {
 
-
     @Option(
             name = "-a",
             aliases = "--all",
@@ -158,5 +157,4 @@ public class CmdTimerList extends AbstractCmd {
         if (t == SchedulerJob.REMOVE_TIME) return "Remove";
         return "OK";
     }
-
 }
