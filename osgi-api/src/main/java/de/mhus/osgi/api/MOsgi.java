@@ -52,6 +52,7 @@ import de.mhus.lib.core.util.Version;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.errors.NotFoundRuntimeException;
 import de.mhus.osgi.api.services.BundleStarter;
+import de.mhus.osgi.api.util.OsgiBundleClassLoader;
 
 public class MOsgi {
 
@@ -82,8 +83,15 @@ public class MOsgi {
     }
 
     public static <T> T getServiceOrNull(Class<T> ifc) {
-        BundleContext context = FrameworkUtil.getBundle(ifc).getBundleContext();
-        if (context == null) context = FrameworkUtil.getBundle(MOsgi.class).getBundleContext();
+        Bundle bundle = FrameworkUtil.getBundle(ifc);
+        BundleContext context = null;
+        if (bundle != null)
+            context = bundle.getBundleContext();
+        if (context == null) {
+            bundle = FrameworkUtil.getBundle(MOsgi.class);
+            if (bundle != null)
+                context = bundle.getBundleContext();
+        }
         if (context == null) return null;
         ServiceReference<T> ref = context.getServiceReference(ifc);
         if (ref == null) return null;
@@ -548,4 +556,16 @@ public class MOsgi {
     public static boolean isValid(BundleContext bundleContext) {
         return bundleContext != null && bundleContext.getBundle().getState() != Bundle.UNINSTALLED;
     }
+    
+    /**
+     * Load a accessible class from the osgi environment. Will use the first if more then one is available.
+     * 
+     * @param name
+     * @return The class
+     * @throws ClassNotFoundException
+     */
+    public static Class<?> loadClass(String name) throws ClassNotFoundException {
+        return new OsgiBundleClassLoader().loadClass(name); // cache??!!
+    }
+    
 }

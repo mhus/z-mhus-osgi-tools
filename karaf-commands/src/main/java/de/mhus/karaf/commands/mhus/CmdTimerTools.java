@@ -214,9 +214,6 @@ public class CmdTimerTools extends AbstractCmd {
             for (SchedulerJob job : getScheduledJob(scheduler, parameters[0])) {
                 if (job != null) {
                     System.out.println("Change " + job.getName());
-                    if (parameters.length < 2 || MString.isEmpty(parameters[1]))
-                        job.setLogTrailConfig(null);
-                    else job.setLogTrailConfig(parameters[1]);
                 }
             }
         }

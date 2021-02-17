@@ -62,7 +62,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
     @Override
     public void doInitialize(ClassLoader coreLoader) {
-        baseDir = new File(System.getProperty("karaf.base"));
+        baseDir = new File(System.getProperty("karaf.base","."));
         logFactory = new JavaLoggerFactory();
         mlogFactory = new SingleMLogInstanceFactory();
         base.addObject(MLogFactory.class, null, mlogFactory);
