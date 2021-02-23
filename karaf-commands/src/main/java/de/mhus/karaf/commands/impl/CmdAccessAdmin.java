@@ -42,7 +42,7 @@ public class CmdAccessAdmin extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        String user = "admin";
+        String user = AccessUtil.USER_ADMIN.value();
         String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
         Subject subject = M.l(AccessApi.class).createSubject();
         AccessUtil.login(subject, user, pass, true, Locale.getDefault());
