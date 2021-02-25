@@ -81,7 +81,7 @@ public class CmdAccessLogin extends AbstractCmd {
 
         @Override
         public void onCmdStart(Session session) {
-            if (subject != null) env = AccessUtil.useSubject(subject);
+            if (subject != null) env = AccessUtil.asSubject(subject);
         }
 
         @Override
