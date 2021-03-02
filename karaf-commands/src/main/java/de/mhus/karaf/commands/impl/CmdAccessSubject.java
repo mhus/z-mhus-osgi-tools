@@ -19,7 +19,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.shiro.subject.Subject;
 
-import de.mhus.lib.core.shiro.AccessUtil;
+import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(
@@ -32,7 +32,7 @@ public class CmdAccessSubject extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        Subject subject = AccessUtil.getSubject();
+        Subject subject = Aaa.getSubject();
         System.out.println("Subject: " + subject);
         System.out.println("Principal: " + String.valueOf(subject.getPrincipal()));
         System.out.println("Authenticated: " + subject.isAuthenticated());

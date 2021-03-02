@@ -22,9 +22,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.env.DefaultEnvironment;
 import org.osgi.service.component.annotations.Component;
 
-import de.mhus.lib.core.shiro.AccessApi;
-import de.mhus.lib.core.shiro.DefaultAccessApi;
-import de.mhus.lib.core.shiro.EmptySecurityManager;
+import de.mhus.lib.core.aaa.AccessApi;
+import de.mhus.lib.core.aaa.DefaultAccessApi;
+import de.mhus.lib.core.aaa.EmptySecurityManager;
 
 @Component(service = AccessApi.class)
 public class AccessApiService extends DefaultAccessApi {

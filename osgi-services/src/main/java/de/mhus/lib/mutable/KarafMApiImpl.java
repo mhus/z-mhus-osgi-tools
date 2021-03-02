@@ -30,6 +30,7 @@ import org.osgi.framework.ServiceReference;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
+import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogFactory;
@@ -40,7 +41,6 @@ import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
-import de.mhus.lib.core.shiro.AccessUtil;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.logging.JavaLoggerFactory;
 import de.mhus.osgi.api.MOsgi;
@@ -234,7 +234,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         if (result == null) result = super.lookup(ifc, def);
 
         if (result != null) {
-            AccessUtil.checkPermission(result);
+            Aaa.checkPermission(result);
         }
 
         return result;

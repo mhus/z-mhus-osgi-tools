@@ -25,10 +25,10 @@ import org.apache.karaf.shell.api.console.Session;
 import org.apache.shiro.subject.Subject;
 
 import de.mhus.lib.core.M;
+import de.mhus.lib.core.aaa.Aaa;
+import de.mhus.lib.core.aaa.AccessApi;
+import de.mhus.lib.core.aaa.SubjectEnvironment;
 import de.mhus.lib.core.console.Console;
-import de.mhus.lib.core.shiro.AccessApi;
-import de.mhus.lib.core.shiro.AccessUtil;
-import de.mhus.lib.core.shiro.SubjectEnvironment;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptor;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
@@ -63,7 +63,7 @@ public class CmdAccessLogin extends AbstractCmd {
 
         if (pass == null) pass = Console.get().readPassword();
         Subject subject = M.l(AccessApi.class).createSubject();
-        AccessUtil.login(subject, user, pass, true, Locale.getDefault());
+        Aaa.login(subject, user, pass, true, Locale.getDefault());
         CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
         System.out.println("OK");
 
@@ -81,7 +81,7 @@ public class CmdAccessLogin extends AbstractCmd {
 
         @Override
         public void onCmdStart(Session session) {
-            if (subject != null) env = AccessUtil.asSubject(subject);
+            if (subject != null) env = Aaa.asSubject(subject);
         }
 
         @Override

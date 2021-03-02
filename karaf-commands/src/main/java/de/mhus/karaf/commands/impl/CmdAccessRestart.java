@@ -19,7 +19,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.M;
-import de.mhus.lib.core.shiro.AccessApi;
+import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(

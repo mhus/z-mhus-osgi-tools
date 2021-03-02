@@ -36,7 +36,7 @@ import org.apache.shiro.util.Nameable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.mhus.lib.core.shiro.IniDataRealm;
+import de.mhus.lib.core.aaa.IniDataRealm;
 
 public class MyIniSecurityManagerFactory extends MyIniFactorySupport<SecurityManager> {
 

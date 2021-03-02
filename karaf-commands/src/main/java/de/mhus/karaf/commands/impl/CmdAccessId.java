@@ -18,7 +18,7 @@ package de.mhus.karaf.commands.impl;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.shiro.AccessUtil;
+import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "access-id", description = "Access Control - print current user id")
@@ -28,7 +28,7 @@ public class CmdAccessId extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        System.out.println(AccessUtil.getPrincipal());
+        System.out.println(Aaa.getPrincipal());
 
         return null;
     }

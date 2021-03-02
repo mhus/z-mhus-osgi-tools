@@ -25,8 +25,8 @@ import org.apache.shiro.subject.Subject;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.shiro.AccessApi;
-import de.mhus.lib.core.shiro.AccessUtil;
+import de.mhus.lib.core.aaa.Aaa;
+import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
@@ -42,10 +42,10 @@ public class CmdAccessAdmin extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        String user = AccessUtil.USER_ADMIN.value();
+        String user = Aaa.USER_ADMIN.value();
         String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
         Subject subject = M.l(AccessApi.class).createSubject();
-        AccessUtil.login(subject, user, pass, true, Locale.getDefault());
+        Aaa.login(subject, user, pass, true, Locale.getDefault());
         CmdInterceptorUtil.setInterceptor(session, new CmdAccessLogin.AaaInterceptor(subject));
         System.out.println("OK");
 
