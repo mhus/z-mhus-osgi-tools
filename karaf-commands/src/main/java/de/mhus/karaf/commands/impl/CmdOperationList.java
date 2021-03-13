@@ -1,9 +1,12 @@
 package de.mhus.karaf.commands.impl;
 
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.core.IReadProperties;
 import de.mhus.lib.core.M;
+import de.mhus.lib.core.MProperties;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.operation.Operation;
 import de.mhus.lib.core.operation.OperationDescription;
@@ -17,19 +20,40 @@ import de.mhus.osgi.api.services.OperationManager;
 @Service
 public class CmdOperationList extends AbstractCmd {
 
+
+    @Option(
+            name = "-a",
+            aliases = "--all",
+            description = "Print all labels",
+            required = false)
+    private boolean full;
+
 	@Override
 	public Object execute2() throws Exception {
 		ConsoleTable out = new ConsoleTable(tblOpt);
-		out.setHeaderValues("Path","Version","Caption","Class","Labels");
+		out.setHeaderValues("Path","Version","Caption","Class","Labels", "uuid");
 		for (Operation oper : M.l(OperationManager.class).getOperations()) {
 			OperationDescription desc = oper.getDescription();
 			
 			if (desc == null)
 				out.addRowValues("?","?","?",oper.getClass().getCanonicalName(), "");
 			else
-				out.addRowValues(desc.getPath(),desc.getVersionString(),desc.getCaption(),oper.getClass().getCanonicalName(),desc.getLabels());
+				out.addRowValues(
+						desc.getPath(),
+						desc.getVersionString(),
+						desc.getCaption(),
+						oper.getClass().getCanonicalName(),
+						reduceLabels(desc.getLabels()),
+						desc.getUuid());
 		}
 		out.print();
+		return null;
+	}
+
+	private Object reduceLabels(IReadProperties labels) {
+		if (full) return labels;
+		MProperties p = new MProperties(labels);
+		p.keys().removeIf(k -> k.startsWith("@") || k.startsWith("_") );
 		return null;
 	}
 
