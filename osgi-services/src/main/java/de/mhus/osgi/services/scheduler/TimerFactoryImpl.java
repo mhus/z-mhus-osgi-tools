@@ -47,7 +47,7 @@ import de.mhus.lib.core.service.TimerIfc;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.MOsgi.Service;
 import de.mhus.osgi.api.scheduler.SchedulerService;
-import de.mhus.osgi.api.util.MServiceTracker;
+import de.mhus.osgi.api.util.AbstractServiceTracker;
 
 @Component(
         service = TimerFactory.class,
@@ -57,7 +57,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 
     protected static Log log = Log.getLog(TimerFactoryImpl.class);
     private SchedulerTimer myTimer = new SchedulerTimer("de.mhus.lib.karaf.Scheduler");
-    private MServiceTracker<SchedulerService> tracker;
+    private AbstractServiceTracker<SchedulerService> tracker;
     private WeakHashMap<SchedulerService, SchedulerJob> services = new WeakHashMap<>();
     private BundleContext context;
     public static TimerFactoryImpl instance; // TODO use method
@@ -102,7 +102,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 
         context = ctx.getBundleContext();
         tracker =
-                new MServiceTracker<SchedulerService>(context, SchedulerService.class) {
+                new AbstractServiceTracker<SchedulerService>(context, SchedulerService.class) {
 
                     @Override
                     protected void removeService(
