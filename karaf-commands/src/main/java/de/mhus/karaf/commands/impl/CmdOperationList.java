@@ -54,7 +54,7 @@ public class CmdOperationList extends AbstractCmd {
 		if (full) return labels;
 		MProperties p = new MProperties(labels);
 		p.keys().removeIf(k -> k.startsWith("@") || k.startsWith("_") );
-		return null;
+		return p;
 	}
 
 }
