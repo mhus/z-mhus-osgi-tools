@@ -31,7 +31,7 @@ public class CmdOperationList extends AbstractCmd {
 	@Override
 	public Object execute2() throws Exception {
 		ConsoleTable out = new ConsoleTable(tblOpt);
-		out.setHeaderValues("Path","Version","Caption","Class","Labels", "uuid");
+		out.setHeaderValues("PathVersion","Caption","Class","Labels", "Uuid");
 		for (Operation oper : M.l(OperationManager.class).getOperations()) {
 			OperationDescription desc = oper.getDescription();
 			
@@ -39,8 +39,7 @@ public class CmdOperationList extends AbstractCmd {
 				out.addRowValues("?","?","?",oper.getClass().getCanonicalName(), "");
 			else
 				out.addRowValues(
-						desc.getPath(),
-						desc.getVersionString(),
+						desc.getPathVersion(),
 						desc.getCaption(),
 						oper.getClass().getCanonicalName(),
 						reduceLabels(desc.getLabels()),
