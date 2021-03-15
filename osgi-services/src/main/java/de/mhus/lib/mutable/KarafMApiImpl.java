@@ -167,7 +167,17 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                     if (bundle == null
                             || bundle.getState() != Bundle.ACTIVE
                             || cached.modified != bundle.getLastModified()) {
-                        apiCache.remove(cached.ifc.getCanonicalName());
+                        cleanupLookup(ifc);
+                        cached = null;
+                    }
+                }
+                if (cached != null) {
+                    try {
+                        @SuppressWarnings("unused")
+                        T obj = (T)cached.api;
+                    } catch (ClassCastException e) {
+                        MApi.dirtyLogInfo("KarafMAPiImpl.lookup: Can't cast from cache into ifc: try to reload");
+                        cleanupLookup(ifc);
                         cached = null;
                     }
                 }
@@ -238,6 +248,12 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
         }
 
         return result;
+    }
+
+    @Override
+    public <T> void cleanupLookup(Class<T> ifc) {
+        if (ifc == null || apiCache == null) return;
+        apiCache.remove(ifc.getCanonicalName());
     }
 
     public static class Container implements Serializable {
