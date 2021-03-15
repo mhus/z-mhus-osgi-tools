@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-public class MServiceList<T> extends MServiceTracker<T> {
+public class MServiceList<T> extends AbstractServiceTracker<T> {
 
     protected LinkedList<T> list = new LinkedList<>();
 

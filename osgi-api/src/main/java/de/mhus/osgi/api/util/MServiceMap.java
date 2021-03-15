@@ -23,7 +23,7 @@ import org.osgi.framework.ServiceReference;
 
 import de.mhus.osgi.api.MOsgi;
 
-public class MServiceMap<T> extends MServiceTracker<T> {
+public class MServiceMap<T> extends AbstractServiceTracker<T> {
 
     protected HashMap<String, T> map = new HashMap<>();
 

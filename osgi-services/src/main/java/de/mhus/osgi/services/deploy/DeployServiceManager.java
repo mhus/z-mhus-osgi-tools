@@ -36,20 +36,11 @@ import de.mhus.osgi.services.deploy.BundleDeployer.SENSIVITY;
 public class DeployServiceManager extends MLog implements ISimpleService {
 
     MServiceTracker<DeployService> tracker =
-            new MServiceTracker<DeployService>(DeployService.class) {
-
-                @Override
-                protected void removeService(
-                        ServiceReference<DeployService> reference, DeployService service) {
-                    undeploy(reference, service);
-                }
-
-                @Override
-                protected void addService(
-                        ServiceReference<DeployService> reference, DeployService service) {
-                    deploy(reference, service, SENSIVITY.UPDATE);
-                }
-            };
+            new MServiceTracker<DeployService>(
+        		DeployService.class,
+        		(reference, service) -> undeploy(reference, service),
+        		(reference, service) -> deploy(reference, service, SENSIVITY.UPDATE)
+    		);
 
     @Activate
     public void doActivate(ComponentContext ctx) {

@@ -26,18 +26,18 @@ import de.mhus.lib.core.keychain.KeychainSource;
 import de.mhus.lib.core.keychain.MKeychain;
 import de.mhus.osgi.api.services.ISimpleService;
 import de.mhus.osgi.api.services.SimpleService;
-import de.mhus.osgi.api.util.MServiceTracker;
+import de.mhus.osgi.api.util.AbstractServiceTracker;
 
 @Component(service = ISimpleService.class, immediate = true)
 public class VaultManagerImpl extends SimpleService {
 
-    MServiceTracker<KeychainSource> services;
+    AbstractServiceTracker<KeychainSource> services;
     private MKeychain vault;
 
     @Activate
     public void doActivate(ComponentContext ctx) {
         services =
-                new MServiceTracker<KeychainSource>(ctx.getBundleContext(), KeychainSource.class) {
+                new AbstractServiceTracker<KeychainSource>(ctx.getBundleContext(), KeychainSource.class) {
 
                     @Override
                     protected void removeService(
