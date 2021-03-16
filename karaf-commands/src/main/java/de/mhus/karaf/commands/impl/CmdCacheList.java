@@ -18,10 +18,10 @@ package de.mhus.karaf.commands.impl;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.ehcache.core.statistics.CacheStatistics;
 
 import de.mhus.lib.core.cache.LocalCache;
 import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.LocalCacheStatistics;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.cache.LocalCacheWrapper;
@@ -44,17 +44,23 @@ public class CmdCacheList extends AbstractCmd {
         }
 
         ConsoleTable table = new ConsoleTable(tblOpt);
-        table.setHeaderValues("Name", "Size", "Bytes");
+        table.setHeaderValues("Name", "Size", "Bytes", "Gets", "Puts", "Removed", "Hits", "Missed","AvrRemove");
 
         for (String name : service.getCacheNames()) {
             LocalCache<Object, Object> cache = service.getCache(name);
             if (cache != null) {
-                CacheStatistics cacheStatistics =
-                        ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
+                LocalCacheStatistics cacheStatistics = ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
                 table.addRowValues(
                         name,
-                        cacheStatistics.getTierStatistics().get("OnHeap").getMappings(),
-                        cacheStatistics.getTierStatistics().get("OnHeap").getOccupiedByteSize());
+                        cacheStatistics.getCacheSize(),
+                        cacheStatistics.getOccupiedByteSize(),
+                        cacheStatistics.getCacheGets(),
+                        cacheStatistics.getCachePuts(),
+                        cacheStatistics.getCacheRemovals(),
+                        cacheStatistics.getCacheHits(),
+                        cacheStatistics.getCacheMisses(),
+                        cacheStatistics.getAverageRemoveTime()
+                        );
             }
         }
         table.print();

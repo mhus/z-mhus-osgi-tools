@@ -15,8 +15,8 @@
  */
 package de.mhus.osgi.services.cache;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
@@ -24,6 +24,9 @@ import org.ehcache.config.Builder;
 import org.ehcache.config.ResourcePools;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ExpiryPolicyBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
+import org.ehcache.core.spi.service.StatisticsService;
 import org.ehcache.core.statistics.DefaultStatisticsService;
 import org.ehcache.impl.config.copy.DefaultCopierConfiguration;
 import org.osgi.framework.BundleContext;
@@ -33,22 +36,24 @@ import org.osgi.service.component.annotations.Component;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.cache.LocalCache;
+import de.mhus.lib.core.cache.LocalCacheConfig;
 import de.mhus.lib.core.cache.LocalCacheService;
-import de.mhus.lib.core.cache.NoneCopier;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
 
 @Component
 public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
 
-    private CacheManagerBuilder<CacheManager> cacheBuilder;
+//    private CacheManagerBuilder<CacheManager> cacheBuilder;
     private DefaultStatisticsService statisticsService;
+private CacheManager cacheManager;
+private javax.cache.CacheManager cacheManagerWrapper;
 
-    @Override
-    public CacheManagerBuilder<CacheManager> getCacheBuilder() {
-        if (cacheBuilder == null) cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
-        return cacheBuilder;
-    }
+//    @Override
+//    public CacheManagerBuilder<CacheManager> getCacheBuilder() {
+//        if (cacheBuilder == null) cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
+//        return cacheBuilder;
+//    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -57,8 +62,8 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
             String name,
             Class<K> keyType,
             Class<V> valueType,
-            Builder<? extends ResourcePools> resourcePoolsBuilder,
-            Consumer<CacheConfigurationBuilder<K, V>> configurator) {
+            LocalCacheConfig config
+            ) {
 
         BundleContext ownerContext = FrameworkUtil.getBundle(owner.getClass()).getBundleContext();
         name =
@@ -73,21 +78,26 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
 
         if (statisticsService == null) statisticsService = new DefaultStatisticsService();
 
-        CacheManager cacheManager =
-                CacheManagerBuilder.newCacheManagerBuilder().using(statisticsService).build(false);
-        cacheManager.init();
+        if (cacheManager == null) {
+            cacheManager =
+                    CacheManagerBuilder.newCacheManagerBuilder().using(statisticsService).build(false);
+            cacheManager.init();
+            cacheManagerWrapper = new CacheManagerWrapper(this);
+        }
+        
+        Builder<? extends ResourcePools> resourcePoolsBuilder = 
+                    config.getHeapSize() > 0 
+                    ?
+                    ResourcePoolsBuilder.heap(config.getHeapSize())
+                    :
+                    ResourcePoolsBuilder.newResourcePoolsBuilder();
 
         CacheConfigurationBuilder<K, V> ccb =
                 CacheConfigurationBuilder.newCacheConfigurationBuilder(
                         keyType, valueType, resourcePoolsBuilder);
 
-        if (resourcePoolsBuilder == null)
-            throw new NullPointerException("resourcePoolsBuilder is null");
-
-        if (configurator != null) {
-            configurator.accept(ccb);
-        } else {
-            // default configuration
+        // configuration
+        if (!config.isSerializable()) {
             @SuppressWarnings("rawtypes")
             DefaultCopierConfiguration<String> copierConfigurationKey =
                     new DefaultCopierConfiguration(
@@ -98,11 +108,13 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
                             NoneCopier.class, DefaultCopierConfiguration.Type.VALUE);
             ccb.withService(copierConfigurationKey).withService(copierConfigurationValue);
         }
+        if (config.getTTL() > 0)
+            ccb.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis( config.getTTL() )));
 
         Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
 
         LocalCacheWrapper<K, V> wrapper =
-                new LocalCacheWrapper<>(cacheManager, cache, name, ownerContext, statisticsService);
+                new LocalCacheWrapper<>(this, cache, name, ownerContext);
         return wrapper;
     }
 
@@ -120,5 +132,17 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
             MApi.dirtyLogTrace("not found", name);
             return null;
         }
+    }
+
+    public CacheManager getCacheManager() {
+        return cacheManager;
+    }
+
+    public StatisticsService getStatisticsService() {
+        return statisticsService;
+    }
+
+    public javax.cache.CacheManager getCacheManagerWrapper() {
+        return cacheManagerWrapper;
     }
 }

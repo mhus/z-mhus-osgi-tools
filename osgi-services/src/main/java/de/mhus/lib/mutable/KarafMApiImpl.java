@@ -30,6 +30,7 @@ import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.cache.LocalCache;
+import de.mhus.lib.core.cache.LocalCacheConfig;
 import de.mhus.lib.core.cache.LocalCacheService;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
@@ -152,7 +153,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                     "baseApi",
                                     String.class,
                                     Container.class,
-                                    CFG_LOOKUP_CACHE_SIZE);
+                                    new LocalCacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
+                                    );
                 } catch (Throwable e) {
                     MApi.dirtyLogDebug(e.toString());
                 }

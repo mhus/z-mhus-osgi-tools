@@ -15,17 +15,21 @@
  */
 package de.mhus.osgi.services.cache;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
+import javax.cache.CacheManager;
+import javax.cache.configuration.CacheEntryListenerConfiguration;
+import javax.cache.configuration.Configuration;
+import javax.cache.integration.CompletionListener;
+import javax.cache.processor.EntryProcessor;
+import javax.cache.processor.EntryProcessorException;
+import javax.cache.processor.EntryProcessorResult;
+
 import org.ehcache.config.CacheRuntimeConfiguration;
-import org.ehcache.core.spi.service.StatisticsService;
 import org.ehcache.core.statistics.CacheStatistics;
 import org.ehcache.spi.loaderwriter.BulkCacheLoadingException;
 import org.ehcache.spi.loaderwriter.BulkCacheWritingException;
@@ -39,30 +43,28 @@ import org.osgi.framework.ServiceRegistration;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.cache.LocalCache;
+import de.mhus.lib.core.cache.LocalCacheStatistics;
 import de.mhus.osgi.api.MOsgi;
 
 public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
 
-    private Cache<K, V> instance;
-    private CacheManager manager;
+    private org.ehcache.Cache<K, V> instance;
     private String name;
-    private StatisticsService statisticsService;
     private BundleContext bundleContext;
 
     @SuppressWarnings("rawtypes")
     private ServiceRegistration<LocalCache> serviceRegistration;
+    private LocalCacheServiceImpl service;
 
     public LocalCacheWrapper(
-            CacheManager cacheManager,
-            Cache<K, V> cache,
+            LocalCacheServiceImpl service,
+            org.ehcache.Cache<K, V> cache,
             String name,
-            BundleContext bundleContext,
-            StatisticsService statisticsService) {
+            BundleContext bundleContext) {
         MApi.dirtyLogDebug("LocalCacheWrapper","open", name);
-        this.manager = cacheManager;
+        this.service = service; 
         this.instance = cache;
         this.name = name;
-        this.statisticsService = statisticsService;
         this.bundleContext = bundleContext;
 
         serviceRegistration =
@@ -77,6 +79,10 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         }
     }
 
+    public CacheStatistics getEhCacheStatistics() {
+        return service.getStatisticsService().getCacheStatistics(name);
+    }
+    
     private void serviceListener(ServiceEvent ev) {
         try {
             if (ev == null || ev.getServiceReference() == null || serviceRegistration == null) return;
@@ -91,20 +97,44 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         }
     }
 
-    public CacheStatistics getCacheStatistics() {
-        return statisticsService.getCacheStatistics(name);
+    public LocalCacheStatistics getCacheStatistics() {
+        return new WrapperCacheStatistics(service.getStatisticsService().getCacheStatistics(name));
     }
 
     @Override
     public CacheManager getCacheManager() {
-        return manager;
+        return service.getCacheManagerWrapper();
     }
 
     @Override
     public void forEach(Consumer<? super Entry<K, V>> action) {
-        instance.forEach(action);
+        instance.forEach(e -> action.accept( new EntryWrapper<K, V>(e) ) );
     }
 
+    private static class EntryWrapper<K,V> implements javax.cache.Cache.Entry<K,V> {
+        
+        org.ehcache.Cache.Entry<K,V> entry;
+        
+        public EntryWrapper(org.ehcache.Cache.Entry<K, V> e) {
+            this.entry = e;
+        }
+        
+        @Override
+        public K getKey() {
+            return entry.getKey();
+        }
+
+        @Override
+        public V getValue() {
+            return entry.getValue();
+        }
+
+        @Override
+        public <T> T unwrap(Class<T> clazz) {
+            return null;
+        }
+        
+    }
     @Override
     public V get(K key) throws CacheLoadingException {
         return instance.get(key);
@@ -117,7 +147,8 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
 
     @Override
     public Spliterator<Entry<K, V>> spliterator() {
-        return instance.spliterator();
+//        return instance.spliterator();
+        return null;
     }
 
     @Override
@@ -126,8 +157,10 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
     }
 
     @Override
-    public void remove(K key) throws CacheWritingException {
+    public boolean remove(K key) throws CacheWritingException {
+        if (!instance.containsKey(key)) return false;
         instance.remove(key);
+        return true;
     }
 
     @Override
@@ -151,8 +184,10 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
     }
 
     @Override
-    public V putIfAbsent(K key, V value) throws CacheLoadingException, CacheWritingException {
-        return instance.putIfAbsent(key, value);
+    public boolean putIfAbsent(K key, V value) throws CacheLoadingException, CacheWritingException {
+        if (instance.containsKey(key)) return false;
+        instance.putIfAbsent(key, value);
+        return true;
     }
 
     @Override
@@ -161,8 +196,8 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
     }
 
     @Override
-    public V replace(K key, V value) throws CacheLoadingException, CacheWritingException {
-        return instance.replace(key, value);
+    public boolean replace(K key, V value) throws CacheLoadingException, CacheWritingException {
+        return instance.replace(key, value) != null;
     }
 
     @Override
@@ -171,18 +206,37 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         return instance.replace(key, oldValue, newValue);
     }
 
-    @Override
     public CacheRuntimeConfiguration<K, V> getRuntimeConfiguration() {
         return instance.getRuntimeConfiguration();
     }
 
     @Override
     public Iterator<Entry<K, V>> iterator() {
-        return instance.iterator();
+        return new InteratorWrapper<K,V>(instance.iterator());
     }
 
+    private static class InteratorWrapper<K, V> implements Iterator<Entry<K, V>> {
+
+        private Iterator<org.ehcache.Cache.Entry<K, V>> iterator;
+
+        public InteratorWrapper(Iterator<org.ehcache.Cache.Entry<K, V>> iterator) {
+            this.iterator = iterator;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public Entry<K, V> next() {
+            return new EntryWrapper<K,V>(iterator.next());
+        }
+        
+    }
+    
     @Override
-    public void close() throws IOException {
+    public void close() {
         MApi.dirtyLogDebug("LocalCacheWrapper","close", name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
@@ -191,13 +245,90 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
             serviceRegistration = null;
             sr.unregister();
         }
-        if (manager != null) {
-            manager.close();
-            manager = null;
-        }
+        service.getCacheManager().removeCache(name);
     }
 
     public Bundle getBundle() {
         return bundleContext.getBundle();
+    }
+
+    public LocalCacheServiceImpl getService() {
+        return service;
+    }
+
+    @Override
+    public void loadAll(Set<? extends K> keys, boolean replaceExistingValues, CompletionListener completionListener) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public V getAndPut(K key, V value) {
+        V cur = instance.get(key);
+        instance.put(key, value);
+        return cur;
+    }
+
+    @Override
+    public V getAndRemove(K key) {
+        return null;
+    }
+
+    @Override
+    public V getAndReplace(K key, V value) {
+        V cur = instance.get(key);
+        instance.replace(key, value);
+        return cur;
+    }
+
+    @Override
+    public void removeAll() {
+        instance.clear();
+    }
+
+    @Override
+    public <C extends Configuration<K, V>> C getConfiguration(Class<C> clazz) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> T invoke(K key, EntryProcessor<K, V, T> entryProcessor, Object... arguments)
+            throws EntryProcessorException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T> Map<K, EntryProcessorResult<T>> invokeAll(Set<? extends K> keys, EntryProcessor<K, V, T> entryProcessor,
+            Object... arguments) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean isClosed() {
+        return serviceRegistration == null;
+    }
+
+    @Override
+    public <T> T unwrap(Class<T> clazz) {
+        return null;
+    }
+
+    @Override
+    public void registerCacheEntryListener(CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void deregisterCacheEntryListener(CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+        // TODO Auto-generated method stub
+        
     }
 }
