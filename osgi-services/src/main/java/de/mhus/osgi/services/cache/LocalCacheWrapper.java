@@ -37,11 +37,11 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceRegistration;
 
-import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MApi;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
 
-public class LocalCacheWrapper<K, V> extends MLog implements LocalCache<K, V> {
+public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
 
     private Cache<K, V> instance;
     private CacheManager manager;
@@ -58,7 +58,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements LocalCache<K, V> {
             String name,
             BundleContext bundleContext,
             StatisticsService statisticsService) {
-        log().d("open", name);
+        MApi.dirtyLogDebug("LocalCacheWrapper","open", name);
         this.manager = cacheManager;
         this.instance = cache;
         this.name = name;
@@ -72,18 +72,19 @@ public class LocalCacheWrapper<K, V> extends MLog implements LocalCache<K, V> {
             bundleContext.addServiceListener(
                     ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
         } catch (InvalidSyntaxException e) {
-            log().e(name, e);
+            MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
         }
     }
 
     private Object serviceListener(ServiceEvent ev) {
         if (ev.getServiceReference().equals(serviceRegistration.getReference())
-                && ev.getType() == ServiceEvent.UNREGISTERING) log().d("unregister", name);
+                && ev.getType() == ServiceEvent.UNREGISTERING) 
+            MApi.dirtyLogDebug("LocalCacheWrapper","unregister", name);
         try {
             serviceRegistration = null;
             close();
         } catch (IOException e) {
-            log().e(name, e);
+            MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
         }
         return null;
     }
@@ -180,7 +181,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements LocalCache<K, V> {
 
     @Override
     public void close() throws IOException {
-        log().d("close", name);
+        MApi.dirtyLogDebug("LocalCacheWrapper","close", name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
             ServiceRegistration<LocalCache> sr =

@@ -17,8 +17,6 @@ package de.mhus.lib.mutable;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
@@ -41,7 +39,6 @@ import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
-import de.mhus.lib.errors.NotFoundException;
 import de.mhus.lib.logging.JavaLoggerFactory;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.cache.LocalCache;
@@ -53,7 +50,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     private boolean fullTrace = false;
     private KarafHousekeeper housekeeper;
     private LocalCache<String, Container> apiCache;
-    private boolean useLookupCache = false;
+    private boolean useLookupCache = true;
+    private BundleContext context;
 
     @Override
     protected MCfgManager createMCfgManager() {
@@ -154,8 +152,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                     String.class,
                                     Container.class,
                                     100);
-                } catch (NotFoundException e) {
-                    MApi.dirtyLogTrace(e);
+                } catch (Throwable e) {
+                    MApi.dirtyLogDebug(e.toString());
                 }
             }
 
@@ -184,47 +182,60 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
             }
 
             if (cached == null) {
-                Bundle bundle = FrameworkUtil.getBundle(KarafMApiImpl.class);
-                if (bundle != null) {
-                    BundleContext context = bundle.getBundleContext();
-                    if (context != null) {
-                        String filter = null;
-                        IConfig cfg = MApi.getCfg(ifc);
-                        if (cfg != null) {
-                            filter = cfg.getString("mhusApiBaseFilter", null);
+                if (context == null) {
+                    Bundle bundle = FrameworkUtil.getBundle(KarafMApiImpl.class);
+                    if (bundle != null) {
+                        context = bundle.getBundleContext();
+                    }
+                }
+                if (context != null) {
+                    String filter = null;
+                    IConfig cfg = MApi.getCfg(ifc);
+                    if (cfg != null) {
+                        filter = cfg.getString("mhusApiBaseFilter", null);
+                    }
+                    ServiceReference<T> ref = null;
+                    try {
+                        ServiceReference<?>[] refs = context.getServiceReferences(ifc.getCanonicalName(), filter);
+                        if (refs != null) {
+                            if (refs.length > 0)
+                                ref = (ServiceReference<T>) refs[0];
+                            if (refs.length > 1) {
+                                for (ServiceReference<?> refx : refs)
+                                    MApi.dirtyLogDebug("more then one service found",ifc,refx.getBundle().getSymbolicName(),refx.getBundle().getBundleId(),context.getService(refx).getClass().getCanonicalName());
+                            }
                         }
-                        ServiceReference<T> ref = null;
+//                        Collection<ServiceReference<T>> refs =
+//                                context.getServiceReferences(ifc, filter);
+//                        Iterator<ServiceReference<T>> refsIterator = refs.iterator();
+//
+//                        if (refsIterator.hasNext()) ref = refs.iterator().next();
+//                        if (refsIterator.hasNext())
+//                            MApi.dirtyLogDebug(
+//                                    "more then one service found for singleton", ifc, filter);
+                    } catch (InvalidSyntaxException e) {
+                        MApi.dirtyLogError(ifc, filter, e);
+                    }
+                    if (ref != null) {
+                        if (ref.getBundle().getState() != Bundle.ACTIVE) {
+                            MLogUtil.log()
+                                    .d(
+                                            "KarafBase",
+                                            "found in bundle but not jet active",
+                                            ifc,
+                                            context.getBundle().getSymbolicName());
+                            return null;
+                        }
+                        T obj = null;
                         try {
-                            Collection<ServiceReference<T>> refs =
-                                    context.getServiceReferences(ifc, filter);
-                            Iterator<ServiceReference<T>> refsIterator = refs.iterator();
-
-                            if (refsIterator.hasNext()) ref = refs.iterator().next();
-                            if (refsIterator.hasNext())
-                                MApi.dirtyLogDebug(
-                                        "more then one service found for singleton", ifc, filter);
-                        } catch (InvalidSyntaxException e) {
-                            MApi.dirtyLogError(ifc, filter, e);
+                            obj = ref.getBundle().getBundleContext().getService(ref);
+                            //                              obj = context.getService(ref);
+                        } catch (Throwable t) {
+                            t.printStackTrace();
                         }
-                        if (ref != null) {
-                            if (ref.getBundle().getState() != Bundle.ACTIVE) {
-                                MLogUtil.log()
-                                        .d(
-                                                "KarafBase",
-                                                "found in bundle but not jet active",
-                                                ifc,
-                                                bundle.getSymbolicName());
-                                return null;
-                            }
-                            T obj = null;
+                        if (obj != null) {
+                            MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc, apiCache != null);
                             try {
-                                obj = ref.getBundle().getBundleContext().getService(ref);
-                                //                              obj = context.getService(ref);
-                            } catch (Throwable t) {
-                                t.printStackTrace();
-                            }
-                            if (obj != null) {
-                                MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc);
                                 cached = new Container();
                                 cached.bundleId = ref.getBundle().getBundleId();
                                 cached.bundleName = ref.getBundle().getSymbolicName();
@@ -233,6 +244,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                 cached.ifc = ifc;
                                 cached.filter = filter;
                                 if (apiCache != null) apiCache.put(ifc.getCanonicalName(), cached);
+                            } catch (Throwable t) {
+                                MApi.dirtyLogDebug("KarafBase", t);
                             }
                         }
                     }

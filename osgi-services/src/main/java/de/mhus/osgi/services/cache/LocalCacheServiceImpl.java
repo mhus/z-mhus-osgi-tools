@@ -29,6 +29,7 @@ import org.ehcache.impl.config.copy.DefaultCopierConfiguration;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Component;
 
+import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
@@ -114,7 +115,7 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
         try {
             return MOsgi.getService(LocalCache.class, MOsgi.filterValue("name", name));
         } catch (NotFoundException e) {
-            log().t("not found", name);
+            MApi.dirtyLogTrace("not found", name);
             return null;
         }
     }
