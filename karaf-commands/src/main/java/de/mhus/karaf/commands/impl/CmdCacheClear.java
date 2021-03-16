@@ -20,7 +20,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "cache-clear", description = "Cache Control Service - clear cache")
@@ -35,7 +35,7 @@ public class CmdCacheClear extends AbstractCmd {
             multiValued = false)
     String name;
 
-    @Reference LocalCacheService service;
+    @Reference ICacheService service;
 
     @Override
     public Object execute2() throws Exception {

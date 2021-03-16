@@ -2,9 +2,9 @@ package de.mhus.osgi.services.cache;
 
 import org.ehcache.core.statistics.CacheStatistics;
 
-import de.mhus.lib.core.cache.LocalCacheStatistics;
+import de.mhus.lib.core.cache.ICacheStatistics;
 
-public class WrapperCacheStatistics implements LocalCacheStatistics {
+public class WrapperCacheStatistics implements ICacheStatistics {
 
     private CacheStatistics instance;
 

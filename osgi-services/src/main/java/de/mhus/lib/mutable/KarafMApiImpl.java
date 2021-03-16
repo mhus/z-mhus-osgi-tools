@@ -29,9 +29,9 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.aaa.Aaa;
-import de.mhus.lib.core.cache.LocalCache;
-import de.mhus.lib.core.cache.LocalCacheConfig;
-import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.ICache;
+import de.mhus.lib.core.cache.CacheConfig;
+import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogFactory;
@@ -50,7 +50,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
     private boolean fullTrace = false;
     private KarafHousekeeper housekeeper;
-    private LocalCache<String, Container> apiCache;
+    private ICache<String, Container> apiCache;
     private boolean CFG_USE_LOOKUP_CACHE = true;
     private BundleContext context;
     private int CFG_LOOKUP_CACHE_SIZE = 1000;
@@ -146,14 +146,14 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
             if (apiCache == null && CFG_USE_LOOKUP_CACHE) {
                 try {
-                    LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
+                    ICacheService cacheService = MOsgi.getService(ICacheService.class);
                     apiCache =
                             cacheService.createCache(
                                     this,
                                     "baseApi",
                                     String.class,
                                     Container.class,
-                                    new LocalCacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
+                                    new CacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
                                     );
                 } catch (Throwable e) {
                     MApi.dirtyLogDebug(e.toString());

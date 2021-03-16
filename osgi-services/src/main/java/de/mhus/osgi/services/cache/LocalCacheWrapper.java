@@ -42,18 +42,18 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceRegistration;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.cache.LocalCache;
-import de.mhus.lib.core.cache.LocalCacheStatistics;
+import de.mhus.lib.core.cache.ICache;
+import de.mhus.lib.core.cache.ICacheStatistics;
 import de.mhus.osgi.api.MOsgi;
 
-public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
+public class LocalCacheWrapper<K, V> implements ICache<K, V> {
 
     private org.ehcache.Cache<K, V> instance;
     private String name;
     private BundleContext bundleContext;
 
     @SuppressWarnings("rawtypes")
-    private ServiceRegistration<LocalCache> serviceRegistration;
+    private ServiceRegistration<ICache> serviceRegistration;
     private LocalCacheServiceImpl service;
 
     public LocalCacheWrapper(
@@ -69,11 +69,11 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
 
         serviceRegistration =
                 bundleContext.registerService(
-                        LocalCache.class, this, MOsgi.createProperties("name", name));
+                        ICache.class, this, MOsgi.createProperties("name", name));
         try {
             // add listener to services. If my service is shut down, stop cache
             bundleContext.addServiceListener(
-                    ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
+                    ev -> serviceListener(ev), MOsgi.filterObjectClass(ICache.class));
         } catch (InvalidSyntaxException e) {
             MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
         }
@@ -97,7 +97,7 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         }
     }
 
-    public LocalCacheStatistics getCacheStatistics() {
+    public ICacheStatistics getCacheStatistics() {
         return new WrapperCacheStatistics(service.getStatisticsService().getCacheStatistics(name));
     }
 
@@ -240,7 +240,7 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         MApi.dirtyLogDebug("LocalCacheWrapper","close", name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
-            ServiceRegistration<LocalCache> sr =
+            ServiceRegistration<ICache> sr =
                     serviceRegistration; // need to set it null before unregister for the listener
             serviceRegistration = null;
             sr.unregister();

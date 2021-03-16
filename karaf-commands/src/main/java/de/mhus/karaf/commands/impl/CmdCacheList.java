@@ -19,9 +19,9 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.cache.LocalCache;
-import de.mhus.lib.core.cache.LocalCacheService;
-import de.mhus.lib.core.cache.LocalCacheStatistics;
+import de.mhus.lib.core.cache.ICache;
+import de.mhus.lib.core.cache.ICacheService;
+import de.mhus.lib.core.cache.ICacheStatistics;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.services.cache.LocalCacheWrapper;
@@ -33,7 +33,7 @@ import de.mhus.osgi.services.cache.LocalCacheWrapper;
 @Service
 public class CmdCacheList extends AbstractCmd {
 
-    @Reference LocalCacheService service;
+    @Reference ICacheService service;
 
     @Override
     public Object execute2() throws Exception {
@@ -47,9 +47,9 @@ public class CmdCacheList extends AbstractCmd {
         table.setHeaderValues("Name", "Size", "Bytes", "Gets", "Puts", "Removed", "Hits", "Missed","AvrRemove");
 
         for (String name : service.getCacheNames()) {
-            LocalCache<Object, Object> cache = service.getCache(name);
+            ICache<Object, Object> cache = service.getCache(name);
             if (cache != null) {
-                LocalCacheStatistics cacheStatistics = ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
+                ICacheStatistics cacheStatistics = ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
                 table.addRowValues(
                         name,
                         cacheStatistics.getCacheSize(),

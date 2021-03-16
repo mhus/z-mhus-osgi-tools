@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
-import de.mhus.lib.core.cache.LocalCache;
-import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.ICache;
+import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
 @Command(scope = "mhus", name = "cache-inspect", description = "Cache Control Service - Print all entries of a cache")
@@ -36,7 +36,7 @@ public class CmdCacheInspect extends AbstractCmd {
             multiValued = false)
     String name;
 
-    @Reference LocalCacheService service;
+    @Reference ICacheService service;
 
     @Override
     public Object execute2() throws Exception {
@@ -46,7 +46,7 @@ public class CmdCacheInspect extends AbstractCmd {
             return null;
         }
 
-        LocalCache<Object, Object> cache = service.getCache(name);
+        ICache<Object, Object> cache = service.getCache(name);
         if (cache == null) {
             System.out.println("Cache not found");
             return null;

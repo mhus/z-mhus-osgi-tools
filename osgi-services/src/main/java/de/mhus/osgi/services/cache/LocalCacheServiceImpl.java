@@ -35,14 +35,14 @@ import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
-import de.mhus.lib.core.cache.LocalCache;
-import de.mhus.lib.core.cache.LocalCacheConfig;
-import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.ICache;
+import de.mhus.lib.core.cache.CacheConfig;
+import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
 
 @Component
-public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
+public class LocalCacheServiceImpl extends MLog implements ICacheService {
 
 //    private CacheManagerBuilder<CacheManager> cacheBuilder;
     private DefaultStatisticsService statisticsService;
@@ -57,12 +57,12 @@ private javax.cache.CacheManager cacheManagerWrapper;
 
     @SuppressWarnings("unchecked")
     @Override
-    public synchronized <K, V> LocalCache<K, V> createCache(
+    public synchronized <K, V> ICache<K, V> createCache(
             Object owner,
             String name,
             Class<K> keyType,
             Class<V> valueType,
-            LocalCacheConfig config
+            CacheConfig config
             ) {
 
         BundleContext ownerContext = FrameworkUtil.getBundle(owner.getClass()).getBundleContext();
@@ -72,9 +72,9 @@ private javax.cache.CacheManager cacheManagerWrapper;
                         + ownerContext.getBundle().getBundleId()
                         + "/"
                         + name;
-        LocalCache<Object, Object> existing = getCache(name);
+        ICache<Object, Object> existing = getCache(name);
         if (existing != null)
-            return (LocalCache<K, V>) existing;
+            return (ICache<K, V>) existing;
 
         if (statisticsService == null) statisticsService = new DefaultStatisticsService();
 
@@ -120,14 +120,14 @@ private javax.cache.CacheManager cacheManagerWrapper;
 
     @Override
     public List<String> getCacheNames() {
-        return MOsgi.collectStringProperty(MOsgi.getServiceRefs(LocalCache.class, null), "name");
+        return MOsgi.collectStringProperty(MOsgi.getServiceRefs(ICache.class, null), "name");
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <K, V> LocalCache<K, V> getCache(String name) {
+    public <K, V> ICache<K, V> getCache(String name) {
         try {
-            return MOsgi.getService(LocalCache.class, MOsgi.filterValue("name", name));
+            return MOsgi.getService(ICache.class, MOsgi.filterValue("name", name));
         } catch (NotFoundException e) {
             MApi.dirtyLogTrace("not found", name);
             return null;
