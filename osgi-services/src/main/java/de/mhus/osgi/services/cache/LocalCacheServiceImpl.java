@@ -50,7 +50,7 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <K, V> LocalCache<K, V> createCache(
+    public synchronized <K, V> LocalCache<K, V> createCache(
             BundleContext ownerContext,
             String name,
             Class<K> keyType,
@@ -65,8 +65,7 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
                         + "/"
                         + name;
         LocalCache<Object, Object> existing = getCache(name);
-        if (existing != null
-                && existing.getBundle().getBundleId() == ownerContext.getBundle().getBundleId())
+        if (existing != null)
             return (LocalCache<K, V>) existing;
 
         if (statisticsService == null) statisticsService = new DefaultStatisticsService();

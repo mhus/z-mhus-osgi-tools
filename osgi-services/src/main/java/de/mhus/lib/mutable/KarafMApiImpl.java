@@ -50,8 +50,9 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     private boolean fullTrace = false;
     private KarafHousekeeper housekeeper;
     private LocalCache<String, Container> apiCache;
-    private boolean useLookupCache = true;
+    private boolean CFG_USE_LOOKUP_CACHE = true;
     private BundleContext context;
+    private int CFG_LOOKUP_CACHE_SIZE = 1000;
 
     @Override
     protected MCfgManager createMCfgManager() {
@@ -142,7 +143,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
         if (def == null && ifc.isInterface()) { // only interfaces can be OSGi services
 
-            if (apiCache == null && useLookupCache) {
+            if (apiCache == null && CFG_USE_LOOKUP_CACHE) {
                 try {
                     LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
                     apiCache =
@@ -151,7 +152,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                     "baseApi",
                                     String.class,
                                     Container.class,
-                                    100);
+                                    CFG_LOOKUP_CACHE_SIZE);
                 } catch (Throwable e) {
                     MApi.dirtyLogDebug(e.toString());
                 }
@@ -284,6 +285,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     public void updateSystemCfg(CfgProvider system) {
         super.updateSystemCfg(system);
         if (system == null) return;
-        useLookupCache = system.getConfig().getBoolean("useLookupCache", useLookupCache);
+        CFG_USE_LOOKUP_CACHE = system.getConfig().getBoolean("lookupCacheEnabled", CFG_USE_LOOKUP_CACHE);
+        CFG_LOOKUP_CACHE_SIZE  = system.getConfig().getInt("lookupCacheSize", CFG_LOOKUP_CACHE_SIZE);
     }
 }

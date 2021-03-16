@@ -69,6 +69,7 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
                 bundleContext.registerService(
                         LocalCache.class, this, MOsgi.createProperties("name", name));
         try {
+            // add listener to services. If my service is shut down, stop cache
             bundleContext.addServiceListener(
                     ev -> serviceListener(ev), MOsgi.filterObjectClass(LocalCache.class));
         } catch (InvalidSyntaxException e) {
@@ -76,17 +77,18 @@ public class LocalCacheWrapper<K, V> implements LocalCache<K, V> {
         }
     }
 
-    private Object serviceListener(ServiceEvent ev) {
-        if (ev.getServiceReference().equals(serviceRegistration.getReference())
-                && ev.getType() == ServiceEvent.UNREGISTERING) 
-            MApi.dirtyLogDebug("LocalCacheWrapper","unregister", name);
+    private void serviceListener(ServiceEvent ev) {
         try {
-            serviceRegistration = null;
-            close();
-        } catch (IOException e) {
+            if (ev == null || ev.getServiceReference() == null || serviceRegistration == null) return;
+            if (ev.getServiceReference().equals(serviceRegistration.getReference())
+                && ev.getType() == ServiceEvent.UNREGISTERING) {
+                MApi.dirtyLogDebug("LocalCacheWrapper","unregister", name);
+                serviceRegistration = null;
+                close();
+            }
+        } catch (Throwable e) {
             MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
         }
-        return null;
     }
 
     public CacheStatistics getCacheStatistics() {
