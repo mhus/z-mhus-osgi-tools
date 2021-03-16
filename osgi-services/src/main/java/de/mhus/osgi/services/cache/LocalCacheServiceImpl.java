@@ -27,14 +27,16 @@ import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.core.statistics.DefaultStatisticsService;
 import org.ehcache.impl.config.copy.DefaultCopierConfiguration;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.cache.LocalCache;
+import de.mhus.lib.core.cache.LocalCacheService;
+import de.mhus.lib.core.cache.NoneCopier;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
-import de.mhus.osgi.api.cache.LocalCache;
-import de.mhus.osgi.api.cache.LocalCacheService;
 
 @Component
 public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
@@ -51,13 +53,14 @@ public class LocalCacheServiceImpl extends MLog implements LocalCacheService {
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <K, V> LocalCache<K, V> createCache(
-            BundleContext ownerContext,
+            Object owner,
             String name,
             Class<K> keyType,
             Class<V> valueType,
             Builder<? extends ResourcePools> resourcePoolsBuilder,
             Consumer<CacheConfigurationBuilder<K, V>> configurator) {
 
+        BundleContext ownerContext = FrameworkUtil.getBundle(owner.getClass()).getBundleContext();
         name =
                 ownerContext.getBundle().getSymbolicName()
                         + ":"

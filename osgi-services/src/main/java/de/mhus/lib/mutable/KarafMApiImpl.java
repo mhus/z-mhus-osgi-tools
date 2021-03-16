@@ -29,6 +29,8 @@ import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MHousekeeper;
 import de.mhus.lib.core.aaa.Aaa;
+import de.mhus.lib.core.cache.LocalCache;
+import de.mhus.lib.core.cache.LocalCacheService;
 import de.mhus.lib.core.cfg.CfgProvider;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogFactory;
@@ -41,8 +43,6 @@ import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
 import de.mhus.lib.logging.JavaLoggerFactory;
 import de.mhus.osgi.api.MOsgi;
-import de.mhus.osgi.api.cache.LocalCache;
-import de.mhus.osgi.api.cache.LocalCacheService;
 
 /** @author mikehummel */
 public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, IApiInternal {
@@ -148,7 +148,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                     LocalCacheService cacheService = MOsgi.getService(LocalCacheService.class);
                     apiCache =
                             cacheService.createCache(
-                                    FrameworkUtil.getBundle(KarafMApiImpl.class).getBundleContext(),
+                                    this,
                                     "baseApi",
                                     String.class,
                                     Container.class,
