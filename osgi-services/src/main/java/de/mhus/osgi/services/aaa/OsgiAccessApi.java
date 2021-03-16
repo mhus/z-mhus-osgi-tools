@@ -2,11 +2,10 @@ package de.mhus.osgi.services.aaa;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.env.DefaultEnvironment;
+import org.apache.shiro.env.Environment;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
@@ -18,7 +17,6 @@ import org.osgi.service.component.annotations.Deactivate;
 
 import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.lib.core.aaa.DefaultAccessApi;
-import de.mhus.lib.core.aaa.EmptySecurityManager;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.aaa.RealmServiceProvider;
 import de.mhus.osgi.api.util.MServiceTracker;
@@ -45,20 +43,13 @@ public class OsgiAccessApi extends DefaultAccessApi {
     
     @Override
     protected void initialize() {
-        try {
-            log().d("Initialize shiro", CFG_CONFIG_FILE);
-            env = new OsgiAccessEnvironment(CFG_CONFIG_FILE.value());
-        } catch (Exception e) {
-            log().d(e);
-        }
-        if (env == null || env.getSecurityManager() instanceof EmptySecurityManager) {
-            log().i("Initialize empty shiro", CFG_CONFIG_FILE);
-            HashMap<String, Object> seed = new HashMap<>();
-            seed.put(DefaultEnvironment.DEFAULT_SECURITY_MANAGER_KEY, new DefaultSecurityManager());
-            env = new DefaultEnvironment(seed);
-        }
+        super.initialize();
         loadServices(env.getSecurityManager());
-        SecurityUtils.setSecurityManager(env.getSecurityManager());
+    }
+
+    @Override
+    protected Environment createEnvironment() {
+        return  new OsgiAccessEnvironment(CFG_CONFIG_FILE.value());
     }
 
     protected void loadServices(SecurityManager securityManager) {

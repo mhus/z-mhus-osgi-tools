@@ -25,6 +25,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.subject.Subject;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.aaa.Aaa;
@@ -92,7 +93,9 @@ public class CmdAccessTool extends AbstractCmd {
         } else
         if (cmd.equals("login")) {
             System.out.println(Aaa.getPrincipal());
-            try (SubjectEnvironment access = Aaa.asSubject(Aaa.login(Aaa.createAccountTicket(parameters[0], parameters[1])))) {
+            String ticket = Aaa.createAccountTicket(parameters[0], parameters[1]);
+            Subject subject = Aaa.login(ticket);
+            try (SubjectEnvironment access = Aaa.asSubject(subject)) {
                 System.out.println(Aaa.getPrincipal());
                 System.out.println(Aaa.getPrincipalData());
             }
