@@ -71,6 +71,8 @@ private javax.cache.CacheManager cacheManagerWrapper;
                         + ":"
                         + ownerContext.getBundle().getBundleId()
                         + "/"
+                        + owner.getClass().getCanonicalName() 
+                        + "/"
                         + name;
         ICache<Object, Object> existing = getCache(name);
         if (existing != null)
@@ -111,6 +113,10 @@ private javax.cache.CacheManager cacheManagerWrapper;
         if (config.getTTL() > 0)
             ccb.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis( config.getTTL() )));
 
+        if (cacheManager.getCache(name, keyType, valueType) != null) {
+            log().w("Remove existing cache with the same name", name);
+            cacheManager.removeCache(name);
+        }
         Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
 
         LocalCacheWrapper<K, V> wrapper =

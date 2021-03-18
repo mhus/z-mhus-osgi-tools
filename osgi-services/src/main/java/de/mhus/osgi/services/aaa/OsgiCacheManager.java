@@ -44,7 +44,7 @@ public class OsgiCacheManager implements CacheManager {
         if (service == null) return null;
         ICache<Object,Object> c = service.createCache(
                 this, 
-                getClass().getSimpleName() + ":" + name, 
+                name, 
                 Object.class, 
                 Object.class, 
                 new CacheConfig().setHeapSize(CFG_SIZE.value()).setTTL(CFG_TTL.value()));

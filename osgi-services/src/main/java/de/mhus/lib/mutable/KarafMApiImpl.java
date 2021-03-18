@@ -150,7 +150,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                     apiCache =
                             cacheService.createCache(
                                     this,
-                                    "baseApi",
+                                    "lookup",
                                     String.class,
                                     Container.class,
                                     new CacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
