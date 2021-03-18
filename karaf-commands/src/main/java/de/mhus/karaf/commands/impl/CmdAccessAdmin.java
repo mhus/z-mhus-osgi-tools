@@ -15,18 +15,13 @@
  */
 package de.mhus.karaf.commands.impl;
 
-import java.util.Locale;
-
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
-import org.apache.shiro.subject.Subject;
 
-import de.mhus.lib.core.M;
-import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.aaa.Aaa;
-import de.mhus.lib.core.aaa.AccessApi;
+import de.mhus.lib.core.aaa.SubjectEnvironment;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 
@@ -42,11 +37,9 @@ public class CmdAccessAdmin extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        String user = Aaa.USER_ADMIN.value();
-        String pass = MApi.get().getCfgString(AccessApi.class, "adminPassword", "secret");
-        Subject subject = M.l(AccessApi.class).createSubject();
-        Aaa.login(subject, user, pass, true, Locale.getDefault());
-        CmdInterceptorUtil.setInterceptor(session, new CmdAccessLogin.AaaInterceptor(subject));
+        try (SubjectEnvironment env = Aaa.asAdmin()) {
+            CmdInterceptorUtil.setInterceptor(session, new CmdAccessLogin.AaaInterceptor(env.getSubject()));
+        }
         System.out.println("OK");
 
         return null;

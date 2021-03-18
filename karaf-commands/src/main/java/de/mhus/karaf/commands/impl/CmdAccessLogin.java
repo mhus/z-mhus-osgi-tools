@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
+import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
@@ -58,13 +59,29 @@ public class CmdAccessLogin extends AbstractCmd {
             multiValued = false)
     String pass;
 
+    @Option(
+            name = "-f",
+            aliases = "--force",
+            required = false,
+            description = "Do not ask for a password",
+            multiValued = false)
+    boolean force;
+
     @Override
     public Object execute2() throws Exception {
 
-        if (pass == null) pass = Console.get().readPassword();
-        Subject subject = M.l(AccessApi.class).createSubject();
-        Aaa.login(subject, user, pass, true, Locale.getDefault());
-        CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
+        if (force) {
+            Subject subject = Aaa.createSubjectWithoutCheck(user);
+            CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
+        } else {
+            if (pass == null) pass = Console.get().readPassword();
+            Subject subject = M.l(AccessApi.class).createSubject();
+            if (!Aaa.login(subject, user, pass, true, Locale.getDefault())) {
+                System.out.println("Login failed");
+                return null;
+            }
+            CmdInterceptorUtil.setInterceptor(session, new AaaInterceptor(subject));
+        }
         System.out.println("OK");
 
         return null;
