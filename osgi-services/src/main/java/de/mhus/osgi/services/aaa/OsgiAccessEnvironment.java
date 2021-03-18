@@ -4,8 +4,10 @@ import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.env.DefaultEnvironment;
 
+@SuppressWarnings("deprecation")
 public class OsgiAccessEnvironment extends DefaultEnvironment {
 
+    @SuppressWarnings("unused")
     private Ini ini;
 
     public OsgiAccessEnvironment(String resourcePath) {

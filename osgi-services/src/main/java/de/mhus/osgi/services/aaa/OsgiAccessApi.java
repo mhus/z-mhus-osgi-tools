@@ -9,6 +9,7 @@ import org.apache.shiro.env.Environment;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.util.LifecycleUtils;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -59,8 +60,12 @@ public class OsgiAccessApi extends DefaultAccessApi {
                 log().i("add realm " + service.getService().getName() + " " + service.getService().getClass().getCanonicalName());
                 realms.add(service.getService());
             }
-            if (realms.size() > 0)
+            if (realms.size() > 0) {
+                LifecycleUtils.init(realms);
                 ((DefaultSecurityManager)securityManager).setRealms(realms);
+            }
+            
+            ((DefaultSecurityManager)securityManager).setCacheManager( new OsgiCacheManager() );
         }
     }
 
@@ -69,7 +74,9 @@ public class OsgiAccessApi extends DefaultAccessApi {
         if (manager instanceof DefaultSecurityManager) {
             Collection<Realm> realms = ((DefaultSecurityManager)manager).getRealms();
             if (realms == null) return;
-            realms.remove(service.getService());
+            Realm realm = service.getService();
+            realms.remove(realm);
+            LifecycleUtils.destroy(realm);
             ((DefaultSecurityManager)manager).setRealms(realms);
         } else
             log().d("SecurityManager is not DefaultSecurityManager",manager.getClass());
@@ -85,6 +92,7 @@ public class OsgiAccessApi extends DefaultAccessApi {
                 if (r.getName().equals(realm.getName()))
                     return; // already in list
             realms.add(realm);
+            LifecycleUtils.init(realm);
             ((DefaultSecurityManager)manager).setRealms(realms);
         } else
             log().d("SecurityManager is not DefaultSecurityManager",manager.getClass());
