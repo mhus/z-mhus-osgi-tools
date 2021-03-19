@@ -42,11 +42,12 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceRegistration;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.cache.ICache;
 import de.mhus.lib.core.cache.ICacheStatistics;
 import de.mhus.osgi.api.MOsgi;
 
-public class LocalCacheWrapper<K, V> implements ICache<K, V> {
+public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
     private org.ehcache.Cache<K, V> instance;
     private String name;
@@ -180,7 +181,12 @@ public class LocalCacheWrapper<K, V> implements ICache<K, V> {
 
     @Override
     public void clear() {
-        instance.clear();
+        try {
+            instance.clear();
+        } catch (Throwable t) {
+            log().d("error clear cache",name,t.toString());
+            log().t(t);
+        }
     }
 
     @Override

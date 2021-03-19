@@ -31,7 +31,7 @@ public class CmdCacheClear extends AbstractCmd {
             index = 0,
             name = "name",
             required = true,
-            description = "Cache name",
+            description = "Name of the cache or * for all",
             multiValued = false)
     String name;
 
@@ -45,7 +45,10 @@ public class CmdCacheClear extends AbstractCmd {
             return null;
         }
 
-        service.getCache(name).clear();
+        if (name.equals("*"))
+            service.getCacheNames().forEach(n -> service.getCache(n).clear() );
+        else
+            service.getCache(name).clear();
         System.out.println("OK");
 
         return null;
