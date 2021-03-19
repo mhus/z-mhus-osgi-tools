@@ -156,31 +156,35 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                     new CacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
                                     );
                 } catch (Throwable e) {
-                    MApi.dirtyLogDebug(e.toString());
+                    MApi.dirtyLogDebug("KarafMApiImpl:lookup",e.toString());
                 }
             }
 
             Container cached = null;
             if (apiCache != null) {
-                cached = apiCache.get(ifc.getCanonicalName());
-                if (cached != null) {
-                    Bundle bundle = MOsgi.getBundleOrNull(cached.bundleId);
-                    if (bundle == null
-                            || bundle.getState() != Bundle.ACTIVE
-                            || cached.modified != bundle.getLastModified()) {
-                        cleanupLookup(ifc);
-                        cached = null;
+                try {
+                    cached = apiCache.get(ifc.getCanonicalName());
+                    if (cached != null) {
+                        Bundle bundle = MOsgi.getBundleOrNull(cached.bundleId);
+                        if (bundle == null
+                                || bundle.getState() != Bundle.ACTIVE
+                                || cached.modified != bundle.getLastModified()) {
+                            cleanupLookup(ifc);
+                            cached = null;
+                        }
                     }
-                }
-                if (cached != null) {
-                    try {
-                        @SuppressWarnings("unused")
-                        T obj = (T)cached.api;
-                    } catch (ClassCastException e) {
-                        MApi.dirtyLogInfo("KarafMAPiImpl.lookup: Can't cast from cache into ifc: try to reload");
-                        cleanupLookup(ifc);
-                        cached = null;
+                    if (cached != null) {
+                        try {
+                            @SuppressWarnings("unused")
+                            T obj = (T)cached.api;
+                        } catch (ClassCastException e) {
+                            MApi.dirtyLogInfo("KarafMAPiImpl.lookup: Can't cast from cache into ifc: try to reload");
+                            cleanupLookup(ifc);
+                            cached = null;
+                        }
                     }
+                } catch (Throwable t) {
+                    MApi.dirtyLogDebug("KarafMApiImpl:lookup",t.toString(),ifc);
                 }
             }
 

@@ -18,6 +18,7 @@ import org.osgi.service.component.annotations.Deactivate;
 
 import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.lib.core.aaa.DefaultAccessApi;
+import de.mhus.lib.core.aaa.DummyRealm;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.aaa.RealmServiceProvider;
 import de.mhus.osgi.api.util.MServiceTracker;
@@ -77,6 +78,8 @@ public class OsgiAccessApi extends DefaultAccessApi {
             Realm realm = service.getService();
             realms.remove(realm);
             LifecycleUtils.destroy(realm);
+            if (realms.size() == 0)
+                realms.add(new DummyRealm());
             ((DefaultSecurityManager)manager).setRealms(realms);
         } else
             log().d("SecurityManager is not DefaultSecurityManager",manager.getClass());
