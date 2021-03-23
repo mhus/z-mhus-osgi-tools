@@ -65,7 +65,9 @@ private javax.cache.CacheManager cacheManagerWrapper;
             CacheConfig config
             ) {
 
-        BundleContext ownerContext = FrameworkUtil.getBundle(owner.getClass()).getBundleContext();
+        @SuppressWarnings("rawtypes")
+        Class<?> ownerClass = owner instanceof Class ? (Class)owner : owner.getClass();
+        BundleContext ownerContext = FrameworkUtil.getBundle(ownerClass).getBundleContext();
         name =
                 ownerContext.getBundle().getSymbolicName()
                         + ":"

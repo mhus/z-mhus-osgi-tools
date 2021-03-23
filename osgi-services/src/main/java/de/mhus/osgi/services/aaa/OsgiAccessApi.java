@@ -35,6 +35,8 @@ public class OsgiAccessApi extends DefaultAccessApi {
     
     @Activate
     public void doActivate(ComponentContext ctx) {
+        super.initialize();
+        loadServices(env.getSecurityManager());
         realmTracker.start(ctx);
     }
 
@@ -45,13 +47,12 @@ public class OsgiAccessApi extends DefaultAccessApi {
     
     @Override
     protected void initialize() {
-        super.initialize();
-        loadServices(env.getSecurityManager());
     }
 
     @Override
     protected Environment createEnvironment() {
-        return  new OsgiAccessEnvironment(CFG_CONFIG_FILE.value());
+        return super.createEnvironment();
+//        return  new OsgiAccessEnvironment(CFG_CONFIG_FILE.value());
     }
 
     protected void loadServices(SecurityManager securityManager) {
