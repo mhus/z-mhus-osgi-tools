@@ -57,6 +57,15 @@ public abstract class SchedulerServiceAdapter extends MLog implements SchedulerS
     }
 
     @Override
+    public String getUsername() {
+        Interval interval = getClass().getAnnotation(Interval.class);
+        if (interval != null && MString.isSet(interval.runAs())) {
+            return interval.runAs();
+        }
+        return null;
+    }
+
+    @Override
     public SchedulerJob getWrappedJob() {
         return null;
     }

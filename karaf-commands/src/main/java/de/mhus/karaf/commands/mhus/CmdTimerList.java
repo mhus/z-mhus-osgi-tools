@@ -72,7 +72,8 @@ public class CmdTimerList extends AbstractCmd {
                     "Status",
                     "Interceptor",
                     "Trail config",
-                    "Busy");
+                    "Busy",
+                    "User");
         else
             table.setHeaderValues(
                     "Name",
@@ -101,7 +102,8 @@ public class CmdTimerList extends AbstractCmd {
                         getStatus(job),
                         job.getInterceptor(),
                         job.getLogTrailConfig(),
-                        job.isBusy());
+                        job.isBusy(),
+                        job.getUsername());
             else
                 table.addRowValues(
                         job.getName(),
@@ -131,7 +133,8 @@ public class CmdTimerList extends AbstractCmd {
                         getStatus(job),
                         job.getInterceptor(),
                         job.getLogTrailConfig(),
-                        job.isBusy());
+                        job.isBusy(),
+                        job.getUsername());
             else
                 table.addRowValues(
                         job.getName(),

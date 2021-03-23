@@ -35,9 +35,12 @@ import de.mhus.lib.core.ITimerTask;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MLog;
+import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
+import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.logging.Log;
+import de.mhus.lib.core.schedule.MutableSchedulerJob;
 import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.schedule.SchedulerJob;
 import de.mhus.lib.core.schedule.SchedulerTimer;
@@ -140,12 +143,13 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
             ServiceReference<SchedulerService> reference, SchedulerService service) {
 
         SchedulerJob job = null;
-        Object interval = service.getInterval();
+        String interval = service.getInterval();
+        String username = service.getUsername();
         job = service.getWrappedJob();
 
         if (job == null) {
             // get interval configuration
-            if (interval == null) interval = reference.getProperty("interval");
+            if (interval == null) interval = MString.valueOf(reference.getProperty("interval"));
             if (interval == null) {
                 log().w(
                                 "interval configuration not found for SchedulerService",
@@ -154,13 +158,13 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
                 return;
             }
             // parse configuration and create job
-            String i = String.valueOf(interval);
-
-            job = Scheduler.createSchedulerJob(i, service);
+            job = Scheduler.createSchedulerJob(interval, service);
         }
+        if (username == null) username = MString.valueOf(reference.getProperty("username"));
 
         if (job != null) {
-
+            if (job instanceof MutableSchedulerJob)
+                ((MutableSchedulerJob)job).setUsername(username);
             job.setNextExecutionTime(SchedulerJob.CALCULATE_NEXT);
 
             job.setInfo(
@@ -211,6 +215,11 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
             properties.put("job.interval", interval);
             properties.put("job.bundle", caller.getSymbolicName());
             properties.put("job.timer", MSystem.getObjectId(this));
+            String username = Aaa.getPrincipal();
+            if (username != null) {
+                properties.put("job.username", username);
+                service.setUsername(username);
+            }
             if (caller == null || caller.getBundleContext() == null) {
                 log().w("Can't register scheduler to others bundle context", service, properties);
                 context.registerService(SchedulerService.class, service, properties);
@@ -231,6 +240,8 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
             properties.put("job.task", job.getTask().getClass());
             properties.put("job.bundle", caller.getSymbolicName());
             properties.put("job.timer", MSystem.getObjectId(this));
+            if (job.getUsername() != null)
+                properties.put("job.username", job.getUsername());
             if (caller == null || caller.getBundleContext() == null) {
                 log().w("Can't register scheduler to others bundle context", service, properties);
                 context.registerService(SchedulerService.class, service, properties);
@@ -336,6 +347,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
         private TimerTask task;
         private String interval;
         private String name;
+        private String username;
 
         public ScheduledServiceWrap(Bundle bundle, SchedulerJob job) {
             task = job;
@@ -393,6 +405,16 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
         public TimerTaskInterceptor getInterceptor() {
             if (task instanceof SchedulerJob) return ((SchedulerJob) task).getInterceptor();
             return null;
+        }
+
+        @Override
+        public String getUsername() {
+            if (task instanceof SchedulerJob) return ((SchedulerJob) task).getUsername();
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
         }
     }
 

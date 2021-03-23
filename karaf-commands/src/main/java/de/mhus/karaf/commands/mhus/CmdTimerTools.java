@@ -80,6 +80,14 @@ public class CmdTimerTools extends AbstractCmd {
             System.out.println("ServiceTracker is not running!");
         }
 
+        if (cmd.equals("username")) {
+            for (SchedulerJob job : getScheduledJob(scheduler, parameters[0])) {
+                if (job != null) {
+                    if (job instanceof MutableSchedulerJob)
+                        ((MutableSchedulerJob)job).setUsername(parameters[1]);
+                }
+            }
+        }
         if (cmd.equals("timeout")) {
             List<SchedulerJob> running = scheduler.getRunningJobs();
 
