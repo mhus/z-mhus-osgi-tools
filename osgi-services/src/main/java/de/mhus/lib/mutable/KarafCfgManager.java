@@ -20,7 +20,7 @@ import java.io.File;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.MConstants;
+import de.mhus.lib.core.M;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.IApiInternal;
@@ -53,16 +53,16 @@ public class KarafCfgManager extends MCfgManager {
 
         // prepare system config for default
         IConfig system = provider.getConfig();
-        if (!system.containsKey(MConstants.PROP_LOG_FACTORY_CLASS)) {
-            system.setString(MConstants.PROP_LOG_FACTORY_CLASS, "de.mhus.lib.logging.Log4JFactory");
+        if (!system.containsKey(M.PROP_LOG_FACTORY_CLASS)) {
+            system.setString(M.PROP_LOG_FACTORY_CLASS, "de.mhus.lib.logging.Log4JFactory");
         }
-        if (!system.containsKey(MConstants.PROP_LOG_CONSOLE_REDIRECT)) {
-            system.setString(MConstants.PROP_LOG_CONSOLE_REDIRECT, "false");
+        if (!system.containsKey(M.PROP_LOG_CONSOLE_REDIRECT)) {
+            system.setString(M.PROP_LOG_CONSOLE_REDIRECT, "false");
         }
     }
 
     public void update(String pid) {
-        if (!pid.equals(MConstants.CFG_SYSTEM)) {
+        if (!pid.equals(M.CFG_SYSTEM)) {
             MApi.dirtyLogInfo("KarafCfgManager::Register PID", pid);
             registerCfgProvider(new KarfConfigProvider(pid));
         }
