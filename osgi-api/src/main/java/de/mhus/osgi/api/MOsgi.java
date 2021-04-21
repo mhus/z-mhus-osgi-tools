@@ -235,6 +235,10 @@ public class MOsgi {
         return context;
     }
 
+    public static BundleContext getBundleContext(Class<?> clazz) {
+        return FrameworkUtil.getBundle(clazz).getBundleContext();
+    }
+
     public enum BUNDLE_STATE {
         UNINSTALLED,
         INSTALLED,

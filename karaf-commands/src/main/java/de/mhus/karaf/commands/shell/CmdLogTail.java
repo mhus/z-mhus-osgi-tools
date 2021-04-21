@@ -29,6 +29,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 import org.apache.karaf.shell.support.completers.StringsCompleter;
 import org.ops4j.pax.logging.spi.PaxAppender;
+import org.ops4j.pax.logging.spi.PaxLocationInfo;
 import org.ops4j.pax.logging.spi.PaxLoggingEvent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -86,6 +87,14 @@ public class CmdLogTail extends AbstractCmd {
     boolean consoleOnly;
 
     @Option(
+            aliases = {"-v"},
+            name = "--verbose",
+            description = "Verbose log event output",
+            required = false,
+            multiValued = false)
+    boolean verbose = false;
+    
+    @Option(
             name = "-l",
             aliases = {"--level"},
             description = "The minimal log level to display",
@@ -137,7 +146,8 @@ public class CmdLogTail extends AbstractCmd {
                             formatter,
                             overridenPattern,
                             noColor,
-                            consoleOnly);
+                            consoleOnly,
+                            verbose);
             session.put("__log_tail2", a);
             if (consoleOnly) {
                 LogTaggerIntercepter inter = new LogTaggerIntercepter();
@@ -248,6 +258,7 @@ public class CmdLogTail extends AbstractCmd {
         private LinkedList<Thread> threadFilter;
         private boolean closed;
         private Session session;
+        private boolean verbose;
 
         public LogTailContainer(
                 Session session,
@@ -259,7 +270,8 @@ public class CmdLogTail extends AbstractCmd {
                 LogEventFormatter formatter,
                 String overridenPattern,
                 boolean noColor,
-                boolean threadFilter) {
+                boolean threadFilter,
+                boolean verbose) {
             this.logService = logService;
             this.logger = logger;
             this.formatter = formatter;
@@ -267,6 +279,7 @@ public class CmdLogTail extends AbstractCmd {
             this.entries = entries;
             this.noColor = noColor;
             this.threadFilter = threadFilter ? new LinkedList<>() : null;
+            this.verbose = verbose;
 
             System.out.println("Start LogTail " + (threadFilter ? "for console" : ""));
 
@@ -306,9 +319,9 @@ public class CmdLogTail extends AbstractCmd {
                 if (threadFilter != null && !threadFilter.contains(Thread.currentThread())) return;
 
                 if ((logger != null) && (event != null) && (checkIfFromRequestedLog(event))) {
-                    out.append(formatter.format(event, overridenPattern, noColor));
+                    printEvent2(out, event);
                 } else if ((event != null) && (logger == null)) {
-                    out.append(formatter.format(event, overridenPattern, noColor));
+                    printEvent2(out, event);
                 }
             } catch (Throwable t) {
                 // close
@@ -318,6 +331,20 @@ public class CmdLogTail extends AbstractCmd {
             }
         }
 
+        protected void printEvent2(final PrintStream out, PaxLoggingEvent event) {
+            if (verbose) {
+                PaxLocationInfo loc = event.getLocationInformation();
+                out.println("{");
+                out.println("  name    :" + event.getLoggerName());
+                out.println("  time    :" + event.getTimeStamp());
+                out.println("  level   :" + event.getLevel());
+                out.println("  location:" + loc.getClassName() + "." + loc.getMethodName() + "(" + loc.getFileName() + ":" + loc.getLineNumber() + ")" );
+                out.println("  thread  :" + event.getThreadName());
+                out.println("  msg     :" + event.getMessage());
+                out.println("}");
+            } else
+                out.append(formatter.format(event, overridenPattern, noColor));
+        }
         protected boolean checkIfFromRequestedLog(PaxLoggingEvent event) {
             return event.getLoggerName().contains(logger);
         }

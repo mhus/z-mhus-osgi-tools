@@ -52,11 +52,12 @@ public class CmdLogSet extends AbstractCmd {
             required = true,
             description =
                     "Command:\n"
-                            + " clear - reset all loggers,\n"
-                            + " add <path> - add a trace log,\n"
-                            + " full - enable full trace logging,\n"
-                            + " dirty - enable dirty logging,\n"
-                            + " level - set log level (console logger),\n"
+                            + " clear - reset all loggers\n"
+                            + " add <path> - add a trace log\n"
+                            + " full - enable full trace logging\n"
+                            + " dirty - enable dirty logging\n"
+                            + " level - set log level (console logger)\n"
+                            + " verbose <on/off> - set log verbose mode\n"
                             + " reloadconfig,\n"
                             + " console [console=ansi] [file=data/log/karaf.log] [color=true]\n"
                             + " maxmsgsize [new size]                 - show or set maximum message size, disable with 0\n"
@@ -94,6 +95,12 @@ public class CmdLogSet extends AbstractCmd {
         KarafMApiImpl api = (KarafMApiImpl) s;
 
         switch (cmd) {
+            case "verbose":
+                {
+                    Log.setVerbose(MCast.toboolean(parameters[0], false));
+                    System.out.println("OK");
+                }
+                break;
             case "stacktracetrace":
                 {
                     Log.setStacktraceTrace(MCast.toboolean(parameters[0], false));
