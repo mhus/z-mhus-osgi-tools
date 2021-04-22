@@ -16,7 +16,7 @@ import de.mhus.osgi.api.services.OperationManager;
 
 @Command(
         scope = "mhus",
-        name = "operastion-info",
+        name = "operation-info",
         description = "Show operation information")
 @Service
 public class CmdOperationInfo extends AbstractCmd {

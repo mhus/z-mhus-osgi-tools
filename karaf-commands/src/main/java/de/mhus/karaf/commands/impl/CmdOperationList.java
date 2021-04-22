@@ -15,7 +15,7 @@ import de.mhus.osgi.api.services.OperationManager;
 
 @Command(
         scope = "mhus",
-        name = "operastion-list",
+        name = "operation-list",
         description = "List all local operation")
 @Service
 public class CmdOperationList extends AbstractCmd {

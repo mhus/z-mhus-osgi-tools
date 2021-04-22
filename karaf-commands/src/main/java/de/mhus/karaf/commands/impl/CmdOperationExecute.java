@@ -17,7 +17,7 @@ import de.mhus.osgi.api.services.OperationManager;
 
 @Command(
         scope = "mhus",
-        name = "operastion-execute",
+        name = "operation-execute",
         description = "Execute operation")
 @Service
 public class CmdOperationExecute extends AbstractCmd {
