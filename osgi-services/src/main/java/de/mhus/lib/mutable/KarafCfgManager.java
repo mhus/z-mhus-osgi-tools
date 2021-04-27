@@ -22,9 +22,9 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MString;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
+import de.mhus.lib.core.node.INode;
 import de.mhus.osgi.api.MOsgi;
 
 public class KarafCfgManager extends MCfgManager {
@@ -52,7 +52,7 @@ public class KarafCfgManager extends MCfgManager {
         }
 
         // prepare system config for default
-        IConfig system = provider.getConfig();
+        INode system = provider.getConfig();
         if (!system.containsKey(M.PROP_LOG_FACTORY_CLASS)) {
             system.setString(M.PROP_LOG_FACTORY_CLASS, "de.mhus.lib.logging.Log4JFactory");
         }

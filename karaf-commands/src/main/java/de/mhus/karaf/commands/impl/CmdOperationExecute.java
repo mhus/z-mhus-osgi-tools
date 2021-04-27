@@ -7,8 +7,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.M;
-import de.mhus.lib.core.config.IConfig;
-import de.mhus.lib.core.config.MConfig;
+import de.mhus.lib.core.node.INode;
+import de.mhus.lib.core.node.MNode;
 import de.mhus.lib.core.operation.DefaultTaskContext;
 import de.mhus.lib.core.operation.Operation;
 import de.mhus.lib.core.operation.OperationResult;
@@ -75,17 +75,17 @@ public class CmdOperationExecute extends AbstractCmd {
 			return null;
 		}
 		
-		IConfig param = null;
+		INode param = null;
 		if (isLoad) {
-			param = IConfig.readConfigFromString(parameters[0]);
+			param = INode.readNodeFromString(parameters[0]);
 		} else {
-			param = new MConfig();
+			param = new MNode();
 			param.putAll( IProperties.explodeToMProperties(parameters) );
 		}
 		
-		IConfig cfg = null;
+		INode cfg = null;
 		if (config != null) {
-			cfg = new MConfig();
+			cfg = new MNode();
 			cfg.putAll( IProperties.explodeToMProperties(config) );
 		}
 		

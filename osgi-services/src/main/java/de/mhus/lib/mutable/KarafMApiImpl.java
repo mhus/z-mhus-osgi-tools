@@ -33,7 +33,6 @@ import de.mhus.lib.core.cache.CacheConfig;
 import de.mhus.lib.core.cache.ICache;
 import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.lib.core.cfg.CfgProvider;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.MLogFactory;
 import de.mhus.lib.core.logging.MLogUtil;
 import de.mhus.lib.core.mapi.ApiInitialize;
@@ -42,6 +41,7 @@ import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.IApiInternal;
 import de.mhus.lib.core.mapi.MCfgManager;
 import de.mhus.lib.core.mapi.SingleMLogInstanceFactory;
+import de.mhus.lib.core.node.INode;
 import de.mhus.lib.logging.JavaLoggerFactory;
 import de.mhus.osgi.api.MOsgi;
 
@@ -197,7 +197,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                 }
                 if (context != null) {
                     String filter = null;
-                    IConfig cfg = MApi.getCfg(ifc);
+                    INode cfg = MApi.getCfg(ifc);
                     if (cfg != null) {
                         filter = cfg.getString("mhusApiBaseFilter", null);
                     }

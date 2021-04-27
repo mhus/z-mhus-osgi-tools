@@ -22,13 +22,13 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import de.mhus.lib.core.cfg.CfgProvider;
-import de.mhus.lib.core.config.IConfig;
-import de.mhus.lib.core.config.MConfig;
+import de.mhus.lib.core.node.INode;
+import de.mhus.lib.core.node.MNode;
 import de.mhus.osgi.api.MOsgi;
 
 public class KarfConfigProvider extends CfgProvider {
 
-    private MConfig config;
+    private MNode config;
 
     public KarfConfigProvider(String pid) {
         super(pid);
@@ -37,7 +37,7 @@ public class KarfConfigProvider extends CfgProvider {
     public void load() throws IOException {
         ConfigurationAdmin admin = MOsgi.getServiceOrNull(ConfigurationAdmin.class);
         Configuration configuration = admin.getConfiguration(getName());
-        config = new MConfig();
+        config = new MNode();
         if (configuration != null && configuration.getProperties() != null) {
             Enumeration<String> enu = configuration.getProperties().keys();
             while (enu.hasMoreElements()) {
@@ -48,7 +48,7 @@ public class KarfConfigProvider extends CfgProvider {
     }
 
     @Override
-    public IConfig getConfig() {
+    public INode getConfig() {
         return config;
     }
 

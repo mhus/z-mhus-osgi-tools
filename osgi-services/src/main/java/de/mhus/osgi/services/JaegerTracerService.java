@@ -29,9 +29,9 @@ import org.osgi.service.component.annotations.Modified;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MString;
 import de.mhus.lib.core.cfg.CfgString;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.logging.DefaultTracer;
 import de.mhus.lib.core.logging.ITracer;
+import de.mhus.lib.core.node.INode;
 import de.mhus.lib.core.service.IdentUtil;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.karaf.LogServiceTracker;
@@ -116,7 +116,7 @@ public class JaegerTracerService extends DefaultTracer {
         logi("Update jaeger tracer");
 
         // prepare env
-        IConfig cfg = MApi.getCfg(JaegerTracerService.class);
+        INode cfg = MApi.getCfg(JaegerTracerService.class);
         for (String key : JAEGER_ENV) {
             if (cfg != null && MString.isSet(cfg.getString(key, null)))
                 System.setProperty(key, cfg.getString(key, null));

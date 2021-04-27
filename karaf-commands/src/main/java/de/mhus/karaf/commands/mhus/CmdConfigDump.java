@@ -20,8 +20,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.cfg.CfgProvider;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.IApi;
+import de.mhus.lib.core.node.INode;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
@@ -40,7 +40,7 @@ public class CmdConfigDump extends AbstractCmd {
 
         for (CfgProvider provider : MApi.get().getCfgManager().getProviders()) {
             System.out.println(">>> " + provider.getClass().getCanonicalName() + " " + provider);
-            IConfig cfg = provider.getConfig();
+            INode cfg = provider.getConfig();
             System.out.println(cfg);
             System.out.println("<<<");
         }

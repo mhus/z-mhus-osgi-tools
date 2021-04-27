@@ -44,8 +44,8 @@ import de.mhus.lib.core.MString;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
 import de.mhus.lib.core.MXml;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.mapi.MCfgManager;
+import de.mhus.lib.core.node.INode;
 import de.mhus.lib.errors.NotFoundException;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.services.IBlueprintManager;
@@ -67,8 +67,8 @@ public class BlueprintManager extends MLog implements IBlueprintManager {
     @Override
     public void reloadConfigured() {
         log().i("reloadConfigured");
-        List<IConfig> list = MCfgManager.getGlobalConfigurations("service");
-        for (IConfig entry : list) {
+        List<INode> list = MCfgManager.getGlobalConfigurations("service");
+        for (INode entry : list) {
             try {
                 log().i("create/update", entry);
                 create(entry.getString("class", null), entry.getString("bundle", null), true);

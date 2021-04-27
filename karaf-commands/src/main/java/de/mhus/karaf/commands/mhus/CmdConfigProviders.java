@@ -20,10 +20,10 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
-import de.mhus.lib.core.config.IConfig;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.core.mapi.MCfgManager;
+import de.mhus.lib.core.node.INode;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
@@ -54,7 +54,7 @@ public class CmdConfigProviders extends AbstractCmd {
         for (String owner : api.getOwners()) {
             if (ownerFilter == null || ownerFilter.equals(owner)) {
                 out.addRowValues(owner, "", "", "");
-                IConfig cfg = api.getCfg(owner);
+                INode cfg = api.getCfg(owner);
                 for (String key : cfg.keys())
                     out.addRowValues(
                             "", key, cfg.get(key), cfg.get(key).getClass().getCanonicalName());
