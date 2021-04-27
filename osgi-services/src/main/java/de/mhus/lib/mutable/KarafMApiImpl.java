@@ -251,6 +251,9 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                 cached.ifc = ifc;
                                 cached.filter = filter;
                                 if (apiCache != null) apiCache.put(ifc.getCanonicalName(), cached);
+                            } catch (java.lang.IllegalStateException e) {
+                                MApi.dirtyLogDebug("KarafBase: disable Cache", e);
+                                apiCache = null;
                             } catch (Throwable t) {
                                 MApi.dirtyLogDebug("KarafBase", t);
                             }
