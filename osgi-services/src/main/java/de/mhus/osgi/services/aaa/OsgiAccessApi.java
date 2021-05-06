@@ -22,6 +22,7 @@ import de.mhus.lib.core.aaa.DummyRealm;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.aaa.RealmServiceProvider;
 import de.mhus.osgi.api.util.MServiceTracker;
+import de.mhus.osgi.services.cache.OsgiCacheManager;
 
 @Component(service = AccessApi.class, immediate = true)
 public class OsgiAccessApi extends DefaultAccessApi {
@@ -96,6 +97,7 @@ public class OsgiAccessApi extends DefaultAccessApi {
                 if (r.getName().equals(realm.getName()))
                     return; // already in list
             realms.add(realm);
+            realms.removeIf(r -> r instanceof DummyRealm); // remove dummy realms
             LifecycleUtils.init(realm);
             ((DefaultSecurityManager)manager).setRealms(realms);
         } else
