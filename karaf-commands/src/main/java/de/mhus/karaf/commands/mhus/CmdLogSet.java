@@ -154,9 +154,10 @@ public class CmdLogSet extends AbstractCmd {
                 break;
             case "maxmsgsize":
                 {
-                    if (parameters != null && parameters.length > 0)
+                    if (parameters != null && parameters.length > 0) {
                         api.getLogFactory().setMaxMessageSize(MCast.toint(parameters[0], 0));
-                    else
+                        Log.setMaxMsgSize(MCast.toint(parameters[0], 0));
+                    } else
                         System.out.println(
                                 "Max Message Size: " + api.getLogFactory().getMaxMessageSize());
                 }

@@ -19,6 +19,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.MApi;
+import de.mhus.lib.core.logging.Log;
 import de.mhus.lib.core.mapi.IApi;
 import de.mhus.lib.mutable.KarafMApiImpl;
 import de.mhus.osgi.api.karaf.AbstractCmd;
@@ -40,6 +41,7 @@ public class CmdLogStatus extends AbstractCmd {
         System.out.println("Default Level  : " + api.getLogFactory().getDefaultLevel());
         System.out.println("Trace          : " + api.isFullTrace());
         System.out.println("LogFoctory     : " + api.getLogFactory().getClass().getSimpleName());
+        System.out.println("MaxMsgSize     : " + Log.getMaxMsgSize());
         System.out.println("DirtyTrace     : " + MApi.isDirtyTrace());
         if (api.getLogFactory().getParameterMapper() != null)
             System.out.println(
