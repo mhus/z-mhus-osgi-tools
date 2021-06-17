@@ -61,7 +61,8 @@ public class CmdOperationExecute extends AbstractCmd {
             required = false)
     private boolean isLoad = false;
     
-	@Override
+	@SuppressWarnings("deprecation")
+    @Override
 	public Object execute2() throws Exception {
 		
 		OperationManager api = M.l(OperationManager.class);
