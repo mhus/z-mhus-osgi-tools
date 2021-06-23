@@ -128,7 +128,7 @@ public class JaegerTracerService extends DefaultTracer {
         Configuration.ReporterConfiguration reporterConfig =
                 Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
         Configuration config =
-                new Configuration(IdentUtil.getServiceIdent())
+                new Configuration((MString.isSetTrim(System.getProperty("JAEGER_SERVICE_NAME")) ? System.getProperty("JAEGER_SERVICE_NAME") + "@" : "" ) + IdentUtil.getServiceIdent().toString() )
                         .withSampler(samplerConfig)
                         .withReporter(reporterConfig);
 
