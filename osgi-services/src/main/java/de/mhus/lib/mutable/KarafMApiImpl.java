@@ -238,6 +238,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                             obj = ref.getBundle().getBundleContext().getService(ref);
                             //                              obj = context.getService(ref);
                         } catch (Throwable t) {
+                            System.out.println("Error lookup for: " + ref);
                             t.printStackTrace();
                         }
                         if (obj != null) {
