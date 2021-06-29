@@ -146,6 +146,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
             if (apiCache == null && CFG_USE_LOOKUP_CACHE) {
                 try {
+                    MApi.dirtyLogDebug("KarafMApiImpl:create cache");
                     ICacheService cacheService = MOsgi.getService(ICacheService.class);
                     apiCache =
                             cacheService.createCache(
@@ -253,7 +254,10 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                 cached.filter = filter;
                                 if (apiCache != null) apiCache.put(ifc.getCanonicalName(), cached);
                             } catch (java.lang.IllegalStateException e) {
-                                MApi.dirtyLogDebug("KarafBase: disable Cache", e);
+                                MApi.dirtyLogDebug("KarafBase: close Cache", e);
+                                try {
+                                    apiCache.close();
+                                } catch (Throwable t) {}
                                 apiCache = null;
                             } catch (Throwable t) {
                                 MApi.dirtyLogDebug("KarafBase", t);
