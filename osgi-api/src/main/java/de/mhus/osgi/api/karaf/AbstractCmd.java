@@ -23,6 +23,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.logging.ITracer;
 import de.mhus.lib.core.util.MObject;
@@ -54,6 +55,8 @@ public abstract class AbstractCmd extends MObject implements Action {
     private String trace;
 
     @Reference private Session session;
+
+    protected boolean cmdIsPermissionDependent = false;
 
     @Override
     public final Object execute() throws Exception {
@@ -105,6 +108,8 @@ public abstract class AbstractCmd extends MObject implements Action {
             tName = tName.replace('\n', ' ');
             Thread.currentThread().setName(tName);
         }
+        if (cmdIsPermissionDependent && Aaa.getPrincipal() == null)
+            System.out.println("--- Warn: You have guest privileges");
         // execute
         Object ret = null;
         try {
@@ -128,5 +133,9 @@ public abstract class AbstractCmd extends MObject implements Action {
         return ret;
     }
 
+    protected Session getSession() {
+        return session;
+    }
+    
     public abstract Object execute2() throws Exception;
 }
