@@ -194,6 +194,11 @@ public class JaegerTracerService extends DefaultTracer {
         fields.put("_msg", e.getMessage());
         fields.put("logger", e.getLoggerName());
         fields.put("thread", e.getThreadName());
+//        fields.put("loggerClass",e.getFQNOfLoggerClass());
+        String[] stack = e.getThrowableStrRep();
+        if (stack != null) {
+            fields.put("exception", MString.join(stack, '\n'));
+        }
         // PaxLocationInfo location = e.getLocationInformation();
         // fields.put("location",
         //		location.getClassName() + "." + location.getMethodName() + "(" + location.getFileName()
