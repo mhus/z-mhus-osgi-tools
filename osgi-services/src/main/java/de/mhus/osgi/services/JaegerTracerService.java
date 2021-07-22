@@ -19,6 +19,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.ops4j.pax.logging.PaxLogger;
 import org.ops4j.pax.logging.spi.PaxLoggingEvent;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -198,6 +199,10 @@ public class JaegerTracerService extends DefaultTracer {
         String[] stack = e.getThrowableStrRep();
         if (stack != null) {
             fields.put("exception", MString.join(stack, '\n'));
+            span.setTag("error", true);
+        }
+        if (e.getLevel().toInt() >= PaxLogger.LEVEL_ERROR) {
+            span.setTag("error", true);
         }
         // PaxLocationInfo location = e.getLocationInformation();
         // fields.put("location",
