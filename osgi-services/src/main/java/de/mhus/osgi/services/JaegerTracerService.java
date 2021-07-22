@@ -192,7 +192,7 @@ public class JaegerTracerService extends DefaultTracer {
 
         Map<String, String> fields = new HashMap<>();
         fields.put("level", e.getLevel().toString());
-        fields.put("msg", e.getMessage());
+        fields.put("message", e.getMessage());
         fields.put("logger", e.getLoggerName());
         fields.put("thread", e.getThreadName());
 //        fields.put("loggerClass",e.getFQNOfLoggerClass());
