@@ -198,11 +198,14 @@ public class JaegerTracerService extends DefaultTracer {
 //        fields.put("loggerClass",e.getFQNOfLoggerClass());
         String[] stack = e.getThrowableStrRep();
         if (stack != null) {
-            fields.put("exception", MString.join(stack, '\n'));
+            fields.put("stack", MString.join(stack, '\n'));
             span.setTag("error", true);
+            fields.put("event", "error");
+            fields.put("error.kind", "exception");
         }
         if (e.getLevel().toInt() >= PaxLogger.LEVEL_ERROR) {
             span.setTag("error", true);
+            fields.put("event", "error");
         }
         // PaxLocationInfo location = e.getLocationInformation();
         // fields.put("location",
