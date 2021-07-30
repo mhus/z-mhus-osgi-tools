@@ -22,8 +22,6 @@ import org.apache.karaf.shell.api.console.SessionFactory;
 
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MTimerTask;
-import de.mhus.lib.core.logging.Log.LEVEL;
-import de.mhus.lib.core.logging.StreamToLogAdapter;
 import de.mhus.lib.core.schedule.Scheduler;
 import de.mhus.lib.core.service.TimerFactory;
 import de.mhus.lib.core.service.TimerIfc;
@@ -74,14 +72,14 @@ public class ScheduleGogo extends MLog implements ISimpleService {
         if (command == null || timer == null) return;
         log().d(name, "execute", command);
 
-        StreamToLogAdapter out = new StreamToLogAdapter(LEVEL.INFO, null);
-        StreamToLogAdapter err = new StreamToLogAdapter(LEVEL.ERROR, null);
+//        StreamToLogAdapter out = new StreamToLogAdapter(LEVEL.INFO, null);
+//        StreamToLogAdapter err = new StreamToLogAdapter(LEVEL.ERROR, null);
         try {
             SessionFactory commandProcessor = MOsgi.getService(SessionFactory.class);
 
             ByteArrayInputStream in = new ByteArrayInputStream(new byte[0]);
 
-            Session commandSession = commandProcessor.create(in, out, err);
+            Session commandSession = commandProcessor.create(in, System.out, System.err);
 
             commandSession.put("interactive.mode", false);
             commandSession.put("APPLICATION", System.getProperty("karaf.name", "root"));
@@ -92,8 +90,8 @@ public class ScheduleGogo extends MLog implements ISimpleService {
             log().w(name, t);
         }
 
-        out.close();
-        err.close();
+//        out.close();
+//        err.close();
     }
 
     public void init() {}
