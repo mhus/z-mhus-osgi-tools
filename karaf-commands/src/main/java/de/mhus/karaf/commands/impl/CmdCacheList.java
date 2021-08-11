@@ -44,12 +44,14 @@ public class CmdCacheList extends AbstractCmd {
         }
 
         ConsoleTable table = new ConsoleTable(tblOpt);
-        table.setHeaderValues("Name", "Size", "Bytes", "Gets", "Puts", "Removed", "Hits", "Missed","AvrRemove");
+        table.setHeaderValues(
+                "Name", "Size", "Bytes", "Gets", "Puts", "Removed", "Hits", "Missed", "AvrRemove");
 
         for (String name : service.getCacheNames()) {
             ICache<Object, Object> cache = service.getCache(name);
             if (cache != null) {
-                ICacheStatistics cacheStatistics = ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
+                ICacheStatistics cacheStatistics =
+                        ((LocalCacheWrapper<?, ?>) cache).getCacheStatistics();
                 table.addRowValues(
                         name,
                         cacheStatistics.getCacheSize(),
@@ -59,8 +61,7 @@ public class CmdCacheList extends AbstractCmd {
                         cacheStatistics.getCacheRemovals(),
                         cacheStatistics.getCacheHits(),
                         cacheStatistics.getCacheMisses(),
-                        cacheStatistics.getAverageRemoveTime()
-                        );
+                        cacheStatistics.getAverageRemoveTime());
             }
         }
         table.print();

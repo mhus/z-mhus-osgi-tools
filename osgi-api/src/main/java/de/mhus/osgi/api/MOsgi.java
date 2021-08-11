@@ -85,12 +85,10 @@ public class MOsgi {
     public static <T> T getServiceOrNull(Class<T> ifc) {
         Bundle bundle = FrameworkUtil.getBundle(ifc);
         BundleContext context = null;
-        if (bundle != null)
-            context = bundle.getBundleContext();
+        if (bundle != null) context = bundle.getBundleContext();
         if (context == null) {
             bundle = FrameworkUtil.getBundle(MOsgi.class);
-            if (bundle != null)
-                context = bundle.getBundleContext();
+            if (bundle != null) context = bundle.getBundleContext();
         }
         if (context == null) return null;
         ServiceReference<T> ref = context.getServiceReference(ifc);
@@ -560,10 +558,11 @@ public class MOsgi {
     public static boolean isValid(BundleContext bundleContext) {
         return bundleContext != null && bundleContext.getBundle().getState() != Bundle.UNINSTALLED;
     }
-    
+
     /**
-     * Load a accessible class from the osgi environment. Will use the first if more then one is available.
-     * 
+     * Load a accessible class from the osgi environment. Will use the first if more then one is
+     * available.
+     *
      * @param name
      * @return The class
      * @throws ClassNotFoundException
@@ -571,5 +570,4 @@ public class MOsgi {
     public static Class<?> loadClass(String name) throws ClassNotFoundException {
         return new OsgiBundleClassLoader().loadClass(name); // cache??!!
     }
-    
 }

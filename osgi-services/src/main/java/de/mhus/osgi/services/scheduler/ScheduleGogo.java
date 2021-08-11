@@ -72,8 +72,8 @@ public class ScheduleGogo extends MLog implements ISimpleService {
         if (command == null || timer == null) return;
         log().d(name, "execute", command);
 
-//        StreamToLogAdapter out = new StreamToLogAdapter(LEVEL.INFO, null);
-//        StreamToLogAdapter err = new StreamToLogAdapter(LEVEL.ERROR, null);
+        //        StreamToLogAdapter out = new StreamToLogAdapter(LEVEL.INFO, null);
+        //        StreamToLogAdapter err = new StreamToLogAdapter(LEVEL.ERROR, null);
         try {
             SessionFactory commandProcessor = MOsgi.getService(SessionFactory.class);
 
@@ -90,8 +90,8 @@ public class ScheduleGogo extends MLog implements ISimpleService {
             log().w(name, t);
         }
 
-//        out.close();
-//        err.close();
+        //        out.close();
+        //        err.close();
     }
 
     public void init() {}

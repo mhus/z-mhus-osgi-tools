@@ -37,7 +37,8 @@ public class VaultManagerImpl extends SimpleService {
     @Activate
     public void doActivate(ComponentContext ctx) {
         services =
-                new AbstractServiceTracker<KeychainSource>(ctx.getBundleContext(), KeychainSource.class) {
+                new AbstractServiceTracker<KeychainSource>(
+                        ctx.getBundleContext(), KeychainSource.class) {
 
                     @Override
                     protected void removeService(

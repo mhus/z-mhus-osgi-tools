@@ -54,6 +54,7 @@ public interface SchedulerService extends ITimerTask {
 
     /**
      * Return the user name or null for guest to execute with this users privileges.
+     *
      * @return The user name to run with.
      */
     String getUsername();

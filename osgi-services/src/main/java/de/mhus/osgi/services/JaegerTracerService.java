@@ -129,7 +129,11 @@ public class JaegerTracerService extends DefaultTracer {
         Configuration.ReporterConfiguration reporterConfig =
                 Configuration.ReporterConfiguration.fromEnv().withLogSpans(true);
         Configuration config =
-                new Configuration((MString.isSetTrim(System.getProperty("JAEGER_SERVICE_NAME")) ? System.getProperty("JAEGER_SERVICE_NAME") + "@" : "" ) + IdentUtil.getServiceIdent().toString() )
+                new Configuration(
+                                (MString.isSetTrim(System.getProperty("JAEGER_SERVICE_NAME"))
+                                                ? System.getProperty("JAEGER_SERVICE_NAME") + "@"
+                                                : "")
+                                        + IdentUtil.getServiceIdent().toString())
                         .withSampler(samplerConfig)
                         .withReporter(reporterConfig);
 
@@ -195,7 +199,7 @@ public class JaegerTracerService extends DefaultTracer {
         fields.put("message", e.getMessage());
         fields.put("logger", e.getLoggerName());
         fields.put("thread", e.getThreadName());
-//        fields.put("loggerClass",e.getFQNOfLoggerClass());
+        //        fields.put("loggerClass",e.getFQNOfLoggerClass());
         String[] stack = e.getThrowableStrRep();
         if (stack != null) {
             fields.put("stack", MString.join(stack, '\n'));

@@ -45,10 +45,8 @@ public class CmdCacheClear extends AbstractCmd {
             return null;
         }
 
-        if (name.equals("*"))
-            service.getCacheNames().forEach(n -> service.getCache(n).clear() );
-        else
-            service.getCache(name).clear();
+        if (name.equals("*")) service.getCacheNames().forEach(n -> service.getCache(n).clear());
+        else service.getCache(name).clear();
         System.out.println("OK");
 
         return null;

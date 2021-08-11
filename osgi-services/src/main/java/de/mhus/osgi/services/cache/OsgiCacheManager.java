@@ -1,3 +1,18 @@
+/**
+ * Copyright (C) 2018 Mike Hummel (mh@mhus.de)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package de.mhus.osgi.services.cache;
 
 import java.util.ArrayList;
@@ -25,36 +40,40 @@ import de.mhus.lib.core.cfg.CfgLong;
 
 public class OsgiCacheManager implements CacheManager {
 
-    private static CfgLong CFG_TTL = new CfgLong(AccessApi.class, "authorizationCacheTTL", MPeriod.MINUTE_IN_MILLISECOUNDS * 30);
-    private static CfgInt  CFG_SIZE = new CfgInt(AccessApi.class, "authorizationCacheSize", 100000);
-    private static CfgBoolean CFG_ENABLED = new CfgBoolean(AccessApi.class, "authorizationCacheEnabled", true);
+    private static CfgLong CFG_TTL =
+            new CfgLong(
+                    AccessApi.class, "authorizationCacheTTL", MPeriod.MINUTE_IN_MILLISECOUNDS * 30);
+    private static CfgInt CFG_SIZE = new CfgInt(AccessApi.class, "authorizationCacheSize", 100000);
+    private static CfgBoolean CFG_ENABLED =
+            new CfgBoolean(AccessApi.class, "authorizationCacheEnabled", true);
 
     @SuppressWarnings("rawtypes")
     private Map<String, Cache> caches = Collections.synchronizedMap(new HashMap<>());
-    
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public <K, V> Cache<K, V> getCache(String name) throws CacheException {
 
         if (!CFG_ENABLED.value()) return new DummyCache();
-        Cache<K,V> inst = caches.get(name);
+        Cache<K, V> inst = caches.get(name);
         if (inst != null) return (Cache<K, V>) inst;
 
         ICacheService service = M.l(ICacheService.class);
         if (service == null) return null;
-        ICache<Object,Object> c = service.createCache(
-                this, 
-                name, 
-                Object.class, 
-                Object.class, 
-                new CacheConfig().setHeapSize(CFG_SIZE.value()).setTTL(CFG_TTL.value()));
+        ICache<Object, Object> c =
+                service.createCache(
+                        this,
+                        name,
+                        Object.class,
+                        Object.class,
+                        new CacheConfig().setHeapSize(CFG_SIZE.value()).setTTL(CFG_TTL.value()));
 
         inst = new CacheWrapper<>(c);
         caches.put(name, inst);
         return inst;
     }
 
-    private static class CacheWrapper<K,V> implements Cache<K,V> {
+    private static class CacheWrapper<K, V> implements Cache<K, V> {
 
         private ICache<Object, Object> inst;
 
@@ -72,7 +91,7 @@ public class OsgiCacheManager implements CacheManager {
         public V put(K key, V value) {
             V val = get(key);
             inst.put(key, value);
-            return val; 
+            return val;
         }
 
         @Override
@@ -91,7 +110,7 @@ public class OsgiCacheManager implements CacheManager {
         @Override
         public Set<K> keys() {
             HashSet<K> ret = new HashSet<>();
-            inst.forEach(e -> ret.add((K)e.getKey()) );
+            inst.forEach(e -> ret.add((K) e.getKey()));
             return ret;
         }
 
@@ -104,18 +123,15 @@ public class OsgiCacheManager implements CacheManager {
         @Override
         public Collection<V> values() {
             ArrayList<V> ret = new ArrayList<>();
-            inst.forEach(e -> ret.add((V)e.getValue()) );
+            inst.forEach(e -> ret.add((V) e.getValue()));
             return ret;
         }
-
-
     }
-    
-    private static class DummyCache<K,V> implements Cache<K,V> {
+
+    private static class DummyCache<K, V> implements Cache<K, V> {
 
         @Override
-        public void clear() throws CacheException {
-        }
+        public void clear() throws CacheException {}
 
         @Override
         public V get(K arg0) throws CacheException {
@@ -148,7 +164,5 @@ public class OsgiCacheManager implements CacheManager {
         public Collection<V> values() {
             return (Collection<V>) MCollection.EMPTY_LIST;
         }
-
     }
-    
 }

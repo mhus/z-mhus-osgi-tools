@@ -44,57 +44,51 @@ import de.mhus.osgi.api.MOsgi;
 @Component
 public class LocalCacheServiceImpl extends MLog implements ICacheService {
 
-//    private CacheManagerBuilder<CacheManager> cacheBuilder;
+    //    private CacheManagerBuilder<CacheManager> cacheBuilder;
     private DefaultStatisticsService statisticsService;
-private CacheManager cacheManager;
-private javax.cache.CacheManager cacheManagerWrapper;
+    private CacheManager cacheManager;
+    private javax.cache.CacheManager cacheManagerWrapper;
 
-//    @Override
-//    public CacheManagerBuilder<CacheManager> getCacheBuilder() {
-//        if (cacheBuilder == null) cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
-//        return cacheBuilder;
-//    }
+    //    @Override
+    //    public CacheManagerBuilder<CacheManager> getCacheBuilder() {
+    //        if (cacheBuilder == null) cacheBuilder = CacheManagerBuilder.newCacheManagerBuilder();
+    //        return cacheBuilder;
+    //    }
 
     @SuppressWarnings("unchecked")
     @Override
     public synchronized <K, V> ICache<K, V> createCache(
-            Object owner,
-            String name,
-            Class<K> keyType,
-            Class<V> valueType,
-            CacheConfig config
-            ) {
+            Object owner, String name, Class<K> keyType, Class<V> valueType, CacheConfig config) {
 
         @SuppressWarnings("rawtypes")
-        Class<?> ownerClass = owner instanceof Class ? (Class)owner : owner.getClass();
+        Class<?> ownerClass = owner instanceof Class ? (Class) owner : owner.getClass();
         BundleContext ownerContext = FrameworkUtil.getBundle(ownerClass).getBundleContext();
         name =
                 ownerContext.getBundle().getSymbolicName()
                         + ":"
                         + ownerContext.getBundle().getBundleId()
                         + "/"
-                        + owner.getClass().getCanonicalName() 
+                        + owner.getClass().getCanonicalName()
                         + "/"
                         + name;
         ICache<Object, Object> existing = getCache(name);
-        if (existing != null)
-            return (ICache<K, V>) existing;
+        if (existing != null) return (ICache<K, V>) existing;
 
         if (statisticsService == null) statisticsService = new DefaultStatisticsService();
 
         if (cacheManager == null) {
             cacheManager =
-                    CacheManagerBuilder.newCacheManagerBuilder().using(statisticsService).build(false);
+                    CacheManagerBuilder.newCacheManagerBuilder()
+                            .using(statisticsService)
+                            .build(false);
             cacheManager.init();
             cacheManagerWrapper = new CacheManagerWrapper(this);
         }
-        
-        Builder<? extends ResourcePools> resourcePoolsBuilder = 
-                    config.getHeapSize() > 0 
-                    ?
-                    ResourcePoolsBuilder.heap(config.getHeapSize())
-                    :
-                    ResourcePoolsBuilder.newResourcePoolsBuilder();
+
+        Builder<? extends ResourcePools> resourcePoolsBuilder =
+                config.getHeapSize() > 0
+                        ? ResourcePoolsBuilder.heap(config.getHeapSize())
+                        : ResourcePoolsBuilder.newResourcePoolsBuilder();
 
         CacheConfigurationBuilder<K, V> ccb =
                 CacheConfigurationBuilder.newCacheConfigurationBuilder(
@@ -113,7 +107,8 @@ private javax.cache.CacheManager cacheManagerWrapper;
             ccb.withService(copierConfigurationKey).withService(copierConfigurationValue);
         }
         if (config.getTTL() > 0)
-            ccb.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis( config.getTTL() )));
+            ccb.withExpiry(
+                    ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMillis(config.getTTL())));
 
         if (cacheManager.getCache(name, keyType, valueType) != null) {
             log().w("Remove existing cache with the same name", name);
@@ -121,8 +116,7 @@ private javax.cache.CacheManager cacheManagerWrapper;
         }
         Cache<K, V> cache = cacheManager.createCache(name, ccb.build());
 
-        LocalCacheWrapper<K, V> wrapper =
-                new LocalCacheWrapper<>(this, cache, name, ownerContext);
+        LocalCacheWrapper<K, V> wrapper = new LocalCacheWrapper<>(this, cache, name, ownerContext);
         return wrapper;
     }
 

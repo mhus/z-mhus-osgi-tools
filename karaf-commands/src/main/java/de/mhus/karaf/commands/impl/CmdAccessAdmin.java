@@ -38,7 +38,8 @@ public class CmdAccessAdmin extends AbstractCmd {
     public Object execute2() throws Exception {
 
         try (SubjectEnvironment env = Aaa.asAdmin()) {
-            CmdInterceptorUtil.setInterceptor(session, new CmdAccessLogin.AaaInterceptor(env.getSubject()));
+            CmdInterceptorUtil.setInterceptor(
+                    session, new CmdAccessLogin.AaaInterceptor(env.getSubject()));
         }
         System.out.println("OK");
 

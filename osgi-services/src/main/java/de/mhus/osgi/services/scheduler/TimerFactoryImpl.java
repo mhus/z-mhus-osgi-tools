@@ -164,7 +164,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
 
         if (job != null) {
             if (job instanceof MutableSchedulerJob)
-                ((MutableSchedulerJob)job).setUsername(username);
+                ((MutableSchedulerJob) job).setUsername(username);
             job.setNextExecutionTime(SchedulerJob.CALCULATE_NEXT);
 
             job.setInfo(
@@ -240,8 +240,7 @@ public class TimerFactoryImpl extends MLog implements TimerFactory {
             properties.put("job.task", job.getTask().getClass());
             properties.put("job.bundle", caller.getSymbolicName());
             properties.put("job.timer", MSystem.getObjectId(this));
-            if (job.getUsername() != null)
-                properties.put("job.username", job.getUsername());
+            if (job.getUsername() != null) properties.put("job.username", job.getUsername());
             if (caller == null || caller.getBundleContext() == null) {
                 log().w("Can't register scheduler to others bundle context", service, properties);
                 context.registerService(SchedulerService.class, service, properties);

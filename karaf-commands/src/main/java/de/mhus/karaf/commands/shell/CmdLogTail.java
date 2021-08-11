@@ -93,7 +93,7 @@ public class CmdLogTail extends AbstractCmd {
             required = false,
             multiValued = false)
     boolean verbose = false;
-    
+
     @Option(
             name = "-l",
             aliases = {"--level"},
@@ -338,13 +338,22 @@ public class CmdLogTail extends AbstractCmd {
                 out.println("  name    :" + event.getLoggerName());
                 out.println("  time    :" + event.getTimeStamp());
                 out.println("  level   :" + event.getLevel());
-                out.println("  location:" + loc.getClassName() + "." + loc.getMethodName() + "(" + loc.getFileName() + ":" + loc.getLineNumber() + ")" );
+                out.println(
+                        "  location:"
+                                + loc.getClassName()
+                                + "."
+                                + loc.getMethodName()
+                                + "("
+                                + loc.getFileName()
+                                + ":"
+                                + loc.getLineNumber()
+                                + ")");
                 out.println("  thread  :" + event.getThreadName());
                 out.println("  msg     :" + event.getMessage());
                 out.println("}");
-            } else
-                out.append(formatter.format(event, overridenPattern, noColor));
+            } else out.append(formatter.format(event, overridenPattern, noColor));
         }
+
         protected boolean checkIfFromRequestedLog(PaxLoggingEvent event) {
             return event.getLoggerName().contains(logger);
         }

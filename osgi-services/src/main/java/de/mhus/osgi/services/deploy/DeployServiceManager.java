@@ -37,10 +37,9 @@ public class DeployServiceManager extends MLog implements ISimpleService {
 
     MServiceTracker<DeployService> tracker =
             new MServiceTracker<DeployService>(
-        		DeployService.class,
-        		(reference, service) -> undeploy(reference, service),
-        		(reference, service) -> deploy(reference, service, SENSIVITY.UPDATE)
-    		);
+                    DeployService.class,
+                    (reference, service) -> undeploy(reference, service),
+                    (reference, service) -> deploy(reference, service, SENSIVITY.UPDATE));
 
     @Activate
     public void doActivate(ComponentContext ctx) {

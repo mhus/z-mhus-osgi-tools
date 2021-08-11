@@ -136,6 +136,6 @@ public abstract class AbstractCmd extends MObject implements Action {
     protected Session getSession() {
         return session;
     }
-    
+
     public abstract Object execute2() throws Exception;
 }

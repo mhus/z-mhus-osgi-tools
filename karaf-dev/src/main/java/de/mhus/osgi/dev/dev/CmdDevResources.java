@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Mike Hummel (mh@mhus.de)
+ * Copyright (C) 2018 Mike Hummel (mh@mhus.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@ public class CmdDevResources extends AbstractCmd {
             description = "Substitute environment parameter values",
             multiValued = false)
     boolean env;
-    
+
     @Option(
             name = "-x",
             aliases = "--extensions",
@@ -122,7 +122,7 @@ public class CmdDevResources extends AbstractCmd {
 
             p = new MProperties();
             if (env) {
-                p.putAll( System.getenv() );
+                p.putAll(System.getenv());
             }
             if (parameters != null) {
                 p.putReadProperties(IProperties.explodeToMProperties(parameters));
@@ -185,8 +185,7 @@ public class CmdDevResources extends AbstractCmd {
             File out = new File(to);
             if (out.exists() && !overwrite) System.out.println("- file already exists");
             else {
-                if (!out.getParentFile().exists())
-                    out.getParentFile().mkdirs();
+                if (!out.getParentFile().exists()) out.getParentFile().mkdirs();
                 long size = -1;
                 if (p.size() == 0 || !substituteFileExtension(out)) {
                     if (!test) {
@@ -201,27 +200,28 @@ public class CmdDevResources extends AbstractCmd {
                     while (true) {
                         pos = content.indexOf("{{", pos);
                         if (pos < 0) break;
-//                        if (pos > 0 && content.charAt(pos - 1) == '#') {
-//                            content = content.substring(0, pos) + content.substring(pos + 1);
-//                            pos = pos + 1;
-//                            continue;
-//                        }
+                        //                        if (pos > 0 && content.charAt(pos - 1) == '#') {
+                        //                            content = content.substring(0, pos) +
+                        // content.substring(pos + 1);
+                        //                            pos = pos + 1;
+                        //                            continue;
+                        //                        }
                         int end = content.indexOf("}}", pos);
                         if (end < 0) {
                             System.out.println("- Error: Open parameter definition");
                             break;
                         }
                         String key = content.substring(pos + 2, end);
-                        String[] parts = key.split(":",3);
+                        String[] parts = key.split(":", 3);
                         String value = null;
                         if (parts[0].equals("env")) {
                             value = p.getString(parts[1], parts.length > 2 ? parts[2] : null);
                         }
                         if (value == null) {
-                            System.out.println("- Parameter not defined for " + key + " - set to empty");
+                            System.out.println(
+                                    "- Parameter not defined for " + key + " - set to empty");
                             value = "";
-                        } else 
-                            System.out.println("- Set: " + key + " -> " + value);
+                        } else System.out.println("- Set: " + key + " -> " + value);
                         content = content.substring(0, pos) + value + content.substring(end + 2);
                         pos = pos + value.length();
                     }
@@ -243,8 +243,7 @@ public class CmdDevResources extends AbstractCmd {
 
     private Bundle findBundleForName(String bundleName) {
         for (Bundle bundle : MOsgi.getBundleContext().getBundles()) {
-            if (bundle.getSymbolicName().equals(bundleName))
-                return bundle;
+            if (bundle.getSymbolicName().equals(bundleName)) return bundle;
         }
         return null;
     }
@@ -263,7 +262,13 @@ public class CmdDevResources extends AbstractCmd {
         while (list.hasMoreElements()) {
             String sub = list.nextElement();
             if (sub.endsWith("/")) showList(bundle, sub);
-            else System.out.println(bundle.getBundleId() + " " + bundle.getSymbolicName() + "/" + sub.substring(9));
+            else
+                System.out.println(
+                        bundle.getBundleId()
+                                + " "
+                                + bundle.getSymbolicName()
+                                + "/"
+                                + sub.substring(9));
         }
     }
 }

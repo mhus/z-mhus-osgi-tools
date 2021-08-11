@@ -84,7 +84,7 @@ public class CmdTimerTools extends AbstractCmd {
             for (SchedulerJob job : getScheduledJob(scheduler, parameters[0])) {
                 if (job != null) {
                     if (job instanceof MutableSchedulerJob)
-                        ((MutableSchedulerJob)job).setUsername(parameters[1]);
+                        ((MutableSchedulerJob) job).setUsername(parameters[1]);
                 }
             }
         }

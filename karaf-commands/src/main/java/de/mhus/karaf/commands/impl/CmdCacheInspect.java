@@ -24,7 +24,10 @@ import de.mhus.lib.core.cache.ICache;
 import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "cache-inspect", description = "Cache Control Service - Print all entries of a cache")
+@Command(
+        scope = "mhus",
+        name = "cache-inspect",
+        description = "Cache Control Service - Print all entries of a cache")
 @Service
 public class CmdCacheInspect extends AbstractCmd {
 

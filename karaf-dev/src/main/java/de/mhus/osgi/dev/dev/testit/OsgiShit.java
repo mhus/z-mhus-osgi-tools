@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2020 Mike Hummel (mh@mhus.de)
+ * Copyright (C) 2018 Mike Hummel (mh@mhus.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,13 +72,16 @@ public class OsgiShit implements ShitIfc {
             System.out.println(MSystem.getObjectId(base.getSession()));
         } else if (cmd.equals("services")) {
             BundleContext context = FrameworkUtil.getBundle(getClass()).getBundleContext();
-            ServiceReference<?>[] refs =
-                    context.getServiceReferences(parameters[0], null);
+            ServiceReference<?>[] refs = context.getServiceReferences(parameters[0], null);
             if (refs != null)
                 for (ServiceReference<?> ref : refs)
-                    System.out.println(ref.getBundle().getSymbolicName() + " " + ref.getBundle().getBundleId() + " " + context.getService(ref).getClass().getCanonicalName());
-            else
-                System.out.println("Not found");
+                    System.out.println(
+                            ref.getBundle().getSymbolicName()
+                                    + " "
+                                    + ref.getBundle().getBundleId()
+                                    + " "
+                                    + context.getService(ref).getClass().getCanonicalName());
+            else System.out.println("Not found");
         }
 
         return null;

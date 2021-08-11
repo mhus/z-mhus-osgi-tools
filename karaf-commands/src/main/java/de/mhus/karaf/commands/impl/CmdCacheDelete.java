@@ -23,7 +23,10 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 import de.mhus.lib.core.cache.ICacheService;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 
-@Command(scope = "mhus", name = "cache-delete", description = "Cache Control Service - delete cache")
+@Command(
+        scope = "mhus",
+        name = "cache-delete",
+        description = "Cache Control Service - delete cache")
 @Service
 public class CmdCacheDelete extends AbstractCmd {
 

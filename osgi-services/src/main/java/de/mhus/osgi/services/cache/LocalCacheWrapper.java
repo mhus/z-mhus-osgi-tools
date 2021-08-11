@@ -55,6 +55,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
     @SuppressWarnings("rawtypes")
     private ServiceRegistration<ICache> serviceRegistration;
+
     private LocalCacheServiceImpl service;
 
     public LocalCacheWrapper(
@@ -62,8 +63,8 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
             org.ehcache.Cache<K, V> cache,
             String name,
             BundleContext bundleContext) {
-        MApi.dirtyLogDebug("LocalCacheWrapper","open", name);
-        this.service = service; 
+        MApi.dirtyLogDebug("LocalCacheWrapper", "open", name);
+        this.service = service;
         this.instance = cache;
         this.name = name;
         this.bundleContext = bundleContext;
@@ -76,25 +77,26 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
             bundleContext.addServiceListener(
                     ev -> serviceListener(ev), MOsgi.filterObjectClass(ICache.class));
         } catch (InvalidSyntaxException e) {
-            MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
+            MApi.dirtyLogDebug("LocalCacheWrapper", name, e);
         }
     }
 
     public CacheStatistics getEhCacheStatistics() {
         return service.getStatisticsService().getCacheStatistics(name);
     }
-    
+
     private void serviceListener(ServiceEvent ev) {
         try {
-            if (ev == null || ev.getServiceReference() == null || serviceRegistration == null) return;
+            if (ev == null || ev.getServiceReference() == null || serviceRegistration == null)
+                return;
             if (ev.getServiceReference().equals(serviceRegistration.getReference())
-                && ev.getType() == ServiceEvent.UNREGISTERING) {
-                MApi.dirtyLogDebug("LocalCacheWrapper","unregister", name);
+                    && ev.getType() == ServiceEvent.UNREGISTERING) {
+                MApi.dirtyLogDebug("LocalCacheWrapper", "unregister", name);
                 serviceRegistration = null;
                 close();
             }
         } catch (Throwable e) {
-            MApi.dirtyLogDebug("LocalCacheWrapper",name, e);
+            MApi.dirtyLogDebug("LocalCacheWrapper", name, e);
         }
     }
 
@@ -109,17 +111,17 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
     @Override
     public void forEach(Consumer<? super Entry<K, V>> action) {
-        instance.forEach(e -> action.accept( new EntryWrapper<K, V>(e) ) );
+        instance.forEach(e -> action.accept(new EntryWrapper<K, V>(e)));
     }
 
-    private static class EntryWrapper<K,V> implements javax.cache.Cache.Entry<K,V> {
-        
-        org.ehcache.Cache.Entry<K,V> entry;
-        
+    private static class EntryWrapper<K, V> implements javax.cache.Cache.Entry<K, V> {
+
+        org.ehcache.Cache.Entry<K, V> entry;
+
         public EntryWrapper(org.ehcache.Cache.Entry<K, V> e) {
             this.entry = e;
         }
-        
+
         @Override
         public K getKey() {
             return entry.getKey();
@@ -134,8 +136,8 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
         public <T> T unwrap(Class<T> clazz) {
             return null;
         }
-        
     }
+
     @Override
     public V get(K key) throws CacheLoadingException {
         return instance.get(key);
@@ -148,7 +150,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
     @Override
     public Spliterator<Entry<K, V>> spliterator() {
-//        return instance.spliterator();
+        //        return instance.spliterator();
         return null;
     }
 
@@ -184,7 +186,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
         try {
             instance.clear();
         } catch (Throwable t) {
-            log().d("error clear cache",name,t.toString());
+            log().d("error clear cache", name, t.toString());
             log().t(t);
         }
     }
@@ -218,7 +220,7 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
     @Override
     public Iterator<Entry<K, V>> iterator() {
-        return new InteratorWrapper<K,V>(instance.iterator());
+        return new InteratorWrapper<K, V>(instance.iterator());
     }
 
     private static class InteratorWrapper<K, V> implements Iterator<Entry<K, V>> {
@@ -236,14 +238,13 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
 
         @Override
         public Entry<K, V> next() {
-            return new EntryWrapper<K,V>(iterator.next());
+            return new EntryWrapper<K, V>(iterator.next());
         }
-        
     }
-    
+
     @Override
     public void close() {
-        MApi.dirtyLogDebug("LocalCacheWrapper","close", name);
+        MApi.dirtyLogDebug("LocalCacheWrapper", "close", name);
         if (serviceRegistration != null) {
             @SuppressWarnings("rawtypes")
             ServiceRegistration<ICache> sr =
@@ -263,7 +264,10 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
     }
 
     @Override
-    public void loadAll(Set<? extends K> keys, boolean replaceExistingValues, CompletionListener completionListener) {
+    public void loadAll(
+            Set<? extends K> keys,
+            boolean replaceExistingValues,
+            CompletionListener completionListener) {
         // TODO Auto-generated method stub
     }
 
@@ -305,8 +309,8 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
     }
 
     @Override
-    public <T> Map<K, EntryProcessorResult<T>> invokeAll(Set<? extends K> keys, EntryProcessor<K, V, T> entryProcessor,
-            Object... arguments) {
+    public <T> Map<K, EntryProcessorResult<T>> invokeAll(
+            Set<? extends K> keys, EntryProcessor<K, V, T> entryProcessor, Object... arguments) {
         // TODO Auto-generated method stub
         return null;
     }
@@ -327,15 +331,16 @@ public class LocalCacheWrapper<K, V> extends MLog implements ICache<K, V> {
     }
 
     @Override
-    public void registerCacheEntryListener(CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+    public void registerCacheEntryListener(
+            CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
-    public void deregisterCacheEntryListener(CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
+    public void deregisterCacheEntryListener(
+            CacheEntryListenerConfiguration<K, V> cacheEntryListenerConfiguration) {
         // TODO Auto-generated method stub
-        
-    }
 
+    }
 }

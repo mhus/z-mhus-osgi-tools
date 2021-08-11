@@ -62,7 +62,7 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
 
     @Override
     public void doInitialize(ClassLoader coreLoader) {
-        baseDir = new File(System.getProperty("karaf.base","."));
+        baseDir = new File(System.getProperty("karaf.base", "."));
         logFactory = new JavaLoggerFactory();
         mlogFactory = new SingleMLogInstanceFactory();
         base.addObject(MLogFactory.class, null, mlogFactory);
@@ -154,10 +154,9 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                     "lookup",
                                     String.class,
                                     Container.class,
-                                    new CacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE)
-                                    );
+                                    new CacheConfig().setHeapSize(CFG_LOOKUP_CACHE_SIZE));
                 } catch (Throwable e) {
-                    MApi.dirtyLogDebug("KarafMApiImpl:lookup",e.toString());
+                    MApi.dirtyLogDebug("KarafMApiImpl:lookup", e.toString());
                 }
             }
 
@@ -177,15 +176,16 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                     if (cached != null) {
                         try {
                             @SuppressWarnings("unused")
-                            T obj = (T)cached.api;
+                            T obj = (T) cached.api;
                         } catch (ClassCastException e) {
-                            MApi.dirtyLogInfo("KarafMAPiImpl.lookup: Can't cast from cache into ifc: try to reload");
+                            MApi.dirtyLogInfo(
+                                    "KarafMAPiImpl.lookup: Can't cast from cache into ifc: try to reload");
                             cleanupLookup(ifc);
                             cached = null;
                         }
                     }
                 } catch (Throwable t) {
-                    MApi.dirtyLogDebug("KarafMApiImpl:lookup",t.toString(),ifc);
+                    MApi.dirtyLogDebug("KarafMApiImpl:lookup", t.toString(), ifc);
                 }
             }
 
@@ -204,23 +204,31 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                     }
                     ServiceReference<T> ref = null;
                     try {
-                        ServiceReference<?>[] refs = context.getServiceReferences(ifc.getCanonicalName(), filter);
+                        ServiceReference<?>[] refs =
+                                context.getServiceReferences(ifc.getCanonicalName(), filter);
                         if (refs != null) {
-                            if (refs.length > 0)
-                                ref = (ServiceReference<T>) refs[0];
+                            if (refs.length > 0) ref = (ServiceReference<T>) refs[0];
                             if (refs.length > 1) {
                                 for (ServiceReference<?> refx : refs)
-                                    MApi.dirtyLogDebug("more then one service found",ifc,refx.getBundle().getSymbolicName(),refx.getBundle().getBundleId(),context.getService(refx).getClass().getCanonicalName());
+                                    MApi.dirtyLogDebug(
+                                            "more then one service found",
+                                            ifc,
+                                            refx.getBundle().getSymbolicName(),
+                                            refx.getBundle().getBundleId(),
+                                            context.getService(refx).getClass().getCanonicalName());
                             }
                         }
-//                        Collection<ServiceReference<T>> refs =
-//                                context.getServiceReferences(ifc, filter);
-//                        Iterator<ServiceReference<T>> refsIterator = refs.iterator();
-//
-//                        if (refsIterator.hasNext()) ref = refs.iterator().next();
-//                        if (refsIterator.hasNext())
-//                            MApi.dirtyLogDebug(
-//                                    "more then one service found for singleton", ifc, filter);
+                        //                        Collection<ServiceReference<T>> refs =
+                        //                                context.getServiceReferences(ifc, filter);
+                        //                        Iterator<ServiceReference<T>> refsIterator =
+                        // refs.iterator();
+                        //
+                        //                        if (refsIterator.hasNext()) ref =
+                        // refs.iterator().next();
+                        //                        if (refsIterator.hasNext())
+                        //                            MApi.dirtyLogDebug(
+                        //                                    "more then one service found for
+                        // singleton", ifc, filter);
                     } catch (InvalidSyntaxException e) {
                         MApi.dirtyLogError(ifc, filter, e);
                     }
@@ -243,7 +251,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                             t.printStackTrace();
                         }
                         if (obj != null) {
-                            MApi.dirtyLogDebug("KarafBase", "loaded from OSGi", ifc, apiCache != null);
+                            MApi.dirtyLogDebug(
+                                    "KarafBase", "loaded from OSGi", ifc, apiCache != null);
                             try {
                                 cached = new Container();
                                 cached.bundleId = ref.getBundle().getBundleId();
@@ -257,7 +266,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
                                 MApi.dirtyLogDebug("KarafBase: close Cache", e);
                                 try {
                                     apiCache.close();
-                                } catch (Throwable t) {}
+                                } catch (Throwable t) {
+                                }
                                 apiCache = null;
                             } catch (Throwable t) {
                                 MApi.dirtyLogDebug("KarafBase", t);
@@ -299,7 +309,8 @@ public class KarafMApiImpl extends DefaultMApi implements IApi, ApiInitialize, I
     public void updateSystemCfg(CfgProvider system) {
         super.updateSystemCfg(system);
         if (system == null) return;
-        CFG_USE_LOOKUP_CACHE = system.getConfig().getBoolean("lookupCacheEnabled", CFG_USE_LOOKUP_CACHE);
-        CFG_LOOKUP_CACHE_SIZE  = system.getConfig().getInt("lookupCacheSize", CFG_LOOKUP_CACHE_SIZE);
+        CFG_USE_LOOKUP_CACHE =
+                system.getConfig().getBoolean("lookupCacheEnabled", CFG_USE_LOOKUP_CACHE);
+        CFG_LOOKUP_CACHE_SIZE = system.getConfig().getInt("lookupCacheSize", CFG_LOOKUP_CACHE_SIZE);
     }
 }
