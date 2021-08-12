@@ -29,7 +29,7 @@
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Tools</name>
 	<description>A set of tools to improve OSGi frameworks and karaf</description>
-	<url>http://www.mhus.de</url>
+	<url>http://www.mhus.info</url>
 	<properties>
 	   <mhus-osgi-tools.version>${project.version}</mhus-osgi-tools.version>
 	</properties>
@@ -42,8 +42,8 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/mhus/mhus-osgi-tools</url>
-		<connection>scm:git:https://github.com/mhus/mhus-osgi-tools/</connection>
+		<url>https://github.com/mhus-info/mhus-osgi-tools</url>
+		<connection>scm:git:https://github.com/mhus-info/mhus-osgi-tools/</connection>
 	</scm>
 	<developers>
 		<developer>
