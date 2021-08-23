@@ -78,15 +78,21 @@ public class CmdAccessTool extends AbstractCmd {
         if (cmd.equals("admininfo")) {
             SimpleAccount info = Aaa.ADMIN;
             System.out.println("Account: " + info);
-            System.out.println("Perms  : " + info.getObjectPermissions());
-            System.out.println("Perms  : " + info.getStringPermissions());
-            System.out.println("Roles  : " + info.getRoles());
+            System.out.println("Perms  : " );
+            printList(info.getObjectPermissions());
+            System.out.println("Perms  : " );
+            printList(info.getStringPermissions());
+            System.out.println("Roles  : ");
+            printList(info.getRoles());
         } else if (cmd.equals("guestinfo")) {
             SimpleAccount info = Aaa.GUEST;
             System.out.println("Account: " + info);
-            System.out.println("Perms  : " + info.getObjectPermissions());
-            System.out.println("Perms  : " + info.getStringPermissions());
-            System.out.println("Roles  : " + info.getRoles());
+            System.out.println("Perms  : " );
+            printList(info.getObjectPermissions());
+            System.out.println("Perms  : ");
+            printList(info.getStringPermissions());
+            System.out.println("Roles  : ");
+            printList(info.getRoles());
         } else if (cmd.equals("role")) {
             Subject subject = Aaa.createSubjectWithoutCheck(parameters[0]);
             try (SubjectEnvironment access = Aaa.asSubject(subject)) {
@@ -130,10 +136,10 @@ public class CmdAccessTool extends AbstractCmd {
                             realm.getAuthenticationInfo(new TrustedToken(parameters[0]));
                     if (info != null && info instanceof SimpleAccount) {
                         System.out.println("Account: " + info);
-                        System.out.println(
-                                "Perms  : " + ((SimpleAccount) info).getObjectPermissions());
-                        System.out.println(
-                                "Perms  : " + ((SimpleAccount) info).getStringPermissions());
+                        System.out.println("Perms  : ");
+                        printList(((SimpleAccount) info).getObjectPermissions());
+                        System.out.println("Perms  : ");
+                        printList(((SimpleAccount) info).getStringPermissions());
                         return null;
                     }
                 } catch (Throwable t) {
@@ -166,9 +172,12 @@ public class CmdAccessTool extends AbstractCmd {
             }
             System.out.println("Account: " + info.value);
             if (info != null) {
-                System.out.println("Perms  : " + info.value.getObjectPermissions());
-                System.out.println("Perms  : " + info.value.getStringPermissions());
-                System.out.println("Roles  : " + info.value.getRoles());
+                System.out.println("Perms  : ");
+                printList(info.value.getObjectPermissions());
+                System.out.println("Perms  : ");
+                printList(info.value.getStringPermissions());
+                System.out.println("Roles  : ");
+                printList(info.value.getRoles());
             }
         } else if (cmd.equals("resetrealms")) {
             List<Realm> realms = new ArrayList<>();
@@ -208,5 +217,11 @@ public class CmdAccessTool extends AbstractCmd {
             System.out.println(Aaa.getPrincipal());
         }
         return null;
+    }
+
+    private void printList(Collection<?> list) {
+        if (list == null) return;
+        for (Object entry : list)
+            System.out.println("  " + entry);
     }
 }
