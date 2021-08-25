@@ -65,7 +65,8 @@ public class CmdAccessTool extends AbstractCmd {
                             + " reloadrealms\n"
                             + " login <user> <pass> - test login as user\n"
                             + " sessions\n"
-                            + " sessioninfo",
+                            + " sessioninfo\n"
+                            + " session <id>",
             multiValued = false)
     String cmd;
 
@@ -80,6 +81,27 @@ public class CmdAccessTool extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (cmd.equals("session")) {
+            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
+            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
+            Session session = null;
+            for (Session s : sessions) {
+                if (s.getId().toString().equals(parameters[0])) {
+                    session = s;
+                    break;
+                }
+            }
+            if (session == null) {
+                System.out.println("Session not found");
+                return null;
+            }
+            ConsoleTable table = new ConsoleTable();
+            table.setHeaderValues("Key","Value");
+            for (Object key : session.getAttributeKeys())
+                table.addRowValues(key,session.getAttribute(key));
+            table.print();
+        } else
         if (cmd.equals("sessioninfo")) {
             DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
             DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
