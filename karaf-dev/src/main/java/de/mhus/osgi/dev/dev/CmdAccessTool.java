@@ -83,12 +83,14 @@ public class CmdAccessTool extends AbstractCmd {
     public Object execute2() throws Exception {
 
         if (cmd.equals("session")) {
-            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
-            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
+            DefaultSecurityManager manager =
+                    (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager =
+                    (DefaultSessionManager) manager.getSessionManager();
             Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
             ConsoleTable table = new ConsoleTable();
             if (MCollection.isEmpty(parameters)) {
-                table.setHeaderValues("Session","Key","Value");
+                table.setHeaderValues("Session", "Key", "Value");
                 for (Session session : sessions) {
                     for (Object key : session.getAttributeKeys())
                         table.addRowValues(session.getId(), key, session.getAttribute(key));
@@ -105,42 +107,45 @@ public class CmdAccessTool extends AbstractCmd {
                     System.out.println("Session not found");
                     return null;
                 }
-                table.setHeaderValues("Key","Value");
+                table.setHeaderValues("Key", "Value");
                 for (Object key : session.getAttributeKeys())
-                    table.addRowValues(key,session.getAttribute(key));}
-            table.print();
-        } else
-        if (cmd.equals("sessioninfo")) {
-            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
-            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
-            System.out.println("Timeout: "+sessionManager.getGlobalSessionTimeout());
-            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
-            System.out.println("Size   : " + sessions.size());
-        } else
-        if (cmd.equals("sessions")) {
-            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
-            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
-            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
-            ConsoleTable table = new ConsoleTable(tblOpt);
-            table.setHeaderValues("Id","Start","Last access");
-            for (Session session : sessions) {
-                table.addRowValues(session.getId(),session.getStartTimestamp(),session.getLastAccessTime());
+                    table.addRowValues(key, session.getAttribute(key));
             }
             table.print();
-        } else
-        if (cmd.equals("admininfo")) {
+        } else if (cmd.equals("sessioninfo")) {
+            DefaultSecurityManager manager =
+                    (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager =
+                    (DefaultSessionManager) manager.getSessionManager();
+            System.out.println("Timeout: " + sessionManager.getGlobalSessionTimeout());
+            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
+            System.out.println("Size   : " + sessions.size());
+        } else if (cmd.equals("sessions")) {
+            DefaultSecurityManager manager =
+                    (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager =
+                    (DefaultSessionManager) manager.getSessionManager();
+            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
+            ConsoleTable table = new ConsoleTable(tblOpt);
+            table.setHeaderValues("Id", "Start", "Last access");
+            for (Session session : sessions) {
+                table.addRowValues(
+                        session.getId(), session.getStartTimestamp(), session.getLastAccessTime());
+            }
+            table.print();
+        } else if (cmd.equals("admininfo")) {
             SimpleAccount info = Aaa.ADMIN;
             System.out.println("Account: " + info);
-            System.out.println("Perms  : " );
+            System.out.println("Perms  : ");
             printList(info.getObjectPermissions());
-            System.out.println("Perms  : " );
+            System.out.println("Perms  : ");
             printList(info.getStringPermissions());
             System.out.println("Roles  : ");
             printList(info.getRoles());
         } else if (cmd.equals("guestinfo")) {
             SimpleAccount info = Aaa.GUEST;
             System.out.println("Account: " + info);
-            System.out.println("Perms  : " );
+            System.out.println("Perms  : ");
             printList(info.getObjectPermissions());
             System.out.println("Perms  : ");
             printList(info.getStringPermissions());
@@ -274,7 +279,6 @@ public class CmdAccessTool extends AbstractCmd {
 
     private void printList(Collection<?> list) {
         if (list == null) return;
-        for (Object entry : list)
-            System.out.println("  " + entry);
+        for (Object entry : list) System.out.println("  " + entry);
     }
 }

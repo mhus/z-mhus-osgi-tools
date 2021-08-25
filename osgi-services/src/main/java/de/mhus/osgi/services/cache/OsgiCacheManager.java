@@ -41,7 +41,8 @@ public class OsgiCacheManager implements CacheManager, Clearable {
     private static CfgLong CFG_TTL =
             new CfgLong(
                     AccessApi.class, "authorizationCacheTTL", MPeriod.MINUTE_IN_MILLISECOUNDS * 30);
-//    private static CfgInt CFG_SIZE = new CfgInt(AccessApi.class, "authorizationCacheSize", 100000);
+    //    private static CfgInt CFG_SIZE = new CfgInt(AccessApi.class, "authorizationCacheSize",
+    // 100000);
     private static CfgBoolean CFG_ENABLED =
             new CfgBoolean(AccessApi.class, "authorizationCacheEnabled", true);
 
@@ -56,25 +57,26 @@ public class OsgiCacheManager implements CacheManager, Clearable {
         Cache<K, V> inst = caches.get(name);
         if (inst != null) return (Cache<K, V>) inst;
 
-//        ICacheService service = M.l(ICacheService.class);
-//        if (service == null) return null;
-//        ICache<Object, Object> c =
-//                service.createCache(
-//                        this,
-//                        name,
-//                        Object.class,
-//                        Object.class,
-//                        new CacheConfig().setHeapSize(CFG_SIZE.value()).setTTL(CFG_TTL.value()));
+        //        ICacheService service = M.l(ICacheService.class);
+        //        if (service == null) return null;
+        //        ICache<Object, Object> c =
+        //                service.createCache(
+        //                        this,
+        //                        name,
+        //                        Object.class,
+        //                        Object.class,
+        //                        new
+        // CacheConfig().setHeapSize(CFG_SIZE.value()).setTTL(CFG_TTL.value()));
 
-//        inst = new CacheWrapper<>(c);
-      inst = new LocalCache<>();
+        //        inst = new CacheWrapper<>(c);
+        inst = new LocalCache<>();
         caches.put(name, inst);
         return inst;
     }
-    
+
     @Override
     public void clear() {
-        caches.forEach( (k,v) -> v.clear()  );
+        caches.forEach((k, v) -> v.clear());
     }
 
     private static class LocalCache<K, V> implements Cache<K, V> {
@@ -116,9 +118,8 @@ public class OsgiCacheManager implements CacheManager, Clearable {
             // TODO Auto-generated method stub
             return null;
         }
-        
     }
-    
+
     @SuppressWarnings("unused")
     private static class CacheWrapper<K, V> implements Cache<K, V> {
 

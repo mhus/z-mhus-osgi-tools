@@ -41,9 +41,8 @@ public class OsgiReflectionBuilder extends ReflectionBuilder {
                     value);
         }
 
-        Object
-                instance; // name with no property, assume right hand side of equals sign is the
-                          // class name:
+        Object instance; // name with no property, assume right hand side of equals sign is the
+        // class name:
         try {
             Class<?> clazz = cl.loadClass(value);
             instance = clazz.getConstructor().newInstance();

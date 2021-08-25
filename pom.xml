@@ -20,12 +20,12 @@
 	<modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.mhus.lib</groupId>
-        <version>7.5.0-SNAPSHOT</version>
+        <version>7.4.2</version>
         <artifactId>mhus-karaf-oss</artifactId>
     </parent>
 	<groupId>de.mhus.osgi</groupId>
 	<artifactId>mhus-osgi-tools</artifactId>
-	<version>7.5.0-SNAPSHOT</version>
+	<version>7.4.2</version>
 	<packaging>pom</packaging>
 	<name>MHUS OSGi Tools</name>
 	<description>A set of tools to improve OSGi frameworks and karaf</description>
