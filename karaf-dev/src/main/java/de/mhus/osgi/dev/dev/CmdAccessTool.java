@@ -34,6 +34,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.LifecycleUtils;
 
 import de.mhus.lib.core.M;
+import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.lib.core.aaa.SubjectEnvironment;
@@ -66,7 +67,7 @@ public class CmdAccessTool extends AbstractCmd {
                             + " login <user> <pass> - test login as user\n"
                             + " sessions\n"
                             + " sessioninfo\n"
-                            + " session <id>",
+                            + " session [id]",
             multiValued = false)
     String cmd;
 
@@ -85,21 +86,28 @@ public class CmdAccessTool extends AbstractCmd {
             DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
             DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
             Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
-            Session session = null;
-            for (Session s : sessions) {
-                if (s.getId().toString().equals(parameters[0])) {
-                    session = s;
-                    break;
-                }
-            }
-            if (session == null) {
-                System.out.println("Session not found");
-                return null;
-            }
             ConsoleTable table = new ConsoleTable();
-            table.setHeaderValues("Key","Value");
-            for (Object key : session.getAttributeKeys())
-                table.addRowValues(key,session.getAttribute(key));
+            if (MCollection.isEmpty(parameters)) {
+                table.setHeaderValues("Session","Key","Value");
+                for (Session session : sessions) {
+                    for (Object key : session.getAttributeKeys())
+                        table.addRowValues(session.getId(), key, session.getAttribute(key));
+                }
+            } else {
+                Session session = null;
+                for (Session s : sessions) {
+                    if (s.getId().toString().equals(parameters[0])) {
+                        session = s;
+                        break;
+                    }
+                }
+                if (session == null) {
+                    System.out.println("Session not found");
+                    return null;
+                }
+                table.setHeaderValues("Key","Value");
+                for (Object key : session.getAttributeKeys())
+                    table.addRowValues(key,session.getAttribute(key));}
             table.print();
         } else
         if (cmd.equals("sessioninfo")) {
