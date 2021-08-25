@@ -28,6 +28,8 @@ import org.apache.shiro.authc.SimpleAccount;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.DefaultSessionManager;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.LifecycleUtils;
 
@@ -36,6 +38,7 @@ import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.lib.core.aaa.SubjectEnvironment;
 import de.mhus.lib.core.aaa.TrustedToken;
+import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.core.util.Value;
 import de.mhus.osgi.api.MOsgi;
 import de.mhus.osgi.api.aaa.RealmServiceProvider;
@@ -60,7 +63,9 @@ public class CmdAccessTool extends AbstractCmd {
                             + " guestinfo - print infos about the guest user\n"
                             + " resetrealms\n"
                             + " reloadrealms\n"
-                            + " login <user> <pass> - test login as user",
+                            + " login <user> <pass> - test login as user\n"
+                            + " sessions\n"
+                            + " sessioninfo",
             multiValued = false)
     String cmd;
 
@@ -75,6 +80,24 @@ public class CmdAccessTool extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (cmd.equals("sessioninfo")) {
+            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
+            System.out.println("Timeout: "+sessionManager.getGlobalSessionTimeout());
+            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
+            System.out.println("Size   : " + sessions.size());
+        } else
+        if (cmd.equals("sessions")) {
+            DefaultSecurityManager manager = (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            DefaultSessionManager sessionManager = (DefaultSessionManager)manager.getSessionManager();
+            Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
+            ConsoleTable table = new ConsoleTable(tblOpt);
+            table.setHeaderValues("Id","Start","Last access");
+            for (Session session : sessions) {
+                table.addRowValues(session.getId(),session.getStartTimestamp(),session.getLastAccessTime());
+            }
+            table.print();
+        } else
         if (cmd.equals("admininfo")) {
             SimpleAccount info = Aaa.ADMIN;
             System.out.println("Account: " + info);
