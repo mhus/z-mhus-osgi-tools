@@ -27,6 +27,7 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
 
+import de.mhus.lib.basics.Clearable;
 import de.mhus.lib.core.MCollection;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.aaa.AccessApi;
@@ -35,7 +36,7 @@ import de.mhus.lib.core.cfg.CfgBoolean;
 import de.mhus.lib.core.cfg.CfgLong;
 import de.mhus.lib.core.util.SoftTimeoutMap;
 
-public class OsgiCacheManager implements CacheManager {
+public class OsgiCacheManager implements CacheManager, Clearable {
 
     private static CfgLong CFG_TTL =
             new CfgLong(
@@ -69,6 +70,11 @@ public class OsgiCacheManager implements CacheManager {
       inst = new LocalCache<>();
         caches.put(name, inst);
         return inst;
+    }
+    
+    @Override
+    public void clear() {
+        caches.forEach( (k,v) -> v.clear()  );
     }
 
     private static class LocalCache<K, V> implements Cache<K, V> {
