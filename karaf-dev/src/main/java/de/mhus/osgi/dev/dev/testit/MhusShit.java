@@ -30,7 +30,6 @@ import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.MThread;
-import de.mhus.lib.core.MThreadPool;
 import de.mhus.lib.core.concurrent.Lock;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -285,7 +284,7 @@ public class MhusShit extends MLog implements ShitIfc {
             housekeeper.register(task, 1000);
 
             String res =
-                    MThreadPool.getWithTimeout(
+                    MThread.getWithTimeout(
                             new ValueProvider<String>() {
 
                                 @Override
