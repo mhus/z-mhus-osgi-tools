@@ -21,14 +21,11 @@ import java.util.Enumeration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
-import de.mhus.lib.core.cfg.CfgProvider;
-import de.mhus.lib.core.node.INode;
+import de.mhus.lib.core.cfg.NodeCfgProvider;
 import de.mhus.lib.core.node.MNode;
 import de.mhus.osgi.api.MOsgi;
 
-public class KarfConfigProvider extends CfgProvider {
-
-    private MNode config;
+public class KarfConfigProvider extends NodeCfgProvider {
 
     public KarfConfigProvider(String pid) {
         super(pid);
@@ -45,11 +42,6 @@ public class KarfConfigProvider extends CfgProvider {
                 config.put(key, configuration.getProperties().get(key));
             }
         }
-    }
-
-    @Override
-    public INode getConfig() {
-        return config;
     }
 
     @Override
