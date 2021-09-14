@@ -180,8 +180,7 @@ public class CmdTimerTools extends AbstractCmd {
             }
             for (SchedulerJob job : getScheduledJob(scheduler, parameters[0])) {
                 if (job != null && job instanceof MutableSchedulerJob) {
-                    ((MutableSchedulerJob) job).setScheduledTime(time.getTime());
-
+                    ((MutableSchedulerJob) job).doReschedule(scheduler, time.getTime());
                     System.out.println(
                             "OK, Scheduled " + job.getName() + " to " + MDate.toIsoDateTime(time));
                 }
