@@ -23,6 +23,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.console.Session;
 
 import de.mhus.lib.core.MString;
+import de.mhus.lib.core.MSystem;
 import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.console.Console;
 import de.mhus.lib.core.logging.ITracer;
@@ -93,7 +94,12 @@ public abstract class AbstractCmd extends MObject implements Action {
 
         Scope scope = null;
         if (MString.isSet(trace)) {
-            scope = ITracer.get().start(getClass().getName(), trace);
+            try {
+                scope = ITracer.get().start(getClass().getName(), trace);
+                ITracer.get().current().setTag("session", MSystem.getObjectId(session) );
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
         }
         // shorten thread name - for logging
         String tName = Thread.currentThread().getName();
