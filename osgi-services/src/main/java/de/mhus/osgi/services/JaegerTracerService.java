@@ -39,9 +39,6 @@ import de.mhus.osgi.api.karaf.LogServiceTracker;
 import de.mhus.osgi.api.karaf.LogServiceTracker.LOG_LEVEL;
 import io.jaegertracing.Configuration;
 import io.jaegertracing.internal.JaegerTracer;
-import io.jaegertracing.internal.reporters.RemoteReporter;
-import io.jaegertracing.spi.Sender;
-import io.jaegertracing.thrift.internal.senders.ThriftSenderFactory;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import io.opentracing.noop.NoopTracerFactory;
@@ -152,24 +149,14 @@ public class JaegerTracerService extends DefaultTracer {
             }
         }
 
-        JaegerTracer tracer = null;
-        if (MString.isSet(config.getReporter().getSenderConfiguration().getAgentHost())) {
-            logi("Create ThriftSender");
-            Sender sender =
-                    new ThriftSenderFactory().getSender(reporterConfig.getSenderConfiguration());
-            if (sender == null) logi("Can't create ThriftSender");
-            else {
-                RemoteReporter reporter = new RemoteReporter.Builder().withSender(sender).build();
-                tracer = config.getTracerBuilder().withReporter(reporter).build();
-            }
-        }
-        if (tracer == null) {
-            tracer = config.getTracer();
-        }
+        JaegerTracerProxy proxy = new JaegerTracerProxy(config, reporterConfig);
 
-        if (!GlobalTracer.isRegistered()) GlobalTracer.register(tracer);
+        if (!GlobalTracer.isRegistered()) GlobalTracer.register(proxy);
         else {
-            logi("Could't register new tracer ");
+            if (GlobalTracer.get() instanceof JaegerTracerProxy)
+                ((JaegerTracerProxy)GlobalTracer.get()).reset(config, reporterConfig);
+            else
+                logi("Could't register new tracer ");
         }
     }
 
