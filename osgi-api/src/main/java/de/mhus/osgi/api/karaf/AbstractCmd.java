@@ -49,10 +49,10 @@ public abstract class AbstractCmd extends MObject implements Action {
 
     @Option(
             name = "--trace",
-            description = "Console table print all",
+            description = "Set trace activation name or empty to blanked tracing",
             required = false,
             multiValued = false)
-    private String trace;
+    private String trace = "cmd";
 
     @Reference private Session session;
 
