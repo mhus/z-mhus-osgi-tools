@@ -19,7 +19,9 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.logging.ITracer;
+import de.mhus.lib.core.logging.TracerProxy;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import io.opentracing.util.GlobalTracer;
 
 @Command(scope = "mhus", name = "tracer-reset", description = "Reset the tracing.io tracer")
 @Service
@@ -28,8 +30,12 @@ public class CmdTracerReset extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
-        ITracer.get().reset();
-
+        if (GlobalTracer.get() instanceof TracerProxy) {
+            ITracer.get().reset();
+            System.out.println("OK");
+        } else {
+            System.out.println("Can't reset this tracer: " + GlobalTracer.get().getClass());
+        }
         return null;
     }
 }
