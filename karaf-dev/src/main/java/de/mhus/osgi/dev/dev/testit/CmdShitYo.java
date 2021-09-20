@@ -117,6 +117,7 @@ public class CmdShitYo extends AbstractCmd {
         return clazz.getDeclaredConstructor().newInstance();
     }
 
+    @Override
     public Session getSession() {
         return session;
     }

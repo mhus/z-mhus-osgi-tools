@@ -151,7 +151,7 @@ public class JaegerTracerService extends DefaultTracer {
 
         JaegerTracerProxy proxy = new JaegerTracerProxy(config, reporterConfig);
 
-        if (!GlobalTracer.isRegistered()) GlobalTracer.register(proxy);
+        if (!GlobalTracer.isRegistered()) GlobalTracer.registerIfAbsent(proxy);
         else {
             if (GlobalTracer.get() instanceof JaegerTracerProxy)
                 ((JaegerTracerProxy)GlobalTracer.get()).reset(config, reporterConfig);

@@ -42,6 +42,7 @@ import de.mhus.osgi.api.karaf.CmdInterceptor;
 import de.mhus.osgi.api.karaf.CmdInterceptorUtil;
 import io.opentracing.References;
 import io.opentracing.Scope;
+import io.opentracing.Span;
 import io.opentracing.SpanContext;
 import io.opentracing.Tracer.SpanBuilder;
 
@@ -105,18 +106,20 @@ public class MhusShit extends MLog implements ShitIfc {
                 log().i("Sleep");
                 MThread.sleep(1000);
                 log().i("Awaken");
-                ctx = t1.span().context();
-                t1.span().finish();
+                ctx = ITracer.get().current().context();
+                ITracer.get().current().finish();
                 log().i("Finished 1");
             }
 
             for (int i = 0; i < 1; i++) {
-                final Scope t2 =
+                final Span s2 =
                         tracer.tracer()
                                 .buildSpan("test2")
                                 .addReference(References.CHILD_OF, ctx)
                                 .withTag("loop", "" + i)
-                                .startActive(true);
+                                .start();
+                final Scope t2 = ITracer.get().tracer().scopeManager().activate(s2);
+
                 // final Scope t2 = tracer.start("test2", "yes", "loop", ""+i);
                 try (t2) {
                     log().i("Sleep");
@@ -132,7 +135,8 @@ public class MhusShit extends MLog implements ShitIfc {
             ITracer tracer = ITracer.get();
             SpanContext ctx = null;
             SpanBuilder s1 = tracer.createSpan(null, "test1", "a", "b");
-            try (Scope t1 = s1.startActive(false)) {
+            Span s1s = s1.start();
+            try (Scope t1 = ITracer.get().tracer().scopeManager().activate(s1s)) {
                 log().f("FATAL Log Entry");
                 log().e("ERROR Log Entry");
                 log().w("WARN Log Entry");
@@ -142,16 +146,17 @@ public class MhusShit extends MLog implements ShitIfc {
                 log().i("Sleep");
                 MThread.sleep(1000);
                 log().i("Awaken");
-                ctx = t1.span().context();
+                ctx = ITracer.get().current().context();
                 log().i("Finished 1");
             }
             for (int i = 0; i < 2; i++) {
-                final Scope t2 =
+                final Span t2s =
                         tracer.tracer()
                                 .buildSpan("test2")
                                 .addReference(References.CHILD_OF, ctx)
                                 .withTag("loop", "" + i)
-                                .startActive(true);
+                                .start();
+                final Scope t2 = ITracer.get().tracer().scopeManager().activate(t2s);
                 // final Scope t2 = tracer.start("test2", "yes", "loop", ""+i);
                 try (t2) {
                     System.gc();
