@@ -149,15 +149,11 @@ public class JaegerTracerService extends DefaultTracer {
             }
         }
 
-        JaegerTracerProxy proxy = new JaegerTracerProxy(config, reporterConfig);
+        JaegerTracerFactory factory = new JaegerTracerFactory(config, reporterConfig);
+        setTracerFactory(factory);
 
-        if (!GlobalTracer.isRegistered()) GlobalTracer.registerIfAbsent(proxy);
-        else {
-            if (GlobalTracer.get() instanceof JaegerTracerProxy)
-                ((JaegerTracerProxy)GlobalTracer.get()).reset(config, reporterConfig);
-            else
-                logi("Could't register new tracer ");
-        }
+        reset();
+
     }
 
     /**

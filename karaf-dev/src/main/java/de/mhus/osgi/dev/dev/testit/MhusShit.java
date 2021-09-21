@@ -118,7 +118,7 @@ public class MhusShit extends MLog implements ShitIfc {
                                 .addReference(References.CHILD_OF, ctx)
                                 .withTag("loop", "" + i)
                                 .start();
-                final Scope t2 = ITracer.get().tracer().scopeManager().activate(s2);
+                final Scope t2 = ITracer.get().activate(s2);
 
                 // final Scope t2 = tracer.start("test2", "yes", "loop", ""+i);
                 try (t2) {
@@ -136,7 +136,7 @@ public class MhusShit extends MLog implements ShitIfc {
             SpanContext ctx = null;
             SpanBuilder s1 = tracer.createSpan(null, "test1", "a", "b");
             Span s1s = s1.start();
-            try (Scope t1 = ITracer.get().tracer().scopeManager().activate(s1s)) {
+            try (Scope t1 = ITracer.get().activate(s1s)) {
                 log().f("FATAL Log Entry");
                 log().e("ERROR Log Entry");
                 log().w("WARN Log Entry");
@@ -156,7 +156,7 @@ public class MhusShit extends MLog implements ShitIfc {
                                 .addReference(References.CHILD_OF, ctx)
                                 .withTag("loop", "" + i)
                                 .start();
-                final Scope t2 = ITracer.get().tracer().scopeManager().activate(t2s);
+                final Scope t2 = ITracer.get().activate(t2s);
                 // final Scope t2 = tracer.start("test2", "yes", "loop", ""+i);
                 try (t2) {
                     System.gc();

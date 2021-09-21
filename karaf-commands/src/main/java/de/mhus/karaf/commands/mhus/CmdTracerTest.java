@@ -20,17 +20,20 @@ import org.apache.karaf.shell.api.action.lifecycle.Service;
 
 import de.mhus.lib.core.logging.ITracer;
 import de.mhus.osgi.api.karaf.AbstractCmd;
+import io.opentracing.Scope;
 
-@Command(scope = "mhus", name = "tracer-reset", description = "Reset the tracing.io tracer")
+@Command(scope = "mhus", name = "tracer-test", description = "Sample tracer span")
 @Service
-public class CmdTracerReset extends AbstractCmd {
+public class CmdTracerTest extends AbstractCmd {
 
     @Override
     public Object execute2() throws Exception {
 
-        ITracer.get().reset();
-        System.out.println("OK");
-
+        try (Scope scope = ITracer.get().enter("test")) {
+            ITracer.get().activate("test");
+            log().i("test");
+//            ITracer.get().current().finish();
+        }
         return null;
     }
 }
