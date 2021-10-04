@@ -134,7 +134,7 @@ public class CmdAccessTool extends AbstractCmd {
             }
             table.print();
         } else if (cmd.equals("admininfo")) {
-            SimpleAccount info = Aaa.ADMIN;
+            SimpleAccount info = Aaa.ACCOUNT_ADMIN;
             System.out.println("Account: " + info);
             System.out.println("Perms  : ");
             printList(info.getObjectPermissions());
@@ -143,7 +143,7 @@ public class CmdAccessTool extends AbstractCmd {
             System.out.println("Roles  : ");
             printList(info.getRoles());
         } else if (cmd.equals("guestinfo")) {
-            SimpleAccount info = Aaa.GUEST;
+            SimpleAccount info = Aaa.ACCOUNT_GUEST;
             System.out.println("Account: " + info);
             System.out.println("Perms  : ");
             printList(info.getObjectPermissions());
