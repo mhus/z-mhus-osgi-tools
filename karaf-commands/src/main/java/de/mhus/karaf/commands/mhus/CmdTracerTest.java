@@ -32,7 +32,7 @@ public class CmdTracerTest extends AbstractCmd {
         try (Scope scope = ITracer.get().enter("test")) {
             ITracer.get().activate("test");
             log().i("test");
-//            ITracer.get().current().finish();
+            //            ITracer.get().current().finish();
         }
         return null;
     }

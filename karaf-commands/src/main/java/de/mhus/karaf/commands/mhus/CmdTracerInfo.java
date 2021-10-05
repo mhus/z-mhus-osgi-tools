@@ -24,7 +24,10 @@ import de.mhus.lib.core.logging.TracerFactory;
 import de.mhus.osgi.api.karaf.AbstractCmd;
 import io.opentracing.Tracer;
 
-@Command(scope = "mhus", name = "tracer-info", description = "Infos about the current tracing.io tracer")
+@Command(
+        scope = "mhus",
+        name = "tracer-info",
+        description = "Infos about the current tracing.io tracer")
 @Service
 public class CmdTracerInfo extends AbstractCmd {
 
@@ -32,11 +35,14 @@ public class CmdTracerInfo extends AbstractCmd {
     public Object execute2() throws Exception {
 
         System.out.println("ITracer class     : " + ITracer.get().getClass().getCanonicalName());
-        Tracer tracer = ((DefaultTracer)ITracer.get()).getEncapsulatedTracer();
-        TracerFactory factory = ((DefaultTracer)ITracer.get()).getTracerFactory();
+        Tracer tracer = ((DefaultTracer) ITracer.get()).getEncapsulatedTracer();
+        TracerFactory factory = ((DefaultTracer) ITracer.get()).getTracerFactory();
         System.out.println("Tracer class      : " + tracer.getClass().getCanonicalName());
-        System.out.println("ScopeManager class: " + tracer.scopeManager().getClass().getCanonicalName());
-        System.out.println("Factory class     : " +  (factory == null ? "not set" : factory.getClass().getCanonicalName()));
+        System.out.println(
+                "ScopeManager class: " + tracer.scopeManager().getClass().getCanonicalName());
+        System.out.println(
+                "Factory class     : "
+                        + (factory == null ? "not set" : factory.getClass().getCanonicalName()));
         return null;
     }
 }

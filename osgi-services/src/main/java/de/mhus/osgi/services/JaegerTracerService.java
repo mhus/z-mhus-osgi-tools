@@ -153,7 +153,6 @@ public class JaegerTracerService extends DefaultTracer {
         setTracerFactory(factory);
 
         reset();
-
     }
 
     /**

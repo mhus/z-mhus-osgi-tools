@@ -96,7 +96,7 @@ public abstract class AbstractCmd extends MObject implements Action {
         if (MString.isSet(trace)) {
             try {
                 scope = ITracer.get().start(getClass().getName(), trace);
-                ITracer.get().current().setTag("session", MSystem.getObjectId(session) );
+                ITracer.get().current().setTag("session", MSystem.getObjectId(session));
             } catch (Throwable t) {
                 t.printStackTrace();
             }
