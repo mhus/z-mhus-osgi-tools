@@ -71,7 +71,8 @@ public class CmdAccessTool extends AbstractCmd {
                             + " sessioninfo\n"
                             + " session [id]\n"
                             + " sessionglobalsessiontimeout <period>\n"
-                            + " sessiontimeout <period>\n",
+                            + " sessiontimeout <period>\n"
+                            + " sessiontouch\n",
             multiValued = false)
     String cmd;
 
@@ -86,6 +87,13 @@ public class CmdAccessTool extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (cmd.equals("sessiontouch")) {
+            Session s = Aaa.getSubject().getSession(false);
+            if (s == null) return "Session not found";
+            System.out.println("Last access: " + MDate.toIso8601(s.getLastAccessTime()));
+            s.touch();
+            System.out.println("Last access: " + MDate.toIso8601(s.getLastAccessTime()));
+        } else
         if (cmd.equals("sessiontimeout")) {
             long sessionTimeout = MPeriod.toTime(parameters[0], 0);
             Session s = Aaa.getSubject().getSession(false);
