@@ -35,6 +35,8 @@ import org.apache.shiro.util.LifecycleUtils;
 
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCollection;
+import de.mhus.lib.core.MDate;
+import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.aaa.AccessApi;
 import de.mhus.lib.core.aaa.SubjectEnvironment;
@@ -67,7 +69,9 @@ public class CmdAccessTool extends AbstractCmd {
                             + " login <user> <pass> - test login as user\n"
                             + " sessions\n"
                             + " sessioninfo\n"
-                            + " session [id]",
+                            + " session [id]\n"
+                            + " sessionglobalsessiontimeout <period>\n"
+                            + " sessiontimeout <period>\n",
             multiValued = false)
     String cmd;
 
@@ -82,6 +86,22 @@ public class CmdAccessTool extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
 
+        if (cmd.equals("sessiontimeout")) {
+            long sessionTimeout = MPeriod.toMilliseconds(parameters[0], 0);
+            Session s = Aaa.getSubject().getSession(false);
+            if (s == null) return "Session not found";
+            s.setTimeout(sessionTimeout);
+            System.out.println("OK");
+        } else
+        if (cmd.equals("sessionglobalsessiontimeout")) {
+            long globalSessionTimeout = MPeriod.toMilliseconds(parameters[0], 0);
+            if (globalSessionTimeout <= 0) return null;
+            DefaultSecurityManager manager =
+                    (DefaultSecurityManager) SecurityUtils.getSecurityManager();
+            ((DefaultSessionManager) manager.getSessionManager())
+                .setGlobalSessionTimeout(globalSessionTimeout);
+            System.out.println("OK");
+        } else
         if (cmd.equals("session")) {
             DefaultSecurityManager manager =
                     (DefaultSecurityManager) SecurityUtils.getSecurityManager();
@@ -117,9 +137,18 @@ public class CmdAccessTool extends AbstractCmd {
                     (DefaultSecurityManager) SecurityUtils.getSecurityManager();
             DefaultSessionManager sessionManager =
                     (DefaultSessionManager) manager.getSessionManager();
-            System.out.println("Timeout: " + sessionManager.getGlobalSessionTimeout());
+            System.out.println("Global timeout: " + sessionManager.getGlobalSessionTimeout());
             Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
             System.out.println("Size   : " + sessions.size());
+            
+            Session s = Aaa.getSubject().getSession(false);
+            if (s == null) return "Session not found";
+            System.out.println("Current Session:");
+            System.out.println("  Host       : " + s.getHost());
+            System.out.println("  Timeout    : " + s.getTimeout());
+            System.out.println("  Last access: " + s.getLastAccessTime() + " " + MDate.toIso8601(s.getLastAccessTime()));
+            System.out.println("  Start      : " + s.getStartTimestamp() + " " + MDate.toIso8601(s.getStartTimestamp()));
+            
         } else if (cmd.equals("sessions")) {
             DefaultSecurityManager manager =
                     (DefaultSecurityManager) SecurityUtils.getSecurityManager();
