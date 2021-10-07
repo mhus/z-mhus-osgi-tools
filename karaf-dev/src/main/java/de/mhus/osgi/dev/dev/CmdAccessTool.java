@@ -87,15 +87,16 @@ public class CmdAccessTool extends AbstractCmd {
     public Object execute2() throws Exception {
 
         if (cmd.equals("sessiontimeout")) {
-            long sessionTimeout = MPeriod.toMilliseconds(parameters[0], 0);
+            long sessionTimeout = MPeriod.toTime(parameters[0], 0);
             Session s = Aaa.getSubject().getSession(false);
             if (s == null) return "Session not found";
+            if (sessionTimeout < 1000) return "invalid timeout";
             s.setTimeout(sessionTimeout);
             System.out.println("OK");
         } else
         if (cmd.equals("sessionglobalsessiontimeout")) {
-            long globalSessionTimeout = MPeriod.toMilliseconds(parameters[0], 0);
-            if (globalSessionTimeout <= 0) return null;
+            long globalSessionTimeout = MPeriod.toTime(parameters[0], 0);
+            if (globalSessionTimeout < 1000) return "invalid timeout";
             DefaultSecurityManager manager =
                     (DefaultSecurityManager) SecurityUtils.getSecurityManager();
             ((DefaultSessionManager) manager.getSessionManager())
@@ -137,7 +138,7 @@ public class CmdAccessTool extends AbstractCmd {
                     (DefaultSecurityManager) SecurityUtils.getSecurityManager();
             DefaultSessionManager sessionManager =
                     (DefaultSessionManager) manager.getSessionManager();
-            System.out.println("Global timeout: " + sessionManager.getGlobalSessionTimeout());
+            System.out.println("Global timeout: " + sessionManager.getGlobalSessionTimeout() + " - " + MPeriod.getIntervalAsString(sessionManager.getGlobalSessionTimeout()));
             Collection<Session> sessions = sessionManager.getSessionDAO().getActiveSessions();
             System.out.println("Size   : " + sessions.size());
             
@@ -145,9 +146,9 @@ public class CmdAccessTool extends AbstractCmd {
             if (s == null) return "Session not found";
             System.out.println("Current Session:");
             System.out.println("  Host       : " + s.getHost());
-            System.out.println("  Timeout    : " + s.getTimeout());
-            System.out.println("  Last access: " + s.getLastAccessTime() + " " + MDate.toIso8601(s.getLastAccessTime()));
-            System.out.println("  Start      : " + s.getStartTimestamp() + " " + MDate.toIso8601(s.getStartTimestamp()));
+            System.out.println("  Timeout    : " + s.getTimeout() + " - " + MPeriod.getIntervalAsString(s.getTimeout()));
+            System.out.println("  Last access: " + MDate.toIso8601(s.getLastAccessTime()));
+            System.out.println("  Start      : " + MDate.toIso8601(s.getStartTimestamp()));
             
         } else if (cmd.equals("sessions")) {
             DefaultSecurityManager manager =
