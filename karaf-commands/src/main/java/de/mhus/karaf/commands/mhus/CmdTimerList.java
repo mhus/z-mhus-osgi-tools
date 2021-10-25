@@ -71,7 +71,7 @@ public class CmdTimerList extends AbstractCmd {
                     "Done",
                     "Status",
                     "Interceptor",
-                    "Trail config",
+                    "Trail caller",
                     "Busy",
                     "User");
         else
@@ -101,7 +101,7 @@ public class CmdTimerList extends AbstractCmd {
                         job.isDone(),
                         getStatus(job),
                         job.getInterceptor(),
-                        job.getLogTrailConfig(),
+                        job.getLogTrailCaller(),
                         job.isBusy(),
                         job.getUsername());
             else
@@ -132,7 +132,7 @@ public class CmdTimerList extends AbstractCmd {
                         job.isDone(),
                         getStatus(job),
                         job.getInterceptor(),
-                        job.getLogTrailConfig(),
+                        job.getLogTrailCaller(),
                         job.isBusy(),
                         job.getUsername());
             else

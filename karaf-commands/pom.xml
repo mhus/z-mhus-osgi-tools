@@ -40,6 +40,8 @@
 						<Bundle-Version>${project.version}</Bundle-Version>
 						<Export-Package>de.mhus.karaf.commands.*;version=${project.version}</Export-Package>
 						<Import-Package>
+		                    org.apache.http.client.*;version=${httpcomponents.httpclient.version};resolution:=optional,
+		                    org.apache.http.*;version=${httpcomponents.httpcore.version};resolution:=optional,
 							*;resolution:=optional
 						</Import-Package>
 						<Service-Component>*</Service-Component>

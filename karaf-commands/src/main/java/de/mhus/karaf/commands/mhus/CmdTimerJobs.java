@@ -69,7 +69,7 @@ public class CmdTimerJobs extends AbstractCmd {
                     "Done",
                     "Status",
                     "Interceptor",
-                    "Trail config",
+                    "Trail caller",
                     "Busy");
         else
             table.setHeaderValues(
@@ -99,7 +99,7 @@ public class CmdTimerJobs extends AbstractCmd {
                         job.isDone(),
                         getStatus(job),
                         job.getInterceptor(),
-                        job.getLogTrailConfig(),
+                        job.getLogTrailCaller(),
                         job.isBusy());
             else
                 table.addRowValues(
