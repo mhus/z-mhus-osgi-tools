@@ -18,6 +18,8 @@ package de.mhus.osgi.dev.dev;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
@@ -39,6 +41,7 @@ import de.mhus.lib.core.MDate;
 import de.mhus.lib.core.MPeriod;
 import de.mhus.lib.core.aaa.Aaa;
 import de.mhus.lib.core.aaa.AccessApi;
+import de.mhus.lib.core.aaa.PrincipalDataRealm;
 import de.mhus.lib.core.aaa.SubjectEnvironment;
 import de.mhus.lib.core.aaa.TrustedToken;
 import de.mhus.lib.core.console.ConsoleTable;
@@ -59,7 +62,8 @@ public class CmdAccessTool extends AbstractCmd {
                     "Command to execute\n"
                             + " role <account> <role> - check if user has role\n"
                             + " access <account> <perm> - check if user has permission\n"
-                            + " roles <account> - rint all roles for the account\n"
+                            + " roles <account> - print all roles for the account\n"
+                            + " data <account> - print all data for the account\n"
                             + " perms <account> - print all perms for the user\n"
                             + " info - print informations about AAA\n"
                             + " admininfo - print infos about the admin user\n"
@@ -216,6 +220,23 @@ public class CmdAccessTool extends AbstractCmd {
                         System.out.println("Account: " + info);
                         System.out.println("Roles  : " + ((SimpleAccount) info).getRoles());
                         return null;
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+        } else if (cmd.equals("data")) {
+
+            Collection<Realm> realms =
+                    ((DefaultSecurityManager) SecurityUtils.getSecurityManager()).getRealms();
+            for (Realm realm : realms) {
+                System.out.println("Realm  : " + realm);
+                try {
+                    AuthenticationInfo info =
+                            realm.getAuthenticationInfo(new TrustedToken(parameters[0]));
+                    Map<String, String> data = ((PrincipalDataRealm)realm).getUserData((Subject) info);
+                    for (String name : new TreeSet<String>(data.keySet())) {
+                        System.out.println(name + "=" + data.get(name));
                     }
                 } catch (Throwable t) {
                     t.printStackTrace();
