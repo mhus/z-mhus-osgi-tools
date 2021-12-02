@@ -26,6 +26,7 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 
+import de.mhus.lib.core.IProperties;
 import de.mhus.lib.core.MApi;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MCollection;
@@ -175,7 +176,7 @@ public class CmdLogSet extends AbstractCmd {
                 break;
             case "console":
                 {
-                    final MProperties pe = new MProperties(parameters);
+                    final MProperties pe = IProperties.to(parameters);
                     MThread a = (MThread) session.get("__log_tail");
                     if (a != null) {
                         // a.throwException(new EOFException());
