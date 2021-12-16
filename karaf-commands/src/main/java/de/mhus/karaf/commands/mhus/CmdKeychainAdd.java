@@ -95,9 +95,9 @@ public class CmdKeychainAdd extends AbstractCmd {
         }
         MutableVaultSource mutable = source.getEditable();
 
-        String type = typeO;
-        String name = nameO;
-        String description = descO;
+        String type = typeO == null ? "" : typeO;
+        String name = nameO == null ? "" : nameO;
+        String description = descO == null ? "" : descO;
 
         if (passphraseO != null && content.contains("-----BEGIN CIPHER-----")) {
             if ("".equals(passphraseO)) {
