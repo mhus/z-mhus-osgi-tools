@@ -23,6 +23,7 @@ import java.util.Enumeration;
 
 import org.osgi.framework.Bundle;
 
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.MFile;
 import de.mhus.lib.core.MLog;
 import de.mhus.lib.core.MProperties;
@@ -235,7 +236,7 @@ public class BundleDeployer extends MLog {
 
     public void setTarget(File target) throws MException {
         if (!target.exists()) target.mkdirs();
-        if (!target.isDirectory()) throw new MException("target must be a directory", target);
+        if (!target.isDirectory()) throw new MException(RC.NOT_SUPPORTED, "target {1} must be a directory", target);
         this.target = target;
     }
 

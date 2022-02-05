@@ -67,6 +67,7 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.Option;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.MCast;
 import de.mhus.lib.core.MFile;
@@ -321,7 +322,7 @@ public class CmdWebGet extends AbstractCmd {
                         else if (method.equals("delete")) request = new HttpDelete(url);
                         else if (method.equals("head")) request = new HttpHead(url);
                         else if (method.equals("options")) request = new HttpOptions(url);
-                        else throw new MException("http method unknown", method);
+                        else throw new MException(RC.USAGE, "http method {1} unknown", method);
 
                         if (headers != null)
                             for (String header : headers)
@@ -334,14 +335,14 @@ public class CmdWebGet extends AbstractCmd {
 
                         if (payload != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException(
+                                throw new MException(RC.USAGE,
                                         "Payload is only possible for requests with POST and PUT");
                             StringEntity pl = new StringEntity(payload);
                             if (verbose) System.out.println("--- Payload: " + pl);
                             ((HttpEntityEnclosingRequest) request).setEntity(pl);
                         } else if (formData != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException(
+                                throw new MException(RC.USAGE,
                                         "Form data is only possible for requests with POST and PUT");
                             List<NameValuePair> form = new ArrayList<>();
                             for (String data : formData)

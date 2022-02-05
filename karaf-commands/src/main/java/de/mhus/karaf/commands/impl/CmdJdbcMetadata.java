@@ -26,6 +26,7 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.errors.MException;
@@ -72,7 +73,7 @@ public class CmdJdbcMetadata extends AbstractCmd {
     @Override
     public Object execute2() throws Exception {
         DataSource ds = DataSourceUtil.getDataSource(source);
-        if (ds == null) throw new MException("DataSource not found", source);
+        if (ds == null) throw new MException(RC.INTERNAL_ERROR, "DataSource {1} not found", source);
 
         if (type.equals("schemas")) {
             Connection con = ds.getConnection();

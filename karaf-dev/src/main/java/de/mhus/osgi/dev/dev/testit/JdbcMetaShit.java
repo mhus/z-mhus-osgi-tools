@@ -22,6 +22,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import de.mhus.lib.basics.RC;
 import de.mhus.lib.core.M;
 import de.mhus.lib.core.console.ConsoleTable;
 import de.mhus.lib.errors.MException;
@@ -38,7 +39,7 @@ public class JdbcMetaShit implements ShitIfc {
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         DataSource ds = DataSourceUtil.getDataSource(parameters[0]);
-        if (ds == null) throw new MException("DataSource not found", parameters[0]);
+        if (ds == null) throw new MException(RC.INTERNAL_ERROR, "DataSource {1} not found", parameters[0]);
 
         if (cmd.equals("tables")) {
             Connection con = ds.getConnection();
