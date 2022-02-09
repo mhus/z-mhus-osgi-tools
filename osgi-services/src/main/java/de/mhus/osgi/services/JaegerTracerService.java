@@ -163,7 +163,7 @@ public class JaegerTracerService extends DefaultTracer {
      */
     private void logi(Object msg) {
         if (!initService) {
-            log().i(msg);
+            log().i(null, msg);
             return;
         }
         if (msg != null && msg instanceof Throwable) {

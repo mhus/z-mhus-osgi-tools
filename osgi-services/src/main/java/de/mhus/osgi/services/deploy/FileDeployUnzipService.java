@@ -50,7 +50,7 @@ public class FileDeployUnzipService extends MLog implements FileDeployer {
             // delete zip
             f.delete();
         } catch (Throwable t) {
-            log().w(f, t);
+            log().w("deploy failed", f, t);
         }
     }
 }

@@ -73,7 +73,7 @@ public class BlueprintManager extends MLog implements IBlueprintManager {
                 log().i("create/update", entry);
                 create(entry.getString("class", null), entry.getString("bundle", null), true);
             } catch (Throwable t) {
-                log().e(entry, t);
+                log().e("create blueprint failed", entry, t);
             }
         }
     }

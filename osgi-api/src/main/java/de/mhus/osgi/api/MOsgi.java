@@ -115,7 +115,7 @@ public class MOsgi {
                 out.add(obj);
             }
         } catch (Exception e) {
-            log.d(ifc, filter, e);
+            log.d("get service failed", ifc, filter, e);
         }
         return out;
     }
@@ -130,7 +130,7 @@ public class MOsgi {
                 out.add(new Service<T>(ref, context));
             }
         } catch (Exception e) {
-            log.d(ifc, filter, e);
+            log.d("get service failed", ifc, filter, e);
         }
         return out;
     }

@@ -64,7 +64,7 @@ public class DeployServiceManager extends MLog implements ISimpleService {
                 File dir = BundleDeployer.deploy(reference.getBundle(), path, sensivity);
                 service.setDeployDirectory(path, dir);
             } catch (Throwable e) {
-                log().w(reference, path, e);
+                log().w("deploy failed", reference, path, e);
             }
         }
     }
@@ -76,7 +76,7 @@ public class DeployServiceManager extends MLog implements ISimpleService {
                 service.setDeployDirectory(path, null);
                 BundleDeployer.delete(reference.getBundle(), path);
             } catch (Throwable e) {
-                log().w(reference, path, e);
+                log().w("undeploy failed", reference, path, e);
             }
         }
     }

@@ -38,8 +38,16 @@ public class CmdLogLog extends AbstractCmd {
             name = "message",
             required = true,
             description = "Message to log",
+            multiValued = false)
+    String msg;
+    
+    @Argument(
+            index = 2,
+            name = "param",
+            required = false,
+            description = "Parameters to log",
             multiValued = true)
-    Object[] msg;
+    Object[] param;
 
     @Override
     public Object execute2() throws Exception {
@@ -48,37 +56,37 @@ public class CmdLogLog extends AbstractCmd {
             case "trace":
             case "t":
                 {
-                    log().t(msg);
+                    log().t(msg, param);
                 }
                 break;
             case "debug":
             case "d":
                 {
-                    log().d(msg);
+                    log().d(msg, param);
                 }
                 break;
             case "info":
             case "i":
                 {
-                    log().i(msg);
+                    log().i(msg, param);
                 }
                 break;
             case "warn":
             case "w":
                 {
-                    log().w(msg);
+                    log().w(msg, param);
                 }
                 break;
             case "error":
             case "e":
                 {
-                    log().e(msg);
+                    log().e(msg, param);
                 }
                 break;
             case "fatal":
             case "f":
                 {
-                    log().f(msg);
+                    log().f(msg, param);
                 }
                 break;
             default:
