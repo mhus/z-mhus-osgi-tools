@@ -20,7 +20,7 @@ import de.mhus.lib.core.MPeriod;
 
 public abstract class BundleStarter extends MLog implements Runnable {
 
-    private long timeout = MPeriod.MINUTE_IN_MILLISECOUNDS;
+    private long timeout = MPeriod.MINUTE_IN_MILLISECONDS;
     private boolean exitOnTimeout = true;
     private boolean retry = false;
 

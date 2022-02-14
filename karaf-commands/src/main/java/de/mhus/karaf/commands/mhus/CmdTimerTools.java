@@ -104,7 +104,7 @@ public class CmdTimerTools extends AbstractCmd {
 
             long time = System.currentTimeMillis();
             for (SchedulerJob job : running) {
-                long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECOUNDS;
+                long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECONDS;
                 if (timeout > 0 && timeout + job.getLastExecutionStart() <= time) {
                     table.addRowValues(
                             job.getTask(),
@@ -136,7 +136,7 @@ public class CmdTimerTools extends AbstractCmd {
             List<SchedulerJob> running = scheduler.getRunningJobs();
             long time = System.currentTimeMillis();
             for (SchedulerJob job : running) {
-                long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECOUNDS;
+                long timeout = job.getTimeoutInMinutes() * MPeriod.MINUTE_IN_MILLISECONDS;
                 if (timeout > 0 && timeout + job.getLastExecutionStart() <= time) {
                     Thread thread = job.getThread();
                     if (thread != null) {
@@ -152,13 +152,13 @@ public class CmdTimerTools extends AbstractCmd {
         if (cmd.equals("dummy")) {
             scheduler.schedule(
                     new OnceJob(
-                            System.currentTimeMillis() + MPeriod.MINUTE_IN_MILLISECOUNDS,
+                            System.currentTimeMillis() + MPeriod.MINUTE_IN_MILLISECONDS,
                             new MTimerTask() {
 
                                 @Override
                                 protected void doit() throws Exception {
                                     log().i(">>> Start Dummy");
-                                    MThread.sleep(MPeriod.MINUTE_IN_MILLISECOUNDS * 2);
+                                    MThread.sleep(MPeriod.MINUTE_IN_MILLISECONDS * 2);
                                     log().i("<<< Stop Dummy");
                                 }
                             }) {

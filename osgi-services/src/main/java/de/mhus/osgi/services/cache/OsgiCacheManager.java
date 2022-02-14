@@ -40,7 +40,7 @@ public class OsgiCacheManager implements CacheManager, Clearable {
 
     private static CfgLong CFG_TTL =
             new CfgLong(
-                    AccessApi.class, "authorizationCacheTTL", MPeriod.MINUTE_IN_MILLISECOUNDS * 30);
+                    AccessApi.class, "authorizationCacheTTL", MPeriod.MINUTE_IN_MILLISECONDS * 30);
     //    private static CfgInt CFG_SIZE = new CfgInt(AccessApi.class, "authorizationCacheSize",
     // 100000);
     private static CfgBoolean CFG_ENABLED =
