@@ -236,7 +236,8 @@ public class BundleDeployer extends MLog {
 
     public void setTarget(File target) throws MException {
         if (!target.exists()) target.mkdirs();
-        if (!target.isDirectory()) throw new MException(RC.NOT_SUPPORTED, "target {1} must be a directory", target);
+        if (!target.isDirectory())
+            throw new MException(RC.NOT_SUPPORTED, "target {1} must be a directory", target);
         this.target = target;
     }
 

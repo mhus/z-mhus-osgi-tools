@@ -40,7 +40,7 @@ public class CmdLogLog extends AbstractCmd {
             description = "Message to log",
             multiValued = false)
     String msg;
-    
+
     @Argument(
             index = 2,
             name = "param",

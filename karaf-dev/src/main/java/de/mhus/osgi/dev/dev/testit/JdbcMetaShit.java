@@ -39,7 +39,8 @@ public class JdbcMetaShit implements ShitIfc {
     @Override
     public Object doExecute(CmdShitYo base, String cmd, String[] parameters) throws Exception {
         DataSource ds = DataSourceUtil.getDataSource(parameters[0]);
-        if (ds == null) throw new MException(RC.INTERNAL_ERROR, "DataSource {1} not found", parameters[0]);
+        if (ds == null)
+            throw new MException(RC.INTERNAL_ERROR, "DataSource {1} not found", parameters[0]);
 
         if (cmd.equals("tables")) {
             Connection con = ds.getConnection();

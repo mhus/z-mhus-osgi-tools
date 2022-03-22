@@ -335,14 +335,16 @@ public class CmdWebGet extends AbstractCmd {
 
                         if (payload != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException(RC.USAGE,
+                                throw new MException(
+                                        RC.USAGE,
                                         "Payload is only possible for requests with POST and PUT");
                             StringEntity pl = new StringEntity(payload);
                             if (verbose) System.out.println("--- Payload: " + pl);
                             ((HttpEntityEnclosingRequest) request).setEntity(pl);
                         } else if (formData != null) {
                             if (!(request instanceof HttpEntityEnclosingRequest))
-                                throw new MException(RC.USAGE,
+                                throw new MException(
+                                        RC.USAGE,
                                         "Form data is only possible for requests with POST and PUT");
                             List<NameValuePair> form = new ArrayList<>();
                             for (String data : formData)
