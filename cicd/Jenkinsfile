@@ -1,0 +1,23 @@
+pipeline {
+  agent {
+    kubernetes {
+      yamlFile 'cicd/jenkins-pod.yaml'
+    }
+  }
+  stages {
+    stage('Run maven') {
+      steps {
+        container('maven') {
+          sh 'mvn package -P deploy-ngnetwork'
+        }
+      }
+    }
+    stage('Run deploy') {
+      steps {
+        container('maven') {
+          sh 'mvn deploy -P deploy-ngnetwork'
+        }
+      }
+    }
+  }
+}

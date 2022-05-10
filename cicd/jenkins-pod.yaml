@@ -1,0 +1,22 @@
+metadata:
+  labels:
+    some-label: some-label-value
+spec:
+  containers:
+  - name: maven
+    image:  maven:3.6-openjdk-11
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+      - name: config-settings
+        mountPath: /root/.m2/settings.xml
+        subPath: settings.xml
+    env:
+    - name: CONTAINER_ENV_VAR
+      value: maven
+  volumes:
+  - name: config-settings
+    secret:
+      secretName: maven-settings-xml
+        

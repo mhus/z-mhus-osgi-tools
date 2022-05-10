@@ -1,0 +1,3 @@
+
+
+kubectl create secret generic -n jx maven-settings-xml --from-file=settings.xml
